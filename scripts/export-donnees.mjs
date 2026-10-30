@@ -136,11 +136,12 @@ const versFiche = (r) => ({ id: r.id, theme: r.category, sujet: r.subcategory, t
 // ---------------------------------------------------------------------------
 const MOTIFS_INTERDITS = [
   // Clés de paramètres personnels (le texte libre « fermentation conjointe » reste permis)
-  /"[a-z0-9_]*(salaire|conjointe|soulte|rachat_np|maison_|glob_are|rupture|foyer|donation|perso|dividende|remuneration|cash_perso|equite)[a-z0-9_]*"\s*:/i,
+  /"[a-z0-9_]*(salaire|conjointe|soulte|rachat_np|maison_|glob_are|rupture|foyer|donation|perso_|_perso|dividende|remuneration|equite)[a-z0-9_]*"\s*:/i,
   // Notions patrimoniales et familiales dans le texte
   /donation-partage|pacte dutreil|soulte|rupture conventionnelle/i,
   /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i,           // adresses e-mail
-  /(?:\+33|\b0)[1-9](?:[ .-]?\d{2}){4}\b/,            // téléphones français
+  // Téléphones français, mais pas les décimales (« 0.0920000000 » n'est pas un numéro)
+  /(?<![\d.,])(?:\+33 ?|0)[1-9](?:[ .-]?\d{2}){4}(?!\d)/,
 ];
 export function controlerVieprivee(nomFichier, contenu) {
   const texte = JSON.stringify(contenu);
@@ -235,7 +236,14 @@ function autoTest() {
   bloque = false;
   try { controlerVieprivee('test', { q: 'Calendrier de donation-partage des parts' }); } catch { bloque = true; }
   ok(bloque, 'une notion patrimoniale bloque l\'export');
+  for (const tel of ['06 12 34 56 78', '0612345678', '+33 6 12 34 56 78', 'appeler le 05.63.12.34.56']) {
+    bloque = false;
+    try { controlerVieprivee('test', { t: tel }); } catch { bloque = true; }
+    ok(bloque, `téléphone détecté : ${tel}`);
+  }
   ok((() => { controlerVieprivee('test', { texte: 'foyer de l\'alambic, 1200 L', d: 'fermentation conjointe miel + pomme' }); return true; })(), 'texte technique accepté');
+  ok((() => { controlerVieprivee('test', { contribution_pts: 0.0920000000, og: { target: 1.0950000000 }, x: [1.0120000000, 0.046] }); return true; })(), 'décimales acceptées');
+  ok((() => { controlerVieprivee('test', { personnel: '1 ETP' }); return true; })(), 'clé « personnel » acceptée');
   console.log('Tous les tests passent.');
 }
 
