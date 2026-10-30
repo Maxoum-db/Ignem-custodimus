@@ -1,0 +1,55 @@
+{
+ "version_contrat": 1,
+ "exporte_le": "2026-10-30T18:16:28.469Z",
+ "nb": 4,
+ "donnees": [
+  {
+   "id": "distill_fixe",
+   "cat": "distill_fixe",
+   "default_taille_lot": "400",
+   "min_taille_lot": "200",
+   "max_taille_lot": "800",
+   "t_fixed_per_lot": "4.0",
+   "t_var_per_unite": "0.10",
+   "unit_label": "LAP",
+   "lot_label": "cuvée",
+   "rationale": "Cincinnatus chamber still : montée vapeur biomasse + CIP + démontage = 4h incompressibles."
+  },
+  {
+   "id": "brasserie",
+   "cat": "brasserie",
+   "default_taille_lot": "1250",
+   "min_taille_lot": "800",
+   "max_taille_lot": "1600",
+   "t_fixed_per_lot": "2.5",
+   "t_var_per_unite": "0.0112",
+   "unit_label": "L",
+   "lot_label": "brassin",
+   "rationale": "Brassin unique cuve. CIP + transition fixes ; empâtage/ébullition/transferts variables."
+  },
+  {
+   "id": "apiculture",
+   "cat": "apiculture",
+   "default_taille_lot": "25",
+   "min_taille_lot": "10",
+   "max_taille_lot": "50",
+   "t_fixed_per_lot": "2.0",
+   "t_var_per_unite": "0.5",
+   "unit_label": "ruche",
+   "lot_label": "session extraction",
+   "rationale": "Extraction miellerie : chauffe + montage extracteur + nettoyage CIP fixes par session."
+  },
+  {
+   "id": "distill_amb",
+   "cat": "distill_amb",
+   "default_taille_lot": "120",
+   "min_taille_lot": "50",
+   "max_taille_lot": "400",
+   "t_fixed_per_lot": "8.0",
+   "t_var_per_unite": "0.12",
+   "unit_label": "LAP",
+   "lot_label": "prestation",
+   "rationale": "Ulysse ambulant : trajets aller-retour + setup chez producteur + reprise = 8h fixes par tournée."
+  }
+ ]
+}

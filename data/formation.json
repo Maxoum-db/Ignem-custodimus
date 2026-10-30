@@ -1,0 +1,296 @@
+{
+ "version_contrat": 1,
+ "exporte_le": "2026-10-30T18:16:28.469Z",
+ "nb": 18,
+ "donnees": {
+  "phases": [
+   {
+    "id": "P3",
+    "code": "P3",
+    "titre": "Productions végétales",
+    "ordre": 3,
+    "description": "Arboriculture à distiller, maraîchage sur causse et agroforesterie / sylviculture."
+   },
+   {
+    "id": "PT",
+    "code": "PT",
+    "titre": "Transversal — Métabolisme Prométhée",
+    "ordre": 7,
+    "description": "Fil rouge sur les synergies inter-activités (le « métabolisme » du système Prométhée)."
+   },
+   {
+    "id": "P4",
+    "code": "P4",
+    "titre": "Transformation & énergie",
+    "ordre": 4,
+    "description": "Distillation ambulante, brasserie pro et énergie biomasse (intégration Cincinnatus)."
+   },
+   {
+    "id": "P5",
+    "code": "P5",
+    "titre": "Valorisation",
+    "ordre": 5,
+    "description": "Stratégie de valorisation et de commercialisation des productions."
+   }
+  ],
+  "modules": [
+   {
+    "id": "M-ACCISE",
+    "phase_id": "P4",
+    "code": "M-ACCISE",
+    "titre": "Fiscalité & accises des alcools (DGDDI)",
+    "ordre": 3,
+    "categorie": "enrichissement",
+    "objectifs": "Objectifs : maîtriser le régime des accises pour la production propre d'alcool : statut entrepositaire agréé (EA), DRM, capsules CRD, DSA / DAE / EMCS, registres 503 et de stock.\nRessources : DGDDI (service des contributions indirectes 82), ton panel Douane, code des impositions sur les biens et services (CIBS).\nLivrable : checklist d'obligations accises avant 1ʳᵉ production + maquette de DRM (relie le panel Douane).",
+    "notions_cles": "- Entrepositaire agréé (EA) : production/détention/expédition en suspension de droits, caution, locaux accessibles à la douane, numéro d'accise.\n- CIBS : assiette/tarif des accises sur alcools ; revalorisation annuelle plafonnée à +1,75 % pour 2026 (art. L313-19).\n- DRM (Déclaration Récapitulative Mensuelle) : entrées/sorties, dépôt avant le 10 du mois suivant, téléservice ; liquidation des droits.\n- Capsules CRD : marque fiscale sur contenants en droits acquittés ; commande, gestion, comptabilisation.\n- Circulation : DAE (EMCS/Gamma) en suspension entre EA dans l'UE ; DSA en droits acquittés ; cas du bouilleur de cru.\n- Registres : comptabilité matières (stock/entrées-sorties), registre 503 selon activité, justificatifs de circulation.\n- Cautionnement & garanties : montant, dispenses/réductions petits opérateurs, lien avec le statut de petit producteur.\n- Téléservices : CIEL/Gamma, déclaration préalable de profession, numéro utilisateur.",
+    "prerequis": [
+     "M-DIST",
+     "M-FISC",
+     "M-JURI"
+    ],
+    "heures_estimees": 25,
+    "criteres_validation": "Je comprends le statut d'EA et sais constituer le dossier d'agrément (caution, locaux) ; je sais établir et déposer une DRM dans les délais, gérer les capsules CRD et émettre un DAE/DSA ; je tiens une comptabilité matières conforme et connais l'impact du tarif d'accise 2026 sur mon prix de revient.",
+    "questions_cles": "- Quel montant de caution pour une petite distillerie, et dispense/réduction micro-opérateur en 2026 ?\n- Un seul agrément multi-produits (distillerie + ambulant + future brasserie) ou plusieurs ?\n- Quel tarif d'accise alcool €/hLAP en 2026 après revalorisation +1,75 % ?"
+   },
+   {
+    "id": "M-SECU",
+    "phase_id": "P4",
+    "code": "M-SECU",
+    "titre": "Sécurité distillerie (ATEX, incendie) & assurances pro",
+    "ordre": 4,
+    "categorie": "enrichissement",
+    "objectifs": "Objectifs : évaluer le risque d'atmosphère explosive (vapeurs d'éthanol), appliquer le zonage ATEX et la prévention incendie, dimensionner les assurances pro (RC, multirisque, prestation ambulante).\nRessources : INRS (ATEX), SDIS 82, courtier / assureur agricole, réglementation ICPE le cas échéant.\nLivrable : document relatif à la protection contre les explosions (DRPCE) simplifié + tableau des couvertures d'assurance.",
+    "notions_cles": "- Risque ATEX : vapeurs d'éthanol = mélange explosif (point éclair ~13 °C, large plage) — risque majeur distillerie et stockage.\n- Zonage ATEX gaz/vapeurs : zones 0/1/2 selon fréquence/durée ; sources de dégagement (évents, soutirage, alambic, stockage).\n- DRPCE (Document Relatif à la Protection Contre les Explosions) : évaluation des risques, classement en zones, mesures techniques/organisationnelles, formation.\n- Matériel ATEX : appareils conformes à la catégorie de la zone ; maîtrise des sources d'inflammation (statique, étincelles), ventilation.\n- Incendie : stockage alcool/bois, extinction, désenfumage, accès SDIS, classement ICPE éventuel.\n- Réglementation : Code du travail (explosions), directives ATEX, guides INRS (ED 911/945), guide INERIS 2025.\n- Assurances pro : RC, multirisque, garantie ambulant (alambic mobile, transport, intervention client), pertes d'exploitation.\n- Coordination SDIS 82 (visite/conseil), articulation avec le plan de prévention global.",
+    "prerequis": [
+     "M-DIST",
+     "M-ENER",
+     "M-ATELIER"
+    ],
+    "heures_estimees": 20,
+    "criteres_validation": "Je sais identifier les sources de dégagement de vapeurs d'éthanol et établir un zonage ATEX (0/1/2) ; je peux rédiger un DRPCE et choisir du matériel conforme à chaque zone ; je connais mes obligations incendie/ICPE et j'ai souscrit des assurances couvrant la distillerie fixe ET l'activité ambulante.",
+    "questions_cles": "- À partir de quel volume d'alcool/process la distillerie relève-t-elle d'un classement ICPE ?\n- Comment réaliser un zonage ATEX pragmatique pour un petit atelier (autodiagnostic vs bureau d'études) ?\n- Quels assureurs couvrent réellement un bouilleur ambulant et une distillerie en autoconstruction, et à quel coût ?"
+   },
+   {
+    "id": "M-LIQ",
+    "phase_id": "P4",
+    "code": "M-LIQ",
+    "titre": "Liqueurs, macérations & assemblages",
+    "ordre": 6,
+    "categorie": "enrichissement",
+    "objectifs": "Objectifs : maîtriser les liqueurs et macérations (sucre, infusion, titre, repos), l'assemblage et la réduction, pour diversifier la gamme spiritueux (miel, fruits, botaniques) à plus court terme que le whisky.\nRessources : tes références liqueurs_ref & congeners, littérature spiritueux, réglementation des catégories (gin, liqueur).\nLivrable : 3 fiches-produits liqueurs (recette, coût, titre, positionnement) prêtes à tester.",
+    "notions_cles": "- Catégories (règlement UE 2019/787) : « boisson spiritueuse » ≥ 15 % vol ; liqueur = teneur minimale en sucres ; gin = spiritueux au genièvre ≥ 37,5 % vol (gin / gin distillé / London gin).\n- Sucre/édulcoration : seuil minimal pour « liqueur » ; mention « dry/sec » ; impact gustatif et conservation.\n- Macération/infusion : extraction à froid/chaud des arômes (fruits, miel, botaniques) ; durée, ratio, T°, filtration.\n- Titre alcoométrique : calcul et ajustement ; réduction à l'eau ; trouble (louche) et filtration à froid.\n- Repos/vieillissement : maturation après assemblage ; effet du temps et du contenant (verre, inox, bois).\n- Assemblage (blending) : distillats + macérats + sirops pour un profil constant ; registre de recettes/lots.\n- Calcul du sirop : g/L cible, dilution, correction du degré induite par le sirop ; lien calculateur du Hub.\n- Cohérence projet : valoriser miel (liqueurs au miel — lien M-HYDRO), fruits clients et botaniques en gammes liqueurs/gins.",
+    "prerequis": [
+     "M-DIST",
+     "M-HYDRO",
+     "M-SENSO",
+     "M-ACCISE"
+    ],
+    "heures_estimees": 20,
+    "criteres_validation": "Je connais les seuils du règlement UE 2019/787 (sucre min. liqueur, degré min. 37,5 % gin) ; je sais conduire une macération, calculer un sirop, réduire au degré cible et corriger le titre ; je sais assembler et faire reposer pour un profil constant et reproductible documenté en registre.",
+    "questions_cles": "- Quels seuils de sucre (g/L) distinguent « liqueur » et « crème de », et comment l'afficher ?\n- Puis-je revendiquer « gin distillé » avec mon alambic à repasse, et quelles botaniques/genièvre obligatoires ?\n- Quelle eau de réduction sur le causse calcaire (eau dure) sans troubler le produit ?"
+   },
+   {
+    "id": "M-FRUIT",
+    "phase_id": "P3",
+    "code": "M-FRUIT",
+    "titre": "Arboriculture à distiller",
+    "ordre": 0,
+    "categorie": "enrichissement",
+    "objectifs": "Objectifs : choisir variétés / porte-greffes adaptés au sol calcaire superficiel, conduire des vergers à fruits de distillation (prune, poire, pomme), planifier pieds-mères.\nRessources : pépiniéristes spécialisés, INRAE pomologie, Chambre d'agriculture 82 (arbo).\nLivrable : plan de plantation verger à distiller (espèces, densités, calendrier) calé sur le CAPEX plantations.",
+    "notions_cles": "- Porte-greffe pour sol calcaire superficiel : tolérance au calcaire actif et à la chlorose ferrique (Saint-Julien INRA, Damas) vs Myrobolan ; vigueur adaptée au verger extensif.\n- Variétés à distiller du Sud-Ouest : prune d'Ente, Reine-Claude, mirabelle, quetsche ; poiriers et pommiers de pays rustiques.\n- Verger de distillation = logique qualitative différente du verger de bouche : maturité poussée, tri, taux de sucre, pas d'exigence calibre/aspect.\n- Densité, conduite (gobelet/axe), taille de formation/entretien adaptées à la contrainte hydrique.\n- Pieds-mères et conservation du patrimoine variétal local (greffage, surgreffage).\n- Pollinisation croisée, variétés inter-fertiles, étalement des floraisons (gel tardif sur causse).\n- Protection sanitaire raisonnée : monilia, sharka (PPV), carpocapse ; prophylaxie.\n- Adaptation climatique : besoins en froid, débourrement, stress hydrique estival sur sol mince karstique.",
+    "prerequis": [
+     "M-UC1",
+     "M-PROJ"
+    ],
+    "heures_estimees": 16,
+    "criteres_validation": "Je sais choisir un couple variété/porte-greffe adapté à mon sol calcaire superficiel et à un usage distillation. Je peux concevoir un plan de verger (densité, pollinisateurs, conduite) et planifier la création de pieds-mères.",
+    "questions_cles": "- Quel taux de calcaire actif sur mes parcelles et quels porte-greffes y résistent réellement ?\n- Quelles variétés locales à distiller sont disponibles en greffons / conservatoires ?\n- Verger extensif sans irrigation ou goutte-à-goutte d'appoint au jeune âge ?"
+   },
+   {
+    "id": "M-CEREALE",
+    "phase_id": "P3",
+    "code": "M-CEREALE",
+    "titre": "Céréales pour whisky (orge & maltabilité)",
+    "ordre": 5,
+    "categorie": "enrichissement",
+    "objectifs": "Objectifs : évaluer l'autoproduction de céréales maltables (orge de brasserie / whisky) sur le causse, comprendre maltage et qualité, sécuriser l'approvisionnement pour Cincinnatus.\nRessources : malteries artisanales, coopératives céréalières, références whisky fermier français.\nLivrable : étude de faisabilité orge → malt → Cincinnatus (surfaces, rendement, maltage interne vs externe).",
+    "notions_cles": "- Critères de l'orge brassicole/maltable : protéines (~9-11,5 %), calibrage, pouvoir germinatif, variétés inscrites ; distinction orge fourragère vs maltable.\n- Faisabilité sur causse calcaire superficiel : faible RU, stress de fin de cycle, risque protéines élevées ; choix variétal et fertilisation maîtrisée.\n- Le maltage : trempe, germination (amidon → sucres fermentescibles), touraillage.\n- Approvisionnement Cincinnatus : production fermière + maltage externe (malterie artisanale) vs micro-malterie à la ferme.\n- Modèle whisky fermier français : valorisation de l'orge à la ferme (ex. Rozelieures).\n- Qualité et traçabilité grain→malt→distillat ; stockage du grain (hygrométrie, ravageurs).\n- Articulation avec atelier distillation et contrainte sol/eau (rendement vs qualité).",
+    "prerequis": [
+     "M-PROJ",
+     "M-DIST",
+     "M-EAU"
+    ],
+    "heures_estimees": 14,
+    "criteres_validation": "Je sais juger la faisabilité d'une orge maltable sur mon causse (variété, protéines, calibrage) et comprendre les étapes du maltage. Je peux choisir un schéma d'approvisionnement malt pour Cincinnatus (fermier + malterie ou micro-maltage).",
+    "questions_cles": "- Mon sol/climat permettent-ils d'atteindre les critères brassicoles (protéines, calibrage) ou faut-il acheter l'orge ?\n- Maltage à façon en malterie artisanale ou micro-malterie à la ferme : coût et qualité ?\n- Quelle variété d'orge maltable adaptée au causse calcaire sous contrainte hydrique ?"
+   },
+   {
+    "id": "M-DIST",
+    "phase_id": "P4",
+    "code": "M-DIST",
+    "titre": "Distillation ambulante",
+    "ordre": 0,
+    "categorie": "enrichissement",
+    "objectifs": "Objectifs : conduire la distillation ambulante en prestation (statut bouilleur ambulant, art. L664-19), maîtriser fermentation des matières, coupes, sécurité et saison.\nRessources : syndicat des bouilleurs ambulants, formation Bouilleur Ambulant CMA Pays de la Loire (RNCP40586), tes références distillation.\nLivrable : procédure de campagne ambulante (matières clients, LAP, coupes, registres) + grille de tarif prestation.",
+    "notions_cles": "- Statut de distillateur ambulant (art. L664-19 CRPM) : autorisation personnelle + autorisation douanière/préfectorale de détention de l'alambic ; prestation pour les bouilleurs de cru.\n- Distinction bouilleur de cru / bouilleur ambulant prestataire / distillateur professionnel (statut visé pour Cincinnatus).\n- Alambic à repasse (charentais / col de cygne) : 1re chauffe (brouillis ~25-30 %) puis bonne chauffe ; colonne plus tard.\n- Coupes : têtes (méthanol, acétone — écartées), cœur (éthanol + congénères nobles), queues (huiles de fusel) ; pilotage degré/odorat/T° de tête.\n- Fermentation des matières : sucre → alcool, contrôle T°/hygiène, densité/Brix → titre potentiel.\n- Obligations déclaratives : avant le 10 du mois suivant, liasses DSA des clients + IBAN pour prélèvement des droits.\n- Saisonnalité : campagne (automne→hiver après récolte/fermentation) ; logistique de tournée.\n- Registres : suivi des opérations, entrées (matières) / sorties (alcool pur), rendements ; sécurité du transport.",
+    "prerequis": [
+     "M-FERM",
+     "M-JURI",
+     "M-ACCISE",
+     "M-SECU"
+    ],
+    "heures_estimees": 40,
+    "criteres_validation": "Je connais le cadre L664-19 et la procédure d'autorisation ; je sais conduire une fermentation puis une double distillation et placer mes coupes (têtes/cœur/queues) ; je peux remplir et transmettre les DSA et déclarations avant le 10 du mois ; je sais planifier une campagne et sécuriser l'installation mobile.",
+    "questions_cles": "- Procédure exacte 2026 d'autorisation personnelle + détention de l'alambic dans le 82 ?\n- Statut commercial de la prestation « Ulysse » : facturation, qui paie les droits quand le fruit est au client ?\n- La formation RNCP 147 h est-elle compatible avec le BPREA et l'installation 01/01/2028 ?"
+   },
+   {
+    "id": "M-BRASS",
+    "phase_id": "P4",
+    "code": "M-BRASS",
+    "titre": "Brasserie pro",
+    "ordre": 1,
+    "categorie": "enrichissement",
+    "objectifs": "Objectifs : passer du homebrew à l'échelle pro (dimensionnement, process, nettoyage NEP, constance), comprendre l'agrément et la fiscalité bière.\nRessources : SNBI, IFBM, ton pôle Brassage (Calculateur / BrewDayLive), visites de brasseries.\nLivrable : cahier des charges brasserie 500 L (équipement, recettes socles, coûts) calé sur brass_annee_lancement.",
+    "notions_cles": "- Passage homebrew → pro : changement d'échelle (10-20 hL/brassin), reproductibilité, métrologie (densité, pH, IBU), traçabilité des lots.\n- Dimensionnement : salle de brassage (empâtage/filtration/ébullition), tank d'eau chaude, fermenteurs cylindro-coniques, froid (glycol), conditionnement.\n- NEP (Nettoyage En Place) : soude/acide, désinfection, maîtrise du biofilm — saut qualitatif clé vs homebrew.\n- Constance : gestion levure (banque/repiquage), oxygénation, profil d'eau, courbes de fermentation, contrôle qualité par lot.\n- Statut fiscal : entrepositaire agréé « brasseur » (caution), numéro d'accise, locaux pro accessibles à la douane.\n- Fiscalité bière : droit d'accise au degré-hL, taux réduit petites brasseries (paliers ≤ 10 000 / 50 000 / 200 000 hL/an) ; certificat petit producteur indépendant.\n- Déclarations : DRM via téléservice, comptabilité matières, déclaration préalable de profession.\n- Hygiène/agro : agrément/déclaration sanitaire, effluents (drêches valorisables, eaux de NEP), HACCP.",
+    "prerequis": [
+     "M-ACCISE",
+     "M-SANI",
+     "M-COUT",
+     "M-JURI"
+    ],
+    "heures_estimees": 30,
+    "criteres_validation": "Je sais dimensionner une salle de brassage et une capacité de fermentation/froid cohérentes avec mon objectif annuel ; je maîtrise un protocole NEP garantissant la constance ; je peux obtenir l'agrément brasseur, déclarer mes droits au taux réduit et tenir ma comptabilité matières.",
+    "questions_cles": "- Quel volume de brassin et production annuelle (hL) cibler pour 2036 (palier ≤ 10 000 hL) ?\n- Quel investissement froid/NEP minimal pour la constance sans surdimensionner le CAPEX ?\n- Synergies distillerie : eau-de-vie de bière, mutualisation cuverie/vapeur ?"
+   },
+   {
+    "id": "M-ENER",
+    "phase_id": "P4",
+    "code": "M-ENER",
+    "titre": "Énergie biomasse & intégration Cincinnatus",
+    "ordre": 2,
+    "categorie": "enrichissement",
+    "objectifs": "Objectifs : dimensionner une chaufferie biomasse, valoriser le bois énergie de la ferme, intégrer l'énergie à la distillerie Cincinnatus (process vapeur).\nRessources : ADEME Occitanie, CIBE, Mission Bois Énergie 82, ton paramètre bio_investissement.\nLivrable : note de dimensionnement énergétique (besoins process, ressource bois, scénario chaufferie).",
+    "notions_cles": "- Chaufferie biomasse bois : combustion de plaquettes/déchets de chêne pour chaleur process (eau chaude, vapeur, air chaud) → Cincinnatus.\n- Ressource bois de la ferme : gestion durable de la chênaie, volume mobilisable, humidité, séchage/stockage, PCI.\n- Dimensionnement : optimiser l'efficacité du procédé AVANT la chaudière ; puissance, heures au régime nominal, taux de couverture, appoint.\n- Production de vapeur : chaudière vapeur vs fluide thermique ; pression, sécurité appareils sous pression (ESP), traitement d'eau.\n- Fumées et cendres : conformité émissions (poussières), valorisation/épandage des cendres, suivi (guide CIBE).\n- Aides ADEME (chaleur biomasse/bois, BCIB) ; seuils d'éligibilité (MWh utiles/an).\n- Bilan carbone et autonomie : substitution fossile, circuit court bois→énergie→alcool.\n- Sécurité/assurance : risque incendie stockage bois, ramonage, intégration au plan de prévention.",
+    "prerequis": [
+     "M-DIST",
+     "M-AGROF",
+     "M-CIRC",
+     "M-SECU"
+    ],
+    "heures_estimees": 25,
+    "criteres_validation": "Je sais estimer la ressource bois durablement mobilisable et l'énergie disponible ; je peux dimensionner une chaufferie/vapeur adaptée à la distillation et identifier les aides ADEME ; je connais les obligations de sécurité (ESP, fumées, cendres) et de suivi.",
+    "questions_cles": "- Quel tonnage de bois/an la chênaie peut-elle fournir durablement, et quel PCI après séchage ?\n- Vapeur directe vs fluide thermique pour un alambic : choix et contraintes ESP ?\n- Quels seuils d'éligibilité ADEME 2026 atteint une distillerie de petite taille ?"
+   },
+   {
+    "id": "M-SENSO",
+    "phase_id": "P5",
+    "code": "M-SENSO",
+    "titre": "Analyse sensorielle & qualité produit",
+    "ordre": 2,
+    "categorie": "enrichissement",
+    "objectifs": "Objectifs : développer l'analyse sensorielle (dégustation structurée, reconnaissance des défauts) pour spiritueux et bière, garantir la constance, préparer la dégustation jury / concours.\nRessources : tes références distillation_defects & off_flavors_reference, roue des arômes, méthodo IFBM / BNIC.\nLivrable : grille de dégustation maison + protocole de contrôle qualité par lot.",
+    "notions_cles": "- Dégustation structurée : examens visuel, olfactif (1er/2e nez), gustatif (attaque, milieu, finale), tactile.\n- Roue des arômes spiritueux (fruits, fleurs, céréales/malt, épices, bois, tourbe) : du général au précis, vocabulaire commun.\n- Défauts : spiritueux (têtes/queues mal coupées, acétone, soufre, méthanol) et bière (diacétyle, DMS, acétaldéhyde, oxydation, phénols).\n- Grilles normalisées (type WSET) : fiches de dégustation reproductibles.\n- Constance produit : la dégustation comme contrôle qualité lot à lot et ajustement des coupes/recettes.\n- Concours/jury : dégustation à l'aveugle, médailles comme levier de notoriété.\n- Conditions : verrerie, T°, dilution, ordre de service, hygiène du palais.\n- Lien production ↔ sensoriel : tracer les défauts jusqu'aux étapes (fermentation, distillation, vieillissement).",
+    "prerequis": [
+     "M-DIST",
+     "M-BRASS",
+     "M-LIQ"
+    ],
+    "heures_estimees": 10,
+    "criteres_validation": "Je sais conduire une dégustation structurée et remplir une grille d'évaluation. Je peux identifier les principaux défauts d'un spiritueux ou d'une bière et les relier à une étape de production à corriger.",
+    "questions_cles": "- Quels descripteurs retenir pour une fiche sensorielle « maison » Prométhée ?\n- Comment garantir la constance d'un lot à l'autre sans labo coûteux ?\n- Quels concours viser pour crédibiliser le positionnement premium ?"
+   },
+   {
+    "id": "M-COUT",
+    "phase_id": "P5",
+    "code": "M-COUT",
+    "titre": "Prix de revient, marge & politique tarifaire",
+    "ordre": 4,
+    "categorie": "enrichissement",
+    "objectifs": "Objectifs : calculer le prix de revient complet par produit (miel, bière, spiritueux, bois), fixer des prix cohérents par canal, suivre la marge et arbitrer la gamme.\nRessources : ton Hub (coût recette, marge), CERFRANCE, méthodes de costing.\nLivrable : tableau prix de revient / marge / prix de vente par produit et par canal.",
+    "notions_cles": "- Coût complet par produit : charges directes (matières, énergie, conditionnement) + indirectes (amortissements, structure) + temps de travail.\n- Prix de revient agricole : coût de production − aides − produits annexes ; base de tout arbitrage de prix.\n- Valorisation du temps en circuit court : production + transformation + commercialisation, poste majeur.\n- Marge et coefficient multiplicateur : vente directe 1,8-2,5x, revente plus faible ; majoration label 15-25 %.\n- Prix différencié par canal : coûts spécifiques (commission marché, marge revendeur, expédition).\n- Seuil de commercialisation / point mort : volume minimal pour couvrir les charges par atelier.\n- Suivi de marge et tableaux de bord (CER France / Chambre) pour ajuster.\n- Arbitrage de gamme : produits contributeurs vs déficitaires (maintien/abandon/repositionnement).",
+    "prerequis": [
+     "M-FINANCE",
+     "M-CHARGE",
+     "M-UC5"
+    ],
+    "heures_estimees": 14,
+    "criteres_validation": "Je sais calculer le prix de revient complet de chaque produit (temps de travail inclus) et son seuil de commercialisation. Je peux fixer un prix par canal assurant une marge positive et arbitrer la gamme.",
+    "questions_cles": "- Comment ventiler les charges de structure entre ateliers hétérogènes (miel, alcool, bois) ?\n- Quel prix de revient cible pour rester premium tout en restant accessible aux marchés ?\n- Quels produits abandonner si la marge réelle est négative la 1re année ?"
+   },
+   {
+    "id": "M-SANI",
+    "phase_id": "PT",
+    "code": "M-SANI",
+    "titre": "HACCP, sécurité sanitaire & étiquetage",
+    "ordre": 1,
+    "categorie": "transversal",
+    "objectifs": "Objectifs : déployer une démarche HACCP transversale (miel, bière, spiritueux, conserves), maîtriser traçabilité, GBPH et mentions obligatoires d'étiquetage communes.\nRessources : guides de bonnes pratiques d'hygiène par filière, DDETSPP 82, paquet hygiène (règlement CE 852/2004).\nLivrable : plan de maîtrise sanitaire (PMS) commun aux ateliers + modèle d'étiquette conforme par produit.",
+    "notions_cles": "- Paquet hygiène : règlement (CE) 852/2004 ; production primaire (miel, fruits) vs transformation (bière, spiritueux, conserves).\n- Producteur primaire = GBPH applicable ; transformation = HACCP / PMS obligatoire.\n- Méthode HACCP : 7 principes, dangers (biologiques, chimiques, physiques, allergènes) par filière.\n- Plan de maîtrise sanitaire (PMS) : bonnes pratiques, traçabilité amont/aval, non-conformités, retraits/rappels.\n- Traçabilité transversale : numéros de lot reliant miel→hydromel, orge→bière, fruits→distillat.\n- Étiquetage : INCO 1169/2011 (mentions, allergènes), TAV alcools, mentions miel, accises.\n- Agrément sanitaire vs dérogation (vente directe, remise directe).\n- Multi-produits : contamination croisée entre ateliers, nettoyage/désinfection, lutte nuisibles.",
+    "prerequis": [
+     "M-API-IMPL",
+     "M-DIST",
+     "M-BRASS",
+     "M-LIQ"
+    ],
+    "heures_estimees": 18,
+    "criteres_validation": "Je sais distinguer mes obligations en production primaire et en transformation. Je peux rédiger un PMS/HACCP simplifié par atelier et un système de traçabilité par lots reliant les ateliers. Je connais les mentions d'étiquetage obligatoires (miel, bière, spiritueux).",
+    "questions_cles": "- Quels ateliers déclenchent un agrément sanitaire vs une simple déclaration ?\n- Comment mutualiser un seul PMS multi-ateliers sans contamination croisée ?\n- Quel système de numérotation de lots relie toute la chaîne dans le Hub ?"
+   },
+   {
+    "id": "M-HYDRO",
+    "phase_id": "PT",
+    "code": "M-HYDRO",
+    "titre": "Hydromel & fermentations du miel",
+    "ordre": 2,
+    "categorie": "transversal",
+    "objectifs": "Objectifs : maîtriser l'hydromel et les fermentations du miel (chouchen, vinaigre de miel) comme pont apiculture ↔ brasserie ↔ distillation et débouché des miels déclassés / invendus.\nRessources : littérature hydromel (Ken Schramm), ton pôle Brassage, levures et protocoles.\nLivrable : 2 recettes d'hydromel pilotes + estimation de la valorisation des miels déclassés.",
+    "notions_cles": "- Définition légale FR : hydromel = fermentation exclusive de miel + eau potable (décret du 2 mai 1911).\n- Chouchen : appellation traditionnelle bretonne, hydromel pur miel/eau.\n- Procédé : dilution du miel (densité/Brix), nutriments azotés, levure (vin/champagne), fermentation, soutirage, élevage.\n- Variantes : melomel (fruits), metheglin (épices), cyser (pomme), sec/doux, vinaigre de miel (fermentation acétique).\n- Débouché stratégique : valoriser miels déclassés, de cristallisation, opercules, fonds de maturateur.\n- Pont inter-ateliers : miel → hydromel → distillat possible (eau-de-vie d'hydromel) ; lien atelier Ulysse.\n- Réglementation alcool : licence de vente, entrepositaire agréé, comptabilité matière, accises.\n- Maîtrise du goût : équilibre sucre/acidité/alcool, oxydation, élevage en fût (lien M-FUT).",
+    "prerequis": [
+     "M-API-IMPL",
+     "M-FERM",
+     "M-ACCISE",
+     "M-LIQ"
+    ],
+    "heures_estimees": 12,
+    "criteres_validation": "Je sais formuler une recette d'hydromel (TAV cible, levure, nutriments) et la conduire jusqu'à la mise. Je connais le cadre légal/accisien pour vendre de l'hydromel. Je peux valoriser un lot de miel déclassé en hydromel ou vinaigre.",
+    "questions_cles": "- Quel volume de miel déclassé annuel valoriser, et en quel produit (hydromel sec, melomel, vinaigre) ?\n- Distiller l'hydromel a-t-il un intérêt face au whisky / eaux-de-vie de fruits ?\n- Quelle levure et quel profil pour différencier mon hydromel commercialement ?"
+   },
+   {
+    "id": "M-FUT",
+    "phase_id": "PT",
+    "code": "M-FUT",
+    "titre": "Tonnellerie, merrain & élevage sous bois",
+    "ordre": 3,
+    "categorie": "transversal",
+    "objectifs": "Objectifs : comprendre le merrain et l'élevage en fûts (chêne, chauffe, échanges bois / distillat) pour le vieillissement du whisky Cincinnatus, en synergie avec les 9 ha de chêne et le pôle Bois.\nRessources : tonnelleries (visite), Fédération des tonneliers, références chêne de tonnellerie, ton pôle Bois.\nLivrable : itinéraire bois → fût (sélection chêne, séchage merrain, partenariat tonnelier) + plan d'élevage whisky.",
+    "notions_cles": "- Filière merrain : fendage du chêne en merrains (mérandiers), séchage à l'air (24-36 mois), assemblage par le tonnelier.\n- Chêne français (sessile/pédonculé) à grain fin pour spiritueux fins vs chêne américain plus tannique.\n- Chauffe du fût (légère/moyenne/forte) : impact aromatique (vanille, toasté, épicé), bousinage.\n- Élevage en fût : échanges bois↔distillat, oxygénation, part des anges (évaporation), extraction tanins/lactones.\n- Synergie 9 ha chêne : merrain ou bois de chauffe ; le chêne de tonnellerie exige une sylviculture longue (futaie).\n- Vieillissement whisky Cincinnatus (2037) : fûts neufs/usagés (ex-bourbon, ex-vin), gestion des stocks pluriannuels.\n- Réemploi : fûts en fin de vie → copeaux, mobilier, bois énergie.\n- Économie : fût neuf chêne français = poste majeur ; arbitrage achat vs autoproduction merrain.",
+    "prerequis": [
+     "M-AGROF",
+     "M-DIST",
+     "M-ENER"
+    ],
+    "heures_estimees": 12,
+    "criteres_validation": "Je sais expliquer la chaîne chêne→merrain→fût→élevage et l'impact de la chauffe. Je peux décider de ma stratégie fûts pour Cincinnatus (achat vs valorisation de mon chêne) et gérer un stock de vieillissement pluriannuel.",
+    "questions_cles": "- Mon chêne agroforestier (9 ha) peut-il fournir du merrain, ou seulement du bois énergie ?\n- Quels fûts (neufs, ex-bourbon, ex-vin) pour le profil whisky Cincinnatus visé ?\n- Comment financer le stock de fûts immobilisé pendant 10+ ans ?"
+   },
+   {
+    "id": "M-FERM",
+    "phase_id": "PT",
+    "code": "M-FERM",
+    "titre": "Maîtrise de la fermentation (savoir-faire transversal)",
+    "ordre": 4,
+    "categorie": "transversal",
+    "objectifs": "Objectifs : maîtriser les fondamentaux communs de la fermentation (levures / bactéries, sucres, température, pH, hygiène) appliqués à la bière, l'hydromel, les moûts à distiller et la lacto-fermentation des légumes du maraîchage ; transférer un savoir-faire d'un atelier à l'autre.\nRessources : ton pôle Brassage (levures, fermentation_ref), littérature fermentation (Sandor Katz), IFBM.\nLivrable : fiche-mère « paramètres de fermentation » par produit (T°, levure, durée, cibles) + protocole d'hygiène commun.",
+    "notions_cles": "- Micro-organismes : levures (Saccharomyces), bactéries lactiques/acétiques, fermentations spontanées vs ensemencées.\n- Substrats : amidon (orge→empâtage), saccharose/fructose (miel, fruits), conversion enzymatique.\n- Paramètres clés : température, pH, oxygène (aérobie/anaérobie), densité/Brix, nutriments azotés.\n- Types : alcoolique (bière, hydromel, moût à distiller), lactique (légumes, lacto-fermentation), acétique (vinaigres).\n- Gestion de la levure : ensemencement, pied de cuve, propagation, réutilisation, viabilité.\n- Hygiène et prévention des contaminations (Brettanomyces, moisissures) — savoir-faire transversal.\n- Suivi : courbe de densité, dégustation, arrêt/relance, FAN (azote assimilable).\n- Transversalité : un même socle microbiologique sert bière, hydromel, moûts de fruits à distiller, conserves lacto.",
+    "prerequis": [
+     "M-BRASS",
+     "M-HYDRO",
+     "M-DIST"
+    ],
+    "heures_estimees": 16,
+    "criteres_validation": "Je sais identifier les micro-organismes et paramètres pilotant chaque fermentation (bière, hydromel, moût à distiller, lacto). Je peux conduire une fermentation du pied de cuve à l'arrêt et diagnostiquer une déviation (contamination, fermentation bloquée).",
+    "questions_cles": "- Quelles souches de levure mutualiser entre bière, hydromel et moûts de fruits ?\n- Comment garantir l'hygiène fermentaire sans labo, dans un atelier multi-produits ?\n- La lacto-fermentation de mon maraîchage a-t-elle un débouché commercial réel ?"
+   }
+  ]
+ }
+}

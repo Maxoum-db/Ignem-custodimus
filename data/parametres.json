@@ -1,0 +1,46 @@
+{
+ "version_contrat": 1,
+ "exporte_le": "2026-10-30T18:16:28.469Z",
+ "nb": 1,
+ "donnees": [
+  {
+   "id": "main",
+   "label": "Snapshot Pilotage",
+   "params": {
+    "glob_tva_pct": 20,
+    "dist_ABV_moyen": 63,
+    "dist_capacite_LAP": 4000,
+    "dist_cout_kwh_gaz": 0.09,
+    "dist_cout_kwh_bois": 0.04,
+    "dist_pct_ange_share": 3,
+    "dist_prix_moyen_LAP": 110,
+    "dist_rendement_mash": 400,
+    "dist_taille_lot_LAP": 400,
+    "dist_volume_alambic": 1200,
+    "dist_cout_fut_par_LAP": 5,
+    "glob_fut_capacite_LAP": 120,
+    "amb_lap_max_par_client": 50,
+    "amb_lap_par_prestation": 16,
+    "brass_cout_matiere_pct": 30,
+    "brass_prix_moyen_litre": 5,
+    "dist_ABV_embouteillage": 45,
+    "dist_cout_kwh_biomasse": 0.05,
+    "dist_entrepot_suspensif": 1,
+    "dist_cout_kwh_electrique": 0.18,
+    "brass_volume_max_annuel_L": 6000,
+    "amb_prix_facon_eur_par_LAP": 16.5,
+    "dist_cout_grain_eur_par_kg": 0.45,
+    "dist_duree_maturation_mois": 36,
+    "eauvie_prix_eur_par_LAP_TTC": 110,
+    "glob_plafond_brasserie_L_an": 75000,
+    "api_sol_edv_miel_miel_kg_lap": 2.7,
+    "dist_duree_maturation_whisky": 3,
+    "glob_bouteille_70cl_volume_L": 0.7,
+    "glob_bouteille_75cl_volume_L": 0.75,
+    "api_sol_hydromel_miel_kg_litre": 0.32,
+    "glob_plafond_apiculture_ruches": 199,
+    "dist_cout_emballage_eur_par_bouteille": 3
+   }
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "version_contrat": 1,
+ "exporte_le": "2026-10-30T18:16:28.469Z",
+ "fichiers": {
+  "malts.json": 176,
+  "houblons.json": 45,
+  "levures.json": 157,
+  "eau.json": 21,
+  "styles.json": 36,
+  "fiches.json": 168,
+  "recettes.json": 367,
+  "quiz.json": 264,
+  "formation.json": 18,
+  "reperes.json": 27,
+  "economie.json": 4,
+  "parametres.json": 1
+ }
+}

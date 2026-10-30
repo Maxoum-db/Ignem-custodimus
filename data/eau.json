@@ -1,0 +1,373 @@
+{
+ "version_contrat": 1,
+ "exporte_le": "2026-10-30T18:16:28.469Z",
+ "nb": 21,
+ "donnees": [
+  {
+   "id": "salts_mgso4",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Sulfate de magnésium MgSO₄ (Epsom)",
+   "contenu": {
+    "usage": "Apport Mg (nutrition levure) + sulfate",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ],
+    "contribution_per_g": "Mg +26 mg/L, SO4 +103 mg/L"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "salts_nahco3",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Bicarbonate de soude NaHCO₃",
+   "contenu": {
+    "usage": "Augmente alcalinité (mash très foncé : Stout, Schwarzbier)",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ],
+    "contribution_per_g": "Na +72 mg/L, HCO3 +192 mg/L"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "salts_caco3",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Carbonate de calcium CaCO₃ (craie)",
+   "contenu": {
+    "usage": "Booster Ca + alcalinité — usage limité (peu soluble)",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ],
+    "contribution_per_g": "Ca +106 mg/L, HCO3 +322 mg/L"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "acids_lactique_80",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Acide lactique 80%",
+   "contenu": {
+    "usage": "Ajustement pH mash 5.2-5.4. ~1-3 mL pour 25 L selon eau.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ],
+    "packaging": "250 mL / 1 L"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "acids_phosphorique_85",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Acide phosphorique 85%",
+   "contenu": {
+    "usage": "Alternative acide lactique pour pH mash. Goût plus neutre.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "acids_citrique",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Acide citrique",
+   "contenu": {
+    "usage": "Ajustement pH mash + détartrage matériel. Apporte arômes citrons.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "water_hardness_geology",
+   "theme": "water_chemistry",
+   "sujet": "terroir",
+   "titre": "Dureté de l'eau et géologie des sols",
+   "contenu": {
+    "description": "La dureté totale désigne la concentration en cations multivalents (Ca²⁺, Mg²⁺, carbonates) en mg/L CaCO₃. Classification : très douce (<50), douce (50-100), modérément dure (100-200), dure (200-300), très dure (>300). La géologie conditionne directement la dureté : eaux sur roches granitiques/sablonneuses → acides, peu minéralisées, douces ; eaux sur calcaire/grès → bicarbonatées, riches en Ca²⁺, dures. Conductivité (μS/cm) proportionnelle aux ions totaux. Alcalinité résiduelle = alcalinité - 0.71×Ca - 0.59×Mg — notion plus pertinente que le pH brut de l'eau pour prédire le pH du moût."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "water_key_ions",
+   "theme": "water_chemistry",
+   "sujet": "ions",
+   "titre": "Ions clés et leur rôle en brassage",
+   "contenu": {
+    "source": "Palmer, How To Brew",
+    "calcium": {
+     "role": "Abaisse le pH du mash, favorise l'activité enzymatique, aide à la clarification, protège l'alpha-amylase.",
+     "symbol": "Ca²⁺",
+     "range_ppm": "50-150",
+     "source_salt": "CaSO₄ (gypse) ou CaCl₂"
+    },
+    "sulfate": {
+     "role": "Accentue l'amertume sèche et tranchante du houblon. Ratio SO₄/Cl important.",
+     "symbol": "SO₄²⁻",
+     "range_ppm": "50-350 (IPA: 150+)"
+    },
+    "chloride": {
+     "role": "Arrondit le palais, accentue la douceur maltée et le corps.",
+     "symbol": "Cl⁻",
+     "range_ppm": "50-150"
+    },
+    "magnesium": {
+     "role": "Cofacteur enzymatique. Goût amer/astringent à haute concentration.",
+     "symbol": "Mg²⁺",
+     "max_ppm": 50,
+     "range_ppm": "10-30"
+    },
+    "bicarbonate": {
+     "role": "Alcalinité résiduelle. Tampon de pH. Trop élevé → pH du mash trop haut → tanins astringents.",
+     "symbol": "HCO₃⁻",
+     "target": "Le plus bas possible sauf pour stouts/porters avec malts torréfiés acides."
+    },
+    "sulfate_chloride_ratio": {
+     "examples": "IPA: 3-5, Stout: 0.5, Amber: 1-2",
+     "description": "Ratio SO₄/Cl : >2 = hoppy/sec, <1 = malté/rond, ~1 = équilibré"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "water_mineral_ions_detailed",
+   "theme": "water_chemistry",
+   "sujet": "ions",
+   "titre": "Ions minéraux de l'eau — rôles détaillés",
+   "contenu": {
+    "description": "Ca²⁺ : le plus influent, abaisse le pH du moût, améliore saccharification et floculation. Na⁺ : rondeur à 75-150 mg/L, salé/aigre >150 mg/L. Mg²⁺ : essentiel au métabolisme des levures, protège du stress éthanol/T°, aigre >50 mg/L. SO₄²⁻ : accentue amertume ressentie, favorise saccharification, astringent en excès. Cl⁻ : maltée et ronde, chlorophénols médicinaux en excès si >10 mg/L combiné aux phénols de fermentation. K⁺ : croissance levures, salin >10 mg/L. Zn²⁺ : synthèse protéines levures (0.08-0.20 mg/L optimal), métallique à forte dose. PO₄³⁻ : pouvoir tampon. HCO₃⁻/CO₃²⁻ : contrôle alcalinité, tampon pH. pH idéal brassage : 5.4-5.6."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "water_brewing_profiles",
+   "theme": "water_chemistry",
+   "sujet": "profiles",
+   "titre": "Profils d'eau de brassage classiques",
+   "contenu": {
+    "burton": {
+     "style": "IPA, Pale Ale — 'Burton snatch', amertume sèche et tranchante",
+     "calcium_ppm": 275,
+     "sulfate_ppm": 610,
+     "chloride_ppm": 25,
+     "magnesium_ppm": 40,
+     "bicarbonate_ppm": 260
+    },
+    "dublin": {
+     "style": "Stout — haute alcalinité, soutient les malts torréfiés",
+     "calcium_ppm": 120,
+     "sulfate_ppm": 55,
+     "chloride_ppm": 19,
+     "magnesium_ppm": 4,
+     "bicarbonate_ppm": 315
+    },
+    "munich": {
+     "style": "Dunkel, Bock — eau modérément dure",
+     "calcium_ppm": 77,
+     "sulfate_ppm": 10,
+     "chloride_ppm": 2,
+     "magnesium_ppm": 18,
+     "bicarbonate_ppm": 295
+    },
+    "pilsen": {
+     "style": "Pilsner, Helles — eau très douce",
+     "calcium_ppm": 7,
+     "sulfate_ppm": 5,
+     "chloride_ppm": 5,
+     "magnesium_ppm": 2,
+     "bicarbonate_ppm": 15
+    },
+    "source": "Palmer, How To Brew + Buglass 2011",
+    "edinburgh": {
+     "style": "Scottish Ales",
+     "calcium_ppm": 120,
+     "sulfate_ppm": 140,
+     "chloride_ppm": 20,
+     "magnesium_ppm": 25,
+     "bicarbonate_ppm": 225
+    },
+    "description": "L'eau représente 85-95% de la bière. Son profil minéral influence le pH du mash, l'extraction du houblon, et le caractère final."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "whisky_water_requirements",
+   "theme": "water_chemistry",
+   "sujet": "distilling",
+   "titre": "Qualité de l'eau pour la distillation de whisky",
+   "contenu": {
+    "source": "Compilation - Russell et al. + Jacques et al., 2003",
+    "chlorine": "Absent (risque chlorophénols)",
+    "calcium_ppm": "50-100",
+    "description": "L'eau de brassage en distillerie a des exigences spécifiques : dureté modérée (50-150 ppm CaCO₃) pour tamponner le pH du mash, faible teneur en fer (<0.1 ppm, sinon oxydation et notes métalliques), absence de chlore/chloramines (formation de chlorophénols au goût médicinal), calcium suffisant (50-100 ppm, cofacteur enzymatique et aide à la clarification). L'eau de refroidissement (condenseurs, mash cooling) n'a pas les mêmes exigences de pureté. L'eau de réduction (cutting water, pour ajuster le degré avant embouteillage) doit être déminéralisée ou très douce pour éviter la turbidité (chill haze) et les précipitations.",
+    "iron_max_ppm": 0.1,
+    "cutting_water": "Déminéralisée ou très douce",
+    "hardness_ppm_caco3": "50-150"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "water_ph_mash",
+   "theme": "water_chemistry",
+   "sujet": "chemistry",
+   "titre": "pH du mash — cible et ajustement",
+   "contenu": {
+    "source": "Palmer, How To Brew + Buglass 2011",
+    "target_ph": "5.2-5.6 (mesuré à température ambiante)",
+    "why_important": "pH optimal pour l'activité de la beta-amylase (5.4-5.5) et de l'alpha-amylase (5.6-5.8). Un pH trop haut extrait des tanins et réduit l'efficacité.",
+    "dark_malts_effect": "Les malts torréfiés sont naturellement acides (pH 4.5-5.0) et abaissent le pH du mash. C'est pourquoi les stouts tolèrent une eau dure (Dublin).",
+    "adjustment_methods": {
+     "gypsum": "CaSO₄ — abaisse le pH via le calcium",
+     "acid_malt": "Malt acidulé (Sauermalz) — contient de l'acide lactique, 1-5% du grain bill",
+     "lactic_acid": "Acide lactique 88% — 1 mL abaisse ~0.1 pH dans 20L",
+     "phosphoric_acid": "Acide phosphorique 10% — neutre en goût",
+     "calcium_chloride": "CaCl₂ — même effet que le gypse mais favorise le chlorure"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "salts_nacl",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Chlorure de sodium NaCl",
+   "contenu": {
+    "usage": "Petit boost Na pour rondeur (Stout, Gose)",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ],
+    "contribution_per_g": "Na +104 mg/L, Cl +160 mg/L"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "salts_caso4",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Sulfate de calcium CaSO₄ (gypse)",
+   "contenu": {
+    "usage": "Augmente dureté sulfate, rehausse houblons (IPA)",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ],
+    "contribution_per_g": "Ca +61.5 mg/L, SO4 +147.4 mg/L"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "salts_cacl2",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Chlorure de calcium CaCl₂ 36% liquide",
+   "contenu": {
+    "usage": "Augmente dureté chlorure, rehausse malt (Brown/NEIPA)",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ],
+    "contribution_per_mL": "Ca +14 mg/L, Cl +25 mg/L (à 1 mL/L)"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "salts_burton_water",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Burton Salts (mix prêt à l'emploi)",
+   "contenu": {
+    "usage": "Mix gypse + chlorure + Epsom — réplique eau Burton-on-Trent (IPA UK).",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers",
+     "MotlerHops"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "salts_pilsen_water",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Pilsen Salts (mix prêt)",
+   "contenu": {
+    "usage": "Réplique eau Plzeň ultra-douce — Czech Pilsner.",
+    "vendor": [
+     "Rolling Beers",
+     "MotlerHops"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "salts_dublin_water",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Dublin Salts (mix prêt)",
+   "contenu": {
+    "usage": "Réplique eau Dublin (alcalinité haute) — Stout, Porter.",
+    "vendor": [
+     "Rolling Beers",
+     "MotlerHops"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "salts_munich_water",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Munich Salts (mix prêt)",
+   "contenu": {
+    "usage": "Réplique eau Munich — Helles, Dunkel, Märzen.",
+    "vendor": [
+     "Rolling Beers",
+     "MotlerHops"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "acids_sulfurique_dilue",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "Acide sulfurique dilué brassage",
+   "contenu": {
+    "usage": "Ajustement pH mash sans apport de saveur (rare en homebrew).",
+    "vendor": [
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "acids_5_2_stabilizer",
+   "theme": "water_chemistry",
+   "sujet": "variete",
+   "titre": "5.2 pH Stabilizer (Five Star)",
+   "contenu": {
+    "brand": "Five Star",
+    "usage": "Tampon pH mash automatique — alternative simple aux acides.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  }
+ ]
+}

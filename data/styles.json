@@ -1,0 +1,582 @@
+{
+ "version_contrat": 1,
+ "exporte_le": "2026-10-30T18:16:28.469Z",
+ "nb": 36,
+ "donnees": [
+  {
+   "id": "styles_ale_american_barley_wine",
+   "theme": "styles_ale",
+   "sujet": "strong",
+   "titre": "American Barley Wine",
+   "contenu": {
+    "fg": "1.016-1.030+",
+    "og": "1.080-1.120+",
+    "ibu": "50-120+",
+    "srm": "10-19",
+    "description": "Vin d'orge américain. Plus houblonné que la version anglaise. Amertume importante avec un corps riche et complexe. 8-12% ABV."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_american_ipa",
+   "theme": "styles_ale",
+   "sujet": "ipa",
+   "titre": "American IPA",
+   "contenu": {
+    "fg": "1.010-1.018",
+    "og": "1.056-1.075",
+    "ibu": "40-60+",
+    "srm": "6-15",
+    "description": "IPA américaine moderne. Houblonnage américain agressif (Cascade, Simcoe, Citra). Notes d'agrumes, pin et tropicales. Le style craft par excellence."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_belgian_wit",
+   "theme": "styles_ale",
+   "sujet": "wheat",
+   "titre": "Witbier Belge",
+   "contenu": {
+    "fg": "1.008-1.012",
+    "og": "1.044-1.052",
+    "ibu": "10-20",
+    "srm": "2-4",
+    "description": "Bière blanche belge épicée avec coriandre et écorces d'orange. Blé non malté, trouble, légère et rafraîchissante. Style Hoegaarden."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_bavarian_weizen",
+   "theme": "styles_ale",
+   "sujet": "wheat",
+   "titre": "Weizen Bavaroise",
+   "contenu": {
+    "fg": "1.010-1.014",
+    "og": "1.044-1.052",
+    "ibu": "8-15",
+    "srm": "2-8",
+    "description": "Bière de blé bavaroise classique. Caractère de banane et clou de girofle de la levure weizen. Trouble naturel, mousse abondante. Min. 50% de blé malté."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_american_amber",
+   "theme": "styles_ale",
+   "sujet": "amber",
+   "titre": "American Amber Ale",
+   "contenu": {
+    "fg": "1.010-1.015",
+    "og": "1.045-1.060",
+    "ibu": "25-40+",
+    "srm": "10-17",
+    "description": "Ale ambrée américaine. Équilibre entre malts caramel (notes de toffee) et houblons américains. Corps moyen, couleur cuivrée."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_american_pale_ale",
+   "theme": "styles_ale",
+   "sujet": "pale_ale",
+   "titre": "American Pale Ale",
+   "contenu": {
+    "fg": "1.010-1.015",
+    "og": "1.045-1.060",
+    "ibu": "30-45+",
+    "srm": "5-14",
+    "description": "Pale ale américaine, plus houblonnée que son ancêtre anglais. Notes d'agrumes et florales des houblons américains. Corps moyen, amertume modérée. Style Sierra Nevada."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_robust_porter",
+   "theme": "styles_ale",
+   "sujet": "porter",
+   "titre": "Robust Porter",
+   "contenu": {
+    "fg": "1.012-1.016",
+    "og": "1.048-1.065",
+    "ibu": "25-50+",
+    "srm": "22-35+",
+    "description": "Porter robuste américaine. Plus foncée et plus torréfiée que la brown porter. Notes de café, chocolat noir et réglisse."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_russian_imperial_stout",
+   "theme": "styles_ale",
+   "sujet": "stout",
+   "titre": "Russian Imperial Stout",
+   "contenu": {
+    "fg": "1.018-1.030+",
+    "og": "1.075-1.095+",
+    "ibu": "50-90+",
+    "srm": "20-40",
+    "description": "Stout impérial puissant (8-12% ABV). Notes de chocolat noir, café torréfié, fruits noirs et alcool. Vieillissement en fût possible. Historiquement brassé pour la cour russe."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "saison_farmhouse",
+   "theme": "styles_ale",
+   "sujet": "farmhouse",
+   "titre": "Saison — bière fermière belge/française",
+   "contenu": {
+    "og": "1.048-1.065",
+    "abv": "5-7%",
+    "levure": "Dupont / French Saison",
+    "source": "Prométhée — recette Saison Cayriech",
+    "caractere": "Sèche, épicée, fruitée, effervescente",
+    "description": "La Saison est un style fermier belge/français parfaitement adapté au concept Prométhée de ferme-distillerie. Caractéristiques : sèche (atténuation >90%), épicée (poivre, agrumes de la levure), fruitée, effervescente. OG modérée (1.048-1.065), ABV 5-7%. Levure saison (Dupont, French Saison) fermentant à haute température (25-35°C). Ajouts possibles : céréales locales (épeautre, seigle), miel de la miellerie, herbes et épices du terroir. La Saison Cayriech de Prométhée utilise des ingrédients du Quercy pour ancrer ce style historiquement rural dans son terroir d'adoption.",
+    "attenuation_pct": ">90%",
+    "fermentation_temp_c": "25-35"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_special_bitter_esb",
+   "theme": "styles_ale",
+   "sujet": "bitter",
+   "titre": "Special Bitter / ESB",
+   "contenu": {
+    "fg": "1.008-1.012",
+    "og": "1.040-1.048",
+    "ibu": "20-40",
+    "srm": "5-16",
+    "description": "Bitter anglaise plus riche et plus houblonnée que l'ordinary. Corps moyen, équilibre malt caramel et houblon anglais. Style Fuller's ESB."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_lager_traditional_bock",
+   "theme": "styles_lager",
+   "sujet": "bock",
+   "titre": "Bock Traditionnelle",
+   "contenu": {
+    "fg": "1.013-1.020",
+    "og": "1.064-1.072",
+    "ibu": "20-27",
+    "srm": "14-22",
+    "description": "Lager forte allemande (6-7% ABV). Profil malté riche avec des notes de pain, caramel et fruits secs. Faible amertume."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_lager_doppelbock",
+   "theme": "styles_lager",
+   "sujet": "bock",
+   "titre": "Doppelbock",
+   "contenu": {
+    "fg": "1.016-1.024+",
+    "og": "1.072-1.096+",
+    "ibu": "16-26+",
+    "srm": "6-25",
+    "description": "Double bock allemande très forte (7-10% ABV). Extrêmement maltée et riche. Notes de pain d'épices, caramel foncé et pruneaux. Nom traditionnellement en '-ator'."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_lager_oktoberfest_marzen",
+   "theme": "styles_lager",
+   "sujet": "marzen",
+   "titre": "Oktoberfest/Märzen",
+   "contenu": {
+    "fg": "1.012-1.016",
+    "og": "1.050-1.056",
+    "ibu": "20-28",
+    "srm": "7-14",
+    "description": "Lager ambrée bavaroise traditionnelle de l'Oktoberfest. Riche et maltée avec des notes de pain grillé et de miel. Corps moyen-plein."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_lager_german_pilsener",
+   "theme": "styles_lager",
+   "sujet": "pilsener",
+   "titre": "Pilsener Allemande",
+   "contenu": {
+    "fg": "1.008-1.013",
+    "og": "1.044-1.050",
+    "ibu": "25-45",
+    "srm": "2-4",
+    "description": "Pilsener allemande sèche et amère. Houblons nobles allemands dominants, corps sec, finale houblonnée. Plus sèche que la pilsener bohémienne."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_lager_bohemian_pilsener",
+   "theme": "styles_lager",
+   "sujet": "pilsener",
+   "titre": "Pilsener Bohémienne",
+   "contenu": {
+    "fg": "1.013-1.017",
+    "og": "1.044-1.056",
+    "ibu": "35-45",
+    "srm": "3-6",
+    "description": "Pilsener tchèque originelle (style Pilsner Urquell). Plus ronde et maltée que la version allemande. Houblon Saaz et eau douce de Plzeň."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_american_wheat",
+   "theme": "styles_ale",
+   "sujet": "wheat",
+   "titre": "American Wheat (Blé Américaine)",
+   "contenu": {
+    "fg": "1.008-1.013",
+    "og": "1.040-1.055",
+    "ibu": "10-30",
+    "srm": "3-6",
+    "description": "Bière de blé américaine légère et rafraîchissante. Contrairement à la weizen bavaroise, utilise une levure neutre. 30-50% de blé."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "barrel_aged_beer",
+   "theme": "styles_ale",
+   "sujet": "barrel_aged",
+   "titre": "Barrel-Aged Beer — vieillissement en fût de spiritueux",
+   "contenu": {
+    "source": "Prométhée — recette Barleywine Titan",
+    "synergie": "Fûts de distillerie → vieillissement bière → haute valeur ajoutée",
+    "duree_mois": "3-12",
+    "description": "Le barrel-aging (vieillissement en fût) de bières fortes est une synergie naturelle entre distillerie et brasserie : les fûts utilisés pour le whisky deviennent ensuite des fûts de vieillissement pour les bières. Styles idéaux : barleywine, imperial stout, porter, strong ale. Durée : 3-12 mois typiquement. Les fûts ex-whisky apportent vanille, noix de coco, chêne et une touche d'alcool. Les fûts ex-rhum ajoutent des notes de mélasse et de fruits tropicaux. Le Barleywine Titan de Prométhée (barleywine vieilli en fûts Cincinnatus ex-whisky) est le produit phare de cette synergie.",
+    "styles_ideaux": [
+     "barleywine",
+     "imperial stout",
+     "porter",
+     "strong ale"
+    ],
+    "apport_ex_rhum": "mélasse, fruits tropicaux",
+    "apport_ex_whisky": "vanille, noix de coco, chêne, touche d'alcool"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "braggot_biere_miel",
+   "theme": "styles_ale",
+   "sujet": "specialty",
+   "titre": "Braggot — hybride bière-hydromel",
+   "contenu": {
+    "abv": "8-12%",
+    "ibu": "15-20",
+    "levure": "Ale belge (esters fruités)",
+    "source": "Prométhée — recette Braggot Couanac",
+    "og_cible": "1.080-1.100",
+    "description": "Le braggot est un style hybride combinant malt d'orge et miel — le pont parfait entre brasserie et miellerie dans le projet Prométhée. Recette Braggot Couanac : 50% malt pale ale + 40% miel de la miellerie + 10% malt Munich pour la complexité. OG élevée (1.080-1.100), fermentation avec levure ale belge (esters fruités complémentaires du miel). Houblonnage léger (15-20 IBU) pour ne pas masquer le miel. ABV finale : 8-12%. C'est un produit de niche à haute valeur ajoutée, mettant en valeur la synergie apiculture-brasserie.",
+    "valeur_ajoutee": "Produit de niche, synergie apiculture-brasserie",
+    "ratio_malt_miel": "50-60% malt / 40-50% miel"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_brown_porter",
+   "theme": "styles_ale",
+   "sujet": "porter",
+   "titre": "Brown Porter",
+   "contenu": {
+    "fg": "1.008-1.014",
+    "og": "1.040-1.052",
+    "ibu": "18-35",
+    "srm": "20-30",
+    "description": "Porter brune classique londonienne. Notes de chocolat, caramel et pain grillé. Corps moyen, amertume douce. Style historique du XVIIIe siècle."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_dry_stout",
+   "theme": "styles_ale",
+   "sujet": "stout",
+   "titre": "Dry Stout",
+   "contenu": {
+    "fg": "1.007-1.011",
+    "og": "1.036-1.050",
+    "ibu": "30-45",
+    "srm": "25-40+",
+    "description": "Stout sec irlandais. Corps léger malgré sa couleur noire. Notes de café et d'orge torréfiée. Amertume sèche en finale. Style Guinness."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_english_barley_wine",
+   "theme": "styles_ale",
+   "sujet": "strong",
+   "titre": "English Barley Wine",
+   "contenu": {
+    "fg": "1.018-1.030+",
+    "og": "1.080-1.120+",
+    "ibu": "35-70",
+    "srm": "8-22",
+    "description": "Vin d'orge anglais. Très forte (8-12% ABV), maltée et riche. Notes de caramel foncé, fruits confits et sherry. Se bonifie en vieillissant."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_english_ipa",
+   "theme": "styles_ale",
+   "sujet": "ipa",
+   "titre": "English IPA",
+   "contenu": {
+    "fg": "1.010-1.018",
+    "og": "1.050-1.075",
+    "ibu": "40-60",
+    "srm": "8-14",
+    "description": "IPA anglaise originelle. Plus maltée et terreuse que la version américaine. Houblons anglais (EKG, Fuggle) et levure fruitée."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_foreign_extra_stout",
+   "theme": "styles_ale",
+   "sujet": "stout",
+   "titre": "Foreign Extra Stout",
+   "contenu": {
+    "fg": "1.010-1.018",
+    "og": "1.056-1.075",
+    "ibu": "30-70",
+    "srm": "30-40+",
+    "description": "Stout d'exportation forte. Plus alcoolisée (6-8% ABV) et plus intense que le dry stout. Style tropical historiquement brassé pour les colonies."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_imperial_ipa",
+   "theme": "styles_ale",
+   "sujet": "ipa",
+   "titre": "Imperial IPA / Double IPA",
+   "contenu": {
+    "fg": "1.012-1.018",
+    "og": "1.075-1.090+",
+    "ibu": "60-100+",
+    "srm": "8-15",
+    "description": "Version amplifiée de l'IPA américaine. Double dose de houblons et de malt. 7.5-10% ABV. Amertume intense mais équilibrée par le corps malté."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_oatmeal_stout",
+   "theme": "styles_ale",
+   "sujet": "stout",
+   "titre": "Oatmeal Stout",
+   "contenu": {
+    "fg": "1.010-1.018",
+    "og": "1.048-1.065",
+    "ibu": "25-40",
+    "srm": "22-40+",
+    "description": "Stout à l'avoine. Texture soyeuse et onctuosité apportées par les flocons d'avoine (5-20%). Notes de chocolat et café avec une rondeur en bouche."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_ordinary_bitter",
+   "theme": "styles_ale",
+   "sujet": "bitter",
+   "titre": "Ordinary Bitter",
+   "contenu": {
+    "fg": "1.007-1.011",
+    "og": "1.032-1.040",
+    "ibu": "25-35",
+    "srm": "4-14",
+    "description": "Ale anglaise de session, peu amère malgré son nom. Corps léger, malts biscuités et houblons anglais terreux. Bière de pub quotidienne."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_lager_california_common",
+   "theme": "styles_lager",
+   "sujet": "common",
+   "titre": "California Common (Steam Beer)",
+   "contenu": {
+    "fg": "1.011-1.014",
+    "og": "1.048-1.054",
+    "ibu": "30-45",
+    "srm": "10-14",
+    "description": "Style hybride californien fermenté avec une levure lager à température ale. Notes de caramel et d'houblon boisé. Style Anchor Steam."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_lager_classic_american_pilsner",
+   "theme": "styles_lager",
+   "sujet": "pilsener",
+   "titre": "Pilsner Américaine Classique",
+   "contenu": {
+    "fg": "1.010-1.015",
+    "og": "1.044-1.060",
+    "ibu": "25-40",
+    "srm": "3-6",
+    "description": "Pilsner américaine pré-Prohibition. Plus riche et houblonnée que les lagers américaines modernes. Adjuncts de maïs, houblons nobles."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_lager_vienna_lager",
+   "theme": "styles_lager",
+   "sujet": "vienna",
+   "titre": "Vienna Lager",
+   "contenu": {
+    "fg": "1.010-1.014",
+    "og": "1.046-1.052",
+    "ibu": "18-30",
+    "srm": "8-12",
+    "description": "Lager ambrée viennoise. Notes de pain grillé et caramel doux du malt Vienna. Corps moyen, finale propre. Style historique d'Anton Dreher."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_bourbon",
+   "theme": "styles_whisky",
+   "sujet": "american",
+   "titre": "Bourbon Whiskey — réglementation et profil",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "maturation_note": "Contrairement au Scotch, le bourbon GAGNE en degré d'alcool pendant la maturation (climat chaud → eau s'évapore plus vite).",
+    "typical_profile": "Vanille, caramel, maïs doux, épices (seigle), boisé",
+    "straight_bourbon": "Minimum 2 ans de vieillissement (4 ans si pas d'age statement).",
+    "legal_requirements": {
+     "cask": "Fûts de chêne neufs charrés obligatoires",
+     "grain_bill": ">51% maïs",
+     "no_coloring": "Aucun additif de couleur ni d'arôme autorisé",
+     "barrel_entry": "≤62.5% ABV (125 proof)",
+     "aging_location": "USA (généralement Kentucky)",
+     "distillation_max": "≤80% ABV (160 proof)"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "scotch_legal_definition",
+   "theme": "styles_whisky",
+   "sujet": "scotch",
+   "titre": "Définition légale du Scotch whisky (9 critères)",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.14",
+    "description": "Le Scotch whisky doit satisfaire 9 critères légaux : (1) distillé en Écosse, (2) à partir de céréales maltées (+ autres céréales pour grain whisky), (3) avec de l'eau et de la levure uniquement, (4) distillé à moins de 94.8% ABV pour conserver le caractère des matières premières, (5) maturé en Écosse, (6) dans des fûts de chêne de maximum 700 litres, (7) pendant minimum 3 ans, (8) sans addition autre que de l'eau et du colorant caramel (E150a), (9) embouteillé à minimum 40% ABV.",
+    "criteria_count": 9,
+    "max_cask_litres": 700,
+    "min_bottling_abv": 40,
+    "allowed_additions": [
+     "eau",
+     "colorant caramel E150a"
+    ],
+    "max_distillation_abv": 94.8,
+    "min_maturation_years": 3
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "batf_whiskey_definitions",
+   "theme": "styles_whisky",
+   "sujet": "american",
+   "titre": "Définitions BATF des whiskeys américains",
+   "contenu": {
+    "rye": {
+     "rye_min_pct": 51
+    },
+    "corn": {
+     "cask": "neufs non charrés ou usagés",
+     "corn_min_pct": 80
+    },
+    "light": {
+     "cask": "usagés",
+     "distillation_proof": "160-190"
+    },
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.19",
+    "bourbon": {
+     "cask": "chêne neuf charré",
+     "corn_min_pct": 51,
+     "max_barrel_entry_proof": 125,
+     "max_distillation_proof": 160
+    },
+    "straight": {
+     "min_years": 2
+    },
+    "tennessee": "bourbon + Lincoln County Process (filtration charbon érable)",
+    "description": "Définitions réglementaires US (BATF) : Bourbon = ≥51% maïs, distillé ≤160° proof (80% ABV), vieilli en fûts de chêne neufs charrés, empotage ≤125° proof (62.5% ABV). Straight bourbon = ≥2 ans de maturation. Rye whiskey = ≥51% seigle, mêmes contraintes. Corn whiskey = ≥80% maïs, fûts neufs non charrés ou usagés. Light whiskey = distillé entre 160-190° proof, vieilli en fûts usagés. Tennessee whiskey = bourbon + filtration au charbon d'érable (Lincoln County Process)."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_irish_whiskey",
+   "theme": "styles_whisky",
+   "sujet": "irish",
+   "titre": "Irish Whiskey — caractéristiques",
+   "contenu": {
+    "source": "Buglass 2011",
+    "unpeated": "Généralement non-tourbé (séchage au charbon, pas à la tourbe)",
+    "blended_irish": "Jameson, Paddy, Tullamore DEW",
+    "pot_still_irish": {
+     "examples": "Redbreast, Green Spot, Powers",
+     "character": "Crémeux, épicé, huileux — texture distinctive",
+     "definition": "Single Pot Still — mélange unique d'orge maltée ET non-maltée (historiquement pour éviter la taxe sur le malt)"
+    },
+    "triple_distilled": "Traditionnellement triple distillé → spirit très pur et doux",
+    "single_malt_irish": "Identique en concept au Scotch single malt"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "irish_whiskey_specifics",
+   "theme": "styles_whisky",
+   "sujet": "irish",
+   "titre": "Irish whiskey — triple distillation et pot still",
+   "contenu": {
+    "peat": "Généralement non tourbé (exception : Connemara)",
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.14",
+    "description": "L'Irish whiskey présente des particularités : TRIPLE DISTILLATION (Midleton, Bushmills) : wash still → feints still → spirit still, produisant un spirit plus léger et plus doux que la double distillation écossaise. PURE POT STILL : utilisation d'un mélange d'orge maltée ET non maltée (jusqu'à 60% non maltée historiquement, pour raisons fiscales). Le grain non malté apporte une texture crémeuse et épicée distinctive. SHERRY CASK : tradition historique forte d'utilisation de fûts de sherry. PAS DE TOURBE (généralement) : le malt irlandais est séché à l'air chaud sans fumée de tourbe, donnant un profil plus léger et fruité. Exception : Connemara (tourbé).",
+    "distillation": "Triple distillation (3 alambics)",
+    "pure_pot_still": "Mélange orge maltée + non maltée (jusqu'à 60% non maltée)",
+    "unmalted_effect": "Texture crémeuse et épicée",
+    "spirit_character": "Plus léger et doux que le scotch"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_scotch_whisky",
+   "theme": "styles_whisky",
+   "sujet": "scotch",
+   "titre": "Scotch Whisky — catégories réglementaires",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "regions": {
+     "islay": "Tourbé, maritime, puissant",
+     "islands": "Maritime, varié (Skye, Mull, Jura, Arran, Orkney)",
+     "lowlands": "Léger, floral, souvent triple distillé",
+     "speyside": "Fruité, élégant, sherry-influenced souvent",
+     "highlands": "Diversité maximale — du léger au lourd",
+     "campbeltown": "Salin, légèrement tourbé, complexe"
+    },
+    "single_malt": {
+     "examples": "Glenfiddich, Macallan, Lagavulin, Ardbeg",
+     "definition": "100% orge maltée, distillé en pot still, dans une seule distillerie, vieilli 3 ans min en Écosse."
+    },
+    "blended_malt": {
+     "examples": "Monkey Shoulder, Compass Box",
+     "definition": "Mélange de single malts de différentes distilleries (anciennement 'vatted malt')."
+    },
+    "single_grain": {
+     "examples": "Cameron Brig, Haig Club",
+     "definition": "Distillé dans une seule distillerie, en colonne continue, à partir de n'importe quelle céréale (blé, maïs + orge maltée)."
+    },
+    "blended_scotch": {
+     "examples": "Johnnie Walker, Chivas Regal, Ballantine's",
+     "definition": "Mélange de single malts et grain whiskies. 60-70% grain typiquement pour les blends standards."
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "styles_ale_american_brown",
+   "theme": "styles_ale",
+   "sujet": "brown",
+   "titre": "American Brown Ale",
+   "contenu": {
+    "fg": "1.010-1.016",
+    "og": "1.045-1.060",
+    "ibu": "20-40",
+    "srm": "18-35",
+    "description": "Brown ale américaine. Plus houblonnée que la version anglaise. Notes de chocolat, noisette et houblons américains modérés."
+   },
+   "source": "How To Brew - John Palmer"
+  }
+ ]
+}

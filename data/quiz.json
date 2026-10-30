@@ -1,0 +1,2531 @@
+{
+ "version_contrat": 1,
+ "exporte_le": "2026-10-30T18:16:28.469Z",
+ "nb": 264,
+ "donnees": {
+  "decks": [
+   {
+    "id": "deck-mod-M-FRUIT",
+    "title": "M-FRUIT · Arboriculture à distiller",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-CEREALE",
+    "title": "M-CEREALE · Céréales pour whisky (orge & maltabilité)",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-DIST",
+    "title": "M-DIST · Distillation ambulante",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-BRASS",
+    "title": "M-BRASS · Brasserie pro",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-ACCISE",
+    "title": "M-ACCISE · Fiscalité & accises des alcools (DGDDI)",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-ENER",
+    "title": "M-ENER · Énergie biomasse & intégration Cincinnatus",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-SECU",
+    "title": "M-SECU · Sécurité distillerie (ATEX, incendie) & assurances pro",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-LIQ",
+    "title": "M-LIQ · Liqueurs, macérations & assemblages",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-COUT",
+    "title": "M-COUT · Prix de revient, marge & politique tarifaire",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-SENSO",
+    "title": "M-SENSO · Analyse sensorielle & qualité produit",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-FUT",
+    "title": "M-FUT · Tonnellerie, merrain & élevage sous bois",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-HYDRO",
+    "title": "M-HYDRO · Hydromel & fermentations du miel",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-SANI",
+    "title": "M-SANI · HACCP, sécurité sanitaire & étiquetage",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-mod-M-FERM",
+    "title": "M-FERM · Maîtrise de la fermentation (savoir-faire transversal)",
+    "scope": "generale",
+    "color": "#F59E0B"
+   },
+   {
+    "id": "deck-fiche-f-at-1",
+    "title": "Fiche · Matières amylacées & conversion enzymatique",
+    "scope": "biblio",
+    "color": "#0D9488"
+   },
+   {
+    "id": "deck-fiche-f-at-2",
+    "title": "Fiche · Levures & fermentation alcoolique",
+    "scope": "biblio",
+    "color": "#0D9488"
+   },
+   {
+    "id": "deck-fiche-f-at-4",
+    "title": "Fiche · Distillation, déshydratation & coproduits",
+    "scope": "biblio",
+    "color": "#0D9488"
+   },
+   {
+    "id": "deck-fiche-f-wr-1",
+    "title": "Fiche · Orge, maltage & brassage du malt whisky",
+    "scope": "biblio",
+    "color": "#0D9488"
+   },
+   {
+    "id": "deck-fiche-f-wr-2",
+    "title": "Fiche · Whisky de grain & fermentation",
+    "scope": "biblio",
+    "color": "#0D9488"
+   },
+   {
+    "id": "deck-fiche-f-wr-3",
+    "title": "Fiche · Distillation : pot still vs Coffey",
+    "scope": "biblio",
+    "color": "#0D9488"
+   },
+   {
+    "id": "deck-fiche-f-wr-4",
+    "title": "Fiche · Maturation en fût & assemblage",
+    "scope": "biblio",
+    "color": "#0D9488"
+   },
+   {
+    "id": "deck-fiche-f-itsap-hygiene",
+    "title": "Fiche · Bonnes pratiques d'hygiène en apiculture",
+    "scope": "biblio",
+    "color": "#0D9488"
+   },
+   {
+    "id": "deck-qcm-f-at-4",
+    "title": "QCM · Distillation, déshydratation & coproduits",
+    "scope": "biblio",
+    "color": "#8B5CF6"
+   },
+   {
+    "id": "deck-qcm-f-wr-4",
+    "title": "QCM · Maturation en fût & assemblage",
+    "scope": "biblio",
+    "color": "#8B5CF6"
+   },
+   {
+    "id": "deck-qcm-f-wr-3",
+    "title": "QCM · Distillation : pot still vs Coffey",
+    "scope": "biblio",
+    "color": "#8B5CF6"
+   },
+   {
+    "id": "deck-qcm-f-at-2",
+    "title": "QCM · Levures & fermentation alcoolique",
+    "scope": "biblio",
+    "color": "#8B5CF6"
+   },
+   {
+    "id": "deck-qcm-f-itsap-hygiene",
+    "title": "QCM · Bonnes pratiques d'hygiène en apiculture",
+    "scope": "biblio",
+    "color": "#8B5CF6"
+   },
+   {
+    "id": "deck-qcm-f-wr-1",
+    "title": "QCM · Orge, maltage & brassage du malt whisky",
+    "scope": "biblio",
+    "color": "#8B5CF6"
+   },
+   {
+    "id": "deck-qcm-f-wr-2",
+    "title": "QCM · Whisky de grain & fermentation",
+    "scope": "biblio",
+    "color": "#8B5CF6"
+   },
+   {
+    "id": "deck-qcm-f-at-1",
+    "title": "QCM · Matières amylacées & conversion enzymatique",
+    "scope": "biblio",
+    "color": "#8B5CF6"
+   }
+  ],
+  "cartes": [
+   {
+    "id": "card-1782652696250-92018",
+    "deck_id": "deck-mod-M-FRUIT",
+    "front": "Adaptation climatique",
+    "back": "besoins en froid, débourrement, stress hydrique estival sur sol mince karstique.",
+    "type": "basic",
+    "tags": [
+     "M-FRUIT"
+    ]
+   },
+   {
+    "id": "card-1782652696250-94315",
+    "deck_id": "deck-mod-M-CEREALE",
+    "front": "Mon sol/climat permettent-ils d'atteindre les critères brassicoles (protéines, calibrage) ou faut-il acheter l'orge ?",
+    "back": "Les critères d'une orge maltable sont exigeants : taux de protéines d'environ 9 à 11,5 %, bon calibrage (grains gros et homogènes) et pouvoir germinatif élevé, avec une variété inscrite. Or le causse calcaire superficiel a une faible réserve utile en eau et provoque un stress de fin de cycle qui tend à concentrer les protéines au-dessus des seuils, dégradant la maltabilité. La faisabilité dépend donc d'un choix variétal adapté et d'une fertilisation azotée maîtrisée ; si les protéines restent trop hautes ou le rendement trop aléatoire, mieux vaut acheter l'orge maltable et réserver la production fermière à une part symbolique de terroir.",
+    "type": "basic",
+    "tags": [
+     "M-CEREALE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-20720",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Ressource bois de la ferme",
+    "back": "gestion durable de la chênaie, volume mobilisable, humidité, séchage/stockage, PCI.",
+    "type": "basic",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-38544",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Quels seuils de sucre (g/L) distinguent « liqueur » et « crème de », et comment l'afficher ?",
+    "back": "Selon le règlement UE 2019/787, une « liqueur » doit contenir au minimum 100 g de sucre par litre (exprimé en sucre inverti), avec des seuils particuliers pour certaines (ex. liqueur de cerise/gentiane à 70 g/L). La mention « crème de » exige un minimum de 250 g/L de sucre (et 400 g/L pour la crème de cassis). Ces teneurs et la dénomination de vente doivent figurer sur l'étiquette conformément à la catégorie réglementaire, le titre alcoométrique minimal d'une liqueur étant par ailleurs de 15 % vol.",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696794-59557",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Puis-je revendiquer « gin distillé » avec mon alambic à repasse, et quelles botaniques/genièvre obligatoires ?",
+    "back": "Le « gin distillé » se définit par une redistillation d'alcool éthylique d'origine agricole en présence de baies de genièvre (Juniperus communis) et d'autres botaniques, ce qu'un alambic à repasse permet de réaliser ; le genièvre doit être l'arôme dominant. Le gin titre au minimum 37,5 % vol, et la baie de genièvre est la botanique obligatoire, les autres (coriandre, agrumes, racines, plantes du causse) étant libres. La mention « London gin » est en revanche plus stricte (aromatisation uniquement à la distillation, sucre très limité, pas de colorant ni d'arôme ajouté ensuite).",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696794-76590",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Quelle eau de réduction sur le causse calcaire (eau dure) sans troubler le produit ?",
+    "back": "L'eau dure du causse, riche en calcaire (calcium/magnésium), peut provoquer trouble et précipités lors de la réduction au degré cible, surtout sur les produits chargés en huiles essentielles. On privilégie donc une eau déminéralisée ou osmosée (ou adoucie/filtrée) pour réduire, afin d'éviter les réactions avec les sels et de garder la limpidité. Le trouble résiduel (effet louche dû aux composés aromatiques aux degrés bas) se corrige par une filtration à froid avant conditionnement.",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696250-57182",
+    "deck_id": "deck-mod-M-FRUIT",
+    "front": "Quel taux de calcaire actif sur mes parcelles et quels porte-greffes y résistent réellement ?",
+    "back": "Il faut d'abord faire analyser le calcaire actif du sol (laboratoire) et calculer l'IPC (indice de pouvoir chlorosant) ; au-delà d'environ 8-10 % de calcaire actif, le risque de chlorose ferrique devient fort. Pour le prunier, les porte-greffes tolérants au calcaire sont les Saint-Julien (type INRA GF 655/2) et les Damas, plus résistants que le Myrobolan qui souffre en sol calcaire. Pour poirier et pommier sur calcaire actif élevé, le cognassier est sensible alors que le franc (semis) ou des porte-greffes adaptés sont préférables : le choix doit toujours être recalé sur la valeur réelle d'analyse de chaque parcelle.",
+    "type": "basic",
+    "tags": [
+     "M-FRUIT"
+    ]
+   },
+   {
+    "id": "card-1782652696250-63043",
+    "deck_id": "deck-mod-M-FRUIT",
+    "front": "Quelles variétés locales à distiller sont disponibles en greffons / conservatoires ?",
+    "back": "Le Sud-Ouest offre de nombreuses variétés à distiller : prune d'Ente, Reine-Claude, mirabelle, quetsche, ainsi que poires et pommes de pays rustiques. Pour trouver des greffons, sollicitez les conservatoires variétaux et associations pomologiques régionales (vergers conservatoires, Croqueurs de pommes, INRAE/pépiniéristes spécialisés) qui détiennent et diffusent le matériel local. Constituer ses propres pieds-mères à partir de ces greffons sécurise l'approvisionnement et préserve le patrimoine variétal adapté au terroir.",
+    "type": "basic",
+    "tags": [
+     "M-FRUIT"
+    ]
+   },
+   {
+    "id": "card-1782652696794-37939",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "Coupes",
+    "back": "têtes (méthanol, acétone — écartées), cœur (éthanol + congénères nobles), queues (huiles de fusel) ; pilotage degré/odorat/T° de tête.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652696250-3314",
+    "deck_id": "deck-mod-M-FRUIT",
+    "front": "Verger extensif sans irrigation ou goutte-à-goutte d'appoint au jeune âge ?",
+    "back": "Sur sol calcaire mince à faible réserve utile, un goutte-à-goutte d'appoint les 2-3 premières années sécurise fortement la reprise et l'enracinement des jeunes arbres, période la plus critique. Une fois le système racinaire installé, un verger de distillation peut être conduit en extensif sans irrigation, en s'appuyant sur des porte-greffes vigoureux/rustiques, des densités faibles, le paillage et une taille adaptée à la contrainte hydrique. Le compromis recommandé est donc : appoint ciblé au jeune âge, puis sevrage progressif vers la conduite sèche.",
+    "type": "basic",
+    "tags": [
+     "M-FRUIT"
+    ]
+   },
+   {
+    "id": "card-1782652696250-25467",
+    "deck_id": "deck-mod-M-FRUIT",
+    "front": "Es-tu capable de : sais choisir un couple variété/porte-greffe adapté à mon sol calcaire superficiel et à un usage distillation. Je peux concevoir un plan de verger (densité, pollinisateurs, conduite) et planifier la création de pieds-mères.",
+    "back": "Je sais choisir un couple variété/porte-greffe adapté à mon sol calcaire superficiel et à un usage distillation. Je peux concevoir un plan de verger (densité, pollinisateurs, conduite) et planifier la création de pieds-mères.",
+    "type": "can_do",
+    "tags": [
+     "M-FRUIT"
+    ]
+   },
+   {
+    "id": "card-1782652696250-37787",
+    "deck_id": "deck-mod-M-FRUIT",
+    "front": "Porte-greffe pour sol calcaire superficiel",
+    "back": "tolérance au calcaire actif et à la chlorose ferrique (Saint-Julien INRA, Damas) vs Myrobolan ; vigueur adaptée au verger extensif.",
+    "type": "basic",
+    "tags": [
+     "M-FRUIT"
+    ]
+   },
+   {
+    "id": "card-1782652696250-87694",
+    "deck_id": "deck-mod-M-FRUIT",
+    "front": "Variétés à distiller du Sud-Ouest",
+    "back": "prune d'Ente, Reine-Claude, mirabelle, quetsche ; poiriers et pommiers de pays rustiques.",
+    "type": "basic",
+    "tags": [
+     "M-FRUIT"
+    ]
+   },
+   {
+    "id": "card-1782652696250-63278",
+    "deck_id": "deck-mod-M-FRUIT",
+    "front": "Protection sanitaire raisonnée",
+    "back": "monilia, sharka (PPV), carpocapse ; prophylaxie.",
+    "type": "basic",
+    "tags": [
+     "M-FRUIT"
+    ]
+   },
+   {
+    "id": "card-1782652696794-19115",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "Fermentation des matières",
+    "back": "sucre → alcool, contrôle T°/hygiène, densité/Brix → titre potentiel.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652698217-2693",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Quel volume de miel déclassé annuel valoriser, et en quel produit (hydromel sec, melomel, vinaigre) ?",
+    "back": "Le gisement à valoriser correspond aux miels invendus, cristallisés, de fonds de maturateur et issus du lavage des opercules, qu'il faut quantifier en kg/an pour dimensionner la production. L'hydromel sec ou demi-sec offre la meilleure valorisation alcoolique (environ 1,2 à 1,5 kg de miel par litre pour un TAV de 12-14 %), le melomel valorise en plus des fruits de la ferme, et le vinaigre de miel absorbe les petits volumes ou lots de moindre qualité pour un produit à forte marge.",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-89111",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Distiller l'hydromel a-t-il un intérêt face au whisky / eaux-de-vie de fruits ?",
+    "back": "Distiller l'hydromel produit une eau-de-vie de miel rare et identitaire, qui crée un pont entre l'atelier apicole et l'atelier de distillation (Ulysse) et valorise des miels invendables autrement. L'intérêt est surtout différenciant et complémentaire, car le rendement en alcool du miel est coûteux face à l'orge (whisky) ou aux fruits ; à réserver donc à de petits volumes premium plutôt qu'à un produit de volume.",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652696794-44085",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "Obligations déclaratives",
+    "back": "avant le 10 du mois suivant, liasses DSA des clients + IBAN pour prélèvement des droits.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652698217-95021",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Quelle levure et quel profil pour différencier mon hydromel commercialement ?",
+    "back": "Le choix de la levure (levures à vin blanc, à champagne, ou souches dédiées hydromel) oriente le profil : une levure neutre laisse s'exprimer le terroir floral du miel, une levure plus expressive apporte des notes fermentaires. La différenciation commerciale viendra surtout du monofloral utilisé (acacia, châtaignier, tilleul), du dosage sucre/acidité (sec à liquoreux) et d'un éventuel élevage en fût, en complétant systématiquement par des nutriments azotés (FAN) pour éviter les fermentations bloquées.",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-99945",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Es-tu capable de : sais formuler une recette d'hydromel (TAV cible, levure, nutriments) et la conduire jusqu'à la mise. Je connais le cadre légal/accisien pour vendre de l'hydromel. Je peux valoriser un lot de miel déclassé en hydromel ou vinaigre.",
+    "back": "Je sais formuler une recette d'hydromel (TAV cible, levure, nutriments) et la conduire jusqu'à la mise. Je connais le cadre légal/accisien pour vendre de l'hydromel. Je peux valoriser un lot de miel déclassé en hydromel ou vinaigre.",
+    "type": "can_do",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-25013",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Définition légale FR",
+    "back": "hydromel = fermentation exclusive de miel + eau potable (décret du 2 mai 1911).",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-25204",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Chouchen",
+    "back": "appellation traditionnelle bretonne, hydromel pur miel/eau.",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-76739",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Procédé",
+    "back": "dilution du miel (densité/Brix), nutriments azotés, levure (vin/champagne), fermentation, soutirage, élevage.",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-31934",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Mon chêne agroforestier (9 ha) peut-il fournir du merrain, ou seulement du bois énergie ?",
+    "back": "Le merrain exige un chêne de tonnellerie à grain fin, droit, sans nœud et de gros diamètre, issu d'une sylviculture longue en futaie (souvent 150-200 ans) ; un chêne agroforestier planté récemment et conduit en port ouvert ne donnera pas cette qualité avant des générations. Réalistement, les 9 ha fourniront du bois énergie, du BRF et du bois d'œuvre courant, le merrain de qualité restant à acheter ou à sourcer auprès d'un mérandier.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652698217-22362",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Quels fûts (neufs, ex-bourbon, ex-vin) pour le profil whisky Cincinnatus visé ?",
+    "back": "Le choix dépend du profil recherché : les fûts neufs en chêne français à chauffe moyenne apportent vanille, épices et tanins marqués, les ex-bourbon (chêne américain) donnent vanille, noix de coco et rondeur, et les ex-vin (Sauternes, vins rouges) ajoutent fruité et complexité. Pour un whisky identitaire on combine souvent un élevage initial en ex-bourbon puis une finition en fût marqué, en gérant la chauffe et la part des anges.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652698217-53082",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Comment financer le stock de fûts immobilisé pendant 10+ ans ?",
+    "back": "Le whisky impose d'immobiliser fûts et distillat pendant une décennie avant toute vente, ce qui crée un fort besoin de trésorerie. On lisse ce poste en étalant les achats de fûts par millésimes successifs, en finançant le stock par les revenus des ateliers à rotation rapide (bière, hydromel, miel), et en mobilisant le cas échéant un crédit dédié, un préfinancement par vente anticipée de fûts nominatifs ou un stock-outil amorti dans le plan de financement.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652696794-69138",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "Saisonnalité",
+    "back": "campagne (automne→hiver après récolte/fermentation) ; logistique de tournée.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652698217-96842",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Es-tu capable de : sais expliquer la chaîne chêne→merrain→fût→élevage et l'impact de la chauffe. Je peux décider de ma stratégie fûts pour Cincinnatus (achat vs valorisation de mon chêne) et gérer un stock de vieillissement pluriannuel.",
+    "back": "Je sais expliquer la chaîne chêne→merrain→fût→élevage et l'impact de la chauffe. Je peux décider de ma stratégie fûts pour Cincinnatus (achat vs valorisation de mon chêne) et gérer un stock de vieillissement pluriannuel.",
+    "type": "can_do",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652698217-4138",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Filière merrain",
+    "back": "fendage du chêne en merrains (mérandiers), séchage à l'air (24-36 mois), assemblage par le tonnelier.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652698217-19553",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Chauffe du fût (légère/moyenne/forte)",
+    "back": "impact aromatique (vanille, toasté, épicé), bousinage.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652698217-70723",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Élevage en fût",
+    "back": "échanges bois↔distillat, oxygénation, part des anges (évaporation), extraction tanins/lactones.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652698217-27223",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Synergie 9 ha chêne",
+    "back": "merrain ou bois de chauffe ; le chêne de tonnellerie exige une sylviculture longue (futaie).",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652698217-96996",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Vieillissement whisky Cincinnatus (2037)",
+    "back": "fûts neufs/usagés (ex-bourbon, ex-vin), gestion des stocks pluriannuels.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652698217-74413",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Réemploi",
+    "back": "fûts en fin de vie → copeaux, mobilier, bois énergie.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652698217-93658",
+    "deck_id": "deck-mod-M-FUT",
+    "front": "Économie",
+    "back": "fût neuf chêne français = poste majeur ; arbitrage achat vs autoproduction merrain.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652696794-56654",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "Registres",
+    "back": "suivi des opérations, entrées (matières) / sorties (alcool pur), rendements ; sécurité du transport.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652696794-223",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Hygiène/agro",
+    "back": "agrément/déclaration sanitaire, effluents (drêches valorisables, eaux de NEP), HACCP.",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696250-14883",
+    "deck_id": "deck-mod-M-CEREALE",
+    "front": "Maltage à façon en malterie artisanale ou micro-malterie à la ferme : coût et qualité ?",
+    "back": "Le maltage à façon en malterie artisanale offre une qualité régulière et maîtrisée (trempe, germination, touraillage contrôlés) sans investissement lourd, contre un coût de prestation et une logistique de transport du grain. La micro-malterie à la ferme maximise la valeur ajoutée et l'autonomie mais demande un investissement matériel, de la technicité et du temps, avec un risque de qualité variable au démarrage. Pour Cincinnatus, le schéma le plus prudent au lancement est production fermière + maltage externe, la micro-malterie n'étant envisagée qu'à volume suffisant et compétence acquise.",
+    "type": "basic",
+    "tags": [
+     "M-CEREALE"
+    ]
+   },
+   {
+    "id": "card-1782652696250-160",
+    "deck_id": "deck-mod-M-CEREALE",
+    "front": "Quelle variété d'orge maltable adaptée au causse calcaire sous contrainte hydrique ?",
+    "back": "Il faut viser une variété d'orge brassicole inscrite, recommandée par la filière malt/brasserie, tolérante au stress hydrique de fin de cycle et donnant un taux de protéines bas malgré la faible réserve en eau ; les orges d'hiver ou de printemps sont à comparer selon le calendrier du causse. Le choix précis se cale sur les listes variétales validées par les malteries et coopératives locales et sur les retours du modèle whisky fermier français (ex. Rozelieures). L'objectif est de privilégier la qualité maltable plutôt que le rendement, en pilotant aussi la fertilisation pour rester sous le seuil de protéines.",
+    "type": "basic",
+    "tags": [
+     "M-CEREALE"
+    ]
+   },
+   {
+    "id": "card-1782652696250-58192",
+    "deck_id": "deck-mod-M-CEREALE",
+    "front": "Es-tu capable de : sais juger la faisabilité d'une orge maltable sur mon causse (variété, protéines, calibrage) et comprendre les étapes du maltage. Je peux choisir un schéma d'approvisionnement malt pour Cincinnatus (fermier + malterie ou micro-maltage).",
+    "back": "Je sais juger la faisabilité d'une orge maltable sur mon causse (variété, protéines, calibrage) et comprendre les étapes du maltage. Je peux choisir un schéma d'approvisionnement malt pour Cincinnatus (fermier + malterie ou micro-maltage).",
+    "type": "can_do",
+    "tags": [
+     "M-CEREALE"
+    ]
+   },
+   {
+    "id": "card-1782652696250-90309",
+    "deck_id": "deck-mod-M-CEREALE",
+    "front": "Critères de l'orge brassicole/maltable",
+    "back": "protéines (~9-11,5 %), calibrage, pouvoir germinatif, variétés inscrites ; distinction orge fourragère vs maltable.",
+    "type": "basic",
+    "tags": [
+     "M-CEREALE"
+    ]
+   },
+   {
+    "id": "card-1782652696250-47703",
+    "deck_id": "deck-mod-M-CEREALE",
+    "front": "Faisabilité sur causse calcaire superficiel",
+    "back": "faible RU, stress de fin de cycle, risque protéines élevées ; choix variétal et fertilisation maîtrisée.",
+    "type": "basic",
+    "tags": [
+     "M-CEREALE"
+    ]
+   },
+   {
+    "id": "card-1782652696250-63319",
+    "deck_id": "deck-mod-M-CEREALE",
+    "front": "Le maltage",
+    "back": "trempe, germination (amidon → sucres fermentescibles), touraillage.",
+    "type": "basic",
+    "tags": [
+     "M-CEREALE"
+    ]
+   },
+   {
+    "id": "card-1782652696250-95331",
+    "deck_id": "deck-mod-M-CEREALE",
+    "front": "Approvisionnement Cincinnatus",
+    "back": "production fermière + maltage externe (malterie artisanale) vs micro-malterie à la ferme.",
+    "type": "basic",
+    "tags": [
+     "M-CEREALE"
+    ]
+   },
+   {
+    "id": "card-1782652696250-34017",
+    "deck_id": "deck-mod-M-CEREALE",
+    "front": "Modèle whisky fermier français",
+    "back": "valorisation de l'orge à la ferme (ex. Rozelieures).",
+    "type": "basic",
+    "tags": [
+     "M-CEREALE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-93239",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Fiscalité bière",
+    "back": "droit d'accise au degré-hL, taux réduit petites brasseries (paliers ≤ 10 000 / 50 000 / 200 000 hL/an) ; certificat petit producteur indépendant.",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-65411",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Quel tonnage de bois/an la chênaie peut-elle fournir durablement, et quel PCI après séchage ?",
+    "back": "Une chênaie produit durablement de l'ordre de 2 à 4 stères (environ 1,5 à 3 t) par hectare et par an en accroissement mobilisable sans entamer le capital sur pied ; le tonnage annuel dépend donc de la surface et de la gestion (taillis, éclaircies). Le chêne fraîchement coupé titre 45 à 50 % d'humidité ; après 18 à 24 mois de séchage sous abri ventilé, on descend vers 20-25 % d'humidité. À cette humidité, le PCI utile des plaquettes/bûches de chêne est d'environ 3,5 à 4 kWh/kg (soit ~3 500-4 000 kWh/t), contre seulement ~2 kWh/kg pour du bois vert.",
+    "type": "basic",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-16118",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Vapeur directe vs fluide thermique pour un alambic : choix et contraintes ESP ?",
+    "back": "La vapeur directe (chaudière vapeur) chauffe vite, transmet beaucoup d'énergie et convient au chauffage par double-enveloppe ou serpentin d'alambic, mais elle implique un appareil sous pression soumis à la réglementation ESP (équipements sous pression) : traitement d'eau, contrôles périodiques, soupapes, surveillance. Le fluide thermique (huile caloporteuse) permet des hautes températures à basse pression, réduisant fortement les contraintes ESP et le risque de surchauffe locale, au prix d'un coût d'installation et d'un fluide à gérer. Pour un petit atelier, le fluide thermique ou une chaudière vapeur basse pression bien dimensionnée limite les obligations ESP tout en assurant un chauffage doux et régulier favorable aux coupes.",
+    "type": "basic",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-36301",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Quels seuils d'éligibilité ADEME 2026 atteint une distillerie de petite taille ?",
+    "back": "Les aides ADEME « chaleur biomasse » (BCIB / Fonds Chaleur) ciblent historiquement les installations produisant au moins ~1 200 MWh utiles/an, seuil trop élevé pour une petite distillerie. Pour les projets plus modestes, le relais passe par les dispositifs régionaux (ADEME Occitanie, contrats territoriaux, Mission Bois Énergie 82) et les aides aux petites chaufferies bois, parfois dès quelques centaines de MWh/an. Une petite distillerie doit donc viser ces guichets régionaux et le couplage avec d'autres usages (séchage, eau chaude) pour franchir les seuils, plutôt que le Fonds Chaleur national.",
+    "type": "basic",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-7808",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Es-tu capable de : sais estimer la ressource bois durablement mobilisable et l'énergie disponible ; je peux dimensionner une chaufferie/vapeur adaptée à la distillation et identifier les aides ADEME ; je connais les obligations de sécurité (ESP, fumées, cendres) et de suivi.",
+    "back": "Je sais estimer la ressource bois durablement mobilisable et l'énergie disponible ; je peux dimensionner une chaufferie/vapeur adaptée à la distillation et identifier les aides ADEME ; je connais les obligations de sécurité (ESP, fumées, cendres) et de suivi.",
+    "type": "can_do",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-76196",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Chaufferie biomasse bois",
+    "back": "combustion de plaquettes/déchets de chêne pour chaleur process (eau chaude, vapeur, air chaud) → Cincinnatus.",
+    "type": "basic",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-26103",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "Procédure exacte 2026 d'autorisation personnelle + détention de l'alambic dans le 82 ?",
+    "back": "Il faut d'abord une déclaration préalable de profession auprès du service des contributions indirectes de la DGDDI (Montauban pour le Tarn-et-Garonne) et l'obtention d'un statut/numéro d'accise. La détention d'un alambic mobile exige une déclaration de l'appareil à la douane (caractéristiques, capacité, scellés possibles) et son inscription au registre des appareils. L'exercice ambulant relève de l'art. L664-19 du CRPM : on intervient comme prestataire pour des bouilleurs de cru disposant eux-mêmes de leur droit, la tournée et les lieux de distillation étant déclarés aux contributions indirectes.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652696794-33667",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "Statut commercial de la prestation « Ulysse » : facturation, qui paie les droits quand le fruit est au client ?",
+    "back": "Le distillateur ambulant vend une prestation de service (la distillation) : il facture une main-d'œuvre/forfait au client, le fruit et l'alcool produit restant la propriété du bouilleur de cru. Ce sont les droits du client qui s'appliquent : le bouilleur de cru bénéficie de son allocation en franchise puis acquitte les droits d'accise sur les litres d'alcool pur au-delà, généralement par prélèvement via les liasses DSA. L'ambulant n'est donc pas redevable des droits sur cet alcool, mais il établit et transmet les déclarations (DSA des clients + IBAN) avant le 10 du mois suivant et tient ses registres d'opérations.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652696794-36974",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "La formation RNCP 147 h est-elle compatible avec le BPREA et l'installation 01/01/2028 ?",
+    "back": "Oui : la formation Bouilleur Ambulant de la CMA Pays de la Loire (RNCP40586, environ 147 h) est un module court qui se cumule sans difficulté avec le BPREA, lequel reste le diplôme support de la capacité agricole pour l'installation. En suivant le BPREA jusqu'à fin 2027 puis cette certification spécialisée, le calendrier laisse le temps de viser une installation au 01/01/2028. Il faut surtout caler les sessions (souvent hors saison de campagne) et vérifier le financement (CPF, VIVEA) pour ne pas chevaucher les périodes d'examen du BPREA.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652696794-41695",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "Es-tu capable de : connais le cadre L664-19 et la procédure d'autorisation ; je sais conduire une fermentation puis une double distillation et placer mes coupes (têtes/cœur/queues) ; je peux remplir et transmettre les DSA et déclarations avant le 10 du mois ; je sais planifier une campagne et sécuriser l'installation mobile.",
+    "back": "Je connais le cadre L664-19 et la procédure d'autorisation ; je sais conduire une fermentation puis une double distillation et placer mes coupes (têtes/cœur/queues) ; je peux remplir et transmettre les DSA et déclarations avant le 10 du mois ; je sais planifier une campagne et sécuriser l'installation mobile.",
+    "type": "can_do",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652696794-26498",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "Statut de distillateur ambulant (art. L664-19 CRPM)",
+    "back": "autorisation personnelle + autorisation douanière/préfectorale de détention de l'alambic ; prestation pour les bouilleurs de cru.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652696794-52957",
+    "deck_id": "deck-mod-M-DIST",
+    "front": "Alambic à repasse (charentais / col de cygne)",
+    "back": "1re chauffe (brouillis ~25-30 %) puis bonne chauffe ; colonne plus tard.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652698217-68171",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "Quelles souches de levure mutualiser entre bière, hydromel et moûts de fruits ?",
+    "back": "Les souches du genre Saccharomyces sont les plus mutualisables : une levure de fermentation haute neutre et tolérante (type US-05 ou une levure ale polyvalente) couvre la bière, peut démarrer un hydromel et lancer des moûts de fruits à distiller où l'on cherche du rendement plutôt qu'un profil aromatique marqué. En distillation on privilégie des levures à fort rendement alcoolique et tolérantes à l'alcool, tandis qu'un hydromel ou un cidre fin profiteront de souches vineuses/œnologiques plus expressives. L'intérêt est de réduire les références au stock et de maîtriser le pied de cuve et la propagation à partir d'un socle commun, tout en gardant 1 ou 2 souches spécialisées pour les produits où l'arôme est central.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652698217-56004",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "Comment garantir l'hygiène fermentaire sans labo, dans un atelier multi-produits ?",
+    "back": "L'hygiène repose sur un protocole de nettoyage puis désinfection (NEP simplifiée) systématique du matériel en contact : détergent alcalin pour le gras et les dépôts, puis désinfectant (acide peracétique ou solution chlorée rincée) avec respect du temps de contact. On sécurise par la marche en avant et la séparation des flux à risque (éviter de manipuler une culture de Brettanomyces ou un vinaigre acétique près des cuves de bière/hydromel), un ensemencement rapide et massif pour que la levure prenne le dessus, et le suivi de la densité et de la dégustation comme alerte précoce. Sans labo, les meilleurs indicateurs sont la régularité des courbes de fermentation, l'absence d'odeurs déviantes et la traçabilité des lots pour remonter à une contamination.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652696794-43014",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "Quel montant de caution pour une petite distillerie, et dispense/réduction micro-opérateur en 2026 ?",
+    "back": "La caution d'entrepositaire agréé garantit les droits susceptibles d'être dus sur les stocks et la production en suspension ; son montant est calculé sur le volume détenu et peut représenter plusieurs milliers d'euros. Les petits opérateurs bénéficient de dispenses ou réductions : le statut de petit producteur indépendant et les seuils prévus par le CIBS permettent une dispense de caution sur la production (garantie limitée à la circulation) pour les faibles volumes. En pratique, il faut négocier avec le service des contributions indirectes (DGDDI 82) le périmètre de la caution et invoquer le régime micro-opérateur pour la réduire au minimum.",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-90588",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "Un seul agrément multi-produits (distillerie + ambulant + future brasserie) ou plusieurs ?",
+    "back": "Le statut d'entrepositaire agréé est attaché à un opérateur et à des locaux : on peut détenir un seul numéro d'accise couvrant plusieurs catégories de produits (alcools et bière) dès lors que les locaux sont déclarés et accessibles à la douane et que la comptabilité matières distingue chaque atelier. L'activité de distillateur ambulant relève toutefois d'une autorisation personnelle distincte (art. L664-19) et d'obligations déclaratives propres (DSA des clients). En pratique : un agrément EA unique pour la distillerie fixe et la brasserie, plus l'autorisation spécifique pour l'ambulant, en tenant des registres séparés par produit.",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-18062",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "Quel tarif d'accise alcool €/hLAP en 2026 après revalorisation +1,75 % ?",
+    "back": "L'accise sur les alcools est exprimée en euros par hectolitre d'alcool pur (hLAP) et fait l'objet d'une revalorisation annuelle plafonnée à +1,75 % pour 2026 (art. L313-19 du CIBS). Le tarif plein 2025 étant de l'ordre de 1 850 €/hLAP, l'application de +1,75 % le porte à environ 1 880-1 885 €/hLAP en 2026. C'est ce montant qui s'ajoute au prix de revient de chaque litre d'alcool pur produit et mis à la consommation, à intégrer directement dans le calcul de marge.",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-88037",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "Entrepositaire agréé (EA)",
+    "back": "production/détention/expédition en suspension de droits, caution, locaux accessibles à la douane, numéro d'accise.",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-14958",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "CIBS",
+    "back": "assiette/tarif des accises sur alcools ; revalorisation annuelle plafonnée à +1,75 % pour 2026 (art. L313-19).",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-8468",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "DRM (Déclaration Récapitulative Mensuelle)",
+    "back": "entrées/sorties, dépôt avant le 10 du mois suivant, téléservice ; liquidation des droits.",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-87947",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "Capsules CRD",
+    "back": "marque fiscale sur contenants en droits acquittés ; commande, gestion, comptabilisation.",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-32069",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "Circulation",
+    "back": "DAE (EMCS/Gamma) en suspension entre EA dans l'UE ; DSA en droits acquittés ; cas du bouilleur de cru.",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-51172",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "Registres",
+    "back": "comptabilité matières (stock/entrées-sorties), registre 503 selon activité, justificatifs de circulation.",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-64018",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "Cautionnement & garanties",
+    "back": "montant, dispenses/réductions petits opérateurs, lien avec le statut de petit producteur.",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-28545",
+    "deck_id": "deck-mod-M-ACCISE",
+    "front": "Téléservices",
+    "back": "CIEL/Gamma, déclaration préalable de profession, numéro utilisateur.",
+    "type": "basic",
+    "tags": [
+     "M-ACCISE"
+    ]
+   },
+   {
+    "id": "card-1782652696794-54315",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Fumées et cendres",
+    "back": "conformité émissions (poussières), valorisation/épandage des cendres, suivi (guide CIBE).",
+    "type": "basic",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-35187",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Déclarations",
+    "back": "DRM via téléservice, comptabilité matières, déclaration préalable de profession.",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-79283",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Dimensionnement",
+    "back": "optimiser l'efficacité du procédé AVANT la chaudière ; puissance, heures au régime nominal, taux de couverture, appoint.",
+    "type": "basic",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-39274",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Production de vapeur",
+    "back": "chaudière vapeur vs fluide thermique ; pression, sécurité appareils sous pression (ESP), traitement d'eau.",
+    "type": "basic",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-40345",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Bilan carbone et autonomie",
+    "back": "substitution fossile, circuit court bois→énergie→alcool.",
+    "type": "basic",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-56292",
+    "deck_id": "deck-mod-M-ENER",
+    "front": "Sécurité/assurance",
+    "back": "risque incendie stockage bois, ramonage, intégration au plan de prévention.",
+    "type": "basic",
+    "tags": [
+     "M-ENER"
+    ]
+   },
+   {
+    "id": "card-1782652696794-36402",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Quel volume de brassin et production annuelle (hL) cibler pour 2036 (palier ≤ 10 000 hL) ?",
+    "back": "Pour une microbrasserie de ferme, un brassin de 5 à 10 hL (la salle 500 L du cahier des charges = 5 hL) est cohérent et permet, avec 1 à 2 brassins par semaine, d'atteindre 250 à 800 hL/an. Viser nettement sous le palier de 10 000 hL/an conserve le taux d'accise réduit « petite brasserie indépendante » (≤ 200 000 hL) et le palier le plus avantageux (≤ 10 000 hL). Une cible réaliste 2036 se situe autour de 300 à 600 hL/an, dimensionnant la fermentation pour 4 à 6 brassins en cuve simultanément (cylindro-coniques de 10 hL).",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-85958",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Quel investissement froid/NEP minimal pour la constance sans surdimensionner le CAPEX ?",
+    "back": "Le minimum pour la constance est un groupe froid à glycol dimensionné pour le pic de mise en fermentation (refroidissement du moût et maîtrise des courbes), avec chemises sur les fermenteurs cylindro-coniques, plutôt qu'une chambre froide surdimensionnée. Côté NEP, un poste mobile (cuve soude/acide, pompe, billes de lavage) suffit au départ avant d'investir dans une station NEP automatisée. On priorise donc froid sur fermenteurs + NEP semi-manuelle fiable : c'est ce couple qui garantit la reproductibilité (gestion levure, absence de biofilm) sans gonfler le CAPEX.",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-86555",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Synergies distillerie : eau-de-vie de bière, mutualisation cuverie/vapeur ?",
+    "back": "Oui, fortes synergies : la bière (ou un moût houblonné) peut être distillée en eau-de-vie de bière / bierbrand ou en base de whisky, valorisant les invendus et créant un produit premium. La cuverie de fermentation et le générateur de vapeur peuvent être mutualisés entre brasserie et distillerie (l'alambic et l'empâtage/ébullition partageant la chaleur process), de même que le froid, le labo de contrôle et la NEP. Attention au cloisonnement fiscal : la circulation entre l'atelier bière et l'atelier alcool doit respecter la comptabilité matières et le statut d'entrepositaire agréé.",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-26960",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Es-tu capable de : sais dimensionner une salle de brassage et une capacité de fermentation/froid cohérentes avec mon objectif annuel ; je maîtrise un protocole NEP garantissant la constance ; je peux obtenir l'agrément brasseur, déclarer mes droits au taux réduit et tenir ma comptabilité matières.",
+    "back": "Je sais dimensionner une salle de brassage et une capacité de fermentation/froid cohérentes avec mon objectif annuel ; je maîtrise un protocole NEP garantissant la constance ; je peux obtenir l'agrément brasseur, déclarer mes droits au taux réduit et tenir ma comptabilité matières.",
+    "type": "can_do",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-77119",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Passage homebrew → pro",
+    "back": "changement d'échelle (10-20 hL/brassin), reproductibilité, métrologie (densité, pH, IBU), traçabilité des lots.",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-32105",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Dimensionnement",
+    "back": "salle de brassage (empâtage/filtration/ébullition), tank d'eau chaude, fermenteurs cylindro-coniques, froid (glycol), conditionnement.",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-23687",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "NEP (Nettoyage En Place)",
+    "back": "soude/acide, désinfection, maîtrise du biofilm — saut qualitatif clé vs homebrew.",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-40884",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Constance",
+    "back": "gestion levure (banque/repiquage), oxygénation, profil d'eau, courbes de fermentation, contrôle qualité par lot.",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-77066",
+    "deck_id": "deck-mod-M-BRASS",
+    "front": "Statut fiscal",
+    "back": "entrepositaire agréé « brasseur » (caution), numéro d'accise, locaux pro accessibles à la douane.",
+    "type": "basic",
+    "tags": [
+     "M-BRASS"
+    ]
+   },
+   {
+    "id": "card-1782652696794-40320",
+    "deck_id": "deck-mod-M-SECU",
+    "front": "À partir de quel volume d'alcool/process la distillerie relève-t-elle d'un classement ICPE ?",
+    "back": "Le classement ICPE dépend de la rubrique 4755 (alcools de bouche d'origine agricole) qui vise la quantité d'alcool pur stockée ou produite : en dessous d'environ 50 hLAP on reste hors nomenclature, le régime de déclaration s'applique ensuite et le régime d'autorisation pour les gros volumes (plusieurs centaines de hLAP). La distillation elle-même et le stockage de liquides inflammables (rubrique 4331) sont également pris en compte. Une petite distillerie de ferme reste généralement sous le seuil de déclaration, mais il faut faire le calcul précis des quantités d'alcool pur détenues pour confirmer le régime applicable.",
+    "type": "basic",
+    "tags": [
+     "M-SECU"
+    ]
+   },
+   {
+    "id": "card-1782652696794-35396",
+    "deck_id": "deck-mod-M-SECU",
+    "front": "Comment réaliser un zonage ATEX pragmatique pour un petit atelier (autodiagnostic vs bureau d'études) ?",
+    "back": "Pour un petit atelier, on peut réaliser un autodiagnostic guidé par les fiches INRS (ED 911/945) : identifier les sources de dégagement de vapeurs d'éthanol (évents d'alambic, soutirage, remplissage, stockage), classer les zones 0/1/2 selon la fréquence/durée de présence d'atmosphère explosive, puis définir ventilation, matériel conforme et maîtrise des sources d'inflammation. Le DRPCE simplifié formalise cette évaluation. Le recours à un bureau d'études devient pertinent en cas de classement ICPE, de gros volumes, de doute sur les zones, ou pour valider la conformité du matériel électrique et l'assurabilité de l'installation.",
+    "type": "basic",
+    "tags": [
+     "M-SECU"
+    ]
+   },
+   {
+    "id": "card-1782652696794-44128",
+    "deck_id": "deck-mod-M-SECU",
+    "front": "Quels assureurs couvrent réellement un bouilleur ambulant et une distillerie en autoconstruction, et à quel coût ?",
+    "back": "Les couvertures s'obtiennent surtout via des assureurs agricoles et mutualistes (Groupama, Crédit Agricole/Pacifica, MAAF/MMA pro, AXA) et des courtiers spécialisés en risques artisanaux, qui acceptent une distillerie sous conditions de prévention ATEX/incendie. L'autoconstruction est le point sensible : beaucoup excluent ou surtarifient les appareils sous pression et la cuverie non certifiés, d'où l'importance de conserver les éléments réglementés (ESP, contenants) certifiés. Le coût d'une RC pro + multirisque atelier va couramment de l'ordre de quelques centaines à un à deux milliers d'euros par an, la garantie ambulant (alambic mobile, transport, intervention chez le client) s'ajoutant en option spécifique.",
+    "type": "basic",
+    "tags": [
+     "M-SECU"
+    ]
+   },
+   {
+    "id": "card-1782652696794-914",
+    "deck_id": "deck-mod-M-SECU",
+    "front": "Es-tu capable de : sais identifier les sources de dégagement de vapeurs d'éthanol et établir un zonage ATEX (0/1/2) ; je peux rédiger un DRPCE et choisir du matériel conforme à chaque zone ; je connais mes obligations incendie/ICPE et j'ai souscrit des assurances couvrant la distillerie fixe ET l'activité ambulante.",
+    "back": "Je sais identifier les sources de dégagement de vapeurs d'éthanol et établir un zonage ATEX (0/1/2) ; je peux rédiger un DRPCE et choisir du matériel conforme à chaque zone ; je connais mes obligations incendie/ICPE et j'ai souscrit des assurances couvrant la distillerie fixe ET l'activité ambulante.",
+    "type": "can_do",
+    "tags": [
+     "M-SECU"
+    ]
+   },
+   {
+    "id": "card-1782652696794-3212",
+    "deck_id": "deck-mod-M-SECU",
+    "front": "Risque ATEX",
+    "back": "vapeurs d'éthanol = mélange explosif (point éclair ~13 °C, large plage) — risque majeur distillerie et stockage.",
+    "type": "basic",
+    "tags": [
+     "M-SECU"
+    ]
+   },
+   {
+    "id": "card-1782652696794-36061",
+    "deck_id": "deck-mod-M-SECU",
+    "front": "Zonage ATEX gaz/vapeurs",
+    "back": "zones 0/1/2 selon fréquence/durée ; sources de dégagement (évents, soutirage, alambic, stockage).",
+    "type": "basic",
+    "tags": [
+     "M-SECU"
+    ]
+   },
+   {
+    "id": "card-1782652696794-6762",
+    "deck_id": "deck-mod-M-SECU",
+    "front": "Matériel ATEX",
+    "back": "appareils conformes à la catégorie de la zone ; maîtrise des sources d'inflammation (statique, étincelles), ventilation.",
+    "type": "basic",
+    "tags": [
+     "M-SECU"
+    ]
+   },
+   {
+    "id": "card-1782652696794-16659",
+    "deck_id": "deck-mod-M-SECU",
+    "front": "Incendie",
+    "back": "stockage alcool/bois, extinction, désenfumage, accès SDIS, classement ICPE éventuel.",
+    "type": "basic",
+    "tags": [
+     "M-SECU"
+    ]
+   },
+   {
+    "id": "card-1782652696794-58620",
+    "deck_id": "deck-mod-M-SECU",
+    "front": "Réglementation",
+    "back": "Code du travail (explosions), directives ATEX, guides INRS (ED 911/945), guide INERIS 2025.",
+    "type": "basic",
+    "tags": [
+     "M-SECU"
+    ]
+   },
+   {
+    "id": "card-1782652696794-58829",
+    "deck_id": "deck-mod-M-SECU",
+    "front": "Assurances pro",
+    "back": "RC, multirisque, garantie ambulant (alambic mobile, transport, intervention client), pertes d'exploitation.",
+    "type": "basic",
+    "tags": [
+     "M-SECU"
+    ]
+   },
+   {
+    "id": "card-1782652696794-64991",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Es-tu capable de : connais les seuils du règlement UE 2019/787 (sucre min. liqueur, degré min. 37,5 % gin) ; je sais conduire une macération, calculer un sirop, réduire au degré cible et corriger le titre ; je sais assembler et faire reposer pour un profil constant et reproductible documenté en registre.",
+    "back": "Je connais les seuils du règlement UE 2019/787 (sucre min. liqueur, degré min. 37,5 % gin) ; je sais conduire une macération, calculer un sirop, réduire au degré cible et corriger le titre ; je sais assembler et faire reposer pour un profil constant et reproductible documenté en registre.",
+    "type": "can_do",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696794-2621",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Catégories (règlement UE 2019/787)",
+    "back": "« boisson spiritueuse » ≥ 15 % vol ; liqueur = teneur minimale en sucres ; gin = spiritueux au genièvre ≥ 37,5 % vol (gin / gin distillé / London gin).",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696794-94429",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Sucre/édulcoration",
+    "back": "seuil minimal pour « liqueur » ; mention « dry/sec » ; impact gustatif et conservation.",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696794-20951",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Macération/infusion",
+    "back": "extraction à froid/chaud des arômes (fruits, miel, botaniques) ; durée, ratio, T°, filtration.",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696794-49696",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Titre alcoométrique",
+    "back": "calcul et ajustement ; réduction à l'eau ; trouble (louche) et filtration à froid.",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696794-21143",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Repos/vieillissement",
+    "back": "maturation après assemblage ; effet du temps et du contenant (verre, inox, bois).",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696794-83234",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Assemblage (blending)",
+    "back": "distillats + macérats + sirops pour un profil constant ; registre de recettes/lots.",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696794-10832",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Calcul du sirop",
+    "back": "g/L cible, dilution, correction du degré induite par le sirop ; lien calculateur du Hub.",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652696794-6981",
+    "deck_id": "deck-mod-M-LIQ",
+    "front": "Cohérence projet",
+    "back": "valoriser miel (liqueurs au miel — lien M-HYDRO), fruits clients et botaniques en gammes liqueurs/gins.",
+    "type": "basic",
+    "tags": [
+     "M-LIQ"
+    ]
+   },
+   {
+    "id": "card-1782652697289-96683",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Quels descripteurs retenir pour une fiche sensorielle « maison » Prométhée ?",
+    "back": "Il faut une fiche structurée suivant l'ordre de dégustation : examen visuel (limpidité, couleur), olfactif (1er et 2e nez), gustatif (attaque, milieu, finale) et tactile. Les descripteurs s'appuient sur la roue des arômes des spiritueux (fruits, fleurs, céréales/malt, épices, bois, tourbe) déclinée selon les produits Prométhée, en gardant un vocabulaire commun du général au précis. On y intègre une colonne « défauts » (têtes/queues mal coupées, soufre, méthanol pour les alcools ; diacétyle, DMS, oxydation pour la bière) afin de relier chaque écart à une étape de production.",
+    "type": "basic",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652697289-49245",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Comment garantir la constance d'un lot à l'autre sans labo coûteux ?",
+    "back": "La constance repose sur une dégustation systématique de contrôle qualité lot à lot, avec une grille normalisée reproductible (type WSET) remplie dans des conditions standardisées : verrerie, température, dilution, ordre de service et hygiène du palais identiques. En traçant chaque défaut jusqu'à son étape d'origine (fermentation, distillation, vieillissement), on ajuste les coupes et recettes sans analyse instrumentale coûteuse. Un panel interne entraîné et des références conservées (échantillons témoins) suffisent à détecter les dérives.",
+    "type": "basic",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652697289-25438",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Quels concours viser pour crédibiliser le positionnement premium ?",
+    "back": "Pour crédibiliser le positionnement premium, on vise des concours reconnus à dégustation à l'aveugle dont les médailles servent de levier de notoriété : pour les spiritueux le Concours Général Agricole (Paris), les World Spirits Awards ou l'IWSC ; pour la bière le Concours International de Lyon ou des concours brassicoles régionaux ; pour le miel le Concours Général Agricole également. Il faut cibler les concours dont la notoriété parle à la clientèle premium et cavistes/CHR, et présenter des lots représentatifs de la production courante.",
+    "type": "basic",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652697289-74791",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Es-tu capable de : sais conduire une dégustation structurée et remplir une grille d'évaluation. Je peux identifier les principaux défauts d'un spiritueux ou d'une bière et les relier à une étape de production à corriger.",
+    "back": "Je sais conduire une dégustation structurée et remplir une grille d'évaluation. Je peux identifier les principaux défauts d'un spiritueux ou d'une bière et les relier à une étape de production à corriger.",
+    "type": "can_do",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652697289-10185",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Dégustation structurée",
+    "back": "examens visuel, olfactif (1er/2e nez), gustatif (attaque, milieu, finale), tactile.",
+    "type": "basic",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652697289-75489",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Défauts",
+    "back": "spiritueux (têtes/queues mal coupées, acétone, soufre, méthanol) et bière (diacétyle, DMS, acétaldéhyde, oxydation, phénols).",
+    "type": "basic",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652697289-24041",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Grilles normalisées (type WSET)",
+    "back": "fiches de dégustation reproductibles.",
+    "type": "basic",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652697289-39948",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Constance produit",
+    "back": "la dégustation comme contrôle qualité lot à lot et ajustement des coupes/recettes.",
+    "type": "basic",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652697289-90189",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Concours/jury",
+    "back": "dégustation à l'aveugle, médailles comme levier de notoriété.",
+    "type": "basic",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652697290-17909",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Comment ventiler les charges de structure entre ateliers hétérogènes (miel, alcool, bois) ?",
+    "back": "On répartit les charges indirectes (amortissements, assurances, frais administratifs, énergie commune) selon une clé objective adaptée à chaque poste : chiffre d'affaires, heures de travail consacrées, surface ou volume utilisés, voire consommation réelle mesurée. La clé doit refléter la cause de la charge, par exemple le temps de travail pour les charges de main-d'œuvre et la part de CA ou de m2 pour les frais généraux. Croiser deux clés (CA et temps) fiabilise la ventilation et évite de faire porter à un atelier des coûts qu'il ne génère pas.",
+    "type": "basic",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697290-28699",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Quel prix de revient cible pour rester premium tout en restant accessible aux marchés ?",
+    "back": "Le prix de revient complet (matières + énergie + conditionnement + amortissements + temps de travail valorisé) doit laisser une marge même au canal le moins rémunérateur. En vente directe on applique un coefficient de 1,8 à 2,5x ce coût complet, en réservant le haut de gamme aux produits à forte identité ; sur les marchés, il faut un prix de revient suffisamment bas pour rester sous le coefficient revendeur tout en couvrant la commission de marché. Concrètement on vise un prix de revient permettant un prix de vente marché à marge positive, le premium se construisant par la qualité et l'histoire plutôt que par un coût matière élevé.",
+    "type": "basic",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697290-83991",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Quels produits abandonner si la marge réelle est négative la 1re année ?",
+    "back": "On abandonne ou repositionne en priorité les produits dont la marge sur coût complet (temps de travail inclus) reste négative et qui ne jouent pas de rôle stratégique de gamme ou d'image. Avant d'abandonner, on vérifie si le déficit est conjoncturel (montée en charge, volumes encore faibles avant le point mort) ou structurel ; un produit d'appel déficitaire mais qui draine des ventes contributrices peut être maintenu. La décision se prend produit par produit à l'aide du tableau de bord de marge, en distinguant les ateliers contributeurs des ateliers durablement déficitaires.",
+    "type": "basic",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697290-82854",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Es-tu capable de : sais calculer le prix de revient complet de chaque produit (temps de travail inclus) et son seuil de commercialisation. Je peux fixer un prix par canal assurant une marge positive et arbitrer la gamme.",
+    "back": "Je sais calculer le prix de revient complet de chaque produit (temps de travail inclus) et son seuil de commercialisation. Je peux fixer un prix par canal assurant une marge positive et arbitrer la gamme.",
+    "type": "can_do",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697290-75330",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Coût complet par produit",
+    "back": "charges directes (matières, énergie, conditionnement) + indirectes (amortissements, structure) + temps de travail.",
+    "type": "basic",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697290-52873",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Prix de revient agricole",
+    "back": "coût de production − aides − produits annexes ; base de tout arbitrage de prix.",
+    "type": "basic",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697290-65088",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Valorisation du temps en circuit court",
+    "back": "production + transformation + commercialisation, poste majeur.",
+    "type": "basic",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697290-86705",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Marge et coefficient multiplicateur",
+    "back": "vente directe 1,8-2,5x, revente plus faible ; majoration label 15-25 %.",
+    "type": "basic",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697290-57892",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Prix différencié par canal",
+    "back": "coûts spécifiques (commission marché, marge revendeur, expédition).",
+    "type": "basic",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697290-37964",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Seuil de commercialisation / point mort",
+    "back": "volume minimal pour couvrir les charges par atelier.",
+    "type": "basic",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697290-32102",
+    "deck_id": "deck-mod-M-COUT",
+    "front": "Arbitrage de gamme",
+    "back": "produits contributeurs vs déficitaires (maintien/abandon/repositionnement).",
+    "type": "basic",
+    "tags": [
+     "M-COUT"
+    ]
+   },
+   {
+    "id": "card-1782652697289-67447",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Conditions",
+    "back": "verrerie, T°, dilution, ordre de service, hygiène du palais.",
+    "type": "basic",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652697289-1446",
+    "deck_id": "deck-mod-M-SENSO",
+    "front": "Lien production ↔ sensoriel",
+    "back": "tracer les défauts jusqu'aux étapes (fermentation, distillation, vieillissement).",
+    "type": "basic",
+    "tags": [
+     "M-SENSO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-89138",
+    "deck_id": "deck-mod-M-SANI",
+    "front": "Multi-produits",
+    "back": "contamination croisée entre ateliers, nettoyage/désinfection, lutte nuisibles.",
+    "type": "basic",
+    "tags": [
+     "M-SANI"
+    ]
+   },
+   {
+    "id": "card-1782652698217-29513",
+    "deck_id": "deck-mod-M-SANI",
+    "front": "Quels ateliers déclenchent un agrément sanitaire vs une simple déclaration ?",
+    "back": "La récolte de miel et de fruits relève de la production primaire, soumise à un simple GBPH et à une déclaration d'activité. Les ateliers de transformation (bière, spiritueux, conserves, hydromel) exigent un PMS/HACCP et une déclaration auprès de la DDETSPP ; l'agrément sanitaire CE n'est requis que pour la commercialisation en gros de denrées animales, alors que la vente directe et la remise au consommateur bénéficient généralement d'une dérogation à l'agrément.",
+    "type": "basic",
+    "tags": [
+     "M-SANI"
+    ]
+   },
+   {
+    "id": "card-1782652698217-54856",
+    "deck_id": "deck-mod-M-SANI",
+    "front": "Comment mutualiser un seul PMS multi-ateliers sans contamination croisée ?",
+    "back": "On rédige un PMS unique avec un tronc commun (bonnes pratiques d'hygiène, plan de nettoyage-désinfection, lutte contre les nuisibles, traçabilité, gestion des non-conformités) puis une partie spécifique par atelier listant les dangers propres (biologiques, chimiques, physiques, allergènes). La maîtrise de la contamination croisée passe par la séparation des flux dans le temps ou l'espace, des procédures de nettoyage entre productions et une vigilance particulière sur les allergènes partagés.",
+    "type": "basic",
+    "tags": [
+     "M-SANI"
+    ]
+   },
+   {
+    "id": "card-1782652698217-49341",
+    "deck_id": "deck-mod-M-SANI",
+    "front": "Quel système de numérotation de lots relie toute la chaîne dans le Hub ?",
+    "back": "On adopte un numéro de lot structuré et traçable amont/aval qui relie la matière première au produit fini, par exemple année + atelier + matière + rang (miel→hydromel, orge→bière, fruits→distillat). Saisi dans le Hub Prométhée, ce numéro assure la traçabilité descendante (où est parti le lot) et ascendante (d'où viennent ses composants), condition indispensable pour gérer un retrait ou rappel rapide.",
+    "type": "basic",
+    "tags": [
+     "M-SANI"
+    ]
+   },
+   {
+    "id": "card-1782652698217-69076",
+    "deck_id": "deck-mod-M-SANI",
+    "front": "Es-tu capable de : sais distinguer mes obligations en production primaire et en transformation. Je peux rédiger un PMS/HACCP simplifié par atelier et un système de traçabilité par lots reliant les ateliers. Je connais les mentions d'étiquetage obligatoires (miel, bière, spiritueux).",
+    "back": "Je sais distinguer mes obligations en production primaire et en transformation. Je peux rédiger un PMS/HACCP simplifié par atelier et un système de traçabilité par lots reliant les ateliers. Je connais les mentions d'étiquetage obligatoires (miel, bière, spiritueux).",
+    "type": "can_do",
+    "tags": [
+     "M-SANI"
+    ]
+   },
+   {
+    "id": "card-1782652698217-5810",
+    "deck_id": "deck-mod-M-SANI",
+    "front": "Paquet hygiène",
+    "back": "règlement (CE) 852/2004 ; production primaire (miel, fruits) vs transformation (bière, spiritueux, conserves).",
+    "type": "basic",
+    "tags": [
+     "M-SANI"
+    ]
+   },
+   {
+    "id": "card-1782652698217-16342",
+    "deck_id": "deck-mod-M-SANI",
+    "front": "Méthode HACCP",
+    "back": "7 principes, dangers (biologiques, chimiques, physiques, allergènes) par filière.",
+    "type": "basic",
+    "tags": [
+     "M-SANI"
+    ]
+   },
+   {
+    "id": "card-1782652698217-25542",
+    "deck_id": "deck-mod-M-SANI",
+    "front": "Plan de maîtrise sanitaire (PMS)",
+    "back": "bonnes pratiques, traçabilité amont/aval, non-conformités, retraits/rappels.",
+    "type": "basic",
+    "tags": [
+     "M-SANI"
+    ]
+   },
+   {
+    "id": "card-1782652698217-92653",
+    "deck_id": "deck-mod-M-SANI",
+    "front": "Traçabilité transversale",
+    "back": "numéros de lot reliant miel→hydromel, orge→bière, fruits→distillat.",
+    "type": "basic",
+    "tags": [
+     "M-SANI"
+    ]
+   },
+   {
+    "id": "card-1782652698217-33088",
+    "deck_id": "deck-mod-M-SANI",
+    "front": "Étiquetage",
+    "back": "INCO 1169/2011 (mentions, allergènes), TAV alcools, mentions miel, accises.",
+    "type": "basic",
+    "tags": [
+     "M-SANI"
+    ]
+   },
+   {
+    "id": "card-1782652698217-77762",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Variantes",
+    "back": "melomel (fruits), metheglin (épices), cyser (pomme), sec/doux, vinaigre de miel (fermentation acétique).",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-72846",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Débouché stratégique",
+    "back": "valoriser miels déclassés, de cristallisation, opercules, fonds de maturateur.",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-956",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Pont inter-ateliers",
+    "back": "miel → hydromel → distillat possible (eau-de-vie d'hydromel) ; lien atelier Ulysse.",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-24048",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Réglementation alcool",
+    "back": "licence de vente, entrepositaire agréé, comptabilité matière, accises.",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-82979",
+    "deck_id": "deck-mod-M-HYDRO",
+    "front": "Maîtrise du goût",
+    "back": "équilibre sucre/acidité/alcool, oxydation, élevage en fût (lien M-FUT).",
+    "type": "basic",
+    "tags": [
+     "M-HYDRO"
+    ]
+   },
+   {
+    "id": "card-1782652698217-20887",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "La lacto-fermentation de mon maraîchage a-t-elle un débouché commercial réel ?",
+    "back": "Oui, les légumes lacto-fermentés (choucroute, kimchi, pickles, légumes en saumure) répondent à une demande croissante en circuits courts, magasins de producteurs et épiceries fines, et valorisent les surplus et écarts de tri du maraîchage à faible coût d'intrants. Le débouché reste un complément de gamme plutôt qu'un atelier principal : marges intéressantes mais volumes limités, et il faut respecter l'étiquetage, la DLC/DDM et les règles d'hygiène (lien HACCP). C'est cohérent avec le récit circulaire de Prométhée et mobilise le même socle microbiologique que les autres fermentations, donc un bon produit d'appoint à tester avant d'industrialiser.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652698217-48503",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "Es-tu capable de : sais identifier les micro-organismes et paramètres pilotant chaque fermentation (bière, hydromel, moût à distiller, lacto). Je peux conduire une fermentation du pied de cuve à l'arrêt et diagnostiquer une déviation (contamination, fermentation bloquée).",
+    "back": "Je sais identifier les micro-organismes et paramètres pilotant chaque fermentation (bière, hydromel, moût à distiller, lacto). Je peux conduire une fermentation du pied de cuve à l'arrêt et diagnostiquer une déviation (contamination, fermentation bloquée).",
+    "type": "can_do",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652698217-23507",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "Micro-organismes",
+    "back": "levures (Saccharomyces), bactéries lactiques/acétiques, fermentations spontanées vs ensemencées.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652698217-63923",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "Substrats",
+    "back": "amidon (orge→empâtage), saccharose/fructose (miel, fruits), conversion enzymatique.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652698217-82967",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "Paramètres clés",
+    "back": "température, pH, oxygène (aérobie/anaérobie), densité/Brix, nutriments azotés.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652698217-9980",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "Types",
+    "back": "alcoolique (bière, hydromel, moût à distiller), lactique (légumes, lacto-fermentation), acétique (vinaigres).",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652698217-93860",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "Gestion de la levure",
+    "back": "ensemencement, pied de cuve, propagation, réutilisation, viabilité.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652698217-23864",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "Suivi",
+    "back": "courbe de densité, dégustation, arrêt/relance, FAN (azote assimilable).",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652698217-66054",
+    "deck_id": "deck-mod-M-FERM",
+    "front": "Transversalité",
+    "back": "un même socle microbiologique sert bière, hydromel, moûts de fruits à distiller, conserves lacto.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652721993-87861",
+    "deck_id": "deck-fiche-f-wr-3",
+    "front": "Que retenir de : « Distillation : pot still (batch) vs Coffey (continue) » ?",
+    "back": "D'après *Whisky: Technology, Production and Marketing* (Elsevier, 2003), chap. 5 et 6.",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652716273-98188",
+    "deck_id": "deck-fiche-f-at-2",
+    "front": "Que retenir de : « 1. L'organisme : Saccharomyces cerevisiae » ?",
+    "back": "*Saccharomyces cerevisiae* fermente glucose, fructose, saccharose (via son **invertase**) et maltose, mais **ne dégrade pas l'amidon** (d'où la saccharification préalable).",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652716273-43404",
+    "deck_id": "deck-fiche-f-at-2",
+    "front": "Que retenir de : « 2. Réaction globale et voie métabolique » ?",
+    "back": "**C6H12O6 -> 2 C2H5OH + 2 CO2.** La séquence est la **glycolyse (voie d'Embden-Meyerhof-Parnas)** : phosphorylation du glucose (consomme de l'ATP), clivage en deux dérivés en C3, conversion en pyruvate avec production nette d'**ATP** et réduction du **NAD+ en NADH** ; en **anaérobiose**, le pyruvate est décarboxylé puis réduit en éthanol (régénérant le NAD+), libérant le CO2.",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652716273-38251",
+    "deck_id": "deck-fiche-f-at-2",
+    "front": "Que retenir de : « 3. Rendement théorique » ?",
+    "back": "**100 g de glucose -> au maximum 51,1 g d'éthanol** (coefficient 0,51 g/g, Gay-Lussac). En pratique 90-93 % du théorique (une part du sucre fait la biomasse, le glycérol).",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652716273-99722",
+    "deck_id": "deck-fiche-f-at-2",
+    "front": "Que retenir de : « 4. Nutrition : l'azote assimilable (FAN) » ?",
+    "back": "Le **FAN (Free Amino Nitrogen)** est la fraction azotée utile. À éviter : sulfate d'ammonium (entartrage), ammoniac (remonte le pH), **urée** (risque de **carbamate d'éthyle** cancérigène en boisson). Préférer le **phosphate diammonique (DAP)** + vitamines B (biotine, pantothénate, inositol).",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652716273-54146",
+    "deck_id": "deck-fiche-f-at-2",
+    "front": "Que retenir de : « 5. Propagation et stress » ?",
+    "back": "La levure est multipliée en cuve **aérée** (synthèse de stérols/acides gras membranaires), transférée en phase exponentielle.\n\n| Stress | Mécanisme | Repères |\n|--------|-----------|---------|\n| **Température** | perte de viabilité | optimum ~32 degrés C ; souches thermotolérantes 36-38 |\n| **Éthanol** | désorganise la membrane | toxicité > 12-15 % vol |\n| **Osmose** | sucres/sels aspirent l'eau | mélasse à diluer sous 25 Brix |\n| **pH bas / acides faibles** | diffusion d'acides non dissociés | stress dès 0,2-0,8 % lactique |\n| **Carence FAN/vitamines** | fermentation traînante | corriger DAP/vitamines |",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652716273-84425",
+    "deck_id": "deck-fiche-f-at-2",
+    "front": "Application Prométhée — Pour Prométhée : qu'en retenir ?",
+    "back": "- **Choix de souche** tolérante éthanol/chaleur pour moûts céréaliers (Cincinnatus).\n- **Bannir l'urée** pour des spiritueux de bouche (carbamate d'éthyle) ; DAP + vitamines B.\n- **Refroidissement** : la fermentation est exothermique, maîtriser la T est aussi critique que la chauffe.\n- La **biomasse de levure** résiduelle (riche en protéines) n'est pas un déchet (valorisation).",
+    "type": "can_do",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652717225-86267",
+    "deck_id": "deck-fiche-f-at-4",
+    "front": "Application Prométhée — Pour Prométhée : qu'en retenir ?",
+    "back": "- **Énergie vapeur biomasse** : coupler chaufferie biomasse + Cincinnatus ; la **méthanisation des vinasses** pourrait fournir un méthane d'appoint.\n- **Drêches/vinasses -> ruches/sol** : amendements et compléments précieux (épandage raisonné, compost) ; esprit polyculture, pas de déchet.\n- **Cincinnatus** : la **coupe têtes/cœur/queues** prime sur la déshydratation anhydre (réservée au carburant) ; viser un cœur pauvre en méthanol (attention aux matières riches en pectine).\n- **Qualité thèse** : instrumenter le suivi (congénères, DBO, bilan vapeur).",
+    "type": "can_do",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652717225-84019",
+    "deck_id": "deck-fiche-f-at-4",
+    "front": "Que retenir de : « 1. Distillation : principe et énergie » ?",
+    "back": "Séparation éthanol (Téb 78,4 degrés C) / eau par volatilité. Le moût fermenté passe en **colonne à bière** (concentration) puis en **rectification** (affinage du titre). C'est **le poste énergétique majeur** (vapeur). Leviers : moûts plus concentrés en alcool, **fonctionnement sous vide** (abaisse la T d'ébullition, réduit l'entartrage), récupération de chaleur. Pour les spiritueux : gestion des **congénères** (têtes : acétaldéhyde, méthanol ; cœur : éthanol ; queues : huiles de fusel). Le **méthanol** provient de la **pectine**.",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652717225-20928",
+    "deck_id": "deck-fiche-f-at-4",
+    "front": "Que retenir de : « 2. Azéotrope et déshydratation » ?",
+    "back": "La distillation simple ne descend pas sous ~4 % d'eau : éthanol/eau forment un **azéotrope** (~95,6 % éthanol). Pour l'éthanol anhydre (carburant) :\n\n| Technologie | Principe | Limites |\n|-------------|----------|---------|\n| Distillation azéotropique | tiers-corps (benzène, cyclohexane) | énergivore, dangereuse |\n| **Tamis moléculaires (zéolites, PSA)** | adsorption sélective de l'eau | **standard moderne** |\n\nLes **tamis moléculaires** retiennent sélectivement la petite molécule d'eau (adsorption modulée en pression) -> > 99,7 %.",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652717225-3199",
+    "deck_id": "deck-fiche-f-at-4",
+    "front": "Que retenir de : « 3. Coproduits » ?",
+    "back": "- **Filière céréales : DDGS** (Distillers Dried Grains with Solubles). Le stillage est centrifugé, une partie recyclée en **backset**, le reste évaporé et séché -> aliment protéique pour le bétail (économie majeure). Risque : résidus d'antibiotiques/mycotoxines concentrés.\n- **Filière mélasse : vinasses (dunder, CMS)** : effluent à très forte DBO. Voies : épandage/amendement (N, P, MO), **méthanisation anaérobie** (réduit la DBO ~80 %, le méthane alimente la chaudière), évaporation en CMS.",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652717225-65425",
+    "deck_id": "deck-fiche-f-at-4",
+    "front": "Que retenir de : « 4. Analyses qualité » ?",
+    "back": "Titre alcoolique, DBO de l'effluent, profil des congénères (méthanol, fusel), résidus d'antibiotiques (DDGS), NIR pour les protéines.",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652717809-8498",
+    "deck_id": "deck-fiche-f-wr-1",
+    "front": "Que retenir de : « Orge, maltage et brassage du malt whisky » ?",
+    "back": "D'après I. Russell & G. Stewart (dir.), *Whisky: Technology, Production and Marketing*, Elsevier, 2003.",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652717809-12900",
+    "deck_id": "deck-fiche-f-wr-1",
+    "front": "Que retenir de : « 1. L'orge : la matière première » ?",
+    "back": "Le Scotch malt whisky est défini légalement comme produit à partir d'**eau et d'orge maltée uniquement**, convertie par les **seules enzymes endogènes** (aucune enzyme commerciale). L'orge est à la fois source de sucres **et** banque enzymatique.\n\nStructure du grain : petit **embryon** (riche en lipides/protéines), gros **albumen amylacé** (~75 %, dont 85 % d'amidon), **couche à aleurone** (synthèse des enzymes à la germination), enveloppe (husk). Variétés recherchées : albumen **farineux** (mealy, pas vitreux/steely), faible azote (TN 1,6-1,7 %, l'azote se fait au détriment de l'amidon), forte teneur en amidon. Rendement passé de 300 à plus de 460 L d'alcool pur par tonne de malt.",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652717809-32463",
+    "deck_id": "deck-fiche-f-wr-1",
+    "front": "Que retenir de : « 2. Le maltage » ?",
+    "back": "- **Trempe (steeping)** : hydratation de ~12 % à **32-46 %** par immersions + repos à l'air ; l'inhibiteur **acide abscissique** baisse, levant l'inhibition de la synthèse d'alpha-amylase induite par les **gibbérellines**.\n- **Germination** : synthèse des enzymes — **alpha-amylase** (endo, alpha-1,4), **bêta-amylase** (exo, libère le **maltose**), limite-dextrinase et maltase (points alpha-1,6).\n- **Touraillage (kilning)** : séchage doux (ex. 60 -> 68 -> 72 degrés C) jusqu'à 4-6 % d'humidité. **Pas de montée précoce** (enzymes thermolabiles quand l'humidité est haute) : jusqu'à **20 % du rendement** vient des enzymes survivantes. Réactions : **Maillard** (sucres + acides aminés -> aldéhydes, mélanoïdines, notes grillées/caramel via dégradation de Strecker), oxydation des acides gras (acide linoléique -> hexanal), **DMS**.",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652717809-12123",
+    "deck_id": "deck-fiche-f-wr-1",
+    "front": "Que retenir de : « 3. Tourbe et phénols (whisky tourbé) » ?",
+    "back": "La **tourbe** sert de **source d'arômes** (peat reek), pas de chaleur ; ses phénols s'adsorbent au malt quand l'humidité dépasse 25 %. Teneur de 0 à **50+ ppm** (Islay). Composés : phénol, crésols, xylénols ; le **gaïacol** (minoritaire) a un fort impact (fumé/médicinal). Augmenter la T de combustion (400 -> 750 degrés C) multiplie phénols/crésols mais **diminue le gaïacol**. Risque de **nitrosamines** (NDMA) -> brûleurs bas-NOx ou SO2 (10-30 ppm).",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652717809-96536",
+    "deck_id": "deck-fiche-f-wr-1",
+    "front": "Que retenir de : « 4. Mouturage, brassage (mashing), moût (wort) » ?",
+    "back": "Mouture (husk/gruau/farine), empâtage à T finale **64,5 degrés C** (~4 eau / 1 malt). À 64,5 degrés C l'amidon **gélatinise** et les amylases produisent sucres fermentescibles (glucose, maltose, maltotriose) et non fermentescibles (dextrines). Eau : sulfates (baissent le pH), calcium (requis par la levure), carbonates (entartrage). Réduire le palier augmente les fermentescibles.",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652717809-22341",
+    "deck_id": "deck-fiche-f-wr-1",
+    "front": "Application Prométhée — Pour Prométhée : qu'en retenir ?",
+    "back": "- **Orge du causse** : viser albumen farineux, faible azote ; le climat sec/chaud limite la dormance (avantage vs orges écossaises).\n- **Touraillage = style** : doux indirect pour préserver l'alpha-amylase (rendement) ; pour une cuvée tourbée, jouer la T de combustion (gaïacol vs phénols).\n- **Cincinnatus** : empâtage 64,5 degrés C reproductible, eau locale caractérisée (sulfates/calcium/carbonates), chauffe **vapeur** sans point chaud destructeur d'enzymes.",
+    "type": "can_do",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652712889-5728",
+    "deck_id": "deck-fiche-f-at-1",
+    "front": "Que retenir de : « 1. Le substrat : l'amidon des céréales » ?",
+    "back": "Les céréales (maïs, blé, sorgho, orge, seigle, riz) stockent leur énergie sous forme d'**amidon**, polymère de glucose qui constitue typiquement 60 à 70 % de la matière sèche du grain. L'amidon n'est **pas fermentescible directement** par la levure : *Saccharomyces cerevisiae* ne possède pas les enzymes amylolytiques. Il faut donc d'abord le **dépolymériser** en glucose libre. C'est tout l'enjeu de la chaîne mouture -> cuisson -> liquéfaction -> saccharification.\n\nL'amidon existe sous **deux formes** :\n\n| Forme | Structure | Liaisons | % dans le maïs |\n|-------|-----------|----------|----------------|\n| **Amylose** | chaîne linéaire | alpha-1,4 | environ 10 % |\n| **Amylopectine** | chaîne ramifiée | alpha-1,4 + branches alpha-1,6 | environ 90 % |\n\nLes ramifications alpha-1,6 de l'amylopectine sont les points de résistance : peu d'enzymes les attaquent. D'où la nécessité de **deux enzymes…",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652712889-2901",
+    "deck_id": "deck-fiche-f-at-1",
+    "front": "Que retenir de : « 2. Mouture et cuisson (gélatinisation) » ?",
+    "back": "Le grain est broyé au **broyeur à marteaux** pour exposer l'amidon. **La gélatinisation est l'étape physique indispensable** : l'alpha-amylase ne peut accéder à l'amidon tant que la structure cristalline n'est pas détruite. Chauffée, la bouillie adsorbe l'eau, gonfle, perd sa cristallinité ; le **pic de gélatinisation = pic de viscosité**.\n\n| Matière première | Plage de gélatinisation (degrés C) |\n|------------------|-------------------------------------|\n| Maïs | 62-72 |\n| Orge | 52-59 |\n| Seigle | 57-70 |\n| Sorgho | 68-77 |\n| Blé | 58-64 |\n\nEmpâter très haut (jusqu'à 90 degrés C) avec une bonne agitation évite le pic de viscosité sans perte de rendement.",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652712889-30942",
+    "deck_id": "deck-fiche-f-at-1",
+    "front": "Que retenir de : « 3. Liquéfaction : alpha-amylase (endoenzyme) » ?",
+    "back": "L'**alpha-amylase** attaque **au hasard** les liaisons alpha-1,4 internes (mais pas les alpha-1,6) -> **dextrines** courtes -> la viscosité chute, le moût redevient pompable. Conditions : pH ~5,5, T ~90 degrés C.",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652712889-39593",
+    "deck_id": "deck-fiche-f-at-1",
+    "front": "Que retenir de : « 4. Saccharification : glucoamylase (exoenzyme) » ?",
+    "back": "La **glucoamylase** hydrolyse les alpha-1,4 depuis l'extrémité non réductrice et libère le **glucose** un par un (et lentement les alpha-1,6). Conditions : pH 4,0-5,5, T 40-60 degrés C. Le **DE (Dextrose Equivalent)** mesure le degré d'hydrolyse (0 = amidon, 100 = glucose).",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652712889-93137",
+    "deck_id": "deck-fiche-f-at-1",
+    "front": "Que retenir de : « 5. Cas du whisky : le maltage » ?",
+    "back": "L'orge **maltée** fournit naturellement **alpha- et bêta-amylase** ; la bêta-amylase (exoenzyme) produit du **maltose**. Le maltage exploite les enzymes synthétisées à la germination.",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652712889-52129",
+    "deck_id": "deck-fiche-f-at-1",
+    "front": "Application Prométhée — Pour Prométhée : qu'en retenir ?",
+    "back": "- **Orge/céréales du causse** : un maltage maison fournirait des amylases gratuites et un profil maltose, atout pour un whisky de terroir.\n- **Cincinnatus** : maîtriser la fenêtre de gélatinisation propre à chaque céréale conditionne le rendement (empâtage haut = pas de pic de viscosité).\n- **Énergie vapeur biomasse** : la cuisson est le poste le plus énergivore en amont -> chaufferie biomasse.\n- **DE + viscosité** comme indicateurs de conversion à petite échelle.",
+    "type": "can_do",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652721569-79005",
+    "deck_id": "deck-fiche-f-wr-2",
+    "front": "Que retenir de : « Whisky de grain et fermentation » ?",
+    "back": "D'après *Whisky: Technology, Production and Marketing* (Elsevier, 2003), chap. 3 et 4.",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652721569-37198",
+    "deck_id": "deck-fiche-f-wr-2",
+    "front": "Que retenir de : « 1. Céréales du grain whisky : maïs et blé » ?",
+    "back": "Le **grain whisky** (matrice des blends) utilise des céréales **non maltées** cuites + un peu de malt diastasique (enzymes), en distillation continue (Coffey).\n\n| Céréale | Amidon | T gélatinisation | Particularités |\n|---|---|---|---|\n| Maïs | 71-72 % | **70-80 degrés C** | peu visqueux, corps riche |\n| Blé tendre | élevé si N bas | **52-54 degrés C** | arabinoxylanes -> viscosité, profil léger |\n\nRelation **inverse azote/rendement** en alcool bien établie. Whisky américain : mash bills Bourbon 70 maïs/15 seigle/15 malt ; **sour mashing** (backset acide) pour caler le pH.",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652721569-79852",
+    "deck_id": "deck-fiche-f-wr-2",
+    "front": "Que retenir de : « 2. Cuisson et gélatinisation » ?",
+    "back": "Libérer + convertir l'amidon. **Gélatinisation** : gonflement, fusion de la fraction cristalline, dissociation des hélices d'amylose (hausse de viscosité) ; au refroidissement, **rétrogradation** (gel résistant). Puis les **amylases du malt** convertissent en sucres.",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652721569-99385",
+    "deck_id": "deck-fiche-f-wr-2",
+    "front": "Que retenir de : « 3. Levure et fermentation du wash » ?",
+    "back": "La **levure de distillerie** (*S. cerevisiae*, hybride avec *S. diastaticus*) fermente glucose, maltose, maltotriose, maltotétraose ; apporte le **4-vinyl-gaïacol** (note phénolique). pH optimal 5,0-5,2 ; **T optimale 30-33 degrés C** ; facteur de croissance clé : **biotine**.\n\n**Biochimie** : éthanol par glycolyse (Embden-Meyerhof-Parnas) ; **effet Crabtree** (fermente même aérée au-dessus de ~1 % sucre, l'O2 servant à synthétiser stérols/acides gras membranaires).\n\n| Congénères | Exemples | Origine |\n|---|---|---|\n| Alcools supérieurs | propanol, isoamylique, phényléthanol | **voie d'Ehrlich** (céto-acides) |\n| Esters | **acétate d'éthyle** (majoritaire) | recyclage du coenzyme A |\n| Carbonyles | acétaldéhyde, diacétyl | voie de la valine |\n| Soufre | H2S, méthional | réduction des sulfates |\n\nFermentation **longue (>48 h)** -> touche **malo-lactique** (mielleux) ; **courte (<40 h)** -…",
+    "type": "free_recall",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652722321-9295",
+    "deck_id": "deck-fiche-f-wr-4",
+    "front": "Que retenir de : « Maturation en fût et assemblage » ?",
+    "back": "D'après *Whisky: Technology, Production and Marketing* (Elsevier, 2003), chap. 7. Scotch : minimum **3 ans** en chêne (fûts <= 700 L).",
+    "type": "free_recall",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652722321-76784",
+    "deck_id": "deck-fiche-f-wr-4",
+    "front": "Que retenir de : « 1. Le chêne : espèces et composition » ?",
+    "back": "- **Chêne américain** (*Quercus alba*) : fûts ex-bourbon.\n- **Chêne européen** (*Q. robur* pédonculé, *Q. petraea* rouvre) : fûts ex-sherry.\n\n| Constituant | Part | Rôle en maturation |\n|---|---|---|\n| Cellulose | ~50 % | superstructure, peu de couleur |\n| Hémicellulose | 15-30 % | **furfural**, caramel à la chauffe |\n| Lignine | 15-30 % | **vanilline**, syringaldéhyde |\n| Extractibles | jusqu'à 12 % | tanins, lactones, phénols |",
+    "type": "free_recall",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652722321-53521",
+    "deck_id": "deck-fiche-f-wr-4",
+    "front": "Que retenir de : « 2. Toasting / charring » ?",
+    "back": "Bois fendu sur quartier, séché, puis **toasting** (doux, sherry casks) ou **charring** (carbonisation, bourbon). Objectifs : dégrader les polymères en arômes, **détruire les composés résineux** (trans-2-nonenal, odeur de sciure), créer une couche de **charbon actif**. Chimie : **lignine -> vanilline** (seuil bas, dès 6 mois), syringaldéhyde ; **polysaccharides -> furfural**, maltol, produits de Maillard (caramel/grillé).",
+    "type": "free_recall",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652722321-92906",
+    "deck_id": "deck-fiche-f-wr-4",
+    "front": "Que retenir de : « 3. Extraction, oxydation, évaporation » ?",
+    "back": "Réactions **additives** : extraction rapide (6-12 mois) puis hydrolyse + oxydation lentes. **Whisky-lactone** (note **noix de coco**) : isomère **cis** (seuil bas) prédominant dans le **chêne américain** ; **eugénol** (clou de girofle) ; **tanins** hydrolysables (astringence + **catalysent l'oxydation**, éliminent les sulfures). Réactions **soustractives** : **évaporation = part des anges** (humidité haute -> perte d'éthanol, strength baisse ; humidité basse -> perte d'eau, **strength monte**) ; **char actif** adsorbe les composés immatures (DMS).",
+    "type": "free_recall",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652722321-96392",
+    "deck_id": "deck-fiche-f-wr-4",
+    "front": "Que retenir de : « 4. Types de fûts et assemblage » ?",
+    "back": "| Fût | Caractère |\n|---|---|\n| **Ex-bourbon** (américain charré) | vanille, **coco**, intègre sans masquer |\n| **Ex-sherry chêne espagnol** | fruité, doux, couleur/tanins élevés |\n| **Refill / régénéré** | extractibles appauvris |\n| **Ex-tourbé** (in-drink) | transmet la tourbe à un autre spiritueux |\n\nL'**assemblage (blending)** combine malts + grains pour un profil **constant** (nez, mariage de 3-6 mois) ; côté instrumental, **GC** des congénères.",
+    "type": "free_recall",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652722321-14854",
+    "deck_id": "deck-fiche-f-wr-4",
+    "front": "Application Prométhée — Pour Prométhée : qu'en retenir ?",
+    "back": "- **Fûts ex-tourbé** : différenciation à moindre coût (touche tourbée sans tourber le malt).\n- **Synergie bois/merrain** : un **merrain local** (chêne *robur/petraea*) bien séché/toasté = profil tannique-épicé signature, cohérent avec la valorisation bois.\n- Régler la **chauffe (toast/char)** : vanilline (lignine) vs furfural/caramel (polysaccharides) ; toasting intense pour éliminer le trans-2-nonenal.\n- **Climat 82 chaud-sec** : la part des anges fera **monter le degré** (perte d'eau dominante, pertes possibles > 2 %/an) — à intégrer aux rendements. **GC des congénères** dès le new make.",
+    "type": "can_do",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652721569-68327",
+    "deck_id": "deck-fiche-f-wr-2",
+    "front": "Application Prométhée — Pour Prométhée : qu'en retenir ?",
+    "back": "- Whisky de grain en complément du malt : maïs (corps gras), blé (léger) ; céréales locales à faible azote.\n- **Souche** et **durée de fermentation** (viser 48-60 h) = premiers leviers du profil aromatique.\n- Maîtriser **T (30-33 degrés C)** et hygiène des cuves bois (wash infecté -> rendement et goût dégradés).",
+    "type": "can_do",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652721993-76498",
+    "deck_id": "deck-fiche-f-wr-3",
+    "front": "Que retenir de : « 1. L'alambic à repasse (pot still) en discontinu » ?",
+    "back": "Alambics **entièrement en cuivre**, forme copiée à l'identique (elle détermine le style) : pot -> col de cygne -> **bras de lyne** -> condenseur/worm tub. **Double distillation** :\n\n| Coupe | Nom | Strength | Devenir |\n|---|---|---|---|\n| Têtes | **foreshots** | ~85 -> 75 % ABV | recyclées (acétate d'éthyle) |\n| Cœur | **middle cut / new spirit** | 72 -> 60 % ABV | **mis en fût** |\n| Queues | **feints** | jusqu'à ~1 % ABV | recyclées |\n\nLe **demisting test** détermine le 1er point de coupe (dilution à 45,7 % ABV : trouble = non potable, clair = on collecte). Pour concentrer les **phénols tourbés** (arrivent en fin de cœur), couper bas mais **pas sous 60 % ABV**.\n\n**Rôle du cuivre** : \"contributeur silencieux\" qui **piège le soufre** (sulfures) et participe à la formation d'esters ; rongé par CO2/soufre (remplacement). **Reflux** : condensation partielle renvoyant les lourds dans le pot ;…",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652721993-45508",
+    "deck_id": "deck-fiche-f-wr-3",
+    "front": "Que retenir de : « 2. La colonne Coffey (continue) » ?",
+    "back": "Composition **constante**, gros volumes. **Analyseur** (le wash chaud descend, la vapeur extrait l'alcool) + **rectifieur** (le serpentin de wash assure un reflux). 35-40 plateaux/colonne ; soutirage au **spirit plate** ; max légal **94,7 % ABV** (on préfère 94,0 pour garder des congénères). En colonne inox, **cuivre sacrificiel** près du spirit plate.",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652721993-12957",
+    "deck_id": "deck-fiche-f-wr-3",
+    "front": "Que retenir de : « 3. Comparaison des styles » ?",
+    "back": "| Critère | Pot still (batch) | Coffey (continue) |\n|---|---|---|\n| New make | 68-72 % (90 en triple) | jusqu'à 94 % ABV |\n| Congénères | **riches** | **faibles** (léger/neutre) |\n| Usage | single malt | base des blends, gin/vodka |",
+    "type": "free_recall",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652721993-59523",
+    "deck_id": "deck-fiche-f-wr-3",
+    "front": "Application Prométhée — Pour Prométhée : qu'en retenir ?",
+    "back": "- **Cincinnatus (chambres + colonne cuivre + vapeur)** : config hybride réglable du new make riche (peu de reflux) à épuré (plus de reflux/plateaux). La **chauffe vapeur** évite le charbonnage du fond et donne un reflux fin.\n- **Cuivre partout** sur la trajectoire vapeur (nettoie le soufre, affine) ; prévoir l'usure.\n- **Points de coupe stables** ; cuvée tourbée : couper bas mais >= 60 % ABV ; collecter sous 20 degrés C.",
+    "type": "can_do",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652726097-9087",
+    "deck_id": "deck-fiche-f-itsap-hygiene",
+    "front": "Que retenir de : « Pourquoi ? » ?",
+    "back": "Ne pas mettre en danger la santé du consommateur est une **obligation légale européenne depuis 2006**. En cas de problème, **c'est le metteur en marché qui est responsable** : il faut démontrer qu'on **maîtrise les risques**. Concerne **tous** les apiculteurs commercialisant des produits (règles allégées sous 30 ruches).",
+    "type": "free_recall",
+    "tags": [
+     "M-UCARE2"
+    ]
+   },
+   {
+    "id": "card-1782652726097-46015",
+    "deck_id": "deck-fiche-f-itsap-hygiene",
+    "front": "Que retenir de : « Le « Paquet Hygiène » » ?",
+    "back": "| Texte | Champ |\n|---|---|\n| Règl. (CE) 178/2002 « Food Law » | cadre général |\n| Règl. (CE) 852/2004 | hygiène des denrées |\n| Règl. (CE) 853/2004 | denrées d'origine animale |\n| Règl. (UE) 2017/625 | contrôles officiels |\n\nTrois obligations : **innocuité** (aucun aliment dangereux mis sur le marché), **traçabilité** (registres), **déclaration** de l'établissement (parfois agrément). Pour chaque produit : identifier les dangers à chaque étape, mettre en place les bonnes pratiques, **tout consigner**.",
+    "type": "free_recall",
+    "tags": [
+     "M-UCARE2"
+    ]
+   },
+   {
+    "id": "card-1782652726097-90641",
+    "deck_id": "deck-fiche-f-itsap-hygiene",
+    "front": "Que retenir de : « Caractéristiques des produits » ?",
+    "back": "- **Miel** : sucres > 95 % MS (forte pression osmotique), eau libre 0,50-0,62, humidité 14-21 %, pH 3,45-5,5, enzymes/antioxydants -> milieu défavorable aux micro-organismes.\n- **Pollen** : substances antibactériennes (glucose oxydase) mais **sensible aux pollutions** ; conservé par fermentation lactique dans la ruche.\n- **Gelée royale** : plus à risque ; pH bas, **10-HDA** antifongique/antibactérien.",
+    "type": "free_recall",
+    "tags": [
+     "M-UCARE2"
+    ]
+   },
+   {
+    "id": "card-1782652726097-5363",
+    "deck_id": "deck-fiche-f-itsap-hygiene",
+    "front": "Que retenir de : « Mesures par produit » ?",
+    "back": "| Étape | Miel | Pollen | Gelée royale |\n|---|---|---|---|\n| Au rucher | ne rien poser au sol ; traitement Varroa **sans hausses** ; renouveler les cires | colonies saines ; éviter l'humidité ; traitement **pas pendant la récolte** | traitement **jamais en production de GR** ; pas de répulsif chimique |\n| Miellerie / labo | nettoyage régulier ; décantation/filtration/écumage ; attention au verre avant mise en pot | matériel apte contact alimentaire ; **tri + contrôle visuel** ; contenants hermétiques | **labo dédié et propre** ; **filtration 0,4-0,7 mm** ; conservation au froid |\n\nOutils : fiches H1-H9 du GBPA (locaux, équipements, nettoyage, personnel, nuisibles, eau, **H8 traçabilité**, étiquetage).",
+    "type": "free_recall",
+    "tags": [
+     "M-UCARE2"
+    ]
+   },
+   {
+    "id": "card-1782652726097-3400",
+    "deck_id": "deck-fiche-f-itsap-hygiene",
+    "front": "Application Prométhée — Pour Prométhée : qu'en retenir ?",
+    "back": "La **miellerie HACCP** matérialise les 3 obligations : identifier / maîtriser / consigner. Prévoir dès la conception une **marche en avant**, un **labo gelée royale dédié et réfrigéré** (filtration 0,4-0,7 mm), une zone de **tri pollen** + contenants hermétiques, une procédure de nettoyage écrite (H4). Côté rucher : **registre des traitements Varroa** (jamais avec hausses ni pendant récoltes pollen/GR) et **traçabilité H8** = preuve opposable. Renouvellement des cires (priorité opercules) : jonction directe avec la fiche cire. Vérifier la **déclaration d'établissement** et les seuils d'agrément selon les volumes.",
+    "type": "can_do",
+    "tags": [
+     "M-UCARE2"
+    ]
+   },
+   {
+    "id": "card-1782652741209-73768",
+    "deck_id": "deck-qcm-f-itsap-hygiene",
+    "front": "Selon le Paquet Hygiène, qui est responsable en cas de problème sanitaire sur un produit de la ruche ?",
+    "back": "C'est une obligation légale européenne depuis 2006 : le metteur en marché est responsable et doit démontrer qu'il maîtrise les risques.",
+    "type": "basic",
+    "tags": [
+     "M-UCARE2"
+    ]
+   },
+   {
+    "id": "card-1782652741209-85753",
+    "deck_id": "deck-qcm-f-itsap-hygiene",
+    "front": "Quelles sont les trois obligations du Paquet Hygiène ?",
+    "back": "Les trois obligations sont l'innocuité (aucun aliment dangereux mis sur le marché), la traçabilité (registres) et la déclaration de l'établissement.",
+    "type": "basic",
+    "tags": [
+     "M-UCARE2"
+    ]
+   },
+   {
+    "id": "card-1782652741209-81166",
+    "deck_id": "deck-qcm-f-itsap-hygiene",
+    "front": "Quelle filtration est recommandée pour la gelée royale au laboratoire ?",
+    "back": "La gelée royale exige un labo dédié et propre, une filtration de 0,4 à 0,7 mm et une conservation au froid.",
+    "type": "basic",
+    "tags": [
+     "M-UCARE2"
+    ]
+   },
+   {
+    "id": "card-1782652741209-69551",
+    "deck_id": "deck-qcm-f-itsap-hygiene",
+    "front": "Concernant le traitement Varroa au rucher, quelle bonne pratique est indiquée pour le miel ?",
+    "back": "Pour le miel, le traitement Varroa doit se faire sans hausses, et il faut aussi renouveler les cires et ne rien poser au sol.",
+    "type": "basic",
+    "tags": [
+     "M-UCARE2"
+    ]
+   },
+   {
+    "id": "card-1782652741209-73710",
+    "deck_id": "deck-qcm-f-itsap-hygiene",
+    "front": "Quelles sont les caractéristiques du miel qui le rendent défavorable aux micro-organismes ?",
+    "back": "Le miel a des sucres supérieurs à 95 % MS (forte pression osmotique), une eau libre de 0,50 à 0,62, une humidité de 14 à 21 % et un pH de 3,45 à 5,5, milieu défavorable aux micro-organismes.",
+    "type": "basic",
+    "tags": [
+     "M-UCARE2"
+    ]
+   },
+   {
+    "id": "card-1782652745889-54385",
+    "deck_id": "deck-qcm-f-wr-1",
+    "front": "Comment le Scotch malt whisky est-il defini legalement ?",
+    "back": "Le Scotch malt whisky est defini comme produit a partir d'eau et d'orge maltee uniquement, convertie par les seules enzymes endogenes (aucune enzyme commerciale).",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652745889-36470",
+    "deck_id": "deck-qcm-f-wr-1",
+    "front": "Quelles caracteristiques recherche-t-on dans les varietes d'orge a malter ?",
+    "back": "On recherche un albumen farineux (mealy, pas vitreux), un faible azote (TN 1,6-1,7 %, l'azote se faisant au detriment de l'amidon) et une forte teneur en amidon.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652745889-74199",
+    "deck_id": "deck-qcm-f-wr-1",
+    "front": "Que se passe-t-il pendant la trempe (steeping) du maltage ?",
+    "back": "La trempe hydrate le grain de ~12 % a 32-46 % ; l'inhibiteur acide abscissique baisse, levant l'inhibition de la synthese d'alpha-amylase induite par les gibberellines.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652745889-28323",
+    "deck_id": "deck-qcm-f-wr-1",
+    "front": "Pourquoi faut-il eviter une montee de temperature precoce lors du touraillage ?",
+    "back": "Pas de montee precoce car les enzymes sont thermolabiles quand l'humidite est haute ; jusqu'a 20 % du rendement provient des enzymes survivantes (sechage doux ex. 60 -> 68 -> 72 degres C).",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652744617-80374",
+    "deck_id": "deck-qcm-f-wr-4",
+    "front": "Quelle est la durée minimale de maturation en chêne pour un Scotch ?",
+    "back": "La fiche indique un minimum de 3 ans en chêne (fûts de 700 L maximum) pour le Scotch.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652744617-89494",
+    "deck_id": "deck-qcm-f-wr-4",
+    "front": "Quel constituant du chêne est à l'origine de la vanilline ?",
+    "back": "La lignine produit la vanilline (seuil bas, dès 6 mois) et la syringaldéhyde ; les polysaccharides donnent le furfural.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652744617-69781",
+    "deck_id": "deck-qcm-f-wr-4",
+    "front": "Quelle note aromatique est associée à la whisky-lactone, prédominante dans le chêne américain ?",
+    "back": "La whisky-lactone apporte une note de noix de coco, son isomère cis (seuil bas) prédominant dans le chêne américain ; l'eugénol évoque le clou de girofle.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652744617-14837",
+    "deck_id": "deck-qcm-f-wr-4",
+    "front": "En climat chaud et sec, comment évolue généralement le degré d'alcool lors de la part des anges ?",
+    "back": "Quand l'humidité est basse, la perte d'eau domine et la strength monte ; à humidité haute, c'est l'éthanol qui s'évapore et le degré baisse.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652744617-57621",
+    "deck_id": "deck-qcm-f-wr-4",
+    "front": "Quel objectif du toasting/charring concernant les composés résineux est mentionné ?",
+    "back": "Le toasting/charring vise notamment à détruire les composés résineux (trans-2-nonenal, odeur de sciure) et à créer une couche de charbon actif.",
+    "type": "basic",
+    "tags": [
+     "M-FUT"
+    ]
+   },
+   {
+    "id": "card-1782652745105-92452",
+    "deck_id": "deck-qcm-f-wr-3",
+    "front": "Comment se nomme la coupe de tête (têtes) lors de la double distillation en pot still ?",
+    "back": "Les têtes sont appelées foreshots (~85 vers 75 % ABV) et sont recyclées ; les feints sont les queues et le middle cut est le cœur mis en fût.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652745105-80330",
+    "deck_id": "deck-qcm-f-wr-3",
+    "front": "Quel est le rôle principal du cuivre dans l'alambic, décrit comme contributeur silencieux ?",
+    "back": "Le cuivre piège le soufre (sulfures) et participe à la formation d'esters ; il est rongé par le CO2 et le soufre, d'où son remplacement.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652745105-53433",
+    "deck_id": "deck-qcm-f-wr-3",
+    "front": "Pour concentrer les phénols tourbés, en dessous de quel taux ne faut-il pas couper le cœur ?",
+    "back": "Les phénols tourbés arrivent en fin de cœur : il faut couper bas mais pas sous 60 % ABV. Le 45,7 % ABV correspond au demisting test.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652745105-3028",
+    "deck_id": "deck-qcm-f-wr-3",
+    "front": "Quel est le titre alcoométrique maximal légal d'une colonne Coffey ?",
+    "back": "La colonne Coffey peut atteindre un maximum légal de 94,7 % ABV, mais on préfère souvent 94,0 % pour conserver des congénères.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652745105-50007",
+    "deck_id": "deck-qcm-f-wr-3",
+    "front": "Comment le reflux influence-t-il le style du spiritueux en pot still ?",
+    "back": "Le reflux renvoie les composés lourds dans le pot ; plus de reflux donne un spiritueux plus léger et propre (favorisé par la forme de l'alambic, un bras de lyne ascendant et une chauffe douce).",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652747738-84813",
+    "deck_id": "deck-qcm-f-at-2",
+    "front": "Grace a quelle enzyme Saccharomyces cerevisiae peut-il fermenter le saccharose ?",
+    "back": "Saccharomyces cerevisiae fermente le saccharose via son invertase, mais ne degrade pas l'amidon (d'ou la saccharification prealable).",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652747738-73953",
+    "deck_id": "deck-qcm-f-at-2",
+    "front": "Quelle est la voie metabolique de la fermentation alcoolique ?",
+    "back": "La sequence est la glycolyse (voie d'Embden-Meyerhof-Parnas) ; en anaerobiose le pyruvate est decarboxyle puis reduit en ethanol, regenerant le NAD+ et liberant le CO2.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652747738-11485",
+    "deck_id": "deck-qcm-f-at-2",
+    "front": "Quel est le rendement theorique maximal de la conversion du glucose en ethanol ?",
+    "back": "Selon Gay-Lussac, 100 g de glucose donnent au maximum 51,1 g d'ethanol (coefficient 0,51 g/g) ; en pratique 90-93 % du theorique car une part fait la biomasse et le glycerol.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652747738-94034",
+    "deck_id": "deck-qcm-f-at-2",
+    "front": "Quelle source d'azote faut-il bannir pour les spiritueux de bouche ?",
+    "back": "L'uree est a eviter car elle entraine un risque de carbamate d'ethyle cancerigene en boisson ; on prefere le phosphate diammonique (DAP) plus vitamines B.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652745537-9305",
+    "deck_id": "deck-qcm-f-wr-2",
+    "front": "Quelle température de gélatinisation est indiquée pour le maïs dans le grain whisky ?",
+    "back": "La fiche indique une température de gélatinisation de 70-80 degrés C pour le maïs, contre 52-54 degrés C pour le blé tendre.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652745537-15751",
+    "deck_id": "deck-qcm-f-wr-2",
+    "front": "Quel congénère majoritaire de la famille des esters est cité dans la fiche ?",
+    "back": "L'acétate d'éthyle est l'ester majoritaire, issu du recyclage du coenzyme A ; le propanol est un alcool supérieur, le diacétyl un carbonyle et le méthional un composé soufré.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652745537-30716",
+    "deck_id": "deck-qcm-f-wr-2",
+    "front": "Quelle plage de température est donnée comme optimale pour la fermentation du wash par la levure de distillerie ?",
+    "back": "La fiche donne une température optimale de 30-33 degrés C ; au-delà de 33 degrés C, les lactobacilles prolifèrent avec un risque d'acroléine.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652745537-47231",
+    "deck_id": "deck-qcm-f-wr-2",
+    "front": "Selon la fiche, quel facteur de croissance est clé pour la levure de distillerie ?",
+    "back": "Le facteur de croissance clé cité est la biotine ; le pH optimal est 5,0-5,2.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652745537-34618",
+    "deck_id": "deck-qcm-f-wr-2",
+    "front": "Une fermentation longue (plus de 48 h) tend à apporter quelle touche aromatique ?",
+    "back": "Une fermentation longue (>48 h) apporte une touche malo-lactique mielleuse, alors qu'une fermentation courte (<40 h) donne un spectre appauvri.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652748249-34715",
+    "deck_id": "deck-qcm-f-at-1",
+    "front": "Pourquoi l'amidon des cereales n'est-il pas fermentescible directement par la levure ?",
+    "back": "Saccharomyces cerevisiae ne possede pas les enzymes amylolytiques, il faut donc depolymeriser l'amidon en glucose libre avant la fermentation.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652748249-37030",
+    "deck_id": "deck-qcm-f-at-1",
+    "front": "Quelle est la difference structurale entre amylose et amylopectine ?",
+    "back": "L'amylose est une chaine lineaire en alpha-1,4 (environ 10 % du mais) ; l'amylopectine est ramifiee, alpha-1,4 avec branches alpha-1,6 (environ 90 %).",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652748249-92468",
+    "deck_id": "deck-qcm-f-at-1",
+    "front": "Quel est le role de la gelatinisation lors de la cuisson ?",
+    "back": "La gelatinisation est l'etape physique indispensable : l'alpha-amylase ne peut acceder a l'amidon tant que la structure cristalline n'est pas detruite (pic de gelatinisation = pic de viscosite).",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652748249-20527",
+    "deck_id": "deck-qcm-f-at-1",
+    "front": "Comment agit l'alpha-amylase lors de la liquefaction ?",
+    "back": "L'alpha-amylase (endoenzyme) attaque au hasard les liaisons alpha-1,4 internes (pas les alpha-1,6), produit des dextrines courtes et fait chuter la viscosite (pH ~5,5, T ~90 degres C).",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652746281-20665",
+    "deck_id": "deck-qcm-f-at-4",
+    "front": "Pourquoi la distillation est-elle le poste energetique majeur de la production d'ethanol ?",
+    "back": "La distillation separe l'ethanol (Teb 78,4 degres C) de l'eau par volatilite (colonne a biere puis rectification) ; c'est le poste energetique majeur en vapeur.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652746281-83238",
+    "deck_id": "deck-qcm-f-at-4",
+    "front": "De quelle substance provient le methanol indesirable dans les spiritueux ?",
+    "back": "Le methanol provient de la pectine ; il faut viser un coeur pauvre en methanol, donc attention aux matieres riches en pectine.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652746281-96462",
+    "deck_id": "deck-qcm-f-at-4",
+    "front": "Pourquoi la distillation simple ne permet-elle pas d'obtenir l'ethanol anhydre ?",
+    "back": "Ethanol et eau forment un azeotrope (~95,6 % ethanol) ; la distillation simple ne descend pas sous ~4 % d'eau, d'ou le recours aux tamis moleculaires pour l'anhydre.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652746281-54464",
+    "deck_id": "deck-qcm-f-at-4",
+    "front": "Quelle technologie de deshydratation constitue le standard moderne pour l'ethanol anhydre ?",
+    "back": "Les tamis moleculaires (zeolites, adsorption modulee en pression) retiennent selectivement l'eau et atteignent > 99,7 % : c'est le standard moderne, plus sur que la distillation azeotropique.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652746281-58349",
+    "deck_id": "deck-qcm-f-at-4",
+    "front": "Que sont les DDGS issus de la filiere cereales ?",
+    "back": "Les DDGS (Distillers Dried Grains with Solubles) proviennent du stillage centrifuge puis evapore et seche ; c'est un aliment proteique pour le betail (avec risque de residus d'antibiotiques/mycotoxines).",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652745889-67691",
+    "deck_id": "deck-qcm-f-wr-1",
+    "front": "A quelle temperature finale se fait l'empatage (mashing) du malt whisky ?",
+    "back": "L'empatage se fait a une temperature finale de 64,5 degres C (~4 eau / 1 malt) : l'amidon gelatinise et les amylases produisent sucres fermentescibles et dextrines.",
+    "type": "basic",
+    "tags": [
+     "M-DIST"
+    ]
+   },
+   {
+    "id": "card-1782652747738-79583",
+    "deck_id": "deck-qcm-f-at-2",
+    "front": "A partir de quelle teneur en alcool l'ethanol devient-il toxique pour la levure ?",
+    "back": "L'ethanol desorganise la membrane et devient toxique au-dela de 12-15 % vol ; l'optimum thermique est ~32 degres C (souches thermotolerantes 36-38).",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   },
+   {
+    "id": "card-1782652748249-79672",
+    "deck_id": "deck-qcm-f-at-1",
+    "front": "Dans le cas du whisky, qu'apporte l'orge maltee ?",
+    "back": "L'orge maltee fournit naturellement alpha- et beta-amylase ; la beta-amylase (exoenzyme) produit du maltose. Le maltage exploite les enzymes synthetisees a la germination.",
+    "type": "basic",
+    "tags": [
+     "M-FERM"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,3167 @@
+{
+ "version_contrat": 1,
+ "exporte_le": "2026-10-30T18:16:28.469Z",
+ "nb": 168,
+ "donnees": [
+  {
+   "id": "maturation_additive_subtractive",
+   "theme": "elevage",
+   "sujet": "reactions",
+   "titre": "Réactions de maturation : additives et soustractives",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.7",
+    "additive": [
+     "extraction directe",
+     "hydrolyse du bois",
+     "interactions bois-distillat"
+    ],
+    "description": "La maturation implique deux types de réactions. ADDITIVES : extraction directe du bois (tanins, vanilline, lactones, sucres), hydrolyse des composants du bois (hémicellulose → xylose → furfural), interactions bois-distillat (estérification, acétalisation). SOUSTRACTIVES : évaporation différentielle (32% de l'acétaldéhyde s'évapore, 5% des isoamyliques, 1% de l'hexanoate d'éthyle), adsorption par le charbon de bois, oxydation des aldéhydes en acides puis estérification, masking (les nouveaux arômes masquent les notes immatures).",
+    "subtractive": [
+     "évaporation différentielle",
+     "adsorption charbon",
+     "oxydation",
+     "masking"
+    ],
+    "evaporation_rates": {
+     "acetic_acid": "1%",
+     "acetaldehyde": "32%",
+     "ethyl_hexanoate": "1%",
+     "isoamyl_alcohols": "5%"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "toasting_light_noisette",
+   "theme": "elevage",
+   "sujet": "home_guide",
+   "titre": "Toast Léger Noisette",
+   "contenu": {
+    "method": "Dry",
+    "result": "Arôme léger de noisette",
+    "description": "Toast léger au four à 175°C pendant 20-30 min. Développe des notes de noisette grillée et de biscuit. Couleur dorée légère.",
+    "duration_hours": 1,
+    "temperature_celsius": 135
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "copper_triple_role",
+   "theme": "distillation_theory",
+   "sujet": "copper",
+   "titre": "Le triple rôle du cuivre en distillation",
+   "contenu": {
+    "role_1": "Élimination H₂S, DMS, thiols → CuS",
+    "role_2": "Catalyse carbamate d'éthyle (éthanol + cyanates)",
+    "role_3": "Formation d'esters (complexité aromatique)",
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.5",
+    "description": "Le cuivre joue trois rôles fondamentaux dans la distillation : (1) ÉLIMINATION DU SOUFRE : le cuivre réagit avec les composés soufrés volatils (H₂S, DMS, thiols) pour former du CuS insoluble, éliminant les notes désagréables. (2) CATALYSE DU CARBAMATE D'ÉTHYLE : le cuivre catalyse la réaction entre l'éthanol et les cyanates (issus des glycosides cyanogènes de l'orge) → carbamate d'éthyle (cancérigène potentiel, réglementé). (3) FORMATION D'ESTERS : le cuivre est impliqué dans les réactions d'estérification, contribuant à la complexité aromatique. Plus le contact cuivre est important (alambics hauts, colonne de rectification en cuivre), plus le spirit est léger et propre.",
+    "more_copper_contact": "Spirit plus léger et propre"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "oak_wood_composition",
+   "theme": "elevage",
+   "sujet": "oak_science",
+   "titre": "Composition chimique du bois de chêne",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.7",
+    "lignin_pct": "15-30",
+    "description": "Le chêne utilisé en tonnellerie (Q. alba, Q. robur, Q. petraea) se compose de : cellulose ~50% (polymère de glucose), hémicellulose 15-30% (xylanes à base de xylose), lignine 15-30% (polymère de guaiacyl et syringyl, dérivés des alcools coniférylique et sinapylique), et extractibles jusqu'à 12% (tanins, lactones, phénols). La lignine est la source principale des arômes vanillés (vanilline, syringaldéhyde). L'hémicellulose se dégrade en furfural et maltol lors du chauffe.",
+    "cellulose_pct": 50,
+    "extractives_pct": "jusqu'à 12",
+    "lignin_subunits": [
+     "guaiacyl (alcool coniférylique)",
+     "syringyl (alcool sinapylique)"
+    ],
+    "hemicellulose_pct": "15-30",
+    "hemicellulose_sugar": "xylose (xylanes)"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "distillation_cuts",
+   "theme": "distillation_theory",
+   "sujet": "process",
+   "titre": "Coupes de distillation (Heads / Heart / Tails)",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "key_skill": "Le stillman décide les points de coupe au nez et au densimètre. C'est l'un des savoir-faire les plus critiques.",
+    "spent_lees": "~30% restant dans l'alambic — éliminé comme déchet",
+    "feints_tails": {
+     "abv": "<60% ABV",
+     "action": "Recyclé avec les foreshots et low wines",
+     "compounds": "Alcools de fusel, acides gras, esters lourds",
+     "proportion": "~40% du distillat"
+    },
+    "foreshots_heads": {
+     "abv": ">73% ABV",
+     "action": "Recyclé avec les low wines",
+     "duration": "~20 premières minutes",
+     "compounds": "Acétaldéhyde, acétate d'éthyle, méthanol traces",
+     "proportion": "~15% du distillat"
+    },
+    "heart_middle_cut": {
+     "abv": "68-73% ABV",
+     "action": "Envoyé en fûts pour maturation",
+     "proportion": "~15% du distillat total",
+     "description": "La fraction noble — collectée dans le spirit receiver"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "elevage_barrel_reuse",
+   "theme": "elevage",
+   "sujet": "bois",
+   "titre": "Réutilisation des fûts — first fill à refill",
+   "contenu": {
+    "max_fills": "6-8 utilisations typiques",
+    "description": "Un fût perd progressivement sa capacité d'extraction à chaque utilisation. Premier remplissage (first fill) : extraction maximale de vanilline, lactones, tanins et couleur — profil boisé intense. 2ème remplissage : extraction réduite de ~50%, profil plus subtil. Au-delà du 3ème remplissage, le fût devient essentiellement un contenant de maturation oxydative avec peu d'apport aromatique du bois. Les fûts épuisés peuvent être régénérés par raclage et re-chauffe (rejuvenation/STR: shave, toast, re-char). En scotch whisky, l'utilisation de fûts de bourbon ex-first-fill est standard, permettant typiquement 6-8 cycles avant régénération ou remplacement."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "toasting_brown_malt_style",
+   "theme": "elevage",
+   "sujet": "home_guide",
+   "titre": "Style Malt Brun",
+   "contenu": {
+    "method": "Dry",
+    "result": "Roasted, similar to Brown Malt",
+    "description": "Toast reproduisant le profil du malt brun anglais traditionnel. Notes de biscuit sec, noisette et café léger.",
+    "duration_hours": 1,
+    "temperature_celsius": 176.7
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "distillation_batch_vs_continuous",
+   "theme": "distillation_theory",
+   "sujet": "methods",
+   "titre": "Distillation batch vs continue",
+   "contenu": {
+    "batch": {
+     "used_for": "Malt whisky, cognac, rhum agricole, mezcal",
+     "advantages": "Caractère aromatique riche, congénères conservés",
+     "description": "Alambic à repasse (pot still). Le wash est chargé, chauffé, distillé, puis l'alambic est vidé et rechargé.",
+     "typical_abv_output": "25-30% (low wines), puis 68-73% (spirit)"
+    },
+    "source": "Buglass 2011, Ch. 3.1",
+    "continuous": {
+     "used_for": "Grain whisky, vodka, gin (base), whiskey américain (colonne + doubler)",
+     "advantages": "Efficacité énergétique, production continue, volume élevé",
+     "description": "Colonne Coffey à 2 colonnes (analyseur + rectificateur). Le wash entre en continu, la vapeur monte, le condensat descend.",
+     "typical_abv_output": "~70% (grain whisky), jusqu'à 94.8% (neutral spirit)"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "elevage_wood_molecular",
+   "theme": "elevage",
+   "sujet": "bois",
+   "titre": "Composition moléculaire du bois de chêne",
+   "contenu": {
+    "description": "Le bois de chêne est constitué de 4 familles moléculaires principales. La cellulose (40-45%) apporte la structure fibreuse. Les hémicelluloses (20-25%) sont des polysaccharides dont la dégradation thermique libère des sucres (xylose, arabinose) et du furfural (amande grillée). La lignine (20-25%) est le précurseur de la vanilline, du syringaldéhyde et de l'eugénol lors de la chauffe et de l'éthanolyse. Les ellagitanins (5-10%) sont les tanins du bois, responsables de l'astringence et de la structure en bouche.",
+    "lignine_pct": "20-25%",
+    "cellulose_pct": "40-45%",
+    "ellagitanins_pct": "5-10%",
+    "hemicellulose_pct": "20-25%"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "toasting_cereal_grape_nuts",
+   "theme": "elevage",
+   "sujet": "home_guide",
+   "titre": "Toast Céréales/Grape-Nuts",
+   "contenu": {
+    "method": "Dry",
+    "result": "Toasted cereal, similar to Grape-Nuts",
+    "description": "Toast moyen reproduisant le profil des céréales grillées type Grape-Nuts. Notes de malt torréfié doux et de biscottes.",
+    "duration_minutes": 30,
+    "temperature_celsius": 176.7
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "gin_london_dry_production",
+   "theme": "distillation_theory",
+   "sujet": "gin",
+   "titre": "Production de gin London Dry — méthode et botanicals",
+   "contenu": {
+    "source": "Prométhée — recette Gin Prométhée London Dry",
+    "methode": "Macération 24h + redistillation avec panier à botanicals",
+    "description": "Le gin London Dry est redistillé à partir d'un spirit neutre de grain avec des botanicals. Méthode Prométhée : diluer le spirit de base à 50% ABV, macérer les botanicals 24h, redistiller doucement au Cincinnatus avec panier à botanicals dans la colonne. Recette Gin Prométhée : genièvre 30g/L (dominant), coriandre 10g/L (complexité agrumée), zeste de citron frais 8g/L (fraîcheur), angélique 5g/L (fixateur terreux), orange amère 5g/L (profondeur), poivre de Sichuan 2g/L (piquant local), lavande du Quercy 1g/L (floral terroir). Le résultat est un distillat à ~78% ABV, réduit à 43% pour l'embouteillage.",
+    "abv_distillat": 78,
+    "spirit_base_abv": 50,
+    "abv_embouteillage": 43,
+    "botanicals_g_par_L": {
+     "genievre": 30,
+     "angelique": 5,
+     "coriandre": 10,
+     "citron_frais": 8,
+     "orange_amere": 5,
+     "lavande_quercy": 1,
+     "poivre_sichuan": 2
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "toasting_light_sweet",
+   "theme": "elevage",
+   "sujet": "home_guide",
+   "titre": "Toast Léger Sucré",
+   "contenu": {
+    "method": "Wet (soaked)",
+    "result": "Légèrement toasté avec douceur",
+    "description": "Toast léger développant des notes sucrées de miel et de caramel blond. Couleur dorée claire.",
+    "duration_hours": 1,
+    "temperature_celsius": 176.7
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "biomasse_chauffage_distillerie",
+   "theme": "distillation_theory",
+   "sujet": "energy",
+   "titre": "Chauffage biomasse bois en distillerie artisanale",
+   "contenu": {
+    "source": "Projet Prométhée — concept énergie",
+    "avantages": [
+     "Coût combustible très bas",
+     "Bilan carbone neutre",
+     "Indépendance énergétique",
+     "Contrôle fin de température"
+    ],
+    "combustible": "Bois local, déchets de scierie, bois de valorisation",
+    "description": "Le chauffage biomasse (bois) est le choix énergétique du projet Prométhée pour la production de vapeur alimentant l'alambic Cincinnatus. Avantages : coût très bas du combustible (bois local, déchets de scierie, valorisation bois du projet), bilan carbone neutre (CO₂ biogénique), indépendance énergétique (pas de gaz/fioul). Système : chaudière biomasse → production de vapeur basse pression (1-3 bar) → alimentation du serpentin vapeur du pot et des chambres. La vapeur permet un contrôle fin de la température (pas de surchauffe locale comme en chauffage direct) et élimine le risque de caramélisation. Investissement initial plus élevé mais OPEX très faibles.",
+    "synergie_projet": "Pôle bois/biomasse alimente directement la distillerie",
+    "pression_vapeur_bar": "1-3"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "warehouse_climate_effects",
+   "theme": "elevage",
+   "sujet": "warehousing",
+   "titre": "Effet du climat de chai sur la maturation",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.7",
+    "description": "Le climat du chai détermine l'évolution du degré alcoolique pendant la maturation. USA (chaud/sec) : la perte d'eau > perte d'éthanol → le degré AUGMENTE au fil du temps (→ profil plus concentré, extraction plus intense). Écosse (frais/humide) : la perte d'éthanol > perte d'eau → le degré DIMINUE (~0.5-1% ABV/an). La température influence aussi la cinétique des réactions chimiques : un chai chaud accélère l'extraction et l'oxydation. Les racked warehouses (métal) ont des variations thermiques plus grandes que les dunnage warehouses (pierre/terre) traditionnels.",
+    "usa_hot_dry": "Degré augmente (perte eau > perte éthanol)",
+    "racked_warehouse": "Variations thermiques élevées, maturation plus rapide",
+    "dunnage_warehouse": "Température stable, maturation plus lente et régulière",
+    "scotland_cool_humid": "Degré diminue ~0.5-1% ABV/an"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "toasting_toasted_malty",
+   "theme": "elevage",
+   "sujet": "home_guide",
+   "titre": "Toast Malté Sucré",
+   "contenu": {
+    "method": "Wet (soaked)",
+    "result": "Toasted malt with slight sweetness",
+    "description": "Toast moyen développant des notes maltées intenses avec du caramel et du toffee. Couleur ambrée.",
+    "duration_hours": 1.5,
+    "temperature_celsius": 176.7
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_congener_production",
+   "theme": "congeners",
+   "sujet": "formation",
+   "titre": "Formation des congénères pendant la fermentation",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.9",
+    "description": "Les congénères se forment principalement pendant la fermentation par le métabolisme de la levure. ESTERS : formés par la condensation d'acétyl-CoA avec des alcools (enzyme : alcool acétyltransférase) — acétate d'éthyle (fruité), acétate d'isoamyle (banane). Favorisés par basse température, faible aération, OG modérée. ALCOOLS SUPÉRIEURS : via la voie d'Ehrlich (désamination des acides aminés → α-cétoacide → aldéhyde → alcool) ou par synthèse de novo. ALDÉHYDES : intermédiaires entre acides aminés et alcools, réduits par l'alcool déshydrogénase. ACIDES GRAS : précurseurs des esters, synthétisés par la voie des acides gras (FAS). La gestion de la température et de la nutrition azotée est le principal levier de contrôle.",
+    "fusel_pathway": "Voie d'Ehrlich : acide aminé → α-cétoacide → aldéhyde → alcool",
+    "control_levers": [
+     "température",
+     "nutrition azotée (FAN)",
+     "aération",
+     "pitching rate"
+    ],
+    "esters_pathway": "acétyl-CoA + alcool → ester (alcool acétyltransférase)",
+    "esters_favored_by": [
+     "basse température",
+     "faible aération",
+     "OG modérée"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "congeners_lactones",
+   "theme": "congeners",
+   "sujet": "lactones",
+   "titre": "Lactones — pêche et noix de coco",
+   "contenu": {
+    "description": "Deux familles de lactones pertinentes : (1) γ-lactones et δ-lactones issues de la fermentation — nuances de pêche, abricot, noix de coco ; (2) Whisky-lactones (β-méthyl-γ-octalactone) extraites du bois de chêne — notes de noix de coco, bois frais. L'isomère cis est beaucoup plus odorant (seuil ~20 μg/L) que le trans (~800 μg/L). Le chêne américain (Q. alba) contient 5-10× plus de whisky-lactones que le chêne européen. La chauffe modérée maximise l'extraction des lactones, tandis qu'une chauffe forte les dégrade partiellement."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "botanicals_orris",
+   "theme": "gin_liqueurs",
+   "sujet": "gin",
+   "titre": "Iris (Orris root) — fixateur floral",
+   "contenu": {
+    "role": "Fixateur d'arômes, apporte de la rondeur et de la complexité florale.",
+    "latin": "Iris germanica / Iris pallida",
+    "flavor": "Violette, poudré, floral délicat",
+    "source": "Buglass 2011",
+    "parts_used": "Rhizome séché (3+ ans de séchage idéal)",
+    "key_compounds": "Irône, acide myristique"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "cask_manufacture",
+   "theme": "elevage",
+   "sujet": "cooperage",
+   "titre": "Fabrication des fûts de bourbon",
+   "contenu": {
+    "wood": "Quercus alba (chêne blanc américain)",
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.19",
+    "seasoning": "6-12 mois naturel ou four",
+    "char_levels": {
+     "1": "15s",
+     "2": "30s",
+     "3": "35s",
+     "4": "55s"
+    },
+    "description": "La fabrication d'un fût de bourbon suit un processus précis : (1) Sélection du chêne blanc américain (Q. alba), séchage naturel 6-12 mois ou séchage au four. (2) Débit en merrains (staves) dans le sens du fil du bois — essentiel pour l'étanchéité (tyloses bloquent les vaisseaux). (3) Assemblage avec cerclage temporaire. (4) Cintrage au feu ou à la vapeur. (5) Chauffe intérieure — toasting suivi du charring (4 niveaux : 15s, 30s, 35s, 55s). (6) Mise en place des fonds (heads) et cerclage final. Le chêne américain est préféré pour sa richesse en tyloses (étanchéité sans cire) et en oak lactones.",
+    "key_advantage_alba": "Riche en tyloses (étanchéité) et oak lactones"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "congeners_norisoprenoids",
+   "theme": "congeners",
+   "sujet": "norisoprenoids",
+   "titre": "Norisoprénoïdes — violette et damascénone",
+   "contenu": {
+    "description": "Les norisoprénoïdes sont issus de la dégradation des caroténoïdes par l'oxygène, la lumière et la température. Trop lourds pour se volatiliser, les caroténoïdes se fragmentent en molécules odorantes plus petites. Les plus importants dans le whisky : α-ionone et β-ionone (violette, quelques μg/L), β-damascénone (camomille, pétales de rose — aussi exhausteur du fruité). Comme les terpènes, ils peuvent exister sous forme glycosylée (réservoir). Leur libération progressive au cours de la maturation contribue à la complexité florale des vieux whiskies."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "botanicals_coriander",
+   "theme": "gin_liqueurs",
+   "sujet": "gin",
+   "titre": "Coriandre — 2ème botanique du gin",
+   "contenu": {
+    "latin": "Coriandrum sativum",
+    "usage": "Graines séchées, généralement le 2ème botanique en quantité après le genièvre",
+    "flavor": "Citronné, floral, légèrement épicé",
+    "source": "Buglass 2011",
+    "key_compounds": "Linalol, géraniol, α-pinène"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "congeners_terpenes",
+   "theme": "congeners",
+   "sujet": "terpenes",
+   "titre": "Terpènes — arômes floraux et résineux",
+   "contenu": {
+    "description": "Les terpènes sont des hydrocarbures (C10 monoterpènes, C15 sesquiterpènes) d'origine variétale, formés à partir du géranyldiphosphate via les terpènes synthases. Molécules clés dans le whisky : linalol (fleur d'oranger, lavande), géraniol/nérol (rose), limonène (magnolia, agrumes), α-terpinéol (chèvrefeuille, muguet), α-pinène (pin, résineux), bornéol (camphre), citronellol (citronnelle). Les terpénols contiennent un atome d'oxygène. Ils existent sous forme libre (odorante) ou liée (glycosylée, muette) — les précurseurs glycosidiques constituent un réservoir d'arômes libérés progressivement pendant la fermentation et la maturation."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "rum_production_overview",
+   "theme": "distillation_theory",
+   "sujet": "rum",
+   "titre": "Production de rhum — pot vs colonne",
+   "contenu": {
+    "muck": "Mélange fermenté bagasse + dunder (Clostridium)",
+    "dunder": "Résidu de distillation, source de bactéries",
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.16-17",
+    "column_rum": {
+     "abv": ">90%",
+     "origins": "Porto Rico, Cuba",
+     "profile": "léger, neutre"
+    },
+    "description": "Le rhum illustre parfaitement la dualité pot still / colonne continue. Rhum traditionnel (Jamaïque, Barbade) : pot still, fermentation longue avec bactéries (dunder/muck), distillat très aromatique à 70-85% ABV, riche en esters (>700 g/hL AA pour les high ester rums). Rhum léger (Porto Rico, Cuba) : colonne continue multi-plateaux, distillé à >90% ABV, profil neutre et léger. Le dunder (résidu de distillation) et le muck (mélange fermenté de bagasse et dunder) sont des sources de bactéries productrices d'esters (Clostridium). La mélasse est la matière première principale (45-55% sucres fermentescibles).",
+    "pot_still_rum": {
+     "abv": "70-85%",
+     "esters": ">700 g/hL AA (high ester)",
+     "origins": "Jamaïque, Barbade"
+    },
+    "molasses_sugars_pct": "45-55%"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fill_strength_effects",
+   "theme": "elevage",
+   "sujet": "fill_conditions",
+   "titre": "Impact du degré de remplissage (fill strength)",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.7",
+    "description": "Le degré d'empotage influence profondément le profil de maturation. Malt scotch : typiquement 57-70% v/v. Grain scotch : <80% v/v. À faible degré (63.5%) : extraction privilégiée des composés hydrosolubles (tanins, sucres, composés phénoliques). À haut degré (>68%) : extraction privilégiée des composés liposolubles (oak lactones, phénols non polaires). Le standard historique de 63.5% (11° under proof) est un compromis empirique entre les deux profils.",
+    "standard_fill": "63.5% (11° under proof)",
+    "malt_range_abv": "57-70%",
+    "grain_range_abv": "<80%",
+    "low_fill_extracts": "tanins, sucres, composés hydrosolubles",
+    "high_fill_extracts": "oak lactones, composés liposolubles"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "barley_modification",
+   "theme": "barley_science",
+   "sujet": "malting",
+   "titre": "Modification du malt — indicateurs qualité",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "definition": "La 'modification' mesure le degré de dégradation des parois cellulaires et des protéines pendant la germination.",
+    "indicators": {
+     "viscosity": {
+      "description": "Viscosité du moût (indicateur de beta-glucanes résiduels)",
+      "problematic": ">1.70 mPa·s (filtration difficile)",
+      "well_modified": "<1.55 mPa·s"
+     },
+     "friability": {
+      "description": "% de grains qui se brisent facilement au friabilimètre",
+      "well_modified": ">85%",
+      "under_modified": "<80%"
+     },
+     "kolbach_index": {
+      "description": "Ratio azote soluble / azote total × 100",
+      "over_modified": ">45% (risque de corps faible)",
+      "well_modified": "38-45%",
+      "under_modified": "<35%"
+     }
+    },
+    "whisky_vs_beer": "Le malt pour whisky peut être légèrement moins modifié que pour la bière, car on cherche un maximum de sucres fermentescibles, pas de clarté du moût."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "barley_protein_fractions",
+   "theme": "barley_science",
+   "sujet": "biochemistry",
+   "titre": "Fractions protéiques de l'orge",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "fractions": {
+     "albumins": "Solubles dans l'eau. Nutriments pour la levure (FAN).",
+     "hordeins": "Prolamines de l'orge. Insolubles mais partiellement dégradées pendant le maltage. Problème de trouble si mal dégradées.",
+     "globulins": "Solubles en solutions salines. Contribuent à la mousse.",
+     "glutelins": "Protéines structurelles. Peu impactées par le brassage."
+    },
+    "total_protein": "10-12% (idéal pour le brassage ; >12% = trop d'azote → trouble + off-flavors)",
+    "fan_free_amino_nitrogen": {
+     "too_low": "Fermentation lente, H₂S, off-flavors",
+     "too_high": "Excès de fusel alcohols, instabilité microbiologique",
+     "target_ppm": "150-200 ppm dans le moût pour une fermentation saine",
+     "description": "Azote aminé libre — nutriment essentiel pour la levure"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "maturation_4_processes",
+   "theme": "elevage",
+   "sujet": "overview",
+   "titre": "Les 4 processus de la maturation en fût",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2.5",
+    "processes": {
+     "leaching": "Extraction de composés du bois : tanins (ellagiques, galliques), lignines, lactones, vanilline, syringaldéhyde.",
+     "oxidation": "L'oxygène entre par les pores du bois → oxydation lente des alcools de fusel en acides carboxyliques → estérification → esters fruités.",
+     "adsorption": "Le charbon de bois (charring) adsorbe les composés soufrés indésirables et certains congénères agressifs.",
+     "ethanol_loss": "Perte de ~2% volume/an ('angels' share'). En Écosse, l'éthanol s'évapore plus vite que l'eau → le degré baisse."
+    },
+    "minimum_legal": "3 ans minimum en fût de chêne pour le Scotch whisky",
+    "optimum_range": "15-21 ans souvent cité comme optimal pour les single malts. Au-delà de 21 ans, risque de domination boisée."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "distillation_double_triple",
+   "theme": "distillation_theory",
+   "sujet": "process",
+   "titre": "Double et triple distillation",
+   "contenu": {
+    "double": {
+     "examples": "Majorité des distilleries écossaises",
+     "description": "Standard pour le Scotch malt whisky. 1ère passe (wash still) → low wines ~25-30% ABV. 2ème passe (spirit still) → heart ~68-73% ABV."
+    },
+    "source": "Buglass 2011, Ch. 3.2",
+    "triple": {
+     "examples": "Auchentoshan (Lowlands), Irish whiskey traditionnel",
+     "description": "Trois passages successifs. Produit un spirit plus léger et plus pur."
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "congeners_ester_types",
+   "theme": "congeners",
+   "sujet": "esters",
+   "titre": "Types d'esters dans le whisky",
+   "contenu": {
+    "description": "Quatre familles d'esters dans le whisky : (1) Esters éthyliques à chaîne linéaire (acide + éthanol) — hexanoate, octanoate, décanoate d'éthyle — fruités variés, plus lourds/savonneux si >C10 ; (2) Esters éthyliques d'acides ramifiés (3-méthylbutanoate d'éthyle) — fraise, kiwi, solvant ; (3) Esters éthyliques d'acides hydroxylés (3-hydroxybutanoate d'éthyle) — fraise, mûre, pomme ; (4) Acétates d'alcools supérieurs (acétate de butyle, d'isoamyle, de 2-phényléthyle) — banane, poire, notes florales. L'acétate d'éthyle est le plus abondant (dizaines de mg/L) — fruité à faible dose, solvant/vinaigré en excès."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "distillation_vacuum",
+   "theme": "distillation_theory",
+   "sujet": "vacuum",
+   "titre": "Distillation sous vide — principes et effets",
+   "contenu": {
+    "source": "Compilation - Russell et al. + Jacques et al., 2003",
+    "advantages": [
+     "Préservation arômes fragiles",
+     "Économie d'énergie",
+     "Moins de furfural/Maillard"
+    ],
+    "description": "La distillation sous vide abaisse le point d'ébullition du mélange eau-éthanol, permettant de distiller à des températures significativement plus basses (typiquement 40-50°C au lieu de 78-100°C). Avantages potentiels : réduction de la dégradation thermique des composés aromatiques fragiles, économie d'énergie (moindre apport calorifique), réduction de la formation de furfural et de produits de Maillard. Inconvénients : moins de contact cuivre actif (réactions Cu-S sont température-dépendantes), profil aromatique différent (moins de notes cuites/grillées), coût d'équipement supérieur (pompe à vide, étanchéité). Utilisée principalement en parfumerie et pour certains spirits artisanaux innovants.",
+    "applications": "Parfumerie, spirits artisanaux innovants",
+    "disadvantages": [
+     "Moins de contact cuivre actif",
+     "Profil aromatique différent",
+     "Coût équipement supérieur"
+    ],
+    "typical_temp_c": "40-50"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "bourbon_maturation_specifics",
+   "theme": "elevage",
+   "sujet": "bourbon",
+   "titre": "Maturation du bourbon — spécificités",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.19",
+    "description": "La maturation du bourbon a des caractéristiques uniques liées au climat et aux fûts neufs charrés. Durée : moderne 3-4 ans, traditionnel 4-8 ans. Couleur : 25-30% de la couleur finale se forme dans les 6 premiers mois (extraction rapide des fûts neufs charrés). Le degré augmente d'environ 4-5% proof/an dans les warehouses américains (climat chaud/sec). Les warehouses multi-étages ont des conditions différentes par niveau : les étages supérieurs (plus chauds) maturent plus vite. La rotation des fûts entre étages est pratiquée par certaines distilleries.",
+    "modern_years": "3-4",
+    "traditional_years": "4-8",
+    "colour_6months_pct": "25-30%",
+    "warehouse_variation": "Étages supérieurs plus chauds = maturation accélérée",
+    "proof_increase_per_year": "4-5%"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "energy_heat_recovery",
+   "theme": "distillation_theory",
+   "sujet": "energy",
+   "titre": "Récupération de chaleur en distillerie",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "co2_note": "Les réglementations environnementales exigent de baisser les températures de rejet d'eau des condenseurs. La réfrigération de l'eau d'entrée améliore aussi le rendement et la constance du distillat.",
+    "biomass_option": "Chaudière biomasse (bois, drêches séchées) pour produire la vapeur. Réduit les coûts de 50% (retour sur investissement ~3 ans).",
+    "condenser_heat": "L'eau de condensation sort très chaude (60-80°C). Peut être utilisée pour : préchauffer le wash, chauffer les bâtiments, serres (ex: Glen Garioch dans les années 1970).",
+    "steam_efficiency": "Le chauffage vapeur (indirect) via serpentins ou double paroi est standard. Permet un contrôle précis et évite le brûlage.",
+    "spent_wash_valorization": {
+     "pot_ale": "Résidu du wash still — riche en protéines, utilisable en alimentation animale (pot ale syrup) ou méthanisation.",
+     "spent_lees": "Résidu du spirit still — principalement eau + résidus, déchargé ou traité."
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "american_continuous_still",
+   "theme": "distillation_theory",
+   "sujet": "continuous",
+   "titre": "Colonne continue américaine (bourbon)",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.19",
+    "description": "La colonne continue américaine typique comprend 18 plateaux à tamis (sieve plates) pour le stripping + 4-8 plateaux à calottes (bubble cap) pour la concentration. Le beer est injecté en haut de la section de stripping. Le doubler (pot still auxiliaire) ou thumper assure la 2ème distillation. Données opérationnelles typiques (bourbon) : produit à 130° proof (65% ABV), 12,000 lb/hr de vapeur, 120 gal/min de beer en entrée, pertes de 0.0004%. Le doubler reçoit les vapeurs du sommet de la colonne et les redistille pour concentrer et purifier.",
+    "steam_lb_hr": 12000,
+    "product_proof": 130,
+    "stripping_type": "sieve (tamis)",
+    "still_losses_pct": 0.0004,
+    "stripping_plates": 18,
+    "beer_feed_gal_min": 120,
+    "concentrating_type": "bubble cap (calottes)",
+    "second_distillation": "doubler ou thumper",
+    "concentrating_plates": "4-8"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "condenser_types",
+   "theme": "distillation_theory",
+   "sujet": "equipment",
+   "titre": "Types de condenseurs : shell-and-tube vs worm tub",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.5",
+    "worm_tub": {
+     "spirit": "lourd, huileux, complexe",
+     "examples": "Dalwhinnie, Mortlach, Cragganmore",
+     "usage_pct": 10,
+     "copper_contact": "réduit"
+    },
+    "description": "Deux types de condenseurs sont utilisés en distillerie. SHELL-AND-TUBE (moderne, ~90% des distilleries) : tubes de cuivre dans une enveloppe d'eau froide. Grand contact cuivre, condensation rapide, spirit plus léger et propre. Facile à nettoyer (CIP). WORM TUB (traditionnel, ~10%) : long serpentin de cuivre immergé dans une cuve d'eau froide extérieure. Contact cuivre réduit, condensation plus lente et irrégulière, spirit plus lourd, plus huileux et plus complexe. Le choix du condenseur influence significativement le caractère du spirit — Dalwhinnie et Mortlach (worm tub) vs Glenmorangie (shell-and-tube) illustrent cette différence.",
+    "shell_and_tube": {
+     "spirit": "léger, propre",
+     "usage_pct": 90,
+     "maintenance": "CIP facile",
+     "copper_contact": "élevé"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "ulysse_alambic_ambulant",
+   "theme": "distillation_theory",
+   "sujet": "equipment",
+   "titre": "Ulysse — alambic ambulant (distillation de fruits)",
+   "contenu": {
+    "type": "Alambic ambulant (bouilleur de cru)",
+    "zone": "Tarn-et-Garonne (82) et départements limitrophes",
+    "source": "Projet Prométhée — phase Ulysse",
+    "produits": "Eaux-de-vie de fruits, assemblages terroir",
+    "avantages": [
+     "Faible investissement initial",
+     "Trésorerie rapide",
+     "Réseau producteurs locaux",
+     "Notoriété pré-installation"
+    ],
+    "abv_typique": 45,
+    "description": "Le projet Ulysse est le volet distillation ambulante (bouilleur de cru itinérant) de Prométhée. Un alambic mobile permet de se déplacer chez les producteurs de fruits du Tarn-et-Garonne pour distiller sur place les moûts fermentés. Avantages : activité à faible investissement initial, génération rapide de trésorerie, création d'un réseau de producteurs locaux, développement de la notoriété avant l'installation fixe du Cincinnatus. Les eaux-de-vie ambulantes sont distillées à 45% ABV typiquement, avec des assemblages signature mettant en valeur le terroir local."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "formulas_abv",
+   "theme": "formulas",
+   "sujet": "alcohol",
+   "titre": "Formule de Calcul du Taux d'Alcool (ABV)",
+   "contenu": {
+    "notes": "Approximate calculation. More precise formulas exist.",
+    "formula": "ABV ≈ (OG - FG) × 131.25",
+    "description": "ABV = (OG - FG) × 131.25. Formule simplifiée largement utilisée. Pour plus de précision : ABV = (76.08 × (OG - FG) / (1.775 - OG)) × (FG / 0.794)."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "elevage_charring",
+   "theme": "elevage",
+   "sujet": "bois",
+   "titre": "Charring — la carbonisation du fût",
+   "contenu": {
+    "levels": "Niveaux 1 à 4 (15s à 55s)",
+    "description": "Le charring (brûlage) est une carbonisation intense de l'intérieur du fût, distincte du bousinage. Obligatoire pour les fûts de bourbon neufs. Trois effets principaux : (1) Filtration — la couche de charbon actif (red layer / couche rouge) adsorbe les composés soufrés et les congénères indésirables ; (2) Extraction — la carbonisation craquelle le bois, augmentant la surface de contact et accélérant l'extraction de vanilline, lactones et tanins ; (3) Pénétration — les fissures thermiques permettent au spiritueux de pénétrer plus profondément dans le bois. Niveaux : #1 (15s, léger), #2 (30s, moyen), #3 (35-40s, alligator), #4 (55s, très intense — surface écaillée)."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "pot_still_components",
+   "theme": "distillation_theory",
+   "sujet": "pot_still_design",
+   "titre": "Composants d'un pot still (Nicol)",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.5",
+    "copper_role": "Le cuivre élimine les composés soufrés (DMS, H₂S), catalyse la formation de carbamate d'éthyle à partir de glycosides cyanogènes, et favorise la formation d'esters.",
+    "description": "Un pot still de malt scotch comprend 20 composants principaux selon Nicol : pot (corps), steam coil (serpentin vapeur), crown (voûte), flue plate (plaque de fumées, chauffage direct uniquement), shoulder (épaule), ogee (transition convexe pot→col), swan neck (col de cygne), head (tête), lyne arm (bras de sortie), vapour chamber, condenser (shell-and-tube ou worm tub), water jacket, tube bundle, tail pipe, charging line, air valve, anti-collapse valve, discharge valve, steam line et cradle (berceau de support).",
+    "heating_methods": [
+     "Chauffage direct (flamme)",
+     "Chauffage indirect (serpentin vapeur)",
+     "Chauffage par jacket vapeur"
+    ],
+    "components_count": 20
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "maturation_oxidation_reactions",
+   "theme": "elevage",
+   "sujet": "chemistry",
+   "titre": "Réactions d'oxydation pendant la maturation",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2.5",
+    "pathway": "Alcools → Acides carboxyliques → Estérification avec éthanol → Esters fruités",
+    "examples": {
+     "acetic_plus_ethanol": "CH₃COOH + C₂H₅OH → CH₃COOC₂H₅ + H₂O (acétate d'éthyle) — fruité, solvant",
+     "acetaldehyde_to_acetic": "CH₃CHO → CH₃COOH (acide acétique)",
+     "ethanol_to_acetaldehyde": "CH₃CH₂OH → CH₃CHO (acétaldéhyde) — piquant, pomme verte"
+    },
+    "copper_binding": "Les ions Cu²⁺ du new make se lient aux lignines et tanins du bois → la teneur en cuivre diminue avec l'âge.",
+    "lignin_oxidation": "Les lignines s'hydrolysent en aldéhydes phénoliques : vanilline (vanille), syringaldéhyde (épicé-vanillé). Réaction lente, accumulation sur des années.",
+    "polyphenol_evolution": "Les polyphénols totaux augmentent avec le temps. Leur oxydation stabilise les clusters éthanol-eau → texture soyeuse."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "congeners_volatility_distillation",
+   "theme": "congeners",
+   "sujet": "volatility",
+   "titre": "Volatilité des congénères et comportement en distillation",
+   "contenu": {
+    "heads": [
+     "acétaldéhyde",
+     "acétate d'éthyle",
+     "composés soufrés légers"
+    ],
+    "tails": [
+     "alcools supérieurs lourds",
+     "acides gras",
+     "furfural"
+    ],
+    "hearts": [
+     "éthanol",
+     "esters fruités",
+     "alcools supérieurs légers"
+    ],
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.16-17",
+    "paradox": "Certains congénères changent de fraction selon la concentration en éthanol",
+    "description": "Le comportement des congénères pendant la distillation dépend de leur volatilité relative par rapport à l'éthanol dans un milieu eau-éthanol. TÊTES (foreshots) : acétaldéhyde (très volatil, part en premier), acétate d'éthyle, composés soufrés légers. CŒUR : éthanol + esters fruités (butyrate, hexanoate), alcools supérieurs légers. QUEUES (feints) : alcools supérieurs lourds (amyliques), acides gras (décanoïque, octanoïque), furfural. PARADOXE : certains congénères changent de fraction selon la concentration en éthanol — le propanol est plus volatil que l'éthanol à faible concentration mais moins à haute concentration."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "cincinnatus_chamber_still",
+   "theme": "distillation_theory",
+   "sujet": "equipment",
+   "titre": "Alambic Cincinnatus — chamber still signature",
+   "contenu": {
+    "mode": "Semi-continu / feed-and-bleed",
+    "type": "Chamber still (alambic à chambres)",
+    "source": "Projet Prométhée — design Cincinnatus",
+    "objectif": "Fort caractère aromatique + efficacité énergétique",
+    "chauffage": "Vapeur biomasse (bois)",
+    "structure": "1 pot + 3 chambres inox + colonne de rectification latérale",
+    "description": "Le Cincinnatus est le projet d'alambic signature de la distillerie Prométhée. C'est un chamber still (alambic à chambres) inspiré du Leopold Bros, conçu pour un fonctionnement semi-continu (feed-and-bleed). Architecture : 1 pot principal + 3 chambres superposées (inox, chauffage vapeur), plus une colonne de rectification latérale avec garnissage cuivre et anneaux de Raschig en cuivre. Capacité : environ 1200 L utiles. Chauffage : vapeur biomasse (bois). Le design vise un fort caractère aromatique tout en permettant une bonne efficacité énergétique et une modularité d'utilisation (whisky, gin avec panier à botanicals, eaux-de-vie).",
+    "inspiration": "Leopold Bros (Denver, Colorado)",
+    "capacite_utile_L": 1200,
+    "garnissage_colonne": "Cuivre + anneaux de Raschig cuivre"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "distillation_pot_still_anatomy",
+   "theme": "distillation_theory",
+   "sujet": "equipment",
+   "titre": "Anatomie d'un pot still",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "components": {
+     "pot": "Cuve principale en cuivre, chauffée vapeur ou feu direct. Contient le wash ou les low wines.",
+     "lyne_arm": "Bras de lyne — angle ascendant = plus de reflux ; descendant = spirit plus lourd.",
+     "condenser": "Shell-and-tube (moderne) ou worm tub (traditionnel, plus lourd en caractère).",
+     "swan_neck": "Col de cygne — plus il est haut, plus le reflux est important → spirit plus léger."
+    },
+    "copper_role": "Le cuivre élimine les composés organo-soufrés malodorants (DMS, mercaptans). Plus de contact cuivre = spirit plus propre.",
+    "shape_impact": "Alambic haut et fin → spirit léger, floral (ex: Glenmorangie). Court et trapu → spirit lourd, huileux (ex: Lagavulin).",
+    "typical_capacity": "5 000 à 30 000 L pour un wash still, 3 000 à 20 000 L pour un spirit still."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "distillation_raoults_law",
+   "theme": "distillation_theory",
+   "sujet": "thermodynamics",
+   "titre": "Loi de Raoult & équilibre liquide-vapeur",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.1",
+    "formula": "p(i) = X(i) · p₀(i)",
+    "key_point": "Un mélange eau-éthanol à 8% ABV (wash) produit une vapeur à ~50% ABV au premier équilibre. L'azéotrope éthanol-eau est à 95.6% ABV (78.15°C).",
+    "application": "Explique pourquoi une seule distillation ne peut pas produire d'alcool pur — l'azéotrope est la limite thermodynamique.",
+    "description": "La pression partielle de vapeur d'un composant dans un mélange idéal est proportionnelle à sa fraction molaire multipliée par sa pression de vapeur pure. L'éthanol (p₀ plus élevé) s'enrichit dans la vapeur par rapport au liquide."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "elevage_bousinage",
+   "theme": "elevage",
+   "sujet": "bois",
+   "titre": "Bousinage — la chauffe du fût",
+   "contenu": {
+    "description": "Le bousinage (toasting) est la chauffe contrôlée de l'intérieur du fût. Il déclenche 4 voies de dégradation thermique majeures : (1) Dégradation des polysaccharides → furfural, 5-méthylfurfural, xylose (notes amande, pain grillé, caramel) ; (2) Dégradation de la lignine → vanilline, syringaldéhyde, eugénol, guaiacol (vanille, épices, fumé) ; (3) Dégradation des lipides → lactones, dont la whisky-lactone cis/trans (noix de coco, bois frais) ; (4) Réaction de Maillard entre sucres et acides aminés → mélanoidines, arômes grillés complexes. L'intensité de chauffe (légère/moyenne/forte) module le profil : légère = boisé fin, vanille ; moyenne = caramel, épices ; forte = torréfaction, café, chocolat."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "elevage_oak_species",
+   "theme": "elevage",
+   "sujet": "bois",
+   "titre": "Espèces de chêne pour la tonnellerie",
+   "contenu": {
+    "description": "Trois espèces principales en tonnellerie : Quercus petraea (chêne sessile, France — grain fin, tanins élégants, arômes vanillés subtils), Quercus robur (chêne pédonculé, France/Europe — grain plus grossier, tanins plus agressifs, plus d'ellagitanins), Quercus alba (chêne blanc américain — vanilline 2-5× plus élevée, whisky-lactones prononcées, tanins plus doux). Le grain du bois (fin, moyen, grossier) dépend de la largeur des cernes de croissance et conditionne la porosité et la vitesse d'extraction."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "gin_liqueurs_gin_process",
+   "theme": "gin_liqueurs",
+   "sujet": "production",
+   "titre": "Procédés de fabrication du gin",
+   "contenu": {
+    "description": "Trois méthodes principales : (1) Distilled gin — redistillation de l'alcool neutre en présence des botaniques dans un pot still ou carter-head. Le pot still immerge les botaniques dans l'alcool ; le carter-head fait passer les vapeurs à travers un panier de botaniques (vapor infusion). Produit le profil le plus fin et intégré. (2) London Dry gin — un distilled gin sans ajout de sucre ni d'arôme après distillation (max 0.1 g/L sucre). Le genièvre doit dominer le profil. (3) Compound gin — macération à froid des botaniques dans l'alcool neutre sans redistillation. Plus simple mais profil moins intégré, souvent avec des notes terreuses plus marquées."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "heat_treatment_wood",
+   "theme": "elevage",
+   "sujet": "oak_science",
+   "titre": "Chauffe du bois : toasting vs charring",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.7",
+    "charring": {
+     "role": "charbon actif = adsorption composés indésirables",
+     "duration": "15-45 secondes"
+    },
+    "toasting": {
+     "duration": "5-20 min",
+     "products": "furfural, maltol, vanilline, syringaldéhyde"
+    },
+    "description": "Toasting (5-20 min, feu doux) : dégrade les polysaccharides → furfural + maltol + produits de Maillard ; dégrade la lignine → vanilline + syringaldéhyde + coniféraldéhyde. Les tanins s'assouplissent. Charring (15-45 secondes, flamme directe) : crée une couche de charbon actif qui adsorbe les composés indésirables du new make spirit (composés soufrés, immatures). Le charring dégrade davantage la lignine et libère plus de sucres caramélisés. Les fûts bourbon sont toujours charrés (niveaux 1-4), les fûts sherry généralement toastés.",
+    "sherry_practice": "Généralement toasté",
+    "bourbon_practice": "Toujours charré (niveaux 1-4)"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "maturation_wood_chemistry",
+   "theme": "elevage",
+   "sujet": "chemistry",
+   "titre": "Chimie du bois de chêne",
+   "contenu": {
+    "lignin": "20-30% — polymère de guaiacyle et syringyle. Hydrolyse → vanilline, syringaldéhyde, aldéhydes phénoliques.",
+    "source": "Buglass 2011, Ch. 3.2.5",
+    "tannins": {
+     "gallic": "Astringence, prévient l'oxydation excessive",
+     "ellagic": "Tanins hydrolysables — astringence, antioxydant puissant"
+    },
+    "lactones": {
+     "cis_oak_lactone": "β-méthyl-γ-octalactone (isomère cis). Arôme de noix de coco, bois frais. Plus abondant dans le chêne américain.",
+     "trans_oak_lactone": "Isomère trans, moins aromatique."
+    },
+    "cellulose": "40-50% — structure, peu d'impact aromatique direct",
+    "hemicellulose": "20-25% — pyrolysée par le charring → furfural, caramel, sucres simples",
+    "color_compounds": "Caramels (hemicellulose), tanins (ellagiques), extraits de vin résiduel dans les sherry casks",
+    "american_vs_european": {
+     "american": "Quercus alba — moins dense, plus de lactones, plus de vanilline, maturation plus douce",
+     "european": "Quercus robur — plus dense, plus de tanins, extraction plus rapide, caractère plus épicé/structuré"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "elevage_grain_concept",
+   "theme": "elevage",
+   "sujet": "bois",
+   "titre": "Le concept de grain du bois",
+   "contenu": {
+    "description": "Le grain du bois désigne la finesse des cernes annuels de croissance. Un grain fin (cernes serrés) est associé à une croissance lente (forêt dense, sols pauvres) et offre une extraction plus douce avec des tanins élégants. Un grain grossier (cernes larges) donne une extraction rapide et des tanins plus agressifs. Le chêne sessile (Q. petraea) produit généralement un grain plus fin que le pédonculé (Q. robur). Le grain est classé : fin (<3 mm/cerne), moyen (3-5 mm), grossier (>5 mm). Ce paramètre est déterminant dans la sélection des merrains par les tonneliers."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "toasting_light_noisette_alt",
+   "theme": "elevage",
+   "sujet": "home_guide",
+   "titre": "Toast Léger Noisette — Rapide",
+   "contenu": {
+    "method": "Dry",
+    "result": "Arôme léger de noisette",
+    "description": "Version rapide du toast noisette à température plus élevée. Résultat similaire en moins de temps.",
+    "duration_minutes": 15,
+    "temperature_celsius": 176.7
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "maturation_cask_types",
+   "theme": "elevage",
+   "sujet": "casks",
+   "titre": "Types de fûts et leur impact",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2.5",
+    "ex_wine": {
+     "types": "Port, Sauternes, Bordeaux, Madère, Marsala",
+     "flavors": "Fruité, vineux, tanins fins, complexité supplémentaire"
+    },
+    "ex_bourbon": {
+     "wood": "Chêne blanc américain (Quercus alba)",
+     "color": "Or pâle à ambré",
+     "flavors": "Vanille, caramel, noix de coco, épices douces",
+     "capacity": "180-250 L (hogshead reconstitué)",
+     "charring": "Obligatoire par la loi US (charred = brûlé en surface). Crée une couche de charbon actif."
+    },
+    "virgin_oak": {
+     "usage": "Rare en Scotch, standard en bourbon",
+     "flavors": "Très boisé, tannique, vanille intense, épices"
+    },
+    "rejuvenated": "Fûts usagés dont les douelles sont grattées et re-charrées. Moins de caractère que le 1st fill mais réactivation du bois.",
+    "key_principle": "1st fill > 2nd fill > 3rd fill en intensité d'extraction. Les fûts s'épuisent au fil des remplissages.",
+    "ex_sherry_oloroso": {
+     "wood": "Chêne européen (Quercus robur) ou américain",
+     "color": "Ambré foncé à acajou",
+     "flavors": "Fruits secs, noisette, chocolat, épices chaudes, orange confite",
+     "capacity": "~500 L (butt)"
+    },
+    "ex_sherry_pedro_ximenez": {
+     "color": "Très foncé, presque noir",
+     "flavors": "Raisin sec, figue, mélasse, chocolat noir"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "cask_types_detailed",
+   "theme": "elevage",
+   "sujet": "cask_types",
+   "titre": "Types de fûts et profils aromatiques détaillés",
+   "contenu": {
+    "refill": {
+     "notes": "caractère distillat dominant",
+     "extraction": "réduite"
+    },
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.7",
+    "ex_bourbon": {
+     "notes": "sèches, terreuses, vanille, noix de coco",
+     "oak_lactone": "élevé"
+    },
+    "description": "Ex-bourbon (chêne américain, charré) : notes sèches, terreuses, vanille, noix de coco (oak lactone élevé). Ex-sherry/chêne espagnol : vanille, fruité, douceur, couleur intense, tanins élevés. Chêne américain ex-sherry : plus léger, floral, moins de couleur que chêne espagnol. Refill (2ème+ remplissage) : extraction réduite, laisse le caractère du distillat s'exprimer. Régénéré (re-charré/re-toasté) : produits de dégradation thermique dominent, mais les oak lactones et tanins NE sont PAS régénérés — le profil est donc fondamentalement différent d'un fût neuf.",
+    "regenerated": {
+     "notes": "produits thermiques",
+     "limitation": "lactones et tanins non régénérés"
+    },
+    "ex_sherry_spanish": {
+     "notes": "vanille, fruité, douceur",
+     "colour": "élevée",
+     "tannins": "élevés"
+    },
+    "ex_sherry_american": {
+     "notes": "léger, floral",
+     "colour": "modérée"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "acetal_ester_equilibria",
+   "theme": "elevage",
+   "sujet": "reactions",
+   "titre": "Équilibres acétal/aldéhyde et estérification",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.7",
+    "key_acetal": "1,1-diéthoxyéthane (acétaldéhyde + éthanol)",
+    "description": "Pendant la maturation, des équilibres chimiques complexes s'installent. Acétals : l'acétaldéhyde réagit avec l'éthanol pour former le 1,1-diéthoxyéthane (acétal), dont l'équilibre dépend du pH et du type de fût. Les esters augmentent régulièrement via l'estérification de l'acide acétique avec l'éthanol (formation d'acétate d'éthyle). Les aldehydes sont progressivement oxydés en acides carboxyliques correspondants, alimentant la formation d'esters. Ces réactions sont lentes mais continues sur des décennies.",
+    "ester_formation": "acide acétique + éthanol → acétate d'éthyle (augmentation continue)",
+    "aldehyde_pathway": "aldéhyde → oxydation → acide → estérification → ester"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "elevage_ethanolyse",
+   "theme": "elevage",
+   "sujet": "chimie",
+   "titre": "Éthanolyse — extraction par l'éthanol",
+   "contenu": {
+    "description": "L'éthanolyse est le mécanisme principal d'extraction des composés du bois par le spiritueux. L'éthanol agit comme solvant et réactif : il pénètre le bois, solubilise les composés phénoliques de la lignine et catalyse leur transformation. Voie clé : lignine → coniféraldéhyde → vanilline (et syringaldéhyde via l'unité syringyle). Cette réaction est accélérée par la chaleur et le temps. Le degré de remplissage (fill strength) influence l'éthanolyse : un ABV plus élevé (63-65%) extrait davantage de lactones et composés lipophiles, tandis qu'un ABV plus bas (50-55%) favorise l'extraction des tanins hydrophiles."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_off_flavors",
+   "theme": "fermentation",
+   "sujet": "off_flavors",
+   "titre": "Prévention des Faux Goûts",
+   "contenu": {
+    "diacetyl": {
+     "cause": "Incomplete fermentation",
+     "flavor": "Buttery, butterscotch"
+    },
+    "description": "Principaux faux goûts : diacétyle (beurre, palier de repos diacétyle à 18°C), acétaldéhyde (pomme verte, fermentation incomplète), DMS (maïs cuit, ébullition insuffisante), phénols (médicinal, chloramines dans l'eau), esters excessifs (banane, température trop élevée).",
+    "acetaldehyde": {
+     "cause": "Yeast stressed, incomplete fermentation",
+     "flavor": "Green apple"
+    },
+    "fusel_alcohols": {
+     "cause": "Temperature too high",
+     "flavor": "Solvent-like"
+    },
+    "excessive_esters": {
+     "cause": "Under-pitching yeast",
+     "flavor": "Banana-like"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "oak_lactone_chemistry",
+   "theme": "elevage",
+   "sujet": "oak_science",
+   "titre": "Oak lactone (whisky-lactone)",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.7",
+    "key_isomer": "cis (arôme noix de coco, seuil 20x plus bas)",
+    "description": "L'oak lactone (β-méthyl-γ-octalactone) est l'un des composés les plus importants de la maturation. L'isomère cis (arôme de noix de coco) a un seuil de perception ~20x plus bas que l'isomère trans et domine le profil. Le chêne américain (Q. alba) contient naturellement plus de lactones que le chêne européen. Après 4 ans de maturation en fût de chêne américain neuf toasté, la concentration atteint des niveaux très significatifs. Les lactones ne sont PAS régénérées par re-chauffe des fûts usagés.",
+    "chemical_name": "β-méthyl-γ-octalactone",
+    "not_regenerated": true,
+    "american_vs_european": "Q. alba >> Q. robur/petraea en concentration"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "maturation_angels_share",
+   "theme": "elevage",
+   "sujet": "storage",
+   "titre": "Part des anges & conditions d'entrepôt",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2.5",
+    "loss_rate": "~2% du volume par an en Écosse (11 millions de litres perdus par an dans les années 1970)",
+    "humidity_impact": "Humidité élevée → moins d'évaporation → whisky plus rond et doux. Humidité basse → plus d'évaporation → notes plus concentrées.",
+    "warehouse_types": {
+     "racked": "Moderne — sol béton, racks métal, 6-12 fûts de haut. Plus sec, maturation plus rapide mais potentiellement plus dure.",
+     "dunnage": "Traditionnel — sol en terre, murs en pierre, 3 fûts de haut. Humidité élevée, température stable. Maturation lente et douce."
+    },
+    "bourbon_behavior": "Climat chaud (Kentucky) → l'eau s'évapore plus vite → le degré AUGMENTE avec l'âge (55% → 60%+ ABV).",
+    "casking_strength": {
+     "bourbon": "~55% ABV (maximum légal 62.5%)",
+     "scotch_malt": "~63-68% ABV",
+     "scotch_grain": "~68% ABV (dilué à ~68% avant mise en fût)"
+    },
+    "scotland_behavior": "Climat frais et humide → l'éthanol s'évapore plus vite que l'eau → le degré d'alcool diminue avec l'âge."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_temperatures",
+   "theme": "fermentation",
+   "sujet": "temperatures",
+   "titre": "Températures de Fermentation",
+   "contenu": {
+    "description": "Températures optimales : ales 15-24°C (esters fruités favorisés à haute température), lagers 7-13°C (profil propre et net), weizens 17-24°C (esters de banane favorisés), fermentations belges 18-28°C (montée progressive recommandée).",
+    "internal_rise": "Internal temp can be 10°F (5.5°C) above ambient",
+    "ale_celsius_max": 24,
+    "ale_celsius_min": 18,
+    "lager_celsius_max": 13,
+    "lager_celsius_min": 7
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "lactic_acid_bacteria_whisky",
+   "theme": "fermentation_advanced",
+   "sujet": "bacteria",
+   "titre": "Bactéries lactiques dans la production de whisky",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.14",
+    "species": [
+     "L. brevis",
+     "L. fermentum",
+     "L. fermenti",
+     "Streptococcus lactis"
+    ],
+    "description": "Les bactéries lactiques (LAB) jouent un rôle ambivalent en distillerie. Espèces identifiées : L. brevis, L. fermentum, L. fermenti, Streptococcus lactis. Elles produisent jusqu'à 30 mg/L d'acide lactique. La fermentation malolactique, qui débute après 48h de fermentation, AMÉLIORE la qualité du spirit en convertissant l'acide malique en acide lactique (plus doux). C'est pourquoi les fermentations longues (>48h) sont préférées. En revanche, les lactobacilles peuvent métaboliser le glycérol → β-hydroxypropionaldéhyde → acroléine (toxique) lors de la distillation.",
+    "positive_effect": "Fermentation malolactique améliore la qualité du spirit",
+    "negative_pathway": "glycérol → β-hydroxypropionaldéhyde → acroléine",
+    "lactic_acid_max_mg_l": 30,
+    "malolactic_onset_hours": 48
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "lab_classification",
+   "theme": "fermentation_advanced",
+   "sujet": "microbiology",
+   "titre": "Classification des bactéries lactiques (LAB)",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.20",
+    "description": "Les bactéries lactiques (LAB) sont le principal contaminant en distillerie. Deux catégories : HOMOFERMENTATIVES (Lactobacillus delbrueckii, Pediococcus) — produisent uniquement de l'acide lactique via la glycolyse, impact modéré sur le rendement. HÉTÉROFERMENTATIVES (L. brevis, L. fermentum) — produisent acide lactique + éthanol + CO₂ via la voie des pentoses phosphates, plus problématiques car consomment les sucres de façon moins efficace. Seuil critique : 10⁸ CFU/mL → réduction du rendement en éthanol de ~17%. CMI (concentration minimale inhibitrice) : acide acétique 0.6% w/v, acide lactique 2.5% w/v.",
+    "homofermentative": {
+     "pathway": "glycolyse",
+     "species": [
+      "L. delbrueckii",
+      "Pediococcus"
+     ],
+     "products": "acide lactique uniquement"
+    },
+    "heterofermentative": {
+     "pathway": "pentoses phosphates",
+     "species": [
+      "L. brevis",
+      "L. fermentum"
+     ],
+     "products": "acide lactique + éthanol + CO₂"
+    },
+    "mic_acetic_acid_pct": 0.6,
+    "mic_lactic_acid_pct": 2.5,
+    "critical_threshold_cfu_ml": "10⁸",
+    "ethanol_loss_at_threshold_pct": 17
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "elevage_seasoning",
+   "theme": "elevage",
+   "sujet": "bois",
+   "titre": "Séchage naturel du bois (affinage)",
+   "contenu": {
+    "duration": "24-36 mois minimum",
+    "description": "Le séchage naturel (affinage) consiste à exposer les merrains à l'air libre pendant 2 à 3 ans. Objectifs : réduire l'humidité de ~60% à ~15%, laisser les pluies lessiver les tanins les plus agressifs (ellagitanins amers), permettre une oxydation lente qui adoucit le bois, et favoriser le développement de micro-organismes (champignons Trichoderma) qui dégradent certains composés amers. Le séchage artificiel (étuve) est plus rapide mais ne permet pas le même lessivage ni la même maturation biologique."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "contamination_control",
+   "theme": "fermentation_advanced",
+   "sujet": "microbiology",
+   "titre": "Contrôle de la contamination en distillerie",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.20",
+    "strategies": [
+     "CIP (soude + acide)",
+     "pH bas (<4.0)",
+     "Refroidissement rapide",
+     "Antibiotiques (virginiamycine, USA)",
+     "Hop acids",
+     "Inoculation massive levure"
+    ],
+    "description": "Stratégies de contrôle des contaminations bactériennes en distillerie : (1) Hygiène : CIP (nettoyage en place) des cuves, lignes et échangeurs avec soude caustique + acide. (2) pH : maintien du pH bas (<4.0) par le sour mash/backset. (3) Température : refroidissement rapide du moût pour réduire la fenêtre de croissance bactérienne. (4) Antibiotiques (controversé) : virginiamycine (usage courant aux USA, interdit en Écosse). (5) Hop acids : alternatives naturelles aux antibiotiques. (6) Compétition : inoculation massive de levure (>10⁷ cellules/mL) pour dominer la fermentation. Lactobacillus est le genre le plus problématique — résistant à l'éthanol et aux pH bas.",
+    "most_problematic_genus": "Lactobacillus",
+    "target_yeast_pitch_cells_ml": "10⁷+"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_off_flavors_detailed",
+   "theme": "fermentation_advanced",
+   "sujet": "defects",
+   "titre": "Faux goûts — causes et prévention",
+   "contenu": {
+    "dms": {
+     "fix": "Ébullition vigoureuse 60-90 min à couvercle ouvert, refroidissement rapide.",
+     "cause": "S-méthyl-méthionine (SMM) dans le malt pâle → DMS par chaleur. Ébullition insuffisante ou refroidissement trop lent.",
+     "flavor": "Maïs en boîte, légume cuit"
+    },
+    "source": "Palmer + Buglass 2011",
+    "diacetyl": {
+     "fix": "Diacetyl rest (48h à 18°C en fin de fermentation). Assurer une levure saine et suffisante.",
+     "cause": "Sous-produit normal de la fermentation (acétolactate → diacétyle). Réabsorbé par la levure saine.",
+     "flavor": "Beurre, butterscotch"
+    },
+    "phenolic": {
+     "fix": "Traiter l'eau au métabisulfite de potassium ou au charbon actif. Hygiène stricte.",
+     "cause": "Chloramines dans l'eau + levure sauvage ou contamination.",
+     "flavor": "Médicinal, plastique, pansement"
+    },
+    "acetaldehyde": {
+     "fix": "Laisser fermenter complètement, garde à température.",
+     "cause": "Fermentation incomplète, levure retirée trop tôt.",
+     "flavor": "Pomme verte, cidre"
+    },
+    "fusel_alcohols": {
+     "fix": "Contrôler la température, ensemencer correctement (0.75-1.0 million cellules/mL/°P).",
+     "cause": "Température de fermentation trop élevée, sous-ensemencement.",
+     "flavor": "Solvant, chaud, alcooleux"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "american_fermentation",
+   "theme": "fermentation_advanced",
+   "sujet": "american",
+   "titre": "Fermentation des whiskeys américains",
+   "contenu": {
+    "ph_end": 3.8,
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.19",
+    "ph_start": 4.5,
+    "max_temp_c": 35,
+    "alcohol_abv": "8-10%",
+    "backset_pct": "25-33%",
+    "balling_end": 0,
+    "description": "La fermentation américaine dure 72-120 heures (plus longue que le scotch grain). Paramètres typiques : Balling chute de 5.0 → 0.0, pH de 4.5 → 3.8 (acidification progressive par les LAB et le sour mash), alcool final 8-10% ABV. Les cuves de fermentation (fermenters) sont en acier inoxydable ou cyprès. Le backset (stillage recyclé) représente typiquement 25-33% du volume de mash, apportant acidité, nutriments et minéraux. La température est maintenue sous 35°C pour éviter le stress thermique de la levure.",
+    "balling_start": 5,
+    "duration_hours": "72-120"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_wild_spontaneous",
+   "theme": "fermentation_advanced",
+   "sujet": "wild",
+   "titre": "Fermentation spontanée et mixte",
+   "contenu": {
+    "source": "Palmer + Buglass 2011, Ch. 2.4",
+    "kettle_sour": {
+     "examples": "Berliner Weisse, Gose",
+     "advantages": "Rapide, prévisible, pas de contamination croisée",
+     "description": "Technique rapide: post-mash, le moût est refroidi à 35-40°C, inoculé avec Lactobacillus, acidifié en 24-48h, puis bouilli normalement."
+    },
+    "spontaneous": {
+     "duration": "1-3 ans en fûts",
+     "examples": "Lambic belge (Brettanomyces, Pediococcus, Lactobacillus, Saccharomyces)",
+     "character": "Acide, funk, complexe, fruité, terroir",
+     "description": "Le moût est exposé à l'air libre (coolship) → inoculation par les micro-organismes ambiants."
+    },
+    "mixed_culture": {
+     "examples": "Flanders Red, American Wild Ale, certains saisons",
+     "description": "Inoculation délibérée avec Brett + LAB + Saccharomyces dans un ordre contrôlé.",
+     "brett_compounds": "4-éthylphénol (cuir, étable), 4-éthylguaiacol (fumé, bacon), acide isovalérique (fromage)"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_ester_formation",
+   "theme": "fermentation_advanced",
+   "sujet": "chimie",
+   "titre": "Formation des esters pendant la fermentation",
+   "contenu": {
+    "description": "Les esters se forment pendant la fermentation par réaction enzymatique entre un alcool et un acide gras activé (acyl-CoA). Mécanisme : acide gras → acyl-CoA (via acyl-CoA synthétase) → ester (via alcool O-acyl transférase, notamment ATF1/ATF2 chez S. cerevisiae). La synthèse d'esters serait un mécanisme de détoxification : les acides gras à chaîne longue (C8-C14) sont toxiques pour les levures. Conditions favorables : température 25-30°C, pH 5-6, faible teneur en oxygène dissous, forte densité de moût. La production d'esters augmente aussi pendant la maturation en barrique par estérification chimique directe (acide + alcool → ester + eau), réaction lente mais cumulative."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_overview",
+   "theme": "fermentation",
+   "sujet": "overview",
+   "titre": "Phases de la Fermentation",
+   "contenu": {
+    "lag_phase": "< 24 hours",
+    "secondary": "2-3 weeks",
+    "total_ale": "~3 weeks",
+    "description": "La fermentation se déroule en 3 phases : phase de latence (lag phase, 6-12h, multiplication cellulaire), phase active (fermentation tumultueuse, 2-5 jours, production d'éthanol et CO₂), phase de maturation (conditionnement, réabsorption du diacétyle et des aldéhydes).",
+    "primary_ale": "2-6 days",
+    "primary_lager": "4-10 days"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "hydromel_production",
+   "theme": "fermentation_advanced",
+   "sujet": "hydromel",
+   "titre": "Hydromel — production et fermentation du miel",
+   "contenu": {
+    "source": "Prométhée — recette Hydromel Prométhée",
+    "levures": [
+     "Lalvin 71B (fruité)",
+     "Lalvin D47 (floral)"
+    ],
+    "variantes": [
+     "Melomel (fruits)",
+     "Metheglin (épices)",
+     "Braggot (malt + miel)"
+    ],
+    "nutriments": "Fermaid-O / DAP en addition échelonnée (SNA)",
+    "ph_naturel": "3.5-4.0",
+    "ratio_miel": "300-400 g/L pour 12-14% ABV",
+    "description": "L'hydromel (mead) est une boisson fermentée à base de miel dilué dans l'eau. C'est le lien naturel entre l'apiculture et la distillerie dans le projet Prométhée. Ratio typique : 300-400g de miel par litre d'eau pour un hydromel à 12-14% ABV. Nutriments essentiels : les moûts de miel sont pauvres en azote (FAN) — ajouter des nutriments levuriens (Fermaid-O, DAP) en échelonné (staggered nutrient addition). Levure recommandée : Lalvin 71B (fruité, doux) ou D47 (floral). Fermentation longue : 4-8 semaines. Le pH bas du miel (3.5-4.0) protège naturellement de la contamination. Variantes : melomel (avec fruits), metheglin (avec épices), braggot (avec malt).",
+    "lien_apiculture": "Synergie directe avec le pôle apiculture Prométhée",
+    "fermentation_semaines": "4-8"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_temperature_effects",
+   "theme": "fermentation_advanced",
+   "sujet": "control",
+   "titre": "Impact de la température de fermentation",
+   "contenu": {
+    "ranges": {
+     "ale": {
+      "max_c": 22,
+      "min_c": 15,
+      "character": "Esters modérés, alcools de fusel modérés (4-7 jours)"
+     },
+     "lager": {
+      "max_c": 14,
+      "min_c": 8,
+      "character": "Propre, peu d'esters, fermentation lente (2-3 semaines)"
+     },
+     "saison": {
+      "max_c": 35,
+      "min_c": 20,
+      "character": "Très expressif. Montée progressive recommandée (20→30°C)."
+     },
+     "belgian": {
+      "max_c": 30,
+      "min_c": 18,
+      "character": "Esters élevés (banane, poire), phénols (girofle), caractère expressif"
+     },
+     "whisky_wash": {
+      "max_c": 34,
+      "min_c": 18,
+      "character": "Exothermie naturelle tolérée. Température haute = plus de congénères."
+     }
+    },
+    "source": "Palmer + Buglass 2011",
+    "rules_of_thumb": [
+     "Chaque +5°C double environ la production d'esters et d'alcools de fusel",
+     "Les 48 premières heures sont les plus critiques pour le profil aromatique",
+     "Le diacétyle est réabsorbé plus vite à température élevée (diacetyl rest à 18-20°C pour les lagers)"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_yeast_metabolism",
+   "theme": "fermentation_advanced",
+   "sujet": "biochemistry",
+   "titre": "Métabolisme de la levure — voies principales",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 2.1-2.2",
+    "byproducts": {
+     "esters": "Acétate d'isoamyle (banane), acétate d'éthyle (fruité) — synthèse par ATF1. Plus élevés à basse température et haute gravité.",
+     "phenols": "4-vinylguaiacol (clou de girofle), 4-vinylphénol — souches POF+ (hefeweizen, saison).",
+     "higher_alcohols": "Isoamylol, isobutanol, phényléthanol — via la voie d'Ehrlich (désamination des acides aminés). Augmentent avec la température.",
+     "vicinal_diketones": "Diacétyle (beurre), 2,3-pentanedione — produits au pic de fermentation, réabsorbés pendant la garde."
+    },
+    "glycolysis": "Glucose → 2 Pyruvate → 2 Éthanol + 2 CO₂ (anaérobie). Rendement théorique: 51.1% éthanol + 48.9% CO₂ en masse (Gay-Lussac).",
+    "crabtree_effect": "Même en présence d'O₂, si glucose > 0.1%, la levure fermente au lieu de respirer. C'est pourquoi l'aération ne stoppe pas la fermentation dans un moût sucré."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "formulas_abv_proof",
+   "theme": "formulas",
+   "sujet": "conversion",
+   "titre": "Conversions ABV / Proof / alcool pur",
+   "contenu": {
+    "source": "Buglass 2011 + réglementation",
+    "example": "100 L de spirit à 63% ABV = 63 LAP",
+    "lpa_formula": "LAP = Volume (L) × ABV ÷ 100",
+    "lpa_definition": "1 LAP (Litre d'Alcool Pur) = 1 litre de liquide à 100% éthanol",
+    "abv_to_uk_proof": "UK Proof = ABV × 1.75 (ancien système, obsolète)",
+    "abv_to_us_proof": "US Proof = ABV × 2 (ex: 40% ABV = 80 Proof)",
+    "density_ethanol": "0.789 g/mL à 20°C (plus léger que l'eau)"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "formulas_attenuation",
+   "theme": "formulas",
+   "sujet": "fermentation",
+   "titre": "Formule d'Atténuation Apparente",
+   "contenu": {
+    "notes": "Percentage of sugars fermented by yeast",
+    "formula": "Attenuation = (OG - FG) / OG × 100",
+    "description": "Atténuation apparente (%) = ((OG - FG) / (OG - 1)) × 100. Typique : 65-80% pour les ales, 75-85% pour les lagers. Dépend de la souche de levure et de la composition du moût (ratio fermentescible/non-fermentescible)."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "formulas_og",
+   "theme": "formulas",
+   "sujet": "gravity",
+   "titre": "Formule de Densité Initiale (OG)",
+   "contenu": {
+    "notes": "PPG = Points Per Pound per Gallon. Typical grain efficiency 70-80%",
+    "formula": "OG = (Grain Weight lbs × PPG) / Volume Gallons",
+    "description": "OG = 1 + (Points × masse_grain_kg × efficacité) / volume_L. Les points (PPG) varient par malt : base ~37, caramel ~34, torréfié ~25. L'efficacité typique est 70-80% pour le brassage tout-grain."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "formulas_spirit_yield",
+   "theme": "formulas",
+   "sujet": "distillation",
+   "titre": "Rendement en alcool — du grain au spirit",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "efficiency": "~90% du rendement théorique en pratique",
+    "theoretical_max": "Gay-Lussac : C₆H₁₂O₆ → 2 C₂H₅OH + 2 CO₂ → rendement massique 51.1%",
+    "calculation_chain": {
+     "step_1": "1000 kg orge → ~650 kg amidon (65%)",
+     "step_2": "650 kg amidon × 1.11 (hydratation) → ~720 kg sucres fermentescibles",
+     "step_3": "720 kg sucres × 0.511 (Gay-Lussac) → ~368 kg éthanol théorique",
+     "step_4": "368 kg ÷ 0.789 (densité) → ~466 L éthanol théorique",
+     "step_5": "Pertes (fermentation incomplète, distillation, queues) → ~420 LAP réels"
+    },
+    "practical_grain_to_alcohol": "~420 L d'alcool pur (LAP) par tonne d'orge maltée (standard industrie Scotch)."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "formulas_ppg_conversion",
+   "theme": "formulas",
+   "sujet": "conversion",
+   "titre": "Conversion PPG vers PKL",
+   "contenu": {
+    "notes": "Converts US gravity points to Plato Kilogram Liter",
+    "formula": "1 PPG = 8.3454 PKL",
+    "description": "PKL = PPG × 8.3454. PPG (Points Per Pound per Gallon, système US) et PKL (Points per Kilogram per Litre, système métrique). Exemples : Malt Pale 37 PPG = 309 PKL, Sucre 46 PPG = 384 PKL."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "gin_liqueurs_neutral_spirit",
+   "theme": "gin_liqueurs",
+   "sujet": "base",
+   "titre": "Alcool neutre — base des distillats blancs",
+   "contenu": {
+    "description": "L'alcool neutre (ou alcool pur, éthanol rectifié) est la matière première des gins et liqueurs. Produit par distillation à haut degré (>96% ABV) à partir de céréales (blé, maïs), de mélasse, de raisin ou de pomme de terre. La réglementation européenne exige un minimum de 96% ABV pour l'alcool éthylique d'origine agricole. Caractéristiques : quasi inodore et incolore, pureté chimique élevée (très faible teneur en congénères). La qualité de l'alcool neutre est fondamentale — les impuretés résiduelles (méthanol, alcools de fusel, aldéhydes) impactent le produit fini même après redistillation avec les botaniques."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "botanicals_angelica",
+   "theme": "gin_liqueurs",
+   "sujet": "gin",
+   "titre": "Angélique — fixateur d'arômes",
+   "contenu": {
+    "role": "Agit comme 'fixateur' — lie les arômes entre eux et leur donne de la persistance. Quasi-universel dans les recettes de gin.",
+    "latin": "Angelica archangelica",
+    "flavor": "Terreux, musqué, herbacé, légèrement amer",
+    "source": "Buglass 2011",
+    "parts_used": "Racine séchée",
+    "key_compounds": "α-phellandrène, α-pinène, coumarine"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "gin_liqueurs_liqueur_base",
+   "theme": "gin_liqueurs",
+   "sujet": "production",
+   "titre": "Fabrication des liqueurs — principes",
+   "contenu": {
+    "description": "Une liqueur est un spiritueux sucré (minimum 100 g/L de sucre, minimum 15% ABV selon le règlement EU). Méthodes de production : (1) Macération/infusion de fruits, plantes ou épices dans l'alcool neutre, puis ajout de sirop de sucre ; (2) Distillation d'un macérat puis sucrage ; (3) Mélange de distillats, extraits et sirops. L'assemblage final ajuste ABV, sucre, couleur et acidité. Familles principales : liqueurs de fruits (cassis, framboise, poire), liqueurs d'herbes/plantes (chartreuse, bénédictine), crèmes (>250 g/L sucre — crème de cassis, crème de menthe), liqueurs de café/chocolat/noix."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "gin_liqueurs_maceration",
+   "theme": "gin_liqueurs",
+   "sujet": "technique",
+   "titre": "Macération et infusion des botaniques",
+   "contenu": {
+    "description": "La macération est l'immersion des botaniques dans l'alcool neutre dilué (40-60% ABV selon les botaniques) pendant 12-48h. Paramètres clés : durée (trop longue → amertume des tanins végétaux), température (ambiante généralement ; à chaud = plus d'extraction mais moins de finesse), degré alcoolique (plus élevé = meilleure extraction des huiles essentielles lipophiles ; plus bas = meilleure extraction des polyphénols hydrophiles), ratio botaniques/alcool. Certains distillateurs macèrent chaque botanique séparément puis assemblent les distillats individuels (gin « single botanical distillation ») pour un contrôle maximal."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "gin_liqueurs_botanical_ratios",
+   "theme": "gin_liqueurs",
+   "sujet": "formulation",
+   "titre": "Ratios et familles de botaniques pour le gin",
+   "contenu": {
+    "description": "Une recette de gin s'articule autour de 3 familles fonctionnelles : (1) Base/corps — genièvre (dominant, typiquement 25-50% du mélange total), coriandre (10-20%), angélique racine (fixateur, 5-10%) ; (2) Modificateurs — apportent complexité : iris (floral), cardamome (épicé), réglisse (douceur), cannelle, poivre de Sichuan ; (3) Top notes — fraîcheur et éclat : écorces d'agrumes (citron, orange, pamplemousse), concombre, rose, lavande. Un gin classique utilise 6-12 botaniques. Excès de botaniques = confusion aromatique. Le dosage du genièvre est critique : trop = médicinal, pas assez = non conforme à la catégorie gin."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "gin_liqueurs_gin_regulations",
+   "theme": "gin_liqueurs",
+   "sujet": "reglementation",
+   "titre": "Réglementation européenne du gin",
+   "contenu": {
+    "description": "Le règlement CE 2019/787 définit trois catégories : (1) Gin — boisson aromatisée au genièvre, minimum 37.5% ABV ; (2) Distilled gin — obtenu par redistillation d'alcool éthylique en présence de baies de genévrier et d'autres botaniques, minimum 37.5% ABV ; (3) London gin (ou London Dry gin) — distilled gin sans ajout de colorant ni d'édulcorant (max 0.1 g/L), pas d'arôme ajouté post-distillation, minimum 37.5% ABV. Dans tous les cas, l'arôme de genévrier (Juniperus communis) doit être perceptible et prédominant."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "gin_liqueurs_vapor_infusion",
+   "theme": "gin_liqueurs",
+   "sujet": "technique",
+   "titre": "Vapor infusion — distillation en panier",
+   "contenu": {
+    "description": "La vapor infusion (infusion par vapeur) est une technique où les botaniques sont placées dans un panier perforé dans le col de cygne ou dans un carter-head, et les vapeurs d'alcool les traversent en s'élevant. Avantages : extraction plus délicate qu'une immersion directe, meilleur contrôle du profil aromatique, moins de risque de surchauffe des botaniques. Les composés les plus volatils (terpènes, esters légers) sont extraits préférentiellement. Hendrick's utilise notamment un carter-head (Bennett still). Cette méthode peut être combinée avec un pot still classique pour assembler un profil macération + vapor infusion."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "botanicals_gin_juniper",
+   "theme": "gin_liqueurs",
+   "sujet": "gin",
+   "titre": "Genièvre (Juniper) — botanique principal du gin",
+   "contenu": {
+    "latin": "Juniperus communis",
+    "usage": "Baies séchées, ajoutées au spirit neutre pour redistillation (gin pot still) ou macération.",
+    "flavor": "Résineux, pin, herbal, légèrement poivré",
+    "source": "Buglass 2011",
+    "key_compounds": "α-pinène, myrcène, limonène, sabinène, terpinène-4-ol",
+    "legal_requirement": "Le genièvre doit être l'arôme DOMINANT dans un London Dry Gin (Reg. CE 110/2008)."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "botanicals_citrus_peels",
+   "theme": "gin_liqueurs",
+   "sujet": "gin",
+   "titre": "Écorces d'agrumes — fraîcheur et luminosité",
+   "contenu": {
+    "types": {
+     "lime": "Citron vert — limonène → vif, acide",
+     "lemon": "Citron — limonène, citral → frais, vif",
+     "grapefruit": "Pamplemousse — nootkatone → amer, tropical",
+     "orange_sweet": "Orange douce — limonène → doux, fruité",
+     "orange_bitter": "Orange amère (Séville) — limonène, linalol → amer, complexe"
+    },
+    "usage": "Écorces séchées, ajoutées à la charge botanique. Les huiles essentielles sont dans le zeste (flavedo), pas dans la partie blanche (albedo) qui apporte de l'amertume.",
+    "source": "Buglass 2011"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "mashing_standard",
+   "theme": "mashing",
+   "sujet": "standard",
+   "titre": "Empâtage Standard (Mono-palier)",
+   "contenu": {
+    "ph": "5.2-5.6",
+    "description": "Empâtage mono-palier à 65-68°C pendant 60 min. Ratio eau/grain : 2.5-3.5 L/kg. Convient aux malts bien modifiés. Plus haut = corps plus plein, plus bas = bière plus sèche.",
+    "duration_minutes": 60,
+    "temperature_celsius": "65-68",
+    "water_grain_ratio_liters_per_kg_max": 4,
+    "water_grain_ratio_liters_per_kg_min": 3
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "sensory_olfactory_system",
+   "theme": "sensory",
+   "sujet": "physiologie",
+   "titre": "Le système olfactif — mécanisme de perception",
+   "contenu": {
+    "description": "L'humain possède ~400 types de récepteurs olfactifs, capables de distinguer potentiellement 1 milliard d'odeurs. Deux voies d'activation : orthonasale (directe, par le nez — on parle d'odeur) et rétronasale (indirecte, par la bouche lors de l'expiration — on parle d'arôme). Le parcours de la molécule odorante : (1) Captation par le mucus de la muqueuse olfactive ; (2) Liaison aux récepteurs (protéines) sur les cils des cellules olfactives de l'épithélium ; (3) Signal électrique transmis au bulbe olfactif → glomérules → empreinte olfactive ; (4) Interprétation par le cortex cérébral, en lien avec le système limbique (émotions et mémoire)."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "process_sparging_methods",
+   "theme": "mashing",
+   "sujet": "sparging",
+   "titre": "Méthodes de rinçage (sparging)",
+   "contenu": {
+    "fly_sparge": {
+     "risks": "Si le pH dépasse 5.8 pendant le sparge → extraction de tanins. Risque de canalisation du lit.",
+     "advantages": "Meilleure efficacité d'extraction (80-90%)",
+     "description": "Arrosage continu d'eau chaude sur le lit de drêches pendant la filtration. L'eau est ajoutée au même rythme que le moût s'écoule.",
+     "temperature": "76-78°C"
+    },
+    "batch_sparge": {
+     "advantages": "Simple, rapide, moins de risque de tanins",
+     "efficiency": "Légèrement inférieure au fly sparge (70-80%)",
+     "description": "Ajout d'un volume fixe d'eau chaude, mélange, repos 10-15 min, vidange complète. Répété 1-2 fois.",
+     "temperature": "76-78°C"
+    },
+    "no_sparge_biab": {
+     "source": "Palmer",
+     "advantages": "Très simple, peu d'équipement",
+     "efficiency": "60-70%",
+     "description": "Brew In A Bag — pas de rinçage. Tout le grain est trempé dans le volume total d'eau, puis le sac est retiré."
+    },
+    "whisky_3_waters": {
+     "source": "Buglass 2011, Ch. 3.2",
+     "description": "Le brassage whisky utilise typiquement 3 eaux : (1) mash water ~64°C, (2) ~75°C, (3) ~85°C. La 3ème eau est recyclée comme 1ère eau du batch suivant."
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "mashing_rest_phases",
+   "theme": "mashing",
+   "sujet": "rests",
+   "titre": "Paliers Enzymatiques de l'Empâtage",
+   "contenu": {
+    "phytase": {
+     "purpose": "Break down phytic acid",
+     "temperature_celsius_max": 52,
+     "temperature_celsius_min": 30
+    },
+    "protein": {
+     "purpose": "Break down proteins",
+     "duration_minutes": "15-30",
+     "temperature_celsius_max": 55,
+     "temperature_celsius_min": 45
+    },
+    "description": "Paliers classiques : Acid rest (35-45°C, 15 min, abaissement pH), Protéase (50-55°C, 15-20 min, dégradation protéines), β-amylase (62-65°C, 30-40 min, production maltose), α-amylase (68-72°C, 20-30 min, production dextrines), Mash-out (76°C, 10 min, arrêt enzymatique).",
+    "beta_glucanase": {
+     "purpose": "Break down beta-glucans",
+     "duration_minutes": 20,
+     "temperature_celsius_max": 45,
+     "temperature_celsius_min": 35
+    },
+    "saccharification": {
+     "purpose": "Convert starches to sugars",
+     "beta_amylase": "55-65°C",
+     "alpha_amylase": "65-70°C",
+     "temperature_celsius_max": 71,
+     "temperature_celsius_min": 55
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "mashing_gelatinization_cereals",
+   "theme": "mashing",
+   "sujet": "gelatinization",
+   "titre": "Températures de gélatinisation par céréale",
+   "contenu": {
+    "note": "Céréales crues nécessitent cuisson préalable (cereal cooker)",
+    "oat_c": "53-59",
+    "rye_c": "57-70",
+    "corn_c": "62-74",
+    "rice_c": "68-78",
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.19",
+    "wheat_c": "58-64",
+    "sorghum_c": "68-75",
+    "description": "Les températures de gélatinisation varient selon la céréale et conditionnent le protocole de brassage : Orge maltée 60-65°C (la plus basse grâce au maltage), Blé 58-64°C, Seigle 57-70°C, Avoine 53-59°C, Maïs 62-74°C, Riz 68-78°C, Sorgho 68-75°C. Les céréales crues (non maltées) nécessitent une cuisson préalable (cereal cooker) au-dessus de leur température de gélatinisation avant d'être ajoutées au mash tun avec le malt qui fournit les enzymes. Le maïs et le riz requièrent une cuisson à 100°C+ pour une gélatinisation complète en pratique industrielle.",
+    "barley_malt_c": "60-65"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "mashing_enzyme_optima",
+   "theme": "mashing",
+   "sujet": "enzymes",
+   "titre": "Températures et pH optimaux des enzymes du mash",
+   "contenu": {
+    "source": "Palmer + Buglass 2011",
+    "enzymes": {
+     "phytase": {
+      "ph": "5.0-5.5",
+      "role": "Abaisse le pH par libération d'acide phytique",
+      "temp_c": "30-52",
+      "denaturation_c": 55
+     },
+     "protease": {
+      "ph": "4.5-5.5",
+      "role": "Dégrade les protéines en acides aminés (FAN) et peptides",
+      "temp_c": "45-55",
+      "denaturation_c": 62
+     },
+     "beta_amylase": {
+      "ph": "5.4-5.5",
+      "role": "Coupe l'amidon en maltose (fermentescible). Exoenzyme.",
+      "temp_c": "60-65",
+      "denaturation_c": 70
+     },
+     "alpha_amylase": {
+      "ph": "5.6-5.8",
+      "role": "Coupe l'amidon en oligosaccharides et dextrines. Endoenzyme.",
+      "temp_c": "65-72",
+      "denaturation_c": 80
+     },
+     "beta_glucanase": {
+      "ph": "4.5-5.0",
+      "role": "Dégrade les beta-glucanes → améliore la filtration",
+      "temp_c": "35-45",
+      "denaturation_c": 55
+     },
+     "limit_dextrinase": {
+      "ph": "5.1-5.4",
+      "role": "Coupe les branchements α-1,6 de l'amylopectine",
+      "temp_c": "55-60",
+      "denaturation_c": 65
+     }
+    },
+    "mash_strategy": {
+     "high_body": "Palier court à 68-70°C → maximise alpha-amylase → plus de dextrines → corps",
+     "single_infusion": "67°C pendant 60 min = bon compromis pour la majorité des bières et des washes de whisky",
+     "high_fermentability": "Palier long à 63°C → maximise beta-amylase → bière sèche / wash fermentescible"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "mashing_gelatinization_temps",
+   "theme": "mashing",
+   "sujet": "gelatinization",
+   "titre": "Températures de Gélatinisation des Grains",
+   "contenu": {
+    "rye": "57-70°C",
+    "corn": "62-74°C",
+    "oats": "53-59°C",
+    "rice": "68-78°C",
+    "wheat": "58-64°C",
+    "barley": "60-65°C",
+    "description": "Températures de gélatinisation : Orge 60-62°C, Blé 58-64°C, Seigle 57-70°C, Avoine 53-59°C, Maïs 62-74°C, Riz 68-78°C. Les céréales crues nécessitent une cuisson préalable au-dessus de leur température de gélatinisation."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "sensory_fruity_families",
+   "theme": "sensory",
+   "sujet": "descripteurs",
+   "titre": "Familles de l'arôme fruité dans le whisky",
+   "contenu": {
+    "description": "L'arôme fruité se décline en 5 familles : (1) Fruits frais rouges/noirs — fraise, framboise, cassis, mûre, groseille, cerise ; (2) Fruits frais blancs/jaunes — pêche, abricot, pomme, poire, prune ; (3) Fruits exotiques — ananas, banane, goyave, litchi, kiwi, mangue ; (4) Agrumes — orange, citron, pamplemousse ; (5) Fruits secs — amande, figue, datte, raisin sec ; (6) Fruits cuits/confiturés — compote de pomme, tarte à l'abricot, confiture de mirabelle, sirop de cassis. Les esters sont les molécules majoritaires du fruité. La perception du fruité dépend de la concentration, du seuil de perception, de l'affinité avec le bois et l'éthanol, et des interactions synergiques entre molécules."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "sensory_blending_art",
+   "theme": "sensory",
+   "sujet": "blending",
+   "titre": "L'art du blending — assemblage des whiskies",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "purpose": "Produire un produit constant en qualité et en profil gustatif, année après année, malgré la variabilité naturelle des fûts.",
+    "single_cask": "Embouteillage d'un seul fût — pas de blending. Chaque fût est unique.",
+    "age_statement": "L'âge sur l'étiquette = l'ÂGE DU PLUS JEUNE composant du blend.",
+    "blended_scotch": "Le master blender assemble 20-50 whiskies différents (malts + grains) pour obtenir le profil cible.",
+    "vatted_proportions": "Les blends courants contiennent 60-70% de grain whisky. Les blends 'de luxe' (12+ ans) ont >70% de malt.",
+    "single_malt_blending": "Même un 'single malt' est un assemblage de nombreux fûts de la même distillerie, potentiellement de différentes années."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "sensory_floral_wheel",
+   "theme": "sensory",
+   "sujet": "descripteurs",
+   "titre": "Roue aromatique florale du whisky",
+   "contenu": {
+    "description": "L'arôme floral du whisky se divise en deux zones : Floral (rose, lilas, muguet, lavande, magnolia, mimosa, fleur d'oranger, pivoine, chèvrefeuille, jasmin, violette, citronelle, camomille) et Fraîcheur terpénique (pin, thym, eucalyptus). Molécules associées : linalol/α-terpinéol (fleur d'oranger, muguet), géraniol/nérol/β-citronellol (rose), 2-phényléthanol/acétate de 2-phényléthyle (rose, lilas), β-ionone/α-ionone (violette), β-damascénone (camomille, pétales), limonène/phényl acétate d'éthyle (magnolia), α-pinène/bornéol (pin, thym), eucalyptol/1,8-cinéole (eucalyptus). Le potentiel floral dépend de la variété d'orge, de la fermentation, de la distillation et du bois."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "sensory_trigeminal",
+   "theme": "sensory",
+   "sujet": "physiologie",
+   "titre": "Système trigéminal et gustatif",
+   "contenu": {
+    "description": "Le système trigéminal (nerf trijumeau — 3 branches : bouche, nez, yeux) détecte les sensations de piquant (poivre, citron), de fraîcheur (menthe), de chaleur (éthanol, capsaïcine), et les irritations (fumée, SO₂). Il complète le système olfactif dans la perception globale du whisky — la 'chaleur' de l'alcool est une sensation trigéminale, pas gustative. Le système gustatif perçoit 5 saveurs fondamentales : salé, sucré, amer, acide, umami. La perception complète d'un spiritueux combine les 3 systèmes : olfactif (arômes), trigéminal (texture/chaleur), gustatif (saveurs). Les synergies moléculaires font que des molécules combinées peuvent intensifier, diminuer ou créer une odeur nouvelle."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "sensory_whisky_nosing",
+   "theme": "sensory",
+   "sujet": "evaluation",
+   "titre": "Évaluation sensorielle du whisky",
+   "contenu": {
+    "glass": "Verre tulipe (Glencairn) — concentre les arômes.",
+    "method": {
+     "step_1": "Nez sec (sans eau) — impression globale, puissance",
+     "step_2": "Ajout d'eau (quelques gouttes → 20% ABV) — ouverture, détails",
+     "step_3": "Palais — entrée, milieu, finale, longueur",
+     "step_4": "Retro-olfaction — arômes perçus après déglutition"
+    },
+    "source": "Buglass 2011, Ch. 3.2",
+    "dilution": "Toujours diluer à ~20% ABV avec de l'eau pure avant d'évaluer. Réduit la piqûre de l'éthanol et libère les esters.",
+    "why_20pct": "À 20% ABV, les esters à longue chaîne ont une solubilité réduite → ils sont libérés des agrégats en solution et passent dans le headspace → arômes plus perceptibles.",
+    "flavor_wheel_categories": "Céréalier, fruité, floral, tourbé/fumé, boisé/vanillé, épicé, sulfuré, vineux, marin"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "sensory_maturation_timeline",
+   "theme": "sensory",
+   "sujet": "maturation",
+   "titre": "Évolution sensorielle pendant la maturation",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.7",
+    "phase_0_6m": "Disparition new make, premières notes boisées/vanillées",
+    "phase_3_8y": "Complexification (fruits secs, épices), équilibre",
+    "description": "L'évolution sensorielle du whisky pendant la maturation suit un schéma général : 0-6 mois : disparition rapide des notes de new make (céréales, métal, soufre), apparition des premières notes boisées et vanillées, développement de la couleur (25-30% de la couleur finale en bourbon). 6 mois - 3 ans : intégration des arômes de bois, développement du fruité (estérification), adoucissement des tanins. 3-8 ans : complexification (notes de fruits secs, épices, cuir), équilibre bois/distillat. 8-15 ans : expression maximale pour la plupart des whiskies, apparition de notes tertiaires (cire, tabac, fruit confit). >15 ans : risque de domination du bois (tanins excessifs), concentration par évaporation, notes de vieux bois et oxydation.",
+    "phase_6m_3y": "Intégration bois, développement fruité, adoucissement",
+    "phase_8_15y": "Expression maximale, notes tertiaires",
+    "phase_15y_plus": "Risque domination bois, concentration, oxydation"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "sensory_precursors_glycosidic",
+   "theme": "sensory",
+   "sujet": "chimie_sensorielle",
+   "titre": "Précurseurs glycosidiques — réservoir d'arômes",
+   "contenu": {
+    "description": "Les terpènes et norisoprénoïdes peuvent exister sous forme libre (odorante, volatile) ou liée (glycosylée, muette, non odorante). La glycosylation est la liaison d'une molécule aromatique à un ou plusieurs sucres via l'enzyme glycosyltransférase. La molécule liée est trop lourde pour se volatiliser et atteindre le nez. Ce 'réservoir olfactif' est progressivement libéré par hydrolyse enzymatique (pendant la fermentation) ou chimique (pendant la maturation). Ce mécanisme explique pourquoi certains vieux whiskies développent des arômes floraux et fruités complexes avec le temps — les précurseurs glycosidiques protègent les molécules de la dégradation et permettent une libération lente et continue."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "distillery_yield_calculation",
+   "theme": "whisky_production",
+   "sujet": "yield",
+   "titre": "Calcul de rendement en distillerie",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.5",
+    "description": "Rendement de référence : 1 tonne de malt complètement modifié → environ 425 LAA (litres d'alcool anhydre). Calcul détaillé : OG 1.050 × volume wort → sucres fermentescibles → éthanol théorique × efficacité fermentation (~95%) × efficacité distillation (~99.96%). La sur-atténuation cible est d'environ 3% (mesurée par la différence entre atténuation réelle et limite). Exemple chiffré : 415.1 l/t est un rendement typique calculé en conditions réelles.",
+    "typical_yield": "415 l/t",
+    "still_losses_pct": 0.04,
+    "fermentation_efficiency_pct": 95,
+    "over_attenuation_target_pct": 3,
+    "reference_yield_laa_per_tonne": 425
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "whisky_peat_chemistry",
+   "theme": "whisky_production",
+   "sujet": "raw_materials",
+   "titre": "Chimie de la tourbe et phénols de fumée",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "peat_origin": "Matière végétale (sphaigne, bruyère, herbes) partiellement décomposée dans des conditions anaérobies acides sur des millénaires.",
+    "ppm_measurement": "Les phénols sont mesurés en ppm dans le malt (colorimétrie) et dans le spirit (GC-MS). La survie des phénols à travers la distillation est d'environ 30-40%.",
+    "pyrolysis_products": {
+     "catechols": "4-méthylcatéchol — tourbe lourde",
+     "guaiacols": "Guaiacol, 4-méthylguaiacol — notes fumées, épicées, clou de girofle",
+     "syringols": "Syringaldéhyde, acétosyringone — notes douces, vanillées-fumées",
+     "phenols_simples": "Phénol, crésols, xylenols — notes médicinales, antiseptiques"
+    },
+    "source_material_impact": "La composition botanique de la tourbe (sphaigne vs bruyère vs herbes) varie selon les régions et influence le profil phénolique."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "peating_chemistry_detailed",
+   "theme": "whisky_production",
+   "sujet": "peating",
+   "titre": "Chimie du tourbage — composés phénoliques",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.14",
+    "description": "Le tourbage (peating) du malt introduit des composés phénoliques spécifiques issus de la combustion de la tourbe. Principaux composés identifiés : furfural (caramélisé), 5-méthylfurfural, guaiacol (fumé/médicinal), phénol (phénolique), ρ-crésol (créosol), 5-xylénol. Le ratio phénol total / ρ-éthylphénol est utilisé comme indicateur de tourbage (peatiness). Le taux de phénols dans le malt est mesuré en ppm : légèrement tourbé 1-5 ppm, moyennement tourbé 15-25 ppm, fortement tourbé 30-50+ ppm (Islay style).",
+    "key_compounds": [
+     "furfural",
+     "5-méthylfurfural",
+     "guaiacol",
+     "phénol",
+     "ρ-crésol",
+     "5-xylénol"
+    ],
+    "peat_levels_ppm": {
+     "heavy": "30-50+",
+     "light": "1-5",
+     "medium": "15-25"
+    },
+    "peatiness_indicator": "ratio phénol total / ρ-éthylphénol"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "whisky_barley_composition",
+   "theme": "whisky_production",
+   "sujet": "raw_materials",
+   "titre": "Composition de l'orge brassicole",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "husk_pct": "~10%",
+    "lipids_pct": "2-3%",
+    "starch_pct": "63-65%",
+    "key_enzymes": {
+     "beta_amylase": "Exoenzyme, libère le maltose. Optimum 60-65°C.",
+     "alpha_amylase": "Endoenzyme, coupe l'amidon en oligosaccharides. Optimum 65-70°C.",
+     "limit_dextrinase": "Coupe les branchements 1-6. Présente mais souvent dénaturée par le touraillage."
+    },
+    "minerals_pct": "2-3%",
+    "proteins_pct": "10-12%",
+    "spirit_yield": "~420 L d'alcool pur par tonne d'orge (standard industriel)",
+    "varieties_whisky": "Optic, Concerto, Laureate (haute teneur en amidon, faible azote soluble)",
+    "carbohydrates_pct": "78-83%"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "scotch_grain_mash",
+   "theme": "whisky_production",
+   "sujet": "mashing",
+   "titre": "Composition du moût grain scotch (Pyke 1965)",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.14",
+    "wort_sg": "1.060-1.070",
+    "mash_ratio": "1:4 (farine:eau)",
+    "description": "Analyse détaillée d'un moût de grain scotch (Pyke, 1965) : carbohydrates totaux 9%, dont maltose 4.65%, maltotriose 0.96%, dextrines 2.54%. Le cycle de brassage typique : ratio farine/eau 1:4 à 60-65°C → wort à SG 1.060-1.070 → trois lavages successifs (aftermashes) avec SG décroissante. La conversion enzymatique dure 1-2 heures. Le wort final est refroidi et envoyé en fermentation.",
+    "dextrin_pct": 2.54,
+    "maltose_pct": 4.65,
+    "mash_temp_c": "60-65",
+    "total_carb_pct": 9,
+    "maltotriose_pct": 0.96
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "scotch_mashing_cycle",
+   "theme": "whisky_production",
+   "sujet": "mashing",
+   "titre": "Cycle de brassage scotch malt — 3 eaux",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.14",
+    "water_1": {
+     "sg": "1.060-1.070",
+     "ratio": "1:4",
+     "temp_c": 64,
+     "destination": "washback"
+    },
+    "water_2": {
+     "sg": "1.030-1.040",
+     "temp_c": 75,
+     "destination": "washback"
+    },
+    "water_3": {
+     "sg": "1.010-1.015",
+     "temp_c": "85-90",
+     "destination": "recyclée → eau 1 du prochain batch"
+    },
+    "description": "Le brassage du scotch malt suit un cycle traditionnel de 3 eaux dans un mash tun : 1ÈRE EAU (foreshots) : ~64°C, ratio 1:4 farine/eau, repos 20-30 min → wort riche SG 1.060-1.070, envoyé au washback. 2ÈME EAU : ~75°C, ratio réduit → wort intermédiaire SG 1.030-1.040, envoyé au washback. 3ÈME EAU (sparge) : ~85-90°C → wort faible SG 1.010-1.015, RECYCLÉ comme 1ère eau du prochain brassage (énergie + sucres résiduels). Ce système à 3 eaux maximise l'extraction tout en maintenant un volume de wort gérable. Le malt est broyé à 70% farine / 20% grains / 10% cosses.",
+    "grist_composition": {
+     "flour_pct": 70,
+     "grits_pct": 20,
+     "husks_pct": 10
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "dimensionnement_micro_distillerie",
+   "theme": "whisky_production",
+   "sujet": "planning",
+   "titre": "Dimensionnement d'une micro-distillerie artisanale",
+   "contenu": {
+    "source": "Projet Prométhée — dimensionnement Couanac",
+    "personnel": "1-2 personnes (polyvalence)",
+    "description": "Repères de dimensionnement pour une micro-distillerie artisanale (modèle Prométhée) : Production maximale visée : ~4000 LAP/an. Volume d'alambic : 1200 L utiles (Cincinnatus). Nombre de distillations/semaine : 2-3 en croisière. Stockage fûts : prévoir 200-500 fûts en régime de croisière (accumulation sur 3-8 ans). Surface chai : ~200-400 m² minimum. Consommation malt : ~10-15 tonnes/an pour 4000 LAP. Consommation eau : ~50-80 m³/an (process + refroidissement). Énergie : 1-2 tonnes de bois/semaine pour la chaudière biomasse. Personnel : 1-2 personnes en distillation, polyvalence avec les autres activités.",
+    "stockage_futs": "200-500 en régime croisière",
+    "bois_t_semaine": "1-2",
+    "surface_chai_m2": "200-400",
+    "volume_alambic_L": 1200,
+    "distillations_semaine": "2-3",
+    "production_max_lap_an": 4000,
+    "consommation_eau_m3_an": "50-80",
+    "consommation_malt_t_an": "10-15"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "whisky_fermentation_specifics",
+   "theme": "whisky_production",
+   "sujet": "process",
+   "titre": "Fermentation du whisky — spécificités",
+   "contenu": {
+    "yeast": "Saccharomyces cerevisiae — souches de distillerie (M-strain, MX). Parfois mélange avec levure de brasserie pour la complexité aromatique.",
+    "source": "Buglass 2011, Ch. 3.2",
+    "duration": "48-120 heures selon la distillerie",
+    "final_abv": "7-9% ABV (le 'wash' ou 'beer')",
+    "temperature": "18-34°C (commence bas, monte avec l'exothermie de la fermentation)",
+    "lab_influence": {
+     "importance": "Les fermentations longues (>72h) développent plus de congénères et de complexité.",
+     "description": "Après ~48h, quand la levure décline, les bactéries lactiques (Lactobacillus) prennent le relais et produisent de l'acide lactique + des esters.",
+     "compounds_from_lab": "4-vinylguaiacol, β-damascénone (rose/pomme cuite), γ-butyrolactone"
+    },
+    "washback_material": "Bois (mélèze, pin Douglas) ou inox. Le bois est traditionnel et peut héberger des LAB résidentes."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "spirit_still_fractions",
+   "theme": "whisky_production",
+   "sujet": "batch_distillation",
+   "titre": "Fractions du spirit still (coupes)",
+   "contenu": {
+    "feints": {
+     "abv_end": 1,
+     "key_compounds": "alcools supérieurs, acides gras"
+    },
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.5",
+    "foreshots": {
+     "abv_end": 75,
+     "abv_start": 85,
+     "duration_min": "15-30",
+     "key_compounds": "acétaldéhyde, acétate d'éthyle, composés soufrés"
+    },
+    "middle_cut": {
+     "abv_end": "60-65",
+     "abv_start": 72,
+     "duration_hours": "2.5-3"
+    },
+    "description": "La 2ème distillation (spirit still) produit 3 fractions : Foreshots (têtes) — 15-30 min, 85→75% ABV, riches en acétaldéhyde, acétate d'éthyle et composés soufrés. Middle cut (cœur) — 2.5-3h, départ ~72% ABV, fin entre 60-65% ABV selon le profil souhaité. Feints (queues) — continuation jusqu'à 1% ABV, riches en alcools supérieurs et acides gras. CRITIQUE : le mélange foreshots+feints+low wines dans le low wines receiver doit rester <30% ABV pour éviter la séparation de phase des huiles lourdes.",
+    "threshold_reason": "Séparation de phase des huiles si >30% ABV dans le receiver",
+    "critical_threshold_abv": 30
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fruits_tarn_et_garonne",
+   "theme": "whisky_production",
+   "sujet": "terroir",
+   "titre": "Fruits du Tarn-et-Garonne — terroir distillatoire",
+   "contenu": {
+    "source": "Prométhée — référentiel fruits Ulysse",
+    "departement": "82 — Tarn-et-Garonne",
+    "description": "Le Tarn-et-Garonne (82) est un département riche en production fruitière, offrant un terroir exceptionnel pour la distillation ambulante et artisanale. Fruits emblématiques : Chasselas de Moissac (AOP, raisin de table doré), prune d'Ente (pour pruneaux d'Agen), poire Williams, pomme, figue, melon du Quercy (IGP), pêche, abricot. Le climat semi-continental à influence méridionale permet des fruits sucrés et aromatiques. Les assemblages multi-fruits (verger du Quercy : pomme-poire-coing, fruits d'été : prune-pêche-abricot) sont une signature locale.",
+    "commune_projet": "Cayriech (82240)",
+    "fruits_signature": [
+     "Chasselas de Moissac (AOP)",
+     "Prune d'Ente",
+     "Poire Williams",
+     "Figue",
+     "Melon du Quercy (IGP)"
+    ],
+    "assemblages_prometheee": [
+     "Verger du Quercy (pomme-poire-coing)",
+     "Fruits d'Été (prune-pêche-abricot)",
+     "Chasselas-Figue-Melon (terroir Moissac)"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "lincoln_county_process",
+   "theme": "whisky_production",
+   "sujet": "american",
+   "titre": "Lincoln County Process (Tennessee whiskey)",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.19",
+    "timing": "AVANT mise en fût (sur le new make)",
+    "effects": [
+     "adsorption composés soufrés",
+     "élimination congénères lourds",
+     "adoucissement"
+    ],
+    "description": "Le Lincoln County Process est la filtration au charbon d'érable (sugar maple charcoal) qui distingue le Tennessee whiskey du bourbon standard. Le new make spirit passe lentement à travers une colonne de 3-4 mètres de charbon d'érable granulé AVANT la mise en fût. Le processus dure 10-12 jours. Effets : adsorption des composés soufrés et des congénères lourds, élimination des notes agressives du new make, adoucissement du profil. Le charbon est produit sur place par combustion contrôlée de bois d'érable à sucre empilé en ricks. Jack Daniel's et George Dickel sont les principaux praticiens.",
+    "duration_days": "10-12",
+    "column_height_m": "3-4",
+    "filter_material": "Charbon d'érable à sucre (sugar maple)"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "whisky_malting_process",
+   "theme": "whisky_production",
+   "sujet": "raw_materials",
+   "titre": "Maltage — du grain au malt",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "kilning": {
+     "description": "Séchage à 60-80°C pour stopper la germination. Le malt pâle standard est touraillé doucement.",
+     "peated_option": "Pour un malt tourbé, la tourbe est brûlée pendant les premières heures du séchage. Les phénols (guaiacol, crésols, syringol) se déposent sur le malt humide."
+    },
+    "steeping": {
+     "description": "Trempage de l'orge dans l'eau (12-16°C) pendant 2-3 jours, alternance immersion/repos.",
+     "target_moisture": "42-46%"
+    },
+    "germination": {
+     "description": "4-6 jours à 15-20°C. Développement des enzymes (amylases, protéases, β-glucanases).",
+     "key_changes": "Dégradation partielle de l'amidon, modification des parois cellulaires, production d'enzymes."
+    },
+    "phenol_levels": {
+     "unpeated": "<2 ppm phénols",
+     "heavily_peated": "30-50+ ppm (ex: Octomore > 200 ppm)",
+     "lightly_peated": "5-15 ppm"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "wash_still_operation",
+   "theme": "whisky_production",
+   "sujet": "batch_distillation",
+   "titre": "Opération du wash still",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.5",
+    "cycle_hours": "5-8",
+    "description": "Le wash still (1ère distillation) est chargé aux 2/3 de sa capacité avec un wash à OG 1050-1060. Le cycle dure 5-8 heures. Le point final est atteint quand le distillat tombe à ~1% ABV. Les low wines récupérés représentent environ 1/3 du volume de charge, à ~21-25% ABV. La mousse (frothing) est le principal risque opérationnel — des antimousses ou rummagers (chaînes de cuivre rotatives) sont utilisés en chauffage direct.",
+    "endpoint_abv": 1,
+    "low_wines_abv": "21-25%",
+    "wash_og_range": "1050-1060",
+    "charge_fraction": "2/3 de la capacité",
+    "low_wines_volume": "~1/3 du volume de charge"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "american_mash_bills",
+   "theme": "whisky_production",
+   "sujet": "american",
+   "titre": "Mash bills typiques des whiskeys américains",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.19",
+    "bourbon": {
+     "rye": 15,
+     "corn": 70,
+     "malt": 15
+    },
+    "tennessee": {
+     "rye": 10,
+     "corn": 80,
+     "malt": 10
+    },
+    "description": "Les mash bills (recettes de céréales) standards des whiskeys américains sont : Bourbon typique = 70% maïs / 15% seigle / 15% malt. Tennessee = 80% maïs / 10% seigle / 10% malt. Rye whiskey = 51% seigle / 39% maïs / 10% malt. Le maïs apporte la douceur et le rendement, le seigle la sécheresse et les épices, le malt les enzymes pour la conversion. Certaines distilleries utilisent du blé à la place du seigle (ex: Maker's Mark) pour un profil plus doux.",
+    "rye_whiskey": {
+     "rye": 51,
+     "corn": 39,
+     "malt": 10
+    },
+    "wheat_bourbon_note": "Blé remplace seigle pour un profil plus doux (ex: Maker's Mark)"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "whisky_single_malt_artisanal",
+   "theme": "whisky_production",
+   "sujet": "recipes",
+   "titre": "Single malt artisanal français — principes de recette",
+   "contenu": {
+    "levure": "SafSpirit M-1 ou levure maison",
+    "source": "Prométhée — recette Whisky Panthéon",
+    "mash_bill": {
+     "malt_munich": 5,
+     "malt_pale_ale": 95
+    },
+    "maturation": "Ex-bourbon + ex-sherry, minimum 5 ans",
+    "description": "Un single malt artisanal français suit les principes du scotch single malt : 100% orge maltée. Mash bill Prométhée : 95% malt pale ale (base enzymatique, corps), 5% malt Munich (complexité maltée). Empâtage : β-amylase 63°C/45 min, α-amylase 72°C/30 min, mash-out 78°C. Fermentation longue 120h à 20°C avec levure whisky (SafSpirit M-1 ou levure maison) — la fermentation longue permet la fermentation malolactique par les LAB, améliorant la complexité. Distillation double au Cincinnatus. Maturation en ex-bourbon (vanille, noix de coco) et ex-sherry (fruité, épices). Objectif : 5 ans minimum pour le single malt premium.",
+    "distillation": "Double distillation au Cincinnatus",
+    "fermentation": {
+     "duree_h": 120,
+     "temperature_c": 20
+    },
+    "abv_embouteillage": 46
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "sour_mash_whisky_artisanal",
+   "theme": "whisky_production",
+   "sujet": "recipes",
+   "titre": "Sour mash whisky artisanal — adaptation française",
+   "contenu": {
+    "source": "Prométhée — recette Whisky Sour Mash Couanac",
+    "ph_cible": "4.0-4.5",
+    "mash_bill": {
+     "mais": 65,
+     "seigle": 15,
+     "orge_maltee": 20
+    },
+    "backset_pct": "25-30%",
+    "description": "Le sour mash adapté au contexte artisanal français : recycler 25-30% du stillage (résidu de distillation) dans le prochain mash. Avantages spécifiques en artisanal : régulation naturelle du pH (4.0-4.5) sans ajout d'acide, réduction du risque de contamination bactérienne (crucial sans antibiotiques), apport de nutriments pour la levure (minéraux, acides aminés), consistance batch-à-batch même avec des matières premières variables. Mash bill Prométhée Sour Mash : 65% maïs, 20% orge maltée, 15% seigle, avec backset de la distillation précédente. C'est une technique particulièrement adaptée au Cincinnatus en mode semi-continu.",
+    "avantages_artisanal": [
+     "pH naturel sans acide",
+     "Anti-contamination sans antibiotiques",
+     "Nutriments recyclés",
+     "Consistance inter-batch"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "sour_mash_process",
+   "theme": "whisky_production",
+   "sujet": "american",
+   "titre": "Sour mash — processus et rôle du backset",
+   "contenu": {
+    "roles": [
+     "acidification",
+     "nutriments",
+     "consistance inter-batch",
+     "économie d'eau"
+    ],
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.19",
+    "target_ph": "4.0-4.5",
+    "description": "Le sour mash (mash aigre) est le processus standard de la distillerie américaine. Le backset (aussi appelé spent beer, thin stillage ou setback) est le résidu liquide après distillation, recyclé à hauteur de 25-33% du volume total du nouveau mash. Rôles du backset : (1) Acidification — abaisse le pH à 4.0-4.5, inhibant les contaminants bactériens. (2) Apport de nutriments — minéraux, vitamines, acides aminés pour la levure. (3) Consistance — uniformise le pH et la composition entre les batchs. (4) Économie d'eau. Le sweet mash (sans backset) est plus rare et donne un profil différent, souvent décrit comme plus floral et délicat.",
+    "sweet_mash_profile": "Plus floral et délicat (sans backset)",
+    "backset_pct_of_mash": "25-33%"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "apiculture_distillerie_synergies",
+   "theme": "whisky_production",
+   "sujet": "synergies",
+   "titre": "Synergies apiculture-distillerie-brasserie",
+   "contenu": {
+    "source": "Projet Prométhée — modèle multi-activité",
+    "synergies": {
+     "miel_to_biere": "Miel → bières au miel, honey ale",
+     "bois_to_energie": "Bois → vapeur biomasse pour distillation",
+     "miel_to_hydromel": "Miel → hydromel + braggot",
+     "cire_to_packaging": "Cire d'abeille → scellage bouteilles premium",
+     "abeilles_to_verger": "Pollinisation → fruits pour distillation (Ulysse)",
+     "dreches_to_apiculture": "Drêches → complément alimentaire"
+    },
+    "max_ruches": 199,
+    "description": "Le modèle Prométhée repose sur des synergies fortes entre ses pôles d'activité. MIEL → HYDROMEL : le miel de la miellerie (jusqu'à 199 ruches) alimente directement la production d'hydromel et de braggot. MIEL → BIÈRES AU MIEL : ajout de miel dans les recettes de bières spéciales (honey ale, braggot). CIRE → SCELLAGE : la cire d'abeille peut servir au scellage des bouteilles premium. POLLINISATION → VERGER : les abeilles pollinisent les arbres fruitiers locaux dont les fruits sont distillés (Ulysse). DRÊCHES → APICULTURE : les drêches de brassage peuvent être valorisées en alimentation complémentaire. BOIS → ÉNERGIE : le bois alimente la chaudière biomasse pour la vapeur de distillation."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "whisky_bourbon_style_artisanal",
+   "theme": "whisky_production",
+   "sujet": "recipes",
+   "titre": "Whisky bourbon-style artisanal — principes de recette",
+   "contenu": {
+    "levure": "Safspirit USW-6 ou DADY",
+    "source": "Prométhée — recette Whisky Timber",
+    "mash_bill": {
+     "mais": 70,
+     "seigle": 10,
+     "orge_maltee": 20
+    },
+    "maturation": "Fûts chêne américain neufs, charring level 3, 3 ans",
+    "description": "Un whisky bourbon-style artisanal français reprend les principes du bourbon sans en porter le nom (réservé aux USA). Mash bill typique : 70% maïs concassé (douceur, rendement), 20% orge maltée (enzymes de conversion), 10% seigle malté (épices, sécheresse). Empâtage : cuisson du maïs à 90°C 30 min avant ajout du malt enzymatique. Paliers : protéolyse 50°C, β-amylase 63°C/60 min, α-amylase 72°C/30 min, mash-out 78°C. Fermentation 96h à 22°C avec levure distillateur (Safspirit USW-6 ou DADY). Distillation au Cincinnatus, maturation en fûts de chêne américain neufs (charring level 3). Rendement estimé : ~80 LAP pour 1000 L de wash.",
+    "cuisson_mais": "90°C pendant 30 min",
+    "fermentation": {
+     "duree_h": 96,
+     "ph_cible": 4.5,
+     "temperature_c": 22
+    },
+    "abv_distillat": 70,
+    "abv_embouteillage": 46
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "spirit_yield_barley",
+   "theme": "whisky_production",
+   "sujet": "yield",
+   "titre": "Évolution historique du rendement orge → spirit",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.1-2",
+    "description": "Le rendement de conversion orge → alcool a considérablement évolué : années 1900 → ~370 LAA/tonne, années 1960 → ~400 LAA/tonne, années 2000 → ~420-425 LAA/tonne. Facteurs d'amélioration : variétés d'orge à plus haute teneur en amidon (>63% en base sèche), meilleure modification du malt, optimisation du brassage (conversion enzymatique plus complète), souches de levure plus performantes (atténuation plus élevée), réduction des pertes en distillation. Le rendement théorique maximum est d'environ 460 LAA/tonne (conversion parfaite de tout l'amidon disponible).",
+    "yield_1900_laa_t": 370,
+    "yield_1960_laa_t": 400,
+    "yield_2000_laa_t": "420-425",
+    "improvement_factors": [
+     "variétés d'orge améliorées",
+     "meilleure modification",
+     "optimisation brassage",
+     "levures performantes",
+     "réduction des pertes"
+    ],
+    "theoretical_max_laa_t": 460
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "pot_still_purifier",
+   "theme": "distillation_theory",
+   "sujet": "pot_still_design",
+   "titre": "Purifier et spirit safe",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.5",
+    "description": "Le purifier est un dispositif placé sur le lyne arm, constitué de baffles et d'une chemise d'eau froide. Il condense sélectivement les vapeurs lourdes (esters d'acides gras à longue chaîne) qui retournent au pot via un U-bend, augmentant ainsi la pureté du spirit. Le spirit safe permet de contrôler les coupes sans contact direct : le test de démistage (demisting test) se fait à 45.7% ABV (Sykes Proof 80°) — la turbidité apparaît quand les acides gras insolubles dans l'eau précipitent.",
+    "turbidity_cause": "Acides gras et esters à longue chaîne insolubles dans l'eau",
+    "demisting_test_abv": 45.7,
+    "demisting_proof_sykes": 80
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "eaux_de_vie_fruits_principes",
+   "theme": "distillation_theory",
+   "sujet": "eaux_de_vie",
+   "titre": "Eaux-de-vie de fruits — principes de distillation",
+   "contenu": {
+    "source": "Prométhée — recettes Ulysse (ambulant)",
+    "maturation": "Non vieillie (transparente) ou courte repos en inox",
+    "description": "Les eaux-de-vie de fruits (schnaps, brandies de fruits) sont distillées à partir de moûts de fruits fermentés. Principes clés : la qualité du fruit est primordiale (fruits mûrs, sains, sucrés), la fermentation doit être complète (sucres → éthanol + arômes), la distillation doit être douce pour préserver les arômes volatils délicats. Double distillation en pot still recommandée. Les eaux-de-vie de fruits ne sont généralement pas vieillies en fût (transparentes). ABV typique de distillat : 65-72%, embouteillage à 40-45%. Les fruits à noyau (prune, cerise) apportent des notes d'amande (benzaldéhyde) si les noyaux sont inclus avec modération.",
+    "abv_distillat": "65-72%",
+    "fruits_courants": [
+     "prune (quetsche, mirabelle)",
+     "poire Williams",
+     "cerise (kirsch)",
+     "pomme (calvados)",
+     "framboise",
+     "abricot"
+    ],
+    "abv_embouteillage": "40-45%"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "pot_still_shapes",
+   "theme": "distillation_theory",
+   "sujet": "pot_still_design",
+   "titre": "Formes de pot still et impact aromatique",
+   "contenu": {
+    "shapes": [
+     "onion",
+     "plain",
+     "straight",
+     "ball",
+     "lantern"
+    ],
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.5",
+    "description": "Les principales formes de pot still sont : onion (oignon, le plus courant), plain (cylindrique), straight (droit), ball (boule au-dessus du pot), lantern (lanterne, section vitrée historique). La forme influence le reflux : les pots hauts et étroits produisent un spirit plus léger (Glenmorangie), les pots trapus et larges un spirit plus lourd et huileux (Macallan). L'attitude du lyne arm est critique : ascendant = plus de reflux = spirit plus léger ; descendant = moins de reflux = spirit plus lourd.",
+    "lyne_arm_attitudes": {
+     "level": "Reflux modéré",
+     "ascending": "Plus de reflux, spirit léger",
+     "descending": "Moins de reflux, spirit lourd et riche"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "barley_starch_structure",
+   "theme": "barley_science",
+   "sujet": "biochemistry",
+   "titre": "Structure de l'amidon d'orge",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "amylose": {
+     "structure": "Chaîne linéaire α-1,4 glucane",
+     "proportion": "20-25%",
+     "gelatinization": "Plus difficile à gélatiniser, contribue à la fermentescibilité"
+    },
+    "conversion": "L'amidon est converti en maltose (fermentescible) + dextrines (non-fermentescible, apporte du corps) par les amylases pendant le mashing.",
+    "amylopectin": {
+     "structure": "Chaîne ramifiée α-1,4 + α-1,6 glucane",
+     "proportion": "75-80%",
+     "gelatinization": "Gélatinise plus facilement, produit des dextrines (corps de la bière) si les branchements 1-6 ne sont pas coupés"
+    },
+    "total_starch": "63-65% du grain sec",
+    "gelatinization_temp_c": "60-65°C pour l'orge maltée (inférieur à l'orge crue ~65-70°C grâce à la modification pendant le maltage)"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "congeners_fusel_alcohols",
+   "theme": "congeners",
+   "sujet": "higher_alcohols",
+   "titre": "Alcools de fusel — lourds et aromatiques",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 2.2",
+    "formation": "Voie d'Ehrlich : désamination des acides aminés → cétoacides → aldéhydes → alcools supérieurs.",
+    "in_whisky": "Les fusel alcohols contribuent au corps et à la 'chaleur' du spirit. Partiellement éliminés par la coupe des queues.",
+    "key_compounds": {
+     "propanol": {
+      "bp_c": 97,
+      "aroma": "Alcooleux, léger",
+      "threshold_ppm": 800
+     },
+     "isobutanol": {
+      "bp_c": 108,
+      "aroma": "Solvant, alcooleux",
+      "threshold_ppm": 200
+     },
+     "phenylethanol": {
+      "bp_c": 220,
+      "aroma": "Rose, miel, floral",
+      "threshold_ppm": 40
+     },
+     "isoamyl_alcohol": {
+      "bp_c": 132,
+      "aroma": "Banane verte, solvant",
+      "threshold_ppm": 70
+     }
+    },
+    "factors_increasing": "Température haute, sous-ensemencement, excès d'azote aminé libre (FAN), gravité élevée"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "congeners_aldehydes",
+   "theme": "congeners",
+   "sujet": "aldehydes",
+   "titre": "Aldéhydes — marqueurs d'immaturité et de maturation",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2.5",
+    "furfural": {
+     "aroma": "Pain grillé, amande, caramel",
+     "source": "Pyrolyse de l'hémicellulose du chêne pendant le charring. Extrait pendant la maturation.",
+     "indicator": "Marqueur de contact avec le bois charré."
+    },
+    "vanillin": {
+     "aroma": "Vanille",
+     "source": "Oxydation de la lignine du chêne. Augmente avec le temps de maturation.",
+     "more_in": "Chêne américain > chêne européen"
+    },
+    "acetaldehyde": {
+     "bp_c": 20.2,
+     "aroma": "Pomme verte, herbe coupée",
+     "in_new_make": "Présent en quantité dans le new make spirit. Diminue avec la maturation (oxydation → acide acétique)."
+    },
+    "syringaldehyde": {
+     "aroma": "Vanille épicée, boisé doux",
+     "source": "Hydrolyse des lignines de type syringyle."
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "elevage_cask_finish",
+   "theme": "elevage",
+   "sujet": "technique",
+   "titre": "Finitions en fût (cask finishing)",
+   "contenu": {
+    "description": "Le cask finishing (ou wood finish) consiste à transférer un spiritueux déjà maturé dans un second fût ayant contenu un autre produit, pour une période de 6-24 mois. Finitions courantes : ex-sherry (Oloroso = fruits secs, raisins ; PX = sucré, figue ; Fino = salin, amande), ex-porto (fruits rouges, chocolat), ex-sauternes (miel, abricot), ex-rhum (tropicaux, vanille), ex-vin rouge (tanins, baies). Le timing est critique : trop court = pas d'impact, trop long = dominance du second fût masquant le caractère originel. Le degré de chauffe et le nombre d'utilisations préalables du fût de finish influencent fortement le résultat."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_duration_quality",
+   "theme": "fermentation_advanced",
+   "sujet": "duration",
+   "titre": "Durée de fermentation et qualité du spirit",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.14",
+    "optimal_og": "1.045-1.050",
+    "description": "La durée de fermentation est un facteur critique de qualité. Les fermentations courtes (<40h) produisent un spirit inférieur — profil aromatique simple, dominé par les alcools supérieurs. Le minimum recommandé est de 48h. Les fermentations longues (60-120h) permettent la fermentation malolactique par les LAB naturellement présentes, produisant des esters et des composés aromatiques plus complexes. Une OG de 1.045-1.050 (plutôt que 1.060+) favorise la production d'esters. La température de fermentation idéale est de 18-22°C pour le whisky de malt.",
+    "minimum_hours": 48,
+    "optimal_temp_c": "18-22",
+    "long_fermentation_range": "60-120h",
+    "short_fermentation_limit": 40
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "formulas_ibu",
+   "theme": "formulas",
+   "sujet": "bitterness",
+   "titre": "Formule de Calcul des IBU",
+   "contenu": {
+    "u": "U = Utilization factor (depends on time and gravity)",
+    "aau": "AAU = Weight (oz) × Alpha Acid %",
+    "factor": "75 is Tinseth adjustment factor",
+    "formula": "IBU = AAU × U × 75 / Volume",
+    "description": "IBU = (masse_houblon_g × alpha_acide% × utilisation%) / (volume_L × 10). L'utilisation dépend du temps d'ébullition : 60 min ≈ 30%, 30 min ≈ 19%, 15 min ≈ 12%, 5 min ≈ 5%. Formules Tinseth ou Rager."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "nutrients_dap",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "DAP Phosphate diammonique",
+   "contenu": {
+    "usage": "Nutriment azoté — distillation, hydromel, vin. 0.5 g/L wash spirit. Dispense d'autolyse.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ],
+    "packaging": "100g / 500g"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "nutrients_servomyces",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Servomyces (Lallemand)",
+   "contenu": {
+    "brand": "Lallemand",
+    "usage": "Nutriment riche zinc — démarrage rapide, finition propre. 0.5 g/hL.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "nutrients_fermaid_o",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Fermaid O (Lallemand)",
+   "contenu": {
+    "brand": "Lallemand",
+    "usage": "Nutriment 100% organique — vin, cidre, hydromel.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "nutrients_fermaid_k",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Fermaid K (Lallemand)",
+   "contenu": {
+    "brand": "Lallemand",
+    "usage": "Nutriment complexe — vin, hydromel, distillation. Mix DAP + organique.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "nutrients_go_ferm",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Go-Ferm (Lallemand)",
+   "contenu": {
+    "brand": "Lallemand",
+    "usage": "Nutriment réhydratation levure sèche — boost survie, démarrage propre.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "nutrients_yeastex_61",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "YeastEx 61",
+   "contenu": {
+    "usage": "Nutriment azoté pour bières fortes (>8% ABV). Dose 5 g/hL.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "clar_whirlfloc",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Whirlfloc T (Karagheen)",
+   "contenu": {
+    "form": "tablette",
+    "usage": "Clarifiant ébullition (10 min fin) — précipite protéines/tanins.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "clar_irish_moss",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Irish Moss (Carragheen brut)",
+   "contenu": {
+    "usage": "Alternative Whirlfloc — 1 cuillère à café/20L.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "clar_gelatine",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Gélatine alimentaire",
+   "contenu": {
+    "usage": "Clarifiant à froid post-fermentation — 1 cuillère / 20L. NEIPA déconseillé.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "clar_isinglass",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Isinglass (colle de poisson)",
+   "contenu": {
+    "usage": "Clarifiant traditionnel UK — Cask Ale, Real Ale.",
+    "vendor": [
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "clar_biofine_clear",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Biofine Clear",
+   "contenu": {
+    "usage": "Clarifiant silicate — clarification pré-soutirage, vegan.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "clar_polyclar",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Polyclar (PVPP)",
+   "contenu": {
+    "usage": "Stabilisation bière (anti-trouble polyphénols). 10-30 g/hL.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "enz_amylase_alpha",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Amylase alpha (BSG)",
+   "contenu": {
+    "usage": "Boost conversion amidons — high-adjunct, brassins difficiles.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "enz_glucoamylase",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Glucoamylase (Amyloglucosidase)",
+   "contenu": {
+    "usage": "Atténuation maximale — Brut IPA, Saison ultra-sèche.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "enz_beta_glucanase",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Bêta-glucanase",
+   "contenu": {
+    "usage": "Fluidifie wort high-wheat/oat — anti-mash collant.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "enz_lactase",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Lactase",
+   "contenu": {
+    "usage": "Pour bières lactose-free / boost atténuation lactose.",
+    "vendor": [
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "whisky_mashing_differences",
+   "theme": "whisky_production",
+   "sujet": "process",
+   "titre": "Brassage whisky vs bière — différences clés",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "no_boil": "Le moût de whisky n'est PAS bouilli (contrairement à la bière). Pas d'ajout de houblon. Les enzymes restent actives.",
+    "lauter_tun": "Le mash tun à fond filtrant utilise les écorces de l'orge comme filtre naturel. Le lit de drêches doit rester perméable.",
+    "non_sterile": "Le wort n'est pas stérilisé → les bactéries lactiques (LAB) naturelles participent à la fermentation.",
+    "wort_gravity": "~1.050–1.065 OG typique",
+    "temperature_profile": {
+     "water_1": "64-65°C — extraction principale, conversion de l'amidon",
+     "water_2": "75-80°C — rinçage, extraction des sucres résiduels",
+     "water_3": "85-95°C — sparge final, recyclé comme 'water 1' du prochain batch"
+    }
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "dona_yeasting_method",
+   "theme": "whisky_production",
+   "sujet": "american",
+   "titre": "Méthode dona (propagation de levure américaine)",
+   "contenu": {
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.19",
+    "target_ph": 3.8,
+    "description": "La méthode dona est le système de propagation de levure traditionnel des distilleries américaines. Processus : (1) Petites céréales (seigle + malt) brassées séparément. (2) Acidification lactique naturelle jusqu'à pH 3.8 par les LAB présentes. (3) Pasteurisation à 100°C pour tuer les bactéries. (4) Refroidissement à 27-30°C. (5) Inoculation avec la culture de levure maison. (6) Propagation jusqu'à ~400 millions de cellules/mL. Ce système crée un pH bas qui inhibe les contaminants. Le dona est également la source du sour mash (recyclage du stillage acide).",
+    "sour_mash_link": "Le stillage acide (backset) est recyclé dans le mash suivant",
+    "target_cells_ml": "400 millions",
+    "propagation_temp_c": "27-30",
+    "pasteurization_temp_c": 100
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "congeners_phenols",
+   "theme": "congeners",
+   "sujet": "phenols",
+   "titre": "Composés phénoliques — tourbe, fumée, médicinal",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "peat_derived": {
+     "phenol": {
+      "aroma": "Médicinal, antiseptique",
+      "threshold_ppb": 7500
+     },
+     "cresols": {
+      "aroma": "Goudron, créosote",
+      "threshold_ppb": 50
+     },
+     "guaiacol": {
+      "aroma": "Fumée, épicé",
+      "threshold_ppb": 3
+     },
+     "4_vinylphenol": {
+      "aroma": "Médicinal, plastique",
+      "threshold_ppb": 10
+     },
+     "4_methylguaiacol": {
+      "aroma": "Fumée douce, clou de girofle",
+      "threshold_ppb": 10
+     }
+    },
+    "wood_derived": {
+     "eugenol": {
+      "aroma": "Clou de girofle",
+      "source": "Lignine du chêne"
+     },
+     "guaiacol_from_wood": {
+      "aroma": "Fumé léger",
+      "source": "Charring du fût"
+     }
+    },
+    "yeast_derived": {
+     "4_vinylguaiacol": {
+      "aroma": "Clou de girofle (weizen)",
+      "source": "Souches POF+ (ferulate decarboxylase)"
+     }
+    },
+    "survival_through_distillation": "~30-40% des phénols du malt survivent à la double distillation. Les phénols légers (guaiacol) passent mieux que les lourds."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "toasting_roasted_sweet",
+   "theme": "elevage",
+   "sujet": "home_guide",
+   "titre": "Toast Fort / Torréfié",
+   "contenu": {
+    "method": "Wet (soaked)",
+    "result": "Strong toast/roast with slight sweetness",
+    "description": "Toast intense développant des notes de café, chocolat noir et caramel brûlé. Couleur brun foncé. Utiliser avec modération.",
+    "duration_hours": 2,
+    "temperature_celsius": 176.7
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "clar_protafloc_brouwland",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Protafloc T (tablettes Brouwland)",
+   "contenu": {
+    "brand": "Brouwland",
+    "usage": "Whirlfloc — clarification ébullition. 1 tab / 50L à 10 min.",
+    "vendor": [
+     "Brouwland",
+     "Autobrasseur"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "clar_kieselsol",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Kieselsol (silicate de potassium)",
+   "contenu": {
+    "usage": "Clarifiant 2-stage avec gélatine — limpidité max. NEIPA déconseillé.",
+    "vendor": [
+     "Brouwland",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "clar_chitosane",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Chitosane",
+   "contenu": {
+    "usage": "Complément Kieselsol — vegan-friendly.",
+    "vendor": [
+     "Brouwland",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_oxygen_pierre_diffusion",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Pierre diffusion oxygène inox 0.5µm",
+   "contenu": {
+    "usage": "Oxygénation pré-pitch wash >10 ABV (bouteille O2 médicale).",
+    "vendor": [
+     "Brouwland",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_starsan",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Star San (acide phosphorique tampon)",
+   "contenu": {
+    "brand": "Five Star",
+    "usage": "Désinfectant sans rinçage. 1.5 mL/L = 15 sec contact.",
+    "vendor": [
+     "Autobrasseur",
+     "Rolling Beers",
+     "MotlerHops",
+     "Brouwland"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_chemipro_oxi",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Chemipro Oxi",
+   "contenu": {
+    "brand": "Brouwland",
+    "usage": "Nettoyant sans chlore — fermenteurs, bouteilles. 4 g/L.",
+    "vendor": [
+     "Brouwland",
+     "Autobrasseur"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_pbw",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "PBW (Powdered Brewery Wash)",
+   "contenu": {
+    "brand": "Five Star",
+    "usage": "Nettoyant alcalin pro — résidus tenaces.",
+    "vendor": [
+     "Brouwland",
+     "Rolling Beers"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "fermentation_chemipro_caustic",
+   "theme": "fermentation",
+   "sujet": "variete",
+   "titre": "Chemipro Caustic",
+   "contenu": {
+    "brand": "Brouwland",
+    "usage": "Soude caustique — nettoyage profond cuves inox.",
+    "vendor": [
+     "Brouwland"
+    ]
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "barley_starch_detailed",
+   "theme": "barley_science",
+   "sujet": "starch",
+   "titre": "Amidon d'orge — amylose/amylopectine et gélatinisation",
+   "contenu": {
+    "source": "Whisky: Technology, Production and Marketing - Russell et al., 2003, Ch.2",
+    "amylose_pct": 25,
+    "description": "L'amidon d'orge est composé d'amylose (~25%, chaîne linéaire α-1,4) et d'amylopectine (~75%, chaîne ramifiée α-1,4 + α-1,6). Température de gélatinisation de l'orge : 60-65°C (plus basse que maïs 62-74°C ou seigle 57-70°C). La gélatinisation rompt les granules d'amidon cristallins, rendant les chaînes accessibles aux enzymes. L'α-amylase (thermostable, optimum 72°C) coupe aléatoirement les liaisons α-1,4 → dextrines. La β-amylase (thermolabile, optimum 62-65°C) coupe séquentiellement depuis l'extrémité non réductrice → maltose. La limite-dextrinase coupe les liaisons α-1,6 de branchement.",
+    "beta_amylase": {
+     "action": "exoenzyme, coupe α-1,4 séquentiellement → maltose",
+     "optimum_c": "62-65"
+    },
+    "alpha_amylase": {
+     "action": "endoenzyme, coupe α-1,4 aléatoirement → dextrines",
+     "optimum_c": 72
+    },
+    "amylopectin_pct": 75,
+    "limit_dextrinase": {
+     "action": "coupe liaisons α-1,6 de branchement"
+    },
+    "gelatinization_temp_c": "60-65"
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "congeners_sulfur",
+   "theme": "congeners",
+   "sujet": "sulfur",
+   "titre": "Composés soufrés — cuivre et purification",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 3.2",
+    "sources": "Fermentation (métabolisme de la méthionine et cystéine), précurseurs dans le malt",
+    "copper_role": "Le cuivre est essentiel dans la distillation : Cu²⁺ réagit avec les thiols et H₂S pour former des sulfures de cuivre insolubles, éliminés du spirit.",
+    "key_compounds": {
+     "dms": {
+      "aroma": "Maïs, chou",
+      "source": "SMM du malt → DMS par chaleur",
+      "removed_by": "Cuivre de l'alambic + ébullition"
+     },
+     "mmfds": {
+      "note": "Attractif à très faible dose dans certains whiskies corsés",
+      "aroma": "Viandé, meaty",
+      "otv_ppb": 0.015,
+      "full_name": "Methyl 2-methyl 3-furyl disulfide"
+     },
+     "hydrogen_sulfide": {
+      "aroma": "Œuf pourri",
+      "source": "Stress de la levure, carence en azote",
+      "removed_by": "Cuivre de l'alambic"
+     }
+    },
+    "more_copper_contact": "Plus de contact cuivre (tall still, reflux) = spirit plus propre et floral. Moins de cuivre = spirit plus lourd et soufré."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "congeners_esters",
+   "theme": "congeners",
+   "sujet": "esters",
+   "titre": "Esters — arômes fruités des spiritueux et bières",
+   "contenu": {
+    "source": "Buglass 2011, Ch. 2.2 + 3.2",
+    "formation": "Condensation d'un alcool et d'un acide (catalysée par des enzymes en fermentation, ou par voie chimique en maturation).",
+    "key_esters": {
+     "ethyl_acetate": {
+      "aroma": "Fruité, solvant (à haute concentration), vernis",
+      "source": "Fermentation + maturation",
+      "threshold_ppm": 33
+     },
+     "ethyl_lactate": {
+      "aroma": "Crémeux, fruité doux",
+      "source": "LAB + maturation",
+      "threshold_ppm": 150
+     },
+     "ethyl_decanoate": {
+      "aroma": "Fruité, gras",
+      "source": "Fermentation",
+      "threshold_ppm": 0.5
+     },
+     "ethyl_hexanoate": {
+      "aroma": "Pomme rouge, ananas",
+      "source": "Fermentation",
+      "threshold_ppm": 0.2
+     },
+     "ethyl_octanoate": {
+      "aroma": "Pomme, abricot",
+      "source": "Fermentation",
+      "threshold_ppm": 0.9
+     },
+     "isoamyl_acetate": {
+      "aroma": "Banane, poire",
+      "source": "Fermentation (ATF1 enzyme)",
+      "threshold_ppm": 1.2
+     }
+    },
+    "distillation_impact": "Les esters légers (acétate d'éthyle) arrivent dans les têtes. Les esters lourds (décanoate) dans les queues. La coupe détermine le profil."
+   },
+   "source": "How To Brew - John Palmer"
+  },
+  {
+   "id": "yeast_nutrition_distilling",
+   "theme": "yeasts_distilling",
+   "sujet": "nutrition",
+   "titre": "Nutrition et stress de la levure en distillerie",
+   "contenu": {
+    "type": "distillation",
+    "source": "The Alcohol Textbook 4th Ed - Jacques, Lyons, Kelsall, 2003, Ch.9",
+    "reserves": [
+     "glycogène",
+     "tréhalose"
+    ],
+    "description": "La gestion nutritionnelle de la levure est critique en distillerie. Besoins essentiels : azote assimilable (FAN > 150 mg/L), zinc (0.1-0.3 ppm, cofacteur de l'alcool déshydrogénase), magnésium, vitamines B (biotine, thiamine). Facteurs de stress : température >35°C (dénaturation protéique), éthanol >8% v/v (toxicité membranaire), pH <3.5 (stress acide), pression osmotique élevée (OG >1.080). Le glycogène et le tréhalose sont les réserves de carbone de la levure — leur niveau au pitching prédit la vigueur de fermentation. Un pitching rate élevé (>10⁷ cellules/mL) est essentiel pour dominer la flore bactérienne.",
+    "flocculation": "moyenne",
+    "stress_factors": {
+     "og_max": 1.08,
+     "ph_min": 3.5,
+     "temp_max_c": 35,
+     "ethanol_toxic_pct": 8
+    },
+    "zinc_range_ppm": "0.1-0.3",
+    "attenuation_mid": null,
+    "fan_minimum_mg_l": 150,
+    "pitching_rate_min": "10⁷ cellules/mL"
+   },
+   "source": "Fiches techniques laboratoires (Lallemand / Fermentis / White Labs / Wyeast)"
+  },
+  {
+   "id": "sugars_maltodextrine",
+   "theme": "sugars",
+   "sujet": "unfermentable",
+   "titre": "Maltodextrine",
+   "contenu": {
+    "ppg": 40,
+    "effect": "Adds body without increasing gravity",
+    "flavor": "Neutral",
+    "addition": "Ébullition tardive ou post-boil (ne pas empâter).",
+    "mashable": false,
+    "yield_pct": 100,
+    "description": "Polymère de glucose NON fermentescible. Ajoute du corps, de la rondeur et de la tenue de mousse sans sucre résiduel ni alcool. Utilisé pour corriger les bières trop sèches.",
+    "fermentable": true,
+    "max_pct_batch": 20,
+    "diastatic_power_lintner": 0
+   },
+   "source": "Spécifications maltsters (Château/Weyermann, valeurs typiques par classe) · distrib. Autobrasseur/Rolling Beers"
+  },
+  {
+   "id": "sugars_sucrose",
+   "theme": "sugars",
+   "sujet": "disaccharide",
+   "titre": "Saccharose (Sucre Blanc)",
+   "contenu": {
+    "ppg": 46,
+    "addition": "Ébullition tardive ou post-boil (ne pas empâter).",
+    "mashable": false,
+    "yield_pct": 100,
+    "description": "Disaccharide 100% fermentescible. Inversé par la levure en glucose + fructose. Allège le corps. Utilisé dans les bitters anglaises et les bières belges.",
+    "fermentable": true,
+    "max_pct_batch": 20,
+    "fermentability_percent": 100,
+    "diastatic_power_lintner": 0
+   },
+   "source": "Spécifications maltsters (Château/Weyermann, valeurs typiques par classe) · distrib. Autobrasseur/Rolling Beers"
+  },
+  {
+   "id": "sugars_glucose",
+   "theme": "sugars",
+   "sujet": "monosaccharide",
+   "titre": "Glucose / Sucre de Maïs",
+   "contenu": {
+    "ppg": 42,
+    "addition": "Ébullition tardive ou post-boil (ne pas empâter).",
+    "mashable": false,
+    "yield_pct": 100,
+    "description": "Monosaccharide 100% fermentescible. Allège le corps sans ajouter de saveur. Utilisé pour les bières belges fortes et pour augmenter le taux d'alcool sans alourdir.",
+    "fermentable": true,
+    "max_pct_batch": 20,
+    "fermentability": "100%",
+    "solids_percent": 92,
+    "solubility_note": "Above 15-20% inhibits maltose fermentation",
+    "diastatic_power_lintner": 0,
+    "solubility_limit_percent": "15-20"
+   },
+   "source": "Spécifications maltsters (Château/Weyermann, valeurs typiques par classe) · distrib. Autobrasseur/Rolling Beers"
+  },
+  {
+   "id": "sugars_maple_syrup",
+   "theme": "sugars",
+   "sujet": "natural",
+   "titre": "Sirop d'Érable",
+   "contenu": {
+    "usage": "1 gallon Grade B per 5 gallons beer",
+    "timing": "Add after primary fermentation",
+    "addition": "Ébullition tardive ou post-boil (ne pas empâter).",
+    "mashable": false,
+    "yield_pct": 100,
+    "description": "Sucre d'érable ~90% fermentescible. Apporte des notes de caramel et de bois. Le grade B/Dark est préféré en brassage pour un caractère plus marqué.",
+    "fermentable": true,
+    "max_pct_batch": 20,
+    "diastatic_power_lintner": 0
+   },
+   "source": "Spécifications maltsters (Château/Weyermann, valeurs typiques par classe) · distrib. Autobrasseur/Rolling Beers"
+  },
+  {
+   "id": "sugars_belgian_candi",
+   "theme": "sugars",
+   "sujet": "specialty",
+   "titre": "Sucre Candi Belge",
+   "contenu": {
+    "addition": "Ébullition tardive ou post-boil (ne pas empâter).",
+    "mashable": false,
+    "yield_pct": 80,
+    "description": "Sucre cristallisé belge en versions claire et foncée. Le clair (100% fermentescible) allège. Le foncé apporte des notes de fruits confits, caramel brûlé et rhum. Essentiel aux ales belges d'abbaye.",
+    "fermentable": true,
+    "max_pct_batch": 20,
+    "fermentability": "100%",
+    "diastatic_power_lintner": 0
+   },
+   "source": "Spécifications maltsters (Château/Weyermann, valeurs typiques par classe) · distrib. Autobrasseur/Rolling Beers"
+  },
+  {
+   "id": "sugars_brown_sugar",
+   "theme": "sugars",
+   "sujet": "specialty",
+   "titre": "Sucre Brun / Cassonade",
+   "contenu": {
+    "flavor": "Notes légères de rhum",
+    "addition": "Ébullition tardive ou post-boil (ne pas empâter).",
+    "mashable": false,
+    "yield_pct": 80,
+    "description": "Sucre ~95% fermentescible avec des mélasses résiduelles. Apporte des notes de caramel, toffee et rhum. Utilisé dans les bières brunes anglaises et certaines ales belges.",
+    "fermentable": true,
+    "max_pct_batch": 20,
+    "diastatic_power_lintner": 0
+   },
+   "source": "Spécifications maltsters (Château/Weyermann, valeurs typiques par classe) · distrib. Autobrasseur/Rolling Beers"
+  },
+  {
+   "id": "sugars_honey",
+   "theme": "sugars",
+   "sujet": "natural",
+   "titre": "Miel",
+   "contenu": {
+    "addition": "Ébullition tardive ou post-boil (ne pas empâter).",
+    "mashable": false,
+    "yield_pct": 80,
+    "composition": {
+     "glucose_percent": 30,
+     "fructose_percent": 38
+    },
+    "description": "Sucre naturel ~80% fermentescible. Apporte des arômes floraux subtils et une douceur résiduelle. Utilisé en braggot, mead et bières au miel. Ajouter en fin d'ébullition pour préserver les arômes.",
+    "fermentable": true,
+    "ppg_estimate": 38,
+    "max_pct_batch": 20,
+    "pasteurization": "80°C for 30 minutes",
+    "usage_subtle_percent": "3-10",
+    "fermentability_percent": 95,
+    "usage_distinct_percent": "11-30",
+    "usage_dominant_percent": "30-66",
+    "diastatic_power_lintner": 0
+   },
+   "source": "Spécifications maltsters (Château/Weyermann, valeurs typiques par classe) · distrib. Autobrasseur/Rolling Beers"
+  },
+  {
+   "id": "sugars_treacle",
+   "theme": "sugars",
+   "sujet": "specialty",
+   "titre": "Mélasse / Treacle",
+   "contenu": {
+    "flavor": "Strong",
+    "addition": "Ébullition tardive ou post-boil (ne pas empâter).",
+    "mashable": false,
+    "yield_pct": 80,
+    "description": "Sous-produit du raffinage du sucre. Saveur intense de caramel foncé, réglisse et minéral. Partiellement fermentescible. Utilisé en old ales et stouts.",
+    "fermentable": true,
+    "max_pct_batch": 20,
+    "usage_max_cup_per_5gal": 0.5,
+    "diastatic_power_lintner": 0
+   },
+   "source": "Spécifications maltsters (Château/Weyermann, valeurs typiques par classe) · distrib. Autobrasseur/Rolling Beers"
+  },
+  {
+   "id": "yeasts_distilling",
+   "theme": "yeasts_distilling",
+   "sujet": "distilling",
+   "titre": "Levures de distillation",
+   "contenu": {
+    "type": "distillation",
+    "source": "Buglass 2011, Ch. 3.2",
+    "m_strain": {
+     "name": "M-strain (Mauri/Kerry)",
+     "type": "Saccharomyces cerevisiae",
+     "flavor": "Relativement neutre, maximise le rendement en alcool",
+     "characteristics": "Haute atténuation, tolérance alcool élevée (~12% ABV), fermentation rapide (48-60h)"
+    },
+    "mx_strain": {
+     "name": "MX (Mauri Premium)",
+     "characteristics": "Similaire à M-strain avec meilleure tolérance au stress osmotique"
+    },
+    "flocculation": "moyenne",
+    "pitching_rate": "Environ 2-4 kg de levure pressée par 1000 L de wash (beaucoup plus élevé qu'en brasserie).",
+    "attenuation_mid": null,
+    "brewer_yeast_blend": {
+     "ratio": "Typiquement 80% distilling yeast + 20% brewing yeast",
+     "description": "Certaines distilleries ajoutent une portion de levure de brasserie (ale yeast) au mélange pour augmenter la complexité aromatique (esters, alcools supérieurs)."
+    }
+   },
+   "source": "Fiches techniques laboratoires (Lallemand / Fermentis / White Labs / Wyeast)"
+  }
+ ]
+}
