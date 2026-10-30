@@ -27,7 +27,7 @@ export const num = (v) => {
 const arrondi = (v, d = 1) => (v === null ? null : Math.round(v * 10 ** d) / 10 ** d);
 
 // Couleur : Lovibond -> SRM (Morey/ASBC) -> EBC
-export const lovibondVersEbc = (l) => (l === null ? null : arrondi((1.3546 * l - 0.76) * 1.97, 1));
+export const lovibondVersEbc = (l) => (l === null ? null : Math.max(0, arrondi((1.3546 * l - 0.76) * 1.97, 1)));
 // Rendement : PPG (points/livre/gallon) -> % d'extrait (saccharose = 46,214 PPG)
 export const ppgVersPct = (p) => (p === null ? null : arrondi((p / 46.214) * 100, 1));
 // Pouvoir diastasique : Windisch-Kolbach -> Lintner
@@ -217,6 +217,7 @@ async function exporter() {
 function autoTest() {
   const ok = (cond, msg) => { if (!cond) throw new Error('Échec : ' + msg); console.log('✓', msg); };
   ok(Math.abs(lovibondVersEbc(2) - 3.8) < 0.1, '2 °L ≈ 3,8 EBC');
+  ok(lovibondVersEbc(0) === 0, 'jamais d\'EBC négatif');
   ok(Math.abs(ppgVersPct(37) - 80.1) < 0.2, '37 PPG ≈ 80 % d\'extrait');
   ok(wkVersLintner(250) === 76, '250 WK = 76 °Lintner');
   ok(fVersC(68) === 20, '68 °F = 20 °C');
