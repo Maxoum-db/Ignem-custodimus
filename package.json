@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "export:donnees": "node scripts/export-donnees.mjs",
-    "test:export": "node scripts/export-donnees.mjs --test"
+    "test:export": "node scripts/export-donnees.mjs --test",
+    "build:jeu": "node scripts/construire-jeu.mjs",
+    "test:jeu": "node jeu/tests/moteur.test.mjs"
   },
   "devDependencies": {
     "pg": "8.13.1"

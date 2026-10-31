@@ -1,0 +1,165 @@
+<title>Ignem custodimus</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&family=VT323&display=swap">
+<style>/*CSS*/</style>
+
+<div id="app">
+  <header class="entete">
+    <button class="marque" data-aller="domaine" aria-label="Retour au domaine">
+      <img id="marque-feu" class="sprite" alt="" width="16" height="20">
+      <span class="marque-nom">Ignem<br>custodimus</span>
+    </button>
+    <div class="entete-niveau" id="entete-niveau"></div>
+    <nav class="entete-nav" aria-label="Menu">
+      <button data-aller="carnet">Carnet</button>
+      <button data-aller="fiches">Fiches</button>
+      <button data-aller="reglages">Options</button>
+    </nav>
+  </header>
+
+  <main id="scene">
+    <!-- Domaine -->
+    <section id="ecran-domaine" class="ecran">
+      <div class="domaine-cadre">
+        <canvas id="carte" width="192" height="256" aria-label="Plan du Domaine des Braises"></canvas>
+        <div id="lieux" class="lieux"></div>
+      </div>
+      <p class="domaine-legende"><span>Domaine des Braises</span><span>Quercy</span><span id="saison"></span></p>
+    </section>
+
+    <!-- Brasserie -->
+    <section id="ecran-brasserie" class="ecran" hidden>
+      <div class="atelier">
+        <div class="cuve-zone" id="cuve-zone">
+          <canvas id="cuve" width="120" height="96" aria-label="Cuve de brassage"></canvas>
+          <span class="cuve-aide" id="cuve-aide">Glisse les sacs ici</span>
+        </div>
+        <div class="mesures" id="mesures"></div>
+      </div>
+      <button class="style-ligne" id="style-ligne" aria-expanded="false"></button>
+      <div class="style-detail" id="style-detail" hidden></div>
+      <p class="conseil" id="conseil" hidden></p>
+      <div class="onglets" role="tablist" id="onglets"></div>
+      <div class="onglet-contenu" id="onglet-contenu"></div>
+      <div class="barre-brassin">
+        <button id="btn-vider" class="btn btn-sobre">Vider la cuve</button>
+        <button id="btn-lancer" class="btn btn-feu">Lancer le brassin</button>
+      </div>
+    </section>
+
+    <!-- Gestes -->
+    <section id="ecran-empatage" class="ecran geste" hidden>
+      <p class="geste-etape">Geste 1 sur 3</p>
+      <h1 class="geste-titre">Empâtage <span class="en">mashing</span></h1>
+      <p class="geste-consigne" id="emp-consigne"></p>
+      <div class="geste-scene"><canvas id="emp-canvas" width="192" height="128"></canvas></div>
+      <div class="geste-infos" id="emp-infos"></div>
+      <div class="geste-controles">
+        <button id="emp-vapeur" class="btn btn-feu btn-geste" disabled>Vapeur<small>maintenir appuyé</small></button>
+      </div>
+      <div class="geste-bilan" id="emp-bilan" hidden></div>
+      <div class="geste-pied" id="emp-pied">
+        <button id="emp-passer" class="btn btn-sobre">Passer ce geste</button>
+        <button id="emp-go" class="btn">Commencer</button>
+      </div>
+    </section>
+
+    <section id="ecran-ebullition" class="ecran geste" hidden>
+      <p class="geste-etape">Geste 2 sur 3</p>
+      <h1 class="geste-titre">Ébullition <span class="en">boil</span></h1>
+      <p class="geste-consigne" id="ebu-consigne"></p>
+      <div class="geste-scene"><canvas id="ebu-canvas" width="192" height="112"></canvas></div>
+      <div class="frise" id="ebu-frise"></div>
+      <div class="geste-infos" id="ebu-infos"></div>
+      <div class="geste-controles">
+        <button id="ebu-jeter" class="btn btn-houblon btn-geste" disabled>Jeter le houblon</button>
+      </div>
+      <div class="geste-bilan" id="ebu-bilan" hidden></div>
+      <div class="geste-pied" id="ebu-pied">
+        <button id="ebu-passer" class="btn btn-sobre">Passer ce geste</button>
+        <button id="ebu-go" class="btn">Allumer le feu</button>
+      </div>
+    </section>
+
+    <section id="ecran-fermentation" class="ecran geste" hidden>
+      <p class="geste-etape">Geste 3 sur 3</p>
+      <h1 class="geste-titre">Fermentation <span class="en">fermentation</span></h1>
+      <p class="geste-consigne" id="fer-consigne"></p>
+      <div class="geste-scene"><canvas id="fer-canvas" width="192" height="128"></canvas></div>
+      <div class="geste-infos" id="fer-infos"></div>
+      <div class="geste-controles vanne">
+        <label for="fer-vanne">Vanne de la double enveloppe</label>
+        <input type="range" id="fer-vanne" min="-100" max="100" step="1" value="0" disabled>
+        <div class="vanne-echelle"><span>Glycol (froid)</span><span>Chauffe</span></div>
+      </div>
+      <div class="geste-bilan" id="fer-bilan" hidden></div>
+      <div class="geste-pied" id="fer-pied">
+        <button id="fer-passer" class="btn btn-sobre">Passer ce geste</button>
+        <button id="fer-go" class="btn">Ensemencer</button>
+      </div>
+    </section>
+
+    <!-- Dégustation -->
+    <section id="ecran-degustation" class="ecran" hidden>
+      <div class="degust-haut">
+        <canvas id="verre" width="64" height="96" aria-label="Verre de la cuvée"></canvas>
+        <div class="verdict" id="verdict"></div>
+      </div>
+      <div class="degust-grille">
+        <div class="radar" id="radar"></div>
+        <div class="fiche-jury" id="fiche-jury"></div>
+      </div>
+      <div id="degust-defauts"></div>
+      <div id="degust-gains"></div>
+      <div class="nommer">
+        <label for="nom-cuvee">Nom de la cuvée</label>
+        <input id="nom-cuvee" maxlength="40" autocomplete="off">
+      </div>
+      <div class="barre-brassin">
+        <button id="btn-rebrasser" class="btn btn-sobre">Rebrasser en ajustant</button>
+        <button id="btn-retour" class="btn">Retour au domaine</button>
+      </div>
+    </section>
+
+    <!-- Carnet -->
+    <section id="ecran-carnet" class="ecran" hidden>
+      <h1 class="page-titre">Carnet de brassage</h1>
+      <div id="carnet-progression"></div>
+      <h2 class="sous-titre">Étagère</h2>
+      <div class="etagere" id="etagere"></div>
+      <div id="carnet-detail"></div>
+      <h2 class="sous-titre">Succès</h2>
+      <div class="succes" id="succes"></div>
+    </section>
+
+    <!-- Fiches -->
+    <section id="ecran-fiches" class="ecran" hidden>
+      <h1 class="page-titre">Fiches de chimie</h1>
+      <p class="page-intro">Ce qui se passe dans la cuve, et comment le jeu le calcule. Les termes anglais sont ceux de la littérature brassicole.</p>
+      <div id="fiches-liste"></div>
+    </section>
+
+    <!-- Options -->
+    <section id="ecran-reglages" class="ecran" hidden>
+      <h1 class="page-titre">Options</h1>
+      <div id="reglages-contenu"></div>
+    </section>
+  </main>
+
+  <aside id="mentor" class="mentor" hidden aria-live="polite">
+    <img id="mentor-portrait" class="sprite" alt="" width="48" height="48">
+    <div class="mentor-corps">
+      <p class="mentor-nom">Lise <span>maître brasseuse</span></p>
+      <p id="mentor-texte"></p>
+      <div class="mentor-actions" id="mentor-actions"></div>
+    </div>
+  </aside>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <div id="glisse" class="glisse" hidden></div>
+</div>
+
+<script>/*DONNEES*/</script>
+<script>/*MOTEUR*/</script>
+<script>/*JEU*/</script>

@@ -2,6 +2,23 @@
 
 Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du Hub Prométhée.
 
+## Le jeu (V0.1 : brasserie)
+
+| Dossier | Contenu |
+|---|---|
+| `jeu/src/moteur.js` | Chimie du brassage : densité, atténuation selon le palier, Tinseth, Morey, pH (Kolbach), styles, défauts, fiche de jury BJCP |
+| `jeu/src/jeu.js` | Interface : domaine, brasserie, 3 gestes, dégustation, carnet, fiches, options |
+| `jeu/src/page.html`, `style.css` | Page et styles |
+| `jeu/tests/moteur.test.mjs` | Recettes de référence (pils, IPA, dry stout, weizen, recette ratée) |
+| `dist/index.html` | Jeu complet en une page, prêt à héberger |
+
+```bash
+npm run test:jeu    # teste le moteur
+npm run build:jeu   # reconstruit dist/ depuis data/ et jeu/src/
+```
+
+La partie est enregistrée sur le téléphone (stockage du navigateur). Le jeu ne lit que `data/`, jamais la base du Hub.
+
 ## Règle d'or : le jeu ne touche jamais au Hub
 
 | Élément | Hub Prométhée | Ignem custodimus |
