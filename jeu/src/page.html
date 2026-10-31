@@ -101,6 +101,73 @@
       </div>
     </section>
 
+    <!-- Distillerie : l'alambic Ulysse -->
+    <section id="ecran-distillerie" class="ecran" hidden>
+      <div class="ulysse-haut">
+        <canvas id="ulysse" width="96" height="72" aria-label="Ulysse, l'alambic ambulant"></canvas>
+        <div>
+          <h1 class="page-titre">Alambic Ulysse</h1>
+          <p class="page-intro">Alambic à repasse en cuivre, chauffé au bois, sur remorque. Charges de 200 à 500 L, deux chauffes : le brouillis puis la bonne chauffe.</p>
+        </div>
+      </div>
+      <h2 class="sous-titre">Quelle bière distiller ?</h2>
+      <div id="dist-bieres" class="onglet-contenu"></div>
+      <h2 class="sous-titre">Réglages</h2>
+      <div id="dist-reglages" class="reglages-groupe"></div>
+      <div class="barre-brassin">
+        <button class="btn btn-sobre" data-aller="domaine">Domaine</button>
+        <button id="btn-distiller" class="btn btn-feu" disabled>Lancer la distillation</button>
+      </div>
+    </section>
+
+    <section id="ecran-brouillis" class="ecran geste" hidden>
+      <p class="geste-etape">Chauffe 1 sur 2</p>
+      <h1 class="geste-titre">Brouillis <span class="en">stripping run</span></h1>
+      <p class="geste-consigne" id="bro-consigne"></p>
+      <div class="geste-scene"><canvas id="bro-canvas" width="192" height="120"></canvas></div>
+      <div class="geste-infos" id="bro-infos"></div>
+      <div class="jauges-feu" id="bro-jauges"></div>
+      <div class="geste-controles">
+        <button id="bro-buche" class="btn btn-feu btn-geste" disabled>Ajouter une bûche</button>
+      </div>
+      <div class="geste-bilan" id="bro-bilan" hidden></div>
+      <div class="geste-pied" id="bro-pied">
+        <button id="bro-passer" class="btn btn-sobre">Passer ce geste</button>
+        <button id="bro-go" class="btn">Allumer le foyer</button>
+      </div>
+    </section>
+
+    <section id="ecran-repasse" class="ecran geste" hidden>
+      <p class="geste-etape">Chauffe 2 sur 2</p>
+      <h1 class="geste-titre">Bonne chauffe <span class="en">spirit run</span></h1>
+      <p class="geste-consigne" id="rep-consigne"></p>
+      <div class="geste-scene"><canvas id="rep-canvas" width="192" height="120"></canvas></div>
+      <div class="geste-infos" id="rep-infos"></div>
+      <p class="nez-ligne" id="rep-nez"></p>
+      <p class="conseil" id="rep-conseil" hidden></p>
+      <div class="jauges-feu" id="rep-jauges"></div>
+      <div class="geste-controles rangee">
+        <button id="rep-buche" class="btn btn-sobre" disabled>Bûche</button>
+        <button id="rep-couper" class="btn btn-feu btn-geste" disabled>Couper</button>
+      </div>
+      <div class="geste-bilan" id="rep-bilan" hidden></div>
+      <div class="geste-pied" id="rep-pied">
+        <button id="rep-passer" class="btn btn-sobre">Coupes automatiques</button>
+        <button id="rep-go" class="btn">Allumer le foyer</button>
+      </div>
+    </section>
+
+    <section id="ecran-aveugle" class="ecran" hidden>
+      <h1 class="page-titre">À l'aveugle <span class="en">blind nosing</span></h1>
+      <p class="page-intro">Firmin a rempli trois verres : les têtes, le cœur et les queues de ta chauffe, dans le désordre. Retrouve chaque fraction au nez.</p>
+      <div class="verres-aveugle" id="aveugle-verres"></div>
+      <div class="geste-bilan" id="aveugle-bilan" hidden></div>
+      <div class="barre-brassin">
+        <button id="aveugle-passer" class="btn btn-sobre">Passer</button>
+        <button id="aveugle-valider" class="btn btn-feu" disabled>Valider</button>
+      </div>
+    </section>
+
     <!-- Dégustation -->
     <section id="ecran-degustation" class="ecran" hidden>
       <div class="degust-haut">
@@ -151,7 +218,7 @@
   <aside id="mentor" class="mentor" hidden aria-live="polite">
     <img id="mentor-portrait" class="sprite" alt="" width="48" height="48">
     <div class="mentor-corps">
-      <p class="mentor-nom">Lise <span>maître brasseuse</span></p>
+      <p class="mentor-nom"><span id="mentor-nom">Lise</span> <span id="mentor-role">maître brasseuse</span></p>
       <p id="mentor-texte"></p>
       <div class="mentor-actions" id="mentor-actions"></div>
     </div>
@@ -162,4 +229,5 @@
 
 <script>/*DONNEES*/</script>
 <script>/*MOTEUR*/</script>
+<script>/*DISTILLERIE*/</script>
 <script>/*JEU*/</script>

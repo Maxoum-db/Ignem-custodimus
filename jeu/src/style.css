@@ -247,6 +247,41 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .frise .curseur { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1px; background: var(--braise); }
 .frise .graduation { position: absolute; bottom: 1px; font-family: var(--f-chiffre); font-size: 14px; color: var(--cendre); transform: translateX(-50%); }
 
+/* ---------- Distillerie ---------- */
+.ulysse-haut { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; }
+#ulysse { width: 96px; height: 72px; box-shadow: var(--cadre); background: var(--four); }
+.biere-carte { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center; background: var(--four); padding: 10px; box-shadow: 0 0 0 2px var(--pierre); text-align: left; border: 0; width: 100%; }
+.biere-carte[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--cuivre); }
+.biere-carte .nom { font-weight: 700; min-width: 0; }
+.biere-carte .det { grid-column: 1 / -1; font-size: 13px; color: var(--cendre); }
+.biere-carte .lap { font-family: var(--f-chiffre); font-size: 22px; color: var(--braise); }
+.jauges-feu { display: flex; flex-direction: column; gap: 6px; }
+.jauge-feu { display: grid; grid-template-columns: 62px 1fr 44px; gap: 8px; align-items: center; font-size: 13px; color: var(--cendre); }
+.jauge-feu .barre { height: 12px; background: var(--nuit); box-shadow: 0 0 0 2px var(--pierre); position: relative; }
+.jauge-feu .zone { position: absolute; top: 0; bottom: 0; background: rgba(156, 201, 94, .28); }
+.jauge-feu .niv { position: absolute; inset: 0 auto 0 0; }
+.jauge-feu .val { font-family: var(--f-chiffre); font-size: 18px; color: var(--calcaire); text-align: right; }
+.geste-controles.rangee { flex-direction: row; }
+.geste-controles.rangee .btn-geste { flex: 1; }
+.nez-ligne { margin: 0; padding: 8px 10px; background: var(--four); box-shadow: var(--cadre); min-height: 2.6em; }
+.nez-ligne b { color: var(--braise); }
+.tableau-fractions { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 14px; }
+.tableau-fractions th { text-align: left; font-weight: 600; color: var(--cendre); padding: 2px 4px; }
+.tableau-fractions td { padding: 3px 4px; border-top: 1px solid var(--pierre); font-family: var(--f-chiffre); font-size: 18px; }
+.tableau-fractions td:first-child { font-family: var(--f-texte); font-size: 14px; }
+.tableau-wrap { overflow-x: auto; }
+.verres-aveugle { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.verre-a { background: var(--four); box-shadow: var(--cadre); padding: 8px; display: flex; flex-direction: column; gap: 6px; align-items: center; text-align: center; min-width: 0; }
+.verre-a canvas { width: 40px; height: 60px; }
+.verre-a .lettre { font-family: var(--f-titre); font-size: 12px; color: var(--braise); }
+.verre-a .odeurs { font-size: 13px; min-height: 3.2em; }
+.verre-a .choix { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+.verre-a .choix button { border: 0; padding: 5px 2px; font-size: 13px; background: var(--nuit); color: var(--cendre); box-shadow: 0 0 0 2px var(--pierre); }
+.verre-a .choix button[aria-pressed="true"] { background: var(--calcaire); color: var(--nuit); }
+.verre-a.juste { box-shadow: 0 0 0 3px var(--houblon); }
+.verre-a.faux { box-shadow: 0 0 0 3px var(--alerte); }
+.verre-a .reponse { font-size: 13px; font-weight: 700; }
+
 /* ---------- Dégustation ---------- */
 .degust-haut { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; }
 #verre { width: 96px; height: 144px; display: block; }

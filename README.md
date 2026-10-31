@@ -2,18 +2,20 @@
 
 Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du Hub Prométhée.
 
-## Le jeu (V0.1 : brasserie)
+## Le jeu (V0.2 : brasserie et alambic Ulysse)
 
 | Dossier | Contenu |
 |---|---|
 | `jeu/src/moteur.js` | Chimie du brassage : densité, atténuation selon le palier, Tinseth, Morey, pH (Kolbach), styles, défauts, fiche de jury BJCP |
-| `jeu/src/jeu.js` | Interface : domaine, brasserie, 3 gestes, dégustation, carnet, fiches, options |
+| `jeu/src/distillerie.js` | Distillation : équilibre liquide-vapeur, Rayleigh pas à pas, reflux selon la chauffe, 9 congénères, cuivre, coupes, épaisses, notation de l'eau-de-vie |
+| `jeu/src/jeu.js` | Interface : domaine, brasserie, 3 gestes, Ulysse (brouillis, bonne chauffe, aveugle), dégustation, carnet, fiches, options |
 | `jeu/src/page.html`, `style.css` | Page et styles |
 | `jeu/tests/moteur.test.mjs` | Recettes de référence (pils, IPA, dry stout, weizen, recette ratée) |
+| `jeu/tests/distillerie.test.mjs` | Distillation d'une IPA avec différentes coupes |
 | `dist/index.html` | Jeu complet en une page, prêt à héberger |
 
 ```bash
-npm run test:jeu    # teste le moteur
+npm run test:jeu    # teste les moteurs de brassage et de distillation
 npm run build:jeu   # reconstruit dist/ depuis data/ et jeu/src/
 ```
 

@@ -1,6 +1,6 @@
 {
   "name": "ignem-custodimus",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "private": true,
   "description": "Prométhée : Ignem custodimus — jeu de laboratoire brasserie et distillerie",
   "type": "module",
@@ -8,7 +8,7 @@
     "export:donnees": "node scripts/export-donnees.mjs",
     "test:export": "node scripts/export-donnees.mjs --test",
     "build:jeu": "node scripts/construire-jeu.mjs",
-    "test:jeu": "node jeu/tests/moteur.test.mjs"
+    "test:jeu": "node jeu/tests/moteur.test.mjs && node jeu/tests/distillerie.test.mjs"
   },
   "devDependencies": {
     "pg": "8.13.1"
