@@ -558,11 +558,6 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .duo { gap: 10px; }
 /* Atelier : cuve + charge de grain en haut, six mesures sur toute la largeur */
 .atelier { grid-template-columns: 120px 1fr; }
-.atelier .mesures { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
-.atelier .mesure { padding: 4px 8px; flex-direction: column; align-items: flex-start; gap: 0; }
-.atelier .mesure .v { font-size: clamp(22px, 6.4vw, 28px); overflow: visible; }
-.atelier .mesure .l { font-size: 11px; }
-.atelier .mesure .l { max-width: 100%; }
 .charge { background: var(--four); box-shadow: var(--cadre); padding: 6px 8px; display: flex; flex-direction: column; gap: 3px; min-width: 0; align-self: stretch; }
 .charge-v { font-family: var(--f-chiffre); font-size: 34px; line-height: .9; color: var(--calcaire); }
 .charge-v small { font-size: 20px; color: var(--cendre); }
@@ -575,7 +570,18 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .ligne-recette .nom .part { display: inline-block; min-width: 3.2em; margin-right: 6px; padding: 0 4px; font-family: var(--f-chiffre); font-size: 20px; font-weight: 400; text-align: center; color: var(--nuit); background: var(--teinte, var(--braise)); box-shadow: inset 0 0 0 1px rgba(0,0,0,.3); }
 .ligne-recette .nom small { font-size: 13px; }
 .ligne-recette .qte input { font-size: 26px; }
-@media (min-width: 560px) { .atelier .mesure .l { font-size: 11px; } }
 
-@media (min-width: 640px) { .atelier .mesures { grid-template-columns: repeat(6, minmax(0, 1fr)); } .atelier .mesure { flex-direction: column; align-items: flex-start; } }
 .geste-controles.duo .btn-geste { flex: 1 1 0; }
+
+/* ---------- Brasserie : seul le bandeau des mesures reste en haut (V0.4.3) ---------- */
+.atelier { position: static; margin-top: 0; padding-top: 0; padding-bottom: 0; box-shadow: none; z-index: auto; }
+.bandeau-mesures { position: sticky; top: -10px; z-index: 3; margin: -6px -2px 0; padding: 14px 2px 6px; background: var(--nuit); box-shadow: 0 3px 0 var(--nuit); }
+.bandeau-mesures .mesures { display: grid; min-width: 0; grid-template-columns: 1.3fr 1.3fr 1fr .85fr 1fr 1fr; gap: 3px; }
+.bandeau-mesures .mesure { padding: 3px 2px 2px; align-items: center; text-align: center; box-shadow: 0 0 0 2px var(--pierre); gap: 0; }
+.bandeau-mesures .mesure .v { font-size: clamp(17px, 4.9vw, 24px); overflow: visible; letter-spacing: -.02em; }
+.bandeau-mesures .mesure .l { font-size: 10px; line-height: 1.1; }
+.bandeau-mesures .mesure .pastille { width: 7px; height: 7px; margin-left: 2px; }
+.compo-bouton { display: grid; gap: 3px; width: 100%; padding: 0; border: 0; background: none; text-align: left; color: var(--cendre); font-size: 12px; cursor: pointer; }
+.compo-lib { color: var(--cendre); }
+.charge .grist-leg span { display: flex; align-items: center; gap: 4px; }
+.charge .grist-leg i { display: inline-block; width: 8px; height: 8px; flex: none; box-shadow: 0 0 0 1px var(--nuit); }

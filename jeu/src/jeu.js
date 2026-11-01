@@ -639,15 +639,19 @@
   }
 
   // Charge de grain lisible : total, kg/hL et répartition en barre colorée par la teinte des malts
+  let compoOuverte = false;
   function rendreCharge(r) {
     const z = $('#charge'); if (!z) return;
     const kg = R.malts.reduce((a, l) => a + l.kg, 0);
     if (!kg) { z.innerHTML = '<span class="charge-v">0 <small>kg</small></span><span class="charge-l">de grain dans la cuve</span>'; return; }
     const tri = R.malts.map((l) => ({ m: IDX.malt.get(l.id), kg: l.kg })).sort((a, b) => b.kg - a.kg);
     z.innerHTML = `<span class="charge-v">${nf(kg, 0)} <small>kg</small></span><span class="charge-l">de grain · ${nf((kg / R.volume) * 100, 1)} kg/hL</span>
-      <span class="grist">${tri.map((x) => `<i style="width:${(x.kg / kg) * 100}%;background:${couleur(Math.max(4, x.m.ebc))}"></i>`).join('')}</span>
-      <span class="grist-leg">${tri.slice(0, 3).map((x) => `<span><b>${Math.round((x.kg / kg) * 100)} %</b> ${esc(x.m.nom.split(' ').slice(0, 2).join(' '))}</span>`).join('')}${tri.length > 3 ? `<span>+ ${tri.length - 3} autre${tri.length > 4 ? 's' : ''}</span>` : ''}</span>`;
+      <button class="compo-bouton" id="compo-bouton" aria-expanded="${compoOuverte}">
+        <span class="grist">${tri.map((x) => `<i style="width:${(x.kg / kg) * 100}%;background:${couleur(Math.max(4, x.m.ebc))}"></i>`).join('')}</span>
+        <span class="compo-lib">${compoOuverte ? '▾' : '▸'} Composition · ${tri.length} malt${tri.length > 1 ? 's' : ''}</span></button>
+      ${compoOuverte ? `<span class="grist-leg">${tri.map((x) => `<span><i style="background:${couleur(Math.max(4, x.m.ebc))}"></i><b>${Math.round((x.kg / kg) * 100)} %</b> ${esc(x.m.nom)}</span>`).join('')}</span>` : ''}`;
   }
+  document.addEventListener('click', (e) => { if (e.target.closest('#compo-bouton')) { compoOuverte = !compoOuverte; son('clic'); rendreCharge(); } });
   function rendreCuveListe(z) {
     const r = dernierCalc;
     if (!R.malts.length && !R.houblons.length && !R.levure) { z.innerHTML = '<p class="vide">La cuve est vide. Ajoute des céréales depuis l\'onglet Céréales, ou charge une recette du grimoire au pigeonnier.</p><button class="btn btn-sobre" data-catalogue="grimoire">Ouvrir le grimoire</button>'; return; }
@@ -756,9 +760,9 @@
     const st = r.style;
     const dans = (k) => st && st.ecarts[k] === 0;
     const m = [
-      { v: r.aDesMalts ? sg(r.og) : '—', l: 'OG initiale', f: 'densite', c: etat(dans('og')) },
-      { v: r.levure && r.aDesMalts ? sg(r.fg) : '—', l: 'FG finale', f: 'attenuation', c: etat(dans('fg')) },
-      { v: r.levure && r.aDesMalts ? nf(r.abv) + '%' : '—', l: 'Alcool', f: 'attenuation', c: r.bloquee ? 'alerte' : '' },
+      { v: r.aDesMalts ? sg(r.og) : '—', l: 'OG', f: 'densite', c: etat(dans('og')) },
+      { v: r.levure && r.aDesMalts ? sg(r.fg) : '—', l: 'FG', f: 'attenuation', c: etat(dans('fg')) },
+      { v: r.levure && r.aDesMalts ? nf(r.abv) : '—', l: '% vol', f: 'attenuation', c: r.bloquee ? 'alerte' : '' },
       { v: nf(r.ibu, 0), l: 'IBU', f: 'amertume', c: etat(dans('ibu')) },
       { v: `${nf(r.ebc, 0)}<i class="pastille" style="background:${couleur(r.ebc)}"></i>`, l: 'EBC', f: 'couleur', c: etat(dans('ebc')) },
       { v: r.aDesMalts ? nf(r.ph, 2) : '—', l: 'pH', f: 'eau', c: r.aDesMalts ? etat(r.ph >= 5.2 && r.ph <= 5.6, r.ph > 5.78 || r.ph < 5.15) : '' },
@@ -2791,7 +2795,7 @@
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.4.2 · brasserie, alambic Ulysse, chai, pigeonnier, veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.4.3 · brasserie, alambic Ulysse, chai, pigeonnier, veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
