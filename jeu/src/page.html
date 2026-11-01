@@ -17,6 +17,7 @@
     <nav class="entete-nav" id="menu-entete" aria-label="Menu" hidden>
       <button data-aller="domaine">Domaine</button>
       <button data-aller="carnet">Carnet de brassage</button>
+      <button data-aller="batiments">Bâtiments et matériel</button>
       <button data-aller="veillee">Veillée : leçons et questions</button>
       <button data-aller="fiches">Fiches de chimie</button>
       <button data-aller="reglages">Options</button>
@@ -227,6 +228,16 @@
         <p class="page-intro">Certains exploits font arriver des ingrédients en cadeau.</p>
         <div class="succes" id="cat-decouvertes"></div>
       </div>
+    </section>
+
+    <!-- Bâtiments et matériel -->
+    <section id="ecran-batiments" class="ecran" hidden>
+      <h1 class="page-titre">Bâtiments <span class="en">et matériel</span></h1>
+      <p class="page-intro">Le domaine se construit petit à petit. Chaque bâtiment a plusieurs niveaux : il faut des écus, de la réputation auprès des clients, et quelques semaines de travaux. Le matériel change vraiment les gestes.</p>
+      <div class="bourse" id="bat-bourse"></div>
+      <div id="bat-liste" class="bat-liste"></div>
+      <h2 class="sous-titre">Matériel</h2>
+      <div id="bat-equip"></div>
     </section>
 
     <!-- Chai -->

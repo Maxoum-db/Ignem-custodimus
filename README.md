@@ -2,7 +2,7 @@
 
 Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du Hub Prométhée.
 
-## Le jeu (V0.7 : brasserie, alambic Ulysse, chai, pigeonnier, école, calendrier, recherche)
+## Le jeu (V0.8 : brasserie, alambic Ulysse, chai, pigeonnier, école, calendrier, recherche)
 
 | Dossier | Contenu |
 |---|---|
@@ -36,6 +36,12 @@ Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du H
 ### Le chai
 
 Les fûts se rangent sur trois rangées (haut chaud et sec, milieu, bas frais et humide) : un quartaut prend une case, une barrique deux, un demi-muid trois. Le chai s'agrandit de 6 à 10 travées contre des écus. Le temps se règle au curseur (0 à 15 ans, finitions de 0 à 3 ans) avec aperçu en direct : couleur, volume, degré, part des anges, profil, notes à la pipette, conseil de Firmin. Paramètres du Hub utilisés : part des anges 3 %/an, maturation de référence 36 mois, mise en bouteille à 45 %, bouteilles de 0,7 L.
+
+### Domaine à bâtir
+
+Une nouvelle partie commence avec une brasserie pilote de 100 L et un colombier. Le reste s'achète par niveaux, contre des écus et une réputation minimale, avec des semaines de travaux : brasserie 500 L puis 1000 L, alambic Ulysse puis Ulysse rénové (cuivre neuf, soufre mieux retenu), cave voûtée puis chai à trois niveaux, boutique puis salle de dégustation (plus de clients, prix +10 %, commandes spéciales). Les terrains à bâtir et les chantiers se voient sur la carte. Les parties en cours gardent tout ce qu'elles avaient.
+
+Matériel : vanne vapeur proportionnelle (moins d'inertie), faux fond à fentes (lit qui se tasse moins), sonde de cave (enveloppe plus réactive), bouteilles épaisses (4,6 volumes), grille de foyer (bûches qui prennent plus vite). Chaque geste a des objectifs bonus (3 écus, 10 de plus la première fois) et une difficulté qui monte avec la maîtrise (aléas plus fréquents, fenêtres plus serrées, tolérance réduite).
 
 ### Cinq gestes de brassage
 

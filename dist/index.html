@@ -703,6 +703,25 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .entete-nav { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(100% + 4px); z-index: 30; display: grid; gap: 4px; min-width: 230px; padding: 8px; background: var(--four); box-shadow: 0 0 0 3px var(--cuivre), 4px 4px 0 rgba(0, 0, 0, .5); }
 .entete-nav[hidden] { display: none !important; }
 .entete-nav button { text-align: left; padding: 10px 12px; font-size: 16px; font-weight: 700; }
+
+/* ---------- Domaine à bâtir (V0.8) ---------- */
+.bat-liste { display: grid; gap: 10px; }
+.batiment { background: var(--four); box-shadow: 0 0 0 2px var(--pierre); padding: 10px 12px; display: grid; gap: 6px; }
+.batiment.nu { box-shadow: 0 0 0 2px var(--pierre-clair); }
+.batiment p { margin: 0; line-height: 1.4; }
+.bat-tete { display: flex; justify-content: space-between; align-items: center; font-size: 17px; }
+.niveaux { display: flex; gap: 4px; }
+.niveaux i { width: 14px; height: 14px; box-shadow: 0 0 0 2px var(--pierre-clair); }
+.niveaux i.plein { background: var(--or); box-shadow: 0 0 0 2px var(--cuivre); }
+.prochain { background: var(--nuit); padding: 8px 10px; box-shadow: 0 0 0 2px var(--pierre); display: grid; gap: 4px; justify-items: start; }
+.travaux { color: var(--braise); font-weight: 700; }
+.lieu.a-batir span { color: #cfc3a6; font-weight: 400; font-style: italic; }
+.rang-chai.fermee .zone-lib { opacity: .5; font-style: italic; }
+.geste-etape::after { content: attr(data-dif); color: var(--braise); }
+.objectifs { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.objectif { font-size: 14px; color: var(--cendre); }
+.objectif.ok { color: var(--or); font-weight: 700; }
+.objectif-gain { font-size: 14px; color: var(--or); }
 </style>
 
 <div id="app">
@@ -715,6 +734,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     <nav class="entete-nav" id="menu-entete" aria-label="Menu" hidden>
       <button data-aller="domaine">Domaine</button>
       <button data-aller="carnet">Carnet de brassage</button>
+      <button data-aller="batiments">Bâtiments et matériel</button>
       <button data-aller="veillee">Veillée : leçons et questions</button>
       <button data-aller="fiches">Fiches de chimie</button>
       <button data-aller="reglages">Options</button>
@@ -925,6 +945,16 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         <p class="page-intro">Certains exploits font arriver des ingrédients en cadeau.</p>
         <div class="succes" id="cat-decouvertes"></div>
       </div>
+    </section>
+
+    <!-- Bâtiments et matériel -->
+    <section id="ecran-batiments" class="ecran" hidden>
+      <h1 class="page-titre">Bâtiments <span class="en">et matériel</span></h1>
+      <p class="page-intro">Le domaine se construit petit à petit. Chaque bâtiment a plusieurs niveaux : il faut des écus, de la réputation auprès des clients, et quelques semaines de travaux. Le matériel change vraiment les gestes.</p>
+      <div class="bourse" id="bat-bourse"></div>
+      <div id="bat-liste" class="bat-liste"></div>
+      <h2 class="sous-titre">Matériel</h2>
+      <div id="bat-equip"></div>
     </section>
 
     <!-- Chai -->
@@ -2483,11 +2513,19 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     if ((x.type === 'biere' || x.type === 'wash') && x.stockL == null) x.stockL = x.distillee ? 0 : 1000;
     if (x.type === 'vieilli' && x.stockB == null) x.stockB = x.bouteilles || 0;
   }
+  // V0.8 : les parties en cours gardent tout ce qu'elles avaient ; une nouvelle partie part d'une brasserie pilote de 100 L
+  if (!S.bat) {
+    const ancienne = S.brassins > 0 || S.carnet.length > 0;
+    S.bat = ancienne ? { brasserie: 3, distillerie: 1, chai: 2, pigeonnier: 3 } : { brasserie: 1, distillerie: 0, chai: 0, pigeonnier: 1 };
+  }
+  if (!S.travaux) S.travaux = [];
+  if (!S.equip) S.equip = {};
   if (S.chai) for (const f of S.chai.futs) if (f.contenu && f.contenu.debut == null) { f.contenu.debut = S.cal.s - Math.round((f.contenu.ans || 0) * 52); delete f.contenu.ans; }
   const POSSEDE = new Set(S.possede);
   const posseder = (id) => { if (!POSSEDE.has(id)) { POSSEDE.add(id); S.possede.push(id); } };
   const normaliser = (r) => Object.assign(recetteVide(), r, { fermentation: { ...recetteVide().fermentation, ...(r && r.fermentation) } });
   let R = S.recette = normaliser(S.recette);
+  { const vol = [0, 100, 500, 1000][S.bat.brasserie] || 1000; if (R.volume !== vol) { const f = vol / (R.volume || 1000); R.malts.forEach((l) => { l.kg = Math.round(l.kg * f * 2) / 2; }); R.houblons.forEach((l) => { l.g = Math.round(l.g * f / 10) * 10; }); (R.aromates || []).forEach((l) => { l.g = Math.round(l.g * f / 10) * 10; }); R.volume = vol; } }
   let minuterieSauve = null;
   function sauver() { clearTimeout(minuterieSauve); minuterieSauve = setTimeout(() => { try { S.recette = R; localStorage.setItem(CLE, JSON.stringify(S)); } catch (e) { /* stockage indisponible */ } }, 250); }
 
@@ -2622,15 +2660,17 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   const SANS_RETOUR = ['empatage', 'filtration', 'ebullition', 'fermentation', 'bouteille', 'brouillis', 'repasse', 'aveugle'];
   const pile = [];
   function aller(nom, retour) {
+    if ((nom === 'distillerie' && niv('distillerie') === 0) || (nom === 'chai' && niv('chai') === 0)) { toast(`${nom === 'chai' ? 'Le chai' : 'L\'alambic'} n'est pas encore construit.`); nom = 'batiments'; }
     if (!retour && nom !== ecran && !SANS_RETOUR.includes(ecran)) { pile.push(ecran); if (pile.length > 20) pile.shift(); }
     if (quitteurs[ecran]) quitteurs[ecran]();
     ecran = nom;
     $$('.ecran').forEach((s) => { s.hidden = s.id !== 'ecran-' + nom; });
     $$('.entete-nav button').forEach((b) => b.setAttribute('aria-current', b.dataset.aller === nom ? 'page' : 'false'));
     $('#scene').scrollTop = 0;
-    ({ domaine: entrerDomaine, brasserie: entrerBrasserie, distillerie: entrerDistillerie, catalogue: entrerPigeonnier, chai: entrerChai, recherche: entrerRecherche, veillee: rendreVeillee, carnet: rendreCarnet, fiches: rendreFiches, reglages: rendreReglages }[nom] || (() => {}))();
+    ({ domaine: entrerDomaine, brasserie: entrerBrasserie, distillerie: entrerDistillerie, catalogue: entrerPigeonnier, batiments: rendreBatiments, chai: entrerChai, recherche: entrerRecherche, veillee: rendreVeillee, carnet: rendreCarnet, fiches: rendreFiches, reglages: rendreReglages }[nom] || (() => {}))();
     tuto('ecran:' + nom);
     majMentor(); cacherBulle(); tutoEcran(nom);
+    const d = difficulte(); $$('.geste-etape').forEach((e) => { e.dataset.dif = ` · difficulté ${'★'.repeat(d + 1)}${'☆'.repeat(3 - d)}`; });
     const prec = pile[pile.length - 1];
     const vers = (prec && NOMS_ECRANS[prec] ? 'à ' + NOMS_ECRANS[prec] : 'au domaine').replace(/^à le /, 'au ').replace(/^à les /, 'aux ');
     const rb = $('#retour-entete'); rb.setAttribute('aria-label', `Retour ${vers}`); rb.title = `Retour ${vers}`;
@@ -2748,7 +2788,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     ],
     catalogue: [
       ['Les clients', 'Chaque semaine, des clients passent avec leurs goûts. Touche « Conseiller » et propose une bouteille de ta cave : satisfaction, prix et réputation en dépendent.'],
-      ['Le stock et le temps', 'Un brassin met 1000 L en cave, l\'alambic et le chai ajoutent des bouteilles. Une semaine passe à chaque brassin et chaque distillation : les bières perdent leur fraîcheur, les fûts vieillissent.'],
+      ['Le stock et le temps', 'Un brassin remplit la cave du volume de ta brasserie, l\'alambic et le chai ajoutent des bouteilles. Une semaine passe à chaque brassin et chaque distillation : les bières perdent leur fraîcheur, les fûts vieillissent.'],
       ['Les fournisseurs', 'L\'onglet Fournisseurs garde le catalogue : ingrédients, fûts et recettes contre des écus.'],
     ],
     recherche: [['Chercher partout', 'Tape un nom, un arôme, un style (« agrumes », « IPA », « 1150 »), ou touche une suggestion. Filtre par famille, trie, et ajoute directement à la cuve.']],
@@ -2776,8 +2816,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   // =====================================================================
   const TUTO = [
     { ecran: 'domaine', txt: "Bienvenue au Domaine des Braises. Je suis Lise : formée en Belgique, revenue au pays garder le feu. Touche la brasserie pour commencer.", attendre: 'ecran:brasserie' },
-    { ecran: 'brasserie', txt: "Voici la cuve : 1000 litres, l'échelle du domaine. Fais glisser un sac de Pilsner Soufflet Bio dans la cuve, ou touche son bouton +25 kg.", attendre: 'malt' },
-    { ecran: 'brasserie', txt: "Le malt apporte l'amidon que l'empâtage changera en sucres. Regarde la densité monter : vise environ 1,045, soit à peu près 200 kg de malt.", attendre: 'og' },
+    { ecran: 'brasserie', txt: "Voici la cuve. Tu commences petit : une brasserie pilote de 100 L dans la grange. Fais glisser un sac de Pilsner Soufflet Bio dans la cuve, ou touche son bouton +.", attendre: 'malt' },
+    { ecran: 'brasserie', txt: "Le malt apporte l'amidon que l'empâtage changera en sucres. Regarde la densité monter : vise environ 1,045, soit à peu près 20 kg de malt par hectolitre.", attendre: 'og' },
     { ecran: 'brasserie', txt: "Place à l'amertume. Onglet Houblons : ajoute du Magnum. Je le mets à 60 minutes d'ébullition, le temps que ses acides alpha s'isomérisent.", attendre: 'houblon' },
     { ecran: 'brasserie', txt: "Il faut une levure. Onglet Levure : la Safale US-05 est neutre et pardonne beaucoup, parfaite pour débuter.", attendre: 'levure' },
     { ecran: 'brasserie', txt: "Au-dessus des onglets, je t'indique le style le plus proche. Touche-le pour comparer tes chiffres aux plages du style. Quand tu es prêt, lance le brassin.", attendre: 'lancer' },
@@ -2851,8 +2891,9 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const avant = saisonCourante();
     for (let k = 0; k < n; k++) {
       S.cal.s++;
+      finirTravaux();
       genererClients(S.cal.s);
-      const c = Vente.commandeSemaine(S.cal.s, S.vente.rep, ['biere', 'edv', 'vieilli'].filter((k) => produits().some((p) => p.cat === k && p.stock > 0))); if (c) S.vente.commandes.push(c);
+      const c = niv('pigeonnier') < 3 ? null : Vente.commandeSemaine(S.cal.s, S.vente.rep, ['biere', 'edv', 'vieilli'].filter((k) => produits().some((p) => p.cat === k && p.stock > 0))); if (c) S.vente.commandes.push(c);
     }
     const expirees = S.vente.commandes.filter((c) => c.echeance < S.cal.s);
     if (expirees.length) { S.vente.rep = Math.max(0, S.vente.rep - 2 * expirees.length); S.vente.commandes = S.vente.commandes.filter((c) => c.echeance >= S.cal.s); }
@@ -2862,7 +2903,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   }
   function genererClients(s) {
     const cats = ['biere', 'edv', 'vieilli'].filter((c) => produits().some((p) => p.cat === c && p.stock > 0));
-    const nouveaux = Vente.clientsSemaine(s, S.vente.rep, cats);
+    if (niv('pigeonnier') < 2) { S.vente.clients = []; return; }
+    const nouveaux = Vente.clientsSemaine(s, S.vente.rep + (niv('pigeonnier') >= 3 ? 25 : 0), cats);
     S.vente.clients = S.vente.clients.filter((c) => s - c.semaine < 2).concat(nouveaux).slice(-6);
   }
   const SAISONS = {
@@ -2885,7 +2927,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const tx = l.t ? ((l.t[0] - l.r[0]) / l.r[2]) * 100 : 50, ty = l.t ? ((l.t[1] - l.r[1]) / l.r[3]) * 100 : 50;
       b.innerHTML = `<span style="left:${tx}%;top:${ty}%">${esc(l.nom)}</span>`;
       b.setAttribute('aria-label', l.nom + (l.ouvert ? '' : ', bientôt'));
-      b.onclick = () => { son('clic'); if (l.ouvert) aller(l.id); else direLise(l.msg); };
+      const bk = Object.keys(BATIMENTS).find((k) => BATIMENTS[k].lieu === l.id);
+      const nu = bk && niv(bk) === 0, tr = bk && enTravaux(bk);
+      if (nu || (tr && niv(bk) === 0)) { b.classList.add('a-batir'); $('span', b).textContent = `${l.nom} · ${tr ? `travaux, ${tr.fin - S.cal.s} sem.` : 'à bâtir'}`; }
+      else if (tr) $('span', b).textContent = `${l.nom} · travaux`;
+      b.onclick = () => { son('clic'); if (nu) { aller('batiments'); return; } if (l.ouvert) aller(l.id); else direLise(l.msg); };
       z.appendChild(b);
     }
     const ctx = $('#carte').getContext('2d');
@@ -2945,28 +2991,40 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     fenetre(25, 150); fenetre(66, 150);
     if (!nuit) { px(68, 154, 4, 4, '#d27b3e'); }
     for (let i = 0; i < 7; i++) { const a = (t * 0.6 + i / 7) % 1; disque(77 + Math.sin(a * 6 + i) * 3 + a * 10, 106 - a * 40, 1 + Math.floor(a * 3), nuit ? '#4a4a58' : `rgba(240,240,240,${0.8 - a * 0.7})`); }
+    // Terrain à bâtir (piquets et cordeau) et échafaudage des travaux
+    const terrain = (x, y, w, h) => { for (let i = 0; i <= w; i += 6) { px(x + i, y + h - 6, 1, 6, '#7a4a28'); } px(x, y + h - 5, w + 1, 1, '#ecdfc4'); px(x + w / 2 - 6, y + h - 16, 12, 7, '#a87444'); px(x + w / 2 - 1, y + h - 9, 2, 6, '#7a4a28'); };
+    const echafaudage = (x, y, w, h) => { for (let i = 0; i <= w; i += 10) px(x + i, y, 1, h, '#c9a26b'); for (let j = 0; j <= h; j += 8) px(x, y + j, w, 1, '#c9a26b'); };
     // Chai et fûts
-    mur(112, 134, 58, 26); toit(108, 174, 134, 12, 8);
-    px(132, 144, 18, 16, '#4a3020'); px(134, 142, 14, 2, '#4a3020');
-    const fut = (x, y) => { px(x, y, 9, 8, '#7a4a28'); px(x, y + 2, 9, 1, '#3a2618'); px(x, y + 5, 9, 1, '#3a2618'); px(x + 1, y - 1, 7, 1, '#7a4a28'); px(x + 1, y + 8, 7, 1, '#7a4a28'); };
-    fut(152, 162); fut(162, 162); fut(157, 154);
+    if (niv('chai')) {
+      mur(112, 134, 58, 26); toit(108, 174, 134, 12, 8);
+      px(132, 144, 18, 16, '#4a3020'); px(134, 142, 14, 2, '#4a3020');
+      const fut = (x, y) => { px(x, y, 9, 8, '#7a4a28'); px(x, y + 2, 9, 1, '#3a2618'); px(x, y + 5, 9, 1, '#3a2618'); px(x + 1, y - 1, 7, 1, '#7a4a28'); px(x + 1, y + 8, 7, 1, '#7a4a28'); };
+      fut(152, 162); fut(162, 162); fut(157, 154);
+      if (enTravaux('chai')) echafaudage(110, 120, 62, 40);
+    } else if (enTravaux('chai')) { mur(112, 150, 58, 10); echafaudage(110, 126, 62, 34); } else terrain(112, 130, 58, 30);
     // Rucher
     ['#e3c35a', '#8fb4c8', '#d99a6a', '#a8c37a'].forEach((col, i) => { const x = 138 + i * 12; px(x, 104, 8, 8, col); px(x - 1, 102, 10, 2, '#7a5a3a'); px(x + 2, 110, 4, 1, '#2a1d14'); });
     if (!nuit) for (let i = 0; i < 4; i++) px(150 + Math.sin(t * 3 + i * 2) * 14, 98 + Math.cos(t * 4 + i) * 5, 1, 1, '#2a1d14');
     // Ulysse, l'alambic ambulant
+    if (!niv('distillerie')) terrain(122, 182, 50, 24); else {
     px(122, 200, 50, 3, '#3a2c22'); disque(132, 205, 3, '#2a1d14'); disque(162, 205, 3, '#2a1d14');
     disque(136, 192, 7, '#c8743a'); px(130, 186, 4, 3, '#f0a060'); px(135, 182, 3, 4, '#c8743a');
     for (let i = 0; i < 12; i++) px(137 + i, 182 - Math.min(i, 5) * 0.4, 1, 2, '#c8743a');
     px(150, 186, 9, 14, '#8a8f96'); px(151, 188, 7, 1, '#b9c0c8'); px(151, 193, 7, 1, '#b9c0c8');
+    }
     // Pigeonnier : colombier rond du Quercy et étal des fournisseurs
     mur(24, 196, 16, 38); for (let k = 0; k < 14; k++) { const w = 20 - k * 1.35; px(32 - w / 2, 196 - k, w, 1, k % 3 ? tuile : tuile2); } px(31, 180, 2, 3, '#3a2c22');
     for (let k = 0; k < 3; k++) { px(28, 204 + k * 9, 3, 3, '#2a1d14'); px(34, 204 + k * 9, 3, 3, '#2a1d14'); }
     px(23, 214, 18, 2, joint);
     px(43, 198, 37, 9, '#5a3a22'); px(44, 199, 35, 7, '#8a5a32'); px(50, 206, 1, 2, '#3a2618'); px(72, 206, 1, 2, '#3a2618');
-    px(44, 212, 34, 22, nuit ? '#4a3020' : '#8a5a32');
-    for (let k = 0; k < 40; k += 8) px(42 + k, 207, 4, 6, '#ecdfc4'), px(46 + k, 207, 4, 6, '#d27b3e');
-    px(48, 218, 26, 10, nuit ? '#f3c45a' : '#3a2c22');
-    ['#efe2c4', '#9cc95e', '#c9a26b', '#7a4a28'].forEach((col, k) => px(51 + k * 6, 221, 4, 6, col));
+    if (niv('pigeonnier') >= 2) {
+      px(44, 212, 34, 22, nuit ? '#4a3020' : '#8a5a32');
+      for (let k = 0; k < 40; k += 8) px(42 + k, 207, 4, 6, '#ecdfc4'), px(46 + k, 207, 4, 6, '#d27b3e');
+      px(48, 218, 26, 10, nuit ? '#f3c45a' : '#3a2c22');
+      ['#efe2c4', '#9cc95e', '#c9a26b', '#7a4a28'].forEach((col, k) => px(51 + k * 6, 221, 4, 6, col));
+      if (niv('pigeonnier') >= 3) { px(80, 216, 10, 18, nuit ? '#4a3020' : '#8a5a32'); px(82, 220, 6, 6, nuit ? '#f3c45a' : '#3a2c22'); px(79, 213, 12, 3, tuile); }
+    } else if (enTravaux('pigeonnier')) echafaudage(44, 210, 34, 24);
+    if (enTravaux('brasserie')) echafaudage(16, 118, 76, 64);
     // Pigeons qui tournent autour du colombier
     if (!nuit) for (let k = 0; k < 3; k++) { const a = t * 1.3 + k * 2.1, x = 32 + Math.cos(a) * (14 + k * 3), y = 184 + Math.sin(a) * 6 - k * 3, aile = Math.floor(t * 8 + k) % 2; px(x, y, 3, 1, '#e8e4dc'); px(x + 1, y - aile, 1, 1, '#b9b2a6'); }
     // Petit cheval de la leçon : il trotte en bas du domaine, sur la piste, sacoche de livres sur le dos
@@ -2988,6 +3046,108 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   }
 
   // =====================================================================
+  // Domaine à bâtir : bâtiments par niveaux, travaux en semaines, matériel
+  // =====================================================================
+  const BATIMENTS = {
+    brasserie: { nom: 'Brasserie', lieu: 'brasserie', niveaux: [null,
+      { nom: 'Brasserie pilote, 100 L', volume: 100, desc: 'Une cuve de 100 L dans la grange, pour apprendre.' },
+      { nom: 'Brasserie 500 L', volume: 500, prix: 150, rep: 15, semaines: 2, desc: 'Une vraie salle de brassage : cuve-matière, cuve-filtre et cuve d\'ébullition de 500 L.' },
+      { nom: 'Brasserie du domaine, 1000 L', volume: 1000, prix: 400, rep: 35, semaines: 4, desc: 'L\'échelle de Prométhée : 1000 L par brassin, sous le plafond de 75 000 L par an.' }] },
+    distillerie: { nom: 'Alambic', lieu: 'distillerie', niveaux: [{ nom: 'Pas d\'alambic', desc: 'Firmin passe parfois avec Ulysse ; il pourrait te le céder.' },
+      { nom: 'Ulysse, alambic à repasse', cuivre: 0.8, prix: 120, rep: 10, semaines: 1, desc: 'Le vieil alambic ambulant de Firmin, chauffé au bois. Deux chauffes : brouillis puis bonne chauffe.' },
+      { nom: 'Ulysse rénové', cuivre: 0.92, prix: 220, rep: 30, semaines: 2, desc: 'Chapiteau et col de cygne en cuivre neuf : le cuivre retient mieux les composés soufrés.' }] },
+    chai: { nom: 'Chai', lieu: 'chai', niveaux: [{ nom: 'Pas de chai', desc: 'Un terrain au pied de la chênaie, parfait pour un chai.' },
+      { nom: 'Cave voûtée', rangees: [1], prix: 100, rep: 15, semaines: 3, desc: 'Une seule rangée de fûts, tempérée.' },
+      { nom: 'Chai à trois niveaux', rangees: [0, 1, 2], prix: 220, rep: 30, semaines: 4, desc: 'Le haut chaud et sec, le bas frais et humide : trois climats pour élever.' }] },
+    pigeonnier: { nom: 'Pigeonnier', lieu: 'catalogue', niveaux: [null,
+      { nom: 'Colombier', desc: 'Les pigeons portent tes commandes aux fournisseurs. Pas encore de vente.' },
+      { nom: 'Boutique', prix: 80, rep: 0, semaines: 1, desc: 'Un étal à côté du colombier : les clients viennent acheter.' },
+      { nom: 'Salle de dégustation', prix: 250, rep: 40, semaines: 3, desc: 'Plus de clients chaque semaine, prix +10 %, et les commandes spéciales.' }] },
+  };
+  const EQUIPEMENTS = {
+    vanne: { nom: 'Vanne vapeur proportionnelle', bat: 'brasserie', prix: 60, desc: 'Empâtage : la vanne s\'ouvre deux fois plus vite et l\'enveloppe garde moins de chaleur. Moins d\'inertie.' },
+    fauxfond: { nom: 'Faux fond à fentes', bat: 'brasserie', prix: 50, desc: 'Filtration : le lit se tasse 40 % moins vite.' },
+    sonde: { nom: 'Sonde et régulateur de cave', bat: 'brasserie', prix: 70, desc: 'Fermentation : l\'enveloppe réagit deux fois plus vite au glycol et à la vapeur.' },
+    bouteilles: { nom: 'Bouteilles épaisses et capsuleuse', bat: 'brasserie', prix: 40, desc: 'Mise en bouteille : les bouteilles tiennent jusqu\'à 4,6 volumes de CO₂.' },
+    grille: { nom: 'Grille de foyer en fonte', bat: 'distillerie', prix: 60, desc: 'Ulysse : les bûches prennent deux fois plus vite.' },
+  };
+  const niv = (b) => (S.bat && S.bat[b]) || 0;
+  const infoNiv = (b, n = niv(b)) => BATIMENTS[b].niveaux[n] || null;
+  const enTravaux = (b) => (S.travaux || []).find((t) => t.bat === b) || null;
+  const volumeBrasserie = () => infoNiv('brasserie').volume;
+  const fv = () => (R.volume || 1000) / 1000;
+  const equipe = (k) => !!(S.equip && S.equip[k]);
+  // Difficulté des gestes : monte avec la maîtrise (0 à 3)
+  const difficulte = () => Math.min(3, Math.floor((S.points || 0) / 150));
+  function changerVolume(v) {
+    const f = v / (R.volume || 1000);
+    if (Math.abs(f - 1) < 1e-6) return;
+    R.malts.forEach((l) => { l.kg = Math.round(l.kg * f * 2) / 2; });
+    R.houblons.forEach((l) => { l.g = Math.round(l.g * f / 10) * 10; });
+    (R.aromates || []).forEach((l) => { l.g = Math.round(l.g * f / 10) * 10; });
+    R.volume = v;
+  }
+  function finirTravaux() {
+    const finis = (S.travaux || []).filter((t) => t.fin <= S.cal.s);
+    for (const t of finis) {
+      S.bat[t.bat] = t.niv;
+      if (t.bat === 'brasserie') { changerVolume(volumeBrasserie()); }
+      setTimeout(() => toast(`Travaux terminés : ${infoNiv(t.bat).nom}.`), 1400);
+    }
+    S.travaux = (S.travaux || []).filter((t) => t.fin > S.cal.s);
+  }
+  function lancerTravaux(b) {
+    const n = niv(b) + 1, x = infoNiv(b, n);
+    if (!x || enTravaux(b) || S.ecus < x.prix || S.vente.rep < x.rep) { son('rate'); return; }
+    S.ecus -= x.prix;
+    S.travaux.push({ bat: b, niv: n, fin: S.cal.s + x.semaines });
+    son('ok'); toast(`Travaux lancés : ${x.nom}, ${x.semaines} semaine${x.semaines > 1 ? 's' : ''}.`);
+    sauver(); majEntete(); rendreBatiments();
+  }
+  function rendreBatiments() {
+    $('#bat-bourse').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${esc(libCalendrier())} · réputation : <b>${niveauRep()}</b> (${S.vente.rep}/100). Les travaux avancent d'une semaine à chaque brassin, distillation ou attente au chai.</p>`;
+    $('#bat-liste').innerHTML = Object.entries(BATIMENTS).map(([k, B]) => {
+      const n = niv(k), cur = infoNiv(k, n), suiv = infoNiv(k, n + 1), t = enTravaux(k);
+      let action = '';
+      if (t) action = `<p class="travaux">Travaux en cours : ${esc(infoNiv(k, t.niv).nom)}, fin dans ${t.fin - S.cal.s} semaine${t.fin - S.cal.s > 1 ? 's' : ''}.</p>`;
+      else if (suiv) {
+        const manqueRep = S.vente.rep < suiv.rep, manqueEcus = S.ecus < suiv.prix;
+        action = `<div class="prochain"><b>Ensuite : ${esc(suiv.nom)}</b><p>${esc(suiv.desc)}</p><p class="det">${suiv.prix} écus · ${suiv.semaines} semaine${suiv.semaines > 1 ? 's' : ''} de travaux${suiv.rep ? ` · réputation ${suiv.rep} requise` : ''}</p>
+          <button class="btn btn-feu btn-mini" data-construire="${k}" ${manqueRep || manqueEcus ? 'disabled' : ''}>${manqueRep ? `Réputation ${S.vente.rep}/${suiv.rep}` : manqueEcus ? `Il manque ${suiv.prix - S.ecus} écus` : `Lancer les travaux · ${suiv.prix} écus`}</button></div>`;
+      } else action = '<p class="det">Niveau maximal.</p>';
+      const nivMax = B.niveaux.length - 1;
+      return `<div class="batiment ${n ? '' : 'nu'}"><div class="bat-tete"><b>${esc(B.nom)}</b><span class="niveaux">${Array.from({ length: nivMax }, (_, i) => `<i class="${i + 1 <= n ? 'plein' : ''}"></i>`).join('')}</span></div>
+        <p><b>${esc(cur.nom)}</b> · ${esc(cur.desc)}</p>${action}</div>`;
+    }).join('');
+    $('#bat-equip').innerHTML = Object.entries(EQUIPEMENTS).map(([k, e]) => {
+      const a = equipe(k), dispoBat = niv(e.bat) >= 1;
+      return `<div class="article ${a ? 'possede' : ''} ${!dispoBat ? 'hors' : ''}"><span class="nom">${esc(e.nom)}</span>${a ? '<span class="etq ok">Installé</span>' : !dispoBat ? `<span class="etq ko">${esc(BATIMENTS[e.bat].nom)} requis</span>` : `<button class="btn" data-equiper="${k}" ${S.ecus < e.prix ? 'disabled' : ''}>${e.prix} écus</button>`}<span class="det">${esc(e.desc)}</span></div>`;
+    }).join('');
+  }
+  $('#ecran-batiments').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.construire) lancerTravaux(b.dataset.construire);
+    if (b.dataset.equiper) {
+      const k = b.dataset.equiper, x = EQUIPEMENTS[k];
+      if (S.ecus < x.prix || equipe(k)) return;
+      S.ecus -= x.prix; S.equip[k] = true; son('ok'); toast(`${x.nom} installé.`); sauver(); majEntete(); rendreBatiments();
+    }
+  });
+  // Objectifs bonus d'un geste : 3 écus chacun, 10 de plus la première fois
+  function objectifsGeste(id, liste) {
+    if (!S.objectifs) S.objectifs = {};
+    let gain = 0;
+    const lignes = liste.map(([cle, lib, ok]) => {
+      const k = id + ':' + cle, premier = ok && !S.objectifs[k];
+      if (ok) { gain += 3 + (premier ? 10 : 0); if (premier) S.objectifs[k] = S.cal.s; }
+      return `<span class="objectif ${ok ? 'ok' : ''}">${ok ? '★' : '☆'} ${esc(lib)}${premier ? ' · première fois +10' : ''}</span>`;
+    });
+    const g = gagnerEcus(gain);
+    if (g) majEntete();
+    return `<span class="objectifs">${lignes.join('')}${g ? `<span class="objectif-gain">+${g} écus</span>` : ''}</span>`;
+  }
+
+  // =====================================================================
   // Brasserie
   // =====================================================================
   let onglet = 'malts', filtreMalt = 'tous', recherche = '', dernierCalc = null, detailStyleOuvert = false;
@@ -2996,7 +3156,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   function entrerBrasserie() { maj(); rendreOnglets(); rendreOnglet(); majDefiLigne(); }
 
   // Malts de base par sacs de 25 kg, malts de spécialité par 10 kg, malt acide par 5 kg
-  const doseMalt = (m) => (/acidul|sauer/i.test(m.nom) ? 5 : ['caramel', 'roasted'].includes(m.fam) ? 10 : 25);
+  const doseMalt = (m) => Math.max(0.5, Math.round((/acidul|sauer/i.test(m.nom) ? 5 : ['caramel', 'roasted'].includes(m.fam) ? 10 : 25) * fv() * 2) / 2);
+  const pasMalt = () => Math.max(0.5, Math.round(5 * fv() * 2) / 2), pasHop = () => Math.max(10, Math.round(100 * fv() / 10) * 10), doseHop = () => Math.max(10, Math.round(250 * fv() / 10) * 10);
   function ajouterMalt(id) {
     const dose = doseMalt(IDX.malt.get(id));
     const l = R.malts.find((x) => x.id === id);
@@ -3007,7 +3168,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const h = IDX.houblon.get(id);
     const min = h.usage === 'bittering' ? 60 : h.usage === 'aroma' ? 10 : 15;
     const l = R.houblons.find((x) => x.id === id && x.min === min);
-    if (l) l.g += 250; else R.houblons.push({ id, g: 250, min });
+    if (l) l.g += doseHop(); else R.houblons.push({ id, g: doseHop(), min });
     son('bulle'); tuto('houblon'); maj(); if (onglet === 'cuve') rendreOnglet();
   }
   // Aromates : dose de départ au bas de la plage d'usage (g pour le volume de la cuve)
@@ -3219,11 +3380,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     if (d.ebu) { R.ebullition = +d.ebu; maj(); rendreOnglet(); return; }
     if (d.repos) { R.fermentation.reposDiacetyle = d.repos === '1'; maj(); rendreOnglet(); return; }
     const k = (v) => +v;
-    if (d.maltMoins) { const l = R.malts[k(d.maltMoins)]; l.kg = Math.max(0, l.kg - 5); if (!l.kg) R.malts.splice(k(d.maltMoins), 1); }
-    else if (d.maltPlus) R.malts[k(d.maltPlus)].kg += 5;
+    if (d.maltMoins) { const l = R.malts[k(d.maltMoins)]; l.kg = Math.max(0, Math.round((l.kg - pasMalt()) * 2) / 2); if (!l.kg) R.malts.splice(k(d.maltMoins), 1); }
+    else if (d.maltPlus) R.malts[k(d.maltPlus)].kg = Math.round((R.malts[k(d.maltPlus)].kg + pasMalt()) * 2) / 2;
     else if (d.maltSuppr) R.malts.splice(k(d.maltSuppr), 1);
-    else if (d.hopMoins) { const l = R.houblons[k(d.hopMoins)]; l.g = Math.max(0, l.g - 100); if (!l.g) R.houblons.splice(k(d.hopMoins), 1); }
-    else if (d.hopPlus) R.houblons[k(d.hopPlus)].g += 100;
+    else if (d.hopMoins) { const l = R.houblons[k(d.hopMoins)]; l.g = Math.max(0, l.g - pasHop()); if (!l.g) R.houblons.splice(k(d.hopMoins), 1); }
+    else if (d.hopPlus) R.houblons[k(d.hopPlus)].g += pasHop();
     else if (d.hopSuppr) R.houblons.splice(k(d.hopSuppr), 1);
     else if (d.hopMin) { const [i, m] = d.hopMin.split(':').map(Number); R.houblons[i].min = m; }
     else if (d.aroMoins) { const l = R.aromates[k(d.aroMoins)]; l.g = Math.max(0, l.g - pasAromate(l)); if (!l.g) R.aromates.splice(k(d.aroMoins), 1); }
@@ -3349,8 +3510,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     if (!W.malts.some((l) => estBase(IDX.malt.get(l.id)))) {
       const pref = (m) => (ble && /bl[ée]|wheat|froment/i.test(m.nom) ? 0 : pils && /pils|lager/i.test(m.nom) ? 0 : !pils && /pale|otter/i.test(m.nom) ? 0 : 1);
       const b = maltsDispo.filter(estBase).sort((a, c) => pref(a) - pref(c) || (a.palier || 0) - (c.palier || 0))[0];
-      if (b) { W.malts.unshift({ id: b.id, kg: 200 }); etapes.push({ txt: `Base : ${b.nom}.`, fiche: 'empatage' }); }
-      if (ble) { const b2 = maltsDispo.find((m) => estBase(m) && /pils|pale/i.test(m.nom) && m.id !== (b && b.id)); if (b2) W.malts.push({ id: b2.id, kg: 100 }); }
+      if (b) { W.malts.unshift({ id: b.id, kg: 0.2 * W.volume }); etapes.push({ txt: `Base : ${b.nom}.`, fiche: 'empatage' }); }
+      if (ble) { const b2 = maltsDispo.find((m) => estBase(m) && /pils|pale/i.test(m.nom) && m.id !== (b && b.id)); if (b2) W.malts.push({ id: b2.id, kg: 0.1 * W.volume }); }
     }
     if (!W.malts.length) return { etapes: [{ txt: 'Aucun malt de base en réserve.', manque: true }], W, s };
     // 3. Couleur : un malt de spécialité possédé, au plus près du milieu de la plage
@@ -3363,7 +3524,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         if (m) {
           let ligne = W.malts.find((l) => l.id === m.id); if (!ligne) { ligne = { id: m.id, kg: 0 }; W.malts.push(ligne); }
           const avant = r.ebc; let best = ligne.kg, ecartMin = Infinity;
-          const k0 = ligne.kg, plafond = Math.max(k0, Math.round(0.12 * W.malts.reduce((t, x) => t + x.kg, 0))); for (let kg = k0; kg <= plafond; kg += 1) { ligne.kg = kg; const e = calc().ebc; if (Math.abs(e - cEBC) < ecartMin) { ecartMin = Math.abs(e - cEBC); best = kg; } }
+          const pasK = Math.max(0.1, Math.round(W.volume / 1000 * 10) / 10), k0 = ligne.kg, plafond = Math.max(k0, 0.12 * W.malts.reduce((t, x) => t + x.kg, 0)); for (let kg = k0; kg <= plafond + 1e-9; kg = Math.round((kg + pasK) * 10) / 10) { ligne.kg = kg; const e = calc().ebc; if (Math.abs(e - cEBC) < ecartMin) { ecartMin = Math.abs(e - cEBC); best = kg; } }
           ligne.kg = best; if (!best) W.malts = W.malts.filter((l) => l !== ligne);
           etapes.push({ txt: `Couleur : ${best} kg de ${m.nom} (${nf(avant, 0)} → ${nf(calc().ebc, 0)} EBC, plage ${nf(s.ebc[0], 0)}–${nf(s.ebc[1], 0)}).`, fiche: 'couleur' });
         } else etapes.push({ txt: `Couleur trop pâle et aucun malt ${cEBC > 70 ? 'torréfié' : 'caramel'} en réserve.`, fiche: 'couleur', manque: true });
@@ -3381,7 +3542,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const k0 = bases.map((l) => l.kg), avant = r.og;
       let lo = 0.2, hi = 4;
       for (let i = 0; i < 24; i++) { const f = (lo + hi) / 2; bases.forEach((l, j) => { l.kg = k0[j] * f; }); if (calc().og < cOG) lo = f; else hi = f; }
-      bases.forEach((l) => { l.kg = Math.max(5, Math.round(l.kg / 5) * 5); });
+      const pasB = Math.max(0.5, 5 * W.volume / 1000); bases.forEach((l) => { l.kg = Math.max(pasB, Math.round(Math.round(l.kg / pasB) * pasB * 10) / 10); });
       etapes.push({ txt: `Densité : ${bases.map((l) => `${l.kg} kg de ${nomM(l.id)}`).join(', ')} (${sg(avant)} → ${sg(calc().og)}, plage ${sg(s.og[0])}–${sg(s.og[1])}).`, fiche: 'densite' });
     }
     // 5. Houblons aromatiques pour les styles houblonnés
@@ -3402,7 +3563,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       if (!l) { const h = hopsDispo.slice().sort((a, b) => (b.usage === 'bittering') - (a.usage === 'bittering') || b.alpha - a.alpha)[0]; if (h) { l = { id: h.id, g: 0, min: 60 }; W.houblons.unshift(l); } }
       if (l) {
         const avant = r.ibu, g0 = l.g; l.g = 0; const sans = calc().ibu; l.g = 1000; const par = (calc().ibu - sans) / 1000;
-        l.g = Math.max(0, Math.round(((cIBU - sans) / Math.max(1e-6, par)) / 50) * 50);
+        const pasG = Math.max(10, Math.round(50 * W.volume / 1000 / 10) * 10); l.g = Math.max(0, Math.round(((cIBU - sans) / Math.max(1e-6, par)) / pasG) * pasG);
         if (!l.g) W.houblons = W.houblons.filter((x) => x !== l);
         etapes.push({ txt: `Amertume : ${l.g ? `${nf(l.g / 1000, 2)} kg de ${nomH(l.id)} à ${l.min} min` : `retire ${nomH(l.id)}`} (${nf(avant, 0)} → ${nf(calc().ibu, 0)} IBU, plage ${nf(s.ibu[0], 0)}–${nf(s.ibu[1], 0)}).${g0 ? '' : ''}`, fiche: 'amertume' });
       } else etapes.push({ txt: 'Aucun houblon amérisant en réserve.', manque: true, fiche: 'amertume' });
@@ -3561,9 +3722,10 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   // et continue de chauffer ~1,3 s après fermeture (dépassement), la pression chute si l'on tire trop de vapeur.
   const VAP = { ouvre: 1.8, ferme: 4, tau: 1.3, kin: 3.25, pertes: 0.026, pNom: 2.3, regen: 0.55, conso: 0.5 };
   function pasVapeur(st, dt) {
-    st.v += borne((st.vapeur ? 1 : 0) - st.v, -VAP.ferme * dt, VAP.ouvre * dt);
+    const V = st.vap || VAP;
+    st.v += borne((st.vapeur ? 1 : 0) - st.v, -V.ferme * dt, V.ouvre * dt);
     const q = st.v * st.p / 2;
-    st.H += (VAP.kin * q - st.H / VAP.tau) * dt;
+    st.H += (V.kin * q - st.H / V.tau) * dt;
     st.p = borne(st.p + (VAP.regen * (VAP.pNom - st.p) - VAP.conso * q - st.chute) * dt, 0.3, 2.6);
     st.chute = Math.max(0, st.chute - dt * 0.8);
     const dT = st.H - VAP.pertes * (st.T - 20) - st.froid + 0.18 * Math.sin(st.t * 1.7);
@@ -3582,7 +3744,9 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const cible = session.recette.palier;
     const DUREE = 18;
     const st = { T: cible - 2.5, H: 0, v: 0, p: VAP.pNom, chute: 0, froid: 0, pente: 0, vapeur: false, dans: 0, somme: 0, duree: 0, t: 0, prochainAlea: 4, depassements: 0, auDessus: false };
-    const amp = S.mode === 'expert' ? 1 : 0.65;
+    const dif = difficulte();
+    const amp = (S.mode === 'expert' ? 1 : 0.65) * (1 + 0.15 * dif);
+    st.vap = equipe('vanne') ? { ...VAP, ouvre: 3.6, tau: 0.85, kin: 4.2 / 0.85 } : VAP;
     $('#emp-consigne').innerHTML = `Tiens <b>${nf(cible)} °C ± 1</b> pendant 60 min ${iBtn("Les pertes refroidissent la cuve-matière en continu. La vapeur a de l'inertie : la double enveloppe chauffe encore après la fermeture de la vanne, et la pression de la chaudière baisse si tu tires trop. Vers 62–65 °C la β-amylase donne une bière sèche, vers 68–72 °C l'α-amylase laisse du corps.")}`;
     $('#emp-bilan').hidden = true; $('#emp-pied').hidden = false;
     const vap = $('#emp-vapeur'); vap.disabled = true;
@@ -3653,7 +3817,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         if (t >= st.prochainAlea) {
           const a = ALEAS_EMP[Math.floor(Math.random() * ALEAS_EMP.length)];
           a.f(st, amp); st.evt = { id: a.id, t0: t }; evtScene('emp', a.txt, a.genre); son('rate');
-          st.prochainAlea = t + (S.mode === 'expert' ? 3 + Math.random() * 3 : 4.5 + Math.random() * 3.5);
+          st.prochainAlea = t + (S.mode === 'expert' ? 3 + Math.random() * 3 : 4.5 + Math.random() * 3.5) - 0.4 * dif;
         }
         pasVapeur(st, dt);
         const dessus = st.T > cible + 1; if (dessus && !st.auDessus) st.depassements++; st.auDessus = dessus;
@@ -3670,7 +3834,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         }
         const conseilV = st.depassements >= 3 ? `${st.depassements} dépassements : ferme la vanne avant d'arriver, la double enveloppe finit le travail.` : st.depassements ? 'Un dépassement : anticipe l\'inertie de la vapeur.' : 'Aucun dépassement : tu as senti l\'inertie.';
         son(score > 0.6 ? 'ok' : 'rate');
-        bilanGeste('emp', [`<span class="gros">${Math.round(score * 100)} %</span> du temps dans la zone`, `Température moyenne ${nf(moy)} °C pour une consigne de ${nf(cible)} °C.`, conseilV, effet], 'Passer à l\'ébullition');
+        bilanGeste('emp', [`<span class="gros">${Math.round(score * 100)} %</span> du temps dans la zone`, `Température moyenne ${nf(moy)} °C pour une consigne de ${nf(cible)} °C.`, conseilV, effet,
+          objectifsGeste('emp', [['zero', 'Zéro dépassement', st.depassements === 0], ['90', '90 % du temps dans la zone', score >= 0.9]])], 'Passer à la filtration');
         $('#emp-suite').onclick = () => { tuto('fin:empatage'); aller('filtration'); preparerFiltration(); };
       });
     };
@@ -3684,13 +3849,15 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 
   // ---- Filtration : rincer les drêches sans tasser le lit ni le laisser à sec ----
   // Extrait recueilli : 1 − e^(−V/548) ; l'idéal (≈ 1150 L, derniers jus vers 1,010) vaut un facteur de rendement de 1.
-  const FIL = { k: 548, ideal: 1 - Math.exp(-1150 / 548), debitMax: 110, rincage: 100 };
+
   function preparerFiltration() {
-    const DUREE = 20;
+    const DUREE = 20, f = (session.recette.volume || 1000) / 1000, dif = difficulte();
+    const FIL = { k: 548 * f, ideal: 1 - Math.exp(-1150 / 548), debitMax: 110 * f, rincage: 100 * f, cible: 1150 * f };
+    const tasseK = (equipe('fauxfond') ? 0.6 : 1) * (1 + 0.15 * dif);
     const pts = Math.max(20, Moteur.calculer(session.recette).pts || 48);
     const st = { t: 0, V: 0, niveau: 4, tasse: 0, u: 0.4, rince: false, colmate: false, ratisse: 0, somU: 0, n: 0, fini: false, sec: 0 };
     const jus = () => 1.7 * pts * Math.exp(-st.V / FIL.k);
-    $('#fil-consigne').innerHTML = `Recueille <b>environ 1150 L</b>, arrête vers <b>1,010</b> ${iBtn("Le lit de drêches sert de filtre. Ouvre le robinet pour soutirer le moût, et rince en arrosant d'eau à 78 °C pour garder 2 à 6 cm d'eau au-dessus du lit. Trop de débit tasse le lit jusqu'à le colmater ; un lit à sec se tasse aussi. Les premiers jus sont riches en sucre, les derniers dilués : s'arrêter trop tôt perd de l'extrait, trop tard lessive les tanins des enveloppes (astringence).")}`;
+    $('#fil-consigne').innerHTML = `Recueille <b>environ ${nf(FIL.cible, 0)} L</b>, arrête vers <b>1,010</b> ${iBtn("Le lit de drêches sert de filtre. Ouvre le robinet pour soutirer le moût, et rince en arrosant d'eau à 78 °C pour garder 2 à 6 cm d'eau au-dessus du lit. Trop de débit tasse le lit jusqu'à le colmater ; un lit à sec se tasse aussi. Les premiers jus sont riches en sucre, les derniers dilués : s'arrêter trop tôt perd de l'extrait, trop tard lessive les tanins des enveloppes (astringence).")}`;
     $('#fil-bilan').hidden = true; $('#fil-pied').hidden = false; $('#fil-go').disabled = false;
     const deb = $('#fil-debit'), bR = $('#fil-arroser'), bS = $('#fil-stop');
     deb.value = 40; deb.disabled = true; bR.disabled = bS.disabled = true;
@@ -3720,7 +3887,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const j = jus();
       if (st.u > 0.02 && !st.colmate && st.t > 0) for (let i = 0; i < 3; i++) px(131, 112 + ((st.t * 30 + i * 4) % 6), 2, 2, `rgba(${200 - j},${140 - j},${60},.9)`);
       px(140, 40, 46, 80, '#8a8f96'); px(142, 42, 42, 76, '#2a1d14');
-      const h = borne(st.V / 1300, 0, 1) * 74; px(142, 118 - h, 42, h, couleur(Math.max(6, (session.recette.malts.length ? Moteur.calculer(session.recette).ebc : 10))));
+      const h = borne(st.V / (1300 * f), 0, 1) * 74; px(142, 118 - h, 42, h, couleur(Math.max(6, (session.recette.malts.length ? Moteur.calculer(session.recette).ebc : 10))));
       px(142, 118 - (1150 / 1300) * 74, 42, 1, '#9cc95e');
     };
     const infos = () => {
@@ -3730,7 +3897,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         { lib: 'Eau', v: borne(st.niveau, 0, 10) / 10, zone: [0.2, 0.6], coul: st.niveau <= 0 ? 'var(--alerte)' : '#7fb6d6', txt: `${nf(Math.max(0, st.niveau), 1)} cm` },
         { lib: 'Tassement', v: Math.min(1, st.tasse), coul: st.tasse > 0.7 ? 'var(--alerte)' : 'var(--cuivre)' },
       ]);
-      bS.disabled = st.fini || st.V < 500;
+      bS.disabled = st.fini || st.V < 500 * f;
       bS.innerHTML = st.colmate ? 'Ratisser<small>décolmater le lit</small>' : 'Arrêter<small>le soutirage</small>';
       if (st.colmate) bS.disabled = false;
     };
@@ -3747,9 +3914,9 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         st.t = t;
         const sortie = st.colmate ? 0 : st.u * FIL.debitMax * (1 - 0.6 * Math.min(1, st.tasse));
         st.V += sortie * dt;
-        st.niveau = Math.min(10, st.niveau + ((st.rince ? FIL.rincage : 0) - sortie) / 40 * dt);
+        st.niveau = Math.min(10, st.niveau + ((st.rince ? FIL.rincage : 0) - sortie) / (40 * f) * dt);
         if (st.niveau <= 0) { st.niveau = Math.max(-1, st.niveau); st.sec += dt; }
-        st.tasse = Math.max(0, st.tasse + (Math.max(0, st.u - 0.65) * 1.3 + (st.niveau <= 0 ? 0.6 : 0) - (st.u < 0.5 ? 0.08 : 0)) * dt);
+        st.tasse = Math.max(0, st.tasse + ((Math.max(0, st.u - 0.65) * 1.3 + (st.niveau <= 0 ? 0.6 : 0)) * tasseK - (st.u < 0.5 ? 0.08 : 0)) * dt);
         if (st.tasse >= 1 && !st.colmate) { st.colmate = true; son('rate'); evtScene('fil', 'Lit colmaté : plus rien ne coule', 'alerte'); }
         if (sortie > 0) { st.somU += st.u * dt; st.n += dt; }
         dessin(); infos();
@@ -3766,7 +3933,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       bilanGeste('fil', [`<span class="gros">${nf(st.V, 0)} L</span> recueillis, derniers jus à ${sg(1 + j / 1000)}`,
         `Rendement de filtration : ${Math.round(facteur * 100)} % de l'idéal${facteur < 0.95 ? ' : de l\'extrait est resté dans les drêches' : ''}.`,
         tanins ? 'Tu as poussé trop loin : les derniers jus ont lessivé les tanins des enveloppes. La bière sera astringente.' : 'Pas de tanins lessivés.',
-        st.ratisses ? `${st.ratisses} coup${st.ratisses > 1 ? 's' : ''} de râteau : le moût sera un peu plus trouble.` : '', st.sec > 1 ? 'Le lit a tourné à sec : de l\'air s\'y est glissé, il s\'est tassé.' : ''], session.recette.destination === 'wash' ? 'Passer à la fermentation' : 'Passer à l\'ébullition');
+        st.ratisses ? `${st.ratisses} coup${st.ratisses > 1 ? 's' : ''} de râteau : le moût sera un peu plus trouble.` : '', st.sec > 1 ? 'Le lit a tourné à sec : de l\'air s\'y est glissé, il s\'est tassé.' : '',
+        objectifsGeste('fil', [['rateau', 'Sans coup de râteau', !st.ratisses], ['pile', 'Arrêt entre 1,009 et 1,011', j >= 9 && j <= 11], ['noye', 'Lit jamais à sec', st.sec < 0.2]])], session.recette.destination === 'wash' ? 'Passer à la fermentation' : 'Passer à l\'ébullition');
       $('#fil-suite').onclick = suiteFiltration;
     };
     $('#fil-passer').onclick = () => { arretGeste && arretGeste(); suiteFiltration(); };
@@ -3803,7 +3971,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const g = +champ.value, co2 = resid + g / Moteur.G_SUCRE_PAR_VOLUME, d = co2 - cible;
       $('#bou-sucre-val').textContent = `${nf(g, 1)} g/L`;
       $('#bou-infos').innerHTML = infoBloc(nf(co2, 1), 'vol. de CO₂') + infoBloc(nf(cible, 1), 'cible du style') + infoBloc(nf(resid, 2), 'déjà dissous');
-      $('#bou-verdict').innerHTML = co2 > 4 ? '<b style="color:var(--alerte)">Danger : des bouteilles vont éclater.</b>' : d > 0.7 ? '<b style="color:var(--alerte)">Trop gazeuse : elle jaillira à l\'ouverture.</b>' : d < -0.6 ? '<b style="color:var(--alerte)">Trop peu : la bière sera plate.</b>' : Math.abs(d) <= 0.25 ? '<b style="color:var(--houblon)">Juste pour le style.</b>' : 'Acceptable.';
+      $('#bou-verdict').innerHTML = co2 > (equipe('bouteilles') ? 4.6 : 4) ? '<b style="color:var(--alerte)">Danger : des bouteilles vont éclater.</b>' : d > 0.7 ? '<b style="color:var(--alerte)">Trop gazeuse : elle jaillira à l\'ouverture.</b>' : d < -0.6 ? '<b style="color:var(--alerte)">Trop peu : la bière sera plate.</b>' : Math.abs(d) <= 0.25 ? '<b style="color:var(--houblon)">Juste pour le style.</b>' : 'Acceptable.';
       if (S.aide) $('#bou-verdict').insertAdjacentHTML('beforeend', ` <span class="det">Lise : vers ${nf(ideal, 1)} g/L.</span>`);
       dessin(1);
     };
@@ -3811,7 +3979,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     $('#bou-go').onclick = () => {
       champ.disabled = true; $('#bou-go').disabled = true;
       const g = +champ.value, co2 = resid + g / Moteur.G_SUCRE_PAR_VOLUME;
-      const perte = co2 > 4 ? Math.min(0.4, (co2 - 4) * 0.3 + 0.05) : 0;
+      const seuil = equipe('bouteilles') ? 4.6 : 4;
+      const perte = co2 > seuil ? Math.min(0.4, (co2 - seuil) * 0.3 + 0.05) : 0;
       rec.co2 = co2; session.perteBouteilles = perte;
       const eclats = perte ? [1, 4, 6, 2].slice(0, Math.max(1, Math.round(perte * 10))) : null;
       const t0 = performance.now();
@@ -3820,7 +3989,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const fin = () => {
         if (eclats) { son('rate'); evtScene('bou', `Bang ! ${Math.round(perte * 100)} % des bouteilles ont éclaté`, 'alerte'); } else son('ok');
         const d = co2 - cible;
-        bilanGeste('bou', [`<span class="gros">${nf(co2, 1)} vol.</span> de CO₂ pour ${nf(cible, 1)} attendus`,
+        bilanGeste('bou', [objectifsGeste('bou', [['juste', 'CO₂ à 0,2 volume près', Math.abs(d) <= 0.2]]), `<span class="gros">${nf(co2, 1)} vol.</span> de CO₂ pour ${nf(cible, 1)} attendus`,
           Math.abs(d) <= 0.3 ? 'Mousse et pétillance justes : la bière s\'ouvre bien.' : d < 0 ? 'Elle manque de bulles : mousse faible, bouche lourde.' : 'Elle pétille trop : ça jaillit à l\'ouverture.',
           perte ? `Stock réduit de ${Math.round(perte * 100)} % : verre brisé dans la cave.` : ''], 'Déguster');
         $('#bou-suite').onclick = () => { finirBrassin(); };
@@ -3885,13 +4054,15 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       }, () => {
         btn.disabled = true;
         while (st.k < file.length) { const h = file[st.k]; session.gestes.houblonsMin[h.i] = 0; st.ecarts.push(h.prevu); st.k++; }
-        const score = st.ecarts.length ? st.ecarts.reduce((s, e) => s + Math.max(0, 1 - e / 6), 0) / st.ecarts.length : 1;
+        const tol = 6 - difficulte();
+        const score = st.ecarts.length ? st.ecarts.reduce((s, e) => s + Math.max(0, 1 - e / tol), 0) / st.ecarts.length : 1;
         session.scores.houblon = score;
         let effet = S.mode === 'debutant' ? `Effet : ${effetMalus(score)}.` : '';
         if (S.mode === 'expert') { const a = Moteur.calculer(rec), b = Moteur.calculer(rec, { houblonsMin: session.gestes.houblonsMin }); effet = `Amertume prévue ${nf(a.ibu, 0)} IBU, obtenue ${nf(b.ibu, 0)} IBU.`; }
         session.precisionHoublon = st.ecarts.length ? Math.max(...st.ecarts) : 0;
         son(score > 0.6 ? 'ok' : 'rate');
-        bilanGeste('ebu', [`<span class="gros">${Math.round(score * 100)} %</span> de précision`, st.ecarts.length ? `Écart moyen ${nf(st.ecarts.reduce((a, b) => a + b, 0) / st.ecarts.length)} min.` : 'Aucun houblon pendant l\'ébullition.', effet], 'Refroidir et ensemencer');
+        bilanGeste('ebu', [`<span class="gros">${Math.round(score * 100)} %</span> de précision`, st.ecarts.length ? `Écart moyen ${nf(st.ecarts.reduce((a, b) => a + b, 0) / st.ecarts.length)} min.` : 'Aucun houblon pendant l\'ébullition.', effet,
+          st.ecarts.length ? objectifsGeste('ebu', [['minute', 'Chaque houblon à 1 minute près', st.ecarts.every((e) => e <= 1)], ['sec', 'Au moins trois ajouts réussis', st.ecarts.filter((e) => e <= 2).length >= 3]]) : ''], 'Refroidir et ensemencer');
         $('#ebu-suite').onclick = () => { tuto('fin:ebullition'); aller('fermentation'); preparerFermentation(); };
       });
     };
@@ -3909,7 +4080,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const base = Math.round(borne(-((AMB - consigne) * 0.12) / FROID, -1, 1) * 100);
     const bG = $('#fer-glycol'), bC = $('#fer-chauffe'); bG.disabled = bC.disabled = true;
     // Dry hops à déclencher : DH1 dans la fenêtre J1,5–J3,2 (biotransformation), DH2 dans J4,2–J6
-    const dhAFaire = [[1, -2, 1.5, 3.2], [2, -1, 4.2, 6]].filter(([, m]) => rec.houblons.some((h) => h.min === m)).map(([n, m, debut, fin]) => ({ n, m, debut, fin, g: rec.houblons.filter((h) => h.min === m).reduce((a, h) => a + h.g, 0) }));
+    const serre = 0.15 * difficulte();
+    const dhAFaire = [[1, -2, 1.5 + serre, 3.2 - serre], [2, -1, 4.2 + serre, 6 - serre]].filter(([, m]) => rec.houblons.some((h) => h.min === m)).map(([n, m, debut, fin]) => ({ n, m, debut, fin, g: rec.houblons.filter((h) => h.min === m).reduce((a, h) => a + h.g, 0) }));
     const dhFaits = {};
     const bH = $('#fer-houblon'); bH.hidden = !dhAFaire.length; bH.disabled = true;
     function majBoutonDH() {
@@ -3977,7 +4149,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         const j = (t / DUREE) * 7;
         const chaleur = G * (j / 1.8) * Math.exp(1 - j / 1.8);
         st.u += borne(st.cmd - st.u, -3 * dt, 3 * dt);
-        st.e += (st.u - st.e) * Math.min(1, dt / 1.2);
+        st.e += (st.u - st.e) * Math.min(1, dt / (equipe('sonde') ? 0.6 : 1.2));
         st.j = j;
         // Oubli : le houblon part quand même, en retard, à la fin de la fenêtre
         const prochain = dhAFaire[0];
@@ -3999,7 +4171,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         if (st.max > y.t[1] + 1) effet += ` Au-dessus de ${y.t[1]} °C, la levure produit des alcools supérieurs.`;
         const aCru = rec.houblons.filter((h) => h.min < 0);
         son(score > 0.6 ? 'ok' : 'rate');
-        bilanGeste('fer', [`<span class="gros">${Math.round(score * 100)} %</span> du temps dans la bande`, `Pic à ${nf(st.max)} °C, creux à ${nf(st.min)} °C.`, effet, aCru.length ? `Houblonnage à cru : ${aCru.map((h) => `${nf(h.g / 1000, 2)} kg de ${esc(IDX.houblon.get(h.id).nom)} (${libMin(h.min)})`).join(', ')}.` : ''], 'Déguster');
+        const dhOk = Object.keys(dhFaits).length && Object.entries(dhFaits).every(([n, j]) => (n === '1' ? j >= 1.5 && j <= 3.2 : j >= 4.2 && j <= 6));
+        bilanGeste('fer', [objectifsGeste('fer', [['95', '95 % du temps dans la bande', score >= 0.95], ['pic', `Pic sous ${nf(y.t[1])} °C`, st.max <= y.t[1]], ...(Object.keys(dhFaits).length ? [['dh', 'Dry hops dans leur fenêtre', dhOk]] : [])]), `<span class="gros">${Math.round(score * 100)} %</span> du temps dans la bande`, `Pic à ${nf(st.max)} °C, creux à ${nf(st.min)} °C.`, effet, aCru.length ? `Houblonnage à cru : ${aCru.map((h) => `${nf(h.g / 1000, 2)} kg de ${esc(IDX.houblon.get(h.id).nom)} (${libMin(h.min)})`).join(', ')}.` : ''], 'Déguster');
         $('#fer-suite').onclick = () => { tuto('fin:fermentation'); suiteFermentation(); };
       });
     };
@@ -4038,7 +4211,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       style: res.style.style.nom, sujet: res.style.style.sujet, conformite: res.style.conformite,
       og: res.og, fg: res.fg, abv: res.abv, ibu: res.ibu, ebc: res.ebc, total: note.total, lignes: note.lignes, medaille: note.medaille,
       etoiles, defauts: note.defauts.map((d) => d.nom), recette: session.recette, mode: S.mode, bac: S.bac, gain,
-      semaine: S.cal.s, stockL: Math.round(1000 * (1 - (session.perteBouteilles || 0))),
+      semaine: S.cal.s, stockL: Math.round((session.recette.volume || 1000) * (1 - (session.perteBouteilles || 0))),
     };
     S.carnet.unshift(entree);
     avancer(1, 'brassin');
@@ -4062,7 +4235,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       id: Date.now().toString(36), type: 'wash', date: new Date().toISOString(), nom: `Wash n° ${S.brassins}`, style: 'Wash de distillation',
       og: res.og, fg: res.fg, abv: res.abv, ibu: res.ibu, ebc: res.ebc, total: fiche.total, lignes: fiche.lignes, medaille: null,
       etoiles: { sansAide: false, expert: false, gestes: false }, defauts: fiche.defauts.map((d) => d.nom), recette: session.recette, mode: S.mode, bac: S.bac, gain, lap: fiche.lap,
-      semaine: S.cal.s, stockL: 1000,
+      semaine: S.cal.s, stockL: session.recette.volume || 1000,
     };
     S.carnet.unshift(entree);
     avancer(1, 'brassin');
@@ -4182,7 +4355,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   let choixBiere = null, sessionD = null;
   const reglagesD = () => (S.reglagesD = S.reglagesD || { recycler: true, feu: 'moyenne', tetesPct: 4, queuesDegre: 60 });
   const volCave = (b) => Math.min(1000, b.stockL != null ? b.stockL : 1000);
-  const biereDistillable = (x) => (x.type === 'biere' || x.type === 'wash') && !x.distillee && volCave(x) >= 200;
+  const biereDistillable = (x) => (x.type === 'biere' || x.type === 'wash') && !x.distillee && volCave(x) >= 50;
 
   function entrerDistillerie() {
     dessinerUlysse($('#ulysse').getContext('2d'));
@@ -4262,7 +4435,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const a = ALEAS_FEU[Math.floor(Math.random() * ALEAS_FEU.length)];
     f.mod = a.mod; f.evt = { id: a.id, t0: t };
     evtScene(geste, a.txt, a.genre); son('rate');
-    f.prochain = t + (S.mode === 'expert' ? 5 + Math.random() * 3 : 7 + Math.random() * 4);
+    f.prochain = t + (S.mode === 'expert' ? 5 + Math.random() * 3 : 7 + Math.random() * 4) - 0.7 * difficulte();
   }
   const evtFeu = (f) => (f.evt && f.t - f.evt.t0 < 2.6 ? f.evt.id : null);
   // Dessin des événements du foyer : flammes hautes et étincelles, ou fumée grise et flammes sombres
@@ -4275,7 +4448,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     let chaleur = 0;
     for (const b of f.buches) {
       b.age += dt;
-      const prise = 1 - Math.exp(-b.age / 1.1);
+      const prise = 1 - Math.exp(-b.age / (equipe('grille') ? 0.55 : 1.1));
       const q = Math.min(b.m, 0.12 * (0.35 + f.air) * prise * dt);
       b.m -= q; f.braise += q * 0.6;
       chaleur += Math.min(1, b.m * 1.6) * prise * (0.25 + 0.95 * f.air);
@@ -4306,7 +4479,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     else {
       const rg = reglagesD();
       sessionD.brouillis = DI.brouillis(sessionD.prep, 1, {});
-      sessionD.repasse = DI.repasseAuto(chargeRepasse(), { feu: FEUX[rg.feu], tetesPct: rg.tetesPct, queuesDegre: rg.queuesDegre });
+      sessionD.repasse = DI.repasseAuto(chargeRepasse(), { feu: FEUX[rg.feu], tetesPct: rg.tetesPct, queuesDegre: rg.queuesDegre }, infoNiv('distillerie').cuivre || 0.8);
       finirDistillation();
     }
   });
@@ -4414,7 +4587,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   // ---- Bonne chauffe et coupes ----
   function preparerRepasse() {
     const charge = chargeRepasse();
-    const r = DI.nouvelleRepasse(charge);
+    const r = DI.nouvelleRepasse(charge, infoNiv('distillerie').cuivre || 0.8);
     sessionD.repasse = r;
     const st = { t: 0, dans: 0, duree: 0, feu: nouveauFeu() };
     const DUREE = 55, expertVue = S.mode === 'expert';
@@ -4522,7 +4695,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     $('#rep-passer').onclick = () => {
       arretGeste && arretGeste(); sessionD.scoresFeu.push(0.5);
       const rg = reglagesD();
-      sessionD.repasse = DI.repasseAuto(charge, { feu: 0.55, tetesPct: rg.tetesPct, queuesDegre: rg.queuesDegre });
+      sessionD.repasse = DI.repasseAuto(charge, { feu: 0.55, tetesPct: rg.tetesPct, queuesDegre: rg.queuesDegre }, infoNiv('distillerie').cuivre || 0.8);
       tuto('fin:repasse'); preparerAveugle();
     };
   }
@@ -4717,7 +4890,9 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   const histoire = (e) => e.futs.map((x) => `${ABR[x.type]} ${nf(x.ans, x.ans % 1 ? 1 : 0)} a`).join(e.assemblage ? ' + ' : ' → ') + (e.assemblage ? ` (assemblage de ${e.assemblage} lots)` : '');
   const nomFut = (f) => `${CH.TAILLES[f.taille].nom} ${CH.TYPES[f.type].nom.toLowerCase()}`;
   const occupant = (r, c, sauf) => chai().futs.find((f) => f !== sauf && f.pos && f.pos.r === r && c >= f.pos.c && c < f.pos.c + CH.TAILLES[f.taille].w);
+  const rangeesOk = () => (infoNiv('chai') && infoNiv('chai').rangees) || [1];
   function peutPlacer(f, r, c) {
+    if (!rangeesOk().includes(r)) return false;
     const w = CH.TAILLES[f.taille].w;
     if (c < 0 || c + w > chai().cols) return false;
     for (let i = c; i < c + w; i++) if (occupant(r, i, f)) return false;
@@ -4753,6 +4928,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     // Le casse-tête : trois rangées, des travées de largeur variable
     const icone = ['☀', '≈', '❄'];
     const rangees = CH.ZONES.map((z, r) => {
+      if (!rangeesOk().includes(r)) return `<div class="rang-chai fermee" data-zone="${r}"><span class="zone-lib">${icone[r]} ${esc(z.nom)} · à construire (chai à trois niveaux)</span></div>`;
       let cases = '';
       for (let c = 0; c < C.cols; c++) {
         const o = occupant(r, c);
@@ -5227,6 +5403,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   }
   function rendreVente() {
     const V = S.vente, sais = saisonCourante();
+    if (niv('pigeonnier') < 2) { $('#pig-vente').innerHTML = `<div class="batiment nu"><p><b>Pas encore de boutique.</b> Le colombier sert aux commandes chez les fournisseurs. Construis la boutique pour recevoir des clients et vendre ta production.</p><button class="btn btn-feu btn-mini" data-aller="batiments">Voir les bâtiments</button></div>`; return; }
     const prods = produits();
     $('#pig-vente').innerHTML = `<div class="bourse"><span class="ecus">${S.ecus} écus</span><p>${esc(libCalendrier())} · cave à ${Vente.CAVE[sais]} °C${recolte() ? ' · <b>récolte du houblon : −30 % chez les fournisseurs</b>' : ''}</p>
         <div class="rep"><span>Réputation : <b>${niveauRep()}</b></span><span class="barre-rep"><i style="width:${Math.min(100, V.rep)}%"></i></span><span class="det">${V.vendus} ventes · ${V.ca} écus encaissés</span></div></div>
@@ -5235,7 +5412,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       ${V.clients.length ? V.clients.map((c) => carteClient(c, prods)).join('') : '<p class="vide">Personne pour l\'instant. De nouveaux clients viendront la semaine prochaine : un brassin, une distillation ou un passage au chai font avancer le temps.</p>'}
       ${V.commandes.length ? `<h2 class="sous-titre">Commandes spéciales</h2>${V.commandes.map((c) => carteCommande(c, prods)).join('')}` : V.rep < 35 ? '<p class="page-intro">Les commandes spéciales (fêtes, marchés, auberges) arrivent quand le domaine est apprécié.</p>' : ''}
       <h2 class="sous-titre">Ta cave</h2>
-      ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<p class="vide">La cave est vide. Chaque brassin met 1000 L en cave ; l\'alambic et le chai ajoutent des bouteilles.</p>'}`;
+      ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<p class="vide">La cave est vide. Chaque brassin y met le volume de ta brasserie ; l\'alambic et le chai ajoutent des bouteilles.</p>'}`;
   }
   function carteClient(c, prods) {
     const d = demandeDe(c), t = Vente.TYPES[c.type], ouvert = clientOuvert === c.id;
@@ -5266,6 +5443,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const sat = Vente.satisfaction(c, p, S.cal.s);
       const sAjuste = q < c.qte ? sat.s * 0.9 : sat.s;
       const pr = Vente.prix(c, p, q, sAjuste, V.rep);
+      if (niv('pigeonnier') >= 3) pr.ecus = Math.round(pr.ecus * 1.1);
       const dr = Vente.variationRep(sAjuste);
       retirerStock(p, q);
       const gagne = gagnerEcus(pr.ecus + pr.pourboire);
@@ -5399,12 +5577,13 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const manque = manquantsRecette(r);
     if (manque.length) { direLise(`Il te manque ${manque.map((m) => m.x.nom).join(', ')}. Achète-les au pigeonnier, ou adapte la recette à la brasserie.`); return; }
     const y = IDX.levure.get(r.levure);
-    R = S.recette = normaliser({
-      malts: r.malts.map((l) => ({ ...l })), houblons: r.houblons.map((l) => ({ ...l })), levure: r.levure,
+    const fr = volumeBrasserie() / 1000;
+    R = S.recette = normaliser({ volume: volumeBrasserie(),
+      malts: r.malts.map((l) => ({ ...l, kg: Math.max(0.5, Math.round(l.kg * fr * 2) / 2) })), houblons: r.houblons.map((l) => ({ ...l, g: Math.max(10, Math.round(l.g * fr / 10) * 10) })), levure: r.levure,
       ebullition: r.malts.some((l) => /pils/i.test(IDX.malt.get(l.id).nom)) ? 90 : 60,
       fermentation: { temp: Math.round((y.fam === 'lager' ? Math.min(y.t[0] + 3, y.t[1]) : y.t[0] + (y.t[1] - y.t[0]) * 0.35) * 2) / 2, reposDiacetyle: y.fam === 'lager' },
     });
-    son('ok'); toast(`${r.nom} chargée dans la cuve, ramenée à 1000 L.`);
+    son('ok'); toast(`${r.nom} chargée dans la cuve, ramenée à ${volumeBrasserie()} L.`);
     onglet = 'cuve'; aller('brasserie');
   }
   $('#cat-onglets').addEventListener('click', (e) => { const b = e.target.closest('[data-cat]'); if (!b) return; catOnglet = b.dataset.cat; catRecherche = ''; son('clic'); rendreCatalogue(); });
@@ -5893,7 +6072,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       "À la mise en bouteille, Firmin réduit à 45 % (paramètre du Hub) avec de l'eau de source. Un compte descendu sous 45 % est mis brut de fût. L'âge affiché est celui du plus jeune spiritueux de l'assemblage."]]
   };
   let retourFiche = null;
-  const NOMS_ECRANS = { fiches: 'les fiches', reglages: 'les options', brasserie: 'la brasserie', catalogue: 'le pigeonnier', chai: 'le chai', recherche: 'la recherche', veillee: 'la veillée', distillerie: "l'alambic", degustation: 'la dégustation', carnet: 'le carnet', domaine: 'le domaine' };
+  const NOMS_ECRANS = { batiments: 'les bâtiments', fiches: 'les fiches', reglages: 'les options', brasserie: 'la brasserie', catalogue: 'le pigeonnier', chai: 'le chai', recherche: 'la recherche', veillee: 'la veillée', distillerie: "l'alambic", degustation: 'la dégustation', carnet: 'le carnet', domaine: 'le domaine' };
   function rendreFiches() {
     const retour = retourFiche && NOMS_ECRANS[retourFiche] ? `<button class="btn btn-sobre" data-aller="${retourFiche}">← Retour à ${NOMS_ECRANS[retourFiche]}</button>` : '';
     retourFiche = null;
@@ -5920,7 +6099,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.7.3 · style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.8 · domaine à bâtir (bâtiments par niveaux, matériel, objectifs des gestes, difficulté progressive), style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

@@ -689,3 +689,22 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .entete-nav { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(100% + 4px); z-index: 30; display: grid; gap: 4px; min-width: 230px; padding: 8px; background: var(--four); box-shadow: 0 0 0 3px var(--cuivre), 4px 4px 0 rgba(0, 0, 0, .5); }
 .entete-nav[hidden] { display: none !important; }
 .entete-nav button { text-align: left; padding: 10px 12px; font-size: 16px; font-weight: 700; }
+
+/* ---------- Domaine à bâtir (V0.8) ---------- */
+.bat-liste { display: grid; gap: 10px; }
+.batiment { background: var(--four); box-shadow: 0 0 0 2px var(--pierre); padding: 10px 12px; display: grid; gap: 6px; }
+.batiment.nu { box-shadow: 0 0 0 2px var(--pierre-clair); }
+.batiment p { margin: 0; line-height: 1.4; }
+.bat-tete { display: flex; justify-content: space-between; align-items: center; font-size: 17px; }
+.niveaux { display: flex; gap: 4px; }
+.niveaux i { width: 14px; height: 14px; box-shadow: 0 0 0 2px var(--pierre-clair); }
+.niveaux i.plein { background: var(--or); box-shadow: 0 0 0 2px var(--cuivre); }
+.prochain { background: var(--nuit); padding: 8px 10px; box-shadow: 0 0 0 2px var(--pierre); display: grid; gap: 4px; justify-items: start; }
+.travaux { color: var(--braise); font-weight: 700; }
+.lieu.a-batir span { color: #cfc3a6; font-weight: 400; font-style: italic; }
+.rang-chai.fermee .zone-lib { opacity: .5; font-style: italic; }
+.geste-etape::after { content: attr(data-dif); color: var(--braise); }
+.objectifs { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.objectif { font-size: 14px; color: var(--cendre); }
+.objectif.ok { color: var(--or); font-weight: 700; }
+.objectif-gain { font-size: 14px; color: var(--or); }
