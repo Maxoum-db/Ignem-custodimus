@@ -188,8 +188,15 @@
     const rb = $('#retour-entete'); rb.setAttribute('aria-label', `Retour ${vers}`); rb.title = `Retour ${vers}`;
     rb.disabled = nom === 'domaine' && !pile.length; delete rb.dataset.confirme; $('.retour-txt', rb).textContent = '';
   }
+  // Menu de l'en-tête : un seul bouton, la liste se déroule
+  function basculerMenu(ouvrir) { const m = $('#menu-entete'), o = ouvrir != null ? ouvrir : m.hidden; m.hidden = !o; $('#btn-menu').setAttribute('aria-expanded', o); }
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#btn-menu')) { son('clic'); basculerMenu(); return; }
+    if (!e.target.closest('#menu-entete')) basculerMenu(false);
+  }, true);
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-aller]');
+    if (b && b.closest('#menu-entete')) basculerMenu(false);
     if (b) { son('clic'); if (b.dataset.catonglet) { catOnglet = b.dataset.catonglet; catFiltre = 'tous'; pigOnglet = 'achats'; } aller(b.dataset.aller); }
     const rt = e.target.closest('[data-retour]');
     if (rt) {
@@ -201,7 +208,7 @@
     if (f) { e.preventDefault(); ouvrirFiche(f.dataset.fiche); }
   });
   function majEntete() {
-    $('#entete-niveau').innerHTML = `<b>${niveau()}</b><span class="ligne2"><span style="color:var(--or)">${S.ecus} écus</span> · ${S.points} pts${S.bac ? ' · bac à sable' : ''}</span>`;
+    $('#entete-niveau').innerHTML = `<b class="ecus-entete">${S.ecus} écus</b><span class="ligne2">${S.bac ? 'bac à sable' : `${S.points} pts`}</span>`;
   }
   function toast(txt) {
     const t = document.createElement('div'); t.className = 'toast'; t.textContent = txt;
@@ -397,7 +404,7 @@
     for (let k = 0; k < n; k++) {
       S.cal.s++;
       genererClients(S.cal.s);
-      const c = Vente.commandeSemaine(S.cal.s, S.vente.rep); if (c) S.vente.commandes.push(c);
+      const c = Vente.commandeSemaine(S.cal.s, S.vente.rep, ['biere', 'edv', 'vieilli'].filter((k) => produits().some((p) => p.cat === k && p.stock > 0))); if (c) S.vente.commandes.push(c);
     }
     const expirees = S.vente.commandes.filter((c) => c.echeance < S.cal.s);
     if (expirees.length) { S.vente.rep = Math.max(0, S.vente.rep - 2 * expirees.length); S.vente.commandes = S.vente.commandes.filter((c) => c.echeance >= S.cal.s); }
@@ -2731,15 +2738,20 @@
     for (const x of S.carnet) {
       if (x.type === 'biere' && (x.stockL || 0) >= 1) {
         let a = cacheAttr.get(x.id);
-        if (!a) { const r = Moteur.calculer(x.recette); a = { amer: r.profil.amer, houblon: r.profil.houblon, fruite: r.profil.fruite, torrefie: r.profil.torrefie, malte: r.profil.malte }; cacheAttr.set(x.id, a); }
+        if (!a) {
+          const r = Moteur.calculer(x.recette);
+          a = { amer: r.profil.amer, houblon: r.profil.houblon, fruite: r.profil.fruite, torrefie: r.profil.torrefie, malte: r.profil.malte, epice: r.profil.epice, miel: r.ptsMiel || 0, fume: maltsFumes(x),
+            fruitAro: (x.recette.aromates || []).some((l) => (IDX.aromate.get(l.id) || {}).type === 'fruit') ? 1 : 0 };
+          cacheAttr.set(x.id, a);
+        }
         out.push({ ...a, cat: 'biere', x, nom: x.nom, abv: x.abv, ibu: x.ibu, ebc: x.ebc, sujet: x.sujet, total: x.total, semaine: x.semaine, stock: Math.floor(x.stockL) });
       } else if (x.type === 'edv' && x.coeur && x.coeur.lap > 0) {
         const lap = x.lapRestant != null ? x.lapRestant : x.coeur.lap, c = x.comp || {};
         const n = Math.floor(lap / 0.225);
-        if (n >= 1) out.push({ cat: 'edv', x, nom: x.nom, total: x.total, fruite: (c.esters || 0.8) * 2.5 + (c.terpenes || 0) * 1.5, chaleur: (c.fusels || 1) * 4, semaine: x.semaine, stock: n });
+        if (n >= 1) out.push({ cat: 'edv', x, nom: x.nom, total: x.total, fruite: (c.esters || 0.8) * 2.5 + (c.terpenes || 0) * 1.5, chaleur: (c.fusels || 1) * 4, botanique: c.terpenes || 0, malt: x.source && x.source !== 'biere' ? 1 : 0, semaine: x.semaine, stock: n });
       } else if (x.type === 'vieilli' && (x.stockB || 0) >= 1) {
         const p = x.profil || {};
-        out.push({ cat: 'vieilli', x, nom: x.nom, total: x.total, age: x.age, whisky: /^Whisky/.test(x.style), fume: p.fume || 0, vanille: p.vanille || 0, semaine: x.semaine, stock: x.stockB });
+        out.push({ cat: 'vieilli', x, nom: x.nom, total: x.total, age: x.age, whisky: /^Whisky/.test(x.style), fume: p.fume || 0, vanille: p.vanille || 0, vineux: p.vineux || 0, domaine: (x.futs || []).some((f) => f.type === 'domaine') ? 1 : 0, semaine: x.semaine, stock: x.stockB });
       }
     }
     return out;
@@ -2782,16 +2794,16 @@
     const choix = prods.filter((p) => p.cat === d.cat);
     return `<div class="client ${ouvert ? 'ouvert' : ''}"><div class="client-tete"><span class="avatar" style="background:hsl(${(c.nom.length * 47) % 360} 35% 45%)">${esc(c.nom.split(' ').pop()[0])}</span>
       <span class="corps"><b>${esc(c.nom)}</b><small>${esc(t.nom)} · ${esc(c.lieu)}${t.exigence ? ` · exigeant (${t.exigence}/50)` : ''}</small></span></div>
-      <p class="demande">« ${esc(d.txt)} »</p><p class="det">Il voudrait ${uniteQ(d.cat, c.qte)} ${d.cat === 'biere' ? 'de bière' : d.cat === 'edv' ? 'd\'eau-de-vie' : 'de spiritueux vieilli'}.</p>
+      <p class="demande">« ${esc(c.txt || (Array.isArray(d.txt) ? d.txt[0] : d.txt))} »</p><p class="det">Il voudrait ${uniteQ(d.cat, c.qte)} ${d.cat === 'biere' ? 'de bière' : d.cat === 'edv' ? 'd\'eau-de-vie' : 'de spiritueux vieilli'}.</p>
       ${ouvert ? (choix.length ? choix.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-proposer="${c.id}|${p.x.id}">Proposer</button>`)).join('') : '<p class="vide">Rien de ce genre en cave.</p>') + `<button class="btn btn-mini btn-sobre" data-congedier="${c.id}">Je n'ai rien pour vous</button>`
         : `<button class="btn btn-mini" data-conseiller="${c.id}">Conseiller</button>`}</div>`;
   }
   function carteCommande(c, prods) {
     const d = demandeDe(c), ouvert = commandeOuverte === c.id;
     const ok = prods.filter((p) => p.cat === d.cat && p.stock >= c.qte && p.total >= c.note);
-    return `<div class="client commande"><div class="client-tete"><span class="avatar">★</span><span class="corps"><b>${esc(c.nom)}</b><small>${c.qte} L · ${c.note}/50 au moins · avant ${Math.max(0, c.echeance - S.cal.s)} semaine(s) · prime ${c.prime} écus</small></span></div>
-      <p class="demande">« ${esc(d.txt)} »</p>
-      ${ouvert ? (ok.length ? ok.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-livrer="${c.id}|${p.x.id}">Livrer</button>`)).join('') : '<p class="vide">Aucune bière en cave n\'a le volume et la note demandés.</p>') : `<button class="btn btn-mini" data-ouvrircommande="${c.id}">Voir ce que je peux livrer</button>`}</div>`;
+    return `<div class="client commande"><div class="client-tete"><span class="avatar">★</span><span class="corps"><b>${esc(c.nom)}</b><small>${uniteQ(d.cat, c.qte)} · ${c.note}/50 au moins · avant ${Math.max(0, c.echeance - S.cal.s)} semaine(s) · prime ${c.prime} écus</small></span></div>
+      <p class="demande">« ${esc(c.txt || (Array.isArray(d.txt) ? d.txt[0] : d.txt))} »</p>
+      ${ouvert ? (ok.length ? ok.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-livrer="${c.id}|${p.x.id}">Livrer</button>`)).join('') : '<p class="vide">Rien en cave n\'a la quantité et la note demandées.</p>') : `<button class="btn btn-mini" data-ouvrircommande="${c.id}">Voir ce que je peux livrer</button>`}</div>`;
   }
   $('#pig-vente').addEventListener('click', (ev) => {
     const b = ev.target.closest('button'); if (!b) return;
@@ -2825,7 +2837,7 @@
       const gagne = gagnerEcus(c.prime);
       V.rep = Math.min(100, V.rep + c.rep); V.vendus++; V.ca += gagne;
       V.commandes = V.commandes.filter((x) => x.id !== cid); commandeOuverte = null;
-      derniereVente = { nom: c.nom, s: 0.9, detail: 'Livré à temps, tout le monde a apprécié.', txt: `${c.qte} L de ${esc(p.nom)} · <b style="color:var(--or)">+${c.prime} écus</b> · réputation +${c.rep}` };
+      derniereVente = { nom: c.nom, s: 0.9, detail: 'Livré à temps, tout le monde a apprécié.', txt: `${uniteQ(p.cat, c.qte)} de ${esc(p.nom)} · <b style="color:var(--or)">+${c.prime} écus</b> · réputation +${c.rep}` };
       son('medaille'); sauver(); majEntete(); entrerPigeonnier(); $('#scene').scrollTop = 0;
       return;
     }
@@ -3460,7 +3472,7 @@
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.7.2 · style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.7.3 · style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

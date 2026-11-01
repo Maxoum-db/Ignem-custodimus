@@ -691,20 +691,32 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .retour-entete[data-confirme="1"] { background: var(--alerte); }
 .retour-txt:empty { display: none; }
 @media (max-width: 440px) { .entete { gap: 6px; } .retour-entete { min-width: 36px; padding: 0 6px; } }
+
+/* ---------- En-tête simplifié (V0.7.3) : retour · feu · écus · loupe · menu ---------- */
+.entete { position: relative; }
+.entete .marque-nom { display: none; }
+.entete-niveau { flex: 1; min-width: 0; }
+.entete-niveau .ecus-entete { color: var(--or); font-size: 17px; font-weight: 700; }
+.entete-niveau .ligne2 { font-size: 12px; }
+.btn-entete { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 40px; border: 0; background: var(--pierre); color: var(--calcaire); box-shadow: var(--relief); flex: none; padding: 0; }
+.btn-entete[aria-expanded="true"], .btn-loupe[aria-current="page"] { background: var(--cuivre); color: var(--nuit); }
+.entete-nav { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(100% + 4px); z-index: 30; display: grid; gap: 4px; min-width: 230px; padding: 8px; background: var(--four); box-shadow: 0 0 0 3px var(--cuivre), 4px 4px 0 rgba(0, 0, 0, .5); }
+.entete-nav[hidden] { display: none !important; }
+.entete-nav button { text-align: left; padding: 10px 12px; font-size: 16px; font-weight: 700; }
 </style>
 
 <div id="app">
   <header class="entete">
     <button class="retour-entete" id="retour-entete" data-retour aria-label="Retour"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M5 1h2v1H6v1H5v1H4v1h7v2H4v1h1v1h1v1h1v1H5v-1H4V9H3V8H2V7H1V5h1V4h1V3h1V2h1z"/></svg><span class="retour-txt"></span></button>
-    <button class="marque" data-aller="domaine" aria-label="Retour au domaine">
-      <img id="marque-feu" class="sprite" alt="" width="16" height="20">
-      <span class="marque-nom">Ignem<br>custodimus</span>
-    </button>
+    <button class="marque" data-aller="domaine" aria-label="Retour au domaine"><img id="marque-feu" class="sprite" alt="" width="16" height="20"></button>
     <div class="entete-niveau" id="entete-niveau"></div>
-    <nav class="entete-nav" aria-label="Menu">
-      <button data-aller="recherche" class="btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 12 12" width="14" height="14" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 0h4v1H3zM2 1h1v1H2zM7 1h1v1H7zM1 2h1v4H1zM8 2h1v4H8zM2 6h1v1H2zM7 6h1v1H7zM3 7h4v1H3zM8 7h1v1H8zM9 8h1v1H9zM10 9h1v1h-1zM11 10h1v2h-1zM10 11h1v1h-1z"/></svg></button>
-      <button data-aller="carnet">Carnet</button>
-      <button data-aller="fiches">Fiches</button>
+    <button data-aller="recherche" class="btn-entete btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 0h4v1H3zM2 1h1v1H2zM7 1h1v1H7zM1 2h1v4H1zM8 2h1v4H8zM2 6h1v1H2zM7 6h1v1H7zM3 7h4v1H3zM8 7h1v1H8zM9 8h1v1H9zM10 9h1v1h-1zM11 10h1v2h-1zM10 11h1v1h-1z"/></svg></button>
+    <button class="btn-entete" id="btn-menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M1 2h10v2H1zM1 5h10v2H1zM1 8h10v2H1z"/></svg></button>
+    <nav class="entete-nav" id="menu-entete" aria-label="Menu" hidden>
+      <button data-aller="domaine">Domaine</button>
+      <button data-aller="carnet">Carnet de brassage</button>
+      <button data-aller="veillee">Veillée : leçons et questions</button>
+      <button data-aller="fiches">Fiches de chimie</button>
       <button data-aller="reglages">Options</button>
     </nav>
   </header>
@@ -2300,35 +2312,59 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     restaurateur: { nom: 'restaurateur', rep: 20, prix: 0.9 },
     caviste: { nom: 'caviste', rep: 35, prix: 1.1 },
     amateur: { nom: 'amateur éclairé', rep: 55, prix: 1.4, exigence: 38 },
+    touriste: { nom: 'touriste de passage', rep: 0, prix: 1.25 },
+    fromager: { nom: 'fromager', rep: 25, prix: 1.05 },
+    chef: { nom: 'chef cuisinier', rep: 45, prix: 1.5, exigence: 40 },
   };
   const NOMS = ['Mme Delpech', 'M. Lafon', 'Mme Bousquet', 'M. Couderc', 'Mme Vidal', 'M. Lacombe', 'Mme Roques', 'M. Fabre', 'Mme Calmels', 'M. Bonnet', 'Mme Garrigues', 'M. Pélissier', 'Mme Lagarde', 'M. Rouquette', 'Mme Andrieu', 'M. Malbec'];
   const LIEUX = ['de Caylus', 'de Septfonds', 'de Caussade', 'de Saint-Antonin', 'de Montpezat', 'de Cayriech', 'de Lalbenque', 'de Puylaroque', 'de Montauban', 'de Cahors'];
-  const METIERS = { restaurateur: ['l\'auberge', 'le bistrot', 'la table d\'hôtes', 'le restaurant'], caviste: ['la cave', 'l\'épicerie fine', 'la boutique du terroir'] };
+  const METIERS = { restaurateur: ['l\'auberge', 'le bistrot', 'la table d\'hôtes', 'le restaurant'], caviste: ['la cave', 'l\'épicerie fine', 'la boutique du terroir'],
+    fromager: ['la fromagerie', 'la crèmerie du marché'], chef: ['la table étoilée', 'le restaurant gastronomique', 'l\'auberge du château'] };
+  const VENUS = ['de Belgique', 'de Toulouse', 'de Bordeaux', 'des Pays-Bas', 'de Paris', 'd\'Angleterre', 'de Lyon', 'du Québec'];
 
   // Demandes : critères mesurables sur les produits, poids selon la saison
+  // txt peut être une liste de formulations : le client en choisit une
   const DEMANDES = [
-    { id: 'apero', cat: 'biere', txt: 'Une bière légère pour l\'apéro, pas trop forte, pas trop amère.', c: [['abv', null, 5], ['amer', null, 5]], s: { 'été': 2, printemps: 1.5 } },
-    { id: 'amere', cat: 'biere', txt: 'Quelque chose de bien amer et houblonné, qui réveille.', c: [['amer', 6, null], ['houblon', 5, null]], s: {} },
-    { id: 'brune', cat: 'biere', txt: 'Une brune : café, chocolat, du torréfié.', c: [['torrefie', 4, null], ['ebc', 45, null]], s: { hiver: 2, automne: 1.5 } },
-    { id: 'blonde', cat: 'biere', txt: 'Une blonde désaltérante pour les chaleurs.', c: [['ebc', null, 14], ['abv', null, 5.8]], s: { 'été': 2.5 } },
-    { id: 'forte', cat: 'biere', txt: 'Une bière forte pour les soirées d\'hiver, au coin du feu.', c: [['abv', 7, null], ['malte', 5, null]], s: { hiver: 2.5, automne: 1.5 } },
-    { id: 'fruitee', cat: 'biere', txt: 'Fruitée, pas amère : ma femme n\'aime pas l\'amertume.', c: [['fruite', 4, null], ['amer', null, 4]], s: { printemps: 1.5, 'été': 1.5 } },
-    { id: 'pils', cat: 'biere', txt: 'Une pils bien nette, comme en Bohême.', c: [['sujet', 'pilsener'], ['fruite', null, 3]], s: { 'été': 1.5 } },
-    { id: 'blanche', cat: 'biere', txt: 'Une blanche ou une weizen, pour la terrasse.', c: [['sujet', 'wheat']], s: { 'été': 2, printemps: 1.5 } },
-    { id: 'ambree', cat: 'biere', txt: 'Une ambrée, ronde et maltée, pour accompagner un cassoulet.', c: [['malte', 5, null], ['ebc', 18, 45]], s: { automne: 2, hiver: 1.5 } },
-    { id: 'meilleure', cat: 'biere', txt: 'Votre meilleure bière, peu importe le style.', c: [['total', 38, null]], s: {}, types: ['restaurateur', 'caviste', 'amateur'] },
-    { id: 'digestif', cat: 'edv', txt: 'Une eau-de-vie pour finir le repas.', c: [['total', 28, null]], s: { hiver: 1.5, automne: 1.3 } },
-    { id: 'edvfruit', cat: 'edv', txt: 'Une eau-de-vie fruitée, pas brûlante.', c: [['fruite', 3, null], ['chaleur', null, 5]], s: {} },
-    { id: 'whisky', cat: 'vieilli', txt: 'Un whisky du pays, pour changer de l\'écossais.', c: [['whisky', 1]], s: { hiver: 1.5 } },
-    { id: 'tourbe', cat: 'vieilli', txt: 'Quelque chose de tourbé, qui sent le feu de bois.', c: [['fume', 3, null]], s: { hiver: 1.5 } },
-    { id: 'vieux', cat: 'vieilli', txt: 'Un vieux, bien boisé, vanillé.', c: [['age', 5, null], ['vanille', 4, null]], s: {} },
-    { id: 'cadeau', cat: 'vieilli', txt: 'Une belle bouteille à offrir, médaillée si possible.', c: [['total', 38, null]], s: { hiver: 2.5 } },
+    { id: 'apero', cat: 'biere', txt: ['Une bière légère pour l\'apéro, pas trop forte, pas trop amère.', 'Quelque chose de facile pour l\'apéritif entre voisins.'], c: [['abv', null, 5], ['amer', null, 5]], s: { 'été': 2, printemps: 1.5 } },
+    { id: 'amere', cat: 'biere', txt: ['Quelque chose de bien amer et houblonné, qui réveille.', 'Je veux sentir le houblon, et que ça amérise franchement.'], c: [['amer', 6, null], ['houblon', 5, null]], s: {} },
+    { id: 'brune', cat: 'biere', txt: ['Une brune : café, chocolat, du torréfié.', 'Une bière noire, qui sent le café grillé.'], c: [['torrefie', 4, null], ['ebc', 45, null]], s: { hiver: 2, automne: 1.5 } },
+    { id: 'blonde', cat: 'biere', txt: ['Une blonde désaltérante pour les chaleurs.', 'Une blonde bien fraîche pour la moisson.'], c: [['ebc', null, 14], ['abv', null, 5.8]], s: { 'été': 2.5 } },
+    { id: 'forte', cat: 'biere', txt: ['Une bière forte pour les soirées d\'hiver, au coin du feu.', 'Du costaud, à siroter après la chasse.'], c: [['abv', 7, null], ['malte', 5, null]], s: { hiver: 2.5, automne: 1.5 } },
+    { id: 'fruitee', cat: 'biere', txt: ['Fruitée, pas amère : ma femme n\'aime pas l\'amertume.', 'Une bière douce et fruitée, pour quelqu\'un qui n\'aime pas la bière.'], c: [['fruite', 4, null], ['amer', null, 4]], s: { printemps: 1.5, 'été': 1.5 } },
+    { id: 'pils', cat: 'biere', txt: ['Une pils bien nette, comme en Bohême.', 'Une vraie lager, sèche et propre.'], c: [['sujet', 'pilsener'], ['fruite', null, 3]], s: { 'été': 1.5 } },
+    { id: 'blanche', cat: 'biere', txt: ['Une blanche ou une weizen, pour la terrasse.', 'Une bière de blé, trouble, avec de la mousse.'], c: [['sujet', 'wheat']], s: { 'été': 2, printemps: 1.5 } },
+    { id: 'ambree', cat: 'biere', txt: ['Une ambrée, ronde et maltée, pour accompagner un cassoulet.', 'Une rousse maltée pour le confit de canard.'], c: [['malte', 5, null], ['ebc', 18, 45]], s: { automne: 2, hiver: 1.5 } },
+    { id: 'session', cat: 'biere', txt: ['Quelque chose qu\'on peut boire toute la journée des vendanges, très léger.', 'Une petite bière de soif, sous les 4 degrés.'], c: [['abv', null, 4.2], ['amer', null, 4.5]], s: { automne: 2, 'été': 1.5 } },
+    { id: 'noel', cat: 'biere', txt: ['Une bière de Noël, épicée et ronde.', 'Pour le réveillon : forte, avec des épices.'], c: [['epice', 3, null], ['abv', 6, null]], s: { hiver: 3.5 } },
+    { id: 'miel', cat: 'biere', txt: ['Une bière au miel du pays.', 'Il paraît que vous faites une bière au miel ?'], c: [['miel', 0.1, null]], s: { printemps: 1.8, 'été': 1.3 } },
+    { id: 'fumee', cat: 'biere', txt: ['Une bière fumée pour la charcuterie et le jambon de pays.', 'Quelque chose de fumé, comme à Bamberg.'], c: [['fume', 2, null]], s: { automne: 1.5, hiver: 1.5 } },
+    { id: 'auxfruits', cat: 'biere', txt: ['Une bière aux fruits pour l\'apéritif.', 'Vous avez une bière avec de vrais fruits dedans ?'], c: [['fruitAro', 1, null]], s: { 'été': 2, printemps: 1.5 } },
+    { id: 'oktober', cat: 'biere', txt: ['Une märzen pour notre fête d\'octobre.', 'Une bière d\'Oktoberfest, ambrée et maltée.'], c: [['sujet', 'marzen']], s: { automne: 3 } },
+    { id: 'stout', cat: 'biere', txt: ['Un vrai stout, noir et sec, comme à Dublin.', 'Un stout pour accompagner des huîtres.'], c: [['sujet', 'stout']], s: { hiver: 1.8 } },
+    { id: 'ipa', cat: 'biere', txt: ['Une IPA bien fruitée, tropicale.', 'Une IPA américaine, avec du houblon partout.'], c: [['sujet', 'ipa'], ['houblon', 6, null]], s: {} },
+    { id: 'saison', cat: 'biere', txt: ['Une saison, sèche et poivrée, comme en Wallonie.'], c: [['sujet', 'farmhouse']], s: { 'été': 1.8, printemps: 1.5 } },
+    { id: 'mariage', cat: 'biere', txt: ['Pour un mariage : une blonde qui plaise à tout le monde.', 'Pour la fête du village : facile, blonde, sans défaut.'], c: [['ebc', null, 15], ['amer', null, 5], ['total', 30, null]], s: { 'été': 2, printemps: 1.5 }, types: ['restaurateur', 'caviste'], qte: 2 },
+    { id: 'fromage', cat: 'biere', txt: ['Pour un plateau de fromages du Quercy : une ambrée maltée.', 'Avec le rocamadour, il me faut une bière ronde, pas trop amère.'], c: [['malte', 5, null], ['ebc', 14, 40], ['amer', null, 6]], s: {}, types: ['fromager', 'chef', 'restaurateur', 'particulier'] },
+    { id: 'meilleure', cat: 'biere', txt: ['Votre meilleure bière, peu importe le style.', 'Ce que vous avez de mieux, je vous fais confiance.'], c: [['total', 38, null]], s: {}, types: ['restaurateur', 'caviste', 'amateur', 'chef'] },
+    { id: 'decouverte', cat: 'biere', txt: ['Je suis de passage : faites-moi découvrir ce qui se fait ici.', 'Quelque chose de typique du domaine, pour ramener chez moi.'], c: [['total', 30, null]], s: { 'été': 2 }, types: ['touriste'] },
+    { id: 'digestif', cat: 'edv', txt: ['Une eau-de-vie pour finir le repas.', 'Un petit digestif, comme on en faisait chez mon grand-père.'], c: [['total', 28, null]], s: { hiver: 1.5, automne: 1.3 } },
+    { id: 'edvfruit', cat: 'edv', txt: ['Une eau-de-vie fruitée, pas brûlante.'], c: [['fruite', 3, null], ['chaleur', null, 5]], s: {} },
+    { id: 'gin', cat: 'edv', txt: ['Un alcool aux plantes pour mes cocktails, genre gin.', 'Une eau-de-vie aromatique, avec des baies et des agrumes.'], c: [['botanique', 0.5, null]], s: { 'été': 1.8 }, types: ['particulier', 'restaurateur', 'chef', 'touriste'] },
+    { id: 'newmake', cat: 'edv', txt: ['Une eau-de-vie de malt, je veux la vieillir moi-même en petit fût.'], c: [['malt', 1, null], ['total', 30, null]], s: {}, types: ['amateur', 'caviste', 'particulier'] },
+    { id: 'whisky', cat: 'vieilli', txt: ['Un whisky du pays, pour changer de l\'écossais.', 'Un whisky français, c\'est possible ?'], c: [['whisky', 1]], s: { hiver: 1.5 } },
+    { id: 'tourbe', cat: 'vieilli', txt: ['Quelque chose de tourbé, qui sent le feu de bois.'], c: [['fume', 3, null]], s: { hiver: 1.5 } },
+    { id: 'vieux', cat: 'vieilli', txt: ['Un vieux, bien boisé, vanillé.'], c: [['age', 5, null], ['vanille', 4, null]], s: {} },
+    { id: 'cadeau', cat: 'vieilli', txt: ['Une belle bouteille à offrir, médaillée si possible.', 'Pour l\'anniversaire de mon père : quelque chose qui en jette.'], c: [['total', 38, null]], s: { hiver: 2.5 } },
+    { id: 'finition', cat: 'vieilli', txt: ['Un whisky fini en fût de vin, sherry ou Cahors.'], c: [['vineux', 2, null]], s: {}, types: ['amateur', 'caviste', 'chef'] },
+    { id: 'chene', cat: 'vieilli', txt: ['Un spiritueux élevé dans le chêne du Quercy.', 'J\'aime l\'idée d\'un fût fait avec le bois d\'ici.'], c: [['domaine', 1, null]], s: {}, types: ['touriste', 'caviste', 'amateur', 'particulier'] },
+    { id: 'cocktail', cat: 'vieilli', txt: ['Un whisky jeune et vif pour les cocktails du bar.'], c: [['whisky', 1], ['age', null, 4]], s: { 'été': 1.5 }, types: ['restaurateur', 'chef'] },
   ];
   const QTE = {
-    biere: { particulier: [2, 5], restaurateur: [20, 40], caviste: [8, 16], amateur: [2, 4] },
-    edv: { particulier: [1, 2], restaurateur: [2, 3], caviste: [3, 6], amateur: [1, 2] },
-    vieilli: { particulier: [1, 1], restaurateur: [1, 2], caviste: [3, 6], amateur: [1, 3] },
+    biere: { particulier: [2, 5], restaurateur: [20, 40], caviste: [8, 16], amateur: [2, 4], touriste: [2, 6], fromager: [6, 12], chef: [10, 20] },
+    edv: { particulier: [1, 2], restaurateur: [2, 3], caviste: [3, 6], amateur: [1, 2], touriste: [1, 2], fromager: [1, 2], chef: [2, 4] },
+    vieilli: { particulier: [1, 1], restaurateur: [1, 2], caviste: [3, 6], amateur: [1, 3], touriste: [1, 2], fromager: [1, 1], chef: [1, 3] },
   };
+  const formulation = (r, d) => (Array.isArray(d.txt) ? choisir(r, d.txt) : d.txt);
 
   function aleatoire(graine) { let s = (graine * 2654435761) % 2147483647 || 1; return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
   const choisir = (r, l) => l[Math.floor(r() * l.length)];
@@ -2347,23 +2383,31 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const types = Object.entries(TYPES).filter(([, t]) => rep >= t.rep).map(([k]) => k);
     const out = [];
     for (let i = 0; i < n; i++) {
-      const type = r() < 0.5 ? 'particulier' : choisir(r, types);
+      const type = r() < 0.4 ? 'particulier' : sais === 'été' && r() < 0.35 ? 'touriste' : choisir(r, types);
       const d = tirerDemande(r, sais, type, cats.length ? cats : ['biere']);
       if (!d) continue;
       const [a, b] = QTE[d.cat][type];
-      const lieu = type === 'particulier' || type === 'amateur' ? choisir(r, LIEUX) : `${choisir(r, METIERS[type])} ${choisir(r, LIEUX)}`;
-      out.push({ id: `${s}-${i}`, nom: choisir(r, NOMS), type, lieu, demande: d.id, qte: Math.round(a + r() * (b - a)), semaine: s });
+      const lieu = type === 'touriste' ? `venu ${choisir(r, VENUS)}` : METIERS[type] ? `${choisir(r, METIERS[type])} ${choisir(r, LIEUX)}` : choisir(r, LIEUX);
+      out.push({ id: `${s}-${i}`, nom: choisir(r, NOMS), type, lieu, demande: d.id, txt: formulation(r, d), qte: Math.round((a + r() * (b - a)) * (d.qte || 1)), semaine: s });
     }
     return out;
   }
   // Commande spéciale : grosse quantité, note minimale, échéance de 4 semaines
-  function commandeSemaine(s, rep) {
+  const COMMANDEURS = {
+    biere: ['La fête de la bière de Caussade', 'Le marché de nuit de Saint-Antonin', 'Le comité des fêtes de Cayriech', 'L\'auberge du Lot', 'Le festival de Montauban', 'Le club de rugby de Caussade', 'Le mariage du château de Cas'],
+    edv: ['Le bar à cocktails de Cahors', 'L\'épicerie fine de Montauban', 'La distillerie voisine, en manque de stock'],
+    vieilli: ['Le caviste de Toulouse', 'La cave de Cahors', 'Le salon des spiritueux de Bordeaux', 'La table étoilée de Montauban'],
+  };
+  function commandeSemaine(s, rep, cats = ['biere']) {
     if (rep < 35) return null;
     const r = aleatoire(s * 104729 + 7);
-    if (r() > 0.25) return null;
-    const d = choisir(r, DEMANDES.filter((x) => x.cat === 'biere' && x.id !== 'meilleure'));
-    const qte = 80 + Math.round(r() * 8) * 20;
-    return { id: 'c' + s, nom: choisir(r, ['La fête de la bière de Caussade', 'Le marché de nuit de Saint-Antonin', 'Le comité des fêtes de Cayriech', 'L\'auberge du Lot', 'Le festival de Montauban']), demande: d.id, qte, note: 34, echeance: s + 4, prime: Math.round(qte * 1.6), rep: 6 };
+    if (r() > 0.28) return null;
+    const cat = choisir(r, cats.length ? cats : ['biere']);
+    const d = choisir(r, DEMANDES.filter((x) => x.cat === cat && !['meilleure', 'decouverte'].includes(x.id)));
+    if (!d) return null;
+    const qte = cat === 'biere' ? 60 + Math.round(r() * 7) * 20 : cat === 'edv' ? 6 + Math.round(r() * 6) : 6 + Math.round(r() * 3) * 6;
+    const prime = Math.round(qte * (cat === 'biere' ? 1.6 : cat === 'edv' ? 9 : 24));
+    return { id: 'c' + s, nom: choisir(r, COMMANDEURS[cat]), cat, demande: d.id, txt: formulation(r, d), qte, note: cat === 'vieilli' ? 36 : 34, echeance: s + (cat === 'vieilli' ? 6 : 4), prime, rep: cat === 'biere' ? 6 : 8 };
   }
 
   // Satisfaction du client : critères respectés (avec crédit partiel), qualité, fraîcheur
@@ -2592,8 +2636,15 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const rb = $('#retour-entete'); rb.setAttribute('aria-label', `Retour ${vers}`); rb.title = `Retour ${vers}`;
     rb.disabled = nom === 'domaine' && !pile.length; delete rb.dataset.confirme; $('.retour-txt', rb).textContent = '';
   }
+  // Menu de l'en-tête : un seul bouton, la liste se déroule
+  function basculerMenu(ouvrir) { const m = $('#menu-entete'), o = ouvrir != null ? ouvrir : m.hidden; m.hidden = !o; $('#btn-menu').setAttribute('aria-expanded', o); }
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#btn-menu')) { son('clic'); basculerMenu(); return; }
+    if (!e.target.closest('#menu-entete')) basculerMenu(false);
+  }, true);
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-aller]');
+    if (b && b.closest('#menu-entete')) basculerMenu(false);
     if (b) { son('clic'); if (b.dataset.catonglet) { catOnglet = b.dataset.catonglet; catFiltre = 'tous'; pigOnglet = 'achats'; } aller(b.dataset.aller); }
     const rt = e.target.closest('[data-retour]');
     if (rt) {
@@ -2605,7 +2656,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     if (f) { e.preventDefault(); ouvrirFiche(f.dataset.fiche); }
   });
   function majEntete() {
-    $('#entete-niveau').innerHTML = `<b>${niveau()}</b><span class="ligne2"><span style="color:var(--or)">${S.ecus} écus</span> · ${S.points} pts${S.bac ? ' · bac à sable' : ''}</span>`;
+    $('#entete-niveau').innerHTML = `<b class="ecus-entete">${S.ecus} écus</b><span class="ligne2">${S.bac ? 'bac à sable' : `${S.points} pts`}</span>`;
   }
   function toast(txt) {
     const t = document.createElement('div'); t.className = 'toast'; t.textContent = txt;
@@ -2801,7 +2852,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     for (let k = 0; k < n; k++) {
       S.cal.s++;
       genererClients(S.cal.s);
-      const c = Vente.commandeSemaine(S.cal.s, S.vente.rep); if (c) S.vente.commandes.push(c);
+      const c = Vente.commandeSemaine(S.cal.s, S.vente.rep, ['biere', 'edv', 'vieilli'].filter((k) => produits().some((p) => p.cat === k && p.stock > 0))); if (c) S.vente.commandes.push(c);
     }
     const expirees = S.vente.commandes.filter((c) => c.echeance < S.cal.s);
     if (expirees.length) { S.vente.rep = Math.max(0, S.vente.rep - 2 * expirees.length); S.vente.commandes = S.vente.commandes.filter((c) => c.echeance >= S.cal.s); }
@@ -5135,15 +5186,20 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     for (const x of S.carnet) {
       if (x.type === 'biere' && (x.stockL || 0) >= 1) {
         let a = cacheAttr.get(x.id);
-        if (!a) { const r = Moteur.calculer(x.recette); a = { amer: r.profil.amer, houblon: r.profil.houblon, fruite: r.profil.fruite, torrefie: r.profil.torrefie, malte: r.profil.malte }; cacheAttr.set(x.id, a); }
+        if (!a) {
+          const r = Moteur.calculer(x.recette);
+          a = { amer: r.profil.amer, houblon: r.profil.houblon, fruite: r.profil.fruite, torrefie: r.profil.torrefie, malte: r.profil.malte, epice: r.profil.epice, miel: r.ptsMiel || 0, fume: maltsFumes(x),
+            fruitAro: (x.recette.aromates || []).some((l) => (IDX.aromate.get(l.id) || {}).type === 'fruit') ? 1 : 0 };
+          cacheAttr.set(x.id, a);
+        }
         out.push({ ...a, cat: 'biere', x, nom: x.nom, abv: x.abv, ibu: x.ibu, ebc: x.ebc, sujet: x.sujet, total: x.total, semaine: x.semaine, stock: Math.floor(x.stockL) });
       } else if (x.type === 'edv' && x.coeur && x.coeur.lap > 0) {
         const lap = x.lapRestant != null ? x.lapRestant : x.coeur.lap, c = x.comp || {};
         const n = Math.floor(lap / 0.225);
-        if (n >= 1) out.push({ cat: 'edv', x, nom: x.nom, total: x.total, fruite: (c.esters || 0.8) * 2.5 + (c.terpenes || 0) * 1.5, chaleur: (c.fusels || 1) * 4, semaine: x.semaine, stock: n });
+        if (n >= 1) out.push({ cat: 'edv', x, nom: x.nom, total: x.total, fruite: (c.esters || 0.8) * 2.5 + (c.terpenes || 0) * 1.5, chaleur: (c.fusels || 1) * 4, botanique: c.terpenes || 0, malt: x.source && x.source !== 'biere' ? 1 : 0, semaine: x.semaine, stock: n });
       } else if (x.type === 'vieilli' && (x.stockB || 0) >= 1) {
         const p = x.profil || {};
-        out.push({ cat: 'vieilli', x, nom: x.nom, total: x.total, age: x.age, whisky: /^Whisky/.test(x.style), fume: p.fume || 0, vanille: p.vanille || 0, semaine: x.semaine, stock: x.stockB });
+        out.push({ cat: 'vieilli', x, nom: x.nom, total: x.total, age: x.age, whisky: /^Whisky/.test(x.style), fume: p.fume || 0, vanille: p.vanille || 0, vineux: p.vineux || 0, domaine: (x.futs || []).some((f) => f.type === 'domaine') ? 1 : 0, semaine: x.semaine, stock: x.stockB });
       }
     }
     return out;
@@ -5186,16 +5242,16 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const choix = prods.filter((p) => p.cat === d.cat);
     return `<div class="client ${ouvert ? 'ouvert' : ''}"><div class="client-tete"><span class="avatar" style="background:hsl(${(c.nom.length * 47) % 360} 35% 45%)">${esc(c.nom.split(' ').pop()[0])}</span>
       <span class="corps"><b>${esc(c.nom)}</b><small>${esc(t.nom)} · ${esc(c.lieu)}${t.exigence ? ` · exigeant (${t.exigence}/50)` : ''}</small></span></div>
-      <p class="demande">« ${esc(d.txt)} »</p><p class="det">Il voudrait ${uniteQ(d.cat, c.qte)} ${d.cat === 'biere' ? 'de bière' : d.cat === 'edv' ? 'd\'eau-de-vie' : 'de spiritueux vieilli'}.</p>
+      <p class="demande">« ${esc(c.txt || (Array.isArray(d.txt) ? d.txt[0] : d.txt))} »</p><p class="det">Il voudrait ${uniteQ(d.cat, c.qte)} ${d.cat === 'biere' ? 'de bière' : d.cat === 'edv' ? 'd\'eau-de-vie' : 'de spiritueux vieilli'}.</p>
       ${ouvert ? (choix.length ? choix.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-proposer="${c.id}|${p.x.id}">Proposer</button>`)).join('') : '<p class="vide">Rien de ce genre en cave.</p>') + `<button class="btn btn-mini btn-sobre" data-congedier="${c.id}">Je n'ai rien pour vous</button>`
         : `<button class="btn btn-mini" data-conseiller="${c.id}">Conseiller</button>`}</div>`;
   }
   function carteCommande(c, prods) {
     const d = demandeDe(c), ouvert = commandeOuverte === c.id;
     const ok = prods.filter((p) => p.cat === d.cat && p.stock >= c.qte && p.total >= c.note);
-    return `<div class="client commande"><div class="client-tete"><span class="avatar">★</span><span class="corps"><b>${esc(c.nom)}</b><small>${c.qte} L · ${c.note}/50 au moins · avant ${Math.max(0, c.echeance - S.cal.s)} semaine(s) · prime ${c.prime} écus</small></span></div>
-      <p class="demande">« ${esc(d.txt)} »</p>
-      ${ouvert ? (ok.length ? ok.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-livrer="${c.id}|${p.x.id}">Livrer</button>`)).join('') : '<p class="vide">Aucune bière en cave n\'a le volume et la note demandés.</p>') : `<button class="btn btn-mini" data-ouvrircommande="${c.id}">Voir ce que je peux livrer</button>`}</div>`;
+    return `<div class="client commande"><div class="client-tete"><span class="avatar">★</span><span class="corps"><b>${esc(c.nom)}</b><small>${uniteQ(d.cat, c.qte)} · ${c.note}/50 au moins · avant ${Math.max(0, c.echeance - S.cal.s)} semaine(s) · prime ${c.prime} écus</small></span></div>
+      <p class="demande">« ${esc(c.txt || (Array.isArray(d.txt) ? d.txt[0] : d.txt))} »</p>
+      ${ouvert ? (ok.length ? ok.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-livrer="${c.id}|${p.x.id}">Livrer</button>`)).join('') : '<p class="vide">Rien en cave n\'a la quantité et la note demandées.</p>') : `<button class="btn btn-mini" data-ouvrircommande="${c.id}">Voir ce que je peux livrer</button>`}</div>`;
   }
   $('#pig-vente').addEventListener('click', (ev) => {
     const b = ev.target.closest('button'); if (!b) return;
@@ -5229,7 +5285,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const gagne = gagnerEcus(c.prime);
       V.rep = Math.min(100, V.rep + c.rep); V.vendus++; V.ca += gagne;
       V.commandes = V.commandes.filter((x) => x.id !== cid); commandeOuverte = null;
-      derniereVente = { nom: c.nom, s: 0.9, detail: 'Livré à temps, tout le monde a apprécié.', txt: `${c.qte} L de ${esc(p.nom)} · <b style="color:var(--or)">+${c.prime} écus</b> · réputation +${c.rep}` };
+      derniereVente = { nom: c.nom, s: 0.9, detail: 'Livré à temps, tout le monde a apprécié.', txt: `${uniteQ(p.cat, c.qte)} de ${esc(p.nom)} · <b style="color:var(--or)">+${c.prime} écus</b> · réputation +${c.rep}` };
       son('medaille'); sauver(); majEntete(); entrerPigeonnier(); $('#scene').scrollTop = 0;
       return;
     }
@@ -5864,7 +5920,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.7.2 · style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.7.3 · style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

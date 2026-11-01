@@ -10,15 +10,15 @@
 <div id="app">
   <header class="entete">
     <button class="retour-entete" id="retour-entete" data-retour aria-label="Retour"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M5 1h2v1H6v1H5v1H4v1h7v2H4v1h1v1h1v1h1v1H5v-1H4V9H3V8H2V7H1V5h1V4h1V3h1V2h1z"/></svg><span class="retour-txt"></span></button>
-    <button class="marque" data-aller="domaine" aria-label="Retour au domaine">
-      <img id="marque-feu" class="sprite" alt="" width="16" height="20">
-      <span class="marque-nom">Ignem<br>custodimus</span>
-    </button>
+    <button class="marque" data-aller="domaine" aria-label="Retour au domaine"><img id="marque-feu" class="sprite" alt="" width="16" height="20"></button>
     <div class="entete-niveau" id="entete-niveau"></div>
-    <nav class="entete-nav" aria-label="Menu">
-      <button data-aller="recherche" class="btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 12 12" width="14" height="14" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 0h4v1H3zM2 1h1v1H2zM7 1h1v1H7zM1 2h1v4H1zM8 2h1v4H8zM2 6h1v1H2zM7 6h1v1H7zM3 7h4v1H3zM8 7h1v1H8zM9 8h1v1H9zM10 9h1v1h-1zM11 10h1v2h-1zM10 11h1v1h-1z"/></svg></button>
-      <button data-aller="carnet">Carnet</button>
-      <button data-aller="fiches">Fiches</button>
+    <button data-aller="recherche" class="btn-entete btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 0h4v1H3zM2 1h1v1H2zM7 1h1v1H7zM1 2h1v4H1zM8 2h1v4H8zM2 6h1v1H2zM7 6h1v1H7zM3 7h4v1H3zM8 7h1v1H8zM9 8h1v1H9zM10 9h1v1h-1zM11 10h1v2h-1zM10 11h1v1h-1z"/></svg></button>
+    <button class="btn-entete" id="btn-menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M1 2h10v2H1zM1 5h10v2H1zM1 8h10v2H1z"/></svg></button>
+    <nav class="entete-nav" id="menu-entete" aria-label="Menu" hidden>
+      <button data-aller="domaine">Domaine</button>
+      <button data-aller="carnet">Carnet de brassage</button>
+      <button data-aller="veillee">Veillée : leçons et questions</button>
+      <button data-aller="fiches">Fiches de chimie</button>
       <button data-aller="reglages">Options</button>
     </nav>
   </header>

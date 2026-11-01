@@ -677,3 +677,15 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .retour-entete[data-confirme="1"] { background: var(--alerte); }
 .retour-txt:empty { display: none; }
 @media (max-width: 440px) { .entete { gap: 6px; } .retour-entete { min-width: 36px; padding: 0 6px; } }
+
+/* ---------- En-tête simplifié (V0.7.3) : retour · feu · écus · loupe · menu ---------- */
+.entete { position: relative; }
+.entete .marque-nom { display: none; }
+.entete-niveau { flex: 1; min-width: 0; }
+.entete-niveau .ecus-entete { color: var(--or); font-size: 17px; font-weight: 700; }
+.entete-niveau .ligne2 { font-size: 12px; }
+.btn-entete { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 40px; border: 0; background: var(--pierre); color: var(--calcaire); box-shadow: var(--relief); flex: none; padding: 0; }
+.btn-entete[aria-expanded="true"], .btn-loupe[aria-current="page"] { background: var(--cuivre); color: var(--nuit); }
+.entete-nav { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(100% + 4px); z-index: 30; display: grid; gap: 4px; min-width: 230px; padding: 8px; background: var(--four); box-shadow: 0 0 0 3px var(--cuivre), 4px 4px 0 rgba(0, 0, 0, .5); }
+.entete-nav[hidden] { display: none !important; }
+.entete-nav button { text-align: left; padding: 10px 12px; font-size: 16px; font-weight: 700; }
