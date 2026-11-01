@@ -1,4 +1,4 @@
-# Illustrations — brasserie A–E
+# Illustrations — ateliers et univers du domaine
 
 Le vrai jeu utilise désormais ces illustrations dans `jeu/src/ateliers.js`,
 chargé avant `jeu.js`. Le dessin historique reste un repli fonctionnel.
@@ -53,14 +53,48 @@ remplissages et effets sont pilotés par les états fournis par le vrai jeu.
 - Contours #3b2a1e, pierre #e2cfa4, tuiles #d9714a, bois #a87444, cuivre #e09a4e,
   végétation #9cc94a ; lumière en haut à gauche et ombres douces à deux tons.
 
-## À produire ensuite
+## Univers livré dans le lot suivant
 
-F / Ulysse conserve son dessin historique : `f-fond`, `f-alambic-vide`,
-`f-condenseur` et ses récipients, accessoires et placements propres aux
-Canvas aperçu/brouillis/repasse restent à livrer. Aucun asset F n'est annoncé
-comme terminé dans cette phase.
+Le registre `UniversJeu` et les modules `activites-illustrees.js`,
+`domaine-illustre.js`, `habillage.js` étendent désormais A–E à F–Q :
 
-Les illustrations G–Q (chai, boutique, dégustation, ingrédients, veillée,
-portraits, carte du domaine et saisons) et les sprites R à six images restent
-à produire. Les effets A–E sont procéduraux ; ce ne sont pas des sprites R.
-Les portraits et icônes hérités sont conservés jusqu'à leur lot graphique.
+- Ulysse : fond, chaudière mobile **vide**, condenseur indépendants ; tuyaux,
+  foyer, mousse, liquide du hublot, jauges, récipients et vapeur par code.
+- Chai : intérieur voûté plein cadre et fût sur support indépendant. Le panorama
+  ne montre que les fûts réellement placés ; le casse-tête HTML reste actif.
+- Pigeonnier : tour, auvent, comptoir, bouteilles, terrasse et oiseaux séparés.
+  Les ajouts dépendent du niveau réel du bâtiment.
+- Dégustation : verrerie et flacons vectoriels, liquides translucides de couleur
+  calculée par le jeu. Les verres de dégustation à l'aveugle restent identiques.
+- Ingrédients : icônes SVG originales malt, houblon, levure, fruit, épice, eau,
+  miel, bois, bouteille, outil. La poignée interactive historique est conservée.
+- Veillée : mobilier, foyer et éclairage nocturne indépendants, mêmes personnages.
+- Domaine : trois brasseries, deux chais, pigeonnier, Ulysse, chêne, deux mentors,
+  cheval et cinq volailles/chat. Sol, chemins, murets, vigne, potager, verger,
+  échafaudages, neige et variations saisonnières sont composés par code.
+
+Les six bâtiments partagent le canevas 768 × 512 et l'ancrage normalisé
+`(0.5, 0.9004)`. Les niveaux restent superposables au même point de sol.
+Lise et Firmin ont chacun **un sprite source** : les portraits sont des recadrages
+Canvas de ces sprites, et non des visages régénérés. Les clients emploient des
+portraits SVG déterministes originaux.
+
+Le total actuel, les dimensions et les SHA256 exacts des **25 WebP** sont dans
+`manifest.json` ; le pipeline impose toujours le plafond source de 6 Mio.
+Les cinq assets A–E sont inchangés. Les nouvelles illustrations sont produites
+avec `image_gen`, et non simulées par des emplacements vides.
+
+## Animation et limites
+
+Le feu comporte six images Canvas indépendantes à ancrage constant, espacées de
+120 ms. Les poses au repos des personnages utilisent une séquence discrète de
+six positions. Il ne s'agit pas de six nouvelles poses anatomiques dessinées.
+Vapeur, écoulement, reflets et liquides restent procéduraux. Le mouvement réduit
+fige les décorations, pas les mesures nécessaires au déroulement d'un geste.
+Les vues cachées ou hors écran ne sont pas repeintes.
+
+Aucun asset n'est nécessaire pour jouer au lot livré : le dessin historique reste
+le repli. Restent des enrichissements facultatifs : vraies poses de marche/travail
+à six dessins pour les mentors/animaux, portraits peints individualisés des clients,
+variantes peintes de végétation hivernale (actuellement dessinées par code).
+Le rucher reste l'extension « bientôt » du vrai jeu ; cette refonte ne l'ouvre pas.

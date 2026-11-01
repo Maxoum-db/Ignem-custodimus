@@ -171,6 +171,7 @@
     { b: '#2a2a3a', g: '#c9c2b4', s: '#d9a07a', E: '#2a1a10', n: '#b9785a', m: '#ecdfc4', c: '#d27b3e', v: '#5a4632' }, 3);
   $('#marque-feu').src = SPR.feu;
   $('#mentor-portrait').src = SPR.lise;
+  window.UniversJeu?.habiller(SPR);
   const couleur = (ebc) => `rgb(${Moteur.couleurRVB(ebc).join(',')})`;
 
   // =====================================================================
@@ -467,6 +468,7 @@
   function dessinerDomaine(c, t, saison) {
     const P = SAISONS[saison], W = 192, H = 256;
     const heure = new Date().getHours(), nuit = heure >= 21 || heure < 7;
+    if (window.UniversJeu?.rendre('domaine', c, { t, saison, nuit, bat: { ...S.bat }, travaux: S.travaux, semaine: S.cal.s }, () => dessinerDomaine(c, t, saison))) return;
     const px = (x, y, w, h, col) => { c.fillStyle = col; c.fillRect(Math.round(x), Math.round(y), w, h); };
     const disque = (cx, cy, r, col) => { c.fillStyle = col; for (let y = -r; y <= r; y++) { const w = Math.round(Math.sqrt(r * r - y * y)); c.fillRect(Math.round(cx - w), Math.round(cy + y), w * 2 + 1, 1); } };
     // Ciel en bandes tramées
@@ -1854,6 +1856,7 @@
     const ctx = $('#verre').getContext('2d');
     const rgb = Moteur.couleurRVB(res.ebc), mousse = res.ebc > 60 ? '#d8b98a' : '#f4ecd8';
     const dessinVerre = (p) => {
+      if (window.UniversJeu?.rendre('verre-biere', ctx, { p, couleur: `rgb(${rgb.join(',')})`, t: p * 1.6 }, () => dessinVerre(p))) return;
       const px = (x, y, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       ctx.clearRect(0, 0, 64, 96); px(0, 0, 64, 96, '#221912');
       const larg = (y) => (y < 20 ? 18 + (y - 6) * 0.25 : y < 60 ? 21 - (y - 20) * 0.14 : 15.4 - (y - 60) * 0.1);
@@ -1987,6 +1990,7 @@
   });
 
   function dessinerUlysse(c, t = 0, feu = 0.5) {
+    if (window.UniversJeu?.rendre('ulysse', c, { t, force: feu }, () => dessinerUlysse(c, t, feu))) return;
     const px = (x, y, w, h, k) => { c.fillStyle = k; c.fillRect(Math.round(x), Math.round(y), w, h); };
     const disque = (cx, cy, r, k) => { c.fillStyle = k; for (let y = -r; y <= r; y++) { const w = Math.round(Math.sqrt(r * r - y * y)); c.fillRect(Math.round(cx - w), Math.round(cy + y), w * 2 + 1, 1); } };
     px(0, 0, 96, 72, '#221912'); px(0, 60, 96, 12, '#3b2d22');
@@ -2072,6 +2076,7 @@
     const btn = $('#bro-buche'); btn.disabled = true;
     const ctx = $('#bro-canvas').getContext('2d');
     const dessin = () => {
+      if (window.UniversJeu?.rendre('brouillis', ctx, { ...st, evenement: evtFeu(st.feu), couleur: couleur(sessionD.biere.ebc) }, dessin)) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       px(24, 90, 70, 22, '#574332');
@@ -2180,6 +2185,7 @@
     const ctx = $('#rep-canvas').getContext('2d');
     const COUL = { tetes: '#e3593d', esters: '#f3b04a', terpenes: '#9cc95e', cereale: '#d9c7a0', queues: '#8f7ad0', furfural: '#b9865a' };
     const dessin = () => {
+      if (window.UniversJeu?.rendre('repasse', ctx, { ...st, evenement: evtFeu(st.feu), expert: expertVue, courbe: r.courbe, coupes: r.coupes, phase: r.phase, degre: r.dernier ? r.dernier.degre : 0, fractions: r.fractions }, dessin)) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       if (expertVue) {
@@ -2296,6 +2302,7 @@
     }).join('');
     $$('#aveugle-verres canvas').forEach((cv) => {
       const c = cv.getContext('2d'); const px = (x, y, w, h, k) => { c.fillStyle = k; c.fillRect(x, y, w, h); };
+      if (window.UniversJeu?.rendre('verre-aveugle', c, {}, function repeindre() { window.UniversJeu.rendre('verre-aveugle', c, {}, repeindre); })) return;
       px(1, 0, 1, 9, '#9aa1a8'); px(8, 0, 1, 9, '#9aa1a8'); px(2, 4, 6, 5, 'rgba(236,232,220,.85)'); px(2, 9, 6, 1, '#9aa1a8'); px(4, 10, 2, 3, '#9aa1a8'); px(2, 13, 6, 1, '#9aa1a8');
     });
     $('#aveugle-bilan').hidden = true;
@@ -2383,6 +2390,7 @@
     // Verre tulipe d'eau-de-vie, avec ses larmes
     const ctx = $('#verre').getContext('2d');
     const dessin = (p) => {
+      if (window.UniversJeu?.rendre('verre-edv', ctx, { p, couleur: '#eee8dc', t: p * 1.4 }, () => dessin(p))) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       ctx.clearRect(0, 0, 64, 96); px(0, 0, 64, 96, '#221912');
       const larg = (y) => (y < 30 ? 9 + (y - 10) * 0.25 : 14 - Math.abs(y - 44) * 0.0 - Math.max(0, y - 44) * 0.5);
@@ -2500,6 +2508,7 @@
 
   function rendreChai() {
     const C = chai();
+    window.UniversJeu?.panorama('chai', { cols: C.cols, futs: C.futs.filter(f => f.pos).map(f => ({ r: f.pos.r, c: f.pos.c, taille: f.taille, type: f.type, plein: !!f.contenu, age: f.contenu ? ageFut(f.contenu) : 0 })) });
     const f = C.futs.find((x) => x.id === choixFut) || null;
     $('#chai-bourse').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${C.futs.length} fût${C.futs.length > 1 ? 's' : ''} · ${C.cols} travées sur ${PLAFOND_TRAVEES} · ${C.lots.length} lot${C.lots.length > 1 ? 's' : ''} en cuve d'attente</p>
       <button class="btn btn-mini" data-aller="catalogue" data-catonglet="futs">Commander des fûts</button>
@@ -2728,6 +2737,7 @@
     const ctx = $('#verre').getContext('2d');
     // Verre tulipe de dégustation, robe ambrée
     const dessin = (p) => {
+      if (window.UniversJeu?.rendre('verre-vieilli', ctx, { p, couleur: liquide, t: p * 1.4 }, () => dessin(p))) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       ctx.clearRect(0, 0, 64, 96); px(0, 0, 64, 96, '#221912');
       const larg = (y) => (y < 30 ? 9 + (y - 10) * 0.25 : 14 - Math.max(0, y - 44) * 0.5);
@@ -2968,6 +2978,7 @@
   const demandeDe = (c) => Vente.DEMANDES.find((d) => d.id === c.demande);
   function niveauRep() { const r = S.vente.rep; return r >= 75 ? 'renommé dans tout le Quercy' : r >= 55 ? 'réputé' : r >= 35 ? 'apprécié' : r >= 20 ? 'connu au village' : 'inconnu'; }
   function entrerPigeonnier() {
+    window.UniversJeu?.panorama('boutique', { niveau: niv('pigeonnier') });
     $('#pig-onglets').innerHTML = [['vente', 'Clients', S.vente.clients.length + S.vente.commandes.length], ['achats', 'Fournisseurs', null]].map(([k, v, n]) => `<button class="onglet" role="tab" aria-selected="${pigOnglet === k}" data-pigonglet="${k}">${v}${n ? `<span class="badge">${n}</span>` : ''}</button>`).join('');
     $('#pig-vente').hidden = pigOnglet !== 'vente'; $('#pig-achats').hidden = pigOnglet !== 'achats';
     if (pigOnglet === 'vente') rendreVente(); else rendreCatalogue();
@@ -3303,6 +3314,7 @@
   }
 
   function rendreVeillee() {
+    window.UniversJeu?.panorama('veillee', {});
     $('#veillee-onglets').innerHTML = [['lecons', 'Leçons'], ['questions', 'Questions du soir']].map(([k, v]) => `<button class="onglet" role="tab" aria-selected="${ongletVeillee === k}" data-ongletveillee="${k}">${v}${k === 'lecons' ? `<span class="badge">${LECONS.filter((l) => leconFaite(l.id)).length}/${LECONS.length}</span>` : ''}</button>`).join('');
     $('#veillee-lecons').hidden = ongletVeillee !== 'lecons';
     $('#veillee-quiz-zone').hidden = ongletVeillee !== 'questions';
@@ -3456,6 +3468,7 @@
   }
   function dessinerBouteille(cv) {
     const c = cv.getContext('2d'), col = couleur(+cv.dataset.ebc), med = cv.dataset.med;
+    if (window.UniversJeu?.rendre('flacon', c, { couleur: col, medaille: med, edv: cv.dataset.edv }, () => dessinerBouteille(cv))) return;
     const px = (x, y, w, h, k) => { c.fillStyle = k; c.fillRect(x, y, w, h); };
     if (cv.dataset.edv) {
       // Flacon d'eau-de-vie : verre clair, bouchon de liège, étiquette cuivre
