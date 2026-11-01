@@ -1,0 +1,122 @@
+
+> ignem-custodimus@0.8.1 test:jeu
+> node jeu/tests/moteur.test.mjs && node jeu/tests/distillerie.test.mjs && node jeu/tests/chai.test.mjs && node jeu/tests/ecole.test.mjs && node jeu/tests/vente.test.mjs
+
+
+Pils allemande
+  OG 1.047  FG 1.007  5.2 %  34 IBU  6 EBC  pH 5.46
+  Style : Pilsener Allemande (93 %), puis Pilsner Américaine Classique
+  Profil : malte 3.1, caramel 0.0, torrefie 0.0, amer 4.2, houblon 1.3, fruite 2.0, epice 0.2, corps 1.7
+  Jury : {"aspect":2.5,"arome":11.5,"bouche":5,"saveur":19.5,"impression":9.5} = 48/50 or
+  Défauts : aucun
+
+IPA américaine
+  OG 1.060  FG 1.013  6.2 %  53 IBU  13 EBC  pH 5.62
+  Style : American IPA (92 %), puis English IPA
+  Profil : malte 4.2, caramel 1.6, torrefie 0.0, amer 7.4, houblon 9.6, fruite 1.1, epice 1.5, corps 4.4
+  Jury : {"aspect":2.5,"arome":11.5,"bouche":5,"saveur":19,"impression":9.5} = 47.5/50 or
+  Défauts : aucun
+
+Dry stout
+  OG 1.041  FG 1.012  3.9 %  41 IBU  53 EBC  pH 5.57
+  Style : Dry Stout (87 %), puis American Brown Ale
+  Profil : malte 2.6, caramel 0.0, torrefie 5.4, amer 6.0, houblon 0.2, fruite 4.5, epice 0.0, corps 4.4
+  Jury : {"aspect":2.5,"arome":11.5,"bouche":5,"saveur":18.5,"impression":9.5} = 47/50 or
+  Défauts : aucun
+
+Weizen
+  OG 1.050  FG 1.007  5.6 %  13 IBU  6 EBC  pH 5.72
+  Style : Weizen Bavaroise (89 %), puis Saison
+  Profil : malte 4.2, caramel 0.0, torrefie 0.0, amer 2.4, houblon 0.2, fruite 3.8, epice 5.0, corps 1.5
+  Jury : {"aspect":3,"arome":11.5,"bouche":5,"saveur":19,"impression":9.5} = 48/50 or
+  Défauts : aucun
+
+Ratée exprès
+  OG 1.049  FG 1.010  5.1 %  28 IBU  6 EBC  pH 5.91
+  Style : Special Bitter / ESB (84 %), puis Ordinary Bitter
+  Profil : malte 3.2, caramel 0.0, torrefie 0.0, amer 3.5, houblon 0.3, fruite 3.7, epice 0.0, corps 3.0
+  Jury : {"aspect":2.5,"arome":5,"bouche":2,"saveur":8.5,"impression":5.5} = 23.5/50 sans médaille
+  Défauts : Alcools supérieurs, DMS, Astringence
+  Conseil : pH d'empâtage estimé 5,91, trop haut : environ 9 kg de malt acide le ramènerait vers 5,5.
+✓ sels : pH 5.91 → 5.78, SO₄/Cl 1.3 → 6.8
+✓ maïs cru 1.043 contre cuit 1.049
+✓ witbier reconnue (Witbier Belge, 46.5/50), notes : orange amère, zeste / agrume, épicé, poivré
+✓ une surdose de coriandre est relevée par le jury
+✓ clarifiants : aspect 2.5 → 3
+✓ wash : 7.6 %, atténuation 96 %, 76 LAP, 15.5/20
+
+Tous les tests passent.
+✓ un moût à 10 % donne une vapeur à 49,5 %
+✓ une chauffe douce enrichit la vapeur (reflux)
+✓ brouillis à 22.1 % (attendu 18–32 %)
+✓ 96 % de l'alcool récupéré au brouillis
+  juste : 49.5/50, cœur 38.3 LAP à 66 %
+  large : 38.5/50, cœur 53.6 LAP
+  sans têtes : 36/50 · serré : 47/50, 0.1 L
+✓ le cœur sort entre 62 et 72 %
+✓ des coupes justes sur une IPA donnent l'or
+✓ un cœur large rapporte plus d'alcool mais coûte des points
+✓ oublier les têtes donne un défaut grave
+✓ un cœur de quelques décilitres ne passe pas au jury
+✓ rendement en cœur 64 % du LAP de la bière
+  wash 7.7 % → brouillis 25.3 %, cœur 53.9 LAP, 37.5/50, céréale 1.9
+✓ un wash de malt donne plus de notes de céréale qu'une IPA
+✓ coriandre et orange amère : terpènes 0.82 par LAP, ils passeront à l'alambic
+
+Tous les tests passent.
+✓ paramètres du Hub : part des anges 3 %, mise à 45 %, bouteilles de 0,7 L
+✓ barrique au milieu : 26 % bus par les anges en 10 ans (3 %/an)
+✓ les anges boivent plus en haut du chai qu'en bas
+✓ degré : 66.5 % en haut (chaud et sec), 57.5 % en bas (frais et humide)
+✓ un quartaut extrait bien plus vite qu'une barrique (rapport surface sur volume)
+✓ un second remplissage extrait moitié moins
+✓ 35 % de la couleur à 4 ans est déjà là après 6 mois
+✓ le charbon de l'ex-bourbon retient mieux le soufre
+✓ le chêne français neuf donne bien plus de tanins
+✓ un ex-tourbé fume le distillat
+✓ l'ex-sherry donne des raisins secs
+✓ le rancio n'apparaît qu'après de longues années
+  bourbon quartaut 1 an 22.5, 4 ans 47.5, chêne français 14 ans 29
+✓ un an de fût : trop jeune, pas de médaille
+✓ un quartaut ex-bourbon de 4 ans sur un bon cœur décroche l'or
+✓ 14 ans en quartaut de chêne neuf : sur-boisé et tannique
+✓ une barrique au quart pleine pendant 10 ans s'oxyde
+✓ une finition d'un an en ex-sherry ajoute le vin sans effacer le bourbon
+✓ un assemblage garde l'âge du plus jeune
+✓ 95 bouteilles de 70 cl à 45 % pour un quartaut
+✓ wash de malt, 4 ans, 45 % : whisky de malt
+✓ moins de 3 ans : pas encore du whisky
+✓ une bière houblonnée distillée reste une eau-de-vie de bière
+
+Tous les tests passent.
+  fruité : sans DH 1.1, DH J5 1.1, DDH 2.4 · atténuation 78 → 79 %
+✓ DDH reconnu avec 4 g/L au jour 2 et au jour 5
+✓ la biotransformation du DH J2 ajoute du fruité
+✓ le houblon à cru n'ajoute aucune amertume
+✓ hop creep : la bière sèche un peu
+✓ 24 g/L à cru : défaut végétal
+✓ hop creep sans repos : diacétyle ; avec repos : rien
+✓ un soutirage arrêté trop tôt fait baisser la densité
+✓ des jus lessivés donnent de l'astringence
+✓ un DH1 tardif perd la biotransformation
+✓ CO₂ résiduel à 20 °C : 0.86 vol.
+✓ carbonatation juste, plate ou trop gazeuse selon le CO₂
+✓ 10 leçons
+✓ prérequis, quiz, recettes et ingrédients de chaque leçon existent
+✓ le défi DDH exige les deux ajouts
+✓ défi de l'empâtage réussi par une pale ale à 67 °C
+
+Tous les tests passent.
+✓ saisons : 13 semaines chacune, l'année boucle à 52
+✓ le 1er novembre tombe en automne
+✓ une IPA s'évente en quelques semaines, une bière forte se garde
+  IPA à un amateur d'amer : 0.94 ; blonde fade : 0.34
+✓ conseiller la bonne bière satisfait, la mauvaise déçoit
+✓ une eau-de-vie à qui veut une bière : échec
+✓ un bon conseil rapporte plus, avec pourboire
+✓ la réputation suit la satisfaction
+✓ plus de clients et de types avec la réputation
+✓ les clients d'une semaine sont stables (graine)
+✓ blondes l'été, bières fortes et brunes l'hiver
+
+Tous les tests passent.

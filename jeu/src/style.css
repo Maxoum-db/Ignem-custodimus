@@ -837,3 +837,26 @@ input[type="range"] { accent-color: #d9935b; }
   .btn, .onglet, .carte-ing { transition: none; }
   .btn:active:not(:disabled), .btn-geste.actif { transform: none; }
 }
+
+/* Univers rural illustré : fonds espresso, cadres de chêne et cuivre. */
+.univers-panorama { margin: 8px 0 18px; overflow: hidden; border: 2px solid #967044; border-radius: 18px; background: #30251b; box-shadow: 0 4px 0 #1a1510, inset 0 0 0 1px #c59a60; }
+.univers-panorama canvas { display: block; width: 100%; height: auto; aspect-ratio: 192 / 88; image-rendering: auto; }
+.domaine-cadre { overflow: hidden; border-radius: 20px; border: 2px solid #987546; box-shadow: 0 5px 0 #1b1710; }
+.lieu span { top: auto !important; bottom: 0; left: 50% !important; transform: translateX(-50%); max-width: 125%; padding: 5px 7px; border: 1px solid #c59a60; border-radius: 9px; background: #2e241ee8; color: #fff0cd; text-shadow: none; font-family: var(--f-texte, sans-serif); font-size: 10px; line-height: 1.2; box-shadow: 0 2px 3px #30231566; white-space: normal; text-align: center; }
+.lieu:focus-visible { outline: 3px solid #fff0cd; border-radius: 12px; }
+.ulysse-haut { grid-template-columns: 144px 1fr; }
+#ulysse { width: 144px; height: 108px; border-radius: 14px; }
+.mentor img, .plan-tete img, #marque-feu, .poignee img { image-rendering: auto; }
+#mentor-portrait, .plan-tete img { border-radius: 50%; border: 2px solid #d3a362; background: #ead6ac; object-fit: cover; }
+.avatar { border-radius: 50%; border: 2px solid #d3a362; background-size: cover; box-shadow: 0 2px 3px #17110d55; }
+.fut { min-height: 58px; border-radius: 12px; background-color: #33281d; background-image: var(--image-fut); background-size: contain; background-position: center; background-repeat: no-repeat; border: 1px solid #957044; box-shadow: inset 0 0 0 1px #221a13; }
+.fut.choisi { outline: 3px solid #f2c46c; outline-offset: -2px; }
+.fut-abr, .fut-age { position: relative; z-index: 1; padding: 2px 4px; border-radius: 5px; background: #241c15df; color: #fff0cd; text-shadow: none; }
+.fut-jauge { z-index: 1; border-radius: 5px; overflow: hidden; }
+.cour { align-items: center; }
+.fut-mini { border-radius: 5px; background-image: var(--image-fut); background-size: contain; background-repeat: no-repeat; background-position: center; }
+.bloc, .fiche, .article, .client, .lecon, .batiment { border-radius: 13px; }
+.badge, .rarete { color: #efbd64; }
+@media(max-width: 350px) { .ulysse-haut { grid-template-columns: 112px 1fr; } #ulysse { width: 112px; height: 84px; } .lieu span { font-size: 9px; padding: 4px; } }
+.icone-famille { background-repeat: no-repeat; background-size: 24px 24px; background-position: 7px center; padding-left: 36px; }
+.lieu.ouvert span { animation: none; }

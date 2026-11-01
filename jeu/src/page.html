@@ -5,11 +5,11 @@
 
 <div id="app">
   <header class="entete">
-    <button class="retour-entete" id="retour-entete" data-retour aria-label="Retour"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M5 1h2v1H6v1H5v1H4v1h7v2H4v1h1v1h1v1h1v1H5v-1H4V9H3V8H2V7H1V5h1V4h1V3h1V2h1z"/></svg><span class="retour-txt"></span></button>
+    <button class="retour-entete" id="retour-entete" data-retour aria-label="Retour"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M14 5L7 12L14 19M7 12H22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="retour-txt"></span></button>
     <button class="marque" data-aller="domaine" aria-label="Retour au domaine"><img id="marque-feu" class="sprite" alt="" width="16" height="20"></button>
     <div class="entete-niveau" id="entete-niveau"></div>
-    <button data-aller="recherche" class="btn-entete btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 0h4v1H3zM2 1h1v1H2zM7 1h1v1H7zM1 2h1v4H1zM8 2h1v4H8zM2 6h1v1H2zM7 6h1v1H7zM3 7h4v1H3zM8 7h1v1H8zM9 8h1v1H9zM10 9h1v1h-1zM11 10h1v2h-1zM10 11h1v1h-1z"/></svg></button>
-    <button class="btn-entete" id="btn-menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M1 2h10v2H1zM1 5h10v2H1zM1 8h10v2H1z"/></svg></button>
+    <button data-aller="recherche" class="btn-entete btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M15 15L22 22" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>
+    <button class="btn-entete" id="btn-menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 5H20M4 12H20M4 19H20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>
     <nav class="entete-nav" id="menu-entete" aria-label="Menu" hidden>
       <button data-aller="domaine">Domaine</button>
       <button data-aller="carnet">Carnet de brassage</button>
@@ -214,6 +214,7 @@
     <!-- Pigeonnier : catalogue des fournisseurs -->
     <section id="ecran-catalogue" class="ecran" hidden>
       <h1 class="page-titre">Pigeonnier <span class="en">vente et fournisseurs</span></h1>
+      <div class="univers-panorama"><canvas id="panorama-boutique" width="192" height="88" aria-label="Le pigeonnier du Quercy, son comptoir et ses bouteilles"></canvas></div>
       <p class="page-intro">Au pigeonnier, les clients viennent chercher tes bouteilles, et les fournisseurs envoient leurs catalogues par pigeon. Conseille bien tes clients : la réputation du domaine attire des restaurateurs, des cavistes et des commandes spéciales. Les ingrédients rares demandent un meilleur niveau de maîtrise.</p>
       <div class="onglets onglets-2" role="tablist" id="pig-onglets"></div>
       <div id="pig-vente"></div>
@@ -240,6 +241,7 @@
     <!-- Chai -->
     <section id="ecran-chai" class="ecran" hidden>
       <h1 class="page-titre">Chai <span class="en">cask warehouse</span></h1>
+      <div class="univers-panorama"><canvas id="panorama-chai" width="192" height="88" aria-label="Cave voûtée et fûts rangés dans le chai"></canvas></div>
       <p class="page-intro">Range les fûts : en haut chaud et sec, en bas frais et humide. Remplis-les d'eau-de-vie, fais glisser les années, goûte à la pipette. <button class="btn btn-mini btn-sobre" data-fiche="elevage">Élevage</button> <button class="btn btn-mini btn-sobre" data-fiche="anges">Part des anges</button> <button class="btn btn-mini btn-sobre" data-fiche="whisky">Whisky</button></p>
       <div class="bourse" id="chai-bourse"></div>
       <div id="chai-grille"></div>
@@ -261,6 +263,7 @@
     <!-- Veillée : questions de Lise et Firmin -->
     <section id="ecran-veillee" class="ecran" hidden>
       <h1 class="page-titre">La veillée <span class="en">leçons et questions</span></h1>
+      <div class="univers-panorama"><canvas id="panorama-veillee" width="192" height="88" aria-label="Lise et Firmin près du feu, sous les étoiles"></canvas></div>
       <p class="page-intro">Au coin du feu, Lise et Firmin donnent leurs leçons : un peu de chimie, un défi à réussir à la brasserie, à l'alambic ou au chai, puis trois questions. Chaque leçon réussie offre des recettes au grimoire. Les questions du soir rapportent 4 écus chacune, cinq fois par jour.</p>
       <div class="onglets onglets-2" role="tablist" id="veillee-onglets"></div>
       <div id="veillee-lecons"></div>
@@ -351,4 +354,8 @@
 <script>/*VENTE*/</script>
 <script>/*ILLUSTRATIONS*/</script>
 <script>/*ATELIERS*/</script>
+<script>/*UNIVERS*/</script>
+<script>/*ACTIVITES_ILLUSTREES*/</script>
+<script>/*DOMAINE_ILLUSTRE*/</script>
+<script>/*HABILLAGE*/</script>
 <script>/*JEU*/</script>

@@ -2,6 +2,7 @@
 """QA ciblée des vrais ateliers : assets, repli, tactile, DPR et mouvement réduit.
 Utilise Playwright Python, Chromium système et le serveur du dépôt sur :8000.
 """
+import argparse
 import gzip
 import json
 import subprocess
@@ -11,11 +12,15 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
 ROOT = Path(__file__).resolve().parent
-OUT = ROOT / 'phase-1'
+parser=argparse.ArgumentParser()
+parser.add_argument('--sortie',type=Path,default=ROOT/'phase-1')
+parser.add_argument('--reference',default='b892b92')
+opt=parser.parse_args()
+OUT = opt.sortie
 (OUT / 'captures').mkdir(parents=True, exist_ok=True)
 FIXTURE = json.loads((ROOT / 'sauvegardes/main-v0.8.1.json').read_text())
 HTML = (ROOT.parent / 'dist/index.html').read_bytes()
-REFERENCE = subprocess.check_output(['git','show','b892b92:dist/index.html'])
+REFERENCE = subprocess.check_output(['git','show',opt.reference+':dist/index.html'])
 report = {'errors': [], 'checks': [], 'images': {}, 'performance_simulee': {}}
 
 with sync_playwright() as p:

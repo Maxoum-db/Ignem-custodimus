@@ -178,3 +178,16 @@ Le [bilan de la phase 1](qa/phase-1/BILAN.md) détaille les images livrées, les
 tests et les limites. `npm run test:presentation` vérifie que les cinq moteurs
 et tout `jeu.js` hors des sept raccords de dessin restent identiques à la phase 0.
 Ulysse, les portraits et la carte du domaine attendent leurs lots suivants.
+
+### Univers illustré : Ulysse, chai, pigeonnier, mentors et domaine
+
+La suite de la refonte habille désormais les activités F–Q et ajoute les effets
+R, tout en conservant les fonds sombres demandés. Les saisons, les bâtiments par
+niveaux et les zones tactiles suivent la vraie partie. 25 WebP totalisent environ
+1,26 Mio. Les moteurs et le contrôleur hors vingt raccords de présentation sont
+protégés par empreintes. Le [bilan avec captures et limites](qa/univers/BILAN.md)
+détaille les parcours exécutés et les poses supplémentaires restant à dessiner.
+
+[Jouer à la version mobile privée](https://promethee-ignem-custodimus.ivorycow37.chatgpt.site).
+Le HTML autonome réel reste disponible dans `dist/index.html` et dans l'artefact
+GitHub Actions des PR. Aucune PR de ce chantier n'est fusionnée automatiquement.

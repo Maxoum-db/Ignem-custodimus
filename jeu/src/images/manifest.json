@@ -1,37 +1,232 @@
 {
-  "phase": 1,
-  "origine": "Illustrations originales générées avec image_gen, puis conversion WebP qualité 82 et redimensionnement avec ImageMagick. Aucun liquide ni effet animé peint dans les équipements.",
+  "lot": "univers-illustre",
+  "origine": "Illustrations originales image_gen ; redimensionnement et conversion WebP Q82 avec ImageMagick. Effets, interfaces et icônes vectoriels séparés.",
   "fichiers": [
     {
       "fichier": "a-cuve-vide.webp",
       "octets": 34630,
       "sha256": "5b0c22858463a66110c3e0d786589fff6edc98fb243b8db7e6ba3371beab9b33",
-      "qualite_webp": 82
+      "largeur": 512,
+      "hauteur": 427,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "animal-canard.webp",
+      "octets": 9088,
+      "sha256": "0e364e53ef46b280424bff1e5f4294afc8046e7fc0f56229de0f598f1130e91d",
+      "largeur": 171,
+      "hauteur": 256,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "animal-chat-noir.webp",
+      "octets": 9418,
+      "sha256": "2d09c5bcf32d521eea624b9d8b5b8fbc62f63cb6fa02813ace7b0eae3b92066e",
+      "largeur": 171,
+      "hauteur": 256,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "animal-cheval.webp",
+      "octets": 20354,
+      "sha256": "10d68306de2004d4c16c17b06ffd4cd8df699c0b8c548a7a931df81da0ba6dee",
+      "largeur": 256,
+      "hauteur": 384,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "animal-coq.webp",
+      "octets": 12200,
+      "sha256": "671b74258eff3904590b8cfdc9da8e2d12654bc8dee76261ce1c9985d6176a80",
+      "largeur": 171,
+      "hauteur": 256,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "animal-poule-blanche.webp",
+      "octets": 11048,
+      "sha256": "5fd24978c0555a76550d3214c9905b58b69221d432e44a7e74ef88cd93fd93b8",
+      "largeur": 171,
+      "hauteur": 256,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "animal-poule-brune.webp",
+      "octets": 10980,
+      "sha256": "b3825a8056f984793bdced8458ea32474508a0335adcd433b1a7cc1771e4e01b",
+      "largeur": 213,
+      "hauteur": 256,
+      "qualite_webp": 82,
+      "alpha": true
     },
     {
       "fichier": "b-filtre-vide.webp",
       "octets": 46984,
       "sha256": "cdad46ad058e19f35dc5c9d17ad433e3e2424cf6e05bfb64761e0bedeb904901",
-      "qualite_webp": 82
+      "largeur": 512,
+      "hauteur": 468,
+      "qualite_webp": 82,
+      "alpha": true
     },
     {
       "fichier": "brasserie-fond.webp",
       "octets": 105306,
       "sha256": "bf38be78d425f28418a29687929200e8a018728db5172dacde32dffed2beb34b",
-      "qualite_webp": 82
+      "largeur": 1024,
+      "hauteur": 683,
+      "qualite_webp": 82,
+      "alpha": false
+    },
+    {
+      "fichier": "chai-fond.webp",
+      "octets": 145988,
+      "sha256": "bb6e86698b79ec73bdfc94226e499f61f2336cb2f373c97cd6f5294062d7ee03",
+      "largeur": 1024,
+      "hauteur": 683,
+      "qualite_webp": 82,
+      "alpha": false
     },
     {
       "fichier": "d-fermenteur-vide.webp",
       "octets": 19230,
       "sha256": "b77bff9c426c2a995be71bb6fcc09db85e239345d9fd6dd57413232ef0b659fd",
-      "qualite_webp": 82
+      "largeur": 341,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "decor-arbre.webp",
+      "octets": 81378,
+      "sha256": "55f205041f399471caf03b0e7a5e26667952b9c4b1407681ec6221174eb113a6",
+      "largeur": 505,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "domaine-brasserie-1-batiment.webp",
+      "octets": 60632,
+      "sha256": "fbeb56a92f6c3bb5426035aae13b37c3cfb04e90a1214e1351fcd80f04f26b3c",
+      "largeur": 768,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "domaine-brasserie-2-batiment.webp",
+      "octets": 87344,
+      "sha256": "2f7b4eb66255d33348cda58a82adcaa75289d7875ab33163119f4ed21ef19827",
+      "largeur": 768,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "domaine-brasserie-3-batiment.webp",
+      "octets": 84126,
+      "sha256": "ff0966d6c5b7cbad887c901669c612ef86faf968050981af5ad233f7b8b35d99",
+      "largeur": 768,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "domaine-chai-1-batiment.webp",
+      "octets": 89096,
+      "sha256": "da80ff4ffe9e0ab338964d21c64cf1792d1ea937d9b96602b6e3081b3726f8df",
+      "largeur": 768,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "domaine-chai-2-batiment.webp",
+      "octets": 88920,
+      "sha256": "3aad0904860b2fd09b2a3ef496983449d1e3da796bc1e42da55eaf8a3c609dc8",
+      "largeur": 768,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "domaine-pigeonnier-batiment.webp",
+      "octets": 45756,
+      "sha256": "d85bc71a6f26678732d18bd447e79db245d8a4b0dab3d4f3fb5fce0243609d31",
+      "largeur": 768,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
     },
     {
       "fichier": "e-capsuleuse.webp",
       "octets": 24206,
       "sha256": "23df7fd8c809fb938b228500f776a0bdddd96c000210842ff060dbb9639239de",
-      "qualite_webp": 82
+      "largeur": 485,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "f-alambic-vide.webp",
+      "octets": 33906,
+      "sha256": "44d3d901d0906b025e5335c1bf4c55d8dbc7dbd54389ef5b6ce3ddddc29e0595",
+      "largeur": 512,
+      "hauteur": 468,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "f-condenseur.webp",
+      "octets": 37100,
+      "sha256": "6e71383b8dc60624b9999d23b42254c7d69dab0f999ed0a2a038b36b86713c99",
+      "largeur": 469,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "f-fond.webp",
+      "octets": 185970,
+      "sha256": "61dde5aa8e6f6afa250b67ee58ab6696156090546459648d2378de95b38fe52b",
+      "largeur": 1024,
+      "hauteur": 683,
+      "qualite_webp": 82,
+      "alpha": false
+    },
+    {
+      "fichier": "fut-chene.webp",
+      "octets": 40000,
+      "sha256": "c3ee528e0f9c63968594a9cc8cb7063bd3645a0fdd62e386af6d1f7954be3cf5",
+      "largeur": 493,
+      "hauteur": 512,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "personnage-firmin.webp",
+      "octets": 17914,
+      "sha256": "4493cc6998c148e8f23497856138d4e019ab37e0b4562bde27ca577d0c2252ae",
+      "largeur": 256,
+      "hauteur": 384,
+      "qualite_webp": 82,
+      "alpha": true
+    },
+    {
+      "fichier": "personnage-lise.webp",
+      "octets": 15864,
+      "sha256": "571b402ccd5c609f544f011e7eab7ea96c8d3c5e6c3b594b10525e45b8ee798b",
+      "largeur": 256,
+      "hauteur": 384,
+      "qualite_webp": 82,
+      "alpha": true
     }
   ],
-  "total_octets": 230356
+  "total_octets": 1317438
 }
