@@ -57,6 +57,7 @@
       <p class="geste-consigne" id="emp-consigne"></p>
       <div class="geste-scene"><canvas id="emp-canvas" width="192" height="128"></canvas></div>
       <div class="geste-infos" id="emp-infos"></div>
+      <div class="jauges-feu" id="emp-jauges"></div>
       <div class="geste-controles">
         <button id="emp-vapeur" class="btn btn-feu btn-geste" disabled>Vapeur<small>maintenir appuyé</small></button>
       </div>
@@ -129,7 +130,8 @@
       <div class="geste-infos" id="bro-infos"></div>
       <div class="jauges-feu" id="bro-jauges"></div>
       <div class="geste-controles">
-        <button id="bro-buche" class="btn btn-feu btn-geste" disabled>Ajouter une bûche</button>
+        <button id="bro-buche" class="btn btn-feu btn-geste" disabled>Ajouter une bûche<small>elle met une seconde à prendre</small></button>
+        <label class="registre" for="bro-registre"><span>Registre d'air</span><input type="range" id="bro-registre" min="0" max="100" step="1" value="50" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
       </div>
       <div class="geste-bilan" id="bro-bilan" hidden></div>
       <div class="geste-pied" id="bro-pied">
@@ -151,6 +153,7 @@
         <button id="rep-buche" class="btn btn-sobre" disabled>Bûche</button>
         <button id="rep-couper" class="btn btn-feu btn-geste" disabled>Couper</button>
       </div>
+      <label class="registre" for="rep-registre"><span>Registre d'air</span><input type="range" id="rep-registre" min="0" max="100" step="1" value="50" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
       <div class="geste-bilan" id="rep-bilan" hidden></div>
       <div class="geste-pied" id="rep-pied">
         <button id="rep-passer" class="btn btn-sobre">Coupes automatiques</button>
@@ -171,6 +174,7 @@
 
     <!-- Pigeonnier : catalogue des fournisseurs -->
     <section id="ecran-catalogue" class="ecran" hidden>
+      <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
       <h1 class="page-titre">Pigeonnier <span class="en">catalogue des fournisseurs</span></h1>
       <p class="page-intro">Les fournisseurs envoient leurs catalogues par pigeon. Dépense tes écus pour débloquer céréales, houblons, levures, sels, aromates, auxiliaires et recettes du grimoire. Les ingrédients rares demandent un meilleur niveau de maîtrise.</p>
       <div class="bourse" id="cat-bourse"></div>
@@ -183,6 +187,7 @@
 
     <!-- Chai -->
     <section id="ecran-chai" class="ecran" hidden>
+      <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
       <h1 class="page-titre">Chai <span class="en">cask warehouse</span></h1>
       <p class="page-intro">Range les fûts : en haut chaud et sec, en bas frais et humide. Remplis-les d'eau-de-vie, fais glisser les années, goûte à la pipette. <button class="btn btn-mini btn-sobre" data-fiche="elevage">Élevage</button> <button class="btn btn-mini btn-sobre" data-fiche="anges">Part des anges</button> <button class="btn btn-mini btn-sobre" data-fiche="whisky">Whisky</button></p>
       <div class="bourse" id="chai-bourse"></div>
@@ -194,6 +199,7 @@
 
     <!-- Recherche d'ingrédients -->
     <section id="ecran-recherche" class="ecran" hidden>
+      <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
       <h1 class="page-titre">Recherche <span class="en">ingrédients, fûts, recettes, fiches</span></h1>
       <input class="recherche recherche-grande" id="rech-champ" type="search" placeholder="citra, agrumes, 1150 EBC, lager…" autocomplete="off" enterkeyhint="search">
       <div class="suggestions" id="rech-suggestions"></div>
@@ -204,6 +210,7 @@
 
     <!-- Veillée : questions de Lise et Firmin -->
     <section id="ecran-veillee" class="ecran" hidden>
+      <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
       <h1 class="page-titre">La veillée <span class="en">quiz</span></h1>
       <p class="page-intro">Au coin du feu, Lise et Firmin te questionnent sur tes modules de formation. Cinq questions récompensées par jour, 4 écus par bonne réponse.</p>
       <div class="bourse" id="veillee-etat"></div>
@@ -234,6 +241,7 @@
 
     <!-- Carnet -->
     <section id="ecran-carnet" class="ecran" hidden>
+      <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
       <h1 class="page-titre">Carnet de brassage</h1>
       <div id="carnet-progression"></div>
       <h2 class="sous-titre">Étagère</h2>

@@ -508,3 +508,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .entete-niveau .ligne2 { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .entete-niveau b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 440px) { .entete-nav { gap: 4px; } .entete-nav button { padding: 6px 6px; font-size: 12px; } }
+
+/* ---------- Chauffes nerveuses et retour (V0.4.1) ---------- */
+.jauge-feu .prev { position: absolute; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: #7fb6d6; }
+.registre { display: grid; gap: 4px; font-size: 13px; color: var(--cendre); }
+.registre input { width: 100%; }
+.btn-retour { justify-self: start; margin-bottom: 4px; }
+.jauge-feu { grid-template-columns: 70px 1fr 68px; }
+.jauge-feu .val { white-space: nowrap; font-size: 17px; }
