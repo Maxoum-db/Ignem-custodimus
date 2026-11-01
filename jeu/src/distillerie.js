@@ -55,14 +55,22 @@
   function congeneresBiere(res, defauts) {
     const d = (nom) => (defauts || []).some((x) => x.toLowerCase().includes(nom));
     const p = res.profil, y = res.levure || {};
+    // Aromates : les huiles volatiles des botaniques et des zestes passent à l'alambic (comme pour un gin)
+    let terpAromates = 0, estersFruits = 0;
+    for (const a of res.aromates || []) {
+      const k = a.g / (res.volume || 1000);
+      if (a.type === 'fruit') estersFruits += Math.min(1, k / 80);
+      else terpAromates += a.terp * Math.min(1.5, k / 1.5);
+    }
+    const nutri = res.aux && res.aux.has && res.aux.has('nutriment');
     return {
       tetes: 1 + 0.12 * p.fruite + (d('infection') ? 1.5 : 0),
-      soufre: 0.4 + (y.fam === 'lager' ? 0.5 : 0) + (d('dms') ? 0.4 : 0),
+      soufre: (0.4 + (y.fam === 'lager' ? 0.5 : 0) + (d('dms') ? 0.4 : 0)) * (nutri ? 0.6 : 1),
       methanol: 0.15,
-      esters: 0.4 + 0.12 * p.fruite + (d('infection') ? 0.3 : 0),
-      terpenes: 0.09 * p.houblon,
+      esters: 0.4 + 0.12 * p.fruite + (d('infection') ? 0.3 : 0) + 0.6 * estersFruits,
+      terpenes: 0.09 * p.houblon + 0.5 * terpAromates,
       fusels: 0.7 + (d('alcools sup') ? 0.5 : 0) + 0.04 * Math.max(0, (res.fermEff || 18) - 20),
-      cereale: 0.3 + 0.05 * p.malte + 0.06 * p.caramel + 0.08 * p.torrefie,
+      cereale: 0.3 + 0.05 * p.malte + 0.06 * p.caramel + 0.08 * p.torrefie + (res.wash ? 0.25 : 0),
       queues: 1 + 0.03 * p.corps,
       furfural: 0.25 + 0.05 * p.torrefie,
     };

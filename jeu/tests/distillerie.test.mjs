@@ -41,5 +41,18 @@ verifier(sansTetes.n.defauts.some((d) => d.id === 'tetes' && d.gravite === 3), '
 verifier(!serre.n.presentable && serre.n.medaille === null, 'un cœur de quelques décilitres ne passe pas au jury');
 verifier(juste.bl.coeur.lap / lap > 0.5, `rendement en cœur ${Math.round((juste.bl.coeur.lap / lap) * 100)} % du LAP de la bière`);
 
+// V0.3 : wash de malt et bière aux botaniques
+const washRes = M.calculer({ volume: 1000, rendement: 0.75, destination: 'wash', malts: [{ id: id('malts', 'Pale Ale Soufflet'), kg: 260 }], houblons: [],
+  levure: id('levures', 'Distilamax XP'), eau: 'causse', palier: 65, ebullition: 60, fermentation: { temp: 30, reposDiacetyle: false } });
+const bw = Di.brouillis(Di.preparerBrouillis(1000, washRes.abv, Di.congeneresBiere(washRes, [])), 1);
+const rw = Di.repasseAuto(bw, { feu: 0.55, tetesPct: 4, queuesDegre: 60 }), nwash = Di.noterEDV(rw, { mode: 'expert' });
+console.log(`  wash ${washRes.abv.toFixed(1)} % → brouillis ${bw.degre.toFixed(1)} %, cœur ${Di.bilan(rw).coeur.lap.toFixed(1)} LAP, ${nwash.total}/50, céréale ${nwash.composition.cereale.toFixed(1)}`);
+verifier(nwash.presentable && nwash.composition.cereale > juste.n.composition.cereale, 'un wash de malt donne plus de notes de céréale qu\'une IPA');
+const gin = M.calculer({ volume: 1000, rendement: 0.75, malts: [{ id: id('malts', 'Pale Ale Soufflet'), kg: 230 }], houblons: [{ id: id('houblons', 'Magnum'), g: 800, min: 60 }],
+  levure: id('levures', 'Safale US-05'), eau: 'causse', palier: 66, ebullition: 60, fermentation: { temp: 19, reposDiacetyle: false },
+  aromates: [{ id: D.aromates.find((a) => /coriandre/i.test(a.nom)).id, g: 1500 }, { id: D.aromates.find((a) => /orange am/i.test(a.nom)).id, g: 1200 }] });
+const qg = Di.congeneresBiere(gin, []);
+verifier(qg.terpenes > 0.5, `coriandre et orange amère : terpènes ${qg.terpenes.toFixed(2)} par LAP, ils passeront à l'alambic`);
+
 console.log(echecs ? `\n${echecs} échec(s)` : '\nTous les tests passent.');
 process.exit(echecs ? 1 : 0);

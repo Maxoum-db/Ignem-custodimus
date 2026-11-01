@@ -15,7 +15,11 @@
   let D = null, idx = null;
   function init(donnees) {
     D = donnees;
-    idx = { malt: new Map(), houblon: new Map(), levure: new Map(), eau: new Map(), style: new Map() };
+    idx = { malt: new Map(), houblon: new Map(), levure: new Map(), eau: new Map(), style: new Map(), aromate: new Map(), aux: new Map(), sel: new Map(), recette: new Map() };
+    (D.aromates || []).forEach((a) => idx.aromate.set(a.id, a));
+    (D.auxiliaires || []).forEach((a) => idx.aux.set(a.id, a));
+    (D.sels || []).forEach((a) => idx.sel.set(a.id, a));
+    (D.recettes || []).forEach((a) => idx.recette.set(a.id, a));
     D.malts.forEach((m) => idx.malt.set(m.id, m));
     D.houblons.forEach((h) => idx.houblon.set(h.id, h));
     D.levures.forEach((y) => idx.levure.set(y.id, y));
@@ -58,6 +62,15 @@
   function alcaliniteResiduelle(e) {
     return e.hco3 * (50 / 61) - e.ca / 1.4 - e.mg / 1.7;
   }
+  // Profil d'eau corrigé par les sels (doses en g/hL, acide lactique en mL/hL)
+  function eauCorrigee(base, sels) {
+    const e = { ...base, na: base.na || 0 };
+    for (const [id, dose] of Object.entries(sels || {})) {
+      const sel = idx.sel.get(id); if (!sel || !(dose > 0)) continue;
+      for (const [ion, mg] of Object.entries(sel.ions)) e[ion] = Math.max(0, (e[ion] || 0) + mg * dose);
+    }
+    return e;
+  }
 
   // --- Calcul complet d'une recette ------------------------------------------
   // recette : { volume, rendement, malts:[{id,kg}], houblons:[{id,g,min}] (min −1 = à cru),
@@ -77,19 +90,31 @@
       .map((r, i) => ({ h: idx.houblon.get(r.id), g: r.g, min: gestes && gestes.houblonsMin && gestes.houblonsMin[i] != null ? gestes.houblonsMin[i] : r.min }))
       .filter((x) => x.h && x.g > 0);
     const levure = idx.levure.get(recette.levure) || null;
-    const eau = idx.eau.get(recette.eau) || idx.eau.get('causse');
+    const eauBase = idx.eau.get(recette.eau) || idx.eau.get('causse');
+    const eau = eauCorrigee(eauBase, recette.sels);
+    const aux = new Set((recette.auxiliaires || []).map((id) => idx.aux.get(id)).filter(Boolean).map((a) => a.effet));
+    const wash = recette.destination === 'wash';
+    const aromates = (recette.aromates || []).map((r) => ({ a: idx.aromate.get(r.id), g: r.g })).filter((x) => x.a && x.g > 0);
 
     // Grains empâtés et pouvoir diastasique
     const empates = malts.filter((x) => !estSucre(x.m));
     const kgEmpate = empates.reduce((s, x) => s + x.kg, 0);
     const kgTotal = malts.reduce((s, x) => s + x.kg, 0);
     const dpMoyen = kgEmpate > 0 ? empates.reduce((s, x) => s + x.kg * (x.m.dp || 0), 0) / kgEmpate : 0;
-    const conversion = kgEmpate === 0 ? 1 : borne(Math.pow(dpMoyen / 35, 0.6), 0.45, 1);
+    let conversion = kgEmpate === 0 ? 1 : borne(Math.pow(dpMoyen / 35, 0.6), 0.45, 1);
+    if (aux.has('alpha')) conversion = Math.max(conversion, 0.97);
+    // Grains crus : l'amidon doit être gélatinisé (cuisson) avant que les enzymes l'attaquent
+    const crusNonCuits = malts.filter((x) => x.m.gel != null && !recette.cuisson && palier < x.m.gel + 8);
+    // Bêta-glucanes du seigle, de l'avoine et du blé cru : maische collante sans bêta-glucanase
+    const kgGlucanes = malts.filter((x) => estAvoine(x.m) || estSeigle(x.m) || estBleCru(x.m)).reduce((s, x) => s + x.kg, 0);
+    const collant = kgEmpate > 0 && kgGlucanes / kgEmpate > 0.3 && !aux.has('glucanase');
+    const effMaische = eff * (collant ? 0.9 : 1);
 
     // Extrait (points de densité)
     let pts = 0, ptsCara = 0, ptsTorr = 0, ptsSucre = 0, ptsLactose = 0, ptsMiel = 0;
     for (const { m, kg } of malts) {
-      const e = estSucre(m) ? 1 : eff * conversion;
+      const cru = crusNonCuits.some((x) => x.m === m);
+      const e = estSucre(m) ? 1 : effMaische * conversion * (cru ? 0.55 : 1);
       const p = (kg * (m.rend / 100) * PTS_SACCHAROSE * e) / V;
       pts += p;
       if (m.fam === 'caramel') ptsCara += p;
@@ -97,6 +122,9 @@
       if (estSucre(m)) { if (estLactose(m)) ptsLactose += p; else ptsSucre += p; }
       if (estMiel(m)) ptsMiel += p;
     }
+    // Purées de fruits : environ 12 % de sucres entièrement fermentescibles
+    for (const { a, g } of aromates) if (a.sucre) { const p = ((g / 1000) * a.sucre * PTS_SACCHAROSE) / V; pts += p; ptsSucre += p; }
+    if (aux.has('lactase')) { ptsSucre += ptsLactose; ptsLactose = 0; }
     const og = 1 + pts / 1000;
     const part = (x) => (pts > 0 ? x / pts : 0);
 
@@ -118,30 +146,39 @@
     // Atténuation apparente : levure, palier d'empâtage, dextrines des malts caramel
     const attLevure = levure ? milieu(levure.att) / 100 : 0;
     const effetPalier = borne(-0.015 * (palier - 65.5), -0.1, 0.04);
-    let attMalt = (attLevure + effetPalier) * (1 - 0.35 * part(ptsCara) - 0.15 * part(ptsTorr));
+    // Sans ébullition (wash), les enzymes du malt continuent de travailler pendant la fermentation
+    let attMalt = (attLevure + effetPalier + (wash ? 0.04 : 0)) * (1 - 0.35 * part(ptsCara) - 0.15 * part(ptsTorr));
+    if (aux.has('gluco')) attMalt = Math.min(0.98, attMalt + 0.08 + 0.2 * part(ptsCara));
     let att = attMalt * (1 - part(ptsSucre) - part(ptsLactose)) + 0.98 * part(ptsSucre);
     let fermentationLente = false;
-    if (levure && fermMin < levure.t[0] - 2) { att *= 0.88; fermentationLente = true; }
+    if (levure && fermMin < levure.t[0] - 2) { att *= aux.has('nutriment') ? 0.94 : 0.88; fermentationLente = true; }
     att = levure ? borne(att, 0.35, 0.99) : 0;
     let fgPts = pts * (1 - att);
     let abv = ((pts - fgPts) / 1000) * 131.25;
     let bloquee = false;
-    if (levure && abv > levure.tol) {
+    const tolerance = levure ? levure.tol + (aux.has('nutriment') ? 1 : 0) : 0;
+    if (levure && abv > tolerance) {
       bloquee = true;
-      abv = levure.tol;
+      abv = tolerance;
       fgPts = pts - (abv / 131.25) * 1000;
       att = pts > 0 ? 1 - fgPts / pts : 0;
     }
     const fg = 1 + fgPts / 1000;
 
     // Amertume et arôme houblon
-    let ibu = 0, aromeHoublon = 0;
+    let ibu = 0, aromeHoublon = 0, epiceHoublon = 0;
+    const notesHoublon = [];
     const detailHoublons = houblons.map(({ h, g, min }) => {
-      const u = utilisationTinseth(og, min);
+      const u = wash ? 0 : utilisationTinseth(og, min);
       const mgL = ((h.alpha / 100) * g * 1000) / V;
       const i = u * mgL;
       ibu += i;
-      aromeHoublon += (g / V) * poidsArome(min) * (h.huile || 1);
+      const w = (g / V) * poidsArome(wash ? -1 : min) * (h.huile || 1);
+      aromeHoublon += w;
+      // Humulène et caryophyllène : notes boisées et poivrées
+      if (h.oils && h.oils.hum != null) epiceHoublon += w * ((h.oils.hum || 0) + (h.oils.car || 0)) / 100;
+      const n = notesHoublon.find((x) => x.nom === h.nom);
+      if (n) n.w += w; else notesHoublon.push({ nom: h.nom, notes: h.aromes, w });
       return { nom: h.nom, g, min, ibu: i };
     });
 
@@ -163,25 +200,39 @@
       if (levure.fam === 'lager' && fermEff > 15) fruite += (fermEff - 15) * 0.35;
       epice = levure.phenol ? 4.5 + 3 * Math.min(1, tf) : 0;
     }
-    epice += fMasse.seigle * 6;
+    epice += fMasse.seigle * 6 + Math.min(1.5, epiceHoublon * 1.5);
+    // Aromates : intensité selon la dose (g/L) rapportée à leur dose d'usage
+    const notesAromates = [], surdoses = [];
+    const ajoutAxes = { malte: 0, caramel: 0, torrefie: 0, amer: 0, houblon: 0, fruite: 0, epice: 0, corps: 0 };
+    for (const { a, g } of aromates) {
+      const k = g / V, dm = (a.dose[0] + a.dose[1]) / 2;
+      const intensite = 10 * (1 - Math.exp(-k / dm));
+      for (const [axe, coef] of Object.entries(a.axes)) ajoutAxes[axe] += intensite * coef * 0.6;
+      notesAromates.push({ nom: a.nom, notes: a.notes, intensite });
+      if (k > a.dose[1] * 1.5) surdoses.push({ a, k });
+    }
     const profil = {
-      malte: borne(2.5 + 5 * fMasse.touraille + (pts - 40) / 12 + fMasse.ble * 1.5, 0, 10),
-      caramel: borne(28 * fMasse.caramel, 0, 10),
-      torrefie: borne(55 * fMasse.torrefie, 0, 10),
-      amer: borne(ibu / 8 + (so4cl > 2 ? 0.8 : so4cl < 0.8 ? -0.5 : 0), 0, 10),
+      malte: borne(2.5 + 5 * fMasse.touraille + (pts - 40) / 12 + fMasse.ble * 1.5 + ajoutAxes.malte, 0, 10),
+      caramel: borne(28 * fMasse.caramel + ajoutAxes.caramel, 0, 10),
+      torrefie: borne(55 * fMasse.torrefie + ajoutAxes.torrefie, 0, 10),
+      amer: borne(ibu / 8 + (so4cl > 2 ? 0.8 : so4cl < 0.8 ? -0.5 : 0) + ajoutAxes.amer, 0, 10),
       houblon: borne(10 * (1 - Math.exp(-aromeHoublon / 2)), 0, 10),
-      fruite: borne(fruite, 0, 10),
-      epice: borne(epice, 0, 10),
-      corps: borne((fgPts - 4) / 2 + fMasse.avoine * 8, 0, 10),
+      fruite: borne(fruite + ajoutAxes.fruite, 0, 10),
+      epice: borne(epice + ajoutAxes.epice, 0, 10),
+      corps: borne((fgPts - 4) / 2 + fMasse.avoine * 8 + ajoutAxes.corps, 0, 10),
     };
+    // Notes de dégustation : houblons tardifs dominants et aromates
+    const notes = notesHoublon.filter((x) => x.w > 0.15).sort((a, b) => b.w - a.w).slice(0, 3).map((x) => ({ source: x.nom, notes: x.notes, type: 'houblon' }))
+      .concat(notesAromates.filter((x) => x.intensite > 1).sort((a, b) => b.intensite - a.intensite).map((x) => ({ source: x.nom, notes: x.notes, type: 'aromate' })));
 
     const res = {
       volume: V, og, fg, pts, fgPts, abv, ibu, ebc, ph, ra, so4cl, attenuation: att,
       dpMoyen, conversion, kgTotal, fMasse, ptsMiel: part(ptsMiel), detailHoublons, profil,
       levure, eau, palier, fermEff, fermMax, fermMin, bloquee, fermentationLente,
-      aDesMalts: kgTotal > 0,
+      aDesMalts: kgTotal > 0, wash, aux, notes, surdoses, crusNonCuits: crusNonCuits.map((x) => x.m.nom), collant,
+      aromates: aromates.map((x) => ({ id: x.a.id, g: x.g, terp: x.a.terp, type: x.a.type })),
     };
-    res.styles = classerStyles(res, recette);
+    res.styles = wash ? [] : classerStyles(res, recette);
     res.style = res.styles[0] || null;
     res.defauts = detecterDefauts(res, recette);
     return res;
@@ -271,6 +322,15 @@
     infection: { nom: 'Infection lactique', en: 'lactic infection', sens: ['arome', 'saveur', 'aspect'],
       chimie: "Des lactobacilles ont transformé une partie des sucres en acide lactique : acidité et voile.",
       conseil: 'Hygiène stricte et fermentation tenue dans la plage de la levure.' },
+    aromate: { nom: 'Aromate envahissant', en: 'overspiced', sens: ['arome', 'saveur'],
+      chimie: "Un aromate dosé bien au-delà de son usage écrase la bière : on ne goûte plus que lui.",
+      conseil: "Reste dans la plage de dose indiquée sur la fiche de l'aromate." },
+    lactique: { nom: 'Acidité lactique', en: 'lactic sourness', sens: ['saveur'],
+      chimie: "Au-delà d'environ 25 mL/hL, l'acide lactique ajouté à l'eau devient perceptible : bière aigrelette.",
+      conseil: "Corrige plutôt le pH avec du malt acide, ou une eau moins alcaline." },
+    crus: { nom: 'Amidon cru', en: 'ungelatinized starch', sens: ['aspect', 'saveur'],
+      chimie: "Le maïs, le seigle ou le blé crus gélatinisent à plus haute température que le malt d'orge. Sans cuisson, leur amidon reste inaccessible aux enzymes : trouble et extrait perdu.",
+      conseil: 'Active la cuisson des grains crus dans le Procédé, ou prends des flocons (déjà gélatinisés).' },
     horsStyle: { nom: 'Style trop étrange', en: 'off-style', sens: ['arome', 'saveur'],
       chimie: "La bière ne ressemble à aucun style connu : le jury ne sait pas à quoi la comparer.",
       conseil: 'Rapproche densité, amertume et couleur des plages du style visé.' },
@@ -294,7 +354,10 @@
     const s = r.style && r.style.style;
     if (s && r.ibu > s.ibu[1] * 1.4 + 10) out.push(defaut('amertume', r.ibu > s.ibu[1] * 2 ? 2 : 1, `${Math.round(r.ibu)} IBU pour un maximum de ${Math.round(s.ibu[1])}.`));
     if (s && y.phenol && !/weizen|witbier/i.test(s.nom) && s.sujet !== 'farmhouse') out.push(defaut('phenols', 1, `Levure ${y.nom} dans une ${s.nom}.`));
-    if (!r.style || r.style.conformite < 0.18) out.push(defaut('horsStyle', 2, r.style ? `Le style le plus proche, ${r.style.style.nom}, ne colle qu'à ${Math.round(r.style.conformite * 100)} %.` : null));
+    for (const { a, k } of r.surdoses) out.push(defaut('aromate', k > a.dose[1] * 3 ? 2 : 1, `${a.nom} à ${fr(k, 1)} g/L, usage ${fr(a.dose[0], 1)}–${fr(a.dose[1], 1)} g/L.`));
+    if (recette.sels && recette.sels.lactique > 25) out.push(defaut('lactique', recette.sels.lactique > 45 ? 2 : 1, `${Math.round(recette.sels.lactique)} mL/hL d'acide lactique.`));
+    if (r.crusNonCuits.length) out.push(defaut('crus', 1, `${r.crusNonCuits.join(', ')} sans cuisson, palier à ${fr(r.palier, 1)} °C.`));
+    if (!r.wash && (!r.style || r.style.conformite < 0.18)) out.push(defaut('horsStyle', 2, r.style ? `Le style le plus proche, ${r.style.style.nom}, ne colle qu'à ${Math.round(r.style.conformite * 100)} %.` : null));
     return out;
   }
 
@@ -345,7 +408,11 @@
       if (v.length) malus = 1 - v.reduce((a, b) => a + b, 0) / v.length;
     }
 
-    const aspect = borne((r.style.ecarts.ebc < 0.25 ? 1 : r.style.ecarts.ebc < 1 ? 0.5 : 0) + (grav('aspect') ? 0 : 1) + (r.fermMax > r.levure.t[1] + 3 ? 0.5 : 1), 0, 3);
+    // Limpidité : les clarifiants comptent, sauf pour les styles troubles par nature
+    const trouble = /weizen|witbier/i.test(s.nom);
+    let limpidite = grav('aspect') ? 0 : trouble ? 1 : 0.5 + (r.aux.has('clarif_chaud') ? 0.25 : 0) + (r.aux.has('clarif_froid') ? 0.25 : 0);
+    if (trouble && r.aux.has('clarif_froid')) limpidite -= 0.5;
+    const aspect = borne((r.style.ecarts.ebc < 0.25 ? 1 : r.style.ecarts.ebc < 1 ? 0.5 : 0) + limpidite + (r.fermMax > r.levure.t[1] + 3 ? 0.5 : 1), 0, 3);
     const arome = borne(12 * (0.25 + 0.4 * c + 0.35 * e) - 1.5 * grav('arome'), 0, 12);
     const bouche = borne(5 * (0.4 + 0.6 * Math.exp(-(r.style.ecarts.fg ** 2))) - 1 * grav('bouche'), 0, 5);
     const saveur = borne(20 * (0.25 + 0.45 * c + 0.3 * equilibre) - 2 * grav('saveur') - 4 * malus, 0, 20);
@@ -355,6 +422,22 @@
     const total = Object.values(lignes).reduce((a, b) => a + b, 0);
     const medaille = total >= 45 ? 'or' : total >= 38 ? 'argent' : total >= 30 ? 'bronze' : null;
     return { lignes, total, medaille, defauts, conformite: c, attente: e, equilibre, malus };
+  }
+
+  // --- Fiche technique d'un wash de distillation (/20) --------------------------------
+  // Le bouilleur juge un wash sur ce qu'il donnera à l'alambic : alcool, propreté, potentiel aromatique.
+  function noterWash(r, jeu) {
+    if (!r.aDesMalts || !r.levure) return null;
+    const defauts = r.defauts.filter((d) => ['fusels', 'bloquee', 'crus', 'amidon', 'astringence', 'acidite', 'lactique'].includes(d.id));
+    if (jeu && jeu.infection) defauts.push(defaut('infection', 1, 'Un peu de lactique : en distillerie écossaise, ce n\'est pas toujours un drame.'));
+    const lap = r.abv * r.volume / 100;
+    const alcool = borne((r.abv - 4) / 4.5, 0, 1) * 8;
+    const attenuation = borne((r.attenuation - 0.72) / 0.18, 0, 1) * 4;
+    const proprete = borne(5 - 1.5 * defauts.reduce((t, d) => t + d.gravite, 0), 0, 5);
+    const potentiel = borne((r.profil.fruite + r.profil.malte) / 12, 0, 1) * 3;
+    const lignes = { alcool: Math.round(alcool * 2) / 2, attenuation: Math.round(attenuation * 2) / 2, proprete: Math.round(proprete * 2) / 2, potentiel: Math.round(potentiel * 2) / 2 };
+    const total = Object.values(lignes).reduce((a, b) => a + b, 0);
+    return { lignes, total, lap, defauts };
   }
 
   // --- Conseils chiffrés du mentor ------------------------------------------------
@@ -371,8 +454,13 @@
     if (r.fMasse.torrefieAmer > 0.15) out.push({ txt: 'Plus de 15 % de malts torréfiés : attention à l\'âpreté.', fiche: 'couleur' });
     if (r.levure && r.levure.fam === 'lager' && !recette.fermentation.reposDiacetyle) out.push({ txt: 'Levure lager : pense au repos diacétyle dans l\'onglet Procédé.', fiche: 'defauts' });
     if (r.levure && (recette.fermentation.temp > r.levure.t[1] || recette.fermentation.temp < r.levure.t[0])) out.push({ txt: `${r.levure.nom} travaille entre ${r.levure.t[0]} et ${r.levure.t[1]} °C. Ta consigne est à ${recette.fermentation.temp} °C.`, fiche: 'levure' });
-    if (r.fMasse.pils > 0.5 && recette.ebullition < 90) out.push({ txt: 'Beaucoup de malt Pils : 90 min d\'ébullition chasseront le DMS.', fiche: 'defauts' });
+    if (r.fMasse.pils > 0.5 && recette.ebullition < 90 && !r.wash) out.push({ txt: 'Beaucoup de malt Pils : 90 min d\'ébullition chasseront le DMS.', fiche: 'defauts' });
+    if (r.crusNonCuits.length) out.push({ txt: `${r.crusNonCuits.join(', ')} : grain cru non gélatinisé à ${fr(r.palier, 1)} °C. Active la cuisson des grains crus.`, fiche: 'empatage' });
+    if (r.collant) out.push({ txt: 'Plus de 30 % de seigle, d\'avoine ou de blé cru : la maische colle et le rendement baisse. Une bêta-glucanase aiderait.', fiche: 'empatage' });
+    for (const { a } of r.surdoses) out.push({ txt: `${a.nom} : dose trop forte, l'usage est de ${fr(a.dose[0], 1)} à ${fr(a.dose[1], 1)} g/L.`, fiche: 'aromates' });
+    if (r.wash && recette.houblons.length) out.push({ txt: 'Un wash de distillation se fait d\'ordinaire sans houblon : sans ébullition, pas d\'amertume, mais les huiles passeront dans l\'eau-de-vie.', fiche: 'distillation' });
     const st = r.style;
+    if (r.wash && r.levure && r.levure.fam !== 'distilling') out.push({ txt: 'Pour un wash, une levure de distillerie atténue plus loin et tolère plus d\'alcool.', fiche: 'levure' });
     if (st) {
       const s = st.style, V = r.volume, eff = recette.rendement || 0.75;
       if (st.ecarts.og > 0.2) {
@@ -404,7 +492,7 @@
     return TEINTES[TEINTES.length - 1][1];
   }
 
-  const api = { init, calculer, noter, conseils, couleurRVB, utilisationTinseth, couleurEBC, poidsArome, DEFAUTS, PTS_SACCHAROSE, attentes };
+  const api = { init, calculer, noter, noterWash, eauCorrigee, conseils, couleurRVB, utilisationTinseth, couleurEBC, poidsArome, DEFAUTS, PTS_SACCHAROSE, attentes };
   racine.Moteur = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

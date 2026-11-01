@@ -55,5 +55,36 @@ for (const [nom, rec] of Object.entries(RECETTES)) {
   if (rec.attendu && n.total < 38) { echecs++; console.log('  ✗ une recette juste devrait obtenir au moins l\'argent'); }
   if (!rec.attendu && n.defauts.length < 2) { echecs++; console.log('  ✗ la recette ratée devrait cumuler des défauts'); }
 }
+// --- Chimies ajoutées en V0.3 ---------------------------------------------------
+const base = { volume: 1000, rendement: 0.75, houblons: [hop('Magnum', 900, 60)], levure: id('levures', 'Safale US-05'), eau: 'causse', palier: 66, ebullition: 60, fermentation: { temp: 19, reposDiacetyle: false } };
+const verif = (cond, msg) => { console.log((cond ? '✓ ' : '✗ ') + msg); if (!cond) echecs++; };
+const aro = (n) => D.aromates.find((x) => x.nom.startsWith(n)).id;
+const aux = (n) => D.auxiliaires.find((x) => x.nom.startsWith(n)).id;
+// Sels : le gypse et l'acide lactique abaissent le pH d'une pils sur eau calcaire
+const pilsCausse = { ...base, malts: [malt('Pilsner Soufflet Bio', 210)] };
+const avant = M.calculer(pilsCausse), apres = M.calculer({ ...pilsCausse, sels: { gypse: 20, lactique: 15 } });
+verif(apres.ph < avant.ph - 0.1, `sels : pH ${avant.ph.toFixed(2)} → ${apres.ph.toFixed(2)}, SO₄/Cl ${avant.so4cl.toFixed(1)} → ${apres.so4cl.toFixed(1)}`);
+// Grains crus : le maïs sans cuisson rend moins et laisse de l'amidon
+const mais = D.malts.find((m) => /^Maïs/.test(m.nom));
+const avecMais = { ...base, malts: [malt('Pale Ale Soufflet', 150), { id: mais.id, kg: 60 }] };
+const cru = M.calculer(avecMais), cuit = M.calculer({ ...avecMais, cuisson: true });
+verif(cuit.og > cru.og + 0.005 && cru.defauts.some((d) => d.id === 'crus'), `maïs cru ${cru.og.toFixed(3)} contre cuit ${cuit.og.toFixed(3)}`);
+// Witbier : blé cru, coriandre et orange amère
+const wit = { ...base, malts: [malt('Pilsner Soufflet Bio', 110), malt('Flocons de Blé', 90)], houblons: [hop('Strisselspalt', 1500, 60)], levure: id('levures', 'Safale WB-06'),
+  aromates: [{ id: aro('Coriandre'), g: 1500 }, { id: aro('Écorce orange amère'), g: 1200 }], cuisson: true, ebullition: 90, eau: 'pilsen' };
+const rw = M.calculer(wit), nw = M.noter(rw, { mode: 'expert' });
+verif(/Witbier/.test(rw.style.style.nom), `witbier reconnue (${rw.style.style.nom}, ${nw.total}/50), notes : ${rw.notes.map((n) => n.notes).join(' / ')}`);
+// Surdose d'épice
+const trop = M.calculer({ ...wit, aromates: [{ id: aro('Coriandre'), g: 9000 }] });
+verif(trop.defauts.some((d) => d.id === 'aromate'), 'une surdose de coriandre est relevée par le jury');
+// Clarifiant : limpidité d'une pale ale
+const pa = { ...base, malts: [malt('Pale Ale Soufflet', 220)] };
+const sansClar = M.noter(M.calculer(pa), { mode: 'expert' }), avecClar = M.noter(M.calculer({ ...pa, auxiliaires: [aux('Whirlfloc'), aux('Gélatine')] }), { mode: 'expert' });
+verif(avecClar.lignes.aspect > sansClar.lignes.aspect, `clarifiants : aspect ${sansClar.lignes.aspect} → ${avecClar.lignes.aspect}`);
+// Wash : pas d'ébullition, levure de distillerie
+const washR = { ...base, destination: 'wash', malts: [malt('Pale Ale Soufflet', 260)], houblons: [], levure: D.levures.find((y) => y.nom === 'Distilamax XP').id, fermentation: { temp: 30, reposDiacetyle: false } };
+const rwash = M.calculer(washR), fw = M.noterWash(rwash);
+verif(!rwash.style && rwash.abv > 7 && fw.total >= 14, `wash : ${rwash.abv.toFixed(1)} %, atténuation ${Math.round(rwash.attenuation * 100)} %, ${fw.lap.toFixed(0)} LAP, ${fw.total}/20`);
+
 console.log(echecs ? `\n${echecs} échec(s)` : '\nTous les tests passent.');
 process.exit(echecs ? 1 : 0);

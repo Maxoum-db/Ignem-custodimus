@@ -16,27 +16,41 @@
   // Sauvegarde (sur le téléphone)
   // =====================================================================
   const CLE = 'ignem.v1';
-  const recetteVide = () => ({ volume: 1000, rendement: 0.75, malts: [], houblons: [], levure: null, eau: 'causse', palier: 66, ebullition: 60, fermentation: { temp: 19, reposDiacetyle: false } });
-  const etatDefaut = () => ({ mode: 'debutant', aide: true, son: true, gestesExpert: false, bac: false, tuto: 0, tutoD: 0, points: 0, succes: {}, carnet: [], brassins: 0, recette: recetteVide(), epaisses: null, reglagesD: null });
+  const recetteVide = () => ({ volume: 1000, rendement: 0.75, malts: [], houblons: [], levure: null, eau: 'causse', palier: 66, ebullition: 60, fermentation: { temp: 19, reposDiacetyle: false },
+    aromates: [], sels: {}, auxiliaires: [], cuisson: false, destination: 'biere' });
+  const etatDefaut = () => ({ mode: 'debutant', aide: true, son: true, gestesExpert: false, bac: false, tuto: 0, tutoD: 0, points: 0, succes: {}, carnet: [], brassins: 0, recette: recetteVide(), epaisses: null, reglagesD: null,
+    possede: null, ecus: 30, decouvertes: {}, quiz: null, grimoire: [] });
   let S = (() => { try { const j = JSON.parse(localStorage.getItem(CLE) || 'null'); return j ? { ...etatDefaut(), ...j } : etatDefaut(); } catch (e) { return etatDefaut(); } })();
-  let R = S.recette;
+  // Sauvegardes d'avant la V0.3 : tout ce qui était débloqué par palier devient possédé, et les points donnent des écus
+  if (!Array.isArray(S.possede)) {
+    const ancien = [0, 60, 140, 240, 360, 500].filter((p) => S.points >= p).length - 1;
+    S.possede = [...D.malts, ...D.houblons, ...D.levures.filter((y) => y.fam !== 'distilling')].filter((x) => x.palier > 0 && x.palier <= ancien).map((x) => x.id);
+    if (S.points > 0) S.ecus = 30 + Math.round(S.points / 2);
+  }
+  const POSSEDE = new Set(S.possede);
+  const posseder = (id) => { if (!POSSEDE.has(id)) { POSSEDE.add(id); S.possede.push(id); } };
+  const normaliser = (r) => Object.assign(recetteVide(), r, { fermentation: { ...recetteVide().fermentation, ...(r && r.fermentation) } });
+  let R = S.recette = normaliser(S.recette);
   let minuterieSauve = null;
   function sauver() { clearTimeout(minuterieSauve); minuterieSauve = setTimeout(() => { try { S.recette = R; localStorage.setItem(CLE, JSON.stringify(S)); } catch (e) { /* stockage indisponible */ } }, 250); }
 
   // =====================================================================
   // Progression
   // =====================================================================
+  // Niveaux de maîtrise : chacun ouvre une rareté de plus au catalogue du pigeonnier
   const PALIERS = [
-    { pts: 0, txt: '13 malts, 7 houblons et 5 levures de départ' },
-    { pts: 60, txt: 'tous les malts de base, touraillés et caramel, les levures ale, les houblons français et anglais' },
-    { pts: 140, txt: 'les malts torréfiés et grains crus, les levures lager, les houblons allemands, tchèques et slovènes' },
-    { pts: 240, txt: 'les houblons américains' },
-    { pts: 360, txt: 'les houblons du Pacifique, les levures belges et spéciales, les sucres' },
-    { pts: 500, txt: 'les levures sauvages : Brettanomyces et lactobacilles' },
+    { pts: 0, txt: 'les ingrédients courants (★) au catalogue' },
+    { pts: 60, txt: 'les ingrédients ★★ : malts torréfiés, grains crus, levures lager, houblons allemands, fruits, nutriments' },
+    { pts: 140, txt: 'les ingrédients ★★★ : houblons américains, levures belges, enzymes, botaniques et bois' },
+    { pts: 240, txt: 'les ingrédients ★★★★ : houblons du Pacifique' },
+    { pts: 360, txt: 'les ingrédients ★★★★★ : levures sauvages, Brettanomyces et lactobacilles' },
+    { pts: 500, txt: 'le titre de maître du domaine' },
   ];
   const palierAtteint = () => (S.bac ? 5 : PALIERS.filter((p) => S.points >= p.pts).length - 1);
   const niveau = () => (S.points >= 360 ? 'Maître brasseur' : S.points >= 140 ? 'Compagnon brasseur' : 'Apprenti brasseur');
-  const dispo = (x) => x.palier <= palierAtteint();
+  const dispo = (x) => S.bac || !x.palier || POSSEDE.has(x.id);
+  const achetable = (x) => (x.palier || 0) <= palierAtteint() + 1;
+  const prixDe = (x, cat) => (cat === 'grimoire' ? 10 : D.prix[x.palier || 0]);
 
   const SUCCES = [
     { id: 'premier', nom: 'Premier brassin', desc: "Mener un brassin jusqu'à la dégustation." },
@@ -123,6 +137,10 @@
       '.cwwaaaaawwc....', '.wwaaaaaaaww....', '.wwaaaaaaaww....', '.wwaaaaaaaww....'],
       { h: '#6b3b22', H: '#8a5030', s: '#e8b48a', E: '#2a1a10', n: '#c98a66', m: '#a04a3a', c: '#d27b3e', w: '#ecdfc4', a: '#4f6b3a' }, 3),
   };
+  SPR.bocal = sprite([
+    '............', '...kkkkkk...', '...cccccc...', '..kkkkkkkk..', '..kggggggk..', '..kgwwwwgk..', '..kgwrrwgk..',
+    '..kgwrrwgk..', '..kgwwwwgk..', '..kggggggk..', '..kkkkkkkk..', '............', '............', '............'],
+    { k: '#2a1d14', c: '#d27b3e', g: '#8fb4a8', w: '#efe2c4', r: '#c0642a' });
   SPR.firmin = sprite([
     '...bbbbbbbb.....', '..bbbbbbbbbbb...', '.bbbbbbbbbbbbb..', '..gsssssssssg...', '..sssssssssss...', '..ssEsssssEss...',
     '..sssssssssss...', '..sssssnsssss...', '..smmmmmmmmms...', '...sssssssss....', '....ssssss......', '..vvvvccvvvv....',
@@ -143,7 +161,7 @@
     $$('.ecran').forEach((s) => { s.hidden = s.id !== 'ecran-' + nom; });
     $$('.entete-nav button').forEach((b) => b.setAttribute('aria-current', b.dataset.aller === nom ? 'page' : 'false'));
     $('#scene').scrollTop = 0;
-    ({ domaine: entrerDomaine, brasserie: entrerBrasserie, distillerie: entrerDistillerie, carnet: rendreCarnet, fiches: rendreFiches, reglages: rendreReglages }[nom] || (() => {}))();
+    ({ domaine: entrerDomaine, brasserie: entrerBrasserie, distillerie: entrerDistillerie, catalogue: rendreCatalogue, veillee: rendreVeillee, carnet: rendreCarnet, fiches: rendreFiches, reglages: rendreReglages }[nom] || (() => {}))();
     tuto('ecran:' + nom);
     majMentor();
   }
@@ -154,7 +172,7 @@
     if (f) { e.preventDefault(); ouvrirFiche(f.dataset.fiche); }
   });
   function majEntete() {
-    $('#entete-niveau').innerHTML = `<b>${niveau()}</b>${S.points} pts${S.bac ? ' · bac à sable' : ''}`;
+    $('#entete-niveau').innerHTML = `<b>${niveau()}</b>${S.points} pts · <span style="color:var(--or)">${S.ecus} écus</span>${S.bac ? ' · bac à sable' : ''}`;
   }
   function toast(txt) {
     const t = document.createElement('div'); t.className = 'toast'; t.textContent = txt;
@@ -189,7 +207,7 @@
     if (S.tutoD >= 0 && S.tutoD < TUTO_D.length && TUTO_D[S.tutoD].attendre === evt) { S.tutoD++; if (S.tutoD >= TUTO_D.length) S.tutoD = -1; sauver(); majMentor(); }
   }
   const ECRANS_FIRMIN = ['distillerie', 'brouillis', 'repasse', 'aveugle'];
-  const avecFirmin = () => ECRANS_FIRMIN.includes(ecran) || (ecran === 'degustation' && dernier && dernier.type === 'edv');
+  const avecFirmin = () => ECRANS_FIRMIN.includes(ecran) || (ecran === 'degustation' && dernier && (dernier.type === 'edv' || dernier.type === 'wash'));
   let messageMentor = null;
   function direLise(txt, actions) { messageMentor = { txt, actions: actions || [] }; majMentor(); }
   function majMentor() {
@@ -228,6 +246,7 @@
     { id: 'brasserie', nom: 'Brasserie', r: [14, 108, 80, 76], ouvert: true },
     { id: 'chai', nom: 'Chai', r: [108, 120, 70, 54], msg: "Le chai ouvrira avec la distillerie : chêne neuf, ex-bourbon, ex-sherry, ex-tourbé, Cahors, armagnac. On y rangera les fûts façon casse-tête." },
     { id: 'distillerie', nom: 'Alambic Ulysse', r: [118, 178, 60, 32], ouvert: true },
+    { id: 'catalogue', nom: 'Pigeonnier', r: [92, 96, 22, 44], ouvert: true },
     { id: 'comptoir', nom: 'Comptoir', r: [22, 200, 58, 38], msg: "Le comptoir de vente à la ferme ouvrira plus tard : les visiteurs viendront avec leurs goûts, à toi de conseiller la bonne bouteille." },
     { id: 'rucher', nom: 'Rucher', r: [130, 94, 58, 22], msg: "Le rucher viendra en extension. Le miel du domaine est déjà dans la brasserie : essaie un braggot." },
   ];
@@ -361,6 +380,27 @@
     if (l) l.g += 250; else R.houblons.push({ id, g: 250, min });
     son('bulle'); tuto('houblon'); maj(); if (onglet === 'cuve') rendreOnglet();
   }
+  // Aromates : dose de départ au bas de la plage d'usage (g pour le volume de la cuve)
+  const doseAromate = (a) => Math.max(50, Math.round((a.dose[0] * R.volume) / 50) * 50);
+  const pasAromate = (l) => { const a = IDX.aromate.get(l.id); return Math.max(50, Math.round(((a.dose[1] - a.dose[0]) * R.volume) / 8 / 50) * 50); };
+  function ajouterAromate(id) {
+    const a = IDX.aromate.get(id);
+    const l = R.aromates.find((x) => x.id === id);
+    if (l) l.g += doseAromate(a); else R.aromates.push({ id, g: doseAromate(a) });
+    son('bulle'); maj(); if (onglet === 'cuve') rendreOnglet();
+  }
+  function rendreSels() {
+    const sels = D.sels;
+    const h = sels.filter(dispo).map((x) => `<div class="dose"><label for="sel-${x.id}">${esc(x.nom)}</label><span class="val" id="v-sel-${x.id}">${R.sels[x.id] || 0} ${x.id === 'lactique' ? 'mL/hL' : 'g/hL'}</span>
+      <input type="range" id="sel-${x.id}" data-sel="${x.id}" min="0" max="${x.max}" step="1" value="${R.sels[x.id] || 0}"><p>${esc(x.note)}</p></div>`).join('');
+    return `<p class="groupe-titre">SELS ET ACIDE</p><p class="page-intro" id="ions-eau"></p>${h || ''}${verrouLigne(sels, 'sels', 'eau')}`;
+  }
+  function majIons() {
+    const p = $('#ions-eau'); if (!p) return;
+    const e = Moteur.eauCorrigee(IDX.eau.get(R.eau), R.sels);
+    const ra = e.hco3 * (50 / 61) - e.ca / 1.4 - e.mg / 1.7;
+    p.innerHTML = `Eau corrigée : Ca <b>${Math.round(e.ca)}</b> · Mg ${Math.round(e.mg)} · Na ${Math.round(e.na || 0)} · SO₄ <b>${Math.round(e.so4)}</b> · Cl <b>${Math.round(e.cl)}</b> · HCO₃ ${Math.round(e.hco3)} mg/L · alcalinité résiduelle <b>${Math.round(ra)}</b> · SO₄/Cl ${e.cl ? nf(e.so4 / e.cl) : '—'}`;
+  }
   function choisirLevure(id) {
     const change = R.levure !== id;
     R.levure = id;
@@ -375,8 +415,8 @@
   }
 
   function rendreOnglets() {
-    const nb = R.malts.length + R.houblons.length + (R.levure ? 1 : 0);
-    const defs = [['cuve', `Cuve<span class="badge">${nb}</span>`], ['malts', 'Malts'], ['houblons', 'Houblons'], ['levure', 'Levure'], ['eau', 'Eau'], ['procede', 'Procédé']];
+    const nb = R.malts.length + R.houblons.length + R.aromates.length + (R.levure ? 1 : 0);
+    const defs = [['cuve', `Cuve<span class="badge">${nb}</span>`], ['malts', 'Céréales'], ['houblons', 'Houblons'], ['levure', 'Levure'], ['eau', 'Eau'], ['aromates', 'Aromates'], ['procede', 'Procédé']];
     $('#onglets').innerHTML = defs.map(([id, lib]) => `<button class="onglet" role="tab" id="tab-${id}" aria-selected="${onglet === id}" data-onglet="${id}">${lib}</button>`).join('');
   }
   $('#onglets').addEventListener('click', (e) => { const b = e.target.closest('[data-onglet]'); if (!b) return; onglet = b.dataset.onglet; recherche = ''; son('clic'); rendreOnglets(); rendreOnglet(); });
@@ -384,11 +424,11 @@
   function poignee(img, teinte, type, id) {
     return `<span class="poignee" data-glisser="${type}" data-id="${esc(id)}" aria-hidden="true"><img class="sprite" src="${img}" alt="">${teinte ? `<i class="teinte" style="background:${teinte}"></i>` : ''}</span>`;
   }
-  function verrouLigne(liste, quoi) {
+  function verrouLigne(liste, quoi, cat) {
     const bloques = liste.filter((x) => !dispo(x));
     if (!bloques.length) return '';
-    const prochain = Math.min(...bloques.map((x) => x.palier));
-    return `<p class="verrou">${bloques.length} ${quoi} à débloquer. Prochain palier à ${PALIERS[prochain].pts} points : ${PALIERS[prochain].txt}.</p>`;
+    const dispoAchat = bloques.filter(achetable).length;
+    return `<p class="verrou">${bloques.length} ${quoi} à débloquer, dont ${dispoAchat} déjà en vente au pigeonnier. Tu as ${S.ecus} écus. <button class="btn btn-mini" data-catalogue="${cat}">Ouvrir le catalogue</button></p>`;
   }
   const filtreTexte = (n) => !recherche || n.toLowerCase().includes(recherche.toLowerCase());
   const champRecherche = (ph) => `<input class="recherche" id="recherche" type="search" placeholder="${ph}" value="${esc(recherche)}" autocomplete="off">`;
@@ -405,7 +445,7 @@
               <div class="det"><b>${nf(m.ebc, 0)} EBC</b> · extrait ${m.rend} % · ${m.dp ? `${m.dp} °Lintner` : 'sans enzymes'}${m.max ? ` · max ${m.max} %` : ''}</div>
               <div class="etiquettes"><span class="etq">${FAMILLES[m.fam]}</span>${m.pays ? `<span class="etq">${esc(m.pays)}</span>` : ''}</div></div>
             <button class="btn btn-mini" data-ajouter="malt" data-id="${esc(m.id)}" aria-label="Ajouter ${doseMalt(m)} kg de ${esc(m.nom)}">+${doseMalt(m)} kg</button></div>`).join('')}</div>
-        ${verrouLigne(liste, 'malts')}`;
+        ${verrouLigne(liste, 'céréales', 'cereales')}`;
     } else if (onglet === 'houblons') {
       z.innerHTML = `${champRecherche('Chercher un houblon')}
         <div class="liste">${D.houblons.filter(dispo).filter((h) => filtreTexte(h.nom + ' ' + (h.aromes || ''))).map((h) => `
@@ -415,17 +455,19 @@
               <div class="det">${esc(h.aromes || '')}</div>
               <div class="etiquettes"><span class="etq">${{ bittering: 'Amérisant', aroma: 'Aromatique', dual: 'Double usage' }[h.usage]}</span></div></div>
             <button class="btn btn-mini" data-ajouter="houblon" data-id="${esc(h.id)}" aria-label="Ajouter 250 g de ${esc(h.nom)}">+250 g</button></div>`).join('')}</div>
-        ${verrouLigne(D.houblons, 'houblons')}`;
+        ${verrouLigne(D.houblons, 'houblons', 'houblons')}`;
     } else if (onglet === 'levure') {
-      z.innerHTML = `${champRecherche('Chercher une levure')}
-        <div class="liste">${D.levures.filter(dispo).filter((y) => filtreTexte(y.nom + ' ' + (y.desc || ''))).map((y) => `
+      const wash = R.destination === 'wash';
+      const visibles = D.levures.filter((y) => (y.fam === 'distilling') === wash || (wash && y.fam === 'ale'));
+      z.innerHTML = `<p class="page-intro">${wash ? 'Wash de distillation : levures de distillerie et levures ale.' : 'Les levures de distillerie apparaissent quand la destination est un wash (onglet Procédé).'}</p>${champRecherche('Chercher une levure')}
+        <div class="liste">${visibles.filter(dispo).filter((y) => filtreTexte(y.nom + ' ' + (y.desc || ''))).sort((a, b) => (b.fam === 'distilling') - (a.fam === 'distilling')).map((y) => `
           <div class="carte-ing ${R.levure === y.id ? 'choisie' : ''}">${poignee(SPR.sachet, null, 'levure', y.id)}
             <div class="corps"><div class="nom">${esc(y.nom)}</div>
               <div class="det"><b>${y.att[0]}–${y.att[1]} %</b> d'atténuation · <b>${y.t[0]}–${y.t[1]} °C</b> · tolère ${y.tol} %</div>
               <div class="det">${esc(y.desc || '')}</div>
-              <div class="etiquettes"><span class="etq">${{ ale: 'Ale', lager: 'Lager', specialty: 'Spéciale' }[y.fam]}</span>${y.phenol ? '<span class="etq phen">Phénols</span>' : ''}${y.ester === 2 ? '<span class="etq est">Esters marqués</span>' : y.ester === 0 ? '<span class="etq">Neutre</span>' : ''}${y.sauvage ? '<span class="etq sauv">Sauvage</span>' : ''}</div></div>
+              <div class="etiquettes"><span class="etq">${{ ale: 'Ale', lager: 'Lager', specialty: 'Spéciale', distilling: 'Distillerie' }[y.fam]}</span>${y.phenol ? '<span class="etq phen">Phénols</span>' : ''}${y.ester === 2 ? '<span class="etq est">Esters marqués</span>' : y.ester === 0 ? '<span class="etq">Neutre</span>' : ''}${y.sauvage ? '<span class="etq sauv">Sauvage</span>' : ''}</div></div>
             <button class="btn btn-mini" data-ajouter="levure" data-id="${esc(y.id)}" aria-pressed="${R.levure === y.id}">${R.levure === y.id ? 'Choisie' : 'Choisir'}</button></div>`).join('')}</div>
-        ${verrouLigne(D.levures, 'levures')}`;
+        ${verrouLigne(visibles, 'levures', 'levures')}`;
     } else if (onglet === 'eau') {
       z.innerHTML = D.eaux.map((e) => {
         const ra = e.hco3 * (50 / 61) - e.ca / 1.4 - e.mg / 1.7;
@@ -435,16 +477,33 @@
             <div class="det">Alcalinité résiduelle <b>${Math.round(ra)} ppm CaCO₃</b> · SO₄/Cl ${e.cl ? nf(e.so4 / e.cl) : '—'}</div>
             <div class="det">${esc(e.note)}</div></div>
           <button class="btn btn-mini" data-ajouter="eau" data-id="${e.id}" aria-pressed="${R.eau === e.id}">${R.eau === e.id ? 'Choisie' : 'Choisir'}</button></div>`;
-      }).join('') + `<p class="page-intro">Le calcaire du causse remonte le pH : parfait pour les bières foncées, à corriger au malt acide pour les pâles. <button class="btn btn-mini btn-sobre" data-fiche="eau">Fiche eau</button></p>`;
+      }).join('') + rendreSels() + `<p class="page-intro">Le calcaire du causse remonte le pH : parfait pour les bières foncées, à corriger au malt acide, aux sels ou à l'acide lactique pour les pâles. <button class="btn btn-mini btn-sobre" data-fiche="eau">Fiche eau</button></p>`;
+    } else if (onglet === 'aromates') {
+      const TYPES = { fruit: 'Fruits', epice: 'Épices et zestes', botanique: 'Botaniques', bois: 'Bois' };
+      z.innerHTML = `<p class="page-intro">Fruits, épices, botaniques et bois, ajoutés en fin d'ébullition ou en garde. Doses en g/L : sur 1000 L, 1 g/L fait 1 kg.</p>${champRecherche('Chercher un aromate')}
+        <div class="liste">${D.aromates.filter(dispo).filter((a) => filtreTexte(a.nom + ' ' + a.notes)).map((a) => `
+          <div class="carte-ing">${poignee(SPR.bocal, null, 'aromate', a.id)}
+            <div class="corps"><div class="nom">${esc(a.nom)}</div>
+              <div class="det"><b>${esc(a.notes)}</b> · usage ${nf(a.dose[0], 1)}–${nf(a.dose[1], 0)} g/L${a.sucre ? ` · ${Math.round(a.sucre * 100)} % de sucres` : ''}</div>
+              <div class="etiquettes"><span class="etq">${TYPES[a.type]}</span></div></div>
+            <button class="btn btn-mini" data-ajouter="aromate" data-id="${esc(a.id)}">+${nf(doseAromate(a) / 1000, doseAromate(a) < 1000 ? 1 : 0)} kg</button></div>`).join('') || '<p class="vide">Aucun aromate. Le pigeonnier en vend dès le premier niveau.</p>'}</div>
+        ${verrouLigne(D.aromates, 'aromates', 'aromates')}`;
     } else if (onglet === 'procede') {
       const y = R.levure ? IDX.levure.get(R.levure) : null;
+      const auxDispo = D.auxiliaires.filter(dispo);
       z.innerHTML = `
+        <div class="reglage"><span class="lib">Destination</span>
+          <div class="bascule"><button data-dest="biere" aria-pressed="${R.destination !== 'wash'}">Bière pour le jury</button><button data-dest="wash" aria-pressed="${R.destination === 'wash'}">Wash pour Ulysse</button></div>
+          <p>${R.destination === 'wash' ? 'Un wash de distillation n\'est pas bouilli : les enzymes du malt continuent de travailler, l\'atténuation monte, mais rien ne stérilise le moût.' : 'Une bière passe devant le jury, puis peut aller à l\'alambic.'}</p></div>
         <div class="reglage"><label for="r-palier">Palier d'empâtage <span class="val" id="v-palier">${nf(R.palier)} °C</span></label>
           <input type="range" id="r-palier" min="62" max="72" step="0.5" value="${R.palier}">
           <p id="p-palier"></p></div>
-        <div class="reglage"><span class="lib">Durée d'ébullition</span>
+        <div class="reglage"><span class="lib">Cuisson des grains crus</span>
+          <div class="bascule"><button data-cuisson="1" aria-pressed="${!!R.cuisson}">Oui</button><button data-cuisson="0" aria-pressed="${!R.cuisson}">Non</button></div>
+          <p>Le maïs, le seigle et le blé crus gélatinisent plus chaud que le malt d'orge. On les fait bouillir à part avant de les ajouter à la maische.</p></div>
+        ${R.destination === 'wash' ? '' : `<div class="reglage"><span class="lib">Durée d'ébullition</span>
           <div class="bascule">${[60, 90].map((m) => `<button data-ebu="${m}" aria-pressed="${R.ebullition === m}">${m} min</button>`).join('')}</div>
-          <p>90 minutes chassent le DMS des malts très pâles et concentrent un peu le moût.</p></div>
+          <p>90 minutes chassent le DMS des malts très pâles et concentrent un peu le moût.</p></div>`}
         <div class="reglage"><label for="r-ferm">Température de fermentation <span class="val" id="v-ferm">${nf(R.fermentation.temp)} °C</span></label>
           <input type="range" id="r-ferm" min="8" max="35" step="0.5" value="${R.fermentation.temp}">
           <p>${y ? `${esc(y.nom)} : plage ${y.t[0]}–${y.t[1]} °C. Plus chaud, plus d'esters ; au-delà, des alcools supérieurs.` : 'Choisis d\'abord une levure.'}</p></div>
@@ -453,11 +512,15 @@
           <p>+4 °C les deux derniers jours : la levure réabsorbe le diacétyle. Indispensable pour une lager.</p></div>
         ${S.mode === 'expert' ? `<div class="reglage"><label for="r-rend">Rendement de la salle de brassage <span class="val" id="v-rend">${Math.round(R.rendement * 100)} %</span></label>
           <input type="range" id="r-rend" min="65" max="85" step="1" value="${Math.round(R.rendement * 100)}">
-          <p>Part de l'extrait théorique récupérée dans le moût (brewhouse efficiency).</p></div>` : ''}`;
+          <p>Part de l'extrait théorique récupérée dans le moût (brewhouse efficiency).</p></div>` : ''}
+        <div class="reglage"><span class="lib">Auxiliaires</span>
+          ${auxDispo.length ? auxDispo.map((a) => `<label class="coche"><input type="checkbox" id="aux-${a.id}" data-aux="${a.id}" ${R.auxiliaires.includes(a.id) ? 'checked' : ''}><span>${esc(a.nom)}<small>${esc(a.note)}</small></span></label>`).join('') : '<p>Nutriments, clarifiants, enzymes et produits d\'hygiène s\'achètent au pigeonnier.</p>'}
+          ${verrouLigne(D.auxiliaires, 'auxiliaires', 'auxiliaires')}</div>`;
       majTextePalier();
     } else if (onglet === 'cuve') {
       rendreCuveListe(z);
     }
+    if (onglet === 'eau') majIons();
   }
   function majTextePalier() {
     const p = $('#p-palier'); if (!p) return;
@@ -469,7 +532,7 @@
 
   function rendreCuveListe(z) {
     const r = dernierCalc;
-    if (!R.malts.length && !R.houblons.length && !R.levure) { z.innerHTML = '<p class="vide">La cuve est vide. Ajoute des malts depuis l\'onglet Malts.</p>'; return; }
+    if (!R.malts.length && !R.houblons.length && !R.levure) { z.innerHTML = '<p class="vide">La cuve est vide. Ajoute des céréales depuis l\'onglet Céréales, ou charge une recette du grimoire au pigeonnier.</p><button class="btn btn-sobre" data-catalogue="grimoire">Ouvrir le grimoire</button>'; return; }
     const kgTot = R.malts.reduce((s, x) => s + x.kg, 0) || 1;
     let h = '<p class="groupe-titre">MALTS ET SUCRES</p>';
     h += R.malts.map((l, i) => { const m = IDX.malt.get(l.id); return `<div class="ligne-recette"><div class="nom">${esc(m.nom)}<small>${Math.round((l.kg / kgTot) * 100)} % du grain · ${nf(m.ebc, 0)} EBC</small></div>
@@ -481,9 +544,16 @@
       <div class="qte"><button class="btn btn-carre" data-hop-moins="${i}" aria-label="Retirer 100 g">−</button><input id="g-${i}" inputmode="numeric" data-hop-g="${i}" value="${l.g}" aria-label="Grammes de ${esc(hb.nom)}"><span class="u">g</span><button class="btn btn-carre" data-hop-plus="${i}" aria-label="Ajouter 100 g">+</button><button class="btn btn-carre btn-sobre" data-hop-suppr="${i}" aria-label="Enlever ${esc(hb.nom)}">×</button></div>
       <div class="temps">${[60, 30, 15, 10, 5, 0, -1].map((m) => `<button data-hop-min="${i}:${m}" aria-pressed="${l.min === m}">${m < 0 ? 'À cru' : m + ' min'}</button>`).join('')}</div></div>`;
     }).join('') || '<p class="vide">Aucun houblon.</p>';
+    if (R.aromates.length) {
+      h += '<p class="groupe-titre">AROMATES</p>';
+      h += R.aromates.map((l, i) => { const a = IDX.aromate.get(l.id); return `<div class="ligne-recette"><div class="nom">${esc(a.nom)}<small>${nf(l.g / R.volume, 1)} g/L · usage ${nf(a.dose[0], 1)}–${nf(a.dose[1], 0)} g/L</small></div>
+        <div class="qte"><button class="btn btn-carre" data-aro-moins="${i}" aria-label="Moins">−</button><input id="aro-${i}" inputmode="numeric" data-aro-g="${i}" value="${l.g}" aria-label="Grammes de ${esc(a.nom)}"><span class="u">g</span><button class="btn btn-carre" data-aro-plus="${i}" aria-label="Plus">+</button><button class="btn btn-carre btn-sobre" data-aro-suppr="${i}" aria-label="Enlever ${esc(a.nom)}">×</button></div></div>`; }).join('');
+    }
     const y = R.levure && IDX.levure.get(R.levure), e = IDX.eau.get(R.eau);
     h += `<p class="groupe-titre">LEVURE ET EAU</p><div class="ligne-recette"><div class="nom">${y ? esc(y.nom) : 'Aucune levure'}<small>${y ? `${y.t[0]}–${y.t[1]} °C · consigne ${nf(R.fermentation.temp)} °C` : 'Choisis-en une dans l\'onglet Levure'}</small></div></div>
-      <div class="ligne-recette"><div class="nom">${esc(e.nom)}<small>Palier ${nf(R.palier)} °C · ébullition ${R.ebullition} min</small></div></div>`;
+      <div class="ligne-recette"><div class="nom">${esc(e.nom)}<small>${Object.entries(R.sels).filter(([, v]) => v > 0).map(([k, v]) => `${IDX.sel.get(k)?.nom.split(' (')[0] || k} ${v}`).join(' · ') || 'sans sels'} · palier ${nf(R.palier)} °C · ${R.destination === 'wash' ? 'wash, sans ébullition' : `ébullition ${R.ebullition} min`}</small></div></div>
+      ${R.auxiliaires.length ? `<div class="ligne-recette"><div class="nom">Auxiliaires<small>${R.auxiliaires.map((a) => esc(IDX.aux.get(a)?.nom || '')).join(' · ')}</small></div></div>` : ''}
+      <button class="btn btn-sobre" data-catalogue="grimoire">Charger une recette du grimoire</button>`;
     z.innerHTML = h;
   }
 
@@ -496,6 +566,10 @@
     if (d.ajouter === 'houblon') return ajouterHoublon(d.id);
     if (d.ajouter === 'levure') return choisirLevure(d.id);
     if (d.ajouter === 'eau') { R.eau = d.id; son('bulle'); maj(); rendreOnglet(); return; }
+    if (d.ajouter === 'aromate') return ajouterAromate(d.id);
+    if (d.catalogue) { catOnglet = d.catalogue; aller('catalogue'); return; }
+    if (d.dest) { R.destination = d.dest; if (d.dest === 'biere' && R.levure && IDX.levure.get(R.levure).fam === 'distilling') R.levure = null; son('clic'); maj(); rendreOnglet(); return; }
+    if (d.cuisson) { R.cuisson = d.cuisson === '1'; maj(); rendreOnglet(); return; }
     if (d.ebu) { R.ebullition = +d.ebu; maj(); rendreOnglet(); return; }
     if (d.repos) { R.fermentation.reposDiacetyle = d.repos === '1'; maj(); rendreOnglet(); return; }
     const k = (v) => +v;
@@ -506,6 +580,9 @@
     else if (d.hopPlus) R.houblons[k(d.hopPlus)].g += 100;
     else if (d.hopSuppr) R.houblons.splice(k(d.hopSuppr), 1);
     else if (d.hopMin) { const [i, m] = d.hopMin.split(':').map(Number); R.houblons[i].min = m; }
+    else if (d.aroMoins) { const l = R.aromates[k(d.aroMoins)]; l.g = Math.max(0, l.g - pasAromate(l)); if (!l.g) R.aromates.splice(k(d.aroMoins), 1); }
+    else if (d.aroPlus) { const l = R.aromates[k(d.aroPlus)]; l.g += pasAromate(l); }
+    else if (d.aroSuppr) R.aromates.splice(k(d.aroSuppr), 1);
     else return;
     son('clic'); maj(); rendreOnglet();
   });
@@ -515,12 +592,15 @@
     if (t.id === 'r-palier') { R.palier = +t.value; $('#v-palier').textContent = nf(R.palier) + ' °C'; majTextePalier(); maj(); }
     if (t.id === 'r-ferm') { R.fermentation.temp = +t.value; $('#v-ferm').textContent = nf(R.fermentation.temp) + ' °C'; maj(); }
     if (t.id === 'r-rend') { R.rendement = +t.value / 100; $('#v-rend').textContent = t.value + ' %'; maj(); }
+    if (t.dataset.sel) { R.sels[t.dataset.sel] = +t.value; $('#v-sel-' + t.dataset.sel).textContent = t.value + (t.dataset.sel === 'lactique' ? ' mL/hL' : ' g/hL'); maj(); majIons(); }
   });
   $('#onglet-contenu').addEventListener('change', (e) => {
     const t = e.target, d = t.dataset;
     const v = parseFloat(String(t.value).replace(',', '.'));
     if (d.maltKg != null) { if (v > 0) R.malts[+d.maltKg].kg = Math.min(2000, v); else R.malts.splice(+d.maltKg, 1); maj(); rendreOnglet(); }
     if (d.hopG != null) { if (v > 0) R.houblons[+d.hopG].g = Math.min(50000, Math.round(v)); else R.houblons.splice(+d.hopG, 1); maj(); rendreOnglet(); }
+    if (d.aroG != null) { if (v > 0) R.aromates[+d.aroG].g = Math.min(300000, Math.round(v)); else R.aromates.splice(+d.aroG, 1); maj(); rendreOnglet(); }
+    if (d.aux) { const id = d.aux; if (t.checked) { if (!R.auxiliaires.includes(id)) R.auxiliaires.push(id); } else R.auxiliaires = R.auxiliaires.filter((x) => x !== id); son('clic'); maj(); }
   });
 
   // Glisser-déposer : on attrape le sac par son icône, on le lâche dans la cuve
@@ -542,7 +622,7 @@
     $('#glisse').hidden = true; $('#cuve-zone').classList.remove('survol');
     const { type, id } = glisse; glisse = null;
     if (!dedans) return;
-    if (type === 'malt') ajouterMalt(id); else if (type === 'houblon') ajouterHoublon(id); else if (type === 'levure') choisirLevure(id);
+    if (type === 'malt') ajouterMalt(id); else if (type === 'houblon') ajouterHoublon(id); else if (type === 'levure') choisirLevure(id); else if (type === 'aromate') ajouterAromate(id);
     else if (type === 'eau') { R.eau = id; son('bulle'); maj(); rendreOnglet(); }
     splash = 1;
   };
@@ -567,7 +647,10 @@
     ];
     $('#mesures').innerHTML = m.map((x) => `<button class="mesure ${x.c}" data-fiche="${x.f}"><span class="v">${x.v}</span><span class="l">${x.l}</span></button>`).join('');
     const ligne = $('#style-ligne');
-    if (st) {
+    if (r.wash && r.aDesMalts && r.levure) {
+      const pc = Math.round(r.attenuation * 100);
+      ligne.innerHTML = `<span class="nom">Wash de distillation</span><span class="pc">${nf(r.abv * r.volume / 100, 0)} LAP</span><span class="jauge"><i style="width:${Math.min(100, pc)}%;background:var(--braise)"></i></span><span class="indice">Atténuation ${pc} % · pas d'ébullition · ${r.levure.fam === 'distilling' ? 'levure de distillerie' : 'levure de brasserie'}</span>`;
+    } else if (st) {
       const pc = Math.round(st.conformite * 100);
       ligne.innerHTML = `<span class="nom">≈ ${esc(st.style.nom)}</span><span class="pc">${pc} %</span><span class="jauge"><i style="width:${pc}%;background:${pc >= 70 ? 'var(--houblon)' : pc >= 35 ? 'var(--braise)' : 'var(--alerte)'}"></i></span><span class="indice">Style le plus proche · touche pour comparer aux plages</span>`;
     } else ligne.innerHTML = `<span class="nom">Aucun style pour l'instant</span><span class="pc">—</span><span class="indice">${r.aDesMalts ? 'Il manque une levure.' : 'Ajoute du malt et une levure.'}</span>`;
@@ -720,14 +803,14 @@
         }
         son(score > 0.6 ? 'ok' : 'rate');
         bilanGeste('emp', [`<span class="gros">${Math.round(score * 100)} %</span> du temps dans la zone`, `Température moyenne ${nf(moy)} °C pour une consigne de ${nf(cible)} °C.`, effet], 'Passer à l\'ébullition');
-        $('#emp-suite').onclick = () => { tuto('fin:empatage'); aller('ebullition'); preparerEbullition(); };
+        $('#emp-suite').onclick = () => { tuto('fin:empatage'); if (session.recette.destination === 'wash') { aller('fermentation'); preparerFermentation(); } else { aller('ebullition'); preparerEbullition(); } };
       });
     };
     const on = (e) => { e.preventDefault(); if (vap.disabled) return; st.vapeur = true; vap.classList.add('actif'); };
     const off = () => { st.vapeur = false; vap.classList.remove('actif'); };
     vap.onpointerdown = on; vap.onpointerup = off; vap.onpointerleave = off; vap.onpointercancel = off;
     vap.oncontextmenu = (e) => e.preventDefault();
-    $('#emp-passer').onclick = () => { arretGeste && arretGeste(); session.scores.palier = 0.5; tuto('fin:empatage'); aller('ebullition'); preparerEbullition(); };
+    $('#emp-passer').onclick = () => { arretGeste && arretGeste(); session.scores.palier = 0.5; tuto('fin:empatage'); if (session.recette.destination === 'wash') { aller('fermentation'); preparerFermentation(); } else { aller('ebullition'); preparerEbullition(); } };
   }
   document.addEventListener('keydown', (e) => { if (ecran === 'empatage' && e.code === 'Space' && !$('#emp-vapeur').disabled) { e.preventDefault(); $('#emp-vapeur').onpointerdown(e); } });
   document.addEventListener('keyup', (e) => { if (ecran === 'empatage' && e.code === 'Space') $('#emp-vapeur').onpointerup(); });
@@ -864,10 +947,20 @@
   // Fin du brassin : calcul, jury, carnet, succès
   // =====================================================================
   let dernier = null;
+  // Risque d'infection (mode débutant) : fermentation mal tenue, pas d'ébullition, hygiène
+  function risqueInfection(rec) {
+    let p = 0.03 + (session.scores.ferm != null && session.scores.ferm < 0.5 ? 0.05 : 0);
+    if (rec.destination === 'wash') p *= 1.8;
+    if ((rec.auxiliaires || []).some((a) => IDX.aux.get(a)?.effet === 'hygiene')) p *= 0.5;
+    return p;
+  }
+  const BONUS_MEDAILLE = { bronze: 5, argent: 10, or: 20 };
+  function gagnerEcus(n) { if (!S.bac && n > 0) S.ecus += n; return S.bac ? 0 : n; }
   function finirBrassin() {
+    if (session.recette.destination === 'wash') return finirWash();
     const expertJoue = S.mode === 'expert' && session.joue;
     const res = Moteur.calculer(session.recette, expertJoue ? session.gestes : null);
-    const infection = S.mode === 'debutant' && session.joue && Math.random() < 0.03 + (session.scores.ferm != null && session.scores.ferm < 0.5 ? 0.05 : 0);
+    const infection = S.mode === 'debutant' && session.joue && Math.random() < risqueInfection(session.recette);
     const note = Moteur.noter(res, { mode: S.mode, scores: S.mode === 'debutant' ? session.scores : null, infection });
     const etoiles = { sansAide: !S.aide, expert: S.mode === 'expert', gestes: expertJoue };
     const nbEtoiles = Object.values(etoiles).filter(Boolean).length;
@@ -882,10 +975,33 @@
     };
     S.carnet.unshift(entree);
     const nouveaux = verifierSucces(entree, res, note);
+    const ecus = gagnerEcus(Math.round(note.total / 2) + (BONUS_MEDAILLE[note.medaille] || 0) + (note.medaille ? 3 * nbEtoiles : 0));
+    const cadeaux = verifierDecouvertes('biere', { entree, res, note, infection });
     sauver(); majEntete();
-    dernier = { entree, res, note, gain, palierMonte: palierAtteint() > palierAvant, nouveaux };
+    dernier = { type: 'biere', entree, res, note, gain, ecus, cadeaux, palierMonte: palierAtteint() > palierAvant, nouveaux };
     aller('degustation');
     rendreDegustation();
+  }
+  function finirWash() {
+    const expertJoue = S.mode === 'expert' && session.joue;
+    const res = Moteur.calculer(session.recette, expertJoue ? session.gestes : null);
+    const infection = S.mode === 'debutant' && session.joue && Math.random() < risqueInfection(session.recette);
+    const fiche = Moteur.noterWash(res, { infection });
+    const palierAvant = palierAtteint();
+    const gain = S.bac ? 0 : Math.round(fiche.total);
+    S.brassins++; S.points += gain;
+    const entree = {
+      id: Date.now().toString(36), type: 'wash', date: new Date().toISOString(), nom: `Wash n° ${S.brassins}`, style: 'Wash de distillation',
+      og: res.og, fg: res.fg, abv: res.abv, ibu: res.ibu, ebc: res.ebc, total: fiche.total, lignes: fiche.lignes, medaille: null,
+      etoiles: { sansAide: false, expert: false, gestes: false }, defauts: fiche.defauts.map((d) => d.nom), recette: session.recette, mode: S.mode, bac: S.bac, gain, lap: fiche.lap,
+    };
+    S.carnet.unshift(entree);
+    const ecus = gagnerEcus(Math.round(fiche.total) + 5);
+    const cadeaux = verifierDecouvertes('wash', { entree, res, infection });
+    sauver(); majEntete();
+    dernier = { type: 'wash', entree, res, fiche, gain, ecus, cadeaux, palierMonte: palierAtteint() > palierAvant, nouveaux: [] };
+    aller('degustation');
+    rendreDegustationWash();
   }
   function verifierSucces(e, res, note) {
     const s = session.scores, gagne = [];
@@ -962,8 +1078,10 @@
 
     // Gains et bilan de Lise
     const g = [];
-    g.push(S.bac ? 'Bac à sable : ce brassin ne rapporte pas de points.' : `<b>+${gain} points</b> de maîtrise · ${S.points} au total.`);
-    if (palierMonte) g.push(`Nouveaux ingrédients débloqués : ${PALIERS[palierAtteint()].txt}.`);
+    g.push(S.bac ? 'Bac à sable : ce brassin ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} écus en bourse.`);
+    if (palierMonte) g.push(`Nouveau niveau : le pigeonnier propose désormais ${PALIERS[palierAtteint()].txt}.`);
+    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    if (res.notes && res.notes.length) $('#degust-defauts').insertAdjacentHTML('afterbegin', `<p class="notes-degust">Notes : ${res.notes.map((n) => `<b>${esc(n.source)}</b> ${esc(n.notes || '')}`).join(' · ')}</p>`);
     nouveaux.forEach((n) => g.push(`★ Succès : ${esc(n)}`));
     if (S.mode === 'debutant' && note.malus > 0.15) g.push(`Les gestes ont coûté environ ${nf(note.malus * 8, 0)} points sur la saveur et l'impression.`);
     $('#degust-gains').innerHTML = `<div class="gains">${g.map((x) => `<p>${x}</p>`).join('')}</div>`;
@@ -983,7 +1101,7 @@
     nouveaux.forEach((n, i) => setTimeout(() => toast('★ ' + n), 2600 + i * 900));
   }
   $('#nom-cuvee').addEventListener('change', (e) => { if (!dernier) return; dernier.entree.nom = e.target.value.trim() || dernier.entree.nom; sauver(); });
-  $('#btn-rebrasser').addEventListener('click', () => { messageMentor = null; if (dernier && dernier.type === 'edv') { aller('distillerie'); return; } if (dernier) R = clone(dernier.entree.recette); onglet = 'cuve'; aller('brasserie'); });
+  $('#btn-rebrasser').addEventListener('click', () => { messageMentor = null; if (dernier && (dernier.type === 'edv' || dernier.type === 'wash')) { aller('distillerie'); return; } if (dernier) R = clone(dernier.entree.recette); onglet = 'cuve'; aller('brasserie'); });
   $('#btn-retour').addEventListener('click', () => { messageMentor = null; aller('domaine'); });
 
   // =====================================================================
@@ -1009,7 +1127,7 @@
       if (b.defauts.some((d) => /infection/i.test(d))) notes.push('infection : beaucoup d\'acétate d\'éthyle dans les têtes');
       return `<button class="biere-carte" data-biere="${b.id}" aria-pressed="${choixBiere === b.id}">
         <span class="nom">${esc(b.nom)}</span><span class="lap">${nf(b.abv * 10, 0)} LAP</span>
-        <span class="det">${esc(b.style)} · 1000 L à ${nf(b.abv)} % · ${nf(b.total, b.total % 1 ? 1 : 0)}/50</span>
+        <span class="det">${esc(b.style)} · 1000 L à ${nf(b.abv)} % · ${b.type === 'wash' ? `${nf(b.total, b.total % 1 ? 1 : 0)}/20` : `${nf(b.total, b.total % 1 ? 1 : 0)}/50`} · donnera une ${nomEauDeVie(b).toLowerCase()}</span>
         ${notes.length ? `<span class="det">${esc(notes.join(' · '))}</span>` : ''}</button>`;
     }).join('') : '<p class="vide">Aucune bière à distiller. Brasse d\'abord à la brasserie : chaque bière du carnet peut passer une fois dans Ulysse.</p>';
     rendreReglagesD();
@@ -1360,15 +1478,17 @@
     const palierAvant = palierAtteint();
     S.points += gain; S.brassins++;
     const entree = {
-      id: Date.now().toString(36), type: 'edv', date: new Date().toISOString(), nom: `Eau-de-vie de ${b.nom}`,
-      style: 'Eau-de-vie de bière', biere: b.nom, total: note ? note.total : 0, lignes: note ? note.lignes : null, medaille: note ? note.medaille : null,
+      id: Date.now().toString(36), type: 'edv', date: new Date().toISOString(), nom: `${nomEauDeVie(b)} · ${b.nom}`,
+      style: nomEauDeVie(b), biere: b.nom, total: note ? note.total : 0, lignes: note ? note.lignes : null, medaille: note ? note.medaille : null,
       etoiles, defauts: note ? note.defauts.map((d) => d.nom) : [], coeur: bl.coeur, rendement, aveugle, mode: S.mode, bac: S.bac, gain,
       ebc: 0, abv: bl.coeur.degre, coupes: r.coupes, incidents: { ...sessionD.incidents }, recyclees: sessionD.recyclees || 0,
     };
     S.carnet.unshift(entree);
     const nouveaux = verifierSuccesD(entree, note);
+    dernier = { ecus: gagnerEcus(note ? Math.round(note.total / 2) + (BONUS_MEDAILLE[note.medaille] || 0) + Math.round(10 * rendement) + 2 * (aveugle || 0) : 0) };
+    dernier.cadeaux = verifierDecouvertes('edv', { entree, note });
     sauver(); majEntete();
-    dernier = { type: 'edv', entree, note, bl, gain, rendement, palierMonte: palierAtteint() > palierAvant, nouveaux, r };
+    dernier = { ...dernier, type: 'edv', entree, note, bl, gain, rendement, palierMonte: palierAtteint() > palierAvant, nouveaux, r };
     aller('degustation');
     rendreDegustationEDV();
   }
@@ -1420,7 +1540,9 @@
     }
     $('#degust-defauts').innerHTML = note && note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [];
-    g.push(S.bac ? 'Bac à sable : cette chauffe ne rapporte pas de points.' : `<b>+${gain} points</b> de maîtrise, dont ${Math.round(10 * rendement)} pour le rendement${e.aveugle != null ? ` et ${2 * e.aveugle} pour l'aveugle` : ''} · ${S.points} au total.`);
+    g.push(S.bac ? 'Bac à sable : cette chauffe ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise, dont ${Math.round(10 * rendement)} pour le rendement${e.aveugle != null ? ` et ${2 * e.aveugle} pour l'aveugle` : ''}, et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} en bourse.`);
+    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    if (/malt|grain/.test(e.style)) g.push('C\'est un « new make » : il faudra au moins trois ans en fût de chêne de 700 L au plus pour qu\'il ait droit au nom de whisky (règlement UE 2019/787).');
     g.push(S.epaisses ? `Épaisses en réserve : ${nf(S.epaisses.A, 1)} LAP pour la prochaine bonne chauffe.` : 'Aucune épaisse en réserve.');
     if (palierMonte) g.push(`Nouveaux ingrédients débloqués : ${PALIERS[palierAtteint()].txt}.`);
     nouveaux.forEach((n) => g.push(`★ Succès : ${esc(n)}`));
@@ -1449,6 +1571,235 @@
     const poly = axes.map(([cle], k) => pt(k, Math.max(0.04, profil[cle] / 10)).join(',')).join(' ');
     const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="Pixelify Sans, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(profil[cle], 0)}</text>`; }).join('');
     return `<svg viewBox="0 0 220 220" role="img" aria-label="Profil aromatique">${anneaux}${rayons}<polygon class="poly" points="${poly}" fill="rgba(243,176,74,.35)" stroke="var(--braise)" stroke-width="2"/>${libs}</svg>`;
+  }
+
+  // =====================================================================
+  // Pigeonnier : catalogue, découvertes, grimoire
+  // =====================================================================
+  let catOnglet = 'cereales', catFiltre = 'achat', catRecherche = '';
+  const CATEGORIES = {
+    cereales: { lib: 'Céréales', liste: () => D.malts, det: (m) => `<b>${nf(m.ebc, 0)} EBC</b> · ${FAMILLES[m.fam]} · extrait ${m.rend} %${m.dp ? ` · ${m.dp} °Lintner` : ''}${m.gel ? ` · gélatinise vers ${m.gel} °C` : ''}${m.saveurs ? ` · ${esc(m.saveurs)}` : ''}` },
+    houblons: { lib: 'Houblons', liste: () => D.houblons, det: (h) => `<b>α ${nf(h.amin)}–${nf(h.amax)} %</b> · ${esc(h.pays)} · ${esc(h.aromes || '')}${h.oils && h.oils.myr != null ? ` · myrcène ${h.oils.myr} %, humulène ${h.oils.hum} %` : ''}` },
+    levures: { lib: 'Levures', liste: () => D.levures, det: (y) => `<b>${{ ale: 'Ale', lager: 'Lager', specialty: 'Spéciale', distilling: 'Distillerie' }[y.fam]}</b> · ${y.att[0]}–${y.att[1]} % · ${y.t[0]}–${y.t[1]} °C · tolère ${y.tol} % · ${esc(y.desc || '')}` },
+    eau: { lib: 'Sels', liste: () => D.sels, det: (x) => esc(x.note) },
+    aromates: { lib: 'Aromates', liste: () => D.aromates, det: (a) => `<b>${esc(a.notes)}</b> · usage ${nf(a.dose[0], 1)}–${nf(a.dose[1], 0)} g/L` },
+    auxiliaires: { lib: 'Auxiliaires', liste: () => D.auxiliaires, det: (a) => `<b>${esc(a.groupe)}</b> · ${esc(a.note)}` },
+    grimoire: { lib: 'Grimoire', liste: () => D.recettes, det: (r) => `<b>${esc(r.style || '')}</b>${r.og ? ` · OG ${sg(r.og)}` : ''}${r.ibu ? ` · ${Math.round(r.ibu)} IBU` : ''}` },
+  };
+  const possedeRecette = (r) => S.bac || S.grimoire.includes(r.id);
+  const etoilesRarete = (r) => '★'.repeat(Math.max(1, r)) + '☆'.repeat(Math.max(0, 5 - Math.max(1, r)));
+
+  function rendreCatalogue() {
+    const p = palierAtteint();
+    $('#cat-bourse').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${niveau()} : tu peux acheter jusqu'à la rareté ${'★'.repeat(Math.min(5, p + 1))}. ${PALIERS[p + 1] ? `Au prochain niveau (${PALIERS[p + 1].pts} points) : ${PALIERS[p + 1].txt}.` : ''}</p>
+      <button class="btn btn-mini btn-houblon" data-aller="veillee">Veillée : gagner des écus</button>`;
+    $('#cat-onglets').innerHTML = Object.entries(CATEGORIES).map(([id, c]) => {
+      const l = c.liste(), n = id === 'grimoire' ? l.filter(possedeRecette).length : l.filter(dispo).length;
+      return `<button class="onglet" role="tab" aria-selected="${catOnglet === id}" data-cat="${id}">${c.lib}<span class="badge">${n}/${l.length}</span></button>`;
+    }).join('');
+    const c = CATEGORIES[catOnglet];
+    const filtres = [['achat', 'À acheter'], ['possede', 'Possédés'], ['tous', 'Tous']];
+    let liste = c.liste().filter((x) => !catRecherche || `${x.nom} ${x.style || ''} ${x.aromes || ''} ${x.notes || ''}`.toLowerCase().includes(catRecherche.toLowerCase()));
+    const estPossede = (x) => (catOnglet === 'grimoire' ? possedeRecette(x) : dispo(x));
+    if (catFiltre === 'achat') liste = liste.filter((x) => !estPossede(x));
+    if (catFiltre === 'possede') liste = liste.filter(estPossede);
+    liste.sort((a, b) => (a.palier || 0) - (b.palier || 0) || a.nom.localeCompare(b.nom, 'fr'));
+    const total = liste.length;
+    liste = liste.slice(0, 60);
+    $('#cat-contenu').innerHTML = `<div class="filtres">${filtres.map(([k, v]) => `<button class="filtre" data-catfiltre="${k}" aria-pressed="${catFiltre === k}">${v}</button>`).join('')}</div>
+      <input class="recherche" id="cat-recherche" type="search" placeholder="Chercher" value="${esc(catRecherche)}" autocomplete="off">
+      ${liste.map((x) => carteArticle(x, catOnglet)).join('') || `<p class="vide">${catFiltre === 'achat' ? 'Tout est déjà à toi dans cette catégorie.' : 'Rien ici pour l\'instant.'}</p>`}
+      ${total > 60 ? `<p class="page-intro">${total - 60} autres : affine la recherche.</p>` : ''}`;
+    rendreDecouvertes();
+  }
+  function carteArticle(x, cat) {
+    const recette = cat === 'grimoire';
+    const possede = recette ? possedeRecette(x) : dispo(x);
+    const prix = prixDe(x, cat), ok = recette || achetable(x);
+    let action;
+    if (possede) action = recette ? `<button class="btn btn-feu" data-brasser="${esc(x.id)}">Brasser</button>` : '<span class="etq ok">Possédé</span>';
+    else if (!ok) action = `<span class="etq ko">${PALIERS[Math.max(0, (x.palier || 1) - 1)].pts} pts requis</span>`;
+    else action = `<button class="btn" data-acheter="${cat}:${esc(x.id)}" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>`;
+    let extra = '';
+    if (recette) {
+      const manque = manquantsRecette(x);
+      const ing = [...x.malts.map((l) => `${l.kg} kg ${IDX.malt.get(l.id).nom}`), ...x.houblons.map((l) => `${nf(l.g / 1000, 1)} kg ${IDX.houblon.get(l.id).nom} ${l.min < 0 ? 'à cru' : l.min + ' min'}`), IDX.levure.get(x.levure).nom];
+      extra = `<span class="det">${esc(ing.join(' · '))}</span>${possede && manque.length ? `<div class="manquants"><span class="det">Il te manque :</span>${manque.map((m) => `<button class="btn btn-sobre" data-acheter="${m.cat}:${esc(m.x.id)}" ${S.ecus < prixDe(m.x, m.cat) || !achetable(m.x) ? 'disabled' : ''}>${esc(m.x.nom)} · ${achetable(m.x) ? prixDe(m.x, m.cat) + ' écus' : 'niveau requis'}</button>`).join('')}</div>` : ''}`;
+    }
+    return `<div class="article ${possede ? 'possede' : ''} ${!possede && !ok ? 'hors' : ''}"><span class="nom">${esc(x.nom)} ${recette ? '' : `<span class="rarete">${etoilesRarete(x.palier || 0)}</span>`}</span>${action}
+      <span class="det">${CATEGORIES[cat].det(x)}</span>${extra}</div>`;
+  }
+  function manquantsRecette(r) {
+    const m = [];
+    r.malts.forEach((l) => { const x = IDX.malt.get(l.id); if (!dispo(x)) m.push({ x, cat: 'cereales' }); });
+    r.houblons.forEach((l) => { const x = IDX.houblon.get(l.id); if (!dispo(x) && !m.some((y) => y.x === x)) m.push({ x, cat: 'houblons' }); });
+    const y = IDX.levure.get(r.levure); if (!dispo(y)) m.push({ x: y, cat: 'levures' });
+    return m;
+  }
+  function acheter(cat, id) {
+    const x = cat === 'grimoire' ? IDX.recette.get(id) : CATEGORIES[cat].liste().find((e) => e.id === id);
+    if (!x) return;
+    const prix = prixDe(x, cat);
+    if (S.ecus < prix || (cat !== 'grimoire' && !achetable(x))) { son('rate'); return; }
+    S.ecus -= prix;
+    if (cat === 'grimoire') S.grimoire.push(id); else posseder(id);
+    son('ok'); toast(`${x.nom} ${cat === 'grimoire' ? 'ajoutée au grimoire' : 'arrive par pigeon'}.`);
+    sauver(); majEntete(); rendreCatalogue();
+  }
+  function brasserRecette(id) {
+    const r = IDX.recette.get(id); if (!r) return;
+    const manque = manquantsRecette(r);
+    if (manque.length) { direLise(`Il te manque ${manque.map((m) => m.x.nom).join(', ')}. Achète-les au pigeonnier, ou adapte la recette à la brasserie.`); return; }
+    const y = IDX.levure.get(r.levure);
+    R = S.recette = normaliser({
+      malts: r.malts.map((l) => ({ ...l })), houblons: r.houblons.map((l) => ({ ...l })), levure: r.levure,
+      ebullition: r.malts.some((l) => /pils/i.test(IDX.malt.get(l.id).nom)) ? 90 : 60,
+      fermentation: { temp: Math.round((y.fam === 'lager' ? Math.min(y.t[0] + 3, y.t[1]) : y.t[0] + (y.t[1] - y.t[0]) * 0.35) * 2) / 2, reposDiacetyle: y.fam === 'lager' },
+    });
+    son('ok'); toast(`${r.nom} chargée dans la cuve, ramenée à 1000 L.`);
+    onglet = 'cuve'; aller('brasserie');
+  }
+  $('#cat-onglets').addEventListener('click', (e) => { const b = e.target.closest('[data-cat]'); if (!b) return; catOnglet = b.dataset.cat; catRecherche = ''; son('clic'); rendreCatalogue(); });
+  $('#cat-contenu').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.catfiltre) { catFiltre = b.dataset.catfiltre; rendreCatalogue(); }
+    if (b.dataset.acheter) { const [cat, ...id] = b.dataset.acheter.split(':'); acheter(cat, id.join(':')); }
+    if (b.dataset.brasser) brasserRecette(b.dataset.brasser);
+  });
+  $('#cat-contenu').addEventListener('input', (e) => {
+    if (e.target.id !== 'cat-recherche') return;
+    catRecherche = e.target.value; const pos = e.target.selectionStart; rendreCatalogue();
+    const n = $('#cat-recherche'); n.focus(); n.setSelectionRange(pos, pos);
+  });
+
+  // Découvertes : des exploits qui font arriver des ingrédients en cadeau
+  const parNom = (liste, re) => liste.find((x) => re.test(x.nom));
+  const DECOUVERTES = [
+    { id: 'clarif', titre: 'Premier brassin', desc: 'Brasser une première bière', cadeaux: () => [parNom(D.auxiliaires, /^Whirlfloc/)], test: (e) => e === 'biere' },
+    { id: 'hygiene', titre: 'Leçon d\'hygiène', desc: 'Subir une infection', cadeaux: () => [parNom(D.auxiliaires, /^Star San/)], test: (e, c) => c.infection },
+    { id: 'noir', titre: 'Nuit noire', desc: 'Un stout ou un porter médaillé', cadeaux: () => [parNom(D.malts, /^CARAFA II Special/), parNom(D.malts, /^Special B Dingemans/)], test: (e, c) => e === 'biere' && c.note.medaille && ['stout', 'porter'].includes(c.res.style.style.sujet) },
+    { id: 'ble', titre: 'Blanche et blonde', desc: 'Une weizen ou une witbier médaillée', cadeaux: () => [parNom(D.aromates, /^Coriandre/), parNom(D.aromates, /^Écorce orange amère/)], test: (e, c) => e === 'biere' && c.note.medaille && /weizen|witbier/i.test(c.res.style.style.nom) },
+    { id: 'ipa', titre: 'Houblonnière', desc: 'Une IPA à 40 points ou plus', cadeaux: () => [parNom(D.houblons, /^Citra$/)], test: (e, c) => e === 'biere' && c.res.style.style.sujet === 'ipa' && c.note.total >= 40 },
+    { id: 'pils', titre: 'Pils de garde', desc: 'Une pils à 40 points ou plus', cadeaux: () => [parNom(D.levures, /^WLP800/)], test: (e, c) => e === 'biere' && c.res.style.style.sujet === 'pilsener' && c.note.total >= 40 },
+    { id: 'braggot', titre: 'Le miel du domaine', desc: 'Un braggot médaillé', cadeaux: () => [parNom(D.auxiliaires, /^Go-Ferm/), parNom(D.malts, /^Miel brut \(production/)], test: (e, c) => e === 'biere' && c.note.medaille && c.res.style.style.sujet === 'specialty' },
+    { id: 'zero', titre: 'Sans faute', desc: 'Une bière médaillée sans défaut', cadeaux: () => [parNom(D.auxiliaires, /^Servomyces/)], test: (e, c) => e === 'biere' && c.note.medaille && !c.note.defauts.length },
+    { id: 'orbiere', titre: 'Premier or', desc: 'Une médaille d\'or au jury de la bière', cadeaux: () => [parNom(D.houblons, /^Galaxy$/)], test: (e, c) => e === 'biere' && c.note.medaille === 'or' },
+    { id: 'wash', titre: 'Pour l\'alambic', desc: 'Brasser un premier wash', cadeaux: () => [parNom(D.auxiliaires, /^Glucoamylase/)], test: (e) => e === 'wash' },
+    { id: 'distil', titre: 'Première goutte', desc: 'Distiller une première eau-de-vie', cadeaux: () => [parNom(D.levures, /^Distilamax XP$/), parNom(D.auxiliaires, /^DAP/)], test: (e) => e === 'edv' },
+    { id: 'nez', titre: 'Nez de bouilleur', desc: 'Trois fractions sur trois à l\'aveugle', cadeaux: () => [parNom(D.levures, /^SafSpirit M-1$/)], test: (e, c) => e === 'edv' && c.entree.aveugle === 3 },
+    { id: 'gin', titre: 'Panier de botaniques', desc: 'Distiller une bière aux aromates', cadeaux: () => [parNom(D.aromates, /^Baies de genièvre/)], test: (e, c) => e === 'edv' && (S.carnet.find((x) => x.nom === c.entree.biere)?.recette?.aromates || []).some((a) => IDX.aromate.get(a.id)?.type !== 'fruit') },
+    { id: 'veillee', titre: 'Veillée studieuse', desc: 'Cinq bonnes réponses d\'affilée à la veillée', cadeaux: () => [parNom(D.houblons, /^Nelson Sauvin$/)], test: (e) => e === 'quiz' && S.quiz && S.quiz.serie >= 5 },
+  ];
+  function verifierDecouvertes(evt, ctx = {}) {
+    const recus = [];
+    if (S.bac) return recus;
+    for (const d of DECOUVERTES) {
+      if (S.decouvertes[d.id]) continue;
+      let ok = false; try { ok = !!d.test(evt, ctx); } catch (e) { ok = false; }
+      if (!ok) continue;
+      S.decouvertes[d.id] = new Date().toISOString();
+      for (const x of d.cadeaux().filter(Boolean)) {
+        if (dispo(x)) { gagnerEcus(10); recus.push(`${d.titre} : ${x.nom} déjà en réserve, +10 écus`); }
+        else { posseder(x.id); recus.push(`${d.titre} : ${x.nom}`); }
+      }
+    }
+    // Chaque bière médaillée ajoute au grimoire une recette du même style
+    if (evt === 'biere' && ctx.note && ctx.note.medaille) {
+      const mots = sansAccents(ctx.res.style.style.nom).split(/\W+/).filter((m) => m.length > 3);
+      const libres = D.recettes.filter((r) => !S.grimoire.includes(r.id));
+      const proche = libres.find((r) => mots.some((m) => sansAccents(r.style + ' ' + r.nom).includes(m))) || libres[Math.floor(Math.random() * libres.length)];
+      if (proche) { S.grimoire.push(proche.id); recus.push(`Grimoire : ${proche.nom}`); }
+    }
+    recus.forEach((r, i) => setTimeout(() => toast('Découverte · ' + r), 3200 + i * 900));
+    return recus;
+  }
+  const sansAccents = (t) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  function rendreDecouvertes() {
+    $('#cat-decouvertes').innerHTML = DECOUVERTES.map((d) => `<div class="succes-item ${S.decouvertes[d.id] ? 'obtenu' : ''}"><b>${esc(d.titre)}</b>${esc(d.desc)} → ${esc(d.cadeaux().filter(Boolean).map((x) => x.nom).join(', '))}</div>`).join('');
+  }
+
+  // =====================================================================
+  // Veillée : questions tirées des cartes de formation du Hub
+  // =====================================================================
+  let questionCourante = null;
+  const aujourdhui = () => new Date().toISOString().slice(0, 10);
+  function etatQuiz() { if (!S.quiz || S.quiz.jour !== aujourdhui()) S.quiz = { jour: aujourdhui(), faits: 0, bonnes: 0, serie: S.quiz ? S.quiz.serie : 0 }; return S.quiz; }
+  function nouvelleQuestion() {
+    const C = D.quiz.cartes, carte = C[Math.floor(Math.random() * C.length)];
+    const memes = C.filter((c) => c.d === carte.d && c !== carte && c.r !== carte.r);
+    const autres = C.filter((c) => c.d !== carte.d);
+    const pioche = (src, n) => src.slice().sort(() => Math.random() - 0.5).slice(0, n);
+    const leurres = pioche(memes, 2);
+    if (leurres.length < 2) leurres.push(...pioche(autres, 2 - leurres.length));
+    const options = [carte, ...leurres].map((c) => c.r).sort(() => Math.random() - 0.5);
+    questionCourante = { carte, options, repondu: null };
+  }
+  function rendreVeillee() {
+    const q = etatQuiz();
+    const reste = Math.max(0, 5 - q.faits);
+    $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
+    if (!questionCourante) nouvelleQuestion();
+    const { carte, options, repondu } = questionCourante;
+    const qui = Math.random() < 0.5 ? 'Lise' : 'Firmin';
+    $('#veillee-question').innerHTML = `<div class="question"><span class="module">${esc(D.quiz.modules[carte.d] || '')}</span>
+      <p class="page-intro">Quelle réponse correspond à :</p><p class="enonce">${esc(carte.q)}</p>
+      <div class="reponses">${options.map((o, i) => `<button data-rep="${i}" ${repondu != null ? 'disabled' : ''} class="${repondu != null ? (o === carte.r ? 'juste' : i === repondu ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
+      ${repondu != null ? `<p>${options[repondu] === carte.r ? '<b style="color:var(--houblon)">Juste.</b>' : '<b style="color:var(--alerte)">Raté.</b> La bonne réponse est encadrée en vert.'}</p><button class="btn btn-feu" id="veillee-suivante">Question suivante</button>` : `<p class="page-intro">${qui} attend ta réponse.</p>`}</div>`;
+  }
+  $('#veillee-question').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.id === 'veillee-suivante') { questionCourante = null; rendreVeillee(); return; }
+    if (b.dataset.rep == null || !questionCourante || questionCourante.repondu != null) return;
+    const i = +b.dataset.rep, q = etatQuiz();
+    questionCourante.repondu = i;
+    const juste = questionCourante.options[i] === questionCourante.carte.r;
+    q.serie = juste ? q.serie + 1 : 0;
+    if (q.faits < 5) { q.faits++; if (juste) { q.bonnes++; gagnerEcus(4); } }
+    son(juste ? 'ok' : 'rate');
+    const cadeaux = verifierDecouvertes('quiz');
+    cadeaux.forEach(() => {});
+    sauver(); majEntete(); rendreVeillee();
+  });
+
+  // =====================================================================
+  // Fiche technique du wash
+  // =====================================================================
+  function nomEauDeVie(b) {
+    if (b.type !== 'wash') return 'Eau-de-vie de bière';
+    const ms = (b.recette.malts || []).map((l) => IDX.malt.get(l.id)).filter(Boolean);
+    const malt = ms.every((m) => ['base', 'kilned', 'caramel', 'roasted'].includes(m.fam) && !/bl[ée]|wheat|seigle|rye|froment/i.test(m.nom));
+    return malt ? 'Eau-de-vie de malt' : 'Eau-de-vie de grain';
+  }
+  function rendreDegustationWash() {
+    const { entree: e, res, fiche, gain } = dernier;
+    const ctx = $('#verre').getContext('2d');
+    const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
+    ctx.clearRect(0, 0, 64, 96); px(0, 0, 64, 96, '#221912');
+    px(16, 14, 32, 70, '#9aa1a8'); px(18, 16, 28, 66, '#3b2d22'); px(18, 30, 28, 52, `rgba(${Moteur.couleurRVB(res.ebc).join(',')},.75)`);
+    for (let i = 0; i < 14; i++) px(20 + (i * 7) % 24, 32 + (i * 11) % 46, 2, 2, 'rgba(236,223,196,.5)');
+    px(18, 26, 28, 4, '#e8dcc0');
+    $('#verdict').innerHTML = `<span class="style">Wash de distillation · ${esc(res.levure.nom)}</span>
+      <span class="total">${nf(fiche.total, fiche.total % 1 ? 1 : 0)}<small>/20</small></span>
+      <span class="medaille aucune">Fiche du bouilleur</span>
+      <span class="style">${sg(res.og)} → ${sg(res.fg)} · ${nf(res.abv)} % vol · atténuation ${Math.round(res.attenuation * 100)} % · ${nf(fiche.lap, 0)} LAP</span>`;
+    const axes = [['malte', 'Malté'], ['caramel', 'Caramel'], ['torrefie', 'Torréfié'], ['amer', 'Amer'], ['houblon', 'Houblonné'], ['fruite', 'Fruité'], ['epice', 'Épicé'], ['corps', 'Corps']];
+    $('#radar').innerHTML = radarSVG(axes, res.profil);
+    const L = fiche.lignes;
+    const rang = [['alcool', 'Alcool à distiller', 8], ['attenuation', 'Atténuation', 4], ['proprete', 'Propreté', 5], ['potentiel', 'Potentiel aromatique', 3]];
+    $('#fiche-jury').innerHTML = `<h3>FICHE DU BOUILLEUR · WASH</h3><table>${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.3 + i * 0.3}s"><td>${lib}</td><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
+      <tr class="total lent" style="animation-delay:1.5s"><td>Total</td><td>${nf(fiche.total, fiche.total % 1 ? 1 : 0)} / 20</td></tr></table>`;
+    $('#degust-defauts').innerHTML = fiche.defauts.length ? `<h2 class="sous-titre">Points faibles</h2>` + fiche.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
+    const g = [S.bac ? 'Bac à sable : ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b>.`];
+    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    g.push(`Ce wash donnera une ${nomEauDeVie(e).toLowerCase()} : il t'attend à l'alambic.`);
+    $('#degust-gains').innerHTML = `<div class="gains">${g.map((x) => `<p>${x}</p>`).join('')}</div>`;
+    $('#nom-cuvee').value = e.nom;
+    $('#btn-rebrasser').textContent = 'Aller à l\'alambic';
+    const bilan = [res.abv >= 7.5 ? 'Un wash bien chargé, ça va bien monter.' : 'Un peu léger en alcool : plus de malt, ou une levure de distillerie.'];
+    if (res.attenuation < 0.85) bilan.push('L\'atténuation est courte : une glucoamylase ou un palier plus bas aideraient.');
+    if (res.houblons && res.houblons.length) bilan.push('Du houblon dans un wash, Lise a déteint sur toi.');
+    setTimeout(() => { if (ecran === 'degustation') direLise(bilan.join(' ')); }, reduit ? 0 : 1800);
+    setTimeout(() => son('ok'), reduit ? 0 : 1500);
   }
 
   // =====================================================================
@@ -1506,7 +1857,7 @@
     const hops = rec.houblons.map((l) => `${nf(l.g / 1000, 2)} kg ${IDX.houblon.get(l.id)?.nom || '?'} ${l.min < 0 ? 'à cru' : l.min + ' min'}`).join(', ');
     $('#carnet-detail').innerHTML = `<div class="carnet-detail"><h3>${esc(x.nom)}</h3>
       <p>${esc(x.style)} · ${new Date(x.date).toLocaleDateString('fr-FR')} · mode ${x.mode === 'expert' ? 'expert' : 'débutant'}${x.bac ? ' · bac à sable' : ''}</p>
-      <div class="chiffres"><span>${nf(x.total, x.total % 1 ? 1 : 0)}/50</span><span>${sg(x.og)} → ${sg(x.fg)}</span><span>${nf(x.abv)} %</span><span>${nf(x.ibu, 0)} IBU</span><span>${nf(x.ebc, 0)} EBC</span></div>
+      <div class="chiffres"><span>${nf(x.total, x.total % 1 ? 1 : 0)}/${x.type === 'wash' ? 20 : 50}</span><span>${sg(x.og)} → ${sg(x.fg)}</span><span>${nf(x.abv)} %</span><span>${nf(x.ibu, 0)} IBU</span><span>${nf(x.ebc, 0)} EBC</span></div>
       <p>${x.medaille ? `Médaille ${x.medaille === 'or' ? "d'or" : x.medaille === 'argent' ? "d'argent" : 'de bronze'}` : 'Sans médaille'}${x.defauts.length ? ` · défauts : ${esc(x.defauts.join(', '))}` : ' · aucun défaut'}</p>
       <p><b>Malts :</b> ${esc(malts)}</p><p><b>Houblons :</b> ${esc(hops) || 'aucun'}</p>
       ${x.distillee ? '<p><b>Distillée</b> dans Ulysse.</p>' : ''}<p><b>Levure :</b> ${esc(IDX.levure.get(rec.levure)?.nom || '?')} à ${nf(rec.fermentation.temp)} °C · eau ${esc(IDX.eau.get(rec.eau)?.nom || '?')} · palier ${nf(rec.palier)} °C · ${rec.ebullition} min</p>
@@ -1589,6 +1940,28 @@
       "Les levures produisent des composés soufrés (H₂S, thiols, DMS), surtout les levures lager. Le cuivre de la chaudière et du chapiteau les fixe sous forme de sulfures de cuivre : Ulysse en retire environ 80 % dans le jeu.",
       "La bière mousse en chauffant : protéines et CO₂ dissous. Un feu trop vif au début fait monter la mousse dans le col de cygne et de la bière passe dans le brouillis (puking).",
       "Une bière chargée de levure accroche au fond d'une chaudière chauffée à feu nu : caramélisation, furfural, goût de brûlé. D'où la chauffe douce et régulière des bouilleurs."]],
+    cereales: ['Céréales crues, flocons et bêta-glucanes', 'adjuncts and gelatinization', [
+      "Pour que les enzymes attaquent l'amidon, il faut d'abord le gélatiniser : les granules gonflent d'eau et éclatent. L'amidon du malt d'orge gélatinise pendant l'empâtage, vers 61–65 °C.",
+      "Les grains crus gélatinisent plus haut : environ 58–64 °C pour le blé, 57–70 °C pour le seigle, 62–74 °C pour le maïs. Dans le jeu, un grain cru reste à moitié inaccessible si le palier est à moins de sa température de gélatinisation plus 8 °C, sauf avec la cuisson des grains crus.",
+      "La cuisson (cereal cooking) : on fait bouillir les grains crus à part, souvent avec un peu de malt, puis on verse cette bouillie dans la maische. Les flocons sont déjà gélatinisés : ils passent entre des rouleaux chauffés à la vapeur.",
+      "Les bêta-glucanes sont des polysaccharides des parois cellulaires, abondants dans l'avoine, le seigle et l'orge non maltée. Ils rendent la maische visqueuse : la filtration traîne et le rendement baisse. Au-delà de 30 % de ces grains, une bêta-glucanase les découpe.",
+      "Les grains crus n'apportent aucune enzyme : il faut assez de malt de base pour convertir leur amidon."]],
+    aromates: ['Aromates : fruits, épices, bois', 'adjuncts and botanicals', [
+      "Les épices et les zestes apportent des huiles essentielles : limonène des écorces d'agrume, linalol de la coriandre, alpha-pinène du genièvre. On les ajoute en fin d'ébullition, ou à froid, pour ne pas les évaporer.",
+      "Les doses se comptent en grammes par litre. Sur 1000 L, 1 g/L fait 1 kg. Chaque aromate a sa plage d'usage : au-delà d'une fois et demie le haut de la plage, le jury le trouve envahissant.",
+      "Les purées de fruits apportent environ 12 % de sucres, que la levure fermente : la densité monte un peu. Ajoutées en garde, elles gardent mieux leurs arômes, qui sinon partent avec le CO₂.",
+      "Le chêne libère des lactones (la whisky lactone, noix de coco), de la vanilline et des tanins. Le bois fumé apporte des phénols de fumée.",
+      "À la distillation, les huiles volatiles des botaniques passent dans l'eau-de-vie : c'est le principe du gin. Le jeu les compte avec les terpènes du houblon."]],
+    auxiliaires: ['Auxiliaires de brassage', 'processing aids', [
+      "Nutriments (DAP, Servomyces, Fermaid, Go-Ferm) : ils apportent de l'azote assimilable et du zinc. La levure fermente plus franchement, produit moins de composés soufrés et va un peu plus loin en alcool.",
+      "Clarifiants à chaud (Whirlfloc, Irish moss, Protafloc) : le carraghénane, chargé négativement, fait floculer les protéines en fin d'ébullition. Clarifiants à froid (gélatine, isinglass, kieselsol) : ils entraînent levures et trouble au fond. Une weizen ou une witbier doivent rester troubles : les coller leur coûte des points.",
+      "Enzymes : l'alpha-amylase exogène convertit l'amidon quand les malts manquent d'enzymes ; la glucoamylase coupe les liaisons α-1,4 et α-1,6 des dextrines en glucose, pour une bière très sèche ; la bêta-glucanase fluidifie la maische ; la lactase rend le lactose fermentescible.",
+      "Hygiène (Star San, Chemipro Oxi, PBW, soude) : nettoyage puis désinfection. Dans le jeu, le risque d'infection est divisé par deux."]],
+    wash: ['Le wash de distillation', 'distillers wash', [
+      "Un wash est un moût fermenté destiné à l'alambic. On ne le fait pas bouillir : les enzymes du malt continuent de travailler pendant la fermentation, et l'atténuation dépasse souvent 90 %.",
+      "Sans ébullition, rien ne stérilise le moût : le risque bactérien monte. En Écosse, une petite fermentation lactique en fin de cycle est même recherchée pour ses esters.",
+      "Les levures de distillerie tolèrent plus d'alcool et de chaleur, et chacune a son profil d'esters : de très neutre (Distilamax XP) à très fruitée (Distilamax RM).",
+      "Un wash 100 % malt d'orge donne une eau-de-vie de malt ; avec du blé, du seigle ou du maïs, une eau-de-vie de grain. Pour avoir droit au nom de whisky, il faut ensuite au moins trois ans en fût de chêne de 700 L au plus (règlement UE 2019/787)."]],
     jury: ['La fiche de dégustation', 'BJCP scoresheet', [
       "Le barème suit celui des concours BJCP : aspect sur 3, arôme sur 12, bouche sur 5, saveur sur 20, impression générale sur 10. Bronze à partir de 30, argent à 38, or à 45.",
       "Le jury juge la conformité au style, les arômes attendus (houblon pour une IPA, esters et phénols pour une weizen, torréfaction pour un stout) et l'équilibre BU:GU. Chaque défaut retire des points selon sa gravité.",
@@ -1596,11 +1969,11 @@
       "Étoiles : sans l'aide de Lise, en mode expert, gestes joués en mode expert. Chaque étoile ajoute 5 points de maîtrise à une bière médaillée."]],
   };
   let retourFiche = null;
-  const NOMS_ECRANS = { brasserie: 'la brasserie', distillerie: "l'alambic", degustation: 'la dégustation', carnet: 'le carnet', domaine: 'le domaine' };
+  const NOMS_ECRANS = { brasserie: 'la brasserie', catalogue: 'le pigeonnier', veillee: 'la veillée', distillerie: "l'alambic", degustation: 'la dégustation', carnet: 'le carnet', domaine: 'le domaine' };
   function rendreFiches() {
     const retour = retourFiche && NOMS_ECRANS[retourFiche] ? `<button class="btn btn-sobre" data-aller="${retourFiche}">← Retour à ${NOMS_ECRANS[retourFiche]}</button>` : '';
     retourFiche = null;
-    $('#fiches-liste').innerHTML = retour + Object.entries(FICHES).map(([id, [titre, en, paras]]) => `<details class="fiche" id="fiche-${id}"><summary><span>${esc(titre)} <span class="en">${esc(en)}</span></span></summary><div class="contenu">${paras.map((p) => `<p>${p}</p>`).join('')}</div></details>`).join('');
+    $('#fiches-liste').innerHTML = retour + '<button class="btn btn-houblon" data-aller="veillee">Veillée : se tester sur les modules</button>' + Object.entries(FICHES).map(([id, [titre, en, paras]]) => `<details class="fiche" id="fiche-${id}"><summary><span>${esc(titre)} <span class="en">${esc(en)}</span></span></summary><div class="contenu">${paras.map((p) => `<p>${p}</p>`).join('')}</div></details>`).join('');
   }
   function ouvrirFiche(id) {
     son('clic'); retourFiche = ecran; aller('fiches');
@@ -1623,7 +1996,7 @@
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir le tutoriel</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.2 · brasserie et alambic Ulysse. Données du Hub Prométhée : ${D.malts.length} malts, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.styles.length} styles, ${D.eaux.length} eaux.</p></div>`;
+      <p class="infos-version">Version 0.3 · brasserie, alambic Ulysse, pigeonnier et veillée. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

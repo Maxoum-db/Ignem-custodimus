@@ -161,14 +161,16 @@ button { cursor: pointer; }
 .conseil b { color: var(--braise); }
 .conseil button { background: none; border: 0; color: var(--braise); text-decoration: underline; padding: 0 0 0 4px; font-size: 14px; }
 
-.onglets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 4px 0 0; }
-@media (min-width: 560px) { .onglets { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.onglets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 4px 0 0; }
+@media (min-width: 560px) { .onglets { grid-template-columns: repeat(7, minmax(0, 1fr)); } }
 .onglet {
   border: 0; padding: 8px 6px; background: var(--four); color: var(--cendre);
   font-weight: 600; font-size: 14px; box-shadow: var(--relief);
 }
 .onglet[aria-selected="true"] { background: var(--calcaire); color: var(--nuit); }
 .onglet .badge { font-family: var(--f-chiffre); font-size: 17px; margin-left: 4px; }
+#cat-onglets .onglet { padding: 6px 4px; line-height: 1.15; }
+#cat-onglets .badge { display: block; margin: 2px 0 0; font-size: 15px; }
 .onglet-contenu { display: flex; flex-direction: column; gap: 8px; min-height: 120px; }
 
 .filtres { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -282,6 +284,43 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .verre-a.faux { box-shadow: 0 0 0 3px var(--alerte); }
 .verre-a .reponse { font-size: 13px; font-weight: 700; }
 
+/* ---------- Catalogue et veillée ---------- */
+.bourse { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; background: var(--four); box-shadow: var(--cadre); padding: 10px 12px; }
+.bourse .ecus { font-family: var(--f-chiffre); font-size: 30px; line-height: 1; color: var(--or); }
+.bourse p { margin: 0; font-size: 14px; color: var(--cendre); flex: 1 1 200px; }
+.article { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center; background: var(--four); padding: 10px; box-shadow: 0 0 0 2px var(--pierre); }
+.article.possede { box-shadow: 0 0 0 2px var(--houblon); }
+.article.hors { opacity: .55; }
+.article .nom { font-weight: 700; min-width: 0; line-height: 1.25; }
+.article .det { grid-column: 1 / -1; font-size: 13px; color: var(--cendre); line-height: 1.35; }
+.article .det b { color: var(--calcaire); font-weight: 600; }
+.rarete { color: var(--braise); letter-spacing: 1px; font-size: 13px; white-space: nowrap; }
+.prix { font-family: var(--f-chiffre); font-size: 20px; color: var(--or); }
+.article .btn { min-height: 36px; padding: 4px 10px; font-size: 14px; }
+.manquants { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.manquants .btn { font-size: 13px; }
+.etq.ok { background: #3f5a2a; }
+.etq.ko { background: #6a2f24; }
+.question { background: var(--four); box-shadow: var(--cadre); padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.question .module { font-size: 12px; color: var(--cuivre); font-family: var(--f-titre); line-height: 1.6; }
+.question .enonce { font-weight: 700; font-size: 17px; margin: 0; }
+.reponses { display: flex; flex-direction: column; gap: 8px; }
+.reponses button { text-align: left; border: 0; padding: 10px; background: var(--nuit); color: var(--calcaire); box-shadow: 0 0 0 2px var(--pierre); font-size: 14px; line-height: 1.4; }
+.reponses button.juste { box-shadow: 0 0 0 3px var(--houblon); }
+.reponses button.faux { box-shadow: 0 0 0 3px var(--alerte); }
+.reponses button:disabled { cursor: default; }
+.dose { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center; background: var(--four); padding: 8px 10px; box-shadow: 0 0 0 2px var(--pierre); }
+.dose label { font-weight: 600; font-size: 14px; }
+.dose .val { font-family: var(--f-chiffre); font-size: 20px; color: var(--braise); }
+.dose input[type="range"] { grid-column: 1 / -1; }
+.dose p { grid-column: 1 / -1; margin: 0; font-size: 12px; color: var(--cendre); }
+.coche { display: flex; gap: 10px; align-items: flex-start; background: var(--nuit); padding: 8px; box-shadow: 0 0 0 2px var(--pierre); }
+.coche input { width: 20px; height: 20px; accent-color: var(--houblon); margin-top: 2px; flex: none; }
+.coche span { font-size: 14px; }
+.coche small { display: block; color: var(--cendre); font-size: 12px; }
+.notes-degust { margin: 0; padding: 8px 12px; background: var(--four); box-shadow: var(--cadre); font-size: 14px; }
+.notes-degust b { color: var(--braise); }
+
 /* ---------- Dégustation ---------- */
 .degust-haut { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; }
 #verre { width: 96px; height: 144px; display: block; }
@@ -387,8 +426,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01s !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
+@media (max-width: 440px) {
+  .marque-nom { display: none; }
+  .entete-niveau { font-size: 12px; }
+}
 @media (max-width: 380px) {
   .entete-nav button { padding: 6px 5px; font-size: 12px; }
-  .marque-nom { display: none; }
   .mesure .v { font-size: 21px; }
 }

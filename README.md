@@ -2,7 +2,7 @@
 
 Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du Hub Prométhée.
 
-## Le jeu (V0.2 : brasserie et alambic Ulysse)
+## Le jeu (V0.3 : brasserie, alambic Ulysse, pigeonnier et veillée)
 
 | Dossier | Contenu |
 |---|---|
@@ -13,6 +13,23 @@ Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du H
 | `jeu/tests/moteur.test.mjs` | Recettes de référence (pils, IPA, dry stout, weizen, recette ratée) |
 | `jeu/tests/distillerie.test.mjs` | Distillation d'une IPA avec différentes coupes |
 | `dist/index.html` | Jeu complet en une page, prêt à héberger |
+
+### Ce que le jeu tire des données du Hub
+
+| Famille | Nombre | Usage dans le jeu |
+|---|---|---|
+| Céréales, sucres et miel | 128 | Brassage, gélatinisation des grains crus, bêta-glucanes |
+| Houblons | 45 | Tinseth, huiles (myrcène, humulène, caryophyllène) pour les notes |
+| Levures | 108 | Dont 16 de distillerie pour les washs |
+| Aromates | 40 | Fruits, épices, botaniques, bois ; passent aussi à l'alambic |
+| Sels et acide | 7 | Ions de l'eau, pH, rapport sulfates/chlorures |
+| Auxiliaires | 23 | Nutriments, clarifiants, enzymes, hygiène |
+| Recettes | 205 sur 302 | Grimoire, ramenées à 1000 L (celles dont les ingrédients se rattachent) |
+| Questions | 128 | Veillée quotidienne, tirées des cartes de formation techniques |
+
+### Déblocages
+
+Les écus se gagnent au jury, à l'alambic et à la veillée. Ils s'échangent au pigeonnier contre des ingrédients (8 à 60 écus selon la rareté) ou des recettes (10 écus). Le niveau de maîtrise, en points, limite la rareté accessible. Les découvertes offrent des ingrédients après certains exploits, et chaque bière médaillée ajoute une recette au grimoire.
 
 ```bash
 npm run test:jeu    # teste les moteurs de brassage et de distillation
