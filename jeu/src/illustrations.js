@@ -1,16 +1,17 @@
 /* Ignem custodimus — présentation illustrée, sans dépendance métier.
- * Le jeu pixel-art reste inchangé tant que les visuels définitifs sont absents.
+ * Le dessin historique reste disponible si les illustrations sont absentes.
  * Chaque scène utilise une couche de décor et des objets distincts ; les liquides,
  * la vapeur, les flammes et les jauges restent dessinés par les contrôleurs du jeu.
  */
 (function () {
   'use strict';
   const scenes = Object.freeze({
-    emp: { canvas: 'emp-canvas', fond: 'a-fond', objets: ['a-cuve-vide', 'a-tuyauterie'] },
-    fil: { canvas: 'fil-canvas', fond: 'b-fond', objets: ['b-filtre-vide', 'b-bac'] },
-    ebu: { canvas: 'ebu-canvas', fond: 'c-fond', objets: ['c-chaudiere-vide', 'c-houblon'] },
-    fer: { canvas: 'fer-canvas', fond: 'd-fond', objets: ['d-fermenteur-vide', 'd-vanne-glycol'] },
-    bou: { canvas: 'bou-canvas', fond: 'e-fond', objets: ['e-embouteilleuse', 'e-bouteilles-vides'] },
+    cuve: { canvas: 'cuve', fond: 'brasserie-fond', objets: ['a-cuve-vide'] },
+    emp: { canvas: 'emp-canvas', fond: 'brasserie-fond', objets: ['a-cuve-vide'] },
+    fil: { canvas: 'fil-canvas', fond: 'brasserie-fond', objets: ['b-filtre-vide'] },
+    ebu: { canvas: 'ebu-canvas', fond: 'brasserie-fond', objets: ['a-cuve-vide'] },
+    fer: { canvas: 'fer-canvas', fond: 'brasserie-fond', objets: ['d-fermenteur-vide'] },
+    bou: { canvas: 'bou-canvas', fond: 'brasserie-fond', objets: ['e-capsuleuse'] },
     ulysse: { canvas: 'ulysse', fond: 'f-fond', objets: ['f-alambic-vide', 'f-condenseur'] },
     bro: { canvas: 'bro-canvas', fond: 'f-fond', objets: ['f-alambic-vide', 'f-condenseur'] },
     rep: { canvas: 'rep-canvas', fond: 'f-fond', objets: ['f-alambic-vide', 'f-condenseur'] }

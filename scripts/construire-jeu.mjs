@@ -339,8 +339,10 @@ async function donneesJeu() {
 async function construire() {
   const D = await donneesJeu();
   const IMAGES = await imagesJeu(path.join(RACINE, 'jeu', 'src', 'images'));
-  const [page, css, moteur, distillerie, chai, ecole, vente, illustrations, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'chai.js', 'ecole.js', 'vente.js', 'illustrations.js', 'jeu.js'].map(src));
+  const [page, css, moteur, distillerie, chai, ecole, vente, illustrations, ateliers, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'chai.js', 'ecole.js', 'vente.js', 'illustrations.js', 'ateliers.js', 'jeu.js'].map(src));
+  const police = await fs.readFile(path.join(RACINE, 'jeu', 'src', 'fonts', 'lilita-one.woff'));
   const corps = page
+    .replace('/*POLICES*/', () => '@font-face{font-family:"Lilita One";font-style:normal;font-weight:400;font-display:swap;src:url(data:font/woff;base64,' + police.toString('base64') + ') format("woff");}')
     .replace('/*CSS*/', () => css)
     .replace('/*DONNEES*/', () => 'window.DONNEES_JEU = ' + JSON.stringify(D) + ';')
     .replace('/*IMAGES*/', () => 'window.IMAGES_JEU = ' + JSON.stringify(IMAGES) + ';')
@@ -350,6 +352,7 @@ async function construire() {
     .replace('/*ECOLE*/', () => ecole)
     .replace('/*VENTE*/', () => vente)
     .replace('/*ILLUSTRATIONS*/', () => illustrations)
+    .replace('/*ATELIERS*/', () => ateliers)
     .replace('/*JEU*/', () => jeu);
   const complet = `<!doctype html>\n<html lang="fr">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n</head>\n<body>\n${corps}\n</body>\n</html>\n`;
   await fs.mkdir(path.join(RACINE, 'dist'), { recursive: true });

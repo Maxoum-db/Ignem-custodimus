@@ -1219,6 +1219,7 @@
   let splash = 0, animCuve = null;
   function dessinerCuve(t) {
     const c = $('#cuve').getContext('2d'), W = 120, H = 96, r = dernierCalc;
+    if (window.AteliersIllustres?.rendre('cuve', c, { t, niveau: borne((r ? r.kgTotal : 0) / 260, 0, 1), couleur: couleur(r ? r.ebc : 6), splash }, () => dessinerCuve(t))) { splash = Math.max(0, splash - 0.05); return; }
     const px = (x, y, w, h, col) => { c.fillStyle = col; c.fillRect(Math.round(x), Math.round(y), w, h); };
     px(0, 0, W, H, '#221912');
     for (let y = 6; y < H; y += 10) for (let x = (y % 20 === 6 ? 0 : 10); x < W; x += 20) px(x, y, 16, 1, '#2c2118');
@@ -1325,6 +1326,7 @@
     const enzyme = (T) => T < 60 ? ['β', 'au ralenti'] : T < 65 ? ['β', 'maltose'] : T < 68 ? ['α + β', 'équilibre'] : T < 72.5 ? ['α', 'dextrines'] : ['—', 'dénaturées'];
     const ctx = $('#emp-canvas').getContext('2d');
     const dessin = () => {
+      if (window.AteliersIllustres?.rendre('emp', ctx, { ...st, cible, prevision: S.aide && st.t > 0 ? prevoirVapeur(st) : null }, dessin)) return;
       const px = (x, y, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve-matière et sa double enveloppe (rougit avec la chaleur stockée)
@@ -1436,7 +1438,9 @@
     deb.oninput = () => { st.u = deb.value / 100; };
     maintenir(bR, () => { st.rince = true; }, () => { st.rince = false; });
     const ctx = $('#fil-canvas').getContext('2d');
+    const teinteFiltration = couleur(Math.max(6, session.recette.malts.length ? Moteur.calculer(session.recette).ebc : 10));
     const dessin = () => {
+      if (window.AteliersIllustres?.rendre('fil', ctx, { ...st, volumeFraction: borne(st.V / (1300 * f), 0, 1), couleur: teinteFiltration }, dessin)) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve-filtre en coupe : faux fond, lit de drêches, eau au-dessus
@@ -1527,6 +1531,7 @@
     const ctx = $('#bou-canvas').getContext('2d');
     let anim = null;
     const dessin = (rempli, eclats) => {
+      if (window.AteliersIllustres?.rendre('bou', ctx, { rempli, eclats, couleur: couleur(res.ebc), t: performance.now() / 1000 }, () => dessin(rempli, eclats))) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 112, '#221912'); px(0, 96, 192, 16, '#3b2d22');
       for (let i = 0; i < 8; i++) {
@@ -1591,6 +1596,7 @@
     const ctx = $('#ebu-canvas').getContext('2d');
     const teinteMout = couleur(Moteur.calculer(rec).ebc);
     const dessin = () => {
+      if (window.AteliersIllustres?.rendre('ebu', ctx, { ...st, couleur: teinteMout }, dessin)) return;
       const px = (x, y, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 112, '#221912');
       px(40, 34, 112, 70, '#d27b3e'); px(40, 34, 6, 70, '#f0a060'); px(146, 34, 6, 70, '#8a4a22');
@@ -1683,6 +1689,7 @@
     const phase = (j) => j < 1 ? 'Latence' : j < 3.2 ? 'Tumultueuse' : j < 5 ? 'Atténuation' : 'Maturation';
     const ctx = $('#fer-canvas').getContext('2d');
     const dessin = () => {
+      if (window.AteliersIllustres?.rendre('fer', ctx, { ...st, consigne, cible, houblons: rec.houblons, dhJours: rec.dhJours, activite: G * (st.t / DUREE * 7 / 1.8) * Math.exp(1 - st.t / DUREE * 7 / 1.8) }, dessin)) return;
       const px = (x, yy, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(yy), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve cylindro-conique

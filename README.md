@@ -12,6 +12,7 @@ Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du H
 | `jeu/src/ecole.js` | 10 leçons (théorie, défi vérifié par le moteur, 3 questions) qui offrent recettes, ingrédients et fûts |
 | `jeu/src/vente.js` | Calendrier (52 semaines, saisons, cave), clients et leurs demandes, satisfaction, prix, réputation, commandes, fraîcheur |
 | `jeu/src/jeu.js` | Interface : domaine, brasserie, 3 gestes, Ulysse, chai en casse-tête, recherche, dégustation, carnet, fiches, options |
+| `jeu/src/ateliers.js` | Présentation illustrée de la brasserie A–E : images, couches Canvas, liquides, équipements et effets, sans accès aux moteurs ni aux sauvegardes |
 | `jeu/src/page.html`, `style.css` | Page et styles |
 | `jeu/tests/moteur.test.mjs` | Recettes de référence (pils, IPA, dry stout, weizen, recette ratée) |
 | `jeu/tests/distillerie.test.mjs` | Distillation d'une IPA avec différentes coupes |
@@ -164,3 +165,16 @@ PR examinées, les réparations du pipeline, les tests exécutés et leurs limit
 moteurs métier. Les captures et fixtures de sauvegarde de test sont dans `qa/`.
 Le [contrat des illustrations](jeu/src/images/README.md) précise les assets
 encore manquants. La refonte graphique n'est pas annoncée comme livrée dans ce lot.
+
+### Phase 1 : brasserie illustrée A–E
+
+La cuve de préparation et les cinq gestes disposent d'un décor de pierre du
+Quercy, d'équipements illustrés indépendants et d'effets pilotés par les états
+réels du jeu. Cinq WebP totalisent environ 225 Kio. Lilita One est intégrée dans
+le HTML sous licence OFL ; les polices ne nécessitent plus de requête externe.
+Les panneaux, commandes et typographies adoptent une palette claire et cuivrée.
+
+Le [bilan de la phase 1](qa/phase-1/BILAN.md) détaille les images livrées, les
+tests et les limites. `npm run test:presentation` vérifie que les cinq moteurs
+et tout `jeu.js` hors des sept raccords de dessin restent identiques à la phase 0.
+Ulysse, les portraits et la carte du domaine attendent leurs lots suivants.

@@ -1,0 +1,28 @@
+{
+  "viewport": "390 × 844",
+  "dpr": 2,
+  "checks": [
+    "02-reprise-recette",
+    "03-empatage",
+    "04-filtration",
+    "05-ebullition",
+    "06-fermentation",
+    "07-embouteillage",
+    "08-degustation",
+    "09-ulysse",
+    "10-brouillis",
+    "11-repasse",
+    "13-degustation-edv",
+    "14-chai",
+    "15-chai-vieilli",
+    "16-spiritueux-vieilli",
+    "17-boutique",
+    "18-vente",
+    "19-carnet",
+    "19-veillee",
+    "19-fiches",
+    "19-batiments",
+    "19-reglages"
+  ],
+  "errors": []
+}
