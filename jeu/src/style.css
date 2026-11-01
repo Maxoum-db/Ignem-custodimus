@@ -653,3 +653,20 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 #fer-houblon.pret:not(:disabled) { animation: pret 0.6s steps(2) infinite; }
 @keyframes pret { 50% { box-shadow: 0 0 0 3px var(--or); } }
 .dose-sucre p { grid-column: 1 / -1; margin: 0; font-size: 14px; }
+
+/* ---------- Style visé et plan de Lise (V0.7.1) ---------- */
+#btn-viser { justify-self: start; }
+.plan-lise { background: var(--four); box-shadow: 0 0 0 2px var(--houblon); padding: 10px 12px; display: grid; gap: 8px; }
+.plan-tete { display: flex; gap: 10px; align-items: center; }
+.plan-tete img { image-rendering: pixelated; width: 32px; height: 32px; }
+.plan-tete div { display: grid; gap: 2px; }
+.plan-tete small { color: var(--cendre); font-size: 13px; }
+.plan-etapes { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; line-height: 1.4; }
+.plan-etapes li.manque { color: var(--alerte); }
+.plan-ok { margin: 0; color: var(--houblon); font-weight: 700; }
+.lien-fiche { border: 0; background: none; padding: 0; color: var(--braise); text-decoration: underline; font-size: 13px; }
+.style-carte { max-height: 82vh; overflow: auto; }
+.style-liste { display: grid; gap: 6px; }
+.choix-style { display: grid; gap: 2px; text-align: left; border: 0; background: var(--nuit); padding: 8px 10px; box-shadow: 0 0 0 2px var(--pierre); }
+.choix-style.choisi { box-shadow: 0 0 0 2px var(--houblon); }
+.choix-style small { color: var(--cendre); font-size: 12px; line-height: 1.3; }

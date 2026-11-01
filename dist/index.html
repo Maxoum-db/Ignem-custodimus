@@ -667,6 +667,23 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 #fer-houblon.pret:not(:disabled) { animation: pret 0.6s steps(2) infinite; }
 @keyframes pret { 50% { box-shadow: 0 0 0 3px var(--or); } }
 .dose-sucre p { grid-column: 1 / -1; margin: 0; font-size: 14px; }
+
+/* ---------- Style visé et plan de Lise (V0.7.1) ---------- */
+#btn-viser { justify-self: start; }
+.plan-lise { background: var(--four); box-shadow: 0 0 0 2px var(--houblon); padding: 10px 12px; display: grid; gap: 8px; }
+.plan-tete { display: flex; gap: 10px; align-items: center; }
+.plan-tete img { image-rendering: pixelated; width: 32px; height: 32px; }
+.plan-tete div { display: grid; gap: 2px; }
+.plan-tete small { color: var(--cendre); font-size: 13px; }
+.plan-etapes { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; line-height: 1.4; }
+.plan-etapes li.manque { color: var(--alerte); }
+.plan-ok { margin: 0; color: var(--houblon); font-weight: 700; }
+.lien-fiche { border: 0; background: none; padding: 0; color: var(--braise); text-decoration: underline; font-size: 13px; }
+.style-carte { max-height: 82vh; overflow: auto; }
+.style-liste { display: grid; gap: 6px; }
+.choix-style { display: grid; gap: 2px; text-align: left; border: 0; background: var(--nuit); padding: 8px 10px; box-shadow: 0 0 0 2px var(--pierre); }
+.choix-style.choisi { box-shadow: 0 0 0 2px var(--houblon); }
+.choix-style small { color: var(--cendre); font-size: 12px; line-height: 1.3; }
 </style>
 
 <div id="app">
@@ -706,6 +723,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <div class="bandeau-mesures"><div class="mesures" id="mesures"></div></div>
       <button class="style-ligne" id="style-ligne" aria-expanded="false"></button>
       <div class="style-detail" id="style-detail" hidden></div>
+      <button class="btn btn-mini btn-sobre" id="btn-viser">◎ Viser un style : Lise t'aide</button>
+      <div class="plan-lise" id="plan-lise" hidden></div>
       <button class="defi-ligne" id="defi-ligne" data-aller="veillee" hidden></button>
       <p class="conseil" id="conseil" hidden></p>
       <div class="onglets" role="tablist" id="onglets"></div>
@@ -757,7 +776,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <p class="geste-etape" id="ebu-etape">Geste 3 sur 5</p>
       <h1 class="geste-titre">Ébullition <span class="en">boil</span></h1>
       <p class="geste-consigne" id="ebu-consigne"></p>
-      <div class="geste-scene"><canvas id="ebu-canvas" width="192" height="112"></canvas></div>
+      <div class="geste-scene"><canvas id="ebu-canvas" width="192" height="112"></canvas><span class="geste-evt" id="ebu-evt" hidden></span></div>
       <div class="frise" id="ebu-frise"></div>
       <div class="geste-infos" id="ebu-infos"></div>
       <div class="geste-controles">
@@ -980,6 +999,13 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   </aside>
   <div id="toasts" class="toasts" aria-live="polite"></div>
   <div id="bulle" class="bulle" role="tooltip" hidden></div>
+  <div id="style-voile" class="tuto-voile" hidden>
+    <div class="tuto-carte style-carte" role="dialog" aria-modal="true" aria-label="Choisir un style">
+      <h2>Quel style veux-tu brasser ?</h2>
+      <div id="style-liste" class="style-liste"></div>
+      <button class="btn btn-sobre" id="style-fermer">Annuler</button>
+    </div>
+  </div>
   <div id="tuto-voile" class="tuto-voile" hidden>
     <div class="tuto-carte" role="dialog" aria-modal="true" aria-labelledby="tuto-titre">
       <p class="tuto-etape" id="tuto-etape"></p>
@@ -3196,7 +3222,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     dernierCalc = r;
     if (r.og >= 1.040) tuto('og');
     const etat = (ok, alerte) => (alerte ? 'alerte' : ok ? 'ok' : '');
-    const st = r.style;
+    const vise = styleVise();
+    const st = vise && r.styles ? evalStyle(r, vise) : r.style;
     const dans = (k) => st && st.ecarts[k] === 0;
     const m = [
       { v: r.aDesMalts ? sg(r.og) : '—', l: 'OG', f: 'densite', c: etat(dans('og')) },
@@ -3214,22 +3241,171 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       ligne.innerHTML = `<span class="nom">Wash de distillation</span><span class="pc">${nf(r.abv * r.volume / 100, 0)} LAP</span><span class="jauge"><i style="width:${Math.min(100, pc)}%;background:var(--braise)"></i></span><span class="indice">Atténuation ${pc} % · pas d'ébullition · ${r.levure.fam === 'distilling' ? 'levure de distillerie' : 'levure de brasserie'}</span>`;
     } else if (st) {
       const pc = Math.round(st.conformite * 100);
-      ligne.innerHTML = `<span class="nom">≈ ${esc(st.style.nom)}</span><span class="pc">${pc} %</span><span class="jauge"><i style="width:${pc}%;background:${pc >= 70 ? 'var(--houblon)' : pc >= 35 ? 'var(--braise)' : 'var(--alerte)'}"></i></span><span class="indice">Style le plus proche · touche pour comparer aux plages</span>`;
-    } else ligne.innerHTML = `<span class="nom">Aucun style pour l'instant</span><span class="pc">—</span><span class="indice">${r.aDesMalts ? 'Il manque une levure.' : 'Ajoute du malt et une levure.'}</span>`;
+      ligne.innerHTML = `<span class="nom">${vise ? '◎ ' : '≈ '}${esc(st.style.nom)}</span><span class="pc">${pc} %</span><span class="jauge"><i style="width:${pc}%;background:${pc >= 70 ? 'var(--houblon)' : pc >= 35 ? 'var(--braise)' : 'var(--alerte)'}"></i></span><span class="indice">${vise ? `Style visé${r.style && r.style.style.id !== vise.id ? ` · le plus proche : ${esc(r.style.style.nom)}` : ''}` : 'Style le plus proche'} · touche pour comparer aux plages</span>`;
+    } else if (vise) ligne.innerHTML = `<span class="nom">◎ ${esc(vise.nom)}</span><span class="pc">—</span><span class="indice">Style visé · ${r.aDesMalts ? 'il manque une levure' : 'cuve vide : Lise peut te préparer une base'}</span>`;
+    else ligne.innerHTML = `<span class="nom">Aucun style pour l'instant</span><span class="pc">—</span><span class="indice">${r.aDesMalts ? 'Il manque une levure.' : 'Ajoute du malt et une levure.'}</span>`;
     ligne.setAttribute('aria-expanded', detailStyleOuvert);
     rendreDetailStyle(r);
+    $('#btn-viser').hidden = !!vise || r.wash;
+    clearTimeout(minuteurPlan); minuteurPlan = setTimeout(() => rendrePlan(dernierCalc), 150);
     const c = $('#conseil');
-    const cs = S.aide ? Moteur.conseils(r, R) : [];
+    const cs = S.aide && !vise ? Moteur.conseils(r, R) : [];
     if (cs.length) { c.hidden = false; c.innerHTML = `<b>Lise :</b> ${esc(cs[0].txt)}<button data-fiche="${cs[0].fiche}">Fiche</button>`; } else c.hidden = true;
     $('#btn-lancer').disabled = !(r.aDesMalts && r.levure);
     rendreOnglets();
     sauver();
   }
+  // =====================================================================
+  // Viser un style : le plan de Lise (corrections calculées par le moteur, sur les ingrédients possédés)
+  // =====================================================================
+  const styleVise = () => (R.cible ? D.styles.find((s) => s.id === R.cible) : null);
+  const evalStyle = (r, s) => (r.styles || []).find((x) => x.style.id === s.id) || null;
+  const milieu2 = (p) => (p[0] + p[1]) / 2;
+  // Famille de levure attendue par style
+  function levureVoulue(s) {
+    const t = s.nom.toLowerCase();
+    if (['pilsener', 'bock', 'marzen', 'vienna', 'common'].includes(s.sujet)) return { lib: 'une levure lager', ok: (y) => y.fam === 'lager' };
+    if (/weizen/.test(t)) return { lib: 'une levure de blé bavaroise (banane, girofle)', ok: (y) => y.phenol && y.ester >= 2 && !/wit|farm|saison/i.test(y.nom) };
+    if (/witbier/.test(t)) return { lib: 'une levure de bière blanche', ok: (y) => y.phenol && /wit|blanche|belg/i.test(y.nom + ' ' + (y.desc || '')) };
+    if (s.sujet === 'farmhouse') return { lib: 'une levure saison', ok: (y) => /saison|farm/i.test(y.nom + ' ' + (y.desc || '')) };
+    if (s.sujet === 'bitter' || /english/.test(t)) return { lib: 'une levure ale anglaise', ok: (y) => y.fam === 'ale' && !y.phenol };
+    return { lib: 'une levure ale nette', ok: (y) => y.fam === 'ale' && !y.phenol && y.ester <= 1 };
+  }
+  function planStyle(s) {
+    const W = clone(R), etapes = [];
+    const calc = () => Moteur.calculer(W);
+    const nomM = (id) => IDX.malt.get(id).nom, nomH = (id) => IDX.houblon.get(id).nom;
+    const maltsDispo = D.malts.filter(dispo), hopsDispo = D.houblons.filter(dispo), levDispo = D.levures.filter((y) => dispo(y) && y.fam !== 'distilling');
+    if (W.destination === 'wash') W.destination = 'biere';
+    // 1. Levure
+    const voulue = levureVoulue(s), yCour = W.levure ? IDX.levure.get(W.levure) : null;
+    if (!yCour || !voulue.ok(yCour)) {
+      const y = levDispo.filter(voulue.ok).sort((a, b) => (a.palier || 0) - (b.palier || 0))[0];
+      if (y) { W.levure = y.id; W.fermentation.temp = Math.round((y.fam === 'lager' ? Math.min(y.t[0] + 3, y.t[1]) : y.t[0] + (y.t[1] - y.t[0]) * 0.35) * 2) / 2; W.fermentation.reposDiacetyle = y.fam === 'lager'; etapes.push({ txt: `Levure : ${y.nom} à ${nf(W.fermentation.temp)} °C${y.fam === 'lager' ? ', repos diacétyle' : ''}, il faut ${voulue.lib}.`, fiche: 'levure' }); }
+      else etapes.push({ txt: `Il te faut ${voulue.lib} : il n'y en a pas dans ta réserve. Va voir le pigeonnier.`, fiche: 'levure', manque: true });
+    }
+    // 2. Malt de base
+    const pils = ['pilsener'].includes(s.sujet) || /pils|helles|lager/i.test(s.nom), ble = s.sujet === 'wheat';
+    const estBase = (m) => m.fam === 'base' && !/acidul|sauer/i.test(m.nom);
+    if (!W.malts.some((l) => estBase(IDX.malt.get(l.id)))) {
+      const pref = (m) => (ble && /bl[ée]|wheat|froment/i.test(m.nom) ? 0 : pils && /pils|lager/i.test(m.nom) ? 0 : !pils && /pale|otter/i.test(m.nom) ? 0 : 1);
+      const b = maltsDispo.filter(estBase).sort((a, c) => pref(a) - pref(c) || (a.palier || 0) - (c.palier || 0))[0];
+      if (b) { W.malts.unshift({ id: b.id, kg: 200 }); etapes.push({ txt: `Base : ${b.nom}.`, fiche: 'empatage' }); }
+      if (ble) { const b2 = maltsDispo.find((m) => estBase(m) && /pils|pale/i.test(m.nom) && m.id !== (b && b.id)); if (b2) W.malts.push({ id: b2.id, kg: 100 }); }
+    }
+    if (!W.malts.length) return { etapes: [{ txt: 'Aucun malt de base en réserve.', manque: true }], W, s };
+    // 3. Couleur : un malt de spécialité possédé, au plus près du milieu de la plage
+    const cEBC = milieu2(s.ebc);
+    let r = calc();
+    if (r.ebc < s.ebc[0] || r.ebc > s.ebc[1]) {
+      if (r.ebc < s.ebc[0]) {
+        const fond = cEBC > 70 || ['stout', 'porter'].includes(s.sujet) ? maltsDispo.filter((m) => m.fam === 'roasted').sort((a, b) => (/special|d[ée]samer/i.test(b.nom) ? 1 : 0) - (/special|d[ée]samer/i.test(a.nom) ? 1 : 0)) : maltsDispo.filter((m) => m.fam === 'caramel' && m.ebc >= 40).sort((a, b) => Math.abs(a.ebc - cEBC * 4) - Math.abs(b.ebc - cEBC * 4));
+        const m = fond[0];
+        if (m) {
+          let ligne = W.malts.find((l) => l.id === m.id); if (!ligne) { ligne = { id: m.id, kg: 0 }; W.malts.push(ligne); }
+          const avant = r.ebc; let best = ligne.kg, ecartMin = Infinity;
+          const k0 = ligne.kg, plafond = Math.max(k0, Math.round(0.12 * W.malts.reduce((t, x) => t + x.kg, 0))); for (let kg = k0; kg <= plafond; kg += 1) { ligne.kg = kg; const e = calc().ebc; if (Math.abs(e - cEBC) < ecartMin) { ecartMin = Math.abs(e - cEBC); best = kg; } }
+          ligne.kg = best; if (!best) W.malts = W.malts.filter((l) => l !== ligne);
+          etapes.push({ txt: `Couleur : ${best} kg de ${m.nom} (${nf(avant, 0)} → ${nf(calc().ebc, 0)} EBC, plage ${nf(s.ebc[0], 0)}–${nf(s.ebc[1], 0)}).`, fiche: 'couleur' });
+        } else etapes.push({ txt: `Couleur trop pâle et aucun malt ${cEBC > 70 ? 'torréfié' : 'caramel'} en réserve.`, fiche: 'couleur', manque: true });
+      } else {
+        const fonces = W.malts.filter((l) => !estBase(IDX.malt.get(l.id))).sort((a, b) => IDX.malt.get(b.id).ebc - IDX.malt.get(a.id).ebc);
+        const l = fonces[0];
+        if (l) { const avant = r.ebc; while (l.kg > 0 && calc().ebc > s.ebc[1] - (s.ebc[1] - s.ebc[0]) * 0.3) l.kg -= 1; etapes.push({ txt: `Couleur : ramène ${nomM(l.id)} à ${l.kg} kg (${nf(avant, 0)} → ${nf(calc().ebc, 0)} EBC).`, fiche: 'couleur' }); if (!l.kg) W.malts = W.malts.filter((x) => x !== l); }
+      }
+    }
+    // 4. Densité : on ajuste les malts de base au milieu de la plage
+    r = calc();
+    const cOG = milieu2(s.og);
+    if (r.og < s.og[0] + (s.og[1] - s.og[0]) * 0.2 || r.og > s.og[1] - (s.og[1] - s.og[0]) * 0.2) {
+      const bases = W.malts.filter((l) => estBase(IDX.malt.get(l.id)));
+      const k0 = bases.map((l) => l.kg), avant = r.og;
+      let lo = 0.2, hi = 4;
+      for (let i = 0; i < 24; i++) { const f = (lo + hi) / 2; bases.forEach((l, j) => { l.kg = k0[j] * f; }); if (calc().og < cOG) lo = f; else hi = f; }
+      bases.forEach((l) => { l.kg = Math.max(5, Math.round(l.kg / 5) * 5); });
+      etapes.push({ txt: `Densité : ${bases.map((l) => `${l.kg} kg de ${nomM(l.id)}`).join(', ')} (${sg(avant)} → ${sg(calc().og)}, plage ${sg(s.og[0])}–${sg(s.og[1])}).`, fiche: 'densite' });
+    }
+    // 5. Houblons aromatiques pour les styles houblonnés
+    const houblonne = ['ipa', 'pale_ale', 'amber'].includes(s.sujet);
+    if (houblonne && !W.houblons.some((h) => h.min >= 0 && h.min <= 15 || h.min < 0)) {
+      const h = hopsDispo.filter((x) => x.usage !== 'bittering').sort((a, b) => (b.oils && b.oils.myr || 0) - (a.oils && a.oils.myr || 0))[0];
+      if (h) {
+        W.houblons.push({ id: h.id, g: Math.round(W.volume * 1.5 / 50) * 50, min: 5 });
+        if (s.sujet === 'ipa') W.houblons.push({ id: h.id, g: Math.round(W.volume * 4 / 50) * 50, min: -1 });
+        etapes.push({ txt: `Arôme : ${h.nom} à 5 min${s.sujet === 'ipa' ? ', et 4 g/L en dry hop au jour 5' : ''}.`, fiche: 'amertume' });
+      }
+    }
+    // 6. Amertume : l'ajout de 60 min porte l'écart (l'IBU est linéaire en grammes)
+    r = calc();
+    const cIBU = milieu2(s.ibu);
+    if (r.ibu < s.ibu[0] + (s.ibu[1] - s.ibu[0]) * 0.15 || r.ibu > s.ibu[1] - (s.ibu[1] - s.ibu[0]) * 0.15) {
+      let l = W.houblons.filter((h) => h.min >= 45).sort((a, b) => b.min - a.min)[0];
+      if (!l) { const h = hopsDispo.slice().sort((a, b) => (b.usage === 'bittering') - (a.usage === 'bittering') || b.alpha - a.alpha)[0]; if (h) { l = { id: h.id, g: 0, min: 60 }; W.houblons.unshift(l); } }
+      if (l) {
+        const avant = r.ibu, g0 = l.g; l.g = 0; const sans = calc().ibu; l.g = 1000; const par = (calc().ibu - sans) / 1000;
+        l.g = Math.max(0, Math.round(((cIBU - sans) / Math.max(1e-6, par)) / 50) * 50);
+        if (!l.g) W.houblons = W.houblons.filter((x) => x !== l);
+        etapes.push({ txt: `Amertume : ${l.g ? `${nf(l.g / 1000, 2)} kg de ${nomH(l.id)} à ${l.min} min` : `retire ${nomH(l.id)}`} (${nf(avant, 0)} → ${nf(calc().ibu, 0)} IBU, plage ${nf(s.ibu[0], 0)}–${nf(s.ibu[1], 0)}).${g0 ? '' : ''}`, fiche: 'amertume' });
+      } else etapes.push({ txt: 'Aucun houblon amérisant en réserve.', manque: true, fiche: 'amertume' });
+    }
+    // 7. Atténuation : le palier d'empâtage cale la densité finale
+    r = calc();
+    if (W.levure && (r.fg < s.fg[0] || r.fg > s.fg[1])) {
+      const avant = W.palier; let best = W.palier, ecMin = Infinity;
+      for (let p = 62; p <= 70; p += 0.5) { W.palier = p; const f = calc().fg, e = Math.abs(f - milieu2(s.fg)); if (e < ecMin) { ecMin = e; best = p; } }
+      W.palier = best;
+      etapes.push({ txt: `Palier : ${nf(avant)} → ${nf(best)} °C pour une finale à ${sg(calc().fg)} (plage ${sg(s.fg[0])}–${sg(s.fg[1])}).`, fiche: 'empatage' });
+    }
+    // 8. Procédé : ébullition et eau
+    r = calc();
+    if (r.fMasse.pils > 0.5 && W.ebullition < 90) { W.ebullition = 90; etapes.push({ txt: 'Ébullition : 90 min pour chasser le DMS du malt Pils.', fiche: 'defauts' }); }
+    const eauIdeale = { stout: 'dublin', porter: 'dublin', pilsener: 'pilsen', ipa: 'burton', bitter: 'burton', marzen: 'munich', bock: 'munich' }[s.sujet];
+    if (eauIdeale && W.eau !== eauIdeale && IDX.eau.get(eauIdeale)) { W.eau = eauIdeale; etapes.push({ txt: `Eau : profil ${IDX.eau.get(eauIdeale).nom}, celle des ${s.nom.toLowerCase().includes('stout') || s.sujet === 'porter' ? 'stouts de Dublin' : s.sujet === 'pilsener' ? 'pils de Bohême' : s.sujet === 'ipa' || s.sujet === 'bitter' ? 'pale ales de Burton' : 'bières de Munich'}.`, fiche: 'eau' }); }
+    const fin = calc(), ev = evalStyle(fin, s);
+    return { etapes, W, s, conformite: ev ? ev.conformite : 0 };
+  }
+  function rendrePlan(r) {
+    const z = $('#plan-lise'), s = styleVise();
+    if (!s || R.destination === 'wash') { z.hidden = true; return; }
+    z.hidden = false;
+    const ev = evalStyle(r, s), pc = ev ? Math.round(ev.conformite * 100) : 0;
+    const plan = planStyle(s);
+    const bon = ev && ev.ecarts.og === 0 && ev.ecarts.fg === 0 && ev.ecarts.ibu === 0 && ev.ecarts.ebc === 0 && pc >= 70;
+    z.innerHTML = `<div class="plan-tete"><img src="${SPR.lise}" alt="" width="32" height="32"><div><b>Lise · plan pour une ${esc(s.nom)}</b><small>${r.aDesMalts && r.levure ? `ta recette colle à ${pc} %` : 'cuve vide : je te prépare une base'}${plan.etapes.length ? ` · après le plan : ${Math.round(plan.conformite * 100)} %` : ''}</small></div></div>
+      ${bon && !plan.etapes.filter((e) => !e.manque).length ? '<p class="plan-ok">Ta recette est dans toutes les plages du style. Il ne reste qu\'à la brasser proprement.</p>'
+        : `<ol class="plan-etapes">${plan.etapes.map((e) => `<li class="${e.manque ? 'manque' : ''}">${esc(e.txt)} ${e.fiche ? `<button class="lien-fiche" data-fiche="${e.fiche}">fiche</button>` : ''}</li>`).join('')}</ol>`}
+      ${plan.etapes.length && plan.conformite < 0.5 ? `<p class="det">Même ainsi, le style ne colle qu'à ${Math.round(plan.conformite * 100)} % : il a d'autres exigences (proportions de malts, levure, miel…). <button class="lien-fiche" data-fiche="styles">fiche Styles</button></p>` : ''}
+      <div class="actions-fut">${plan.etapes.some((e) => !e.manque) ? '<button class="btn btn-feu btn-mini" id="plan-appliquer">Appliquer le plan de Lise</button>' : ''}<button class="btn btn-sobre btn-mini" id="plan-changer">Changer de style</button><button class="btn btn-sobre btn-mini" id="plan-stop">Ne plus viser</button></div>`;
+    dernierPlan = plan;
+  }
+  let dernierPlan = null, minuteurPlan = null;
+  function ouvrirChoixStyle() {
+    const groupes = {};
+    D.styles.forEach((s) => { (groupes[s.sujet] = groupes[s.sujet] || []).push(s); });
+    const LIB = { pilsener: 'Pils et lagers blondes', bock: 'Bocks', marzen: 'Märzen', vienna: 'Vienna', common: 'California common', wheat: 'Blanches et blés', pale_ale: 'Pale ales', ipa: 'IPA', amber: 'Ambrées', brown: 'Brunes', bitter: 'Bitters', porter: 'Porters', stout: 'Stouts', strong: 'Bières fortes', farmhouse: 'Saisons', specialty: 'Spéciales' };
+    $('#style-liste').innerHTML = Object.entries(groupes).map(([k, l]) => `<p class="groupe-titre">${esc(LIB[k] || k)}</p>${l.map((s) => `<button class="choix-style ${R.cible === s.id ? 'choisi' : ''}" data-viser="${s.id}"><b>${esc(s.nom)}</b><small>${sg(s.og[0])}–${sg(s.og[1])} · ${Math.round(s.ibu[0])}–${Math.round(s.ibu[1])} IBU · ${Math.round(s.ebc[0])}–${Math.round(s.ebc[1])} EBC</small><small>${esc((s.desc || '').slice(0, 110))}</small></button>`).join('')}`).join('');
+    $('#style-voile').hidden = false;
+  }
+  $('#style-voile').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-viser]');
+    if (b) { R.cible = b.dataset.viser; $('#style-voile').hidden = true; son('ok'); maj(); setTimeout(() => $('#plan-lise').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'nearest' }), 50); return; }
+    if (e.target.id === 'style-fermer' || e.target === $('#style-voile')) $('#style-voile').hidden = true;
+  });
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#btn-viser') || e.target.closest('#plan-changer')) { son('clic'); ouvrirChoixStyle(); return; }
+    if (e.target.closest('#plan-stop')) { delete R.cible; son('clic'); maj(); return; }
+    if (e.target.closest('#plan-appliquer') && dernierPlan) {
+      const W = dernierPlan.W; W.cible = R.cible;
+      R = S.recette = normaliser(W); son('bulle'); toast('Lise a ajusté la recette.'); maj(); rendreOnglet(); return;
+    }
+  });
+
   function rendreDetailStyle(r) {
     const z = $('#style-detail');
-    z.hidden = !detailStyleOuvert || !r.style;
+    const vise = styleVise();
+    z.hidden = !detailStyleOuvert || !(r.style || vise) || !r.aDesMalts;
     if (z.hidden) return;
-    const s = r.style.style;
+    const s = vise || r.style.style;
     const ligne = (lib, val, plage, txt, min, max) => {
       const pos = (v) => borne(((v - min) / (max - min)) * 100, 0, 100);
       return `<div class="repere"><span>${lib}</span><span class="barre"><i class="plage" style="left:${pos(plage[0])}%;width:${pos(plage[1]) - pos(plage[0])}%"></i><i class="moi" style="left:${pos(val)}%"></i></span><span class="val">${txt}</span></div>`;
@@ -3238,7 +3414,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const [o1, o2] = span(s.og, 1.2), [f1, f2] = span(s.fg, 1.2), [i1, i2] = span(s.ibu, 1), [e1, e2] = span(s.ebc, 1);
     z.innerHTML = `${ligne('Densité', r.og, s.og, sg(r.og), o1, o2)}${ligne('Finale', r.fg, s.fg, sg(r.fg), f1, f2)}${ligne('IBU', r.ibu, s.ibu, nf(r.ibu, 0), Math.max(0, i1), i2)}${ligne('EBC', r.ebc, s.ebc, nf(r.ebc, 0), Math.max(0, e1), e2)}
       <p>${esc(s.desc || '')}</p>
-      <p class="autres-styles">Ensuite : ${r.styles.slice(1, 4).map((x) => `${esc(x.style.nom)} ${Math.round(x.conformite * 100)} %`).join(' · ')}</p>`;
+      <p class="autres-styles">${vise ? 'Styles les plus proches' : 'Ensuite'} : ${r.styles.slice(vise ? 0 : 1, vise ? 3 : 4).map((x) => `${esc(x.style.nom)} ${Math.round(x.conformite * 100)} %`).join(' · ')}</p>`;
   }
   $('#style-ligne').addEventListener('click', () => { detailStyleOuvert = !detailStyleOuvert; son('clic'); rendreDetailStyle(dernierCalc); $('#style-ligne').setAttribute('aria-expanded', detailStyleOuvert); });
   $('#btn-vider').addEventListener('click', () => {
@@ -3620,6 +3796,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       px(40, 34, 112, 70, '#d27b3e'); px(40, 34, 6, 70, '#f0a060'); px(146, 34, 6, 70, '#8a4a22');
       px(48, 30, 96, 10, teinteMout);
       if (st.t > 0) for (let i = 0; i < 14; i++) { const a = (st.t * 2 + i * 0.37) % 1; px(52 + ((i * 41) % 88), 38 - a * 6, 3, 2, 'rgba(255,240,200,.7)'); }
+      else if (st.montee) for (let i = 0; i < Math.round(st.chauffe * 8); i++) { const a = (performance.now() / 600 + i * 0.37) % 1; px(52 + ((i * 53) % 88), 36 - a * 3, 2, 2, 'rgba(255,240,200,.5)'); }
       for (let i = 0; i < 5; i++) { const a = (st.t * 0.6 + i / 5) % 1; px(70 + i * 12 + Math.sin(a * 6) * 3, 26 - a * 26, 5, 3, `rgba(236,223,196,${0.5 - a * 0.5})`); }
       st.chutes = st.chutes.filter((c) => c.y < 34); st.chutes.forEach((c) => { c.y += 1.6; px(c.x, c.y, 4, 5, '#9cc95e'); px(c.x + 1, c.y + 1, 2, 2, '#5c8a33'); });
       px(60, 104, 72, 6, '#e3593d'); for (let i = 0; i < 9; i++) px(62 + i * 8, 100 - (Math.sin(st.t * 12 + i) + 1) * 2, 4, 4, '#f3b04a');
@@ -3637,10 +3814,14 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     rendreFrise(); etiquette(); dessin();
     $('#ebu-infos').innerHTML = infoBloc(total + "'", 'restantes') + infoBloc(file.length, 'ajouts prévus') + infoBloc(aCru.length, 'à cru');
     btn.onclick = jeter;
+    const MONTEE = 3;
     $('#ebu-go').onclick = () => {
-      $('#ebu-go').disabled = true; btn.disabled = !file.length;
-      arretGeste = bouclePendant(DUREE, (dt, t) => {
-        st.t = t; dessin(); rendreFrise();
+      $('#ebu-go').disabled = true; btn.disabled = true; st.montee = true;
+      evtScene('ebu', 'Montée à ébullition…', 'chaud');
+      arretGeste = bouclePendant(DUREE + MONTEE, (dt, t) => {
+        st.chauffe = Math.min(1, t / MONTEE);
+        if (st.montee && t >= MONTEE) { st.montee = false; btn.disabled = !file.length; evtScene('ebu', 'Ça bout : le chrono démarre', 'houblon'); son('bulle'); }
+        st.t = Math.max(0, t - MONTEE); dessin(); rendreFrise();
         if (st.k === 0 || st.k < file.length) $('#ebu-infos').firstElementChild.innerHTML = `<span class="v">${Math.max(0, Math.round(minutes()))}'</span><span class="l">restantes</span>`;
       }, () => {
         btn.disabled = true;
@@ -5675,7 +5856,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.7 · cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.7.1 · style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

@@ -44,6 +44,8 @@
       <div class="bandeau-mesures"><div class="mesures" id="mesures"></div></div>
       <button class="style-ligne" id="style-ligne" aria-expanded="false"></button>
       <div class="style-detail" id="style-detail" hidden></div>
+      <button class="btn btn-mini btn-sobre" id="btn-viser">◎ Viser un style : Lise t'aide</button>
+      <div class="plan-lise" id="plan-lise" hidden></div>
       <button class="defi-ligne" id="defi-ligne" data-aller="veillee" hidden></button>
       <p class="conseil" id="conseil" hidden></p>
       <div class="onglets" role="tablist" id="onglets"></div>
@@ -95,7 +97,7 @@
       <p class="geste-etape" id="ebu-etape">Geste 3 sur 5</p>
       <h1 class="geste-titre">Ébullition <span class="en">boil</span></h1>
       <p class="geste-consigne" id="ebu-consigne"></p>
-      <div class="geste-scene"><canvas id="ebu-canvas" width="192" height="112"></canvas></div>
+      <div class="geste-scene"><canvas id="ebu-canvas" width="192" height="112"></canvas><span class="geste-evt" id="ebu-evt" hidden></span></div>
       <div class="frise" id="ebu-frise"></div>
       <div class="geste-infos" id="ebu-infos"></div>
       <div class="geste-controles">
@@ -318,6 +320,13 @@
   </aside>
   <div id="toasts" class="toasts" aria-live="polite"></div>
   <div id="bulle" class="bulle" role="tooltip" hidden></div>
+  <div id="style-voile" class="tuto-voile" hidden>
+    <div class="tuto-carte style-carte" role="dialog" aria-modal="true" aria-label="Choisir un style">
+      <h2>Quel style veux-tu brasser ?</h2>
+      <div id="style-liste" class="style-liste"></div>
+      <button class="btn btn-sobre" id="style-fermer">Annuler</button>
+    </div>
+  </div>
   <div id="tuto-voile" class="tuto-voile" hidden>
     <div class="tuto-carte" role="dialog" aria-modal="true" aria-labelledby="tuto-titre">
       <p class="tuto-etape" id="tuto-etape"></p>
