@@ -443,9 +443,9 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 /* ---------- Chai (V0.4) ---------- */
 .btn-loupe { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; }
 .chai-plan { display: grid; gap: 10px; background: linear-gradient(#2a2018, #1c150f); box-shadow: var(--cadre); padding: 10px 8px; }
-.rangee { display: grid; gap: 4px; }
-.rangee[data-zone="0"] .cases { background: rgba(243, 176, 74, .07); }
-.rangee[data-zone="2"] .cases { background: rgba(127, 182, 214, .07); }
+.rang-chai { display: grid; gap: 4px; }
+.rang-chai[data-zone="0"] .cases { background: rgba(243, 176, 74, .07); }
+.rang-chai[data-zone="2"] .cases { background: rgba(127, 182, 214, .07); }
 .zone-lib { font-size: 12px; color: var(--cendre); line-height: 1.2; }
 .cases { display: grid; gap: 3px; padding: 3px; box-shadow: inset 0 -3px 0 #5a4632; }
 .case { min-height: 40px; border: 0; background: rgba(0, 0, 0, .25); box-shadow: inset 0 0 0 1px var(--pierre); padding: 0; }
@@ -489,8 +489,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .ligne-choix span { font-size: 13px; color: var(--cendre); }
 .apercu-chai { display: grid; gap: 8px; }
 .apercu-haut { display: flex; gap: 12px; align-items: center; }
-.pastille { display: inline-block; width: 34px; height: 34px; flex: none; box-shadow: 0 0 0 2px var(--calcaire), inset -4px -4px 0 rgba(0, 0, 0, .25); }
-.lot .pastille { width: 16px; height: 16px; margin-right: 6px; vertical-align: -3px; }
+.robe { display: inline-block; width: 34px; height: 34px; flex: none; box-shadow: 0 0 0 2px var(--calcaire), inset -4px -4px 0 rgba(0, 0, 0, .25); }
+.lot .robe { width: 16px; height: 16px; margin-right: 6px; vertical-align: -3px; }
 .nom-legal { margin: 0; font-family: var(--f-titre); font-size: 10px; line-height: 1.6; color: var(--calcaire); }
 .pipette { background: var(--four); padding: 8px 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 0 0 2px var(--pierre); }
 .pipette small { color: var(--cendre); }
@@ -518,9 +518,72 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .jauge-feu .prev { position: absolute; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: #7fb6d6; }
 .registre { display: grid; gap: 4px; font-size: 13px; color: var(--cendre); }
 .registre input { width: 100%; }
-.btn-retour { justify-self: start; margin-bottom: 4px; }
+.btn-retour { justify-self: start; align-self: flex-start; width: auto; margin-bottom: 4px; }
 .jauge-feu { grid-template-columns: 70px 1fr 68px; }
 .jauge-feu .val { white-space: nowrap; font-size: 17px; }
+
+/* ---------- Bulles « i », tutoriels, événements, charge (V0.4.2) ---------- */
+.info-i {
+  display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; padding: 0; margin-left: 6px; vertical-align: 1px;
+  border: 0; border-radius: 50%; background: var(--pierre-clair); color: var(--calcaire);
+  font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 700; font-size: 14px; line-height: 1;
+  box-shadow: 0 0 0 2px var(--cuivre); cursor: pointer; flex: none;
+}
+
+.page-titre .info-i, .sous-titre .info-i { font-size: 14px; letter-spacing: 0; }
+.bulle {
+  position: fixed; z-index: 60; background: var(--calcaire); color: var(--nuit); padding: 10px 12px; font-size: 15px; line-height: 1.4;
+  box-shadow: 0 0 0 3px var(--cuivre), 4px 4px 0 rgba(0, 0, 0, .5);
+}
+.bulle::before { content: ""; position: absolute; top: -9px; left: calc(var(--fleche, 20px) - 6px); border: 6px solid transparent; border-bottom: 6px solid var(--cuivre); border-top: 0; }
+.bulle.dessus::before { top: auto; bottom: -9px; border-bottom: 0; border-top: 6px solid var(--cuivre); }
+.page-liens { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.tuto-voile { position: fixed; inset: 0; z-index: 70; background: rgba(10, 7, 5, .72); display: grid; place-items: center; padding: 16px; }
+.tuto-carte { width: min(420px, 100%); background: var(--four); box-shadow: 0 0 0 3px var(--cuivre), 6px 6px 0 rgba(0, 0, 0, .5); padding: 16px; display: grid; gap: 10px; }
+.tuto-carte h2 { margin: 0; font-family: var(--f-titre); font-size: 13px; line-height: 1.5; color: var(--braise); }
+.tuto-carte p { margin: 0; font-size: 16px; line-height: 1.5; }
+.tuto-etape { font-size: 12px !important; color: var(--cendre); }
+.tuto-actions { display: flex; justify-content: space-between; gap: 8px; margin-top: 4px; }
+.mini-btn { display: inline-block; padding: 0 6px; font-weight: 700; font-size: 14px; background: var(--pierre); box-shadow: var(--relief); }
+.mini-btn.feu { background: var(--cuivre); color: var(--nuit); }
+.mini-btn.froid { background: #4b7fa0; color: var(--calcaire); }
+.mini-btn.houblon { background: var(--houblon); color: var(--nuit); }
+.mini-trait { display: inline-block; width: 22px; height: 3px; background: #7fb6d6; vertical-align: 4px; }
+.geste-scene { position: relative; }
+.geste-evt {
+  position: absolute; left: 8px; top: 8px; padding: 3px 8px; font-weight: 700; font-size: 14px;
+  background: var(--calcaire); color: var(--nuit); box-shadow: 0 0 0 2px var(--nuit); animation: evt-pop .25s steps(3) both;
+}
+.geste-evt.froid { background: #7fb6d6; }
+.geste-evt.chaud { background: var(--braise); }
+.geste-evt.alerte { background: var(--alerte); color: var(--calcaire); }
+@keyframes evt-pop { from { transform: scale(.6); opacity: 0; } }
+.btn-froid { background: #4b7fa0; color: var(--calcaire); }
+.btn-froid.actif { background: #7fb6d6; color: var(--nuit); transform: translate(1px, 2px); }
+.duo { gap: 10px; }
+/* Atelier : cuve + charge de grain en haut, six mesures sur toute la largeur */
+.atelier { grid-template-columns: 120px 1fr; }
+.atelier .mesures { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+.atelier .mesure { padding: 4px 8px; flex-direction: column; align-items: flex-start; gap: 0; }
+.atelier .mesure .v { font-size: clamp(22px, 6.4vw, 28px); overflow: visible; }
+.atelier .mesure .l { font-size: 11px; }
+.atelier .mesure .l { max-width: 100%; }
+.charge { background: var(--four); box-shadow: var(--cadre); padding: 6px 8px; display: flex; flex-direction: column; gap: 3px; min-width: 0; align-self: stretch; }
+.charge-v { font-family: var(--f-chiffre); font-size: 34px; line-height: .9; color: var(--calcaire); }
+.charge-v small { font-size: 20px; color: var(--cendre); }
+.charge-l { font-size: 12px; color: var(--cendre); }
+.grist { display: flex; height: 12px; box-shadow: 0 0 0 2px var(--nuit); margin-top: 2px; }
+.grist i { display: block; height: 100%; min-width: 2px; }
+.grist-leg { display: flex; flex-direction: column; font-size: 12px; line-height: 1.3; color: var(--cendre); }
+.grist-leg span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grist-leg b { color: var(--calcaire); font-family: var(--f-chiffre); font-size: 16px; font-weight: 400; }
+.ligne-recette .nom .part { display: inline-block; min-width: 3.2em; margin-right: 6px; padding: 0 4px; font-family: var(--f-chiffre); font-size: 20px; font-weight: 400; text-align: center; color: var(--nuit); background: var(--teinte, var(--braise)); box-shadow: inset 0 0 0 1px rgba(0,0,0,.3); }
+.ligne-recette .nom small { font-size: 13px; }
+.ligne-recette .qte input { font-size: 26px; }
+@media (min-width: 560px) { .atelier .mesure .l { font-size: 11px; } }
+
+@media (min-width: 640px) { .atelier .mesures { grid-template-columns: repeat(6, minmax(0, 1fr)); } .atelier .mesure { flex-direction: column; align-items: flex-start; } }
+.geste-controles.duo .btn-geste { flex: 1 1 0; }
 </style>
 
 <div id="app">
@@ -555,6 +618,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
           <canvas id="cuve" width="120" height="96" aria-label="Cuve de brassage"></canvas>
           <span class="cuve-aide" id="cuve-aide">Glisse les sacs ici</span>
         </div>
+        <div class="charge" id="charge"></div>
         <div class="mesures" id="mesures"></div>
       </div>
       <button class="style-ligne" id="style-ligne" aria-expanded="false"></button>
@@ -573,7 +637,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <p class="geste-etape">Geste 1 sur 3</p>
       <h1 class="geste-titre">Empâtage <span class="en">mashing</span></h1>
       <p class="geste-consigne" id="emp-consigne"></p>
-      <div class="geste-scene"><canvas id="emp-canvas" width="192" height="128"></canvas></div>
+      <div class="geste-scene"><canvas id="emp-canvas" width="192" height="128"></canvas><span class="geste-evt" id="emp-evt" hidden></span></div>
       <div class="geste-infos" id="emp-infos"></div>
       <div class="jauges-feu" id="emp-jauges"></div>
       <div class="geste-controles">
@@ -607,12 +671,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <p class="geste-etape">Geste 3 sur 3</p>
       <h1 class="geste-titre">Fermentation <span class="en">fermentation</span></h1>
       <p class="geste-consigne" id="fer-consigne"></p>
-      <div class="geste-scene"><canvas id="fer-canvas" width="192" height="128"></canvas></div>
+      <div class="geste-scene"><canvas id="fer-canvas" width="192" height="128"></canvas><span class="geste-evt" id="fer-evt" hidden></span></div>
       <div class="geste-infos" id="fer-infos"></div>
-      <div class="geste-controles vanne">
-        <label for="fer-vanne">Vanne de la double enveloppe</label>
-        <input type="range" id="fer-vanne" min="-100" max="100" step="1" value="0" disabled>
-        <div class="vanne-echelle"><span>Glycol (froid)</span><span>Chauffe</span></div>
+      <div class="jauges-feu" id="fer-jauges"></div>
+      <div class="geste-controles rangee duo">
+        <button id="fer-glycol" class="btn btn-geste btn-froid" disabled>Glycol<small>maintenir · refroidit</small></button>
+        <button id="fer-chauffe" class="btn btn-feu btn-geste" disabled>Vapeur<small>maintenir · réchauffe</small></button>
       </div>
       <div class="geste-bilan" id="fer-bilan" hidden></div>
       <div class="geste-pied" id="fer-pied">
@@ -644,7 +708,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <p class="geste-etape">Chauffe 1 sur 2</p>
       <h1 class="geste-titre">Brouillis <span class="en">stripping run</span></h1>
       <p class="geste-consigne" id="bro-consigne"></p>
-      <div class="geste-scene"><canvas id="bro-canvas" width="192" height="120"></canvas></div>
+      <div class="geste-scene"><canvas id="bro-canvas" width="192" height="120"></canvas><span class="geste-evt" id="bro-evt" hidden></span></div>
       <div class="geste-infos" id="bro-infos"></div>
       <div class="jauges-feu" id="bro-jauges"></div>
       <div class="geste-controles">
@@ -662,7 +726,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <p class="geste-etape">Chauffe 2 sur 2</p>
       <h1 class="geste-titre">Bonne chauffe <span class="en">spirit run</span></h1>
       <p class="geste-consigne" id="rep-consigne"></p>
-      <div class="geste-scene"><canvas id="rep-canvas" width="192" height="120"></canvas></div>
+      <div class="geste-scene"><canvas id="rep-canvas" width="192" height="120"></canvas><span class="geste-evt" id="rep-evt" hidden></span></div>
       <div class="geste-infos" id="rep-infos"></div>
       <p class="nez-ligne" id="rep-nez"></p>
       <p class="conseil" id="rep-conseil" hidden></p>
@@ -792,6 +856,15 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     </div>
   </aside>
   <div id="toasts" class="toasts" aria-live="polite"></div>
+  <div id="bulle" class="bulle" role="tooltip" hidden></div>
+  <div id="tuto-voile" class="tuto-voile" hidden>
+    <div class="tuto-carte" role="dialog" aria-modal="true" aria-labelledby="tuto-titre">
+      <p class="tuto-etape" id="tuto-etape"></p>
+      <h2 id="tuto-titre"></h2>
+      <div id="tuto-corps"></div>
+      <div class="tuto-actions"><button class="btn btn-sobre" id="tuto-passer">Passer</button><button class="btn btn-feu" id="tuto-suivant">Suivant</button></div>
+    </div>
+  </div>
   <div id="glisse" class="glisse" hidden></div>
 </div>
 
@@ -1995,7 +2068,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     $('#scene').scrollTop = 0;
     ({ domaine: entrerDomaine, brasserie: entrerBrasserie, distillerie: entrerDistillerie, catalogue: rendreCatalogue, chai: entrerChai, recherche: entrerRecherche, veillee: rendreVeillee, carnet: rendreCarnet, fiches: rendreFiches, reglages: rendreReglages }[nom] || (() => {}))();
     tuto('ecran:' + nom);
-    majMentor();
+    majMentor(); cacherBulle(); tutoEcran(nom);
     const prec = pile[pile.length - 1];
     const vers = (prec && NOMS_ECRANS[prec] ? 'à ' + NOMS_ECRANS[prec] : 'au domaine').replace(/^à le /, 'au ').replace(/^à les /, 'aux ');
     $$('[data-retour]').forEach((x) => { x.textContent = `← Retour ${vers}`; });
@@ -2018,6 +2091,97 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   }
 
   // =====================================================================
+  // Bulles d'information « i »
+  // =====================================================================
+  const iBtn = (txt) => `<button class="info-i" type="button" data-info="${esc(txt)}" aria-label="Plus d'informations">i</button>`;
+  let bulleDe = null;
+  function montrerBulle(btn) {
+    const b = $('#bulle');
+    if (bulleDe === btn && !b.hidden) { cacherBulle(); return; }
+    b.textContent = btn.dataset.info; b.hidden = false; bulleDe = btn;
+    const r = btn.getBoundingClientRect(), W = Math.min(320, innerWidth - 24);
+    b.style.width = W + 'px';
+    b.style.left = borne(r.left + r.width / 2 - W / 2, 12, innerWidth - W - 12) + 'px';
+    const h = b.offsetHeight;
+    b.style.top = (r.bottom + 8 + h < innerHeight - 8 ? r.bottom + 8 : Math.max(8, r.top - 8 - h)) + 'px';
+    b.style.setProperty('--fleche', borne(r.left + r.width / 2 - parseFloat(b.style.left), 14, W - 14) + 'px');
+    b.classList.toggle('dessus', r.bottom + 8 + h >= innerHeight - 8);
+  }
+  function cacherBulle() { $('#bulle').hidden = true; bulleDe = null; }
+  document.addEventListener('click', (e) => { const i = e.target.closest('[data-info]'); if (i) { e.stopPropagation(); montrerBulle(i); return; } if (!e.target.closest('#bulle')) cacherBulle(); }, true);
+  document.getElementById('scene').addEventListener('scroll', cacherBulle, { passive: true });
+  // Les paragraphes d'introduction des écrans passent dans une bulle « i » à côté du titre
+  $$('section.ecran > p.page-intro:not([id])').forEach((p) => {
+    let t = p.previousElementSibling;
+    while (t && !/^H[12]$/.test(t.tagName)) t = t.previousElementSibling;
+    if (!t) return;
+    const liens = $$('button', p);
+    const texte = p.cloneNode(true); $$('button', texte).forEach((x) => x.remove());
+    t.insertAdjacentHTML('beforeend', ' ' + iBtn(texte.textContent.replace(/\s+/g, ' ').trim()));
+    if (liens.length) { p.className = 'page-liens'; p.innerHTML = ''; liens.forEach((x) => p.appendChild(x)); } else p.remove();
+  });
+
+  // Légende brève posée sur la scène d'un geste (l'événement lui-même se voit dans le dessin)
+  const minuteurEvt = {};
+  function evtScene(id, txt, genre) {
+    const el = $('#' + id + '-evt'); if (!el) return;
+    el.textContent = txt; el.className = 'geste-evt ' + (genre || ''); el.hidden = false;
+    clearTimeout(minuteurEvt[id]); minuteurEvt[id] = setTimeout(() => { el.hidden = true; }, 2300);
+  }
+  // Bouton à maintenir (doigt, souris ou touche)
+  function maintenir(el, on, off) {
+    const d = (e) => { e.preventDefault(); if (el.disabled) return; el.classList.add('actif'); on(); };
+    const u = () => { el.classList.remove('actif'); off(); };
+    el.onpointerdown = d; el.onpointerup = u; el.onpointerleave = u; el.onpointercancel = u; el.oncontextmenu = (e) => e.preventDefault();
+  }
+
+  // Tutoriel à la première ouverture de chaque atelier
+  const TUTOS_ECRAN = {
+    empatage: [
+      ['La vanne de vapeur', 'Maintiens <span class="mini-btn feu">Vapeur</span> : la vanne s\'ouvre en une demi-seconde et la vapeur de la chaudière chauffe la double enveloppe.'],
+      ['L\'inertie', 'L\'enveloppe garde sa chaleur : la cuve monte encore après la fermeture. Le <span class="mini-trait"></span> trait bleu sur le thermomètre montre où tu vas arriver. Lâche avant la zone verte.'],
+      ['Les imprévus', 'Trappe ouverte, coup de fourquet, bûche humide dans la chaudière : regarde la cuve, la fumée et le manomètre, puis corrige.'],
+    ],
+    ebullition: [['Le houblonnage', 'Le curseur avance sur la frise. Touche <span class="mini-btn houblon">Jeter le houblon</span> quand il passe sur un repère : tôt pour l\'amertume, tard pour l\'arôme.']],
+    fermentation: [
+      ['Deux mains, deux vannes', '<span class="mini-btn froid">Glycol</span> à gauche refroidit, <span class="mini-btn feu">Vapeur</span> à droite réchauffe. Maintiens pour ouvrir, lâche pour fermer.'],
+      ['Le retard', 'L\'enveloppe met plus d\'une seconde à changer de température. Le pic de chaleur arrive aux jours 2 et 3 : anticipe avec le glycol.'],
+    ],
+    brouillis: [
+      ['Le foyer', 'Une <span class="mini-btn feu">bûche</span> met environ une seconde à prendre, puis brûle plusieurs secondes. La chaudière suit la flamme avec retard.'],
+      ['Le registre d\'air', 'Le curseur règle l\'air : c\'est la commande rapide pour corriger. Grand ouvert, le bois brûle plus vite.'],
+      ['Ce qu\'il faut voir', 'Au début la bière mousse : si la mousse touche le haut du hublot, elle passe dans le col de cygne. Un fond rouge et une fumée noire, c\'est un coup de feu.'],
+    ],
+    repasse: [
+      ['Les coupes', 'Touche <span class="mini-btn feu">Couper</span> deux fois : des têtes au cœur quand ça sent le fruit propre, du cœur aux queues quand le degré tombe et que le carton mouillé arrive.'],
+      ['Le feu', 'Bûches et registre d\'air, comme au brouillis. Une chauffe douce donne plus de reflux et un cœur plus propre.'],
+    ],
+    chai: [
+      ['Trois climats', 'En haut chaud et sec, en bas frais et humide. Touche un fût, puis « Déplacer » et une case libre pour le changer de rangée.'],
+      ['Le temps au curseur', 'Remplis un fût, puis fais glisser les années : couleur, anges, pipette et conseil de Firmin changent en direct. Sors-le quand c\'est mûr.'],
+      ['Finir', 'Les lots sortis attendent en cuve : finition dans un second fût, assemblage, ou mise en bouteille.'],
+    ],
+    recherche: [['Chercher partout', 'Tape un nom, un arôme, un style (« agrumes », « IPA », « 1150 »), ou touche une suggestion. Filtre par famille, trie, et ajoute directement à la cuve.']],
+  };
+  let tutoEnCours = null;
+  function tutoEcran(nom) {
+    if (!S.vus) S.vus = {};
+    if (!TUTOS_ECRAN[nom] || S.vus[nom]) return;
+    tutoEnCours = { nom, i: 0 }; afficherTutoEcran();
+  }
+  function afficherTutoEcran() {
+    const { nom, i } = tutoEnCours, pages = TUTOS_ECRAN[nom];
+    $('#tuto-etape').textContent = pages.length > 1 ? `${i + 1} / ${pages.length}` : 'Premier passage';
+    $('#tuto-titre').textContent = pages[i][0];
+    $('#tuto-corps').innerHTML = `<p>${pages[i][1]}</p>`;
+    $('#tuto-suivant').textContent = i < pages.length - 1 ? 'Suivant' : 'C\'est parti';
+    $('#tuto-voile').hidden = false; $('#tuto-suivant').focus();
+  }
+  function fermerTutoEcran() { if (tutoEnCours) { S.vus[tutoEnCours.nom] = true; sauver(); } tutoEnCours = null; $('#tuto-voile').hidden = true; }
+  $('#tuto-suivant').onclick = () => { son('clic'); if (tutoEnCours.i < TUTOS_ECRAN[tutoEnCours.nom].length - 1) { tutoEnCours.i++; afficherTutoEcran(); } else fermerTutoEcran(); };
+  $('#tuto-passer').onclick = () => { son('clic'); fermerTutoEcran(); };
+
+  // =====================================================================
   // Mentor et tutoriel
   // =====================================================================
   const TUTO = [
@@ -2029,7 +2193,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     { ecran: 'brasserie', txt: "Au-dessus des onglets, je t'indique le style le plus proche. Touche-le pour comparer tes chiffres aux plages du style. Quand tu es prêt, lance le brassin.", attendre: 'lancer' },
     { ecran: 'empatage', txt: "Maintiens la vapeur par petites pressions pour rester dans la zone verte. Vers 62–65 °C, la β-amylase libère du maltose fermentescible. Vers 68–72 °C, l'α-amylase laisse des dextrines qui donnent du corps.", attendre: 'fin:empatage' },
     { ecran: 'ebullition', txt: "Jette chaque houblon quand le curseur passe sur son repère. Plus il bout longtemps, plus il amérise. Plus il arrive tard, plus il garde ses huiles aromatiques.", attendre: 'fin:ebullition' },
-    { ecran: 'fermentation', txt: "La fermentation chauffe, surtout les jours 2 et 3. Règle la vanne pour rester dans la bande de ta levure : vers la gauche, le glycol refroidit.", attendre: 'fin:fermentation' },
+    { ecran: 'fermentation', txt: "La fermentation chauffe, surtout les jours 2 et 3. Maintiens Glycol à gauche pour refroidir, Vapeur à droite pour réchauffer, et reste dans la bande de ta levure.", attendre: 'fin:fermentation' },
     { ecran: 'degustation', txt: "Le jury a goûté. La fiche suit le barème des concours : aspect, arôme, bouche, saveur, impression. Les Fiches expliquent la chimie derrière chaque note. À toi de jouer.", attendre: null },
   ];
   const TUTO_D = [
@@ -2370,12 +2534,22 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         : "α-amylase favorisée : plus de dextrines non fermentescibles, bière ronde et moelleuse.";
   }
 
+  // Charge de grain lisible : total, kg/hL et répartition en barre colorée par la teinte des malts
+  function rendreCharge(r) {
+    const z = $('#charge'); if (!z) return;
+    const kg = R.malts.reduce((a, l) => a + l.kg, 0);
+    if (!kg) { z.innerHTML = '<span class="charge-v">0 <small>kg</small></span><span class="charge-l">de grain dans la cuve</span>'; return; }
+    const tri = R.malts.map((l) => ({ m: IDX.malt.get(l.id), kg: l.kg })).sort((a, b) => b.kg - a.kg);
+    z.innerHTML = `<span class="charge-v">${nf(kg, 0)} <small>kg</small></span><span class="charge-l">de grain · ${nf((kg / R.volume) * 100, 1)} kg/hL</span>
+      <span class="grist">${tri.map((x) => `<i style="width:${(x.kg / kg) * 100}%;background:${couleur(Math.max(4, x.m.ebc))}"></i>`).join('')}</span>
+      <span class="grist-leg">${tri.slice(0, 3).map((x) => `<span><b>${Math.round((x.kg / kg) * 100)} %</b> ${esc(x.m.nom.split(' ').slice(0, 2).join(' '))}</span>`).join('')}${tri.length > 3 ? `<span>+ ${tri.length - 3} autre${tri.length > 4 ? 's' : ''}</span>` : ''}</span>`;
+  }
   function rendreCuveListe(z) {
     const r = dernierCalc;
     if (!R.malts.length && !R.houblons.length && !R.levure) { z.innerHTML = '<p class="vide">La cuve est vide. Ajoute des céréales depuis l\'onglet Céréales, ou charge une recette du grimoire au pigeonnier.</p><button class="btn btn-sobre" data-catalogue="grimoire">Ouvrir le grimoire</button>'; return; }
     const kgTot = R.malts.reduce((s, x) => s + x.kg, 0) || 1;
     let h = '<p class="groupe-titre">MALTS ET SUCRES</p>';
-    h += R.malts.map((l, i) => { const m = IDX.malt.get(l.id); return `<div class="ligne-recette"><div class="nom">${esc(m.nom)}<small>${Math.round((l.kg / kgTot) * 100)} % du grain · ${nf(m.ebc, 0)} EBC</small></div>
+    h += R.malts.map((l, i) => { const m = IDX.malt.get(l.id); return `<div class="ligne-recette"><div class="nom"><span class="part" style="--teinte:${couleur(Math.max(4, m.ebc))};color:${m.ebc > 45 ? 'var(--calcaire)' : 'var(--nuit)'}">${Math.round((l.kg / kgTot) * 100)} %</span>${esc(m.nom)}<small>${nf(m.ebc, 0)} EBC · ${FAMILLES[m.fam]}</small></div>
       <div class="qte"><button class="btn btn-carre" data-malt-moins="${i}" aria-label="Retirer 5 kg">−</button><input id="kg-${i}" inputmode="decimal" data-malt-kg="${i}" value="${l.kg}" aria-label="Kilogrammes de ${esc(m.nom)}"><span class="u">kg</span><button class="btn btn-carre" data-malt-plus="${i}" aria-label="Ajouter 5 kg">+</button><button class="btn btn-carre btn-sobre" data-malt-suppr="${i}" aria-label="Enlever ${esc(m.nom)}">×</button></div></div>`; }).join('') || '<p class="vide">Aucun malt.</p>';
     h += '<p class="groupe-titre">HOUBLONS</p>';
     h += R.houblons.map((l, i) => {
@@ -2485,6 +2659,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       { v: `${nf(r.ebc, 0)}<i class="pastille" style="background:${couleur(r.ebc)}"></i>`, l: 'EBC', f: 'couleur', c: etat(dans('ebc')) },
       { v: r.aDesMalts ? nf(r.ph, 2) : '—', l: 'pH', f: 'eau', c: r.aDesMalts ? etat(r.ph >= 5.2 && r.ph <= 5.6, r.ph > 5.78 || r.ph < 5.15) : '' },
     ];
+    rendreCharge(r);
     $('#mesures').innerHTML = m.map((x) => `<button class="mesure ${x.c}" data-fiche="${x.f}"><span class="v">${x.v}</span><span class="l">${x.l}</span></button>`).join('');
     const ligne = $('#style-ligne');
     if (r.wash && r.aDesMalts && r.levure) {
@@ -2615,17 +2790,17 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   // Température atteinte si l'on ferme la vanne maintenant (la chaleur stockée continue de passer)
   function prevoirVapeur(st) { const g = { ...st, vapeur: false }; let m = g.T; for (let i = 0; i < 60; i++) { pasVapeur(g, 0.05); m = Math.max(m, g.T); } return m; }
   const ALEAS_EMP = [
-    { txt: 'Trappe ouverte : courant d\'air froid.', f: (st, a) => { st.froid += 1.3 * a; } },
-    { txt: 'Coup de fourquet : la maische se mélange.', f: (st, a) => { st.T -= 0.8 * a; } },
-    { txt: 'Bûche humide dans la chaudière : la pression chute.', f: (st, a) => { st.chute += 1.1 * a; } },
-    { txt: 'Le brûleur repart fort : la pression grimpe.', f: (st, a) => { st.p = Math.min(2.6, st.p + 0.4 * a); } },
+    { id: 'air', txt: 'Courant d\'air', genre: 'froid', f: (st, a) => { st.froid += 1.3 * a; } },
+    { id: 'fourquet', txt: 'Coup de fourquet', genre: 'froid', f: (st, a) => { st.T -= 0.8 * a; } },
+    { id: 'humide', txt: 'Bûche humide : pression ↓', genre: 'alerte', f: (st, a) => { st.chute += 1.1 * a; } },
+    { id: 'bruleur', txt: 'Chaudière qui repart : pression ↑', genre: 'chaud', f: (st, a) => { st.p = Math.min(2.6, st.p + 0.4 * a); } },
   ];
   function preparerEmpatage() {
     const cible = session.recette.palier;
     const DUREE = 18;
     const st = { T: cible - 2.5, H: 0, v: 0, p: VAP.pNom, chute: 0, froid: 0, pente: 0, vapeur: false, dans: 0, somme: 0, duree: 0, t: 0, prochainAlea: 4, depassements: 0, auDessus: false };
     const amp = S.mode === 'expert' ? 1 : 0.65;
-    $('#emp-consigne').innerHTML = `Garde la cuve-matière à <b>${nf(cible)} °C ± 1</b> pendant 60 minutes. La vapeur a de l'inertie : la double enveloppe chauffe encore après la fermeture de la vanne, et la pression de la chaudière baisse si tu tires trop.`;
+    $('#emp-consigne').innerHTML = `Tiens <b>${nf(cible)} °C ± 1</b> pendant 60 min ${iBtn("Les pertes refroidissent la cuve-matière en continu. La vapeur a de l'inertie : la double enveloppe chauffe encore après la fermeture de la vanne, et la pression de la chaudière baisse si tu tires trop. Vers 62–65 °C la β-amylase donne une bière sèche, vers 68–72 °C l'α-amylase laisse du corps.")}`;
     $('#emp-bilan').hidden = true; $('#emp-pied').hidden = false;
     const vap = $('#emp-vapeur'); vap.disabled = true;
     const enzyme = (T) => T < 60 ? ['β', 'au ralenti'] : T < 65 ? ['β', 'maltose'] : T < 68 ? ['α + β', 'équilibre'] : T < 72.5 ? ['α', 'dextrines'] : ['—', 'dénaturées'];
@@ -2640,19 +2815,40 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       for (let i = 0; i < 18; i++) px(28 + ((i * 37) % 74), 50 + ((i * 23) % 50), 2, 2, '#c9a26b');
       const h = borne(st.H / 3.5, 0, 1);
       if (h > 0.05) for (let i = 0; i < 4; i++) { const a = (st.t * 1.5 + i / 4) % 1; px(40 + i * 14, 40 - a * 30, 4, 3, `rgba(236,223,196,${(0.6 - a * 0.6) * h})`); }
-      // Conduite et vanne de vapeur (le volant tourne selon l'ouverture)
-      px(108, 62, 26, 4, '#3b2d22'); px(130, 30, 4, 36, '#3b2d22');
+      const ev = st.evt && st.t - st.evt.t0 < 2.2 ? st.evt.id : null, k = ev ? 1 - (st.t - st.evt.t0) / 2.2 : 0;
+      // Chaudière biomasse en bas à droite : foyer, cheminée, fumée
+      px(110, 82, 30, 30, '#574332'); px(112, 84, 26, 26, '#6b5a48'); px(116, 98, 12, 9, '#2a1d14');
+      const fl = ev === 'bruleur' ? 1 : ev === 'humide' ? 0.15 : 0.35 + st.p / 5;
+      for (let i = 0; i < 4; i++) { const h = 2 + Math.abs(Math.sin(st.t * 10 + i * 1.9)) * 6 * fl; px(117 + i * 3, 106 - h, 2, h, i % 2 ? '#f3b04a' : '#e3593d'); }
+      px(134, 70, 4, 14, '#3b2d22');
+      const fumee = ev === 'humide' ? 7 : 3, gris = ev === 'humide' ? '120,120,120' : '200,200,200';
+      for (let i = 0; i < fumee; i++) { const a = (st.t * (ev === 'humide' ? 0.9 : 0.5) + i / fumee) % 1; const r = ev === 'humide' ? 4 + a * 6 : 2; px(135 + Math.sin(a * 7 + i) * 3 - r / 2, 68 - a * 30, r, r * 0.8, `rgba(${gris},${0.55 - a * 0.5})`); }
+      if (ev === 'bruleur') for (let i = 0; i < 6; i++) px(114 + ((i * 7 + Math.floor(st.t * 30)) % 20), 96 - ((i * 5 + st.t * 40) % 14), 1, 1, '#f8d66a');
+      // Conduite de vapeur et vanne (le volant monte avec l'ouverture)
+      px(124, 66, 4, 16, '#3b2d22'); px(108, 62, 20, 4, '#3b2d22');
       px(114, 52, 12, 12, '#574332'); px(116, 54, 8, 8, st.v > 0.05 ? '#f3b04a' : '#2a1d14');
       px(119, 49 - st.v * 3, 2, 4 + st.v * 3, '#d27b3e');
-      if (st.v > 0.05) for (let i = 0; i < 3; i++) { const a = (st.t * 4 + i / 3) % 1; px(122 + a * 6, 60 - a * 8, 2, 2, `rgba(236,223,196,${0.6 * st.v * (1 - a)})`); }
-      // Manomètre de la chaudière
-      px(124, 10, 18, 18, '#ecdfc4'); px(126, 12, 14, 14, '#2a1d14');
+      if (st.v > 0.05) for (let i = 0; i < 3; i++) { const a = (st.t * 4 + i / 3) % 1; px(110 - a * 6, 58 - a * 8, 2, 2, `rgba(236,223,196,${0.6 * st.v * (1 - a)})`); }
+      // Manomètre (cadran qui clignote quand la pression bouge brusquement)
+      const cadre = ev === 'humide' && Math.floor(st.t * 6) % 2 ? '#e3593d' : ev === 'bruleur' && Math.floor(st.t * 6) % 2 ? '#9cc95e' : '#ecdfc4';
+      px(124, 10, 18, 18, cadre); px(126, 12, 14, 14, '#2a1d14'); px(132, 28, 2, 24, '#3b2d22');
       const ang = Math.PI * (0.8 + 1.4 * (st.p / 2.6)); px(133 + Math.cos(ang) * 5, 19 + Math.sin(ang) * 5, 2, 2, st.p < 1.4 ? '#e3593d' : '#9cc95e'); px(132, 18, 2, 2, '#ecdfc4');
+      // Courant d'air : trappe soulevée et filets froids sur la maische
+      if (ev === 'air') {
+        px(24, 22 - 6 * k, 40, 4, '#8a8f96');
+        for (let i = 0; i < 7; i++) { const x = 8 + ((st.t * 120 + i * 29) % 110); px(x, 34 + (i * 9) % 26, 14, 1, `rgba(127,182,214,${0.9 * k})`); px(x + 4, 35 + (i * 9) % 26, 6, 1, `rgba(214,236,245,${0.7 * k})`); }
+      }
+      // Coup de fourquet : la pale plonge et brasse, la maische tourbillonne
+      if (ev === 'fourquet') {
+        const x = 64 + Math.sin(st.t * 9) * 22;
+        px(x, 6, 3, 66, '#8a5a2b'); px(x - 4, 70, 11, 18, '#a87444');
+        for (let i = 0; i < 12; i++) { const a = st.t * 6 + i * 0.52; px(64 + Math.cos(a) * (12 + i * 2), 76 + Math.sin(a) * (6 + i * 0.6), 2, 2, '#f4ecd8'); }
+      }
       // Thermomètre 55–78 °C, avec la prévision en bleu
       const y = (T) => borne(116 - ((T - 55) / 23) * 104, 12, 116);
       px(146, 8, 26, 112, '#ecdfc4'); px(150, 12, 18, 104, '#3b2d22');
       px(150, y(cible + 1), 18, y(cible - 1) - y(cible + 1), 'rgba(156,201,94,.45)');
-      px(156, y(st.T), 6, 116 - y(st.T), Math.abs(st.T - cible) <= 1 ? '#9cc95e' : '#e3593d');
+      px(156, y(st.T), 6, 116 - y(st.T), ev === 'air' || ev === 'fourquet' ? '#7fb6d6' : Math.abs(st.T - cible) <= 1 ? '#9cc95e' : '#e3593d');
       if (S.aide && st.t > 0) { const pr = prevoirVapeur(st); px(150, y(pr), 18, 2, '#7fb6d6'); }
       [55, 60, 65, 70, 75].forEach((T) => px(146, y(T), 4, 1, '#3b2d22'));
     };
@@ -2673,7 +2869,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         st.t = t;
         if (t >= st.prochainAlea) {
           const a = ALEAS_EMP[Math.floor(Math.random() * ALEAS_EMP.length)];
-          a.f(st, amp); toast(a.txt);
+          a.f(st, amp); st.evt = { id: a.id, t0: t }; evtScene('emp', a.txt, a.genre); son('rate');
           st.prochainAlea = t + (S.mode === 'expert' ? 3 + Math.random() * 3 : 4.5 + Math.random() * 3.5);
         }
         pasVapeur(st, dt);
@@ -2695,14 +2891,13 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         $('#emp-suite').onclick = () => { tuto('fin:empatage'); if (session.recette.destination === 'wash') { aller('fermentation'); preparerFermentation(); } else { aller('ebullition'); preparerEbullition(); } };
       });
     };
-    const on = (e) => { e.preventDefault(); if (vap.disabled) return; st.vapeur = true; vap.classList.add('actif'); };
-    const off = () => { st.vapeur = false; vap.classList.remove('actif'); };
-    vap.onpointerdown = on; vap.onpointerup = off; vap.onpointerleave = off; vap.onpointercancel = off;
-    vap.oncontextmenu = (e) => e.preventDefault();
+    maintenir(vap, () => { st.vapeur = true; }, () => { st.vapeur = false; });
     $('#emp-passer').onclick = () => { arretGeste && arretGeste(); session.scores.palier = 0.5; tuto('fin:empatage'); if (session.recette.destination === 'wash') { aller('fermentation'); preparerFermentation(); } else { aller('ebullition'); preparerEbullition(); } };
   }
-  document.addEventListener('keydown', (e) => { if (ecran === 'empatage' && e.code === 'Space' && !$('#emp-vapeur').disabled) { e.preventDefault(); $('#emp-vapeur').onpointerdown(e); } });
-  document.addEventListener('keyup', (e) => { if (ecran === 'empatage' && e.code === 'Space') $('#emp-vapeur').onpointerup(); });
+  // Clavier : espace pour la vapeur ; flèches gauche et droite pour glycol et vapeur en fermentation
+  const TOUCHES = { empatage: { Space: '#emp-vapeur' }, fermentation: { ArrowLeft: '#fer-glycol', ArrowRight: '#fer-chauffe' } };
+  document.addEventListener('keydown', (e) => { const sel = TOUCHES[ecran] && TOUCHES[ecran][e.code]; if (!sel || e.repeat || !$('#tuto-voile').hidden) return; const b = $(sel); if (b.disabled) return; e.preventDefault(); b.onpointerdown(e); });
+  document.addEventListener('keyup', (e) => { const sel = TOUCHES[ecran] && TOUCHES[ecran][e.code]; if (sel) $(sel).onpointerup(); });
 
   // ---- Ébullition ----
   function preparerEbullition() {
@@ -2777,8 +2972,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const cible = (j) => consigne + (repos && j >= 5 ? 4 : 0);
     const st = { T: consigne, u: 0, t: 0, dans: 0, duree: 0, somme: 0, max: consigne, min: consigne, histo: [] };
     const base = Math.round(borne(-((AMB - consigne) * 0.12) / FROID, -1, 1) * 100);
-    const vanne = $('#fer-vanne'); vanne.value = base; vanne.disabled = true; st.u = base / 100; st.e = st.u;
-    $('#fer-consigne').innerHTML = `${esc(y.nom)} à <b>${nf(consigne)} °C ± 1,5</b>, cave à ${AMB} °C. ${repos ? 'Repos diacétyle : la bande monte de 4 °C les deux derniers jours.' : ''}`;
+    const bG = $('#fer-glycol'), bC = $('#fer-chauffe'); bG.disabled = bC.disabled = true;
+    st.u = 0; st.e = 0; st.cmd = 0;
+    maintenir(bG, () => { st.cmd = -1; }, () => { if (st.cmd < 0) st.cmd = 0; });
+    maintenir(bC, () => { st.cmd = 1; }, () => { if (st.cmd > 0) st.cmd = 0; });
+    $('#fer-consigne').innerHTML = `${esc(y.nom)} à <b>${nf(consigne)} °C ± 1,5</b> ${iBtn(`Cave à ${AMB} °C. La fermentation dégage de la chaleur, surtout les jours 2 et 3. Glycol à gauche pour refroidir, vapeur à droite pour réchauffer ; l'enveloppe réagit avec plus d'une seconde de retard.${repos ? ' Repos diacétyle : la bande monte de 4 °C les deux derniers jours.' : ''}`)}`;
     $('#fer-bilan').hidden = true; $('#fer-pied').hidden = false;
     const phase = (j) => j < 1 ? 'Latence' : j < 3.2 ? 'Tumultueuse' : j < 5 ? 'Atténuation' : 'Maturation';
     const ctx = $('#fer-canvas').getContext('2d');
@@ -2801,15 +2999,22 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       st.histo.forEach((p, k) => px(gx + (p.j / 7) * gw, Y(p.T), 2, 2, Math.abs(p.T - cible(p.j)) <= 1.5 ? '#9cc95e' : '#e3593d'));
       px(gx + (st.t / DUREE) * gw, gy, 1, gh, '#f3b04a');
     };
-    const infos = (j) => { $('#fer-infos').innerHTML = infoBloc(nf(st.T) + '°', 'Température') + infoBloc('J' + Math.min(7, Math.floor(j) + 1), 'sur 7 jours') + infoBloc(phase(j), 'Phase'); };
+    const infos = (j) => {
+      $('#fer-infos').innerHTML = infoBloc(nf(st.T) + '°', 'Température') + infoBloc('J' + Math.min(7, Math.floor(j) + 1), 'sur 7 jours') + infoBloc(phase(j), 'Phase');
+      jaugesFeu('#fer-jauges', [
+        { lib: 'Glycol', v: Math.max(0, -st.e), coul: '#7fb6d6' },
+        { lib: 'Vapeur', v: Math.max(0, st.e), coul: 'var(--alerte)' },
+      ]);
+    };
     dessin(); infos(0);
-    vanne.oninput = () => { st.u = vanne.value / 100; };
+
     $('#fer-go').onclick = () => {
-      $('#fer-go').disabled = true; vanne.disabled = false; vanne.focus();
+      $('#fer-go').disabled = true; bG.disabled = bC.disabled = false;
       arretGeste = bouclePendant(DUREE, (dt, t) => {
         st.t = t;
         const j = (t / DUREE) * 7;
         const chaleur = G * (j / 1.8) * Math.exp(1 - j / 1.8);
+        st.u += borne(st.cmd - st.u, -3 * dt, 3 * dt);
         st.e += (st.u - st.e) * Math.min(1, dt / 1.2);
         st.T += (chaleur + (AMB - st.T) * 0.12 + st.e * FROID) * dt;
         st.duree += dt; st.somme += st.T * dt; st.max = Math.max(st.max, st.T); st.min = Math.min(st.min, st.T);
@@ -2817,7 +3022,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         if (!st.histo.length || j - st.histo[st.histo.length - 1].j > 0.06) st.histo.push({ j, T: st.T });
         dessin(); infos(j);
       }, () => {
-        vanne.disabled = true;
+        bG.disabled = bC.disabled = true; st.cmd = 0; bG.classList.remove('actif'); bC.classList.remove('actif');
         const score = st.dans / st.duree, moy = st.somme / st.duree;
         session.scores.ferm = score;
         Object.assign(session.gestes, { fermMax: st.max, fermMin: st.min, fermMoy: moy });
@@ -3069,7 +3274,27 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 
   // Feu de bois : chaque bûche met ~1 s à prendre puis brûle selon l'air ; le registre agit vite,
   // la chaudière de cuivre suit la flamme avec ~1,4 s de retard (inertie thermique de 500 L)
-  function nouveauFeu() { return { buches: [{ age: 3, m: 1 }], braise: 0.35, air: 0.5, flamme: 0.4, P: 0.35 }; }
+  function nouveauFeu() { return { buches: [{ age: 3, m: 1 }], braise: 0.35, air: 0.5, flamme: 0.4, P: 0.35, mod: 1, evt: null, t: 0, prochain: 7 }; }
+  // Aléas du foyer : rafale dans la cheminée (tirage fort) ou bûche humide (fume, chauffe peu)
+  const ALEAS_FEU = [
+    { id: 'tirage', txt: 'Rafale : le tirage s\'emballe', genre: 'chaud', mod: 1.55 },
+    { id: 'humide', txt: 'Bûche humide : ça fume', genre: 'alerte', mod: 0.4 },
+  ];
+  function aleaFeu(f, t, geste) {
+    f.t = t;
+    if (t < f.prochain) return;
+    const a = ALEAS_FEU[Math.floor(Math.random() * ALEAS_FEU.length)];
+    f.mod = a.mod; f.evt = { id: a.id, t0: t };
+    evtScene(geste, a.txt, a.genre); son('rate');
+    f.prochain = t + (S.mode === 'expert' ? 5 + Math.random() * 3 : 7 + Math.random() * 4);
+  }
+  const evtFeu = (f) => (f.evt && f.t - f.evt.t0 < 2.6 ? f.evt.id : null);
+  // Dessin des événements du foyer : flammes hautes et étincelles, ou fumée grise et flammes sombres
+  function dessinerFoyer(px, f, x, y, w) {
+    const ev = evtFeu(f);
+    if (ev === 'tirage') for (let i = 0; i < 10; i++) { const a = (f.t * 2 + i / 10) % 1; px(x + ((i * 13) % w), y - 6 - a * 26, 1, 2, `rgba(248,214,106,${1 - a})`); }
+    if (ev === 'humide') for (let i = 0; i < 6; i++) { const a = (f.t * 0.8 + i / 6) % 1, r = 4 + a * 8; px(x + w / 2 + Math.sin(a * 6 + i) * w / 3 - r / 2, y - 4 - a * 34, r, r * 0.7, `rgba(130,130,130,${0.7 - a * 0.6})`); }
+  }
   function brulerFeu(f, dt) {
     let chaleur = 0;
     for (const b of f.buches) {
@@ -3081,7 +3306,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     }
     f.buches = f.buches.filter((b) => b.m > 0.02);
     f.braise = Math.max(0, f.braise - 0.07 * (0.5 + f.air) * dt);
-    const cible = borne(chaleur * 0.5 + f.braise * 0.3 * (0.4 + f.air), 0, 1.25);
+    f.mod += (1 - f.mod) * Math.min(1, dt * 0.45);
+    const cible = borne((chaleur * 0.5 + f.braise * 0.3 * (0.4 + f.air)) * f.mod, 0, 1.25);
     f.flamme += (cible - f.flamme) * Math.min(1, dt * 3);
     f.P += (f.flamme - f.P) * Math.min(1, dt / 1.4);
   }
@@ -3113,7 +3339,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   function preparerBrouillisGeste() {
     const st = { t: 0, prog: 0, mousse: 0, chaud: 0, dans: 0, duree: 0, feu: nouveauFeu() };
     const DUREE = 24;
-    $('#bro-consigne').innerHTML = `${esc(sessionD.biere.nom)} : 1000 L à ${nf(sessionD.biere.abv)} %, en deux chauffes de 500 L. Nourris le feu pour épuiser la bière en moins de 24 secondes, sans la faire mousser.`;
+    $('#bro-consigne').innerHTML = `Épuise <b>1000 L à ${nf(sessionD.biere.abv)} %</b> en 24 s, sans mousser ${iBtn(`${sessionD.biere.nom}, en deux chauffes de 500 L. Garde la chaudière dans la bande verte : une bûche met une seconde à prendre, le registre d'air corrige vite. Au début, protéines et CO₂ font mousser la bière : chauffe doucement, puis nourris le feu.`)}`;
     $('#bro-bilan').hidden = true; $('#bro-pied').hidden = false; $('#bro-go').disabled = false;
     const btn = $('#bro-buche'); btn.disabled = true;
     const ctx = $('#bro-canvas').getContext('2d');
@@ -3121,7 +3347,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       px(24, 90, 70, 22, '#574332');
-      for (let i = 0; i < 10; i++) { const h = 4 + Math.abs(Math.sin(st.t * 9 + i * 1.3)) * 14 * st.feu.flamme; px(28 + i * 6, 104 - h, 4, h, i % 2 ? '#f3b04a' : '#e3593d'); }
+      for (let i = 0; i < 10; i++) { const h = 4 + Math.abs(Math.sin(st.t * 9 + i * 1.3)) * 14 * st.feu.flamme; px(28 + i * 6, 104 - h, 4, h, evtFeu(st.feu) === 'humide' ? (i % 2 ? '#8a5a3a' : '#6b3b22') : i % 2 ? '#f3b04a' : '#e3593d'); }
+      dessinerFoyer(px, st.feu, 26, 90, 66);
       st.feu.buches.forEach((b, i) => px(30 + i * 9, 104, 8, 4, b.age < 1.1 ? "#3a2a1e" : "#7a4a28"));
       for (let y = 28; y < 90; y++) { const w = 32 - Math.abs(y - 58) * 0.18; px(59 - w, y, w * 2, 1, y % 6 ? '#d27b3e' : '#b9652f'); }
       // Hublot : bière et mousse
@@ -3130,6 +3357,10 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       px(49, niv, 20, 79 - niv, couleur(sessionD.biere.ebc));
       const hm = st.mousse * 34; px(49, Math.max(41, niv - hm), 20, Math.min(hm, niv - 41), '#f4ecd8');
       px(49, 41, 20, 1, st.mousse > 0.8 ? '#e3593d' : '#2a1d14');
+      // Coup de feu : le fond rougit et une fumée noire monte ; moussage : la mousse déborde dans le col
+      const chaudFond = st.chaud > 0.4 || (st.coup != null && st.t - st.coup < 2);
+      if (chaudFond) { px(30, 84, 58, 5, Math.floor(st.t * 8) % 2 ? '#e3593d' : '#f3b04a'); for (let i = 0; i < 5; i++) { const a = (st.t + i / 5) % 1; px(36 + i * 10, 82 - a * 50, 5, 4, `rgba(30,24,20,${0.8 - a * 0.7})`); } }
+      if (st.debord != null && st.t - st.debord < 2.2) for (let i = 0; i < 40; i++) px(60 + i, 26 - Math.min(i, 14) * 0.6 + Math.max(0, i - 30) * 0.5 - 2, 3, 3, '#f4ecd8');
       // Col de cygne, serpentin et éprouvette
       for (let i = 0; i < 70; i++) px(60 + i, 26 - Math.min(i, 14) * 0.6 + Math.max(0, i - 50) * 0.5, 3, 2, '#c8743a');
       px(128, 30, 30, 56, '#8a8f96'); px(131, 33, 24, 50, '#7fb6d6'); for (let j = 0; j < 5; j++) px(131, 38 + j * 9, 24, 1, '#5a8aa8');
@@ -3155,12 +3386,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       let fini = false;
       arretGeste = bouclePendant(DUREE, (dt, t) => {
         if (fini) return;
-        st.t = t; brulerFeu(st.feu, dt);
+        st.t = t; aleaFeu(st.feu, t, 'bro'); brulerFeu(st.feu, dt);
         const P = st.feu.P;
         st.prog = Math.min(1, st.prog + 0.072 * Math.pow(P, 0.9) * dt);
         if (st.prog < 0.4 && P > 0.66) st.mousse += (P - 0.66) * 1.5 * dt; else st.mousse = Math.max(0, st.mousse - 0.35 * dt);
-        if (st.mousse >= 1) { st.mousse = 0.35; sessionD.incidents.moussage++; son('rate'); toast('Moussage : la bière est montée dans le col de cygne.'); }
-        if (P > 0.88) { st.chaud += dt; if (st.chaud > 1.5) { st.chaud = 0; sessionD.incidents.coupDeFeu++; son('rate'); toast('Coup de feu : le fond de la chaudière accroche.'); } } else st.chaud = Math.max(0, st.chaud - dt);
+        if (st.mousse >= 1) { st.mousse = 0.35; st.debord = t; sessionD.incidents.moussage++; son('rate'); evtScene('bro', 'Moussage !', 'alerte'); }
+        if (P > 0.88) { st.chaud += dt; if (st.chaud > 1.5) { st.chaud = 0; st.coup = t; sessionD.incidents.coupDeFeu++; son('rate'); evtScene('bro', 'Coup de feu !', 'alerte'); } } else st.chaud = Math.max(0, st.chaud - dt);
         st.duree += dt; if (P >= 0.4 && P <= 0.8) st.dans += dt;
         dessin(); infos();
         if (st.prog >= 1) { fini = true; arretGeste && arretGeste(); terminer(); }
@@ -3211,8 +3442,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     sessionD.repasse = r;
     const st = { t: 0, dans: 0, duree: 0, feu: nouveauFeu() };
     const DUREE = 55, expertVue = S.mode === 'expert';
-    $('#rep-consigne').innerHTML = `Charge : ${nf(charge.V, 0)} L à ${nf((charge.A / charge.V) * 100)} %${sessionD.recyclees ? `, dont ${nf(sessionD.recyclees, 1)} LAP d'épaisses recyclées` : ''}. Coupe deux fois : des têtes au cœur, puis du cœur aux queues.`
-      + (expertVue ? `<br><small>Courbes au bec, en multiples du seuil de perception (échelle log) : <b style="color:#e3593d">têtes</b> · <b style="color:#f3b04a">esters</b> · <b style="color:#9cc95e">houblon</b> · <b style="color:#d9c7a0">céréale</b> · <b style="color:#8f7ad0">queues</b> · <b style="color:#b9865a">furfural</b> · trait clair : degré. En abscisse, l'alcool recueilli.</small>` : '');
+    $('#rep-consigne').innerHTML = `<b>${nf(charge.V, 0)} L à ${nf((charge.A / charge.V) * 100)} %</b> · coupe deux fois ${iBtn(`${sessionD.recyclees ? `Dont ${nf(sessionD.recyclees, 1)} LAP d'épaisses recyclées. ` : ''}Première coupe des têtes au cœur, quand la colle laisse place au fruit propre ; seconde du cœur aux queues, quand le degré tombe et que le carton mouillé arrive. Garde la chaudière entre 30 et 70 % : plus de reflux, cœur plus propre.`)}`
+      + (expertVue ? `<br><small>Courbes : <b style="color:#e3593d">têtes</b> · <b style="color:#f3b04a">esters</b> · <b style="color:#9cc95e">houblon</b> · <b style="color:#d9c7a0">céréale</b> · <b style="color:#8f7ad0">queues</b> · <b style="color:#b9865a">furfural</b> ${iBtn("Au bec, en multiples du seuil de perception (échelle logarithmique). Trait clair : degré. En abscisse, l'alcool recueilli.")}</small>` : '');
     $('#rep-bilan').hidden = true; $('#rep-pied').hidden = false; $('#rep-go').disabled = false;
     const btnB = $('#rep-buche'), btnC = $('#rep-couper');
     btnB.disabled = btnC.disabled = true;
@@ -3238,7 +3469,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         });
 
       } else {
-        dessinerUlysse(ctx, st.t, st.feu.flamme);
+        dessinerUlysse(ctx, st.t, evtFeu(st.feu) === 'humide' ? st.feu.flamme * 0.4 : st.feu.flamme);
+        dessinerFoyer(px, st.feu, 17, 44, 24);
         // Éprouvette et alcoomètre
         const d = r.dernier ? r.dernier.degre : 0;
         px(118, 20, 26, 90, '#3b2d22'); px(121, 23, 20, 84, 'rgba(236,223,196,.35)');
@@ -3304,7 +3536,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       $('#rep-pied').hidden = true;
       arretGeste = bouclePendant(DUREE, (dt, t) => {
         if (fini) return;
-        st.t = t; brulerFeu(st.feu, dt);
+        st.t = t; aleaFeu(st.feu, t, 'rep'); brulerFeu(st.feu, dt);
         DI.pasRepasse(r, st.feu.P, dt);
         st.duree += dt; if (st.feu.P >= 0.3 && st.feu.P <= 0.7) st.dans += dt;
         dessin(); infos();
@@ -3555,7 +3787,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
           cases += `<button class="case ${cible ? 'cible' : ''}" data-case="${r}:${c}" aria-label="Emplacement libre, rangée ${z.nom}"></button>`;
         }
       }
-      return `<div class="rangee" data-zone="${r}"><span class="zone-lib">${icone[r]} ${esc(z.nom)} · anges ${nf(CH.P.angePct * z.ange, 1)} %/an · degré ${z.deg > 0 ? '+' : ''}${nf(z.deg, 2)}/an</span>
+      return `<div class="rang-chai" data-zone="${r}"><span class="zone-lib">${icone[r]} ${esc(z.nom)} · anges ${nf(CH.P.angePct * z.ange, 1)} %/an · degré ${z.deg > 0 ? '+' : ''}${nf(z.deg, 2)}/an</span>
         <div class="cases" style="grid-template-columns:repeat(${C.cols},1fr)">${cases}</div></div>`;
     }).join('');
     const etendre = C.cols < PLAFOND_TRAVEES ? `<button class="btn btn-mini btn-sobre" id="chai-etendre" ${S.ecus < coutTravee(C.cols) ? 'disabled' : ''}>Agrandir d'une travée · ${coutTravee(C.cols)} écus</button>` : '<span class="etq">Plafond atteint : 10 travées</span>';
@@ -3576,8 +3808,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       if (!f.pos) return tete + '<p class="page-intro">Range d\'abord ce fût dans le chai pour pouvoir le remplir.</p>' + actionsFut;
       const edv = edvDisponibles();
       const lignes = edv.map((x) => { const i = infoEDV(x); return `<button class="ligne-choix" data-remplir="${x.id}"><b>${esc(x.nom)}</b><span>${nf(i.lap, 1)} LAP à ${nf(i.degre, 1)} % · ${nf(x.total, x.total % 1 ? 1 : 0)}/50</span></button>`; }).join('');
-      return `${tete}<h4 class="groupe-titre">REMPLIR AVEC UNE EAU-DE-VIE DU CARNET</h4>
-        <p class="page-intro">Firmin réduit le cœur à 63,5 % à l'eau de source avant l'entonnage : c'est le degré qui extrait le mieux tanins, sucres et vanilline.</p>
+      return `${tete}<h4 class="groupe-titre">REMPLIR AVEC UNE EAU-DE-VIE DU CARNET ${iBtn("Firmin réduit le cœur à 63,5 % à l'eau de source avant l'entonnage : c'est le degré qui extrait le mieux tanins, sucres et vanilline.")}</h4>
         ${lignes || '<p class="vide">Aucune eau-de-vie au carnet. Distille une bière avec Ulysse, ou mieux, un wash de malt.</p>'}
         ${chai().lots.length ? '<p class="page-intro">Pour une finition, choisis un lot dans les cuves d\'attente plus bas, puis « Finition ».</p>' : ''}${actionsFut}`;
     }
@@ -3598,7 +3829,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   function apercuHTML(f, e, pip, n, bt, debutant) {
     const ange = 1 - e.V / f.contenu.etat.V;
     const axes = CH.AXES.map((k) => [k, CH.LIB_AXES[k]]);
-    return `<div class="apercu-haut"><span class="pastille" style="background:${couleur(e.couleur * 0.6)}"></span>
+    return `<div class="apercu-haut"><span class="robe" style="background:${couleur(e.couleur * 0.6)}"></span>
         <div class="chiffres"><span>${nf(e.V, 1)} L</span><span>${nf(e.degre, 1)} %</span><span>anges ${Math.round(ange * 100)} %</span><span>${bt.n} bout. à ${nf(bt.degre, 1)} %</span></div></div>
       <p class="nom-legal">${esc(CH.nom(e, bt.degre))}</p>
       <div class="pipette"><b>À la pipette :</b> ${pip.notes.length ? pip.notes.map((x) => `${esc(x.mot)} <small>(${x.force})</small>`).join(' · ') : 'alcool blanc, céréale'}${pip.bouche.length ? `<br><b>En bouche :</b> ${esc(pip.bouche.join(', '))}` : ''}</div>
@@ -3657,8 +3888,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   function rendreLots() {
     const C = chai();
     if (!C.lots.length) { $('#chai-lots').innerHTML = ''; return; }
-    $('#chai-lots').innerHTML = `<h2 class="sous-titre">Cuves d'attente</h2><p class="page-intro">Les lots sortis des fûts attendent ici, en inox. Mets-les en bouteille, offre-leur une finition dans un autre fût, ou assemble-les.</p>
-      ${C.lots.map((l) => { const e = l.etat, bt = CH.bouteilles(e); return `<div class="lot ${lotsChoisis.has(l.id) ? 'choisi' : ''}"><label class="coche"><input type="checkbox" data-lotcoche="${l.id}" ${lotsChoisis.has(l.id) ? 'checked' : ''}><span class="pastille" style="background:${couleur(e.couleur * 0.6)}"></span><b>${esc(l.nom)}</b></label>
+    $('#chai-lots').innerHTML = `<h2 class="sous-titre">Cuves d'attente ${iBtn("Les lots sortis des fûts attendent ici, en inox. Mets-les en bouteille, offre-leur une finition de 6 à 24 mois dans un autre fût, ou coche-en plusieurs pour les assembler.")}</h2>
+      ${C.lots.map((l) => { const e = l.etat, bt = CH.bouteilles(e); return `<div class="lot ${lotsChoisis.has(l.id) ? 'choisi' : ''}"><label class="coche"><input type="checkbox" data-lotcoche="${l.id}" ${lotsChoisis.has(l.id) ? 'checked' : ''}><span class="robe" style="background:${couleur(e.couleur * 0.6)}"></span><b>${esc(l.nom)}</b></label>
         <p class="det">${esc(l.noms.join(' + '))} · ${nf(e.V, 1)} L à ${nf(e.degre, 1)} % · ${bt.n} bouteilles · ${histoire(e)}</p>
         <div class="actions-fut"><button class="btn btn-feu btn-mini" data-embouteiller="${l.id}">Mettre en bouteille</button><button class="btn btn-mini btn-sobre" data-finition="${l.id}">Finition</button></div></div>`; }).join('')}
       ${C.lots.length >= 2 ? `<button class="btn" id="chai-assembler" ${lotsChoisis.size < 2 ? 'disabled' : ''}>Assembler les ${lotsChoisis.size >= 2 ? lotsChoisis.size + ' ' : ''}lots cochés</button>` : ''}`;
@@ -4453,10 +4684,10 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       ${S.mode === 'expert' ? `<div class="reglage"><span class="lib">Jouer les gestes en mode expert</span><div class="bascule">${bascule('gestesExpert', true, 'Oui')}${bascule('gestesExpert', false, 'Non')}</div><p>Une étoile de plus, et la chimie suit ce que tu fais vraiment.</p></div>` : ''}
       <div class="reglage"><span class="lib">Sons</span><div class="bascule">${bascule('son', true, 'Oui')}${bascule('son', false, 'Non')}</div></div>
       <div class="reglage"><span class="lib">Bac à sable</span><div class="bascule">${bascule('bac', true, 'Oui')}${bascule('bac', false, 'Non')}</div><p>Tout le catalogue ouvert pour expérimenter. Les brassins ne rapportent ni points ni succès.</p></div>
-      <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir le tutoriel</button></div>
+      <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.4.1 · brasserie, alambic Ulysse, chai, pigeonnier, veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.4.2 · brasserie, alambic Ulysse, chai, pigeonnier, veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
@@ -4466,7 +4697,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       if (cle === 'mode' && v === 'debutant') R.rendement = 0.75;
       son('clic'); sauver(); majEntete(); rendreReglages(); return;
     }
-    if (b.id === 'revoir-tuto') { S.tuto = 0; sauver(); aller('domaine'); return; }
+    if (b.id === 'revoir-tuto') { S.tuto = 0; S.vus = {}; sauver(); aller('domaine'); return; }
     if (b.id === 'effacer') { $('#zone-effacer').innerHTML = '<button id="effacer-oui">Oui, tout effacer</button><button id="effacer-non">Annuler</button>'; return; }
     if (b.id === 'effacer-non') { rendreReglages(); return; }
     if (b.id === 'effacer-oui') { S = etatDefaut(); R = S.recette; sauver(); majEntete(); toast('Partie effacée.'); aller('domaine'); }

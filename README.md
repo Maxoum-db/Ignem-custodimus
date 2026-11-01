@@ -33,6 +33,10 @@ Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du H
 
 Les fûts se rangent sur trois rangées (haut chaud et sec, milieu, bas frais et humide) : un quartaut prend une case, une barrique deux, un demi-muid trois. Le chai s'agrandit de 6 à 10 travées contre des écus. Le temps se règle au curseur (0 à 15 ans, finitions de 0 à 3 ans) avec aperçu en direct : couleur, volume, degré, part des anges, profil, notes à la pipette, conseil de Firmin. Paramètres du Hub utilisés : part des anges 3 %/an, maturation de référence 36 mois, mise en bouteille à 45 %, bouteilles de 0,7 L.
 
+### Gestes de chauffe
+
+Empâtage à la vapeur avec inertie (vanne progressive, double enveloppe qui garde la chaleur, pression de chaudière), fermentation pilotée par deux boutons (glycol à gauche, vapeur à droite), feu de bois d'Ulysse avec bûches à allumage différé et registre d'air. Les aléas (courant d'air, coup de fourquet, bûche humide, rafale, moussage, coup de feu) se voient d'abord dans le dessin, avec une courte légende. Chaque atelier a une carte de tutoriel au premier passage ; les textes d'aide sont rangés dans des bulles « i ».
+
 ### Recherche
 
 La loupe de l'en-tête cherche partout : céréales, houblons (avec leurs styles), levures, aromates, sels, auxiliaires, fûts, recettes et fiches. Sans accents ni pluriels, tous les mots doivent correspondre, avec des mots-clés élargis (« agrumes » trouve citron, yuzu, pamplemousse…). Filtres par famille et par état, tri par pertinence, nom, rareté, EBC, alpha ou atténuation, et ajout direct à la cuve.

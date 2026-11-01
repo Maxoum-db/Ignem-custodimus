@@ -37,6 +37,7 @@
           <canvas id="cuve" width="120" height="96" aria-label="Cuve de brassage"></canvas>
           <span class="cuve-aide" id="cuve-aide">Glisse les sacs ici</span>
         </div>
+        <div class="charge" id="charge"></div>
         <div class="mesures" id="mesures"></div>
       </div>
       <button class="style-ligne" id="style-ligne" aria-expanded="false"></button>
@@ -55,7 +56,7 @@
       <p class="geste-etape">Geste 1 sur 3</p>
       <h1 class="geste-titre">Empâtage <span class="en">mashing</span></h1>
       <p class="geste-consigne" id="emp-consigne"></p>
-      <div class="geste-scene"><canvas id="emp-canvas" width="192" height="128"></canvas></div>
+      <div class="geste-scene"><canvas id="emp-canvas" width="192" height="128"></canvas><span class="geste-evt" id="emp-evt" hidden></span></div>
       <div class="geste-infos" id="emp-infos"></div>
       <div class="jauges-feu" id="emp-jauges"></div>
       <div class="geste-controles">
@@ -89,12 +90,12 @@
       <p class="geste-etape">Geste 3 sur 3</p>
       <h1 class="geste-titre">Fermentation <span class="en">fermentation</span></h1>
       <p class="geste-consigne" id="fer-consigne"></p>
-      <div class="geste-scene"><canvas id="fer-canvas" width="192" height="128"></canvas></div>
+      <div class="geste-scene"><canvas id="fer-canvas" width="192" height="128"></canvas><span class="geste-evt" id="fer-evt" hidden></span></div>
       <div class="geste-infos" id="fer-infos"></div>
-      <div class="geste-controles vanne">
-        <label for="fer-vanne">Vanne de la double enveloppe</label>
-        <input type="range" id="fer-vanne" min="-100" max="100" step="1" value="0" disabled>
-        <div class="vanne-echelle"><span>Glycol (froid)</span><span>Chauffe</span></div>
+      <div class="jauges-feu" id="fer-jauges"></div>
+      <div class="geste-controles rangee duo">
+        <button id="fer-glycol" class="btn btn-geste btn-froid" disabled>Glycol<small>maintenir · refroidit</small></button>
+        <button id="fer-chauffe" class="btn btn-feu btn-geste" disabled>Vapeur<small>maintenir · réchauffe</small></button>
       </div>
       <div class="geste-bilan" id="fer-bilan" hidden></div>
       <div class="geste-pied" id="fer-pied">
@@ -126,7 +127,7 @@
       <p class="geste-etape">Chauffe 1 sur 2</p>
       <h1 class="geste-titre">Brouillis <span class="en">stripping run</span></h1>
       <p class="geste-consigne" id="bro-consigne"></p>
-      <div class="geste-scene"><canvas id="bro-canvas" width="192" height="120"></canvas></div>
+      <div class="geste-scene"><canvas id="bro-canvas" width="192" height="120"></canvas><span class="geste-evt" id="bro-evt" hidden></span></div>
       <div class="geste-infos" id="bro-infos"></div>
       <div class="jauges-feu" id="bro-jauges"></div>
       <div class="geste-controles">
@@ -144,7 +145,7 @@
       <p class="geste-etape">Chauffe 2 sur 2</p>
       <h1 class="geste-titre">Bonne chauffe <span class="en">spirit run</span></h1>
       <p class="geste-consigne" id="rep-consigne"></p>
-      <div class="geste-scene"><canvas id="rep-canvas" width="192" height="120"></canvas></div>
+      <div class="geste-scene"><canvas id="rep-canvas" width="192" height="120"></canvas><span class="geste-evt" id="rep-evt" hidden></span></div>
       <div class="geste-infos" id="rep-infos"></div>
       <p class="nez-ligne" id="rep-nez"></p>
       <p class="conseil" id="rep-conseil" hidden></p>
@@ -274,6 +275,15 @@
     </div>
   </aside>
   <div id="toasts" class="toasts" aria-live="polite"></div>
+  <div id="bulle" class="bulle" role="tooltip" hidden></div>
+  <div id="tuto-voile" class="tuto-voile" hidden>
+    <div class="tuto-carte" role="dialog" aria-modal="true" aria-labelledby="tuto-titre">
+      <p class="tuto-etape" id="tuto-etape"></p>
+      <h2 id="tuto-titre"></h2>
+      <div id="tuto-corps"></div>
+      <div class="tuto-actions"><button class="btn btn-sobre" id="tuto-passer">Passer</button><button class="btn btn-feu" id="tuto-suivant">Suivant</button></div>
+    </div>
+  </div>
   <div id="glisse" class="glisse" hidden></div>
 </div>
 
