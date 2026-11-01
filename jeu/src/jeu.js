@@ -19,7 +19,7 @@
   const recetteVide = () => ({ volume: 1000, rendement: 0.75, malts: [], houblons: [], levure: null, eau: 'causse', palier: 66, ebullition: 60, fermentation: { temp: 19, reposDiacetyle: false },
     aromates: [], sels: {}, auxiliaires: [], cuisson: false, destination: 'biere' });
   const etatDefaut = () => ({ mode: 'debutant', aide: true, son: true, gestesExpert: false, bac: false, tuto: 0, tutoD: 0, points: 0, succes: {}, carnet: [], brassins: 0, recette: recetteVide(), epaisses: null, reglagesD: null,
-    possede: null, ecus: 30, decouvertes: {}, quiz: null, grimoire: [] });
+    possede: null, ecus: 30, decouvertes: {}, quiz: null, grimoire: [], ecole: {} });
   let S = (() => { try { const j = JSON.parse(localStorage.getItem(CLE) || 'null'); return j ? { ...etatDefaut(), ...j } : etatDefaut(); } catch (e) { return etatDefaut(); } })();
   // Sauvegardes d'avant la V0.3 : tout ce qui était débloqué par palier devient possédé, et les points donnent des écus
   if (!Array.isArray(S.possede)) {
@@ -265,6 +265,10 @@
       ['Le temps au curseur', 'Remplis un fût, puis fais glisser les années : couleur, anges, pipette et conseil de Firmin changent en direct. Sors-le quand c\'est mûr.'],
       ['Finir', 'Les lots sortis attendent en cuve : finition dans un second fût, assemblage, ou mise en bouteille.'],
     ],
+    veillee: [
+      ['Les leçons', 'Chaque leçon : un peu de chimie, un défi à réussir pour de vrai, puis trois questions. Réussie, elle offre des recettes au grimoire, des ingrédients ou des fûts.'],
+      ['Le défi', 'Touche « Commencer » : le défi s\'affiche en haut de la brasserie. Le moteur le vérifie tout seul à la dégustation.'],
+    ],
     recherche: [['Chercher partout', 'Tape un nom, un arôme, un style (« agrumes », « IPA », « 1150 »), ou touche une suggestion. Filtre par famille, trie, et ajoute directement à la cuve.']],
   };
   let tutoEnCours = null;
@@ -471,7 +475,7 @@
   let onglet = 'malts', filtreMalt = 'tous', recherche = '', dernierCalc = null, detailStyleOuvert = false;
   const FAMILLES = { base: 'Base', kilned: 'Touraillés', caramel: 'Caramel', roasted: 'Torréfiés', adjuncts: 'Grains crus', sugars: 'Sucres et miel' };
 
-  function entrerBrasserie() { maj(); rendreOnglets(); rendreOnglet(); }
+  function entrerBrasserie() { maj(); rendreOnglets(); rendreOnglet(); majDefiLigne(); }
 
   // Malts de base par sacs de 25 kg, malts de spécialité par 10 kg, malt acide par 5 kg
   const doseMalt = (m) => (/acidul|sauer/i.test(m.nom) ? 5 : ['caramel', 'roasted'].includes(m.fam) ? 10 : 25);
@@ -652,6 +656,7 @@
       ${compoOuverte ? `<span class="grist-leg">${tri.map((x) => `<span><i style="background:${couleur(Math.max(4, x.m.ebc))}"></i><b>${Math.round((x.kg / kg) * 100)} %</b> ${esc(x.m.nom)}</span>`).join('')}</span>` : ''}`;
   }
   document.addEventListener('click', (e) => { if (e.target.closest('#compo-bouton')) { compoOuverte = !compoOuverte; son('clic'); rendreCharge(); } });
+  const libMin = (m) => (m === -2 ? 'DH J2' : m === -1 ? 'DH J5' : m + ' min');
   function rendreCuveListe(z) {
     const r = dernierCalc;
     if (!R.malts.length && !R.houblons.length && !R.levure) { z.innerHTML = '<p class="vide">La cuve est vide. Ajoute des céréales depuis l\'onglet Céréales, ou charge une recette du grimoire au pigeonnier.</p><button class="btn btn-sobre" data-catalogue="grimoire">Ouvrir le grimoire</button>'; return; }
@@ -659,12 +664,13 @@
     let h = '<p class="groupe-titre">MALTS ET SUCRES</p>';
     h += R.malts.map((l, i) => { const m = IDX.malt.get(l.id); return `<div class="ligne-recette"><div class="nom"><span class="part" style="--teinte:${couleur(Math.max(4, m.ebc))};color:${m.ebc > 45 ? 'var(--calcaire)' : 'var(--nuit)'}">${Math.round((l.kg / kgTot) * 100)} %</span>${esc(m.nom)}<small>${nf(m.ebc, 0)} EBC · ${FAMILLES[m.fam]}</small></div>
       <div class="qte"><button class="btn btn-carre" data-malt-moins="${i}" aria-label="Retirer 5 kg">−</button><input id="kg-${i}" inputmode="decimal" data-malt-kg="${i}" value="${l.kg}" aria-label="Kilogrammes de ${esc(m.nom)}"><span class="u">kg</span><button class="btn btn-carre" data-malt-plus="${i}" aria-label="Ajouter 5 kg">+</button><button class="btn btn-carre btn-sobre" data-malt-suppr="${i}" aria-label="Enlever ${esc(m.nom)}">×</button></div></div>`; }).join('') || '<p class="vide">Aucun malt.</p>';
-    h += '<p class="groupe-titre">HOUBLONS</p>';
+    const dh = r && r.dh;
+    h += `<p class="groupe-titre">HOUBLONS${dh && dh.total > 0 ? ` <span class="dh-bilan ${dh.total > 18 ? 'alerte' : ''}">à cru ${nf(dh.total, 1)} g/L${dh.ddh ? ' · DDH' : ''}</span> ${iBtn("DH J2 : en pleine fermentation, la levure biotransforme les terpènes (géraniol → citronellol) et libère des thiols : fruité tropical. DH J5 : arôme frais intact. Le total à cru relance un peu la fermentation (hop creep) ; au-delà de 18 g/L, la bière devient végétale. Fiche Dry hop.")}` : ''}</p>`;
     h += R.houblons.map((l, i) => {
       const hb = IDX.houblon.get(l.id), ibu = r && r.detailHoublons[i] ? r.detailHoublons[i].ibu : 0;
-      return `<div class="ligne-recette"><div class="nom">${esc(hb.nom)}<small>α ${nf(hb.alpha)} % · ${l.min < 0 ? 'à cru, sans amertume' : `${nf(ibu, 0)} IBU`}</small></div>
+      return `<div class="ligne-recette"><div class="nom">${esc(hb.nom)}<small>α ${nf(hb.alpha)} % · ${l.min === -2 ? `dry hop jour 2 · ${nf(l.g / R.volume, 1)} g/L · biotransformation` : l.min === -1 ? `dry hop jour 5 · ${nf(l.g / R.volume, 1)} g/L` : `${nf(ibu, 0)} IBU`}</small></div>
       <div class="qte"><button class="btn btn-carre" data-hop-moins="${i}" aria-label="Retirer 100 g">−</button><input id="g-${i}" inputmode="numeric" data-hop-g="${i}" value="${l.g}" aria-label="Grammes de ${esc(hb.nom)}"><span class="u">g</span><button class="btn btn-carre" data-hop-plus="${i}" aria-label="Ajouter 100 g">+</button><button class="btn btn-carre btn-sobre" data-hop-suppr="${i}" aria-label="Enlever ${esc(hb.nom)}">×</button></div>
-      <div class="temps">${[60, 30, 15, 10, 5, 0, -1].map((m) => `<button data-hop-min="${i}:${m}" aria-pressed="${l.min === m}">${m < 0 ? 'À cru' : m + ' min'}</button>`).join('')}</div></div>`;
+      <div class="temps">${[60, 30, 15, 10, 5, 0, -2, -1].map((m) => `<button data-hop-min="${i}:${m}" aria-pressed="${l.min === m}" class="${m < 0 ? 'dh' : ''}">${m < 0 ? libMin(m) : m + ' min'}</button>`).join('')}</div></div>`;
     }).join('') || '<p class="vide">Aucun houblon.</p>';
     if (R.aromates.length) {
       h += '<p class="groupe-titre">AROMATES</p>';
@@ -1095,6 +1101,10 @@
       const enveloppe = st.e < -0.05 ? `rgba(110,170,220,${-st.e})` : st.e > 0.05 ? `rgba(227,89,61,${st.e})` : '#8a8f96';
       px(12, 14, 44, 70, '#b9c0c8'); px(10, 30, 48, 30, enveloppe); px(12, 30, 44, 30, '#b9c0c8'); px(12, 34, 44, 2, enveloppe); px(12, 46, 44, 2, enveloppe); px(12, 56, 44, 2, enveloppe);
       for (let j = 0; j < 18; j++) px(14 + j, 84 + j, 40 - j * 2, 1, '#9aa1a8');
+      // Cônes de houblon qui tombent dans la cuve au moment du dry hop
+      if (st.chuteDH != null && st.t - st.chuteDH < 1.6) { const a = (st.t - st.chuteDH) / 1.6; for (let i = 0; i < 6; i++) { const x = 18 + i * 6, yy = 6 + a * 60 + (i % 3) * 4; px(x, yy, 4, 5, '#9cc95e'); px(x + 1, yy + 1, 2, 3, '#5c8a33'); } }
+      // Repères des dry hops sur la courbe
+      [[2, -2], [5, -1]].forEach(([jour, m]) => { if (rec.houblons.some((h) => h.min === m)) { const x = 68 + (jour / 7) * 118; px(x, 8, 2, 108, 'rgba(156,201,94,.55)'); px(x - 3, 8, 8, 6, '#9cc95e'); } });
       px(32, 102, 4, 10, '#8a8f96'); px(20, 110, 28, 3, '#574332');
       const act = G * (st.t / DUREE * 7 / 1.8) * Math.exp(1 - st.t / DUREE * 7 / 1.8);
       for (let i = 0; i < Math.round(act * 8); i++) px(16 + ((i * 13 + Math.floor(st.t * 20)) % 36), 20 + ((i * 7 + Math.floor(st.t * 30)) % 60), 1, 1, '#ecdfc4');
@@ -1124,6 +1134,10 @@
         const chaleur = G * (j / 1.8) * Math.exp(1 - j / 1.8);
         st.u += borne(st.cmd - st.u, -3 * dt, 3 * dt);
         st.e += (st.u - st.e) * Math.min(1, dt / 1.2);
+        for (const [jour, m] of [[2, -2], [5, -1]]) {
+          const lot = rec.houblons.filter((h) => h.min === m);
+          if (lot.length && j >= jour && !st['dh' + jour]) { st['dh' + jour] = true; st.chuteDH = st.t; evtScene('fer', `Dry hop jour ${jour} : ${nf(lot.reduce((a, h) => a + h.g, 0) / rec.volume, 1)} g/L`, 'houblon'); son('bulle'); }
+        }
         st.T += (chaleur + (AMB - st.T) * 0.12 + st.e * FROID) * dt;
         st.duree += dt; st.somme += st.T * dt; st.max = Math.max(st.max, st.T); st.min = Math.min(st.min, st.T);
         if (Math.abs(st.T - cible(j)) <= 1.5) st.dans += dt;
@@ -1138,7 +1152,7 @@
         if (st.max > y.t[1] + 1) effet += ` Au-dessus de ${y.t[1]} °C, la levure produit des alcools supérieurs.`;
         const aCru = rec.houblons.filter((h) => h.min < 0);
         son(score > 0.6 ? 'ok' : 'rate');
-        bilanGeste('fer', [`<span class="gros">${Math.round(score * 100)} %</span> du temps dans la bande`, `Pic à ${nf(st.max)} °C, creux à ${nf(st.min)} °C.`, effet, aCru.length ? `Houblonnage à cru au jour 4 : ${aCru.map((h) => `${nf(h.g / 1000, 2)} kg de ${esc(IDX.houblon.get(h.id).nom)}`).join(', ')}.` : ''], 'Déguster');
+        bilanGeste('fer', [`<span class="gros">${Math.round(score * 100)} %</span> du temps dans la bande`, `Pic à ${nf(st.max)} °C, creux à ${nf(st.min)} °C.`, effet, aCru.length ? `Houblonnage à cru : ${aCru.map((h) => `${nf(h.g / 1000, 2)} kg de ${esc(IDX.houblon.get(h.id).nom)} (${libMin(h.min)})`).join(', ')}.` : ''], 'Déguster');
         $('#fer-suite').onclick = () => { tuto('fin:fermentation'); finirBrassin(); };
       });
     };
@@ -1179,7 +1193,7 @@
     S.carnet.unshift(entree);
     const nouveaux = verifierSucces(entree, res, note);
     const ecus = gagnerEcus(Math.round(note.total / 2) + (BONUS_MEDAILLE[note.medaille] || 0) + (note.medaille ? 3 * nbEtoiles : 0));
-    const cadeaux = verifierDecouvertes('biere', { entree, res, note, infection });
+    const cadeaux = verifierDecouvertes('biere', { entree, res, note, infection }).concat(verifierLecons('biere', { res, note, recette: session.recette, scores: session.scores }));
     sauver(); majEntete();
     dernier = { type: 'biere', entree, res, note, gain, ecus, cadeaux, palierMonte: palierAtteint() > palierAvant, nouveaux };
     aller('degustation');
@@ -1283,7 +1297,7 @@
     const g = [];
     g.push(S.bac ? 'Bac à sable : ce brassin ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} écus en bourse.`);
     if (palierMonte) g.push(`Nouveau niveau : le pigeonnier propose désormais ${PALIERS[palierAtteint()].txt}.`);
-    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
     if (res.notes && res.notes.length) $('#degust-defauts').insertAdjacentHTML('afterbegin', `<p class="notes-degust">Notes : ${res.notes.map((n) => `<b>${esc(n.source)}</b> ${esc(n.notes || '')}`).join(' · ')}</p>`);
     nouveaux.forEach((n) => g.push(`★ Succès : ${esc(n)}`));
     if (S.mode === 'debutant' && note.malus > 0.15) g.push(`Les gestes ont coûté environ ${nf(note.malus * 8, 0)} points sur la saveur et l'impression.`);
@@ -1738,7 +1752,7 @@
     S.carnet.unshift(entree);
     const nouveaux = verifierSuccesD(entree, note);
     dernier = { ecus: gagnerEcus(note ? Math.round(note.total / 2) + (BONUS_MEDAILLE[note.medaille] || 0) + Math.round(10 * rendement) + 2 * (aveugle || 0) : 0) };
-    dernier.cadeaux = verifierDecouvertes('edv', { entree, note });
+    dernier.cadeaux = verifierDecouvertes('edv', { entree, note }).concat(verifierLecons('edv', { entree, note }));
     sauver(); majEntete();
     dernier = { ...dernier, type: 'edv', entree, note, bl, gain, rendement, palierMonte: palierAtteint() > palierAvant, nouveaux, r };
     aller('degustation');
@@ -1793,7 +1807,7 @@
     $('#degust-defauts').innerHTML = note && note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [];
     g.push(S.bac ? 'Bac à sable : cette chauffe ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise, dont ${Math.round(10 * rendement)} pour le rendement${e.aveugle != null ? ` et ${2 * e.aveugle} pour l'aveugle` : ''}, et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} en bourse.`);
-    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
     if (/malt|grain/.test(e.style)) g.push('C\'est un « new make » : il faudra au moins trois ans en fût de chêne de 700 L au plus pour qu\'il ait droit au nom de whisky (règlement UE 2019/787). <button class="btn btn-mini" data-aller="chai">Mettre en fût au chai</button>');
     else g.push('Le chai peut l\'élever en fût : <button class="btn btn-mini btn-sobre" data-aller="chai">aller au chai</button>');
     g.push(S.epaisses ? `Épaisses en réserve : ${nf(S.epaisses.A, 1)} LAP pour la prochaine bonne chauffe.` : 'Aucune épaisse en réserve.');
@@ -2080,7 +2094,7 @@
     const nouveaux = verifierSuccesChai(entree);
     const ecus = gagnerEcus(note.presentable ? Math.round(note.total / 2) + (BONUS_MEDAILLE[entree.medaille] || 0) + Math.floor(bt.n / 10) : 0);
     dernier = { type: 'vieilli', entree, note, etat: e, bt, gain, ecus, nouveaux, palierMonte: palierAtteint() > palierAvant, cadeaux: [] };
-    dernier.cadeaux = verifierDecouvertes('vieilli', { entree, note });
+    dernier.cadeaux = verifierDecouvertes('vieilli', { entree, note }).concat(verifierLecons('vieilli', { entree, note, etat: e }));
     sauver(); majEntete();
     aller('degustation');
     rendreDegustationVieilli();
@@ -2128,7 +2142,7 @@
     const g = [];
     g.push(`<b>À la pipette :</b> ${esc(pip.notes.map((x) => x.mot).join(', ') || 'alcool blanc')}${pip.bouche.length ? ` · ${esc(pip.bouche.join(', '))}` : ''}.`);
     g.push(S.bac ? 'Bac à sable : cette mise ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} en bourse.`);
-    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
     if (!/^Whisky/.test(e.style) && etat.sources.every((s) => s !== 'biere') && etat.ageMin < 3) g.push(`Moins de trois ans en fût : pas encore le droit au nom de whisky (règlement UE 2019/787).`);
     if (etat.sources.includes('biere')) g.push('Distillée d\'une bière houblonnée, elle reste une eau-de-vie de bière. Pour un whisky, distille un wash de malt sans houblon.');
     if (palierMonte) g.push(`Nouveaux ingrédients débloqués : ${PALIERS[palierAtteint()].txt}.`);
@@ -2365,7 +2379,7 @@
     let extra = '';
     if (recette) {
       const manque = manquantsRecette(x);
-      const ing = [...x.malts.map((l) => `${l.kg} kg ${IDX.malt.get(l.id).nom}`), ...x.houblons.map((l) => `${nf(l.g / 1000, 1)} kg ${IDX.houblon.get(l.id).nom} ${l.min < 0 ? 'à cru' : l.min + ' min'}`), IDX.levure.get(x.levure).nom];
+      const ing = [...x.malts.map((l) => `${l.kg} kg ${IDX.malt.get(l.id).nom}`), ...x.houblons.map((l) => `${nf(l.g / 1000, 1)} kg ${IDX.houblon.get(l.id).nom} ${libMin(l.min)}`), IDX.levure.get(x.levure).nom];
       extra = `<span class="det">${esc(ing.join(' · '))}</span>${possede && manque.length ? `<div class="manquants"><span class="det">Il te manque :</span>${manque.map((m) => `<button class="btn btn-sobre" data-acheter="${m.cat}:${esc(m.x.id)}" ${S.ecus < prixDe(m.x, m.cat) || !achetable(m.x) ? 'disabled' : ''}>${esc(m.x.nom)} · ${achetable(m.x) ? prixDe(m.x, m.cat) + ' écus' : 'niveau requis'}</button>`).join('')}</div>` : ''}`;
     }
     return `<div class="article ${possede ? 'possede' : ''} ${!possede && !ok ? 'hors' : ''}"><span class="nom">${esc(x.nom)} ${recette ? '' : `<span class="rarete">${etoilesRarete(x.palier || 0)}</span>`}</span>${action}
@@ -2491,7 +2505,122 @@
     const options = [carte, ...leurres].map((c) => c.r).sort(() => Math.random() - 0.5);
     questionCourante = { carte, options, repondu: null };
   }
+  // =====================================================================
+  // École : leçons (théorie + défi + quiz) qui offrent des recettes
+  // =====================================================================
+  const LECONS = Ecole.LECONS;
+  let ongletVeillee = 'lecons', leconOuverte = null, quizLecon = null;
+  const etatLecon = (id) => { if (!S.ecole) S.ecole = {}; return S.ecole[id] || null; };
+  const leconFaite = (id) => !!(etatLecon(id) && etatLecon(id).faite);
+  const leconOuvrable = (l) => (l.requiert || []).every(leconFaite);
+  function recompenseTexte(l) {
+    const r = l.recompense, out = [];
+    if (r.recettes) out.push(`${Math.min(4, D.recettes.filter((x) => r.recettes.test(`${x.style} ${x.nom}`)).length)} recettes`);
+    (r.ingredients || []).forEach((re) => { const x = trouverIngredient(re); if (x) out.push(x.nom); });
+    (r.futs || []).forEach(([t, z]) => out.push(`${Chai.TAILLES[z].nom.toLowerCase()} ${Chai.TYPES[t].nom.toLowerCase()}`));
+    if (r.ecus) out.push(`${r.ecus} écus`);
+    return out.join(' · ');
+  }
+  function trouverIngredient(re) { for (const l of [D.malts, D.houblons, D.levures, D.sels, D.aromates, D.auxiliaires]) { const x = l.find((e) => re.test(e.nom)); if (x) return x; } return null; }
+  function terminerLecon(l) {
+    const e = etatLecon(l.id); if (!e || e.faite) return [];
+    e.faite = new Date().toISOString();
+    const r = l.recompense, recus = [];
+    if (r.recettes) {
+      const libres = D.recettes.filter((x) => r.recettes.test(`${x.style} ${x.nom}`) && !S.grimoire.includes(x.id)).slice(0, 4);
+      libres.forEach((x) => S.grimoire.push(x.id));
+      if (libres.length) recus.push(`${libres.length} recette${libres.length > 1 ? 's' : ''} au grimoire : ${libres.map((x) => x.nom).join(', ')}`);
+    }
+    (r.ingredients || []).forEach((re) => { const x = trouverIngredient(re); if (x) { if (dispo(x)) { gagnerEcus(10); recus.push(`${x.nom} déjà en réserve : +10 écus`); } else { posseder(x.id); recus.push(x.nom); } } });
+    (r.futs || []).forEach(([t, z]) => { const f = nouveauFut(t, z); chai().futs.push(f); f.pos = placeLibre(f); recus.push(nomFut(f)); });
+    if (r.ecus) { gagnerEcus(r.ecus); recus.push(`${r.ecus} écus`); }
+    son('medaille'); toast(`Leçon réussie : ${l.titre}`);
+    e.recus = recus; sauver(); majEntete();
+    return recus;
+  }
+  // Appelé à la fin d'un brassin, d'une distillation ou d'une mise en bouteille : messages pour la dégustation
+  function verifierLecons(evt, ctx) {
+    const msgs = [];
+    if (S.bac) return msgs;
+    for (const l of LECONS) {
+      const e = etatLecon(l.id);
+      if (!e || e.faite || e.defi || l.defi.type !== evt) continue;
+      let ok = false; try { ok = !!l.defi.test(ctx); } catch (err) { ok = false; }
+      if (!ok) continue;
+      e.defi = new Date().toISOString();
+      msgs.push(`§<b style="color:var(--houblon)">Défi réussi</b> : ${esc(l.titre)}.${e.quiz ? '' : ' Il reste les trois questions, à la veillée.'}`);
+      if (e.quiz) terminerLecon(l).forEach((x) => msgs.push(`§Leçon terminée, reçu : ${esc(x)}`));
+      setTimeout(() => toast(`Défi réussi : ${l.titre}`), 2800);
+    }
+    sauver();
+    return msgs;
+  }
+  const leconEnCours = (type) => LECONS.find((l) => { const e = etatLecon(l.id); return e && !e.faite && !e.defi && (!type || l.defi.type === type); });
+  function majDefiLigne() {
+    const b = $('#defi-ligne'); if (!b) return;
+    const l = leconEnCours('biere');
+    if (!l) { b.hidden = true; return; }
+    b.hidden = false; b.innerHTML = `<b>Défi · ${esc(l.titre)}</b><span>${esc(l.defi.txt)}</span>`;
+  }
+
   function rendreVeillee() {
+    $('#veillee-onglets').innerHTML = [['lecons', 'Leçons'], ['questions', 'Questions du soir']].map(([k, v]) => `<button class="onglet" role="tab" aria-selected="${ongletVeillee === k}" data-ongletveillee="${k}">${v}${k === 'lecons' ? `<span class="badge">${LECONS.filter((l) => leconFaite(l.id)).length}/${LECONS.length}</span>` : ''}</button>`).join('');
+    $('#veillee-lecons').hidden = ongletVeillee !== 'lecons';
+    $('#veillee-quiz-zone').hidden = ongletVeillee !== 'questions';
+    if (ongletVeillee === 'lecons') rendreLecons(); else rendreQuestions();
+  }
+  $('#veillee-onglets').addEventListener('click', (e) => { const b = e.target.closest('[data-ongletveillee]'); if (!b) return; ongletVeillee = b.dataset.ongletveillee; leconOuverte = null; son('clic'); rendreVeillee(); });
+  function rendreLecons() {
+    const z = $('#veillee-lecons');
+    if (leconOuverte) { z.innerHTML = detailLecon(LECONS.find((l) => l.id === leconOuverte)); return; }
+    z.innerHTML = `<div class="lecons">${LECONS.map((l, i) => {
+      const e = etatLecon(l.id), ouv = leconOuvrable(l);
+      const etat = e && e.faite ? ['faite', 'Réussie'] : e ? ['cours', `${e.defi ? 'Défi ✓' : 'Défi'} · ${e.quiz ? 'Quiz ✓' : 'Quiz'}`] : ouv ? ['ouverte', 'Nouvelle'] : ['verrou', `Après : ${(l.requiert || []).map((r) => LECONS.find((x) => x.id === r).titre).join(', ')}`];
+      return `<button class="lecon ${etat[0]}" data-lecon="${l.id}" ${etat[0] === 'verrou' ? 'disabled' : ''}><span class="num">${i + 1}</span><span class="corps"><b>${esc(l.titre)}</b><small>${esc(l.mentor)} · ${esc(etat[1])}</small><small class="recomp">${esc(recompenseTexte(l))}</small></span></button>`;
+    }).join('')}</div>`;
+  }
+  function detailLecon(l) {
+    const e = etatLecon(l.id);
+    const quiz = quizLecon && quizLecon.id === l.id ? quizLecon : null;
+    let bas;
+    if (!e) bas = `<button class="btn btn-feu" data-commencer="${l.id}">Commencer la leçon</button>`;
+    else if (e.faite) bas = `<p class="lecon-ok">Leçon réussie. Reçu : ${esc((e.recus || []).join(' · ') || recompenseTexte(l))}</p>`;
+    else bas = `<div class="lecon-etapes"><div class="etape ${e.defi ? 'ok' : ''}"><b>${e.defi ? '✓' : '1'} Défi</b><p>${esc(l.defi.txt)}</p>${e.defi ? '' : `<button class="btn btn-mini btn-sobre" data-aller="${{ biere: 'brasserie', edv: 'distillerie', vieilli: 'chai' }[l.defi.type]}">Y aller</button>`}</div>
+      <div class="etape ${e.quiz ? 'ok' : ''}"><b>${e.quiz ? '✓' : '2'} Trois questions</b>${e.quiz ? '<p>Réussies.</p>' : quiz ? quizHTML(l, quiz) : `<p>Deux bonnes réponses sur trois suffisent.</p><button class="btn btn-mini" data-quizlecon="${l.id}">Répondre</button>`}</div></div>`;
+    return `<button class="btn btn-mini btn-sobre" data-retourlecons>← Toutes les leçons</button>
+      <article class="lecon-detail"><p class="module">${esc(l.mentor)} · leçon</p><h2>${esc(l.titre)}</h2>
+      ${l.theorie.map((p) => `<p>${esc(p)}</p>`).join('')}
+      <p><button class="btn btn-mini btn-sobre" data-fiche="${l.fiche}">Fiche complète</button></p>
+      <p class="recomp-ligne"><b>Récompense :</b> ${esc(recompenseTexte(l))}</p>${bas}</article>`;
+  }
+  function quizHTML(l, q) {
+    const [enonce, bonne, faux] = l.quiz[q.i];
+    const opts = q.ordre[q.i].map((k) => (k === 0 ? bonne : faux[k - 1]));
+    const rep = q.rep[q.i];
+    return `<p class="enonce">${q.i + 1}/3 · ${esc(enonce)}</p><div class="reponses">${opts.map((o, k) => `<button data-replecon="${k}" ${rep != null ? 'disabled' : ''} class="${rep != null ? (q.ordre[q.i][k] === 0 ? 'juste' : k === rep ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
+      ${rep != null ? `<button class="btn btn-mini btn-feu" data-quizsuite>${q.i < 2 ? 'Question suivante' : 'Voir le résultat'}</button>` : ''}`;
+  }
+  $('#veillee-lecons').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button'); if (!b) return;
+    if (b.dataset.lecon) { leconOuverte = b.dataset.lecon; son('clic'); rendreLecons(); $('#scene').scrollTop = 0; return; }
+    if (b.hasAttribute('data-retourlecons')) { leconOuverte = null; quizLecon = null; rendreLecons(); return; }
+    const l = LECONS.find((x) => x.id === leconOuverte); if (!l) return;
+    if (b.dataset.commencer) { S.ecole[l.id] = { debut: new Date().toISOString() }; son('ok'); sauver(); rendreLecons(); majDefiLigne(); toast('Leçon commencée : le défi s\'affiche à la brasserie.'); return; }
+    if (b.dataset.quizlecon) { const m = () => [0, 1, 2, 3].sort(() => Math.random() - 0.5); quizLecon = { id: l.id, i: 0, ordre: [m(), m(), m()], rep: [null, null, null] }; rendreLecons(); return; }
+    if (b.dataset.replecon != null && quizLecon) { const k = +b.dataset.replecon; quizLecon.rep[quizLecon.i] = k; son(quizLecon.ordre[quizLecon.i][k] === 0 ? 'ok' : 'rate'); rendreLecons(); return; }
+    if (b.hasAttribute('data-quizsuite') && quizLecon) {
+      if (quizLecon.i < 2) { quizLecon.i++; rendreLecons(); return; }
+      const bons = quizLecon.rep.filter((k, i) => quizLecon.ordre[i][k] === 0).length;
+      quizLecon = null;
+      if (bons >= 2) {
+        const e = etatLecon(l.id); e.quiz = new Date().toISOString(); sauver();
+        toast(`${bons}/3 : questions réussies.`);
+        if (e.defi) terminerLecon(l);
+      } else { son('rate'); toast(`${bons}/3 : relis la leçon et retente.`); }
+      rendreLecons(); rendreVeillee();
+    }
+  });
+  function rendreQuestions() {
     const q = etatQuiz();
     const reste = Math.max(0, 5 - q.faits);
     $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
@@ -2505,7 +2634,7 @@
   }
   $('#veillee-question').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
-    if (b.id === 'veillee-suivante') { questionCourante = null; rendreVeillee(); return; }
+    if (b.id === 'veillee-suivante') { questionCourante = null; rendreQuestions(); return; }
     if (b.dataset.rep == null || !questionCourante || questionCourante.repondu != null) return;
     const i = +b.dataset.rep, q = etatQuiz();
     questionCourante.repondu = i;
@@ -2515,7 +2644,7 @@
     son(juste ? 'ok' : 'rate');
     const cadeaux = verifierDecouvertes('quiz');
     cadeaux.forEach(() => {});
-    sauver(); majEntete(); rendreVeillee();
+    sauver(); majEntete(); rendreQuestions();
   });
 
   // =====================================================================
@@ -2553,7 +2682,7 @@
       <tr class="total lent" style="animation-delay:1.5s"><td>Total</td><td>${nf(fiche.total, fiche.total % 1 ? 1 : 0)} / 20</td></tr></table>`;
     $('#degust-defauts').innerHTML = fiche.defauts.length ? `<h2 class="sous-titre">Points faibles</h2>` + fiche.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [S.bac ? 'Bac à sable : ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b>.`];
-    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
     g.push(`Ce wash donnera une ${nomEauDeVie(e).toLowerCase()} : il t'attend à l'alambic.`);
     $('#degust-gains').innerHTML = `<div class="gains">${g.map((x) => `<p>${x}</p>`).join('')}</div>`;
     $('#nom-cuvee').value = e.nom;
@@ -2629,7 +2758,7 @@
     }
     const rec = x.recette;
     const malts = rec.malts.map((l) => `${nf(l.kg, 0)} kg ${IDX.malt.get(l.id)?.nom || '?'}`).join(', ');
-    const hops = rec.houblons.map((l) => `${nf(l.g / 1000, 2)} kg ${IDX.houblon.get(l.id)?.nom || '?'} ${l.min < 0 ? 'à cru' : l.min + ' min'}`).join(', ');
+    const hops = rec.houblons.map((l) => `${nf(l.g / 1000, 2)} kg ${IDX.houblon.get(l.id)?.nom || '?'} ${libMin(l.min)}`).join(', ');
     $('#carnet-detail').innerHTML = `<div class="carnet-detail"><h3>${esc(x.nom)}</h3>
       <p>${esc(x.style)} · ${new Date(x.date).toLocaleDateString('fr-FR')} · mode ${x.mode === 'expert' ? 'expert' : 'débutant'}${x.bac ? ' · bac à sable' : ''}</p>
       <div class="chiffres"><span>${nf(x.total, x.total % 1 ? 1 : 0)}/${x.type === 'wash' ? 20 : 50}</span><span>${sg(x.og)} → ${sg(x.fg)}</span><span>${nf(x.abv)} %</span><span>${nf(x.ibu, 0)} IBU</span><span>${nf(x.ebc, 0)} EBC</span></div>
@@ -2742,6 +2871,12 @@
       "Le jury juge la conformité au style, les arômes attendus (houblon pour une IPA, esters et phénols pour une weizen, torréfaction pour un stout) et l'équilibre BU:GU. Chaque défaut retire des points selon sa gravité.",
       "En mode débutant, des gestes ratés coûtent des points de saveur et d'impression. En mode expert, ils changent la chimie elle-même.",
       "Étoiles : sans l'aide de Lise, en mode expert, gestes joués en mode expert. Chaque étoile ajoute 5 points de maîtrise à une bière médaillée."]],
+    dryhop: ['Dry hop et DDH', 'dry hopping', [
+      "Le houblonnage à cru (dry hop) met le houblon au contact de la bière froide : les huiles essentielles (myrcène, linalol, géraniol) passent sans s'évaporer, et sans amertume car les acides alpha ne s'isomérisent pas à froid.",
+      "DH1 au jour 2, en fermentation active : la levure biotransforme le géraniol en citronellol (agrume, rose) et libère, grâce à une β-lyase, des thiols fixés sur la cystéine (4-MMP, 3-MH : cassis, fruit de la passion, pamplemousse). Le CO₂ emporte une partie des huiles. Dans le jeu : fruité en plus, surtout pour les houblons fruités, et 20 % d'huiles en moins.",
+      "DH2 au jour 5, après le pic : la levure est calme, les arômes frais restent intacts. Un double dry hop (DDH) combine les deux, au moins 3 g/L à chaque ajout.",
+      "Hop creep : les amylases et dextrinases du houblon redécoupent des dextrines que la levure fermente. La bière sèche, gagne un peu d'alcool et relargue du diacétyle : un repos diacétyle aide. Dans le jeu, +0,16 point d'atténuation par g/L, jusqu'à +3 points.",
+      "Au-delà de 15 à 20 g/L au total, la matière végétale donne un goût d'herbe coupée et une bouche qui pique (hop burn) : défaut végétal au-dessus de 18 g/L."]],
     elevage: ['Élevage en fût', 'cask maturation', [
       "Un spiritueux mûrit par trois familles de réactions (Russell et al., 2003). Les réactions additives : l'éthanol extrait du bois la vanilline, le syringaldéhyde, les lactones, l'eugénol, les tanins et des sucres. Les réactions soustractives : le charbon des fûts charrés adsorbe les composés soufrés, l'acétaldéhyde se combine à l'éthanol en acétal (1,1-diéthoxyéthane). Les réactions interactives : l'oxygène qui traverse les douelles oxyde les alcools supérieurs en acides, que l'éthanol estérifie en esters fruités.",
       "La lignine du chêne (20 à 30 %) se dégrade par éthanolyse : lignine → coniféraldéhyde → vanilline. L'hémicellulose chauffée au bousinage libère furfural et 5-méthylfurfural (amande grillée, caramel).",
@@ -2795,7 +2930,7 @@
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.4.4 · brasserie, alambic Ulysse, chai, pigeonnier, veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.5 · brasserie, alambic Ulysse, chai, pigeonnier, école de la veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

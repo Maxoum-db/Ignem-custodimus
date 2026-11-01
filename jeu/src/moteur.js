@@ -73,7 +73,7 @@
   }
 
   // --- Calcul complet d'une recette ------------------------------------------
-  // recette : { volume, rendement, malts:[{id,kg}], houblons:[{id,g,min}] (min −1 = à cru),
+  // recette : { volume, rendement, malts:[{id,kg}], houblons:[{id,g,min}] (min −2 = dry hop J2, levure active ; −1 = dry hop J5),
   //             levure, eau, palier, ebullition, fermentation:{temp, reposDiacetyle} }
   // gestes (facultatif, mode expert joué) : { palierMoyen, houblonsMin:[...], fermMax, fermMin, fermMoy }
   function calculer(recette, gestes) {
@@ -150,6 +150,12 @@
     let attMalt = (attLevure + effetPalier + (wash ? 0.04 : 0)) * (1 - 0.35 * part(ptsCara) - 0.15 * part(ptsTorr));
     if (aux.has('gluco')) attMalt = Math.min(0.98, attMalt + 0.08 + 0.2 * part(ptsCara));
     let att = attMalt * (1 - part(ptsSucre) - part(ptsLactose)) + 0.98 * part(ptsSucre);
+    // Houblonnage à cru : DH1 au jour 2 (levure active), DH2 au jour 5 (après le pic)
+    const gDH1 = houblons.filter((x) => x.min === -2).reduce((a, x) => a + x.g, 0), gDH2 = houblons.filter((x) => x.min === -1).reduce((a, x) => a + x.g, 0);
+    const dhL1 = gDH1 / V, dhL2 = gDH2 / V, dhL = dhL1 + dhL2;
+    // Hop creep : les amylases et dextrinases du houblon redécoupent des dextrines, la levure les fermente
+    const creep = wash ? 0 : Math.min(0.03, dhL * 0.0016);
+    att += creep;
     let fermentationLente = false;
     if (levure && fermMin < levure.t[0] - 2) { att *= aux.has('nutriment') ? 0.94 : 0.88; fermentationLente = true; }
     att = levure ? borne(att, 0.35, 0.99) : 0;
@@ -173,7 +179,8 @@
       const mgL = ((h.alpha / 100) * g * 1000) / V;
       const i = u * mgL;
       ibu += i;
-      const w = (g / V) * poidsArome(wash ? -1 : min) * (h.huile || 1);
+      // DH1 : une partie des huiles part avec le CO₂ de la fermentation tumultueuse
+      const w = (g / V) * poidsArome(wash ? -1 : min) * (h.huile || 1) * (min === -2 ? 0.8 : 1);
       aromeHoublon += w;
       // Humulène et caryophyllène : notes boisées et poivrées
       if (h.oils && h.oils.hum != null) epiceHoublon += w * ((h.oils.hum || 0) + (h.oils.car || 0)) / 100;
@@ -201,6 +208,12 @@
       epice = levure.phenol ? 4.5 + 3 * Math.min(1, tf) : 0;
     }
     epice += fMasse.seigle * 6 + Math.min(1.5, epiceHoublon * 1.5);
+    // Biotransformation (DH1) : la levure active réduit le géraniol en citronellol et libère des thiols fixés
+    // (cystéine-S-conjugués) : fruité plus tropical. Plus marqué sur les houblons fruités.
+    let bio = 0;
+    for (const { h, g, min } of houblons) if (min === -2) bio += (g / V) * (/tropic|agrume|fruit|passion|mangue|citron|pamplemousse|litchi|melon/i.test(h.aromes || '') ? 0.32 : 0.15);
+    bio = levure && levure.fam !== 'lager' ? Math.min(3, bio) : bio * 0.4;
+    fruite += bio;
     // Aromates : intensité selon la dose (g/L) rapportée à leur dose d'usage
     const notesAromates = [], surdoses = [];
     const ajoutAxes = { malte: 0, caramel: 0, torrefie: 0, amer: 0, houblon: 0, fruite: 0, epice: 0, corps: 0 };
@@ -230,6 +243,7 @@
       dpMoyen, conversion, kgTotal, fMasse, ptsMiel: part(ptsMiel), detailHoublons, profil,
       levure, eau, palier, fermEff, fermMax, fermMin, bloquee, fermentationLente,
       aDesMalts: kgTotal > 0, wash, aux, notes, surdoses, crusNonCuits: crusNonCuits.map((x) => x.m.nom), collant,
+      dh: { l1: dhL1, l2: dhL2, total: dhL, ddh: dhL1 >= 3 && dhL2 >= 3, creep, bio },
       aromates: aromates.map((x) => ({ id: x.a.id, g: x.g, terp: x.a.terp, type: x.a.type })),
     };
     res.styles = wash ? [] : classerStyles(res, recette);
@@ -292,6 +306,9 @@
     fusels: { nom: 'Alcools supérieurs', en: 'fusel alcohols', sens: ['arome', 'saveur', 'bouche'],
       chimie: "Au-dessus de sa plage, la levure produit plus d'alcools supérieurs par la voie d'Ehrlich (désamination des acides aminés). Goût chaud, solvant.",
       conseil: 'Fermente plus frais ou garde la température sous contrôle au pic de fermentation.' },
+    vegetal: { nom: 'Végétal, herbacé', en: 'grassy, hop burn', sens: ['arome', 'saveur', 'bouche'],
+      chimie: "Trop de houblon à cru : la matière végétale libère chlorophylle, polyphénols et composés verts. La bouche pique (hop burn) et l'arôme sent l'herbe coupée, au lieu du fruit.",
+      conseil: 'Reste sous 15 à 18 g/L au total, et répartis en deux ajouts (DH1 et DH2).' },
     diacetyle: { nom: 'Diacétyle', en: 'diacetyl', sens: ['arome', 'saveur'],
       chimie: "L'α-acétolactate sort de la levure puis s'oxyde en 2,3-butanedione (beurre, caramel au beurre). La levure le réabsorbe si on lui en laisse le temps à température plus haute.",
       conseil: 'Pour une lager, active le repos diacétyle : +4 °C en fin de fermentation pendant 2 jours.' },
@@ -345,6 +362,8 @@
     if (r.fermMax > y.t[1] + 1) out.push(defaut('fusels', r.fermMax > y.t[1] + 4 ? 3 : r.fermMax > y.t[1] + 2.5 ? 2 : 1, `Pic à ${fr(r.fermMax, 1)} °C pour une levure donnée jusqu'à ${y.t[1]} °C.`));
     if (y.fam === 'lager' && !recette.fermentation.reposDiacetyle) out.push(defaut('diacetyle', 2, 'Lager sans repos diacétyle.'));
     else if (r.fermentationLente) out.push(defaut('diacetyle', 1, 'Fermentation trop froide, la levure a décroché.'));
+    else if (r.dh && r.dh.total >= 8 && !recette.fermentation.reposDiacetyle) out.push(defaut('diacetyle', 1, `Hop creep : ${fr(r.dh.total, 1)} g/L à cru ont relancé la fermentation sans repos diacétyle.`));
+    if (r.dh && r.dh.total > 18) out.push(defaut('vegetal', r.dh.total > 26 ? 2 : 1, `${fr(r.dh.total, 1)} g/L de houblon à cru.`));
     if (r.fMasse.pils > 0.5 && recette.ebullition < 90) out.push(defaut('dms', r.fMasse.pils > 0.8 ? 2 : 1, `${Math.round(r.fMasse.pils * 100)} % de malt Pils et ${recette.ebullition} min d'ébullition.`));
     if (r.ph > 5.78) out.push(defaut('astringence', r.ph > 5.92 ? 2 : 1, `pH d'empâtage estimé ${fr(r.ph, 2)}.`));
     if (r.ph < 5.15) out.push(defaut('acidite', r.ph < 5.0 ? 2 : 1, `pH d'empâtage estimé ${fr(r.ph, 2)}.`));

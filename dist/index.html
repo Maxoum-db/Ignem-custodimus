@@ -608,6 +608,36 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .etq { font-size: 12px; padding: 1px 6px; }
 /* Touche pixel réservée aux grandes commandes, onglets et lieux */
 .btn-geste, .onglet, .lieu span, .mentor-nom, .tuto-actions .btn, .barre-brassin .btn, .geste-pied .btn { font-family: var(--f-pixel); }
+
+/* ---------- École et DDH (V0.5) ---------- */
+.domaine-veillee { width: 100%; margin-top: 8px; font-family: var(--f-pixel); }
+.onglets-2 { grid-template-columns: 1fr 1fr !important; }
+.lecons { display: grid; gap: 8px; }
+.lecon { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: center; text-align: left; border: 0; background: var(--four); padding: 10px; box-shadow: 0 0 0 2px var(--pierre); width: 100%; }
+.lecon .num { font-family: var(--f-titre); font-size: 14px; color: var(--braise); text-align: center; }
+.lecon .corps { display: grid; gap: 2px; }
+.lecon small { color: var(--cendre); font-size: 13px; }
+.lecon .recomp { color: var(--or); }
+.lecon.faite { box-shadow: 0 0 0 2px var(--houblon); }
+.lecon.faite .num::before { content: "✓ "; color: var(--houblon); }
+.lecon.cours { box-shadow: 0 0 0 2px var(--braise); }
+.lecon.verrou { opacity: .5; }
+.lecon-detail { background: var(--four); box-shadow: var(--cadre); padding: 12px 14px; display: grid; gap: 8px; margin-top: 8px; }
+.lecon-detail h2 { margin: 0; font-family: var(--f-titre); font-size: 13px; line-height: 1.5; color: var(--braise); }
+.lecon-detail p { margin: 0; line-height: 1.5; }
+.lecon-detail .module { font-size: 12px; color: var(--cendre); }
+.recomp-ligne { color: var(--or); }
+.lecon-etapes { display: grid; gap: 8px; }
+.etape { background: var(--nuit); padding: 10px; box-shadow: 0 0 0 2px var(--pierre); display: grid; gap: 6px; justify-items: start; }
+.etape.ok { box-shadow: 0 0 0 2px var(--houblon); }
+.etape .reponses { width: 100%; }
+.lecon-ok { color: var(--houblon); font-weight: 700; }
+.defi-ligne { display: grid; gap: 2px; width: 100%; text-align: left; border: 0; padding: 8px 10px; background: rgba(156, 201, 94, .12); box-shadow: inset 4px 0 0 var(--houblon); color: var(--calcaire); font-size: 14px; line-height: 1.35; }
+.defi-ligne b { color: var(--houblon); }
+.temps button.dh { box-shadow: inset 0 -3px 0 var(--houblon); }
+.dh-bilan { font-family: var(--f-texte); font-size: 12px; letter-spacing: 0; color: var(--houblon); }
+.dh-bilan.alerte { color: var(--alerte); }
+.geste-evt.houblon { background: var(--houblon); }
 </style>
 
 <div id="app">
@@ -633,6 +663,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         <div id="lieux" class="lieux"></div>
       </div>
       <p class="domaine-legende"><span>Domaine des Braises</span><span>Quercy</span><span id="saison"></span></p>
+      <button class="btn btn-houblon domaine-veillee" data-aller="veillee" id="btn-veillee">Veillée : leçons et questions</button>
     </section>
 
     <!-- Brasserie -->
@@ -647,6 +678,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <div class="bandeau-mesures"><div class="mesures" id="mesures"></div></div>
       <button class="style-ligne" id="style-ligne" aria-expanded="false"></button>
       <div class="style-detail" id="style-detail" hidden></div>
+      <button class="defi-ligne" id="defi-ligne" data-aller="veillee" hidden></button>
       <p class="conseil" id="conseil" hidden></p>
       <div class="onglets" role="tablist" id="onglets"></div>
       <div class="onglet-contenu" id="onglet-contenu"></div>
@@ -817,10 +849,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     <!-- Veillée : questions de Lise et Firmin -->
     <section id="ecran-veillee" class="ecran" hidden>
       <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
-      <h1 class="page-titre">La veillée <span class="en">quiz</span></h1>
-      <p class="page-intro">Au coin du feu, Lise et Firmin te questionnent sur tes modules de formation. Cinq questions récompensées par jour, 4 écus par bonne réponse.</p>
-      <div class="bourse" id="veillee-etat"></div>
-      <div id="veillee-question"></div>
+      <h1 class="page-titre">La veillée <span class="en">leçons et questions</span></h1>
+      <p class="page-intro">Au coin du feu, Lise et Firmin donnent leurs leçons : un peu de chimie, un défi à réussir à la brasserie, à l'alambic ou au chai, puis trois questions. Chaque leçon réussie offre des recettes au grimoire. Les questions du soir rapportent 4 écus chacune, cinq fois par jour.</p>
+      <div class="onglets onglets-2" role="tablist" id="veillee-onglets"></div>
+      <div id="veillee-lecons"></div>
+      <div id="veillee-quiz-zone"><div class="bourse" id="veillee-etat"></div><div id="veillee-question"></div></div>
     </section>
 
     <!-- Dégustation -->
@@ -968,7 +1001,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   }
 
   // --- Calcul complet d'une recette ------------------------------------------
-  // recette : { volume, rendement, malts:[{id,kg}], houblons:[{id,g,min}] (min −1 = à cru),
+  // recette : { volume, rendement, malts:[{id,kg}], houblons:[{id,g,min}] (min −2 = dry hop J2, levure active ; −1 = dry hop J5),
   //             levure, eau, palier, ebullition, fermentation:{temp, reposDiacetyle} }
   // gestes (facultatif, mode expert joué) : { palierMoyen, houblonsMin:[...], fermMax, fermMin, fermMoy }
   function calculer(recette, gestes) {
@@ -1045,6 +1078,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     let attMalt = (attLevure + effetPalier + (wash ? 0.04 : 0)) * (1 - 0.35 * part(ptsCara) - 0.15 * part(ptsTorr));
     if (aux.has('gluco')) attMalt = Math.min(0.98, attMalt + 0.08 + 0.2 * part(ptsCara));
     let att = attMalt * (1 - part(ptsSucre) - part(ptsLactose)) + 0.98 * part(ptsSucre);
+    // Houblonnage à cru : DH1 au jour 2 (levure active), DH2 au jour 5 (après le pic)
+    const gDH1 = houblons.filter((x) => x.min === -2).reduce((a, x) => a + x.g, 0), gDH2 = houblons.filter((x) => x.min === -1).reduce((a, x) => a + x.g, 0);
+    const dhL1 = gDH1 / V, dhL2 = gDH2 / V, dhL = dhL1 + dhL2;
+    // Hop creep : les amylases et dextrinases du houblon redécoupent des dextrines, la levure les fermente
+    const creep = wash ? 0 : Math.min(0.03, dhL * 0.0016);
+    att += creep;
     let fermentationLente = false;
     if (levure && fermMin < levure.t[0] - 2) { att *= aux.has('nutriment') ? 0.94 : 0.88; fermentationLente = true; }
     att = levure ? borne(att, 0.35, 0.99) : 0;
@@ -1068,7 +1107,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const mgL = ((h.alpha / 100) * g * 1000) / V;
       const i = u * mgL;
       ibu += i;
-      const w = (g / V) * poidsArome(wash ? -1 : min) * (h.huile || 1);
+      // DH1 : une partie des huiles part avec le CO₂ de la fermentation tumultueuse
+      const w = (g / V) * poidsArome(wash ? -1 : min) * (h.huile || 1) * (min === -2 ? 0.8 : 1);
       aromeHoublon += w;
       // Humulène et caryophyllène : notes boisées et poivrées
       if (h.oils && h.oils.hum != null) epiceHoublon += w * ((h.oils.hum || 0) + (h.oils.car || 0)) / 100;
@@ -1096,6 +1136,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       epice = levure.phenol ? 4.5 + 3 * Math.min(1, tf) : 0;
     }
     epice += fMasse.seigle * 6 + Math.min(1.5, epiceHoublon * 1.5);
+    // Biotransformation (DH1) : la levure active réduit le géraniol en citronellol et libère des thiols fixés
+    // (cystéine-S-conjugués) : fruité plus tropical. Plus marqué sur les houblons fruités.
+    let bio = 0;
+    for (const { h, g, min } of houblons) if (min === -2) bio += (g / V) * (/tropic|agrume|fruit|passion|mangue|citron|pamplemousse|litchi|melon/i.test(h.aromes || '') ? 0.32 : 0.15);
+    bio = levure && levure.fam !== 'lager' ? Math.min(3, bio) : bio * 0.4;
+    fruite += bio;
     // Aromates : intensité selon la dose (g/L) rapportée à leur dose d'usage
     const notesAromates = [], surdoses = [];
     const ajoutAxes = { malte: 0, caramel: 0, torrefie: 0, amer: 0, houblon: 0, fruite: 0, epice: 0, corps: 0 };
@@ -1125,6 +1171,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       dpMoyen, conversion, kgTotal, fMasse, ptsMiel: part(ptsMiel), detailHoublons, profil,
       levure, eau, palier, fermEff, fermMax, fermMin, bloquee, fermentationLente,
       aDesMalts: kgTotal > 0, wash, aux, notes, surdoses, crusNonCuits: crusNonCuits.map((x) => x.m.nom), collant,
+      dh: { l1: dhL1, l2: dhL2, total: dhL, ddh: dhL1 >= 3 && dhL2 >= 3, creep, bio },
       aromates: aromates.map((x) => ({ id: x.a.id, g: x.g, terp: x.a.terp, type: x.a.type })),
     };
     res.styles = wash ? [] : classerStyles(res, recette);
@@ -1187,6 +1234,9 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     fusels: { nom: 'Alcools supérieurs', en: 'fusel alcohols', sens: ['arome', 'saveur', 'bouche'],
       chimie: "Au-dessus de sa plage, la levure produit plus d'alcools supérieurs par la voie d'Ehrlich (désamination des acides aminés). Goût chaud, solvant.",
       conseil: 'Fermente plus frais ou garde la température sous contrôle au pic de fermentation.' },
+    vegetal: { nom: 'Végétal, herbacé', en: 'grassy, hop burn', sens: ['arome', 'saveur', 'bouche'],
+      chimie: "Trop de houblon à cru : la matière végétale libère chlorophylle, polyphénols et composés verts. La bouche pique (hop burn) et l'arôme sent l'herbe coupée, au lieu du fruit.",
+      conseil: 'Reste sous 15 à 18 g/L au total, et répartis en deux ajouts (DH1 et DH2).' },
     diacetyle: { nom: 'Diacétyle', en: 'diacetyl', sens: ['arome', 'saveur'],
       chimie: "L'α-acétolactate sort de la levure puis s'oxyde en 2,3-butanedione (beurre, caramel au beurre). La levure le réabsorbe si on lui en laisse le temps à température plus haute.",
       conseil: 'Pour une lager, active le repos diacétyle : +4 °C en fin de fermentation pendant 2 jours.' },
@@ -1240,6 +1290,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     if (r.fermMax > y.t[1] + 1) out.push(defaut('fusels', r.fermMax > y.t[1] + 4 ? 3 : r.fermMax > y.t[1] + 2.5 ? 2 : 1, `Pic à ${fr(r.fermMax, 1)} °C pour une levure donnée jusqu'à ${y.t[1]} °C.`));
     if (y.fam === 'lager' && !recette.fermentation.reposDiacetyle) out.push(defaut('diacetyle', 2, 'Lager sans repos diacétyle.'));
     else if (r.fermentationLente) out.push(defaut('diacetyle', 1, 'Fermentation trop froide, la levure a décroché.'));
+    else if (r.dh && r.dh.total >= 8 && !recette.fermentation.reposDiacetyle) out.push(defaut('diacetyle', 1, `Hop creep : ${fr(r.dh.total, 1)} g/L à cru ont relancé la fermentation sans repos diacétyle.`));
+    if (r.dh && r.dh.total > 18) out.push(defaut('vegetal', r.dh.total > 26 ? 2 : 1, `${fr(r.dh.total, 1)} g/L de houblon à cru.`));
     if (r.fMasse.pils > 0.5 && recette.ebullition < 90) out.push(defaut('dms', r.fMasse.pils > 0.8 ? 2 : 1, `${Math.round(r.fMasse.pils * 100)} % de malt Pils et ${recette.ebullition} min d'ébullition.`));
     if (r.ph > 5.78) out.push(defaut('astringence', r.ph > 5.92 ? 2 : 1, `pH d'empâtage estimé ${fr(r.ph, 2)}.`));
     if (r.ph < 5.15) out.push(defaut('acidite', r.ph < 5.0 ? 2 : 1, `pH d'empâtage estimé ${fr(r.ph, 2)}.`));
@@ -1918,6 +1970,169 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   racine.Chai = { TYPES, TAILLES, ZONES, AXES, LIB_AXES, DEFAUTS, LIB_LIGNES, init, potentiel, etatInitial, vieillir, assembler, profil, pipette, noter, bouteilles, nom, conseil, get P() { return P; } };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 </script>
+<script>/* Ignem custodimus — l'école du domaine : leçons (théorie + défi + quiz) qui débloquent des recettes
+ * Chaque défi est vérifié par le moteur à la fin d'un brassin, d'une distillation ou d'une mise en bouteille.
+ * ctx biere : { res, note, recette, scores } · ctx edv : { entree, note } · ctx vieilli : { entree, note, etat }
+ */
+(function (racine) {
+  'use strict';
+  const fr = (v, d = 1) => Number(v).toFixed(d).replace('.', ',');
+  const LECONS = [
+    {
+      id: 'empatage', titre: 'Le malt et l\'empâtage', mentor: 'Lise', fiche: 'empatage',
+      theorie: [
+        "L'amidon du malt est un polymère de glucose. À l'empâtage, deux enzymes du malt le découpent : la β-amylase (60–65 °C) détache du maltose par les extrémités des chaînes, entièrement fermentescible ; l'α-amylase (68–72 °C) coupe au hasard et laisse des dextrines que la levure ne mange pas.",
+        "Un palier bas donne une bière sèche et plus alcoolisée, un palier haut une bière ronde avec du corps. Le pouvoir diastasique (°Lintner) dit si le malt a assez d'enzymes pour tout convertir.",
+      ],
+      defi: { type: 'biere', txt: 'Brasse une bière d\'au moins 1,040 avec un palier entre 63 et 67 °C, notée 25/50 ou plus.',
+        test: (c) => c.res.og >= 1.040 && c.res.palier >= 63 && c.res.palier <= 67 && c.note.total >= 25 },
+      quiz: [
+        ['Vers quelle température la β-amylase travaille-t-elle au mieux ?', '60–65 °C', ['68–72 °C', '75–78 °C', '50–55 °C']],
+        ['Un palier à 69 °C donne plutôt…', 'une bière ronde, riche en dextrines', ['une bière plus sèche', 'plus d\'amertume', 'plus d\'alcool']],
+        ['Que mesure le pouvoir diastasique, en °Lintner ?', 'la réserve d\'enzymes du malt', ['la couleur du malt', 'l\'extrait du malt', 'son humidité']],
+      ],
+      recompense: { recettes: /blond|golden|pale ale|american wheat/i, ecus: 15 },
+    },
+    {
+      id: 'amertume', titre: 'L\'amertume du houblon', mentor: 'Lise', fiche: 'amertume', requiert: ['empatage'],
+      theorie: [
+        "Les acides alpha du houblon (humulones) ne sont presque pas solubles ni amers. À l'ébullition, ils s'isomérisent en iso-alpha-acides, solubles et amers. Plus le houblon bout longtemps, plus l'isomérisation avance : c'est l'utilisation, calculée par la formule de Tinseth.",
+        "Un moût dense isomérise moins bien. Les huiles essentielles (myrcène, humulène, linalol), elles, s'évaporent à l'ébullition : un ajout tardif garde l'arôme mais amérise peu.",
+      ],
+      defi: { type: 'biere', txt: 'Une bière médaillée d\'au moins 30 IBU, avec un houblon à 45 min ou plus et un autre à 15 min ou moins.',
+        test: (c) => c.res.ibu >= 30 && c.recette.houblons.some((h) => h.min >= 45) && c.recette.houblons.some((h) => h.min >= 0 && h.min <= 15) && !!c.note.medaille },
+      quiz: [
+        ['Pourquoi un houblon bouilli 60 min amérise-t-il plus qu\'à 10 min ?', 'ses acides alpha ont eu le temps de s\'isomériser', ['ses huiles se concentrent', 'il colore la bière', 'il libère des sucres amers']],
+        ['Dans la formule de Tinseth, un moût plus dense…', 'réduit l\'utilisation des acides alpha', ['augmente l\'amertume', 'ne change rien', 'double les IBU']],
+        ['Un ajout de houblon à 5 min sert surtout à…', 'garder les huiles aromatiques', ['amériser fortement', 'clarifier', 'acidifier le moût']],
+      ],
+      recompense: { recettes: /pale ale|amber|bitter|esb/i, ecus: 15 },
+    },
+    {
+      id: 'levure', titre: 'La levure et la température', mentor: 'Lise', fiche: 'fermentation', requiert: ['empatage'],
+      theorie: [
+        "La fermentation dégage de la chaleur, surtout pendant la phase tumultueuse (jours 2 et 3). Au-dessus de sa plage, la levure produit davantage d'esters (fruité) et d'alcools supérieurs par la voie d'Ehrlich : goût chaud, solvant.",
+        "L'α-acétolactate qu'elle rejette s'oxyde en diacétyle (beurre). En fin de fermentation, une levure encore active le réabsorbe.",
+      ],
+      defi: { type: 'biere', txt: 'Tiens la fermentation dans la bande au moins 75 % du temps, et obtiens 30/50 ou plus.',
+        test: (c) => (c.scores && c.scores.ferm != null ? c.scores.ferm : 0) >= 0.75 && c.note.total >= 30 },
+      quiz: [
+        ['Au-dessus de sa plage, la levure produit davantage…', 'd\'esters et d\'alcools supérieurs', ['de diacétyle uniquement', 'de sucres', 'd\'iso-alpha-acides']],
+        ['Quand la fermentation chauffe-t-elle le plus ?', 'pendant la phase tumultueuse, jours 2 et 3', ['au jour 7', 'pendant la latence', 'à la mise en bouteille']],
+        ['Le diacétyle sent…', 'le beurre', ['la banane', 'le clou de girofle', 'le maïs cuit']],
+      ],
+      recompense: { recettes: /saison|belg|wit|weizen|tripel|dubbel/i, ecus: 15 },
+    },
+    {
+      id: 'lager', titre: 'Les lagers et le froid', mentor: 'Lise', fiche: 'levure', requiert: ['levure'],
+      theorie: [
+        "Saccharomyces pastorianus fermente au frais (9–13 °C) : peu d'esters, un profil net. Mais au froid, la levure réabsorbe mal le diacétyle : on remonte de 4 °C les deux derniers jours, c'est le repos diacétyle.",
+        "Le malt Pils très pâle contient de la S-méthylméthionine qui donne du DMS (maïs cuit) à chaud : 90 minutes d'ébullition vigoureuse le chassent.",
+      ],
+      defi: { type: 'biere', txt: 'Une lager médaillée : levure lager, fermentation à 13 °C ou moins, repos diacétyle activé.',
+        test: (c) => c.res.levure && c.res.levure.fam === 'lager' && c.recette.fermentation.temp <= 13 && c.recette.fermentation.reposDiacetyle && !!c.note.medaille },
+      quiz: [
+        ['Pourquoi un repos diacétyle en fin de lager ?', 'la levure réabsorbe le diacétyle à plus haute température', ['pour tuer la levure', 'pour gazéifier la bière', 'pour la clarifier au froid']],
+        ['Avec plus de 50 % de malt Pils, 90 min d\'ébullition chassent…', 'le DMS', ['le diacétyle', 'l\'acétaldéhyde', 'les tanins']],
+        ['Une levure lager travaille typiquement vers…', '9–13 °C', ['18–22 °C', '25–30 °C', '35 °C']],
+      ],
+      recompense: { recettes: /pils|lager|helles|bock|m[äa]rzen|vienna|oktoberfest/i, ecus: 20 },
+    },
+    {
+      id: 'eau', titre: 'L\'eau du causse', mentor: 'Lise', fiche: 'eau', requiert: ['empatage'],
+      theorie: [
+        "L'eau calcaire du Quercy est riche en bicarbonates : son alcalinité résiduelle remonte le pH d'empâtage. Pour une bière pâle, on vise 5,2 à 5,6 : les enzymes travaillent mieux et les tanins des enveloppes restent dans la drêche.",
+        "Le calcium et le magnésium abaissent l'alcalinité ; les malts acides, caramel et torréfiés baissent le pH. Le rapport sulfates/chlorures oriente le goût : sec et amer au-dessus de 2, rond et malté en dessous de 1.",
+      ],
+      defi: { type: 'biere', txt: 'Une bière pâle (15 EBC au plus) avec un pH d\'empâtage entre 5,2 et 5,6.',
+        test: (c) => c.res.ebc <= 15 && c.res.ph >= 5.2 && c.res.ph <= 5.6 },
+      quiz: [
+        ['L\'alcalinité résiduelle élevée de l\'eau du causse…', 'remonte le pH d\'empâtage', ['baisse le pH', 'n\'a aucun effet', 'colore la bière']],
+        ['Un rapport sulfates/chlorures élevé met en avant…', 'une amertume sèche', ['une rondeur maltée', 'la couleur', 'la mousse']],
+        ['Les malts torréfiés font…', 'baisser le pH d\'empâtage', ['monter le pH', 'monter l\'alcalinité', 'rien du tout']],
+      ],
+      recompense: { recettes: /bitter|esb|brown|california/i, ingredients: [/^Gypse/i, /chlorure de calcium|CaCl/i], ecus: 10 },
+    },
+    {
+      id: 'torrefie', titre: 'Les malts torréfiés', mentor: 'Lise', fiche: 'couleur', requiert: ['eau'],
+      theorie: [
+        "En torréfiant le malt vers 200 °C, les réactions de Maillard puis la pyrolyse forment des mélanoïdines brunes, des notes de café et de chocolat, et des composés acides qui font baisser le pH. Les enzymes, elles, sont détruites : ces malts n'ont aucun pouvoir diastasique.",
+        "Les malts « Special » ou désamérisés sont décortiqués avant torréfaction : la couleur sans l'âpreté des enveloppes brûlées.",
+      ],
+      defi: { type: 'biere', txt: 'Un stout ou un porter médaillé.',
+        test: (c) => c.res.style && ['stout', 'porter'].includes(c.res.style.style.sujet) && !!c.note.medaille },
+      quiz: [
+        ['Pourquoi un CARAFA « Special » est-il dit désamérisé ?', 'son enveloppe est retirée avant torréfaction', ['il est lavé', 'il est moins torréfié', 'il est enrobé de sucre']],
+        ['Les malts torréfiés n\'ont pas de pouvoir diastasique parce que…', 'la chaleur a détruit leurs enzymes', ['ils sont crus', 'ils sont trop sucrés', 'ils n\'ont pas d\'amidon']],
+        ['Ce qui brunit le malt à la torréfaction :', 'les réactions de Maillard et la pyrolyse', ['la fermentation', 'l\'isomérisation', 'l\'oxydation des lipides seule']],
+      ],
+      recompense: { recettes: /stout|porter/i, ecus: 15 },
+    },
+    {
+      id: 'dryhop', titre: 'Houblonnage à cru et DDH', mentor: 'Lise', fiche: 'dryhop', requiert: ['amertume'],
+      theorie: [
+        "Le dry hop met le houblon au contact de la bière froide : les huiles passent sans s'évaporer et sans amertume. En double dry hop (DDH), on le fait deux fois.",
+        "Le DH1, au jour 2, tombe en pleine fermentation : la levure biotransforme le géraniol en citronellol et libère des thiols fixés sur des acides aminés (fruit de la passion, pamplemousse). Le CO₂ emporte un peu d'huiles. Le DH2, au jour 5, garde les arômes frais intacts.",
+        "Revers : les amylases du houblon redécoupent des dextrines que la levure fermente (hop creep) : plus sec, un peu plus d'alcool, et du diacétyle sans repos. Au-delà de 18 g/L au total, la bière devient végétale et pique (hop burn).",
+      ],
+      defi: { type: 'biere', txt: 'Une bière médaillée en DDH : au moins 3 g/L au DH J2 et 3 g/L au DH J5, 18 g/L au plus au total.',
+        test: (c) => c.res.dh && c.res.dh.ddh && c.res.dh.total <= 18 && !!c.note.medaille },
+      quiz: [
+        ['Pourquoi un premier dry hop pendant la fermentation active ?', 'la levure biotransforme les terpènes et libère des thiols', ['pour plus d\'amertume', 'pour stériliser la bière', 'pour la clarifier']],
+        ['Le hop creep, c\'est…', 'des enzymes du houblon qui relancent la fermentation', ['la mousse qui déborde', 'une oxydation', 'une contamination']],
+        ['Au-delà d\'environ 18 g/L de houblon à cru, on risque…', 'un goût végétal et le hop burn', ['plus d\'IBU', 'une bière plus claire', 'moins d\'alcool']],
+      ],
+      recompense: { recettes: /ipa|hazy|neipa|new england/i, ingredients: [/^Citra$/i], ecus: 15 },
+    },
+    {
+      id: 'brouillis', titre: 'Première chauffe', mentor: 'Firmin', fiche: 'distillation', requiert: ['empatage'],
+      theorie: [
+        "L'éthanol bout à 78,4 °C, l'eau à 100 °C : la vapeur d'un moût à 10 % titre environ 50 %. C'est l'équilibre liquide-vapeur. Au brouillis, on épuise la bière jusqu'à n'avoir plus d'alcool dans la chaudière : on recueille 20 à 30 %.",
+        "Le cuivre de l'alambic réagit avec les composés soufrés et les retient. La bière mousse au début (protéines, CO₂) : on chauffe doucement, puis on nourrit le feu.",
+      ],
+      defi: { type: 'edv', txt: 'Distille une eau-de-vie présentable au jury (au moins 2 litres de cœur).',
+        test: (c) => c.note && c.note.presentable },
+      quiz: [
+        ['Pourquoi la vapeur d\'un moût à 10 % titre-t-elle environ 50 % ?', 'l\'éthanol est plus volatil que l\'eau', ['l\'eau s\'évapore d\'abord', 'le cuivre concentre l\'alcool', 'la levure travaille encore']],
+        ['Le brouillis sert à…', 'épuiser la bière en un alcool à 20–30 %', ['séparer les têtes', 'vieillir l\'alcool', 'refroidir la bière']],
+        ['Le cuivre de l\'alambic retient surtout…', 'les composés soufrés', ['le méthanol', 'les esters', 'l\'eau']],
+      ],
+      recompense: { ingredients: [/^Distilamax XP/i], ecus: 15 },
+    },
+    {
+      id: 'coupes', titre: 'Les coupes', mentor: 'Firmin', fiche: 'coupes', requiert: ['brouillis'],
+      theorie: [
+        "À la bonne chauffe sortent d'abord les têtes : acétaldéhyde et acétate d'éthyle, très volatils (colle, pomme verte). Puis le cœur, fruité et propre. Enfin les queues : alcools supérieurs lourds, acides gras, furfural (carton mouillé, gras), quand le degré au bec tombe.",
+        "Têtes et queues forment les épaisses : on les repasse à la chauffe suivante pour récupérer leur alcool.",
+      ],
+      defi: { type: 'edv', txt: 'Une eau-de-vie médaillée, sans défaut de têtes ni de queues.',
+        test: (c) => c.note && !!c.note.medaille && !c.note.defauts.some((d) => d.id === 'tetes' || d.id === 'queues') },
+      quiz: [
+        ['Les têtes contiennent surtout…', 'de l\'acétaldéhyde et de l\'acétate d\'éthyle', ['du furfural', 'des acides gras', 'des tanins']],
+        ['Quand coupe-t-on les queues ?', 'quand le degré tombe et que le carton mouillé arrive', ['dès les premières gouttes', 'à 80 % au bec', 'quand ça sent la pomme verte']],
+        ['Repasser les épaisses permet…', 'de récupérer leur alcool à la chauffe suivante', ['de faire du whisky', 'd\'éliminer le méthanol', 'de colorer le cœur']],
+      ],
+      recompense: { futs: [['bourbon', 'quartaut']], ecus: 20 },
+    },
+    {
+      id: 'chai', titre: 'Le chai et le temps', mentor: 'Firmin', fiche: 'elevage', requiert: ['coupes'],
+      theorie: [
+        "En fût, trois familles de réactions : l'éthanol extrait vanilline, lactones et tanins du bois ; le charbon des fûts charrés adsorbe le soufre ; l'oxygène oxyde lentement les alcools supérieurs, que l'éthanol estérifie en esters fruités.",
+        "Le règlement (UE) 2019/787 exige au moins trois ans en fût de 700 L au plus et 40 % vol à la mise en bouteille pour dire whisky. La part des anges emporte environ 2 à 3 % du volume par an.",
+      ],
+      defi: { type: 'vieilli', txt: 'Mets en bouteille un vrai whisky (wash de malt, trois ans de fût au moins).',
+        test: (c) => /^Whisky/.test(c.entree.style) },
+      quiz: [
+        ['Combien d\'années de fût au minimum pour dire whisky dans l\'UE ?', '3 ans', ['1 an', '2 ans', '5 ans']],
+        ['Dans un chai chaud et sec, le degré du spiritueux…', 'monte', ['baisse', 'ne bouge pas', 'double']],
+        ['La whisky-lactone donne une note de…', 'noix de coco', ['banane', 'fumée', 'cuir']],
+      ],
+      recompense: { futs: [['sherry', 'barrique']], ecus: 25 },
+    },
+  ];
+  racine.Ecole = { LECONS, fr };
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+</script>
 <script>/* Ignem custodimus — interface du jeu (V0.4 : brasserie, alambic, pigeonnier, chai, recherche) */
 (function () {
   'use strict';
@@ -1939,7 +2154,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   const recetteVide = () => ({ volume: 1000, rendement: 0.75, malts: [], houblons: [], levure: null, eau: 'causse', palier: 66, ebullition: 60, fermentation: { temp: 19, reposDiacetyle: false },
     aromates: [], sels: {}, auxiliaires: [], cuisson: false, destination: 'biere' });
   const etatDefaut = () => ({ mode: 'debutant', aide: true, son: true, gestesExpert: false, bac: false, tuto: 0, tutoD: 0, points: 0, succes: {}, carnet: [], brassins: 0, recette: recetteVide(), epaisses: null, reglagesD: null,
-    possede: null, ecus: 30, decouvertes: {}, quiz: null, grimoire: [] });
+    possede: null, ecus: 30, decouvertes: {}, quiz: null, grimoire: [], ecole: {} });
   let S = (() => { try { const j = JSON.parse(localStorage.getItem(CLE) || 'null'); return j ? { ...etatDefaut(), ...j } : etatDefaut(); } catch (e) { return etatDefaut(); } })();
   // Sauvegardes d'avant la V0.3 : tout ce qui était débloqué par palier devient possédé, et les points donnent des écus
   if (!Array.isArray(S.possede)) {
@@ -2185,6 +2400,10 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       ['Le temps au curseur', 'Remplis un fût, puis fais glisser les années : couleur, anges, pipette et conseil de Firmin changent en direct. Sors-le quand c\'est mûr.'],
       ['Finir', 'Les lots sortis attendent en cuve : finition dans un second fût, assemblage, ou mise en bouteille.'],
     ],
+    veillee: [
+      ['Les leçons', 'Chaque leçon : un peu de chimie, un défi à réussir pour de vrai, puis trois questions. Réussie, elle offre des recettes au grimoire, des ingrédients ou des fûts.'],
+      ['Le défi', 'Touche « Commencer » : le défi s\'affiche en haut de la brasserie. Le moteur le vérifie tout seul à la dégustation.'],
+    ],
     recherche: [['Chercher partout', 'Tape un nom, un arôme, un style (« agrumes », « IPA », « 1150 »), ou touche une suggestion. Filtre par famille, trie, et ajoute directement à la cuve.']],
   };
   let tutoEnCours = null;
@@ -2391,7 +2610,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   let onglet = 'malts', filtreMalt = 'tous', recherche = '', dernierCalc = null, detailStyleOuvert = false;
   const FAMILLES = { base: 'Base', kilned: 'Touraillés', caramel: 'Caramel', roasted: 'Torréfiés', adjuncts: 'Grains crus', sugars: 'Sucres et miel' };
 
-  function entrerBrasserie() { maj(); rendreOnglets(); rendreOnglet(); }
+  function entrerBrasserie() { maj(); rendreOnglets(); rendreOnglet(); majDefiLigne(); }
 
   // Malts de base par sacs de 25 kg, malts de spécialité par 10 kg, malt acide par 5 kg
   const doseMalt = (m) => (/acidul|sauer/i.test(m.nom) ? 5 : ['caramel', 'roasted'].includes(m.fam) ? 10 : 25);
@@ -2572,6 +2791,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       ${compoOuverte ? `<span class="grist-leg">${tri.map((x) => `<span><i style="background:${couleur(Math.max(4, x.m.ebc))}"></i><b>${Math.round((x.kg / kg) * 100)} %</b> ${esc(x.m.nom)}</span>`).join('')}</span>` : ''}`;
   }
   document.addEventListener('click', (e) => { if (e.target.closest('#compo-bouton')) { compoOuverte = !compoOuverte; son('clic'); rendreCharge(); } });
+  const libMin = (m) => (m === -2 ? 'DH J2' : m === -1 ? 'DH J5' : m + ' min');
   function rendreCuveListe(z) {
     const r = dernierCalc;
     if (!R.malts.length && !R.houblons.length && !R.levure) { z.innerHTML = '<p class="vide">La cuve est vide. Ajoute des céréales depuis l\'onglet Céréales, ou charge une recette du grimoire au pigeonnier.</p><button class="btn btn-sobre" data-catalogue="grimoire">Ouvrir le grimoire</button>'; return; }
@@ -2579,12 +2799,13 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     let h = '<p class="groupe-titre">MALTS ET SUCRES</p>';
     h += R.malts.map((l, i) => { const m = IDX.malt.get(l.id); return `<div class="ligne-recette"><div class="nom"><span class="part" style="--teinte:${couleur(Math.max(4, m.ebc))};color:${m.ebc > 45 ? 'var(--calcaire)' : 'var(--nuit)'}">${Math.round((l.kg / kgTot) * 100)} %</span>${esc(m.nom)}<small>${nf(m.ebc, 0)} EBC · ${FAMILLES[m.fam]}</small></div>
       <div class="qte"><button class="btn btn-carre" data-malt-moins="${i}" aria-label="Retirer 5 kg">−</button><input id="kg-${i}" inputmode="decimal" data-malt-kg="${i}" value="${l.kg}" aria-label="Kilogrammes de ${esc(m.nom)}"><span class="u">kg</span><button class="btn btn-carre" data-malt-plus="${i}" aria-label="Ajouter 5 kg">+</button><button class="btn btn-carre btn-sobre" data-malt-suppr="${i}" aria-label="Enlever ${esc(m.nom)}">×</button></div></div>`; }).join('') || '<p class="vide">Aucun malt.</p>';
-    h += '<p class="groupe-titre">HOUBLONS</p>';
+    const dh = r && r.dh;
+    h += `<p class="groupe-titre">HOUBLONS${dh && dh.total > 0 ? ` <span class="dh-bilan ${dh.total > 18 ? 'alerte' : ''}">à cru ${nf(dh.total, 1)} g/L${dh.ddh ? ' · DDH' : ''}</span> ${iBtn("DH J2 : en pleine fermentation, la levure biotransforme les terpènes (géraniol → citronellol) et libère des thiols : fruité tropical. DH J5 : arôme frais intact. Le total à cru relance un peu la fermentation (hop creep) ; au-delà de 18 g/L, la bière devient végétale. Fiche Dry hop.")}` : ''}</p>`;
     h += R.houblons.map((l, i) => {
       const hb = IDX.houblon.get(l.id), ibu = r && r.detailHoublons[i] ? r.detailHoublons[i].ibu : 0;
-      return `<div class="ligne-recette"><div class="nom">${esc(hb.nom)}<small>α ${nf(hb.alpha)} % · ${l.min < 0 ? 'à cru, sans amertume' : `${nf(ibu, 0)} IBU`}</small></div>
+      return `<div class="ligne-recette"><div class="nom">${esc(hb.nom)}<small>α ${nf(hb.alpha)} % · ${l.min === -2 ? `dry hop jour 2 · ${nf(l.g / R.volume, 1)} g/L · biotransformation` : l.min === -1 ? `dry hop jour 5 · ${nf(l.g / R.volume, 1)} g/L` : `${nf(ibu, 0)} IBU`}</small></div>
       <div class="qte"><button class="btn btn-carre" data-hop-moins="${i}" aria-label="Retirer 100 g">−</button><input id="g-${i}" inputmode="numeric" data-hop-g="${i}" value="${l.g}" aria-label="Grammes de ${esc(hb.nom)}"><span class="u">g</span><button class="btn btn-carre" data-hop-plus="${i}" aria-label="Ajouter 100 g">+</button><button class="btn btn-carre btn-sobre" data-hop-suppr="${i}" aria-label="Enlever ${esc(hb.nom)}">×</button></div>
-      <div class="temps">${[60, 30, 15, 10, 5, 0, -1].map((m) => `<button data-hop-min="${i}:${m}" aria-pressed="${l.min === m}">${m < 0 ? 'À cru' : m + ' min'}</button>`).join('')}</div></div>`;
+      <div class="temps">${[60, 30, 15, 10, 5, 0, -2, -1].map((m) => `<button data-hop-min="${i}:${m}" aria-pressed="${l.min === m}" class="${m < 0 ? 'dh' : ''}">${m < 0 ? libMin(m) : m + ' min'}</button>`).join('')}</div></div>`;
     }).join('') || '<p class="vide">Aucun houblon.</p>';
     if (R.aromates.length) {
       h += '<p class="groupe-titre">AROMATES</p>';
@@ -3015,6 +3236,10 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const enveloppe = st.e < -0.05 ? `rgba(110,170,220,${-st.e})` : st.e > 0.05 ? `rgba(227,89,61,${st.e})` : '#8a8f96';
       px(12, 14, 44, 70, '#b9c0c8'); px(10, 30, 48, 30, enveloppe); px(12, 30, 44, 30, '#b9c0c8'); px(12, 34, 44, 2, enveloppe); px(12, 46, 44, 2, enveloppe); px(12, 56, 44, 2, enveloppe);
       for (let j = 0; j < 18; j++) px(14 + j, 84 + j, 40 - j * 2, 1, '#9aa1a8');
+      // Cônes de houblon qui tombent dans la cuve au moment du dry hop
+      if (st.chuteDH != null && st.t - st.chuteDH < 1.6) { const a = (st.t - st.chuteDH) / 1.6; for (let i = 0; i < 6; i++) { const x = 18 + i * 6, yy = 6 + a * 60 + (i % 3) * 4; px(x, yy, 4, 5, '#9cc95e'); px(x + 1, yy + 1, 2, 3, '#5c8a33'); } }
+      // Repères des dry hops sur la courbe
+      [[2, -2], [5, -1]].forEach(([jour, m]) => { if (rec.houblons.some((h) => h.min === m)) { const x = 68 + (jour / 7) * 118; px(x, 8, 2, 108, 'rgba(156,201,94,.55)'); px(x - 3, 8, 8, 6, '#9cc95e'); } });
       px(32, 102, 4, 10, '#8a8f96'); px(20, 110, 28, 3, '#574332');
       const act = G * (st.t / DUREE * 7 / 1.8) * Math.exp(1 - st.t / DUREE * 7 / 1.8);
       for (let i = 0; i < Math.round(act * 8); i++) px(16 + ((i * 13 + Math.floor(st.t * 20)) % 36), 20 + ((i * 7 + Math.floor(st.t * 30)) % 60), 1, 1, '#ecdfc4');
@@ -3044,6 +3269,10 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         const chaleur = G * (j / 1.8) * Math.exp(1 - j / 1.8);
         st.u += borne(st.cmd - st.u, -3 * dt, 3 * dt);
         st.e += (st.u - st.e) * Math.min(1, dt / 1.2);
+        for (const [jour, m] of [[2, -2], [5, -1]]) {
+          const lot = rec.houblons.filter((h) => h.min === m);
+          if (lot.length && j >= jour && !st['dh' + jour]) { st['dh' + jour] = true; st.chuteDH = st.t; evtScene('fer', `Dry hop jour ${jour} : ${nf(lot.reduce((a, h) => a + h.g, 0) / rec.volume, 1)} g/L`, 'houblon'); son('bulle'); }
+        }
         st.T += (chaleur + (AMB - st.T) * 0.12 + st.e * FROID) * dt;
         st.duree += dt; st.somme += st.T * dt; st.max = Math.max(st.max, st.T); st.min = Math.min(st.min, st.T);
         if (Math.abs(st.T - cible(j)) <= 1.5) st.dans += dt;
@@ -3058,7 +3287,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         if (st.max > y.t[1] + 1) effet += ` Au-dessus de ${y.t[1]} °C, la levure produit des alcools supérieurs.`;
         const aCru = rec.houblons.filter((h) => h.min < 0);
         son(score > 0.6 ? 'ok' : 'rate');
-        bilanGeste('fer', [`<span class="gros">${Math.round(score * 100)} %</span> du temps dans la bande`, `Pic à ${nf(st.max)} °C, creux à ${nf(st.min)} °C.`, effet, aCru.length ? `Houblonnage à cru au jour 4 : ${aCru.map((h) => `${nf(h.g / 1000, 2)} kg de ${esc(IDX.houblon.get(h.id).nom)}`).join(', ')}.` : ''], 'Déguster');
+        bilanGeste('fer', [`<span class="gros">${Math.round(score * 100)} %</span> du temps dans la bande`, `Pic à ${nf(st.max)} °C, creux à ${nf(st.min)} °C.`, effet, aCru.length ? `Houblonnage à cru : ${aCru.map((h) => `${nf(h.g / 1000, 2)} kg de ${esc(IDX.houblon.get(h.id).nom)} (${libMin(h.min)})`).join(', ')}.` : ''], 'Déguster');
         $('#fer-suite').onclick = () => { tuto('fin:fermentation'); finirBrassin(); };
       });
     };
@@ -3099,7 +3328,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     S.carnet.unshift(entree);
     const nouveaux = verifierSucces(entree, res, note);
     const ecus = gagnerEcus(Math.round(note.total / 2) + (BONUS_MEDAILLE[note.medaille] || 0) + (note.medaille ? 3 * nbEtoiles : 0));
-    const cadeaux = verifierDecouvertes('biere', { entree, res, note, infection });
+    const cadeaux = verifierDecouvertes('biere', { entree, res, note, infection }).concat(verifierLecons('biere', { res, note, recette: session.recette, scores: session.scores }));
     sauver(); majEntete();
     dernier = { type: 'biere', entree, res, note, gain, ecus, cadeaux, palierMonte: palierAtteint() > palierAvant, nouveaux };
     aller('degustation');
@@ -3203,7 +3432,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const g = [];
     g.push(S.bac ? 'Bac à sable : ce brassin ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} écus en bourse.`);
     if (palierMonte) g.push(`Nouveau niveau : le pigeonnier propose désormais ${PALIERS[palierAtteint()].txt}.`);
-    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
     if (res.notes && res.notes.length) $('#degust-defauts').insertAdjacentHTML('afterbegin', `<p class="notes-degust">Notes : ${res.notes.map((n) => `<b>${esc(n.source)}</b> ${esc(n.notes || '')}`).join(' · ')}</p>`);
     nouveaux.forEach((n) => g.push(`★ Succès : ${esc(n)}`));
     if (S.mode === 'debutant' && note.malus > 0.15) g.push(`Les gestes ont coûté environ ${nf(note.malus * 8, 0)} points sur la saveur et l'impression.`);
@@ -3658,7 +3887,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     S.carnet.unshift(entree);
     const nouveaux = verifierSuccesD(entree, note);
     dernier = { ecus: gagnerEcus(note ? Math.round(note.total / 2) + (BONUS_MEDAILLE[note.medaille] || 0) + Math.round(10 * rendement) + 2 * (aveugle || 0) : 0) };
-    dernier.cadeaux = verifierDecouvertes('edv', { entree, note });
+    dernier.cadeaux = verifierDecouvertes('edv', { entree, note }).concat(verifierLecons('edv', { entree, note }));
     sauver(); majEntete();
     dernier = { ...dernier, type: 'edv', entree, note, bl, gain, rendement, palierMonte: palierAtteint() > palierAvant, nouveaux, r };
     aller('degustation');
@@ -3713,7 +3942,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     $('#degust-defauts').innerHTML = note && note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [];
     g.push(S.bac ? 'Bac à sable : cette chauffe ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise, dont ${Math.round(10 * rendement)} pour le rendement${e.aveugle != null ? ` et ${2 * e.aveugle} pour l'aveugle` : ''}, et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} en bourse.`);
-    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
     if (/malt|grain/.test(e.style)) g.push('C\'est un « new make » : il faudra au moins trois ans en fût de chêne de 700 L au plus pour qu\'il ait droit au nom de whisky (règlement UE 2019/787). <button class="btn btn-mini" data-aller="chai">Mettre en fût au chai</button>');
     else g.push('Le chai peut l\'élever en fût : <button class="btn btn-mini btn-sobre" data-aller="chai">aller au chai</button>');
     g.push(S.epaisses ? `Épaisses en réserve : ${nf(S.epaisses.A, 1)} LAP pour la prochaine bonne chauffe.` : 'Aucune épaisse en réserve.');
@@ -4000,7 +4229,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const nouveaux = verifierSuccesChai(entree);
     const ecus = gagnerEcus(note.presentable ? Math.round(note.total / 2) + (BONUS_MEDAILLE[entree.medaille] || 0) + Math.floor(bt.n / 10) : 0);
     dernier = { type: 'vieilli', entree, note, etat: e, bt, gain, ecus, nouveaux, palierMonte: palierAtteint() > palierAvant, cadeaux: [] };
-    dernier.cadeaux = verifierDecouvertes('vieilli', { entree, note });
+    dernier.cadeaux = verifierDecouvertes('vieilli', { entree, note }).concat(verifierLecons('vieilli', { entree, note, etat: e }));
     sauver(); majEntete();
     aller('degustation');
     rendreDegustationVieilli();
@@ -4048,7 +4277,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const g = [];
     g.push(`<b>À la pipette :</b> ${esc(pip.notes.map((x) => x.mot).join(', ') || 'alcool blanc')}${pip.bouche.length ? ` · ${esc(pip.bouche.join(', '))}` : ''}.`);
     g.push(S.bac ? 'Bac à sable : cette mise ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} en bourse.`);
-    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
     if (!/^Whisky/.test(e.style) && etat.sources.every((s) => s !== 'biere') && etat.ageMin < 3) g.push(`Moins de trois ans en fût : pas encore le droit au nom de whisky (règlement UE 2019/787).`);
     if (etat.sources.includes('biere')) g.push('Distillée d\'une bière houblonnée, elle reste une eau-de-vie de bière. Pour un whisky, distille un wash de malt sans houblon.');
     if (palierMonte) g.push(`Nouveaux ingrédients débloqués : ${PALIERS[palierAtteint()].txt}.`);
@@ -4285,7 +4514,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     let extra = '';
     if (recette) {
       const manque = manquantsRecette(x);
-      const ing = [...x.malts.map((l) => `${l.kg} kg ${IDX.malt.get(l.id).nom}`), ...x.houblons.map((l) => `${nf(l.g / 1000, 1)} kg ${IDX.houblon.get(l.id).nom} ${l.min < 0 ? 'à cru' : l.min + ' min'}`), IDX.levure.get(x.levure).nom];
+      const ing = [...x.malts.map((l) => `${l.kg} kg ${IDX.malt.get(l.id).nom}`), ...x.houblons.map((l) => `${nf(l.g / 1000, 1)} kg ${IDX.houblon.get(l.id).nom} ${libMin(l.min)}`), IDX.levure.get(x.levure).nom];
       extra = `<span class="det">${esc(ing.join(' · '))}</span>${possede && manque.length ? `<div class="manquants"><span class="det">Il te manque :</span>${manque.map((m) => `<button class="btn btn-sobre" data-acheter="${m.cat}:${esc(m.x.id)}" ${S.ecus < prixDe(m.x, m.cat) || !achetable(m.x) ? 'disabled' : ''}>${esc(m.x.nom)} · ${achetable(m.x) ? prixDe(m.x, m.cat) + ' écus' : 'niveau requis'}</button>`).join('')}</div>` : ''}`;
     }
     return `<div class="article ${possede ? 'possede' : ''} ${!possede && !ok ? 'hors' : ''}"><span class="nom">${esc(x.nom)} ${recette ? '' : `<span class="rarete">${etoilesRarete(x.palier || 0)}</span>`}</span>${action}
@@ -4411,7 +4640,122 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const options = [carte, ...leurres].map((c) => c.r).sort(() => Math.random() - 0.5);
     questionCourante = { carte, options, repondu: null };
   }
+  // =====================================================================
+  // École : leçons (théorie + défi + quiz) qui offrent des recettes
+  // =====================================================================
+  const LECONS = Ecole.LECONS;
+  let ongletVeillee = 'lecons', leconOuverte = null, quizLecon = null;
+  const etatLecon = (id) => { if (!S.ecole) S.ecole = {}; return S.ecole[id] || null; };
+  const leconFaite = (id) => !!(etatLecon(id) && etatLecon(id).faite);
+  const leconOuvrable = (l) => (l.requiert || []).every(leconFaite);
+  function recompenseTexte(l) {
+    const r = l.recompense, out = [];
+    if (r.recettes) out.push(`${Math.min(4, D.recettes.filter((x) => r.recettes.test(`${x.style} ${x.nom}`)).length)} recettes`);
+    (r.ingredients || []).forEach((re) => { const x = trouverIngredient(re); if (x) out.push(x.nom); });
+    (r.futs || []).forEach(([t, z]) => out.push(`${Chai.TAILLES[z].nom.toLowerCase()} ${Chai.TYPES[t].nom.toLowerCase()}`));
+    if (r.ecus) out.push(`${r.ecus} écus`);
+    return out.join(' · ');
+  }
+  function trouverIngredient(re) { for (const l of [D.malts, D.houblons, D.levures, D.sels, D.aromates, D.auxiliaires]) { const x = l.find((e) => re.test(e.nom)); if (x) return x; } return null; }
+  function terminerLecon(l) {
+    const e = etatLecon(l.id); if (!e || e.faite) return [];
+    e.faite = new Date().toISOString();
+    const r = l.recompense, recus = [];
+    if (r.recettes) {
+      const libres = D.recettes.filter((x) => r.recettes.test(`${x.style} ${x.nom}`) && !S.grimoire.includes(x.id)).slice(0, 4);
+      libres.forEach((x) => S.grimoire.push(x.id));
+      if (libres.length) recus.push(`${libres.length} recette${libres.length > 1 ? 's' : ''} au grimoire : ${libres.map((x) => x.nom).join(', ')}`);
+    }
+    (r.ingredients || []).forEach((re) => { const x = trouverIngredient(re); if (x) { if (dispo(x)) { gagnerEcus(10); recus.push(`${x.nom} déjà en réserve : +10 écus`); } else { posseder(x.id); recus.push(x.nom); } } });
+    (r.futs || []).forEach(([t, z]) => { const f = nouveauFut(t, z); chai().futs.push(f); f.pos = placeLibre(f); recus.push(nomFut(f)); });
+    if (r.ecus) { gagnerEcus(r.ecus); recus.push(`${r.ecus} écus`); }
+    son('medaille'); toast(`Leçon réussie : ${l.titre}`);
+    e.recus = recus; sauver(); majEntete();
+    return recus;
+  }
+  // Appelé à la fin d'un brassin, d'une distillation ou d'une mise en bouteille : messages pour la dégustation
+  function verifierLecons(evt, ctx) {
+    const msgs = [];
+    if (S.bac) return msgs;
+    for (const l of LECONS) {
+      const e = etatLecon(l.id);
+      if (!e || e.faite || e.defi || l.defi.type !== evt) continue;
+      let ok = false; try { ok = !!l.defi.test(ctx); } catch (err) { ok = false; }
+      if (!ok) continue;
+      e.defi = new Date().toISOString();
+      msgs.push(`§<b style="color:var(--houblon)">Défi réussi</b> : ${esc(l.titre)}.${e.quiz ? '' : ' Il reste les trois questions, à la veillée.'}`);
+      if (e.quiz) terminerLecon(l).forEach((x) => msgs.push(`§Leçon terminée, reçu : ${esc(x)}`));
+      setTimeout(() => toast(`Défi réussi : ${l.titre}`), 2800);
+    }
+    sauver();
+    return msgs;
+  }
+  const leconEnCours = (type) => LECONS.find((l) => { const e = etatLecon(l.id); return e && !e.faite && !e.defi && (!type || l.defi.type === type); });
+  function majDefiLigne() {
+    const b = $('#defi-ligne'); if (!b) return;
+    const l = leconEnCours('biere');
+    if (!l) { b.hidden = true; return; }
+    b.hidden = false; b.innerHTML = `<b>Défi · ${esc(l.titre)}</b><span>${esc(l.defi.txt)}</span>`;
+  }
+
   function rendreVeillee() {
+    $('#veillee-onglets').innerHTML = [['lecons', 'Leçons'], ['questions', 'Questions du soir']].map(([k, v]) => `<button class="onglet" role="tab" aria-selected="${ongletVeillee === k}" data-ongletveillee="${k}">${v}${k === 'lecons' ? `<span class="badge">${LECONS.filter((l) => leconFaite(l.id)).length}/${LECONS.length}</span>` : ''}</button>`).join('');
+    $('#veillee-lecons').hidden = ongletVeillee !== 'lecons';
+    $('#veillee-quiz-zone').hidden = ongletVeillee !== 'questions';
+    if (ongletVeillee === 'lecons') rendreLecons(); else rendreQuestions();
+  }
+  $('#veillee-onglets').addEventListener('click', (e) => { const b = e.target.closest('[data-ongletveillee]'); if (!b) return; ongletVeillee = b.dataset.ongletveillee; leconOuverte = null; son('clic'); rendreVeillee(); });
+  function rendreLecons() {
+    const z = $('#veillee-lecons');
+    if (leconOuverte) { z.innerHTML = detailLecon(LECONS.find((l) => l.id === leconOuverte)); return; }
+    z.innerHTML = `<div class="lecons">${LECONS.map((l, i) => {
+      const e = etatLecon(l.id), ouv = leconOuvrable(l);
+      const etat = e && e.faite ? ['faite', 'Réussie'] : e ? ['cours', `${e.defi ? 'Défi ✓' : 'Défi'} · ${e.quiz ? 'Quiz ✓' : 'Quiz'}`] : ouv ? ['ouverte', 'Nouvelle'] : ['verrou', `Après : ${(l.requiert || []).map((r) => LECONS.find((x) => x.id === r).titre).join(', ')}`];
+      return `<button class="lecon ${etat[0]}" data-lecon="${l.id}" ${etat[0] === 'verrou' ? 'disabled' : ''}><span class="num">${i + 1}</span><span class="corps"><b>${esc(l.titre)}</b><small>${esc(l.mentor)} · ${esc(etat[1])}</small><small class="recomp">${esc(recompenseTexte(l))}</small></span></button>`;
+    }).join('')}</div>`;
+  }
+  function detailLecon(l) {
+    const e = etatLecon(l.id);
+    const quiz = quizLecon && quizLecon.id === l.id ? quizLecon : null;
+    let bas;
+    if (!e) bas = `<button class="btn btn-feu" data-commencer="${l.id}">Commencer la leçon</button>`;
+    else if (e.faite) bas = `<p class="lecon-ok">Leçon réussie. Reçu : ${esc((e.recus || []).join(' · ') || recompenseTexte(l))}</p>`;
+    else bas = `<div class="lecon-etapes"><div class="etape ${e.defi ? 'ok' : ''}"><b>${e.defi ? '✓' : '1'} Défi</b><p>${esc(l.defi.txt)}</p>${e.defi ? '' : `<button class="btn btn-mini btn-sobre" data-aller="${{ biere: 'brasserie', edv: 'distillerie', vieilli: 'chai' }[l.defi.type]}">Y aller</button>`}</div>
+      <div class="etape ${e.quiz ? 'ok' : ''}"><b>${e.quiz ? '✓' : '2'} Trois questions</b>${e.quiz ? '<p>Réussies.</p>' : quiz ? quizHTML(l, quiz) : `<p>Deux bonnes réponses sur trois suffisent.</p><button class="btn btn-mini" data-quizlecon="${l.id}">Répondre</button>`}</div></div>`;
+    return `<button class="btn btn-mini btn-sobre" data-retourlecons>← Toutes les leçons</button>
+      <article class="lecon-detail"><p class="module">${esc(l.mentor)} · leçon</p><h2>${esc(l.titre)}</h2>
+      ${l.theorie.map((p) => `<p>${esc(p)}</p>`).join('')}
+      <p><button class="btn btn-mini btn-sobre" data-fiche="${l.fiche}">Fiche complète</button></p>
+      <p class="recomp-ligne"><b>Récompense :</b> ${esc(recompenseTexte(l))}</p>${bas}</article>`;
+  }
+  function quizHTML(l, q) {
+    const [enonce, bonne, faux] = l.quiz[q.i];
+    const opts = q.ordre[q.i].map((k) => (k === 0 ? bonne : faux[k - 1]));
+    const rep = q.rep[q.i];
+    return `<p class="enonce">${q.i + 1}/3 · ${esc(enonce)}</p><div class="reponses">${opts.map((o, k) => `<button data-replecon="${k}" ${rep != null ? 'disabled' : ''} class="${rep != null ? (q.ordre[q.i][k] === 0 ? 'juste' : k === rep ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
+      ${rep != null ? `<button class="btn btn-mini btn-feu" data-quizsuite>${q.i < 2 ? 'Question suivante' : 'Voir le résultat'}</button>` : ''}`;
+  }
+  $('#veillee-lecons').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button'); if (!b) return;
+    if (b.dataset.lecon) { leconOuverte = b.dataset.lecon; son('clic'); rendreLecons(); $('#scene').scrollTop = 0; return; }
+    if (b.hasAttribute('data-retourlecons')) { leconOuverte = null; quizLecon = null; rendreLecons(); return; }
+    const l = LECONS.find((x) => x.id === leconOuverte); if (!l) return;
+    if (b.dataset.commencer) { S.ecole[l.id] = { debut: new Date().toISOString() }; son('ok'); sauver(); rendreLecons(); majDefiLigne(); toast('Leçon commencée : le défi s\'affiche à la brasserie.'); return; }
+    if (b.dataset.quizlecon) { const m = () => [0, 1, 2, 3].sort(() => Math.random() - 0.5); quizLecon = { id: l.id, i: 0, ordre: [m(), m(), m()], rep: [null, null, null] }; rendreLecons(); return; }
+    if (b.dataset.replecon != null && quizLecon) { const k = +b.dataset.replecon; quizLecon.rep[quizLecon.i] = k; son(quizLecon.ordre[quizLecon.i][k] === 0 ? 'ok' : 'rate'); rendreLecons(); return; }
+    if (b.hasAttribute('data-quizsuite') && quizLecon) {
+      if (quizLecon.i < 2) { quizLecon.i++; rendreLecons(); return; }
+      const bons = quizLecon.rep.filter((k, i) => quizLecon.ordre[i][k] === 0).length;
+      quizLecon = null;
+      if (bons >= 2) {
+        const e = etatLecon(l.id); e.quiz = new Date().toISOString(); sauver();
+        toast(`${bons}/3 : questions réussies.`);
+        if (e.defi) terminerLecon(l);
+      } else { son('rate'); toast(`${bons}/3 : relis la leçon et retente.`); }
+      rendreLecons(); rendreVeillee();
+    }
+  });
+  function rendreQuestions() {
     const q = etatQuiz();
     const reste = Math.max(0, 5 - q.faits);
     $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
@@ -4425,7 +4769,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   }
   $('#veillee-question').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
-    if (b.id === 'veillee-suivante') { questionCourante = null; rendreVeillee(); return; }
+    if (b.id === 'veillee-suivante') { questionCourante = null; rendreQuestions(); return; }
     if (b.dataset.rep == null || !questionCourante || questionCourante.repondu != null) return;
     const i = +b.dataset.rep, q = etatQuiz();
     questionCourante.repondu = i;
@@ -4435,7 +4779,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     son(juste ? 'ok' : 'rate');
     const cadeaux = verifierDecouvertes('quiz');
     cadeaux.forEach(() => {});
-    sauver(); majEntete(); rendreVeillee();
+    sauver(); majEntete(); rendreQuestions();
   });
 
   // =====================================================================
@@ -4473,7 +4817,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <tr class="total lent" style="animation-delay:1.5s"><td>Total</td><td>${nf(fiche.total, fiche.total % 1 ? 1 : 0)} / 20</td></tr></table>`;
     $('#degust-defauts').innerHTML = fiche.defauts.length ? `<h2 class="sous-titre">Points faibles</h2>` + fiche.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [S.bac ? 'Bac à sable : ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b>.`];
-    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
     g.push(`Ce wash donnera une ${nomEauDeVie(e).toLowerCase()} : il t'attend à l'alambic.`);
     $('#degust-gains').innerHTML = `<div class="gains">${g.map((x) => `<p>${x}</p>`).join('')}</div>`;
     $('#nom-cuvee').value = e.nom;
@@ -4549,7 +4893,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     }
     const rec = x.recette;
     const malts = rec.malts.map((l) => `${nf(l.kg, 0)} kg ${IDX.malt.get(l.id)?.nom || '?'}`).join(', ');
-    const hops = rec.houblons.map((l) => `${nf(l.g / 1000, 2)} kg ${IDX.houblon.get(l.id)?.nom || '?'} ${l.min < 0 ? 'à cru' : l.min + ' min'}`).join(', ');
+    const hops = rec.houblons.map((l) => `${nf(l.g / 1000, 2)} kg ${IDX.houblon.get(l.id)?.nom || '?'} ${libMin(l.min)}`).join(', ');
     $('#carnet-detail').innerHTML = `<div class="carnet-detail"><h3>${esc(x.nom)}</h3>
       <p>${esc(x.style)} · ${new Date(x.date).toLocaleDateString('fr-FR')} · mode ${x.mode === 'expert' ? 'expert' : 'débutant'}${x.bac ? ' · bac à sable' : ''}</p>
       <div class="chiffres"><span>${nf(x.total, x.total % 1 ? 1 : 0)}/${x.type === 'wash' ? 20 : 50}</span><span>${sg(x.og)} → ${sg(x.fg)}</span><span>${nf(x.abv)} %</span><span>${nf(x.ibu, 0)} IBU</span><span>${nf(x.ebc, 0)} EBC</span></div>
@@ -4662,6 +5006,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       "Le jury juge la conformité au style, les arômes attendus (houblon pour une IPA, esters et phénols pour une weizen, torréfaction pour un stout) et l'équilibre BU:GU. Chaque défaut retire des points selon sa gravité.",
       "En mode débutant, des gestes ratés coûtent des points de saveur et d'impression. En mode expert, ils changent la chimie elle-même.",
       "Étoiles : sans l'aide de Lise, en mode expert, gestes joués en mode expert. Chaque étoile ajoute 5 points de maîtrise à une bière médaillée."]],
+    dryhop: ['Dry hop et DDH', 'dry hopping', [
+      "Le houblonnage à cru (dry hop) met le houblon au contact de la bière froide : les huiles essentielles (myrcène, linalol, géraniol) passent sans s'évaporer, et sans amertume car les acides alpha ne s'isomérisent pas à froid.",
+      "DH1 au jour 2, en fermentation active : la levure biotransforme le géraniol en citronellol (agrume, rose) et libère, grâce à une β-lyase, des thiols fixés sur la cystéine (4-MMP, 3-MH : cassis, fruit de la passion, pamplemousse). Le CO₂ emporte une partie des huiles. Dans le jeu : fruité en plus, surtout pour les houblons fruités, et 20 % d'huiles en moins.",
+      "DH2 au jour 5, après le pic : la levure est calme, les arômes frais restent intacts. Un double dry hop (DDH) combine les deux, au moins 3 g/L à chaque ajout.",
+      "Hop creep : les amylases et dextrinases du houblon redécoupent des dextrines que la levure fermente. La bière sèche, gagne un peu d'alcool et relargue du diacétyle : un repos diacétyle aide. Dans le jeu, +0,16 point d'atténuation par g/L, jusqu'à +3 points.",
+      "Au-delà de 15 à 20 g/L au total, la matière végétale donne un goût d'herbe coupée et une bouche qui pique (hop burn) : défaut végétal au-dessus de 18 g/L."]],
     elevage: ['Élevage en fût', 'cask maturation', [
       "Un spiritueux mûrit par trois familles de réactions (Russell et al., 2003). Les réactions additives : l'éthanol extrait du bois la vanilline, le syringaldéhyde, les lactones, l'eugénol, les tanins et des sucres. Les réactions soustractives : le charbon des fûts charrés adsorbe les composés soufrés, l'acétaldéhyde se combine à l'éthanol en acétal (1,1-diéthoxyéthane). Les réactions interactives : l'oxygène qui traverse les douelles oxyde les alcools supérieurs en acides, que l'éthanol estérifie en esters fruités.",
       "La lignine du chêne (20 à 30 %) se dégrade par éthanolyse : lignine → coniféraldéhyde → vanilline. L'hémicellulose chauffée au bousinage libère furfural et 5-méthylfurfural (amande grillée, caramel).",
@@ -4715,7 +5065,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.4.4 · brasserie, alambic Ulysse, chai, pigeonnier, veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.5 · brasserie, alambic Ulysse, chai, pigeonnier, école de la veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

@@ -2,17 +2,19 @@
 
 Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du Hub Prométhée.
 
-## Le jeu (V0.4 : brasserie, alambic Ulysse, chai, pigeonnier, veillée, recherche)
+## Le jeu (V0.5 : brasserie, alambic Ulysse, chai, pigeonnier, école, recherche)
 
 | Dossier | Contenu |
 |---|---|
 | `jeu/src/moteur.js` | Chimie du brassage : densité, atténuation selon le palier, Tinseth, Morey, pH (Kolbach), styles, défauts, fiche de jury BJCP |
 | `jeu/src/distillerie.js` | Distillation : équilibre liquide-vapeur, Rayleigh pas à pas, reflux selon la chauffe, 9 congénères, cuivre, coupes, épaisses, notation de l'eau-de-vie |
 | `jeu/src/chai.js` | Élevage : 7 fûts × 3 tailles, extraction (rapide qui s'épuise + hydrolyse lente), soufre adsorbé, oxydation et esters, rancio, part des anges et degré selon la rangée, finitions, assemblage, jury sur 50, dénomination (UE 2019/787) |
+| `jeu/src/ecole.js` | 10 leçons (théorie, défi vérifié par le moteur, 3 questions) qui offrent recettes, ingrédients et fûts |
 | `jeu/src/jeu.js` | Interface : domaine, brasserie, 3 gestes, Ulysse, chai en casse-tête, recherche, dégustation, carnet, fiches, options |
 | `jeu/src/page.html`, `style.css` | Page et styles |
 | `jeu/tests/moteur.test.mjs` | Recettes de référence (pils, IPA, dry stout, weizen, recette ratée) |
 | `jeu/tests/distillerie.test.mjs` | Distillation d'une IPA avec différentes coupes |
+| `jeu/tests/ecole.test.mjs` | Double dry hop (biotransformation, hop creep, végétal) et cohérence des leçons |
 | `jeu/tests/chai.test.mjs` | Vieillissement d'un cœur de wash : anges, climat, fûts, finition, assemblage, whisky ou non |
 | `dist/index.html` | Jeu complet en une page, prêt à héberger |
 
@@ -32,6 +34,14 @@ Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du H
 ### Le chai
 
 Les fûts se rangent sur trois rangées (haut chaud et sec, milieu, bas frais et humide) : un quartaut prend une case, une barrique deux, un demi-muid trois. Le chai s'agrandit de 6 à 10 travées contre des écus. Le temps se règle au curseur (0 à 15 ans, finitions de 0 à 3 ans) avec aperçu en direct : couleur, volume, degré, part des anges, profil, notes à la pipette, conseil de Firmin. Paramètres du Hub utilisés : part des anges 3 %/an, maturation de référence 36 mois, mise en bouteille à 45 %, bouteilles de 0,7 L.
+
+### École de la veillée
+
+Dix leçons, de l'empâtage au chai, données par Lise puis Firmin : un peu de chimie, un défi réel (brassin, distillation ou mise en bouteille, vérifié par le moteur) et trois questions. Une leçon réussie offre jusqu'à quatre recettes du style au grimoire, parfois un ingrédient ou un fût, et des écus. Le pigeonnier vend toujours les recettes. Le défi en cours s'affiche en haut de la brasserie.
+
+### Double dry hop
+
+Chaque houblon peut aller au DH J2 (fermentation active : biotransformation, fruité en plus, 20 % d'huiles emportées par le CO₂) ou au DH J5 (arôme frais). Le total à cru relance la fermentation (hop creep, jusqu'à +3 points d'atténuation, diacétyle sans repos) ; au-delà de 18 g/L, défaut végétal.
 
 ### Gestes de chauffe
 

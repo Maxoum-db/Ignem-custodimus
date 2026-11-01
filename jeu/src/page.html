@@ -30,6 +30,7 @@
         <div id="lieux" class="lieux"></div>
       </div>
       <p class="domaine-legende"><span>Domaine des Braises</span><span>Quercy</span><span id="saison"></span></p>
+      <button class="btn btn-houblon domaine-veillee" data-aller="veillee" id="btn-veillee">Veillée : leçons et questions</button>
     </section>
 
     <!-- Brasserie -->
@@ -44,6 +45,7 @@
       <div class="bandeau-mesures"><div class="mesures" id="mesures"></div></div>
       <button class="style-ligne" id="style-ligne" aria-expanded="false"></button>
       <div class="style-detail" id="style-detail" hidden></div>
+      <button class="defi-ligne" id="defi-ligne" data-aller="veillee" hidden></button>
       <p class="conseil" id="conseil" hidden></p>
       <div class="onglets" role="tablist" id="onglets"></div>
       <div class="onglet-contenu" id="onglet-contenu"></div>
@@ -214,10 +216,11 @@
     <!-- Veillée : questions de Lise et Firmin -->
     <section id="ecran-veillee" class="ecran" hidden>
       <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
-      <h1 class="page-titre">La veillée <span class="en">quiz</span></h1>
-      <p class="page-intro">Au coin du feu, Lise et Firmin te questionnent sur tes modules de formation. Cinq questions récompensées par jour, 4 écus par bonne réponse.</p>
-      <div class="bourse" id="veillee-etat"></div>
-      <div id="veillee-question"></div>
+      <h1 class="page-titre">La veillée <span class="en">leçons et questions</span></h1>
+      <p class="page-intro">Au coin du feu, Lise et Firmin donnent leurs leçons : un peu de chimie, un défi à réussir à la brasserie, à l'alambic ou au chai, puis trois questions. Chaque leçon réussie offre des recettes au grimoire. Les questions du soir rapportent 4 écus chacune, cinq fois par jour.</p>
+      <div class="onglets onglets-2" role="tablist" id="veillee-onglets"></div>
+      <div id="veillee-lecons"></div>
+      <div id="veillee-quiz-zone"><div class="bourse" id="veillee-etat"></div><div id="veillee-question"></div></div>
     </section>
 
     <!-- Dégustation -->
@@ -293,4 +296,5 @@
 <script>/*MOTEUR*/</script>
 <script>/*DISTILLERIE*/</script>
 <script>/*CHAI*/</script>
+<script>/*ECOLE*/</script>
 <script>/*JEU*/</script>

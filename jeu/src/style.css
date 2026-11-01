@@ -594,3 +594,33 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .etq { font-size: 12px; padding: 1px 6px; }
 /* Touche pixel réservée aux grandes commandes, onglets et lieux */
 .btn-geste, .onglet, .lieu span, .mentor-nom, .tuto-actions .btn, .barre-brassin .btn, .geste-pied .btn { font-family: var(--f-pixel); }
+
+/* ---------- École et DDH (V0.5) ---------- */
+.domaine-veillee { width: 100%; margin-top: 8px; font-family: var(--f-pixel); }
+.onglets-2 { grid-template-columns: 1fr 1fr !important; }
+.lecons { display: grid; gap: 8px; }
+.lecon { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: center; text-align: left; border: 0; background: var(--four); padding: 10px; box-shadow: 0 0 0 2px var(--pierre); width: 100%; }
+.lecon .num { font-family: var(--f-titre); font-size: 14px; color: var(--braise); text-align: center; }
+.lecon .corps { display: grid; gap: 2px; }
+.lecon small { color: var(--cendre); font-size: 13px; }
+.lecon .recomp { color: var(--or); }
+.lecon.faite { box-shadow: 0 0 0 2px var(--houblon); }
+.lecon.faite .num::before { content: "✓ "; color: var(--houblon); }
+.lecon.cours { box-shadow: 0 0 0 2px var(--braise); }
+.lecon.verrou { opacity: .5; }
+.lecon-detail { background: var(--four); box-shadow: var(--cadre); padding: 12px 14px; display: grid; gap: 8px; margin-top: 8px; }
+.lecon-detail h2 { margin: 0; font-family: var(--f-titre); font-size: 13px; line-height: 1.5; color: var(--braise); }
+.lecon-detail p { margin: 0; line-height: 1.5; }
+.lecon-detail .module { font-size: 12px; color: var(--cendre); }
+.recomp-ligne { color: var(--or); }
+.lecon-etapes { display: grid; gap: 8px; }
+.etape { background: var(--nuit); padding: 10px; box-shadow: 0 0 0 2px var(--pierre); display: grid; gap: 6px; justify-items: start; }
+.etape.ok { box-shadow: 0 0 0 2px var(--houblon); }
+.etape .reponses { width: 100%; }
+.lecon-ok { color: var(--houblon); font-weight: 700; }
+.defi-ligne { display: grid; gap: 2px; width: 100%; text-align: left; border: 0; padding: 8px 10px; background: rgba(156, 201, 94, .12); box-shadow: inset 4px 0 0 var(--houblon); color: var(--calcaire); font-size: 14px; line-height: 1.35; }
+.defi-ligne b { color: var(--houblon); }
+.temps button.dh { box-shadow: inset 0 -3px 0 var(--houblon); }
+.dh-bilan { font-family: var(--f-texte); font-size: 12px; letter-spacing: 0; color: var(--houblon); }
+.dh-bilan.alerte { color: var(--alerte); }
+.geste-evt.houblon { background: var(--houblon); }
