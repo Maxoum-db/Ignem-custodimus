@@ -2,7 +2,7 @@
 
 Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du Hub Prométhée.
 
-## Le jeu (V0.6 : brasserie, alambic Ulysse, chai, pigeonnier, école, calendrier, recherche)
+## Le jeu (V0.7 : brasserie, alambic Ulysse, chai, pigeonnier, école, calendrier, recherche)
 
 | Dossier | Contenu |
 |---|---|
@@ -36,6 +36,10 @@ Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du H
 ### Le chai
 
 Les fûts se rangent sur trois rangées (haut chaud et sec, milieu, bas frais et humide) : un quartaut prend une case, une barrique deux, un demi-muid trois. Le chai s'agrandit de 6 à 10 travées contre des écus. Le temps se règle au curseur (0 à 15 ans, finitions de 0 à 3 ans) avec aperçu en direct : couleur, volume, degré, part des anges, profil, notes à la pipette, conseil de Firmin. Paramètres du Hub utilisés : part des anges 3 %/an, maturation de référence 36 mois, mise en bouteille à 45 %, bouteilles de 0,7 L.
+
+### Cinq gestes de brassage
+
+Empâtage (vapeur à inertie), filtration (robinet de soutirage et rinçage : niveau d'eau sur le lit, tassement, colmatage et râteau, arrêt vers 1,010 ; le rendement et les tanins en dépendent), ébullition (houblons au bon moment), fermentation (glycol et vapeur, dry hops à déclencher dans leur fenêtre : J1,5–J3,2 pour la biotransformation, J4,2–J6), mise en bouteille (sucre de refermentation selon le CO₂ déjà dissous et la carbonatation du style ; bière plate, trop gazeuse, bouteilles qui éclatent au-delà de 4 volumes).
 
 ### Calendrier et vente
 

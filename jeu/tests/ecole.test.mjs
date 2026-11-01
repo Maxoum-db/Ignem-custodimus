@@ -29,6 +29,17 @@ const defs = (r, rec) => M.noter(r, { mode: 'expert' }).defauts.map((d) => d.id)
 verifier(defs(trop).includes('vegetal'), '24 g/L à cru : défaut végétal');
 verifier(defs(ddh).includes('diacetyle') && !M.noter(M.calculer({ ...base([{ id: citra, g: 4000, min: -2 }, { id: citra, g: 4000, min: -1 }]), fermentation: { temp: 19, reposDiacetyle: true } }), { mode: 'expert' }).defauts.some((d) => d.id === 'diacetyle'), 'hop creep sans repos : diacétyle ; avec repos : rien');
 
+// V0.7 : filtration, timing du dry hop, carbonatation
+const avecF = (f) => M.calculer({ ...base([]), filtration: f });
+verifier(avecF({ facteur: 0.85, tanins: 0 }).og < sansDH.og - 0.004, 'un soutirage arrêté trop tôt fait baisser la densité');
+verifier(defs(avecF({ facteur: 1.02, tanins: 2 })).includes('astringence'), 'des jus lessivés donnent de l\'astringence');
+const ddhJ = (j1) => M.calculer({ ...base([{ id: citra, g: 4000, min: -2 }, { id: citra, g: 4000, min: -1 }]), dhJours: { 1: j1, 2: 5 } });
+verifier(ddhJ(2.2).profil.fruite > ddhJ(5.5).profil.fruite + 0.4, 'un DH1 tardif perd la biotransformation');
+const cible = M.cibleCO2(sansDH.style.style);
+const avecCO2 = (c) => defs(M.calculer({ ...base([]), co2: c }));
+verifier(Math.abs(M.co2Residuel(20) - 0.86) < 0.05, `CO₂ résiduel à 20 °C : ${M.co2Residuel(20).toFixed(2)} vol.`);
+verifier(!avecCO2(cible).includes('plate') && !avecCO2(cible).includes('surgazee') && avecCO2(cible - 1).includes('plate') && avecCO2(4.3).includes('surgazee'), 'carbonatation juste, plate ou trop gazeuse selon le CO₂');
+
 // École
 verifier(E.LECONS.length >= 10, `${E.LECONS.length} leçons`);
 const ids = new Set(E.LECONS.map((l) => l.id));

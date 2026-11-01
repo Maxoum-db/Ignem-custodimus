@@ -647,3 +647,9 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .attendre { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; flex: 1 1 100%; font-size: 13px; color: var(--cendre); }
 .age-fut { margin: 0; font-size: 15px; }
 .prevision-txt { color: #7fb6d6; }
+
+/* ---------- Gestes V0.7 ---------- */
+#fer-houblon { margin-top: 8px; width: 100%; }
+#fer-houblon.pret:not(:disabled) { animation: pret 0.6s steps(2) infinite; }
+@keyframes pret { 50% { box-shadow: 0 0 0 3px var(--or); } }
+.dose-sucre p { grid-column: 1 / -1; margin: 0; font-size: 14px; }

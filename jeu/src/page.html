@@ -56,7 +56,7 @@
 
     <!-- Gestes -->
     <section id="ecran-empatage" class="ecran geste" hidden>
-      <p class="geste-etape">Geste 1 sur 3</p>
+      <p class="geste-etape" id="emp-etape">Geste 1 sur 5</p>
       <h1 class="geste-titre">Empâtage <span class="en">mashing</span></h1>
       <p class="geste-consigne" id="emp-consigne"></p>
       <div class="geste-scene"><canvas id="emp-canvas" width="192" height="128"></canvas><span class="geste-evt" id="emp-evt" hidden></span></div>
@@ -72,8 +72,27 @@
       </div>
     </section>
 
+    <section id="ecran-filtration" class="ecran geste" hidden>
+      <p class="geste-etape" id="fil-etape">Geste 2 sur 5</p>
+      <h1 class="geste-titre">Filtration <span class="en">lautering</span></h1>
+      <p class="geste-consigne" id="fil-consigne"></p>
+      <div class="geste-scene"><canvas id="fil-canvas" width="192" height="128"></canvas><span class="geste-evt" id="fil-evt" hidden></span></div>
+      <div class="geste-infos" id="fil-infos"></div>
+      <div class="jauges-feu" id="fil-jauges"></div>
+      <label class="registre" for="fil-debit"><span>Robinet de soutirage</span><input type="range" id="fil-debit" min="0" max="100" step="1" value="40" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
+      <div class="geste-controles rangee duo">
+        <button id="fil-arroser" class="btn btn-geste btn-froid" disabled>Rincer<small>maintenir · eau à 78 °C</small></button>
+        <button id="fil-stop" class="btn btn-feu btn-geste" disabled>Arrêter<small>le soutirage</small></button>
+      </div>
+      <div class="geste-bilan" id="fil-bilan" hidden></div>
+      <div class="geste-pied" id="fil-pied">
+        <button id="fil-passer" class="btn btn-sobre">Passer ce geste</button>
+        <button id="fil-go" class="btn">Ouvrir le robinet</button>
+      </div>
+    </section>
+
     <section id="ecran-ebullition" class="ecran geste" hidden>
-      <p class="geste-etape">Geste 2 sur 3</p>
+      <p class="geste-etape" id="ebu-etape">Geste 3 sur 5</p>
       <h1 class="geste-titre">Ébullition <span class="en">boil</span></h1>
       <p class="geste-consigne" id="ebu-consigne"></p>
       <div class="geste-scene"><canvas id="ebu-canvas" width="192" height="112"></canvas></div>
@@ -90,7 +109,7 @@
     </section>
 
     <section id="ecran-fermentation" class="ecran geste" hidden>
-      <p class="geste-etape">Geste 3 sur 3</p>
+      <p class="geste-etape" id="fer-etape">Geste 4 sur 5</p>
       <h1 class="geste-titre">Fermentation <span class="en">fermentation</span></h1>
       <p class="geste-consigne" id="fer-consigne"></p>
       <div class="geste-scene"><canvas id="fer-canvas" width="192" height="128"></canvas><span class="geste-evt" id="fer-evt" hidden></span></div>
@@ -100,11 +119,26 @@
         <button id="fer-glycol" class="btn btn-geste btn-froid" disabled>Glycol<small>maintenir · refroidit</small></button>
         <button id="fer-chauffe" class="btn btn-feu btn-geste" disabled>Vapeur<small>maintenir · réchauffe</small></button>
       </div>
+      <button id="fer-houblon" class="btn btn-houblon btn-geste" hidden disabled>Houblonner à cru<small id="fer-houblon-sous"></small></button>
       <div class="geste-bilan" id="fer-bilan" hidden></div>
       <div class="geste-pied" id="fer-pied">
         <button id="fer-passer" class="btn btn-sobre">Passer ce geste</button>
         <button id="fer-go" class="btn">Ensemencer</button>
       </div>
+    </section>
+
+    <section id="ecran-bouteille" class="ecran geste" hidden>
+      <p class="geste-etape">Geste 5 sur 5</p>
+      <h1 class="geste-titre">Mise en bouteille <span class="en">bottling</span></h1>
+      <p class="geste-consigne" id="bou-consigne"></p>
+      <div class="geste-scene"><canvas id="bou-canvas" width="192" height="112"></canvas><span class="geste-evt" id="bou-evt" hidden></span></div>
+      <div class="geste-infos" id="bou-infos"></div>
+      <div class="dose dose-sucre"><label for="bou-sucre">Sucre de refermentation</label><span class="val" id="bou-sucre-val"></span>
+        <input type="range" id="bou-sucre" min="0" max="14" step="0.5" value="6"><p id="bou-verdict"></p></div>
+      <div class="geste-controles">
+        <button id="bou-go" class="btn btn-feu btn-geste">Embouteiller<small>capsuler et laisser refermenter 2 semaines</small></button>
+      </div>
+      <div class="geste-bilan" id="bou-bilan" hidden></div>
     </section>
 
     <!-- Distillerie : l'alambic Ulysse -->

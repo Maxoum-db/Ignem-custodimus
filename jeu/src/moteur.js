@@ -78,7 +78,8 @@
   // gestes (facultatif, mode expert joué) : { palierMoyen, houblonsMin:[...], fermMax, fermMin, fermMoy }
   function calculer(recette, gestes) {
     const V = recette.volume || 1000;
-    const eff = recette.rendement || 0.75;
+    // La filtration jouée corrige le rendement : soutirage arrêté tôt (extrait perdu) ou poussé (lessivage)
+    const eff = (recette.rendement || 0.75) * (recette.filtration ? recette.filtration.facteur : 1);
     const palier = gestes && gestes.palierMoyen != null ? gestes.palierMoyen : recette.palier;
     const tFerm = recette.fermentation.temp;
     const fermMax = gestes && gestes.fermMax != null ? gestes.fermMax : tFerm;
@@ -155,6 +156,11 @@
     const dhL1 = gDH1 / V, dhL2 = gDH2 / V, dhL = dhL1 + dhL2;
     // Hop creep : les amylases et dextrinases du houblon redécoupent des dextrines, la levure les fermente
     const creep = wash ? 0 : Math.min(0.03, dhL * 0.0016);
+    // Jour réel des dry hops (geste) : DH1 idéal entre J1,5 et J3,2, levure en pleine activité ; DH2 idéal entre J4,2 et J6
+    const j1 = recette.dhJours && recette.dhJours[1], j2 = recette.dhJours && recette.dhJours[2];
+    const dh1Bio = j1 == null ? 1 : j1 < 1.5 ? 0.6 : j1 <= 3.2 ? 1 : Math.max(0.3, 1 - (j1 - 3.2) * 0.5);
+    const dh1Huile = j1 == null ? 1 : j1 < 1.5 ? 0.75 : 1;
+    const dh2Huile = j2 == null ? 1 : j2 < 3.8 ? 0.85 : j2 > 6.4 ? 0.9 : 1;
     att += creep;
     let fermentationLente = false;
     if (levure && fermMin < levure.t[0] - 2) { att *= aux.has('nutriment') ? 0.94 : 0.88; fermentationLente = true; }
@@ -179,8 +185,8 @@
       const mgL = ((h.alpha / 100) * g * 1000) / V;
       const i = u * mgL;
       ibu += i;
-      // DH1 : une partie des huiles part avec le CO₂ de la fermentation tumultueuse
-      const w = (g / V) * poidsArome(wash ? -1 : min) * (h.huile || 1) * (min === -2 ? 0.8 : 1);
+      // DH1 : une partie des huiles part avec le CO₂ de la fermentation tumultueuse ; le jour réel compte (dry hop joué)
+      const w = (g / V) * poidsArome(wash ? -1 : min) * (h.huile || 1) * (min === -2 ? 0.8 * dh1Huile : min === -1 ? dh2Huile : 1);
       aromeHoublon += w;
       // Humulène et caryophyllène : notes boisées et poivrées
       if (h.oils && h.oils.hum != null) epiceHoublon += w * ((h.oils.hum || 0) + (h.oils.car || 0)) / 100;
@@ -212,7 +218,7 @@
     // (cystéine-S-conjugués) : fruité plus tropical. Plus marqué sur les houblons fruités.
     let bio = 0;
     for (const { h, g, min } of houblons) if (min === -2) bio += (g / V) * (/tropic|agrume|fruit|passion|mangue|citron|pamplemousse|litchi|melon/i.test(h.aromes || '') ? 0.32 : 0.15);
-    bio = levure && levure.fam !== 'lager' ? Math.min(3, bio) : bio * 0.4;
+    bio = (levure && levure.fam !== 'lager' ? Math.min(3, bio) : bio * 0.4) * dh1Bio;
     fruite += bio;
     // Aromates : intensité selon la dose (g/L) rapportée à leur dose d'usage
     const notesAromates = [], surdoses = [];
@@ -243,7 +249,8 @@
       dpMoyen, conversion, kgTotal, fMasse, ptsMiel: part(ptsMiel), detailHoublons, profil,
       levure, eau, palier, fermEff, fermMax, fermMin, bloquee, fermentationLente,
       aDesMalts: kgTotal > 0, wash, aux, notes, surdoses, crusNonCuits: crusNonCuits.map((x) => x.m.nom), collant,
-      dh: { l1: dhL1, l2: dhL2, total: dhL, ddh: dhL1 >= 3 && dhL2 >= 3, creep, bio },
+      dh: { l1: dhL1, l2: dhL2, total: dhL, ddh: dhL1 >= 3 && dhL2 >= 3, creep, bio, j1, j2 },
+      co2: recette.co2 != null ? recette.co2 : null,
       aromates: aromates.map((x) => ({ id: x.a.id, g: x.g, terp: x.a.terp, type: x.a.type })),
     };
     res.styles = wash ? [] : classerStyles(res, recette);
@@ -306,6 +313,12 @@
     fusels: { nom: 'Alcools supérieurs', en: 'fusel alcohols', sens: ['arome', 'saveur', 'bouche'],
       chimie: "Au-dessus de sa plage, la levure produit plus d'alcools supérieurs par la voie d'Ehrlich (désamination des acides aminés). Goût chaud, solvant.",
       conseil: 'Fermente plus frais ou garde la température sous contrôle au pic de fermentation.' },
+    plate: { nom: 'Bière plate', en: 'undercarbonated', sens: ['aspect', 'bouche'],
+      chimie: "Pas assez de sucre à la mise en bouteille : la levure n'a pas produit assez de CO₂. Pas de mousse, bouche lourde, arômes qui ne montent pas au nez.",
+      conseil: 'Compte le CO₂ déjà dissous (il dépend de la température de fin de fermentation) et vise la carbonatation du style : environ 4 g/L de sucre par volume de CO₂.' },
+    surgazee: { nom: 'Trop gazeuse', en: 'overcarbonated, gushing', sens: ['aspect', 'bouche'],
+      chimie: "Trop de sucre : la levure produit plus de CO₂ que la bouteille n'en tient. La bière jaillit à l'ouverture (gushing), pique, et au-delà de 4 volumes les bouteilles peuvent éclater.",
+      conseil: 'Réduis le sucre de refermentation ; seules les blanches et les saisons supportent 3 à 3,5 volumes, en bouteilles épaisses.' },
     vegetal: { nom: 'Végétal, herbacé', en: 'grassy, hop burn', sens: ['arome', 'saveur', 'bouche'],
       chimie: "Trop de houblon à cru : la matière végétale libère chlorophylle, polyphénols et composés verts. La bouche pique (hop burn) et l'arôme sent l'herbe coupée, au lieu du fruit.",
       conseil: 'Reste sous 15 à 18 g/L au total, et répartis en deux ajouts (DH1 et DH2).' },
@@ -353,6 +366,19 @@
       conseil: 'Rapproche densité, amertume et couleur des plages du style visé.' },
   };
 
+  // Carbonatation attendue (volumes de CO₂) selon le style
+  function cibleCO2(s) {
+    const t = (s.nom || '').toLowerCase();
+    if (s.sujet === 'wheat' && !/american/.test(t)) return 3.4;
+    if (s.sujet === 'farmhouse') return 3.0;
+    if (s.sujet === 'bitter') return 1.7;
+    if (s.sujet === 'stout' || s.sujet === 'porter' || s.sujet === 'strong') return 2.0;
+    if (['pilsener', 'bock', 'marzen', 'vienna', 'common'].includes(s.sujet)) return 2.5;
+    return 2.4;
+  }
+  // CO₂ resté dissous en fin de fermentation (volumes) selon la température, et sucre de refermentation
+  const co2Residuel = (T) => { const F = T * 9 / 5 + 32; return 3.0378 - 0.050062 * F + 0.00026555 * F * F; };
+  const G_SUCRE_PAR_VOLUME = 4.0;
   function defaut(id, gravite, detail) { return { id, gravite, detail: detail || null, ...DEFAUTS[id] }; }
 
   function detecterDefauts(r, recette) {
@@ -363,6 +389,15 @@
     if (y.fam === 'lager' && !recette.fermentation.reposDiacetyle) out.push(defaut('diacetyle', 2, 'Lager sans repos diacétyle.'));
     else if (r.fermentationLente) out.push(defaut('diacetyle', 1, 'Fermentation trop froide, la levure a décroché.'));
     else if (r.dh && r.dh.total >= 8 && !recette.fermentation.reposDiacetyle) out.push(defaut('diacetyle', 1, `Hop creep : ${fr(r.dh.total, 1)} g/L à cru ont relancé la fermentation sans repos diacétyle.`));
+    if (recette.filtration && recette.filtration.tanins) {
+      const ex = out.find((d) => d.id === 'astringence');
+      if (ex) ex.gravite = Math.max(ex.gravite, recette.filtration.tanins); else out.push(defaut('astringence', recette.filtration.tanins, 'Soutirage poussé trop loin : les derniers jus, trop dilués, ont lessivé les tanins des enveloppes.'));
+    }
+    if (r.co2 != null && r.style) {
+      const c = cibleCO2(r.style.style), d = r.co2 - c;
+      if (d < -0.6) out.push(defaut('plate', d < -1.1 ? 2 : 1, `${fr(r.co2, 1)} volumes de CO₂ pour ${fr(c, 1)} attendus.`));
+      if (d > 0.7) out.push(defaut('surgazee', r.co2 > 4 ? 3 : d > 1.2 ? 2 : 1, `${fr(r.co2, 1)} volumes de CO₂ pour ${fr(c, 1)} attendus.`));
+    }
     if (r.dh && r.dh.total > 18) out.push(defaut('vegetal', r.dh.total > 26 ? 2 : 1, `${fr(r.dh.total, 1)} g/L de houblon à cru.`));
     if (r.fMasse.pils > 0.5 && recette.ebullition < 90) out.push(defaut('dms', r.fMasse.pils > 0.8 ? 2 : 1, `${Math.round(r.fMasse.pils * 100)} % de malt Pils et ${recette.ebullition} min d'ébullition.`));
     if (r.ph > 5.78) out.push(defaut('astringence', r.ph > 5.92 ? 2 : 1, `pH d'empâtage estimé ${fr(r.ph, 2)}.`));
@@ -511,7 +546,7 @@
     return TEINTES[TEINTES.length - 1][1];
   }
 
-  const api = { init, calculer, noter, noterWash, eauCorrigee, conseils, couleurRVB, utilisationTinseth, couleurEBC, poidsArome, DEFAUTS, PTS_SACCHAROSE, attentes };
+  const api = { init, calculer, noter, noterWash, eauCorrigee, conseils, couleurRVB, utilisationTinseth, couleurEBC, poidsArome, DEFAUTS, PTS_SACCHAROSE, attentes, cibleCO2, co2Residuel, G_SUCRE_PAR_VOLUME };
   racine.Moteur = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

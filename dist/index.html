@@ -661,6 +661,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .attendre { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; flex: 1 1 100%; font-size: 13px; color: var(--cendre); }
 .age-fut { margin: 0; font-size: 15px; }
 .prevision-txt { color: #7fb6d6; }
+
+/* ---------- Gestes V0.7 ---------- */
+#fer-houblon { margin-top: 8px; width: 100%; }
+#fer-houblon.pret:not(:disabled) { animation: pret 0.6s steps(2) infinite; }
+@keyframes pret { 50% { box-shadow: 0 0 0 3px var(--or); } }
+.dose-sucre p { grid-column: 1 / -1; margin: 0; font-size: 14px; }
 </style>
 
 <div id="app">
@@ -712,7 +718,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 
     <!-- Gestes -->
     <section id="ecran-empatage" class="ecran geste" hidden>
-      <p class="geste-etape">Geste 1 sur 3</p>
+      <p class="geste-etape" id="emp-etape">Geste 1 sur 5</p>
       <h1 class="geste-titre">Empâtage <span class="en">mashing</span></h1>
       <p class="geste-consigne" id="emp-consigne"></p>
       <div class="geste-scene"><canvas id="emp-canvas" width="192" height="128"></canvas><span class="geste-evt" id="emp-evt" hidden></span></div>
@@ -728,8 +734,27 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       </div>
     </section>
 
+    <section id="ecran-filtration" class="ecran geste" hidden>
+      <p class="geste-etape" id="fil-etape">Geste 2 sur 5</p>
+      <h1 class="geste-titre">Filtration <span class="en">lautering</span></h1>
+      <p class="geste-consigne" id="fil-consigne"></p>
+      <div class="geste-scene"><canvas id="fil-canvas" width="192" height="128"></canvas><span class="geste-evt" id="fil-evt" hidden></span></div>
+      <div class="geste-infos" id="fil-infos"></div>
+      <div class="jauges-feu" id="fil-jauges"></div>
+      <label class="registre" for="fil-debit"><span>Robinet de soutirage</span><input type="range" id="fil-debit" min="0" max="100" step="1" value="40" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
+      <div class="geste-controles rangee duo">
+        <button id="fil-arroser" class="btn btn-geste btn-froid" disabled>Rincer<small>maintenir · eau à 78 °C</small></button>
+        <button id="fil-stop" class="btn btn-feu btn-geste" disabled>Arrêter<small>le soutirage</small></button>
+      </div>
+      <div class="geste-bilan" id="fil-bilan" hidden></div>
+      <div class="geste-pied" id="fil-pied">
+        <button id="fil-passer" class="btn btn-sobre">Passer ce geste</button>
+        <button id="fil-go" class="btn">Ouvrir le robinet</button>
+      </div>
+    </section>
+
     <section id="ecran-ebullition" class="ecran geste" hidden>
-      <p class="geste-etape">Geste 2 sur 3</p>
+      <p class="geste-etape" id="ebu-etape">Geste 3 sur 5</p>
       <h1 class="geste-titre">Ébullition <span class="en">boil</span></h1>
       <p class="geste-consigne" id="ebu-consigne"></p>
       <div class="geste-scene"><canvas id="ebu-canvas" width="192" height="112"></canvas></div>
@@ -746,7 +771,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     </section>
 
     <section id="ecran-fermentation" class="ecran geste" hidden>
-      <p class="geste-etape">Geste 3 sur 3</p>
+      <p class="geste-etape" id="fer-etape">Geste 4 sur 5</p>
       <h1 class="geste-titre">Fermentation <span class="en">fermentation</span></h1>
       <p class="geste-consigne" id="fer-consigne"></p>
       <div class="geste-scene"><canvas id="fer-canvas" width="192" height="128"></canvas><span class="geste-evt" id="fer-evt" hidden></span></div>
@@ -756,11 +781,26 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         <button id="fer-glycol" class="btn btn-geste btn-froid" disabled>Glycol<small>maintenir · refroidit</small></button>
         <button id="fer-chauffe" class="btn btn-feu btn-geste" disabled>Vapeur<small>maintenir · réchauffe</small></button>
       </div>
+      <button id="fer-houblon" class="btn btn-houblon btn-geste" hidden disabled>Houblonner à cru<small id="fer-houblon-sous"></small></button>
       <div class="geste-bilan" id="fer-bilan" hidden></div>
       <div class="geste-pied" id="fer-pied">
         <button id="fer-passer" class="btn btn-sobre">Passer ce geste</button>
         <button id="fer-go" class="btn">Ensemencer</button>
       </div>
+    </section>
+
+    <section id="ecran-bouteille" class="ecran geste" hidden>
+      <p class="geste-etape">Geste 5 sur 5</p>
+      <h1 class="geste-titre">Mise en bouteille <span class="en">bottling</span></h1>
+      <p class="geste-consigne" id="bou-consigne"></p>
+      <div class="geste-scene"><canvas id="bou-canvas" width="192" height="112"></canvas><span class="geste-evt" id="bou-evt" hidden></span></div>
+      <div class="geste-infos" id="bou-infos"></div>
+      <div class="dose dose-sucre"><label for="bou-sucre">Sucre de refermentation</label><span class="val" id="bou-sucre-val"></span>
+        <input type="range" id="bou-sucre" min="0" max="14" step="0.5" value="6"><p id="bou-verdict"></p></div>
+      <div class="geste-controles">
+        <button id="bou-go" class="btn btn-feu btn-geste">Embouteiller<small>capsuler et laisser refermenter 2 semaines</small></button>
+      </div>
+      <div class="geste-bilan" id="bou-bilan" hidden></div>
     </section>
 
     <!-- Distillerie : l'alambic Ulysse -->
@@ -1032,7 +1072,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   // gestes (facultatif, mode expert joué) : { palierMoyen, houblonsMin:[...], fermMax, fermMin, fermMoy }
   function calculer(recette, gestes) {
     const V = recette.volume || 1000;
-    const eff = recette.rendement || 0.75;
+    // La filtration jouée corrige le rendement : soutirage arrêté tôt (extrait perdu) ou poussé (lessivage)
+    const eff = (recette.rendement || 0.75) * (recette.filtration ? recette.filtration.facteur : 1);
     const palier = gestes && gestes.palierMoyen != null ? gestes.palierMoyen : recette.palier;
     const tFerm = recette.fermentation.temp;
     const fermMax = gestes && gestes.fermMax != null ? gestes.fermMax : tFerm;
@@ -1109,6 +1150,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const dhL1 = gDH1 / V, dhL2 = gDH2 / V, dhL = dhL1 + dhL2;
     // Hop creep : les amylases et dextrinases du houblon redécoupent des dextrines, la levure les fermente
     const creep = wash ? 0 : Math.min(0.03, dhL * 0.0016);
+    // Jour réel des dry hops (geste) : DH1 idéal entre J1,5 et J3,2, levure en pleine activité ; DH2 idéal entre J4,2 et J6
+    const j1 = recette.dhJours && recette.dhJours[1], j2 = recette.dhJours && recette.dhJours[2];
+    const dh1Bio = j1 == null ? 1 : j1 < 1.5 ? 0.6 : j1 <= 3.2 ? 1 : Math.max(0.3, 1 - (j1 - 3.2) * 0.5);
+    const dh1Huile = j1 == null ? 1 : j1 < 1.5 ? 0.75 : 1;
+    const dh2Huile = j2 == null ? 1 : j2 < 3.8 ? 0.85 : j2 > 6.4 ? 0.9 : 1;
     att += creep;
     let fermentationLente = false;
     if (levure && fermMin < levure.t[0] - 2) { att *= aux.has('nutriment') ? 0.94 : 0.88; fermentationLente = true; }
@@ -1133,8 +1179,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const mgL = ((h.alpha / 100) * g * 1000) / V;
       const i = u * mgL;
       ibu += i;
-      // DH1 : une partie des huiles part avec le CO₂ de la fermentation tumultueuse
-      const w = (g / V) * poidsArome(wash ? -1 : min) * (h.huile || 1) * (min === -2 ? 0.8 : 1);
+      // DH1 : une partie des huiles part avec le CO₂ de la fermentation tumultueuse ; le jour réel compte (dry hop joué)
+      const w = (g / V) * poidsArome(wash ? -1 : min) * (h.huile || 1) * (min === -2 ? 0.8 * dh1Huile : min === -1 ? dh2Huile : 1);
       aromeHoublon += w;
       // Humulène et caryophyllène : notes boisées et poivrées
       if (h.oils && h.oils.hum != null) epiceHoublon += w * ((h.oils.hum || 0) + (h.oils.car || 0)) / 100;
@@ -1166,7 +1212,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     // (cystéine-S-conjugués) : fruité plus tropical. Plus marqué sur les houblons fruités.
     let bio = 0;
     for (const { h, g, min } of houblons) if (min === -2) bio += (g / V) * (/tropic|agrume|fruit|passion|mangue|citron|pamplemousse|litchi|melon/i.test(h.aromes || '') ? 0.32 : 0.15);
-    bio = levure && levure.fam !== 'lager' ? Math.min(3, bio) : bio * 0.4;
+    bio = (levure && levure.fam !== 'lager' ? Math.min(3, bio) : bio * 0.4) * dh1Bio;
     fruite += bio;
     // Aromates : intensité selon la dose (g/L) rapportée à leur dose d'usage
     const notesAromates = [], surdoses = [];
@@ -1197,7 +1243,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       dpMoyen, conversion, kgTotal, fMasse, ptsMiel: part(ptsMiel), detailHoublons, profil,
       levure, eau, palier, fermEff, fermMax, fermMin, bloquee, fermentationLente,
       aDesMalts: kgTotal > 0, wash, aux, notes, surdoses, crusNonCuits: crusNonCuits.map((x) => x.m.nom), collant,
-      dh: { l1: dhL1, l2: dhL2, total: dhL, ddh: dhL1 >= 3 && dhL2 >= 3, creep, bio },
+      dh: { l1: dhL1, l2: dhL2, total: dhL, ddh: dhL1 >= 3 && dhL2 >= 3, creep, bio, j1, j2 },
+      co2: recette.co2 != null ? recette.co2 : null,
       aromates: aromates.map((x) => ({ id: x.a.id, g: x.g, terp: x.a.terp, type: x.a.type })),
     };
     res.styles = wash ? [] : classerStyles(res, recette);
@@ -1260,6 +1307,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     fusels: { nom: 'Alcools supérieurs', en: 'fusel alcohols', sens: ['arome', 'saveur', 'bouche'],
       chimie: "Au-dessus de sa plage, la levure produit plus d'alcools supérieurs par la voie d'Ehrlich (désamination des acides aminés). Goût chaud, solvant.",
       conseil: 'Fermente plus frais ou garde la température sous contrôle au pic de fermentation.' },
+    plate: { nom: 'Bière plate', en: 'undercarbonated', sens: ['aspect', 'bouche'],
+      chimie: "Pas assez de sucre à la mise en bouteille : la levure n'a pas produit assez de CO₂. Pas de mousse, bouche lourde, arômes qui ne montent pas au nez.",
+      conseil: 'Compte le CO₂ déjà dissous (il dépend de la température de fin de fermentation) et vise la carbonatation du style : environ 4 g/L de sucre par volume de CO₂.' },
+    surgazee: { nom: 'Trop gazeuse', en: 'overcarbonated, gushing', sens: ['aspect', 'bouche'],
+      chimie: "Trop de sucre : la levure produit plus de CO₂ que la bouteille n'en tient. La bière jaillit à l'ouverture (gushing), pique, et au-delà de 4 volumes les bouteilles peuvent éclater.",
+      conseil: 'Réduis le sucre de refermentation ; seules les blanches et les saisons supportent 3 à 3,5 volumes, en bouteilles épaisses.' },
     vegetal: { nom: 'Végétal, herbacé', en: 'grassy, hop burn', sens: ['arome', 'saveur', 'bouche'],
       chimie: "Trop de houblon à cru : la matière végétale libère chlorophylle, polyphénols et composés verts. La bouche pique (hop burn) et l'arôme sent l'herbe coupée, au lieu du fruit.",
       conseil: 'Reste sous 15 à 18 g/L au total, et répartis en deux ajouts (DH1 et DH2).' },
@@ -1307,6 +1360,19 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       conseil: 'Rapproche densité, amertume et couleur des plages du style visé.' },
   };
 
+  // Carbonatation attendue (volumes de CO₂) selon le style
+  function cibleCO2(s) {
+    const t = (s.nom || '').toLowerCase();
+    if (s.sujet === 'wheat' && !/american/.test(t)) return 3.4;
+    if (s.sujet === 'farmhouse') return 3.0;
+    if (s.sujet === 'bitter') return 1.7;
+    if (s.sujet === 'stout' || s.sujet === 'porter' || s.sujet === 'strong') return 2.0;
+    if (['pilsener', 'bock', 'marzen', 'vienna', 'common'].includes(s.sujet)) return 2.5;
+    return 2.4;
+  }
+  // CO₂ resté dissous en fin de fermentation (volumes) selon la température, et sucre de refermentation
+  const co2Residuel = (T) => { const F = T * 9 / 5 + 32; return 3.0378 - 0.050062 * F + 0.00026555 * F * F; };
+  const G_SUCRE_PAR_VOLUME = 4.0;
   function defaut(id, gravite, detail) { return { id, gravite, detail: detail || null, ...DEFAUTS[id] }; }
 
   function detecterDefauts(r, recette) {
@@ -1317,6 +1383,15 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     if (y.fam === 'lager' && !recette.fermentation.reposDiacetyle) out.push(defaut('diacetyle', 2, 'Lager sans repos diacétyle.'));
     else if (r.fermentationLente) out.push(defaut('diacetyle', 1, 'Fermentation trop froide, la levure a décroché.'));
     else if (r.dh && r.dh.total >= 8 && !recette.fermentation.reposDiacetyle) out.push(defaut('diacetyle', 1, `Hop creep : ${fr(r.dh.total, 1)} g/L à cru ont relancé la fermentation sans repos diacétyle.`));
+    if (recette.filtration && recette.filtration.tanins) {
+      const ex = out.find((d) => d.id === 'astringence');
+      if (ex) ex.gravite = Math.max(ex.gravite, recette.filtration.tanins); else out.push(defaut('astringence', recette.filtration.tanins, 'Soutirage poussé trop loin : les derniers jus, trop dilués, ont lessivé les tanins des enveloppes.'));
+    }
+    if (r.co2 != null && r.style) {
+      const c = cibleCO2(r.style.style), d = r.co2 - c;
+      if (d < -0.6) out.push(defaut('plate', d < -1.1 ? 2 : 1, `${fr(r.co2, 1)} volumes de CO₂ pour ${fr(c, 1)} attendus.`));
+      if (d > 0.7) out.push(defaut('surgazee', r.co2 > 4 ? 3 : d > 1.2 ? 2 : 1, `${fr(r.co2, 1)} volumes de CO₂ pour ${fr(c, 1)} attendus.`));
+    }
     if (r.dh && r.dh.total > 18) out.push(defaut('vegetal', r.dh.total > 26 ? 2 : 1, `${fr(r.dh.total, 1)} g/L de houblon à cru.`));
     if (r.fMasse.pils > 0.5 && recette.ebullition < 90) out.push(defaut('dms', r.fMasse.pils > 0.8 ? 2 : 1, `${Math.round(r.fMasse.pils * 100)} % de malt Pils et ${recette.ebullition} min d'ébullition.`));
     if (r.ph > 5.78) out.push(defaut('astringence', r.ph > 5.92 ? 2 : 1, `pH d'empâtage estimé ${fr(r.ph, 2)}.`));
@@ -1465,7 +1540,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     return TEINTES[TEINTES.length - 1][1];
   }
 
-  const api = { init, calculer, noter, noterWash, eauCorrigee, conseils, couleurRVB, utilisationTinseth, couleurEBC, poidsArome, DEFAUTS, PTS_SACCHAROSE, attentes };
+  const api = { init, calculer, noter, noterWash, eauCorrigee, conseils, couleurRVB, utilisationTinseth, couleurEBC, poidsArome, DEFAUTS, PTS_SACCHAROSE, attentes, cibleCO2, co2Residuel, G_SUCRE_PAR_VOLUME };
   racine.Moteur = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
@@ -2471,7 +2546,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   let ecran = 'domaine';
   const quitteurs = {};
   // Pile de navigation pour le bouton Retour (on ne revient jamais au milieu d'un geste)
-  const SANS_RETOUR = ['empatage', 'ebullition', 'fermentation', 'brouillis', 'repasse', 'aveugle'];
+  const SANS_RETOUR = ['empatage', 'filtration', 'ebullition', 'fermentation', 'bouteille', 'brouillis', 'repasse', 'aveugle'];
   const pile = [];
   function aller(nom, retour) {
     if (!retour && nom !== ecran && !SANS_RETOUR.includes(ecran)) { pile.push(ecran); if (pile.length > 20) pile.shift(); }
@@ -2556,10 +2631,17 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       ['L\'inertie', 'L\'enveloppe garde sa chaleur : la cuve monte encore après la fermeture. Le <span class="mini-trait"></span> trait bleu sur le thermomètre montre où tu vas arriver. Lâche avant la zone verte.'],
       ['Les imprévus', 'Trappe ouverte, coup de fourquet, bûche humide dans la chaudière : regarde la cuve, la fumée et le manomètre, puis corrige.'],
     ],
+    filtration: [
+      ['Le lit de drêches', 'Ouvre le <span class="mini-btn">robinet</span> pour soutirer le moût. Maintiens <span class="mini-btn froid">Rincer</span> pour arroser : garde 2 à 6 cm d\'eau au-dessus du lit.'],
+      ['Ni trop vite, ni à sec', 'Un débit trop fort tasse le lit jusqu\'à le colmater : il faudra ratisser. Un lit à sec se tasse aussi.'],
+      ['Savoir s\'arrêter', 'Les derniers jus s\'appauvrissent. Arrête vers 1,010 et 1150 L : plus tôt, tu perds de l\'extrait ; plus tard, tu lessives les tanins.'],
+    ],
+    bouteille: [['Le sucre et les bulles', 'Choisis la dose de sucre : la levure le refermente en bouteille. Vise la carbonatation du style ; au-delà de 4 volumes, les bouteilles éclatent.']],
     ebullition: [['Le houblonnage', 'Le curseur avance sur la frise. Touche <span class="mini-btn houblon">Jeter le houblon</span> quand il passe sur un repère : tôt pour l\'amertume, tard pour l\'arôme.']],
     fermentation: [
       ['Deux mains, deux vannes', '<span class="mini-btn froid">Glycol</span> à gauche refroidit, <span class="mini-btn feu">Vapeur</span> à droite réchauffe. Maintiens pour ouvrir, lâche pour fermer.'],
       ['Le retard', 'L\'enveloppe met plus d\'une seconde à changer de température. Le pic de chaleur arrive aux jours 2 et 3 : anticipe avec le glycol.'],
+      ['Le dry hop', 'Si ta recette a du houblon à cru, touche <span class="mini-btn houblon">Houblonner</span> quand le bouton s\'allume : la bande verte sur la courbe est la bonne fenêtre.'],
     ],
     brouillis: [
       ['Le foyer', 'Une <span class="mini-btn feu">bûche</span> met environ une seconde à prendre, puis brûle plusieurs secondes. La chaudière suit la flamme avec retard.'],
@@ -3210,6 +3292,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const r = Moteur.calculer(R);
     if (!r.aDesMalts || !r.levure) return;
     session = { recette: clone(R), scores: { palier: null, houblon: null, ferm: null }, gestes: { houblonsMin: R.houblons.map((h) => h.min) }, joue: S.mode === 'debutant' || S.gestesExpert };
+    delete session.recette.filtration; delete session.recette.dhJours; delete session.recette.co2;
     son('ok'); tuto('lancer');
     // Sans gestes, le tutoriel saute directement à la dégustation
     if (!session.joue && S.tuto >= 0 && S.tuto < TUTO.length - 1) S.tuto = TUTO.length - 1;
@@ -3231,8 +3314,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   const infoBloc = (v, l) => `<div class="mesure"><span class="v">${v}</span><span class="l">${l}</span></div>`;
   function bilanGeste(id, lignes, suite) {
     const b = $(`#${id}-bilan`); b.hidden = false;
-    b.innerHTML = lignes.map((l) => `<p>${l}</p>`).join('') + `<button class="btn btn-feu" id="${id}-suite">${suite}</button>`;
-    $(`#${id}-pied`).hidden = true;
+    b.innerHTML = lignes.filter(Boolean).map((l) => `<p>${l}</p>`).join('') + `<button class="btn btn-feu" id="${id}-suite">${suite}</button>`;
+    const pied = $(`#${id}-pied`); if (pied) pied.hidden = true;
     b.scrollIntoView({ block: 'nearest', behavior: reduit ? 'auto' : 'smooth' });
   }
   const effetMalus = (s) => (s >= 0.85 ? 'aucun malus' : s >= 0.6 ? 'léger malus de dégustation' : s >= 0.35 ? 'malus modéré' : 'malus fort');
@@ -3353,16 +3436,163 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         const conseilV = st.depassements >= 3 ? `${st.depassements} dépassements : ferme la vanne avant d'arriver, la double enveloppe finit le travail.` : st.depassements ? 'Un dépassement : anticipe l\'inertie de la vapeur.' : 'Aucun dépassement : tu as senti l\'inertie.';
         son(score > 0.6 ? 'ok' : 'rate');
         bilanGeste('emp', [`<span class="gros">${Math.round(score * 100)} %</span> du temps dans la zone`, `Température moyenne ${nf(moy)} °C pour une consigne de ${nf(cible)} °C.`, conseilV, effet], 'Passer à l\'ébullition');
-        $('#emp-suite').onclick = () => { tuto('fin:empatage'); if (session.recette.destination === 'wash') { aller('fermentation'); preparerFermentation(); } else { aller('ebullition'); preparerEbullition(); } };
+        $('#emp-suite').onclick = () => { tuto('fin:empatage'); aller('filtration'); preparerFiltration(); };
       });
     };
     maintenir(vap, () => { st.vapeur = true; }, () => { st.vapeur = false; });
-    $('#emp-passer').onclick = () => { arretGeste && arretGeste(); session.scores.palier = 0.5; tuto('fin:empatage'); if (session.recette.destination === 'wash') { aller('fermentation'); preparerFermentation(); } else { aller('ebullition'); preparerEbullition(); } };
+    $('#emp-passer').onclick = () => { arretGeste && arretGeste(); session.scores.palier = 0.5; tuto('fin:empatage'); aller('filtration'); preparerFiltration(); };
   }
   // Clavier : espace pour la vapeur ; flèches gauche et droite pour glycol et vapeur en fermentation
   const TOUCHES = { empatage: { Space: '#emp-vapeur' }, fermentation: { ArrowLeft: '#fer-glycol', ArrowRight: '#fer-chauffe' } };
   document.addEventListener('keydown', (e) => { const sel = TOUCHES[ecran] && TOUCHES[ecran][e.code]; if (!sel || e.repeat || !$('#tuto-voile').hidden) return; const b = $(sel); if (b.disabled) return; e.preventDefault(); b.onpointerdown(e); });
   document.addEventListener('keyup', (e) => { const sel = TOUCHES[ecran] && TOUCHES[ecran][e.code]; if (sel) $(sel).onpointerup(); });
+
+  // ---- Filtration : rincer les drêches sans tasser le lit ni le laisser à sec ----
+  // Extrait recueilli : 1 − e^(−V/548) ; l'idéal (≈ 1150 L, derniers jus vers 1,010) vaut un facteur de rendement de 1.
+  const FIL = { k: 548, ideal: 1 - Math.exp(-1150 / 548), debitMax: 110, rincage: 100 };
+  function preparerFiltration() {
+    const DUREE = 20;
+    const pts = Math.max(20, Moteur.calculer(session.recette).pts || 48);
+    const st = { t: 0, V: 0, niveau: 4, tasse: 0, u: 0.4, rince: false, colmate: false, ratisse: 0, somU: 0, n: 0, fini: false, sec: 0 };
+    const jus = () => 1.7 * pts * Math.exp(-st.V / FIL.k);
+    $('#fil-consigne').innerHTML = `Recueille <b>environ 1150 L</b>, arrête vers <b>1,010</b> ${iBtn("Le lit de drêches sert de filtre. Ouvre le robinet pour soutirer le moût, et rince en arrosant d'eau à 78 °C pour garder 2 à 6 cm d'eau au-dessus du lit. Trop de débit tasse le lit jusqu'à le colmater ; un lit à sec se tasse aussi. Les premiers jus sont riches en sucre, les derniers dilués : s'arrêter trop tôt perd de l'extrait, trop tard lessive les tanins des enveloppes (astringence).")}`;
+    $('#fil-bilan').hidden = true; $('#fil-pied').hidden = false; $('#fil-go').disabled = false;
+    const deb = $('#fil-debit'), bR = $('#fil-arroser'), bS = $('#fil-stop');
+    deb.value = 40; deb.disabled = true; bR.disabled = bS.disabled = true;
+    deb.oninput = () => { st.u = deb.value / 100; };
+    maintenir(bR, () => { st.rince = true; }, () => { st.rince = false; });
+    const ctx = $('#fil-canvas').getContext('2d');
+    const dessin = () => {
+      const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
+      px(0, 0, 192, 128, '#221912');
+      // Cuve-filtre en coupe : faux fond, lit de drêches, eau au-dessus
+      px(14, 18, 100, 92, '#8a8f96'); px(16, 20, 96, 88, '#2a1d14');
+      const hLit = 34, yLit = 100 - hLit;
+      px(16, yLit, 96, hLit, st.colmate ? '#5a3a22' : '#a87444');
+      for (let i = 0; i < 40; i++) px(18 + ((i * 37) % 92), yLit + 2 + ((i * 23) % (hLit - 4)), 2, 1, st.colmate ? '#3a2618' : '#c9a26b');
+      if (st.tasse > 0.5) for (let i = 0; i < 5; i++) px(22 + i * 18, yLit + 6 + (i % 2) * 8, 10, 1, '#3a2618');
+      const hEau = borne(st.niveau, 0, 10) * 3;
+      px(16, yLit - hEau, 96, hEau, 'rgba(127,182,214,.55)');
+      if (st.niveau <= 0) for (let i = 0; i < 6; i++) px(20 + i * 16, yLit - 1, 6, 1, '#e3593d');
+      px(16, 100, 96, 3, '#574332'); for (let i = 0; i < 12; i++) px(18 + i * 8, 101, 4, 1, '#2a1d14');
+      // Bras de rinçage
+      px(24, 22, 80, 3, '#b9c0c8');
+      if (st.rince) for (let i = 0; i < 14; i++) { const a = (st.t * 4 + i / 14) % 1; px(28 + (i * 6) % 74, 26 + a * (yLit - hEau - 26), 1, 2, '#d6ecf5'); }
+      // Râteau au moment du décolmatage
+      if (st.t - st.ratisse < 1) { const x = 30 + Math.sin(st.t * 10) * 30; px(x + 30, 6, 2, yLit + 12 - 6, '#8a5a2b'); px(x + 22, yLit + 10, 18, 3, '#8a5a2b'); }
+      // Robinet et cuve d'ébullition qui se remplit, couleur selon la densité des jus
+      px(112, 104, 22, 4, '#574332'); px(130, 104, 4, 8, '#574332');
+      const j = jus();
+      if (st.u > 0.02 && !st.colmate && st.t > 0) for (let i = 0; i < 3; i++) px(131, 112 + ((st.t * 30 + i * 4) % 6), 2, 2, `rgba(${200 - j},${140 - j},${60},.9)`);
+      px(140, 40, 46, 80, '#8a8f96'); px(142, 42, 42, 76, '#2a1d14');
+      const h = borne(st.V / 1300, 0, 1) * 74; px(142, 118 - h, 42, h, couleur(Math.max(6, (session.recette.malts.length ? Moteur.calculer(session.recette).ebc : 10))));
+      px(142, 118 - (1150 / 1300) * 74, 42, 1, '#9cc95e');
+    };
+    const infos = () => {
+      const j = jus();
+      $('#fil-infos').innerHTML = infoBloc(sg(1 + j / 1000), 'derniers jus') + infoBloc(nf(st.V, 0) + ' L', 'recueillis') + infoBloc(Math.max(0, Math.ceil(DUREE - st.t)) + 's', 'restantes');
+      jaugesFeu('#fil-jauges', [
+        { lib: 'Eau', v: borne(st.niveau, 0, 10) / 10, zone: [0.2, 0.6], coul: st.niveau <= 0 ? 'var(--alerte)' : '#7fb6d6', txt: `${nf(Math.max(0, st.niveau), 1)} cm` },
+        { lib: 'Tassement', v: Math.min(1, st.tasse), coul: st.tasse > 0.7 ? 'var(--alerte)' : 'var(--cuivre)' },
+      ]);
+      bS.disabled = st.fini || st.V < 500;
+      bS.innerHTML = st.colmate ? 'Ratisser<small>décolmater le lit</small>' : 'Arrêter<small>le soutirage</small>';
+      if (st.colmate) bS.disabled = false;
+    };
+    dessin(); infos();
+    let finir;
+    bS.onclick = () => {
+      if (st.colmate) { st.colmate = false; st.tasse = 0.35; st.ratisse = st.t; st.ratisses = (st.ratisses || 0) + 1; son('sac'); evtScene('fil', 'Coup de râteau : le lit respire', 'chaud'); return; }
+      finir && finir();
+    };
+    $('#fil-go').onclick = () => {
+      $('#fil-go').disabled = true; deb.disabled = false; bR.disabled = false; $('#fil-pied').hidden = true;
+      arretGeste = bouclePendant(DUREE, (dt, t) => {
+        if (st.fini) return;
+        st.t = t;
+        const sortie = st.colmate ? 0 : st.u * FIL.debitMax * (1 - 0.6 * Math.min(1, st.tasse));
+        st.V += sortie * dt;
+        st.niveau = Math.min(10, st.niveau + ((st.rince ? FIL.rincage : 0) - sortie) / 40 * dt);
+        if (st.niveau <= 0) { st.niveau = Math.max(-1, st.niveau); st.sec += dt; }
+        st.tasse = Math.max(0, st.tasse + (Math.max(0, st.u - 0.65) * 1.3 + (st.niveau <= 0 ? 0.6 : 0) - (st.u < 0.5 ? 0.08 : 0)) * dt);
+        if (st.tasse >= 1 && !st.colmate) { st.colmate = true; son('rate'); evtScene('fil', 'Lit colmaté : plus rien ne coule', 'alerte'); }
+        if (sortie > 0) { st.somU += st.u * dt; st.n += dt; }
+        dessin(); infos();
+      }, () => finir());
+    };
+    finir = () => {
+      if (st.fini) return; st.fini = true;
+      arretGeste && arretGeste(); deb.disabled = bR.disabled = bS.disabled = true; st.rince = false;
+      const ext = 1 - Math.exp(-st.V / FIL.k), uMoy = st.n ? st.somU / st.n : 0.5, j = jus();
+      let facteur = borne(ext / FIL.ideal, 0.6, 1.06) * (1 - 0.12 * Math.max(0, uMoy - 0.75)) * Math.pow(0.98, st.ratisses || 0);
+      const tanins = j < 6.5 ? 2 : j < 8 ? 1 : 0;
+      session.recette.filtration = { facteur, tanins, V: st.V };
+      son(facteur > 0.95 && !tanins ? 'ok' : 'rate');
+      bilanGeste('fil', [`<span class="gros">${nf(st.V, 0)} L</span> recueillis, derniers jus à ${sg(1 + j / 1000)}`,
+        `Rendement de filtration : ${Math.round(facteur * 100)} % de l'idéal${facteur < 0.95 ? ' : de l\'extrait est resté dans les drêches' : ''}.`,
+        tanins ? 'Tu as poussé trop loin : les derniers jus ont lessivé les tanins des enveloppes. La bière sera astringente.' : 'Pas de tanins lessivés.',
+        st.ratisses ? `${st.ratisses} coup${st.ratisses > 1 ? 's' : ''} de râteau : le moût sera un peu plus trouble.` : '', st.sec > 1 ? 'Le lit a tourné à sec : de l\'air s\'y est glissé, il s\'est tassé.' : ''], session.recette.destination === 'wash' ? 'Passer à la fermentation' : 'Passer à l\'ébullition');
+      $('#fil-suite').onclick = suiteFiltration;
+    };
+    $('#fil-passer').onclick = () => { arretGeste && arretGeste(); suiteFiltration(); };
+  }
+  function suiteFiltration() { if (session.recette.destination === 'wash') { aller('fermentation'); preparerFermentation(); } else { aller('ebullition'); preparerEbullition(); } }
+  quitteurs.filtration = () => { arretGeste && arretGeste(); arretGeste = null; };
+
+  // ---- Mise en bouteille : sucre de refermentation, CO₂, bouteilles qui éclatent ----
+  function preparerBouteille() {
+    const rec = session.recette, res = Moteur.calculer(rec);
+    const s = res.style ? res.style.style : { nom: '', sujet: '' };
+    const cible = Moteur.cibleCO2(s), T = session.gestes.fermMax != null ? session.gestes.fermMax : rec.fermentation.temp;
+    const resid = Math.max(0.6, Moteur.co2Residuel(T));
+    const ideal = Math.max(0, (cible - resid) * Moteur.G_SUCRE_PAR_VOLUME);
+    const champ = $('#bou-sucre');
+    champ.value = 6; champ.disabled = false; $('#bou-go').disabled = false; $('#bou-bilan').hidden = true;
+    $('#bou-consigne').innerHTML = `${esc(s.nom || 'Ta bière')} : vise <b>${nf(cible, 1)} volumes de CO₂</b> ${iBtn(`Après la fermentation à ${nf(T, 1)} °C, il reste ${nf(resid, 2)} volumes de CO₂ dissous (plus la bière était froide, plus elle en garde). Le sucre ajouté refermente en bouteille : environ ${Moteur.G_SUCRE_PAR_VOLUME} g/L de saccharose par volume. Trop peu, la bière est plate ; trop, elle jaillit, et au-delà de 4 volumes les bouteilles peuvent éclater.`)}`;
+    const ctx = $('#bou-canvas').getContext('2d');
+    let anim = null;
+    const dessin = (rempli, eclats) => {
+      const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
+      px(0, 0, 192, 112, '#221912'); px(0, 96, 192, 16, '#3b2d22');
+      for (let i = 0; i < 8; i++) {
+        const x = 12 + i * 22;
+        if (eclats && eclats.includes(i)) { for (let k = 0; k < 8; k++) px(x + (k * 5) % 14, 86 + (k * 3) % 10, 3, 2, '#2f4a2a'); px(x, 92, 14, 4, couleur(res.ebc)); continue; }
+        px(x + 4, 40, 6, 12, '#2f4a2a'); px(x + 2, 52, 10, 44, '#2f4a2a'); px(x + 3, 54, 8, 40, couleur(res.ebc));
+        const h = rempli != null ? rempli : 1; px(x + 3, 54, 8, (1 - h) * 40, '#2a1d14');
+        px(x + 4, 37, 6, 3, '#d27b3e'); px(x + 4, 66, 6, 10, '#ecdfc4');
+        const co2 = +champ.value / Moteur.G_SUCRE_PAR_VOLUME + resid;
+        for (let k = 0; k < Math.min(6, co2 * 1.4); k++) px(x + 4 + (k * 3) % 6, 58 + ((k * 7 + Math.floor(Date.now() / 120)) % 30), 1, 1, 'rgba(236,223,196,.7)');
+      }
+    };
+    const maj = () => {
+      const g = +champ.value, co2 = resid + g / Moteur.G_SUCRE_PAR_VOLUME, d = co2 - cible;
+      $('#bou-sucre-val').textContent = `${nf(g, 1)} g/L`;
+      $('#bou-infos').innerHTML = infoBloc(nf(co2, 1), 'vol. de CO₂') + infoBloc(nf(cible, 1), 'cible du style') + infoBloc(nf(resid, 2), 'déjà dissous');
+      $('#bou-verdict').innerHTML = co2 > 4 ? '<b style="color:var(--alerte)">Danger : des bouteilles vont éclater.</b>' : d > 0.7 ? '<b style="color:var(--alerte)">Trop gazeuse : elle jaillira à l\'ouverture.</b>' : d < -0.6 ? '<b style="color:var(--alerte)">Trop peu : la bière sera plate.</b>' : Math.abs(d) <= 0.25 ? '<b style="color:var(--houblon)">Juste pour le style.</b>' : 'Acceptable.';
+      if (S.aide) $('#bou-verdict').insertAdjacentHTML('beforeend', ` <span class="det">Lise : vers ${nf(ideal, 1)} g/L.</span>`);
+      dessin(1);
+    };
+    champ.oninput = maj; maj();
+    $('#bou-go').onclick = () => {
+      champ.disabled = true; $('#bou-go').disabled = true;
+      const g = +champ.value, co2 = resid + g / Moteur.G_SUCRE_PAR_VOLUME;
+      const perte = co2 > 4 ? Math.min(0.4, (co2 - 4) * 0.3 + 0.05) : 0;
+      rec.co2 = co2; session.perteBouteilles = perte;
+      const eclats = perte ? [1, 4, 6, 2].slice(0, Math.max(1, Math.round(perte * 10))) : null;
+      const t0 = performance.now();
+      const pas = (ts) => { const p = Math.min(1, (ts - t0) / 1400); dessin(p < 0.6 ? p / 0.6 : 1, p >= 1 ? eclats : null); if (p < 1) anim = requestAnimationFrame(pas); else fin(); };
+      anim = requestAnimationFrame(pas);
+      const fin = () => {
+        if (eclats) { son('rate'); evtScene('bou', `Bang ! ${Math.round(perte * 100)} % des bouteilles ont éclaté`, 'alerte'); } else son('ok');
+        const d = co2 - cible;
+        bilanGeste('bou', [`<span class="gros">${nf(co2, 1)} vol.</span> de CO₂ pour ${nf(cible, 1)} attendus`,
+          Math.abs(d) <= 0.3 ? 'Mousse et pétillance justes : la bière s\'ouvre bien.' : d < 0 ? 'Elle manque de bulles : mousse faible, bouche lourde.' : 'Elle pétille trop : ça jaillit à l\'ouverture.',
+          perte ? `Stock réduit de ${Math.round(perte * 100)} % : verre brisé dans la cave.` : ''], 'Déguster');
+        $('#bou-suite').onclick = () => { finirBrassin(); };
+      };
+    };
+  }
+  quitteurs.bouteille = () => {};
 
   // ---- Ébullition ----
   function preparerEbullition() {
@@ -3438,6 +3668,29 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     const st = { T: consigne, u: 0, t: 0, dans: 0, duree: 0, somme: 0, max: consigne, min: consigne, histo: [] };
     const base = Math.round(borne(-((AMB - consigne) * 0.12) / FROID, -1, 1) * 100);
     const bG = $('#fer-glycol'), bC = $('#fer-chauffe'); bG.disabled = bC.disabled = true;
+    // Dry hops à déclencher : DH1 dans la fenêtre J1,5–J3,2 (biotransformation), DH2 dans J4,2–J6
+    const dhAFaire = [[1, -2, 1.5, 3.2], [2, -1, 4.2, 6]].filter(([, m]) => rec.houblons.some((h) => h.min === m)).map(([n, m, debut, fin]) => ({ n, m, debut, fin, g: rec.houblons.filter((h) => h.min === m).reduce((a, h) => a + h.g, 0) }));
+    const dhFaits = {};
+    const bH = $('#fer-houblon'); bH.hidden = !dhAFaire.length; bH.disabled = true;
+    function majBoutonDH() {
+      const p = dhAFaire[0];
+      if (!p) { bH.disabled = true; $('#fer-houblon-sous').textContent = 'tous les houblons sont dans la cuve'; return; }
+      const j = st.j || 0, dans = j >= p.debut && j <= p.fin;
+      bH.disabled = !st.go;
+      bH.classList.toggle('pret', dans);
+      $('#fer-houblon-sous').textContent = `DH${p.n} · ${nf(p.g / rec.volume, 1)} g/L · fenêtre J${nf(p.debut, 1)}–J${nf(p.fin, 1)}${dans ? ' : maintenant !' : ''}`;
+    }
+    function houblonner(auto) {
+      const p = dhAFaire.shift(); if (!p) return;
+      const j = st.j || 0; dhFaits[p.n] = j;
+      rec.dhJours = { ...(rec.dhJours || {}), [p.n]: j };
+      st.chuteDH = st.t;
+      const juste = j >= p.debut && j <= p.fin;
+      evtScene('fer', auto ? `DH${p.n} oublié : ajouté en retard (J${nf(j, 1)})` : `Dry hop ${p.n} au jour ${nf(j, 1)}${juste ? ' : pile dans la fenêtre' : p.n === 1 && j < p.debut ? ' : trop tôt, la levure dort' : ' : hors fenêtre'}`, juste ? 'houblon' : 'alerte');
+      son(juste ? 'bulle' : 'rate'); majBoutonDH();
+    }
+    bH.onclick = () => houblonner(false);
+    majBoutonDH();
     st.u = 0; st.e = 0; st.cmd = 0;
     maintenir(bG, () => { st.cmd = -1; }, () => { if (st.cmd < 0) st.cmd = 0; });
     maintenir(bC, () => { st.cmd = 1; }, () => { if (st.cmd > 0) st.cmd = 0; });
@@ -3454,8 +3707,6 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       for (let j = 0; j < 18; j++) px(14 + j, 84 + j, 40 - j * 2, 1, '#9aa1a8');
       // Cônes de houblon qui tombent dans la cuve au moment du dry hop
       if (st.chuteDH != null && st.t - st.chuteDH < 1.6) { const a = (st.t - st.chuteDH) / 1.6; for (let i = 0; i < 6; i++) { const x = 18 + i * 6, yy = 6 + a * 60 + (i % 3) * 4; px(x, yy, 4, 5, '#9cc95e'); px(x + 1, yy + 1, 2, 3, '#5c8a33'); } }
-      // Repères des dry hops sur la courbe
-      [[2, -2], [5, -1]].forEach(([jour, m]) => { if (rec.houblons.some((h) => h.min === m)) { const x = 68 + (jour / 7) * 118; px(x, 8, 2, 108, 'rgba(156,201,94,.55)'); px(x - 3, 8, 8, 6, '#9cc95e'); } });
       px(32, 102, 4, 10, '#8a8f96'); px(20, 110, 28, 3, '#574332');
       const act = G * (st.t / DUREE * 7 / 1.8) * Math.exp(1 - st.t / DUREE * 7 / 1.8);
       for (let i = 0; i < Math.round(act * 8); i++) px(16 + ((i * 13 + Math.floor(st.t * 20)) % 36), 20 + ((i * 7 + Math.floor(st.t * 30)) % 60), 1, 1, '#ecdfc4');
@@ -3466,6 +3717,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       for (let j = 0; j <= 7; j++) px(gx + (j / 7) * gw, gy, 1, gh, '#2c2118');
       for (let x = 0; x < gw; x++) { const j = (x / gw) * 7, c = cible(j); px(gx + x, Y(c + 1.5), 1, Y(c - 1.5) - Y(c + 1.5), 'rgba(156,201,94,.3)'); }
       st.histo.forEach((p, k) => px(gx + (p.j / 7) * gw, Y(p.T), 2, 2, Math.abs(p.T - cible(p.j)) <= 1.5 ? '#9cc95e' : '#e3593d'));
+      // Fenêtres des dry hops sur la courbe, et le jour réel de chaque ajout
+      [[1.5, 3.2, -2, 1], [4.2, 6, -1, 2]].forEach(([a, b, m, n]) => { if (rec.houblons.some((h) => h.min === m)) { const x = 68 + (a / 7) * 118; px(x, 8, ((b - a) / 7) * 118, 108, 'rgba(156,201,94,.18)'); px(x, 8, ((b - a) / 7) * 118, 3, '#9cc95e'); if (rec.dhJours && rec.dhJours[n] != null) { const xj = 68 + (rec.dhJours[n] / 7) * 118; px(xj, 8, 2, 108, '#9cc95e'); } } });
       px(gx + (st.t / DUREE) * gw, gy, 1, gh, '#f3b04a');
     };
     const infos = (j) => {
@@ -3478,17 +3731,18 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     dessin(); infos(0);
 
     $('#fer-go').onclick = () => {
-      $('#fer-go').disabled = true; bG.disabled = bC.disabled = false;
+      $('#fer-go').disabled = true; bG.disabled = bC.disabled = false; st.go = true; majBoutonDH();
       arretGeste = bouclePendant(DUREE, (dt, t) => {
         st.t = t;
         const j = (t / DUREE) * 7;
         const chaleur = G * (j / 1.8) * Math.exp(1 - j / 1.8);
         st.u += borne(st.cmd - st.u, -3 * dt, 3 * dt);
         st.e += (st.u - st.e) * Math.min(1, dt / 1.2);
-        for (const [jour, m] of [[2, -2], [5, -1]]) {
-          const lot = rec.houblons.filter((h) => h.min === m);
-          if (lot.length && j >= jour && !st['dh' + jour]) { st['dh' + jour] = true; st.chuteDH = st.t; evtScene('fer', `Dry hop jour ${jour} : ${nf(lot.reduce((a, h) => a + h.g, 0) / rec.volume, 1)} g/L`, 'houblon'); son('bulle'); }
-        }
+        st.j = j;
+        // Oubli : le houblon part quand même, en retard, à la fin de la fenêtre
+        const prochain = dhAFaire[0];
+        if (prochain && j > prochain.fin + 0.6) houblonner(true);
+        majBoutonDH();
         st.T += (chaleur + (AMB - st.T) * 0.12 + st.e * FROID) * dt;
         st.duree += dt; st.somme += st.T * dt; st.max = Math.max(st.max, st.T); st.min = Math.min(st.min, st.T);
         if (Math.abs(st.T - cible(j)) <= 1.5) st.dans += dt;
@@ -3496,6 +3750,8 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         dessin(); infos(j);
       }, () => {
         bG.disabled = bC.disabled = true; st.cmd = 0; bG.classList.remove('actif'); bC.classList.remove('actif');
+        while (dhAFaire.length) houblonner(true);
+        bH.disabled = true;
         const score = st.dans / st.duree, moy = st.somme / st.duree;
         session.scores.ferm = score;
         Object.assign(session.gestes, { fermMax: st.max, fermMin: st.min, fermMoy: moy });
@@ -3504,10 +3760,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
         const aCru = rec.houblons.filter((h) => h.min < 0);
         son(score > 0.6 ? 'ok' : 'rate');
         bilanGeste('fer', [`<span class="gros">${Math.round(score * 100)} %</span> du temps dans la bande`, `Pic à ${nf(st.max)} °C, creux à ${nf(st.min)} °C.`, effet, aCru.length ? `Houblonnage à cru : ${aCru.map((h) => `${nf(h.g / 1000, 2)} kg de ${esc(IDX.houblon.get(h.id).nom)} (${libMin(h.min)})`).join(', ')}.` : ''], 'Déguster');
-        $('#fer-suite').onclick = () => { tuto('fin:fermentation'); finirBrassin(); };
+        $('#fer-suite').onclick = () => { tuto('fin:fermentation'); suiteFermentation(); };
       });
     };
-    $('#fer-passer').onclick = () => { arretGeste && arretGeste(); session.scores.ferm = 0.5; tuto('fin:fermentation'); finirBrassin(); };
+    $('#fer-passer').onclick = () => { arretGeste && arretGeste(); session.scores.ferm = 0.5; tuto('fin:fermentation'); suiteFermentation(); };
+  }
+  function suiteFermentation() { if (session.recette.destination === 'wash') finirBrassin(); else { aller('bouteille'); preparerBouteille(); }
   }
   quitteurs.empatage = quitteurs.ebullition = quitteurs.fermentation = quitteurs.brouillis = quitteurs.repasse = () => { arretGeste && arretGeste(); arretGeste = null; $('#emp-go').disabled = false; $('#ebu-go').disabled = false; $('#fer-go').disabled = false; };
 
@@ -3540,7 +3798,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       style: res.style.style.nom, sujet: res.style.style.sujet, conformite: res.style.conformite,
       og: res.og, fg: res.fg, abv: res.abv, ibu: res.ibu, ebc: res.ebc, total: note.total, lignes: note.lignes, medaille: note.medaille,
       etoiles, defauts: note.defauts.map((d) => d.nom), recette: session.recette, mode: S.mode, bac: S.bac, gain,
-      semaine: S.cal.s, stockL: 1000,
+      semaine: S.cal.s, stockL: Math.round(1000 * (1 - (session.perteBouteilles || 0))),
     };
     S.carnet.unshift(entree);
     avancer(1, 'brassin');
@@ -5349,6 +5607,15 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       "Le jury juge la conformité au style, les arômes attendus (houblon pour une IPA, esters et phénols pour une weizen, torréfaction pour un stout) et l'équilibre BU:GU. Chaque défaut retire des points selon sa gravité.",
       "En mode débutant, des gestes ratés coûtent des points de saveur et d'impression. En mode expert, ils changent la chimie elle-même.",
       "Étoiles : sans l'aide de Lise, en mode expert, gestes joués en mode expert. Chaque étoile ajoute 5 points de maîtrise à une bière médaillée."]],
+    filtration: ['Filtration et rinçage', 'lautering and sparging', [
+      "Après l'empâtage, les enveloppes du malt forment un lit filtrant sur le faux fond de la cuve. On soutire le moût par le dessous et on rince le lit par le dessus avec de l'eau à 78 °C : chaude, elle fluidifie le moût et arrête les enzymes, sans dépasser 80 °C qui dissoudrait l'amidon et les tanins.",
+      "Le lit doit rester noyé : 2 à 6 cm d'eau au-dessus. À sec, l'air s'y glisse et il se tasse. Trop de débit crée une dépression sous le lit qui le compacte jusqu'au colmatage (stuck mash) ; un coup de râteau le décolmate, au prix d'un moût plus trouble.",
+      "Les premiers jus titrent environ 1,7 fois la densité finale visée ; ils s'appauvrissent à mesure qu'on rince. Dans le jeu, l'extrait recueilli vaut 1 − e^(−V/548) : arrêter vers 1150 L et 1,010 donne 100 % du rendement prévu.",
+      "Sous 1,008 environ, le pH des derniers jus remonte et l'eau lessive les polyphénols des enveloppes : astringence. Mieux vaut laisser un peu d'extrait dans les drêches."]],
+    refermentation: ['Mise en bouteille et CO₂', 'bottle conditioning', [
+      "Une bière fermentée garde du CO₂ dissous, d'autant plus qu'elle était froide : environ 0,9 volume à 20 °C, 1,2 volume à 12 °C (formule de la table de dissolution, en °F : 3,0378 − 0,050062 F + 0,00026555 F²).",
+      "Le sucre ajouté à la mise en bouteille refermente : C₆H₁₂O₆ → 2 C₂H₅OH + 2 CO₂. Environ 4 g/L de saccharose donnent 1 volume de CO₂ (1 litre de gaz par litre de bière).",
+      "Cibles : 1,5 à 2 volumes pour un bitter ou un stout, 2,4 pour une pale ale, 2,5 pour une lager, 3 à 3,5 pour une saison ou une blanche. Au-delà de 4 volumes, une bouteille standard risque d'éclater."]],
     dryhop: ['Dry hop et DDH', 'dry hopping', [
       "Le houblonnage à cru (dry hop) met le houblon au contact de la bière froide : les huiles essentielles (myrcène, linalol, géraniol) passent sans s'évaporer, et sans amertume car les acides alpha ne s'isomérisent pas à froid.",
       "DH1 au jour 2, en fermentation active : la levure biotransforme le géraniol en citronellol (agrume, rose) et libère, grâce à une β-lyase, des thiols fixés sur la cystéine (4-MMP, 3-MH : cassis, fruit de la passion, pamplemousse). Le CO₂ emporte une partie des huiles. Dans le jeu : fruité en plus, surtout pour les houblons fruités, et 20 % d'huiles en moins.",
@@ -5408,7 +5675,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.6 · brasserie, alambic Ulysse, chai, pigeonnier (vente et fournisseurs), école de la veillée, calendrier des saisons et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.7 · cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
