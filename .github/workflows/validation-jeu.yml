@@ -22,6 +22,7 @@ jobs:
       # Ces tests et le build n'utilisent que Node et les fichiers du dépôt.
       - run: npm run test:jeu
       - run: npm run test:images
+      - run: npm run test:presentation
       - run: node scripts/construire-jeu.mjs
       - uses: actions/upload-artifact@v4
         with:

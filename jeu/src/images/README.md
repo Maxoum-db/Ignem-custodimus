@@ -1,42 +1,66 @@
-# Illustrations : contrat de livraison
+# Illustrations — brasserie A–E
 
-Aucune illustration finale n'est présente à la fin de la phase 0. Le rendu
-historique reste actif ; `illustrations.js` est une préparation, pas un moteur
-de scènes déjà intégré à `jeu.js`.
+Le vrai jeu utilise désormais ces illustrations dans `jeu/src/ateliers.js`,
+chargé avant `jeu.js`. Le dessin historique reste un repli fonctionnel.
 
-Chaque objet est livré séparément en WebP (qualité cible 82), sans texte peint,
-avec une transparence réelle et des pixels transparents autour de sa silhouette.
-Le contrôle d'alpha visuel reste nécessaire : un en-tête valide ne le prouve pas.
-Objets : 512 px maximum ; décors nommés `*-fond`, `*-batiment` ou `*-decor` :
-1024 px maximum. Budget cumulé : 6 Mio. Noms : minuscules, chiffres, tirets ou
-underscores, premier caractère alphanumérique, extension `.webp` en minuscules.
-Le constructeur refuse les liens symboliques, les en-têtes invalides, les
-dimensions excessives et les WebP animés. Les sprites seront gérés séparément
-avec un contrat de dimensions explicite lors de la phase R.
+## Assets livrés
 
-Les états d'un même équipement doivent garder leur angle 3/4 (~35°), leur
-échelle, leur ancrage et leur position au sol. Une cuve vide ne contient aucun
-liquide peint. Liquides, vapeur, flammes, jauges et contrôles restent séparés.
-Contours #3b2a1e, pierre #e2cfa4, tuiles #d9714a, bois #a87444, cuivre #e09a4e,
-végétation #9cc94a ; lumière en haut à gauche, ombres douces à deux tons.
+Illustrations originales produites avec `image_gen`, puis redimensionnées et
+encodées en WebP qualité **82** avec ImageMagick. Les PNG de génération restent
+dans le workspace ; les WebP sont les sources de production du dépôt.
+Aucun texte, liquide, vapeur, feu ou jauge n'est peint dans les équipements.
+Les dimensions et les empreintes des fichiers sont dans `manifest.json`.
 
-## Assets du registre A–F encore manquants
+| Asset | Dimensions | Usage | Transparence |
+| --- | --- | --- | --- |
+| `brasserie-fond.webp` | 1024 × 683 | Décor commun de brasserie en pierre du Quercy | Fond opaque prévu |
+| `a-cuve-vide.webp` | 512 × 427 | Cuve vide, préparation, empâtage et ébullition | Alpha réel |
+| `b-filtre-vide.webp` | 512 × 468 | Cuve-filtre vide et faux fond | Alpha réel |
+| `d-fermenteur-vide.webp` | 341 × 512 | Fermenteur cylindro-conique inox | Alpha réel |
+| `e-capsuleuse.webp` | 485 × 512 | Capsuleuse indépendante | Alpha réel |
 
-| Scène | Décor | Objets indépendants du registre actuel |
-| --- | --- | --- |
-| A Empâtage | `a-fond` | `a-cuve-vide`, `a-tuyauterie` |
-| B Filtration | `b-fond` | `b-filtre-vide`, `b-bac` |
-| C Ébullition | `c-fond` | `c-chaudiere-vide`, `c-houblon` |
-| D Fermentation | `d-fond` | `d-fermenteur-vide`, `d-vanne-glycol` |
-| E Embouteillage | `e-fond` | `e-embouteilleuse`, `e-bouteilles-vides` |
-| F Ulysse, brouillis et repasse | `f-fond` | `f-alambic-vide`, `f-condenseur` |
+**Total : 230 356 octets, soit environ 225 Kio sur le budget de 6 Mio.**
+Le navigateur décode les quatre objets et vérifie leurs pixels transparents
+dans `qa/brasserie-illustree.py`. Une simple signature d'en-tête ne suffit pas.
 
-Ce registre doit encore être complété avec thermomètres, vannes, mélangeur,
-sacs de malt, faux fond, drêches, barboteur, instruments de prélèvement,
-capsuleuse et récipients. Les coordonnées logiques diffèrent selon les Canvas :
-ne pas réutiliser aveuglément le placement de l'aperçu Ulysse (96 × 72) dans les
-gestes (192 × 120). Définir des placements propres à chaque scène avant le rendu.
+## Couches indépendantes
 
-Les assets G–Q (chai, boutique, dégustation, ingrédients, veillée, interface,
-mentors, domaine et quatre saisons) et R (animations à six images) restent à
-produire. Aucun n'est annoncé comme terminé dans ce lot.
+Le fond et les équipements sont mis en cache dans un Canvas de décor. Les
+liquides, grains, faux regard de coupe, eau de rinçage, écoulement, flammes,
+vapeur, reflets, vannes, thermomètre, sacs, mélangeur, barboteur, éprouvette et
+densimètre rangé sont dessinés indépendamment par le code de présentation.
+Les huit bouteilles ont chacune leur tracé, niveau, capsule, reflets et état
+brisé. Les commandes HTML et la zone de dépôt de la cuve restent celles du jeu.
+Les instruments rangés ne présentent aucune mesure scientifique fictive.
+
+Les placements utilisent les repères historiques : 120 × 96 pour la cuve de
+préparation, 192 × 128 pour A/B/D, 192 × 112 pour C/E. Le backing store utilise
+la taille CSS et le DPR (plafonné à 2,5), avec lissage des images. Le décor est
+recalculé seulement à son premier rendu ou lors d'un changement de taille.
+
+Les états d'un équipement conservent leur image, angle, ancrage et échelle au
+sein d'une scène. Une cuve de préparation sans ingrédient reste vide. Les
+remplissages et effets sont pilotés par les états fournis par le vrai jeu.
+
+## Contrat pour les livraisons suivantes
+
+- Objets isolés : 512 px maximum ; grands décors : 1024 px maximum.
+- WebP qualité cible 82 ; transparence réelle ; aucune grille ou texte peint.
+- Noms minuscules, chiffres, tirets ou underscores ; extension `.webp`.
+- Les décors nommés `*-fond`, `*-batiment` ou `*-decor` bénéficient de 1024 px.
+- Budget cumulé des sources WebP : 6 Mio ; liens symboliques et WebP animés refusés.
+- Même angle 3/4, échelle et ancrage pour les états d'un objet.
+- Contours #3b2a1e, pierre #e2cfa4, tuiles #d9714a, bois #a87444, cuivre #e09a4e,
+  végétation #9cc94a ; lumière en haut à gauche et ombres douces à deux tons.
+
+## À produire ensuite
+
+F / Ulysse conserve son dessin historique : `f-fond`, `f-alambic-vide`,
+`f-condenseur` et ses récipients, accessoires et placements propres aux
+Canvas aperçu/brouillis/repasse restent à livrer. Aucun asset F n'est annoncé
+comme terminé dans cette phase.
+
+Les illustrations G–Q (chai, boutique, dégustation, ingrédients, veillée,
+portraits, carte du domaine et saisons) et les sprites R à six images restent
+à produire. Les effets A–E sont procéduraux ; ce ne sont pas des sprites R.
+Les portraits et icônes hérités sont conservés jusqu'à leur lot graphique.

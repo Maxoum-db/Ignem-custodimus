@@ -1,0 +1,37 @@
+{
+  "phase": 1,
+  "origine": "Illustrations originales générées avec image_gen, puis conversion WebP qualité 82 et redimensionnement avec ImageMagick. Aucun liquide ni effet animé peint dans les équipements.",
+  "fichiers": [
+    {
+      "fichier": "a-cuve-vide.webp",
+      "octets": 34630,
+      "sha256": "5b0c22858463a66110c3e0d786589fff6edc98fb243b8db7e6ba3371beab9b33",
+      "qualite_webp": 82
+    },
+    {
+      "fichier": "b-filtre-vide.webp",
+      "octets": 46984,
+      "sha256": "cdad46ad058e19f35dc5c9d17ad433e3e2424cf6e05bfb64761e0bedeb904901",
+      "qualite_webp": 82
+    },
+    {
+      "fichier": "brasserie-fond.webp",
+      "octets": 105306,
+      "sha256": "bf38be78d425f28418a29687929200e8a018728db5172dacde32dffed2beb34b",
+      "qualite_webp": 82
+    },
+    {
+      "fichier": "d-fermenteur-vide.webp",
+      "octets": 19230,
+      "sha256": "b77bff9c426c2a995be71bb6fcc09db85e239345d9fd6dd57413232ef0b659fd",
+      "qualite_webp": 82
+    },
+    {
+      "fichier": "e-capsuleuse.webp",
+      "octets": 24206,
+      "sha256": "23df7fd8c809fb938b228500f776a0bdddd96c000210842ff060dbb9639239de",
+      "qualite_webp": 82
+    }
+  ],
+  "total_octets": 230356
+}

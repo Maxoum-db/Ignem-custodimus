@@ -1,10 +1,6 @@
-<title>Ignem custodimus</title>
+<title>Prométhée : Ignem custodimus</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&family=VT323&display=swap">
-<!-- Texte : Comic Neue, l'équivalent libre et lisse de Comic Sans MS (absente des téléphones Android) -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap">
+<style>/*POLICES*/</style>
 <style>/*CSS*/</style>
 
 <div id="app">
@@ -36,6 +32,7 @@
 
     <!-- Brasserie -->
     <section id="ecran-brasserie" class="ecran" hidden>
+      <div class="atelier-titre"><span class="atelier-surtitre">Les ateliers du domaine</span><h1>La brasserie</h1><p>Du grain au verre, le goût des gestes justes.</p></div>
       <div class="atelier">
         <div class="cuve-zone" id="cuve-zone">
           <canvas id="cuve" width="120" height="96" aria-label="Cuve de brassage"></canvas>
@@ -63,7 +60,7 @@
       <p class="geste-etape" id="emp-etape">Geste 1 sur 5</p>
       <h1 class="geste-titre">Empâtage <span class="en">mashing</span></h1>
       <p class="geste-consigne" id="emp-consigne"></p>
-      <div class="geste-scene"><canvas id="emp-canvas" width="192" height="128"></canvas><span class="geste-evt" id="emp-evt" hidden></span></div>
+      <div class="geste-scene"><canvas id="emp-canvas" width="192" height="128" aria-label="Cuve d’empâtage, vapeur, vanne et thermomètre"></canvas><span class="geste-evt" id="emp-evt" hidden></span></div>
       <div class="geste-infos" id="emp-infos"></div>
       <div class="jauges-feu" id="emp-jauges"></div>
       <div class="geste-controles">
@@ -80,7 +77,7 @@
       <p class="geste-etape" id="fil-etape">Geste 2 sur 5</p>
       <h1 class="geste-titre">Filtration <span class="en">lautering</span></h1>
       <p class="geste-consigne" id="fil-consigne"></p>
-      <div class="geste-scene"><canvas id="fil-canvas" width="192" height="128"></canvas><span class="geste-evt" id="fil-evt" hidden></span></div>
+      <div class="geste-scene"><canvas id="fil-canvas" width="192" height="128" aria-label="Cuve-filtre, drêches, niveau d’eau et bac de récupération"></canvas><span class="geste-evt" id="fil-evt" hidden></span></div>
       <div class="geste-infos" id="fil-infos"></div>
       <div class="jauges-feu" id="fil-jauges"></div>
       <label class="registre" for="fil-debit"><span>Robinet de soutirage</span><input type="range" id="fil-debit" min="0" max="100" step="1" value="40" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
@@ -99,7 +96,7 @@
       <p class="geste-etape" id="ebu-etape">Geste 3 sur 5</p>
       <h1 class="geste-titre">Ébullition <span class="en">boil</span></h1>
       <p class="geste-consigne" id="ebu-consigne"></p>
-      <div class="geste-scene"><canvas id="ebu-canvas" width="192" height="112"></canvas><span class="geste-evt" id="ebu-evt" hidden></span></div>
+      <div class="geste-scene"><canvas id="ebu-canvas" width="192" height="112" aria-label="Chaudière en cuivre, ébullition et ajout de houblon"></canvas><span class="geste-evt" id="ebu-evt" hidden></span></div>
       <div class="frise" id="ebu-frise"></div>
       <div class="geste-infos" id="ebu-infos"></div>
       <div class="geste-controles">
@@ -116,7 +113,7 @@
       <p class="geste-etape" id="fer-etape">Geste 4 sur 5</p>
       <h1 class="geste-titre">Fermentation <span class="en">fermentation</span></h1>
       <p class="geste-consigne" id="fer-consigne"></p>
-      <div class="geste-scene"><canvas id="fer-canvas" width="192" height="128"></canvas><span class="geste-evt" id="fer-evt" hidden></span></div>
+      <div class="geste-scene"><canvas id="fer-canvas" width="192" height="128" aria-label="Fermenteur inox, glycol bleu, vapeur rouge et courbe de température"></canvas><span class="geste-evt" id="fer-evt" hidden></span></div>
       <div class="geste-infos" id="fer-infos"></div>
       <div class="jauges-feu" id="fer-jauges"></div>
       <div class="geste-controles rangee duo">
@@ -135,7 +132,7 @@
       <p class="geste-etape">Geste 5 sur 5</p>
       <h1 class="geste-titre">Mise en bouteille <span class="en">bottling</span></h1>
       <p class="geste-consigne" id="bou-consigne"></p>
-      <div class="geste-scene"><canvas id="bou-canvas" width="192" height="112"></canvas><span class="geste-evt" id="bou-evt" hidden></span></div>
+      <div class="geste-scene"><canvas id="bou-canvas" width="192" height="112" aria-label="Bouteilles indépendantes, remplissage et capsuleuse"></canvas><span class="geste-evt" id="bou-evt" hidden></span></div>
       <div class="geste-infos" id="bou-infos"></div>
       <div class="dose dose-sucre"><label for="bou-sucre">Sucre de refermentation</label><span class="val" id="bou-sucre-val"></span>
         <input type="range" id="bou-sucre" min="0" max="14" step="0.5" value="6"><p id="bou-verdict"></p></div>
@@ -353,4 +350,5 @@
 <script>/*ECOLE*/</script>
 <script>/*VENTE*/</script>
 <script>/*ILLUSTRATIONS*/</script>
+<script>/*ATELIERS*/</script>
 <script>/*JEU*/</script>

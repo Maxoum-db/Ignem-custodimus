@@ -13,9 +13,11 @@ from playwright.sync_api import sync_playwright, expect
 args = argparse.ArgumentParser()
 args.add_argument('--reference', type=Path)
 args.add_argument('--url', default='http://127.0.0.1:8000/dist/index.html')
+args.add_argument('--sortie', type=Path, help='Dossier des nouvelles captures et du rapport ; conserve les preuves de la phase 0.')
 opt = args.parse_args()
 root = Path(__file__).resolve().parent
-(root / 'captures').mkdir(exist_ok=True)
+sortie = opt.sortie or root
+(sortie / 'captures').mkdir(parents=True, exist_ok=True)
 (root / 'sauvegardes').mkdir(exist_ok=True)
 report = {'viewport': '390 × 844', 'dpr': 2, 'checks': [], 'errors': []}
 
@@ -37,7 +39,7 @@ with sync_playwright() as p:
     def capture(name):
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'Débordement horizontal'
         assert page.locator('#scene').evaluate('(e) => e.scrollWidth <= e.clientWidth'), 'Débordement de scène'
-        page.screenshot(path=str(root / 'captures' / (name + '.png')))
+        page.screenshot(path=str(sortie / 'captures' / (name + '.png')))
         report['checks'].append(name)
         print(name, flush=True)
 
@@ -214,5 +216,5 @@ with sync_playwright() as p:
     assert not report['errors'], report['errors']
     browser.close()
 
-(root / 'resultats-mobile.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+(sortie / 'resultats-mobile.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
 print(json.dumps(report, ensure_ascii=False, indent=2))
