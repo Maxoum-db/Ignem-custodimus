@@ -8,6 +8,7 @@
     "export:donnees": "node scripts/export-donnees.mjs",
     "test:export": "node scripts/export-donnees.mjs --test",
     "build:jeu": "node scripts/construire-jeu.mjs",
+    "test:images": "node jeu/tests/images.test.mjs",
     "test:jeu": "node jeu/tests/moteur.test.mjs && node jeu/tests/distillerie.test.mjs && node jeu/tests/chai.test.mjs && node jeu/tests/ecole.test.mjs && node jeu/tests/vente.test.mjs"
   },
   "devDependencies": {

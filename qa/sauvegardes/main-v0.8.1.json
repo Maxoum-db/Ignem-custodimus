@@ -1,0 +1,70 @@
+{
+  "mode": "debutant",
+  "aide": true,
+  "son": true,
+  "gestesExpert": false,
+  "bac": false,
+  "tuto": -1,
+  "tutoD": 0,
+  "points": 0,
+  "succes": {},
+  "carnet": [],
+  "brassins": 0,
+  "recette": {
+    "volume": 100,
+    "rendement": 0.75,
+    "malts": [
+      {
+        "id": "malts_base_pilsner_soufflet_bio",
+        "kg": 20
+      }
+    ],
+    "houblons": [
+      {
+        "id": "hops_bittering_magnum",
+        "g": 30,
+        "min": 60
+      }
+    ],
+    "levure": "yeasts_ale_safale_us_05",
+    "eau": "causse",
+    "palier": 66,
+    "ebullition": 60,
+    "fermentation": {
+      "temp": 18,
+      "reposDiacetyle": false
+    },
+    "aromates": [],
+    "sels": {},
+    "auxiliaires": [],
+    "cuisson": false,
+    "destination": "biere"
+  },
+  "epaisses": null,
+  "reglagesD": null,
+  "possede": [],
+  "ecus": 30,
+  "decouvertes": {},
+  "quiz": null,
+  "grimoire": [],
+  "ecole": {},
+  "cal": {
+    "s": 35
+  },
+  "vente": {
+    "rep": 10,
+    "clients": [],
+    "commandes": [],
+    "vendus": 0,
+    "ca": 0
+  },
+  "bat": {
+    "brasserie": 1,
+    "distillerie": 0,
+    "chai": 0,
+    "pigeonnier": 1
+  },
+  "travaux": [],
+  "equip": {},
+  "vus": {}
+}

@@ -1,0 +1,30 @@
+name: Validation du jeu autonome
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'jeu/**'
+      - 'scripts/construire-jeu.mjs'
+      - 'scripts/images-jeu.mjs'
+      - 'data/**'
+      - 'package*.json'
+      - '.github/workflows/validation-jeu.yml'
+permissions:
+  contents: read
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      # Ces tests et le build n'utilisent que Node et les fichiers du dépôt.
+      - run: npm run test:jeu
+      - run: npm run test:images
+      - run: node scripts/construire-jeu.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: promethee-jeu-autonome
+          path: dist/index.html
+          retention-days: 14
