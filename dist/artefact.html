@@ -3,8 +3,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&family=VT323&display=swap">
-<!-- Texte courant : Atkinson Hyperlegible ; Pixelify Sans reste pour les gros boutons et les onglets (ses C/O, E/Є et 5/8 se confondent en petit) -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<!-- Texte : Comic Neue, l'équivalent libre et lisse de Comic Sans MS (absente des téléphones Android) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap">
 <style>/* Un seul monde visuel, assumé : la brasserie la nuit, à la lueur du feu.
    Pierre calcaire du Quercy, cuivre de l'alambic, braise, houblon.
    Mise en page : une app plein écran, en-tête fixe, scène qui défile, mentor en bas. */
@@ -24,8 +24,8 @@
   --bronze: #c98552;
 
   --f-titre: "Press Start 2P", "Courier New", monospace;
-  --f-texte: "Atkinson Hyperlegible", "Trebuchet MS", system-ui, sans-serif;
-  --f-pixel: "Pixelify Sans", "Trebuchet MS", system-ui, sans-serif;
+  --f-texte: "Comic Neue", "Comic Sans MS", "Comic Sans", "Chalkboard SE", cursive, sans-serif;
+  --f-pixel: var(--f-texte);
   --f-chiffre: "VT323", "Courier New", monospace;
 
   --relief: inset -3px -3px 0 rgba(0, 0, 0, .38), inset 3px 3px 0 rgba(255, 255, 255, .22);
@@ -114,15 +114,16 @@ button { cursor: pointer; }
   display: flex; align-items: flex-start; justify-content: center;
 }
 .lieu span {
-  font-family: var(--f-titre); font-size: 8px; line-height: 1.4; padding: 4px 5px;
-  background: var(--nuit); color: var(--calcaire); box-shadow: 0 0 0 2px var(--cuivre);
-  transform: translateY(-60%); white-space: nowrap;
+  position: absolute; transform: translate(-50%, -50%); white-space: nowrap; pointer-events: none;
+  font-family: var(--f-texte); font-weight: 700; font-size: clamp(11px, 3.4vw, 15px); line-height: 1; letter-spacing: .02em;
+  color: #fff4d6; background: none; padding: 0;
+  text-shadow: 1px 1px 0 #2a1d14, -1px 1px 0 #2a1d14, 1px -1px 0 #2a1d14, -1px -1px 0 #2a1d14, 0 2px 0 #2a1d14;
 }
-.lieu.ferme span { box-shadow: 0 0 0 2px var(--pierre-clair); color: var(--cendre); }
-.lieu.ferme span::after { content: " · bientôt"; color: var(--cendre); }
-.lieu:hover span, .lieu:focus-visible span { background: var(--cuivre); color: var(--nuit); }
+.lieu.ferme span { color: #cfc3a6; font-weight: 400; }
+.lieu.ferme span::after { content: " · bientôt"; }
+.lieu:hover span, .lieu:focus-visible span { color: var(--braise); }
 .lieu.ouvert span { animation: appel 2.4s steps(2) infinite; }
-@keyframes appel { 50% { box-shadow: 0 0 0 2px var(--braise); } }
+@keyframes appel { 50% { color: #ffe08a; } }
 .domaine-legende { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; color: var(--cendre); font-size: 14px; }
 .domaine-legende span:first-child { color: var(--calcaire); font-weight: 600; }
 
@@ -631,9 +632,6 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .dh-bilan { font-family: var(--f-texte); font-size: 12px; letter-spacing: 0; color: var(--houblon); }
 .dh-bilan.alerte { color: var(--alerte); }
 .geste-evt.houblon { background: var(--houblon); }
-.lieu-cheval span { box-shadow: 0 0 0 2px var(--houblon); }
-.lieu-bas { align-items: flex-end; }
-.lieu-bas span { transform: translateY(70%); }
 </style>
 
 <div id="app">
@@ -2485,12 +2483,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   // Domaine : carte pixel animée
   // =====================================================================
   const LIEUX = [
-    { id: 'brasserie', nom: 'Brasserie', r: [14, 108, 80, 76], ouvert: true },
-    { id: 'chai', nom: 'Chai', r: [108, 120, 70, 54], ouvert: true },
-    { id: 'distillerie', nom: 'Alambic Ulysse', r: [118, 178, 60, 32], ouvert: true },
-    { id: 'catalogue', nom: 'Pigeonnier', r: [18, 186, 62, 50], ouvert: true, bas: true },
-    { id: 'veillee', nom: 'Leçons', r: [80, 172, 36, 30], ouvert: true, cheval: true, bas: true },
-    { id: 'rucher', nom: 'Rucher', r: [130, 94, 58, 22], msg: "Le rucher viendra en extension. Le miel du domaine est déjà dans la brasserie : essaie un braggot." },
+    { id: 'brasserie', nom: 'Brasserie', r: [14, 108, 80, 76], ouvert: true, t: [53, 131] },
+    { id: 'chai', nom: 'Chai', r: [108, 120, 70, 54], ouvert: true, t: [141, 128] },
+    { id: 'distillerie', nom: 'Alambic Ulysse', r: [118, 178, 60, 34], ouvert: true, t: [147, 212] },
+    { id: 'catalogue', nom: 'Pigeonnier', r: [18, 186, 62, 50], ouvert: true, t: [61, 202] },
+    { id: 'veillee', nom: 'Leçons', r: [92, 222, 98, 32], ouvert: true, t: [113, 230] },
+    { id: 'rucher', nom: 'Rucher', r: [130, 94, 58, 22], t: [160, 117], msg: "Le rucher viendra en extension. Le miel du domaine est déjà dans la brasserie : essaie un braggot." },
   ];
   function saisonCourante() {
     const m = new Date().getMonth();
@@ -2512,9 +2510,9 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       const b = document.createElement('button');
       b.className = 'lieu ' + (l.ouvert ? 'ouvert' : 'ferme');
       Object.assign(b.style, { left: (l.r[0] / 192) * 100 + '%', top: (l.r[1] / 256) * 100 + '%', width: (l.r[2] / 192) * 100 + '%', height: (l.r[3] / 256) * 100 + '%' });
-      b.innerHTML = `<span>${esc(l.nom)}</span>`;
-      if (l.cheval) b.classList.add('lieu-cheval');
-      if (l.bas) b.classList.add('lieu-bas');
+      // Le nom est peint sur le bâtiment, à l'endroit prévu
+      const tx = l.t ? ((l.t[0] - l.r[0]) / l.r[2]) * 100 : 50, ty = l.t ? ((l.t[1] - l.r[1]) / l.r[3]) * 100 : 50;
+      b.innerHTML = `<span style="left:${tx}%;top:${ty}%">${esc(l.nom)}</span>`;
       b.setAttribute('aria-label', l.nom + (l.ouvert ? '' : ', bientôt'));
       b.onclick = () => { son('clic'); if (l.ouvert) aller(l.id); else direLise(l.msg); };
       z.appendChild(b);
@@ -2557,7 +2555,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       disque(x, y - 3, 5 + s, d); disque(x - 1, y - 4, 4 + s, a); disque(x - 2, y - 6, 2 + Math.floor(s / 2), b);
       if (P.fleur && !nuit) { px(x - 2, y - 6, 1, 1, P.fleur); px(x + 2, y - 3, 1, 1, P.fleur); }
     };
-    [[6, 98, 2], [18, 96, 3], [30, 100, 2], [44, 97, 1], [60, 101, 1], [86, 99, 1], [178, 99, 2], [188, 96, 3], [8, 196, 2], [12, 226, 3], [184, 230, 2], [96, 240, 1]].forEach(([x, y, s]) => arbre(x, y, s));
+    [[6, 98, 2], [18, 96, 3], [30, 100, 2], [44, 97, 1], [60, 101, 1], [86, 99, 1], [178, 99, 2], [188, 96, 3], [8, 196, 2], [12, 226, 3], [186, 214, 2]].forEach(([x, y, s]) => arbre(x, y, s));
     // Chemin
     for (let i = 0; i <= 60; i++) {
       const u = i / 60, x = (1 - u) ** 2 * 100 + 2 * (1 - u) * u * 70 + u * u * 54, y = (1 - u) ** 2 * 256 + 2 * (1 - u) * u * 210 + u * u * 184;
@@ -2593,16 +2591,19 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
     mur(24, 196, 16, 38); for (let k = 0; k < 14; k++) { const w = 20 - k * 1.35; px(32 - w / 2, 196 - k, w, 1, k % 3 ? tuile : tuile2); } px(31, 180, 2, 3, '#3a2c22');
     for (let k = 0; k < 3; k++) { px(28, 204 + k * 9, 3, 3, '#2a1d14'); px(34, 204 + k * 9, 3, 3, '#2a1d14'); }
     px(23, 214, 18, 2, joint);
+    px(43, 198, 37, 9, '#5a3a22'); px(44, 199, 35, 7, '#8a5a32'); px(50, 206, 1, 2, '#3a2618'); px(72, 206, 1, 2, '#3a2618');
     px(44, 212, 34, 22, nuit ? '#4a3020' : '#8a5a32');
     for (let k = 0; k < 40; k += 8) px(42 + k, 207, 4, 6, '#ecdfc4'), px(46 + k, 207, 4, 6, '#d27b3e');
     px(48, 218, 26, 10, nuit ? '#f3c45a' : '#3a2c22');
     ['#efe2c4', '#9cc95e', '#c9a26b', '#7a4a28'].forEach((col, k) => px(51 + k * 6, 221, 4, 6, col));
     // Pigeons qui tournent autour du colombier
     if (!nuit) for (let k = 0; k < 3; k++) { const a = t * 1.3 + k * 2.1, x = 32 + Math.cos(a) * (14 + k * 3), y = 184 + Math.sin(a) * 6 - k * 3, aile = Math.floor(t * 8 + k) % 2; px(x, y, 3, 1, '#e8e4dc'); px(x + 1, y - aile, 1, 1, '#b9b2a6'); }
-    // Petit cheval de la leçon : il trotte sur le chemin de l'alambic, sacoche de livres sur le dos
+    // Petit cheval de la leçon : il trotte en bas du domaine, sur la piste, sacoche de livres sur le dos
+    for (let x = 100; x < 190; x += 2) px(x, 245 + Math.round(Math.sin(x / 9)), 3, 4, nuit ? '#3b3528' : '#cdb48a');
+    px(104, 222, 2, 22, '#5a3a22'); px(96, 225, 36, 10, '#8a5a32'); px(96, 225, 36, 1, '#a87444'); px(96, 234, 36, 1, '#5a3a22');
     {
-      const u = 0.06 + 0.42 * (0.5 - 0.5 * Math.cos(t * 0.45)), dir = Math.sin(t * 0.45) >= 0 ? 1 : -1;
-      const cx = 80 + u * 60, cy = 197 - u * 32, pas = Math.floor(t * 7) % 2;
+      const u = 0.5 - 0.5 * Math.cos(t * 0.35), dir = Math.sin(t * 0.35) >= 0 ? 1 : -1;
+      const cx = 122 + u * 58, cy = 247 + Math.round(Math.sin((122 + u * 58) / 9)), pas = Math.floor(t * 7) % 2;
       const P = (dx, dy, w, h, col) => px(dir > 0 ? cx + dx : cx - dx - w + 1, cy + dy, w, h, col);
       const robe = nuit ? '#6b3a20' : '#b0602e', crin = '#2a1a10';
       P(-5, -7, 10, 4, robe); P(4, -10, 3, 5, robe); P(6, -11, 4, 3, robe); P(9, -10, 1, 1, crin); P(7, -12, 1, 1, robe);
@@ -5076,7 +5077,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.5.1 · brasserie, alambic Ulysse, chai, pigeonnier, école de la veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.5.2 · brasserie, alambic Ulysse, chai, pigeonnier, école de la veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

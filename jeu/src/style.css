@@ -17,8 +17,8 @@
   --bronze: #c98552;
 
   --f-titre: "Press Start 2P", "Courier New", monospace;
-  --f-texte: "Atkinson Hyperlegible", "Trebuchet MS", system-ui, sans-serif;
-  --f-pixel: "Pixelify Sans", "Trebuchet MS", system-ui, sans-serif;
+  --f-texte: "Comic Neue", "Comic Sans MS", "Comic Sans", "Chalkboard SE", cursive, sans-serif;
+  --f-pixel: var(--f-texte);
   --f-chiffre: "VT323", "Courier New", monospace;
 
   --relief: inset -3px -3px 0 rgba(0, 0, 0, .38), inset 3px 3px 0 rgba(255, 255, 255, .22);
@@ -107,15 +107,16 @@ button { cursor: pointer; }
   display: flex; align-items: flex-start; justify-content: center;
 }
 .lieu span {
-  font-family: var(--f-titre); font-size: 8px; line-height: 1.4; padding: 4px 5px;
-  background: var(--nuit); color: var(--calcaire); box-shadow: 0 0 0 2px var(--cuivre);
-  transform: translateY(-60%); white-space: nowrap;
+  position: absolute; transform: translate(-50%, -50%); white-space: nowrap; pointer-events: none;
+  font-family: var(--f-texte); font-weight: 700; font-size: clamp(11px, 3.4vw, 15px); line-height: 1; letter-spacing: .02em;
+  color: #fff4d6; background: none; padding: 0;
+  text-shadow: 1px 1px 0 #2a1d14, -1px 1px 0 #2a1d14, 1px -1px 0 #2a1d14, -1px -1px 0 #2a1d14, 0 2px 0 #2a1d14;
 }
-.lieu.ferme span { box-shadow: 0 0 0 2px var(--pierre-clair); color: var(--cendre); }
-.lieu.ferme span::after { content: " · bientôt"; color: var(--cendre); }
-.lieu:hover span, .lieu:focus-visible span { background: var(--cuivre); color: var(--nuit); }
+.lieu.ferme span { color: #cfc3a6; font-weight: 400; }
+.lieu.ferme span::after { content: " · bientôt"; }
+.lieu:hover span, .lieu:focus-visible span { color: var(--braise); }
 .lieu.ouvert span { animation: appel 2.4s steps(2) infinite; }
-@keyframes appel { 50% { box-shadow: 0 0 0 2px var(--braise); } }
+@keyframes appel { 50% { color: #ffe08a; } }
 .domaine-legende { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; color: var(--cendre); font-size: 14px; }
 .domaine-legende span:first-child { color: var(--calcaire); font-weight: 600; }
 
@@ -624,6 +625,3 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .dh-bilan { font-family: var(--f-texte); font-size: 12px; letter-spacing: 0; color: var(--houblon); }
 .dh-bilan.alerte { color: var(--alerte); }
 .geste-evt.houblon { background: var(--houblon); }
-.lieu-cheval span { box-shadow: 0 0 0 2px var(--houblon); }
-.lieu-bas { align-items: flex-end; }
-.lieu-bas span { transform: translateY(70%); }

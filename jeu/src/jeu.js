@@ -355,12 +355,12 @@
   // Domaine : carte pixel animée
   // =====================================================================
   const LIEUX = [
-    { id: 'brasserie', nom: 'Brasserie', r: [14, 108, 80, 76], ouvert: true },
-    { id: 'chai', nom: 'Chai', r: [108, 120, 70, 54], ouvert: true },
-    { id: 'distillerie', nom: 'Alambic Ulysse', r: [118, 178, 60, 32], ouvert: true },
-    { id: 'catalogue', nom: 'Pigeonnier', r: [18, 186, 62, 50], ouvert: true, bas: true },
-    { id: 'veillee', nom: 'Leçons', r: [80, 172, 36, 30], ouvert: true, cheval: true, bas: true },
-    { id: 'rucher', nom: 'Rucher', r: [130, 94, 58, 22], msg: "Le rucher viendra en extension. Le miel du domaine est déjà dans la brasserie : essaie un braggot." },
+    { id: 'brasserie', nom: 'Brasserie', r: [14, 108, 80, 76], ouvert: true, t: [53, 131] },
+    { id: 'chai', nom: 'Chai', r: [108, 120, 70, 54], ouvert: true, t: [141, 128] },
+    { id: 'distillerie', nom: 'Alambic Ulysse', r: [118, 178, 60, 34], ouvert: true, t: [147, 212] },
+    { id: 'catalogue', nom: 'Pigeonnier', r: [18, 186, 62, 50], ouvert: true, t: [61, 202] },
+    { id: 'veillee', nom: 'Leçons', r: [92, 222, 98, 32], ouvert: true, t: [113, 230] },
+    { id: 'rucher', nom: 'Rucher', r: [130, 94, 58, 22], t: [160, 117], msg: "Le rucher viendra en extension. Le miel du domaine est déjà dans la brasserie : essaie un braggot." },
   ];
   function saisonCourante() {
     const m = new Date().getMonth();
@@ -382,9 +382,9 @@
       const b = document.createElement('button');
       b.className = 'lieu ' + (l.ouvert ? 'ouvert' : 'ferme');
       Object.assign(b.style, { left: (l.r[0] / 192) * 100 + '%', top: (l.r[1] / 256) * 100 + '%', width: (l.r[2] / 192) * 100 + '%', height: (l.r[3] / 256) * 100 + '%' });
-      b.innerHTML = `<span>${esc(l.nom)}</span>`;
-      if (l.cheval) b.classList.add('lieu-cheval');
-      if (l.bas) b.classList.add('lieu-bas');
+      // Le nom est peint sur le bâtiment, à l'endroit prévu
+      const tx = l.t ? ((l.t[0] - l.r[0]) / l.r[2]) * 100 : 50, ty = l.t ? ((l.t[1] - l.r[1]) / l.r[3]) * 100 : 50;
+      b.innerHTML = `<span style="left:${tx}%;top:${ty}%">${esc(l.nom)}</span>`;
       b.setAttribute('aria-label', l.nom + (l.ouvert ? '' : ', bientôt'));
       b.onclick = () => { son('clic'); if (l.ouvert) aller(l.id); else direLise(l.msg); };
       z.appendChild(b);
@@ -427,7 +427,7 @@
       disque(x, y - 3, 5 + s, d); disque(x - 1, y - 4, 4 + s, a); disque(x - 2, y - 6, 2 + Math.floor(s / 2), b);
       if (P.fleur && !nuit) { px(x - 2, y - 6, 1, 1, P.fleur); px(x + 2, y - 3, 1, 1, P.fleur); }
     };
-    [[6, 98, 2], [18, 96, 3], [30, 100, 2], [44, 97, 1], [60, 101, 1], [86, 99, 1], [178, 99, 2], [188, 96, 3], [8, 196, 2], [12, 226, 3], [184, 230, 2], [96, 240, 1]].forEach(([x, y, s]) => arbre(x, y, s));
+    [[6, 98, 2], [18, 96, 3], [30, 100, 2], [44, 97, 1], [60, 101, 1], [86, 99, 1], [178, 99, 2], [188, 96, 3], [8, 196, 2], [12, 226, 3], [186, 214, 2]].forEach(([x, y, s]) => arbre(x, y, s));
     // Chemin
     for (let i = 0; i <= 60; i++) {
       const u = i / 60, x = (1 - u) ** 2 * 100 + 2 * (1 - u) * u * 70 + u * u * 54, y = (1 - u) ** 2 * 256 + 2 * (1 - u) * u * 210 + u * u * 184;
@@ -463,16 +463,19 @@
     mur(24, 196, 16, 38); for (let k = 0; k < 14; k++) { const w = 20 - k * 1.35; px(32 - w / 2, 196 - k, w, 1, k % 3 ? tuile : tuile2); } px(31, 180, 2, 3, '#3a2c22');
     for (let k = 0; k < 3; k++) { px(28, 204 + k * 9, 3, 3, '#2a1d14'); px(34, 204 + k * 9, 3, 3, '#2a1d14'); }
     px(23, 214, 18, 2, joint);
+    px(43, 198, 37, 9, '#5a3a22'); px(44, 199, 35, 7, '#8a5a32'); px(50, 206, 1, 2, '#3a2618'); px(72, 206, 1, 2, '#3a2618');
     px(44, 212, 34, 22, nuit ? '#4a3020' : '#8a5a32');
     for (let k = 0; k < 40; k += 8) px(42 + k, 207, 4, 6, '#ecdfc4'), px(46 + k, 207, 4, 6, '#d27b3e');
     px(48, 218, 26, 10, nuit ? '#f3c45a' : '#3a2c22');
     ['#efe2c4', '#9cc95e', '#c9a26b', '#7a4a28'].forEach((col, k) => px(51 + k * 6, 221, 4, 6, col));
     // Pigeons qui tournent autour du colombier
     if (!nuit) for (let k = 0; k < 3; k++) { const a = t * 1.3 + k * 2.1, x = 32 + Math.cos(a) * (14 + k * 3), y = 184 + Math.sin(a) * 6 - k * 3, aile = Math.floor(t * 8 + k) % 2; px(x, y, 3, 1, '#e8e4dc'); px(x + 1, y - aile, 1, 1, '#b9b2a6'); }
-    // Petit cheval de la leçon : il trotte sur le chemin de l'alambic, sacoche de livres sur le dos
+    // Petit cheval de la leçon : il trotte en bas du domaine, sur la piste, sacoche de livres sur le dos
+    for (let x = 100; x < 190; x += 2) px(x, 245 + Math.round(Math.sin(x / 9)), 3, 4, nuit ? '#3b3528' : '#cdb48a');
+    px(104, 222, 2, 22, '#5a3a22'); px(96, 225, 36, 10, '#8a5a32'); px(96, 225, 36, 1, '#a87444'); px(96, 234, 36, 1, '#5a3a22');
     {
-      const u = 0.06 + 0.42 * (0.5 - 0.5 * Math.cos(t * 0.45)), dir = Math.sin(t * 0.45) >= 0 ? 1 : -1;
-      const cx = 80 + u * 60, cy = 197 - u * 32, pas = Math.floor(t * 7) % 2;
+      const u = 0.5 - 0.5 * Math.cos(t * 0.35), dir = Math.sin(t * 0.35) >= 0 ? 1 : -1;
+      const cx = 122 + u * 58, cy = 247 + Math.round(Math.sin((122 + u * 58) / 9)), pas = Math.floor(t * 7) % 2;
       const P = (dx, dy, w, h, col) => px(dir > 0 ? cx + dx : cx - dx - w + 1, cy + dy, w, h, col);
       const robe = nuit ? '#6b3a20' : '#b0602e', crin = '#2a1a10';
       P(-5, -7, 10, 4, robe); P(4, -10, 3, 5, robe); P(6, -11, 4, 3, robe); P(9, -10, 1, 1, crin); P(7, -12, 1, 1, robe);
@@ -2946,7 +2949,7 @@
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.5.1 · brasserie, alambic Ulysse, chai, pigeonnier, école de la veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.5.2 · brasserie, alambic Ulysse, chai, pigeonnier, école de la veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
