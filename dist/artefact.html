@@ -3,6 +3,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&family=VT323&display=swap">
+<!-- Texte courant : Atkinson Hyperlegible ; Pixelify Sans reste pour les gros boutons et les onglets (ses C/O, E/Є et 5/8 se confondent en petit) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
 <style>/* Un seul monde visuel, assumé : la brasserie la nuit, à la lueur du feu.
    Pierre calcaire du Quercy, cuivre de l'alambic, braise, houblon.
    Mise en page : une app plein écran, en-tête fixe, scène qui défile, mentor en bas. */
@@ -22,7 +24,8 @@
   --bronze: #c98552;
 
   --f-titre: "Press Start 2P", "Courier New", monospace;
-  --f-texte: "Pixelify Sans", "Trebuchet MS", system-ui, sans-serif;
+  --f-texte: "Atkinson Hyperlegible", "Trebuchet MS", system-ui, sans-serif;
+  --f-pixel: "Pixelify Sans", "Trebuchet MS", system-ui, sans-serif;
   --f-chiffre: "VT323", "Courier New", monospace;
 
   --relief: inset -3px -3px 0 rgba(0, 0, 0, .38), inset 3px 3px 0 rgba(255, 255, 255, .22);
@@ -590,6 +593,14 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .compo-lib { color: var(--cendre); }
 .charge .grist-leg span { display: flex; align-items: center; gap: 4px; }
 .charge .grist-leg i { display: inline-block; width: 8px; height: 8px; flex: none; box-shadow: 0 0 0 1px var(--nuit); }
+
+/* Lisibilité des fiches d'ingrédients (V0.4.4) */
+.carte-ing .det, .article .det { font-size: 14px; line-height: 1.4; }
+.carte-ing .nom, .article .nom { font-size: 17px; }
+.carte-ing .btn { font-size: 16px; min-width: 76px; }
+.etq { font-size: 12px; padding: 1px 6px; }
+/* Touche pixel réservée aux grandes commandes, onglets et lieux */
+.btn-geste, .onglet, .lieu span, .mentor-nom, .tuto-actions .btn, .barre-brassin .btn, .geste-pied .btn { font-family: var(--f-pixel); }
 </style>
 
 <div id="app">
@@ -4697,7 +4708,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.4.3 · brasserie, alambic Ulysse, chai, pigeonnier, veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.4.4 · brasserie, alambic Ulysse, chai, pigeonnier, veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

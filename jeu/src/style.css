@@ -17,7 +17,8 @@
   --bronze: #c98552;
 
   --f-titre: "Press Start 2P", "Courier New", monospace;
-  --f-texte: "Pixelify Sans", "Trebuchet MS", system-ui, sans-serif;
+  --f-texte: "Atkinson Hyperlegible", "Trebuchet MS", system-ui, sans-serif;
+  --f-pixel: "Pixelify Sans", "Trebuchet MS", system-ui, sans-serif;
   --f-chiffre: "VT323", "Courier New", monospace;
 
   --relief: inset -3px -3px 0 rgba(0, 0, 0, .38), inset 3px 3px 0 rgba(255, 255, 255, .22);
@@ -585,3 +586,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .compo-lib { color: var(--cendre); }
 .charge .grist-leg span { display: flex; align-items: center; gap: 4px; }
 .charge .grist-leg i { display: inline-block; width: 8px; height: 8px; flex: none; box-shadow: 0 0 0 1px var(--nuit); }
+
+/* Lisibilité des fiches d'ingrédients (V0.4.4) */
+.carte-ing .det, .article .det { font-size: 14px; line-height: 1.4; }
+.carte-ing .nom, .article .nom { font-size: 17px; }
+.carte-ing .btn { font-size: 16px; min-width: 76px; }
+.etq { font-size: 12px; padding: 1px 6px; }
+/* Touche pixel réservée aux grandes commandes, onglets et lieux */
+.btn-geste, .onglet, .lieu span, .mentor-nom, .tuto-actions .btn, .barre-brassin .btn, .geste-pied .btn { font-family: var(--f-pixel); }
