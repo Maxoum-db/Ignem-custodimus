@@ -222,7 +222,7 @@ async function donneesJeu() {
       id: h.id, nom: h.nom, usage: h.usage, amin: h.alpha_min, amax: h.alpha_max,
       alpha: r1((h.alpha_min + h.alpha_max) / 2), huile: h.huiles_mL_100g ?? 1, aromes: court(h.aromes, 80),
       oils: { myr: oils.myrcene ?? null, hum: oils.humulene ?? null, car: oils.caryophyllene ?? null, far: oils.farnesene ?? null },
-      pays: h.pays, palier: rareteHoublon(h),
+      pays: h.pays, styles: court(h.styles, 70), palier: rareteHoublon(h),
     };
   });
 
@@ -328,19 +328,22 @@ async function donneesJeu() {
 
   return {
     version: 3, quiz: { modules: titres, cartes: Q }, source: 'Hub Prométhée (export jeu_export)', prix: PRIX,
-    params: { plafondBrasserieL: params[0].params.glob_plafond_brasserie_L_an, prixLitre: params[0].params.brass_prix_moyen_litre },
+    params: { plafondBrasserieL: params[0].params.glob_plafond_brasserie_L_an, prixLitre: params[0].params.brass_prix_moyen_litre,
+      angePct: params[0].params.dist_pct_ange_share ?? 3, maturationMois: params[0].params.dist_duree_maturation_mois ?? 36,
+      degreBouteille: params[0].params.dist_ABV_embouteillage ?? 45, bouteilleL: params[0].params.glob_bouteille_70cl_volume_L ?? 0.7 },
     malts: M, houblons: H, levures: Y, styles: S, eaux: E, sels: SE, aromates: A, auxiliaires: X, recettes: R,
   };
 }
 
 async function construire() {
   const D = await donneesJeu();
-  const [page, css, moteur, distillerie, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'jeu.js'].map(src));
+  const [page, css, moteur, distillerie, chai, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'chai.js', 'jeu.js'].map(src));
   const corps = page
     .replace('/*CSS*/', () => css)
     .replace('/*DONNEES*/', () => 'window.DONNEES_JEU = ' + JSON.stringify(D) + ';')
     .replace('/*MOTEUR*/', () => moteur)
     .replace('/*DISTILLERIE*/', () => distillerie)
+    .replace('/*CHAI*/', () => chai)
     .replace('/*JEU*/', () => jeu);
   const complet = `<!doctype html>\n<html lang="fr">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n</head>\n<body>\n${corps}\n</body>\n</html>\n`;
   await fs.mkdir(path.join(RACINE, 'dist'), { recursive: true });

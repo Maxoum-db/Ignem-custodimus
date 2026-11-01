@@ -13,6 +13,7 @@
     </button>
     <div class="entete-niveau" id="entete-niveau"></div>
     <nav class="entete-nav" aria-label="Menu">
+      <button data-aller="recherche" class="btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 12 12" width="14" height="14" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 0h4v1H3zM2 1h1v1H2zM7 1h1v1H7zM1 2h1v4H1zM8 2h1v4H8zM2 6h1v1H2zM7 6h1v1H7zM3 7h4v1H3zM8 7h1v1H8zM9 8h1v1H9zM10 9h1v1h-1zM11 10h1v2h-1zM10 11h1v1h-1z"/></svg></button>
       <button data-aller="carnet">Carnet</button>
       <button data-aller="fiches">Fiches</button>
       <button data-aller="reglages">Options</button>
@@ -180,6 +181,27 @@
       <div class="succes" id="cat-decouvertes"></div>
     </section>
 
+    <!-- Chai -->
+    <section id="ecran-chai" class="ecran" hidden>
+      <h1 class="page-titre">Chai <span class="en">cask warehouse</span></h1>
+      <p class="page-intro">Range les fûts : en haut chaud et sec, en bas frais et humide. Remplis-les d'eau-de-vie, fais glisser les années, goûte à la pipette. <button class="btn btn-mini btn-sobre" data-fiche="elevage">Élevage</button> <button class="btn btn-mini btn-sobre" data-fiche="anges">Part des anges</button> <button class="btn btn-mini btn-sobre" data-fiche="whisky">Whisky</button></p>
+      <div class="bourse" id="chai-bourse"></div>
+      <div id="chai-grille"></div>
+      <div id="chai-cour"></div>
+      <div id="chai-detail" class="chai-detail"></div>
+      <div id="chai-lots"></div>
+    </section>
+
+    <!-- Recherche d'ingrédients -->
+    <section id="ecran-recherche" class="ecran" hidden>
+      <h1 class="page-titre">Recherche <span class="en">ingrédients, fûts, recettes, fiches</span></h1>
+      <input class="recherche recherche-grande" id="rech-champ" type="search" placeholder="citra, agrumes, 1150 EBC, lager…" autocomplete="off" enterkeyhint="search">
+      <div class="suggestions" id="rech-suggestions"></div>
+      <div id="rech-filtres"></div>
+      <p class="page-intro" id="rech-compte"></p>
+      <div id="rech-resultats"></div>
+    </section>
+
     <!-- Veillée : questions de Lise et Firmin -->
     <section id="ecran-veillee" class="ecran" hidden>
       <h1 class="page-titre">La veillée <span class="en">quiz</span></h1>
@@ -250,4 +272,5 @@
 <script>/*DONNEES*/</script>
 <script>/*MOTEUR*/</script>
 <script>/*DISTILLERIE*/</script>
+<script>/*CHAI*/</script>
 <script>/*JEU*/</script>

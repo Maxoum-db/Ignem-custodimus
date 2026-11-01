@@ -1,4 +1,4 @@
-/* Ignem custodimus — interface du jeu (V0.1 : brasserie) */
+/* Ignem custodimus — interface du jeu (V0.4 : brasserie, alambic, pigeonnier, chai, recherche) */
 (function () {
   'use strict';
   const D = window.DONNEES_JEU;
@@ -72,6 +72,11 @@
     { id: 'coeurnet', nom: 'Cœur net', desc: 'Une eau-de-vie médaillée sans aucun défaut.' },
     { id: 'econome', nom: 'Rien ne se perd', desc: "70 % de l'alcool de la bière en cœur, et une médaille." },
     { id: 'bouilleur', nom: "L'or d'Ulysse", desc: "Une eau-de-vie médaillée d'or." },
+    { id: 'compte', nom: 'Premier compte', desc: 'Mettre en bouteille un premier fût.' },
+    { id: 'whisky', nom: 'Trois ans et un jour', desc: 'Un vrai whisky : wash de malt, trois ans de fût, 40 % au moins.' },
+    { id: 'double', nom: 'Double fût', desc: 'Une finition dans un second fût d\'un autre type.' },
+    { id: 'maitrechai', nom: 'Maître de chai', desc: 'Un spiritueux vieilli médaillé d\'or.' },
+    { id: 'anges', nom: 'La part des anges', desc: 'Un compte de 12 ans ou plus, médaillé.' },
   ];
 
   // =====================================================================
@@ -161,22 +166,23 @@
     $$('.ecran').forEach((s) => { s.hidden = s.id !== 'ecran-' + nom; });
     $$('.entete-nav button').forEach((b) => b.setAttribute('aria-current', b.dataset.aller === nom ? 'page' : 'false'));
     $('#scene').scrollTop = 0;
-    ({ domaine: entrerDomaine, brasserie: entrerBrasserie, distillerie: entrerDistillerie, catalogue: rendreCatalogue, veillee: rendreVeillee, carnet: rendreCarnet, fiches: rendreFiches, reglages: rendreReglages }[nom] || (() => {}))();
+    ({ domaine: entrerDomaine, brasserie: entrerBrasserie, distillerie: entrerDistillerie, catalogue: rendreCatalogue, chai: entrerChai, recherche: entrerRecherche, veillee: rendreVeillee, carnet: rendreCarnet, fiches: rendreFiches, reglages: rendreReglages }[nom] || (() => {}))();
     tuto('ecran:' + nom);
     majMentor();
   }
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-aller]');
-    if (b) { son('clic'); aller(b.dataset.aller); }
+    if (b) { son('clic'); if (b.dataset.catonglet) { catOnglet = b.dataset.catonglet; catFiltre = 'tous'; } aller(b.dataset.aller); }
     const f = e.target.closest('[data-fiche]');
     if (f) { e.preventDefault(); ouvrirFiche(f.dataset.fiche); }
   });
   function majEntete() {
-    $('#entete-niveau').innerHTML = `<b>${niveau()}</b>${S.points} pts · <span style="color:var(--or)">${S.ecus} écus</span>${S.bac ? ' · bac à sable' : ''}`;
+    $('#entete-niveau').innerHTML = `<b>${niveau()}</b><span class="ligne2"><span style="color:var(--or)">${S.ecus} écus</span> · ${S.points} pts${S.bac ? ' · bac à sable' : ''}</span>`;
   }
   function toast(txt) {
     const t = document.createElement('div'); t.className = 'toast'; t.textContent = txt;
-    $('#toasts').appendChild(t); setTimeout(() => t.remove(), 3300);
+    const z = $('#toasts'); z.appendChild(t); setTimeout(() => t.remove(), 3300);
+    while (z.children.length > 3) z.firstElementChild.remove();
   }
 
   // =====================================================================
@@ -206,8 +212,8 @@
     if (S.tuto >= 0 && S.tuto < TUTO.length && TUTO[S.tuto].attendre === evt) { S.tuto++; if (S.tuto >= TUTO.length) S.tuto = -1; sauver(); majMentor(); }
     if (S.tutoD >= 0 && S.tutoD < TUTO_D.length && TUTO_D[S.tutoD].attendre === evt) { S.tutoD++; if (S.tutoD >= TUTO_D.length) S.tutoD = -1; sauver(); majMentor(); }
   }
-  const ECRANS_FIRMIN = ['distillerie', 'brouillis', 'repasse', 'aveugle'];
-  const avecFirmin = () => ECRANS_FIRMIN.includes(ecran) || (ecran === 'degustation' && dernier && (dernier.type === 'edv' || dernier.type === 'wash'));
+  const ECRANS_FIRMIN = ['distillerie', 'brouillis', 'repasse', 'aveugle', 'chai'];
+  const avecFirmin = () => ECRANS_FIRMIN.includes(ecran) || (ecran === 'degustation' && dernier && (dernier.type === 'edv' || dernier.type === 'wash' || dernier.type === 'vieilli'));
   let messageMentor = null;
   function direLise(txt, actions) { messageMentor = { txt, actions: actions || [] }; majMentor(); }
   function majMentor() {
@@ -215,7 +221,7 @@
     let txt = null, actions = [];
     const firmin = avecFirmin();
     $('#mentor-nom').textContent = firmin ? 'Firmin' : 'Lise';
-    $('#mentor-role').textContent = firmin ? 'bouilleur ambulant' : 'maître brasseuse';
+    $('#mentor-role').textContent = firmin ? (ecran === 'chai' || (dernier && dernier.type === 'vieilli' && ecran === 'degustation') ? 'maître de chai' : 'bouilleur ambulant') : 'maître brasseuse';
     $('#mentor-portrait').src = firmin ? SPR.firmin : SPR.lise;
     if (firmin && S.tutoD >= 0 && S.tutoD < TUTO_D.length && TUTO_D[S.tutoD].ecran === ecran) {
       const etape = TUTO_D[S.tutoD];
@@ -230,6 +236,8 @@
     } else if (messageMentor) {
       txt = messageMentor.txt;
       actions = messageMentor.actions.concat([{ lib: 'Fermer', sobre: true, f: () => { messageMentor = null; majMentor(); } }]);
+    } else if (ecran === 'chai' && (txt = conseilChai())) {
+      actions = [{ lib: 'Compris', sobre: true, f: () => { aideChaiFermee = true; majMentor(); } }];
     }
     if (!txt) { m.hidden = true; document.documentElement.style.setProperty('--pied-mentor', '0px'); return; }
     $('#mentor-texte').textContent = txt;
@@ -244,7 +252,7 @@
   // =====================================================================
   const LIEUX = [
     { id: 'brasserie', nom: 'Brasserie', r: [14, 108, 80, 76], ouvert: true },
-    { id: 'chai', nom: 'Chai', r: [108, 120, 70, 54], msg: "Le chai ouvrira avec la distillerie : chêne neuf, ex-bourbon, ex-sherry, ex-tourbé, Cahors, armagnac. On y rangera les fûts façon casse-tête." },
+    { id: 'chai', nom: 'Chai', r: [108, 120, 70, 54], ouvert: true },
     { id: 'distillerie', nom: 'Alambic Ulysse', r: [118, 178, 60, 32], ouvert: true },
     { id: 'catalogue', nom: 'Pigeonnier', r: [92, 96, 22, 44], ouvert: true },
     { id: 'comptoir', nom: 'Comptoir', r: [22, 200, 58, 38], msg: "Le comptoir de vente à la ferme ouvrira plus tard : les visiteurs viendront avec leurs goûts, à toi de conseiller la bonne bouteille." },
@@ -1101,7 +1109,7 @@
     nouveaux.forEach((n, i) => setTimeout(() => toast('★ ' + n), 2600 + i * 900));
   }
   $('#nom-cuvee').addEventListener('change', (e) => { if (!dernier) return; dernier.entree.nom = e.target.value.trim() || dernier.entree.nom; sauver(); });
-  $('#btn-rebrasser').addEventListener('click', () => { messageMentor = null; if (dernier && (dernier.type === 'edv' || dernier.type === 'wash')) { aller('distillerie'); return; } if (dernier) R = clone(dernier.entree.recette); onglet = 'cuve'; aller('brasserie'); });
+  $('#btn-rebrasser').addEventListener('click', () => { messageMentor = null; if (dernier && dernier.type === 'vieilli') { aller('chai'); return; } if (dernier && (dernier.type === 'edv' || dernier.type === 'wash')) { aller('distillerie'); return; } if (dernier) R = clone(dernier.entree.recette); onglet = 'cuve'; aller('brasserie'); });
   $('#btn-retour').addEventListener('click', () => { messageMentor = null; aller('domaine'); });
 
   // =====================================================================
@@ -1482,6 +1490,9 @@
       style: nomEauDeVie(b), biere: b.nom, total: note ? note.total : 0, lignes: note ? note.lignes : null, medaille: note ? note.medaille : null,
       etoiles, defauts: note ? note.defauts.map((d) => d.nom) : [], coeur: bl.coeur, rendement, aveugle, mode: S.mode, bac: S.bac, gain,
       ebc: 0, abv: bl.coeur.degre, coupes: r.coupes, incidents: { ...sessionD.incidents }, recyclees: sessionD.recyclees || 0,
+      // Pour le chai : composition du cœur, céréale de départ, fumée des malts fumés, alcool encore disponible
+      comp: note ? note.composition : null, source: b.type === 'wash' ? (/grain/.test(nomEauDeVie(b)) ? 'grain' : 'malt') : 'biere',
+      fume: maltsFumes(b), lapRestant: bl.coeur.lap,
     };
     S.carnet.unshift(entree);
     const nouveaux = verifierSuccesD(entree, note);
@@ -1542,7 +1553,8 @@
     const g = [];
     g.push(S.bac ? 'Bac à sable : cette chauffe ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise, dont ${Math.round(10 * rendement)} pour le rendement${e.aveugle != null ? ` et ${2 * e.aveugle} pour l'aveugle` : ''}, et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} en bourse.`);
     (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
-    if (/malt|grain/.test(e.style)) g.push('C\'est un « new make » : il faudra au moins trois ans en fût de chêne de 700 L au plus pour qu\'il ait droit au nom de whisky (règlement UE 2019/787).');
+    if (/malt|grain/.test(e.style)) g.push('C\'est un « new make » : il faudra au moins trois ans en fût de chêne de 700 L au plus pour qu\'il ait droit au nom de whisky (règlement UE 2019/787). <button class="btn btn-mini" data-aller="chai">Mettre en fût au chai</button>');
+    else g.push('Le chai peut l\'élever en fût : <button class="btn btn-mini btn-sobre" data-aller="chai">aller au chai</button>');
     g.push(S.epaisses ? `Épaisses en réserve : ${nf(S.epaisses.A, 1)} LAP pour la prochaine bonne chauffe.` : 'Aucune épaisse en réserve.');
     if (palierMonte) g.push(`Nouveaux ingrédients débloqués : ${PALIERS[palierAtteint()].txt}.`);
     nouveaux.forEach((n) => g.push(`★ Succès : ${esc(n)}`));
@@ -1574,6 +1586,485 @@
   }
 
   // =====================================================================
+  // Chai : fûts rangés en casse-tête, curseur des années, finitions, assemblage, mise en bouteille
+  // =====================================================================
+  const CH = Chai;
+  CH.init(D.params);
+  const ABR = { bourbon: 'BOU', francais: 'FR', domaine: 'DOM', cahors: 'CAH', sherry: 'SHY', armagnac: 'ARM', tourbe: 'TRB' };
+  const PLAFOND_TRAVEES = 10;
+  const coutTravee = (cols) => 40 + 20 * (cols - 6);
+  const prixFut = (type, taille) => Math.round((10 + D.prix[CH.TYPES[type].rarete]) * CH.TAILLES[taille].prix);
+  const nouveauFut = (type, taille) => ({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), type, taille, rem: 0, pos: null, contenu: null });
+  function chai() {
+    if (!S.chai) {
+      // Firmin prête un premier quartaut ex-bourbon, déjà rangé au milieu du chai
+      const f = nouveauFut('bourbon', 'quartaut'); f.pos = { r: 1, c: 0 };
+      S.chai = { cols: 6, futs: [f], lots: [] };
+    }
+    return S.chai;
+  }
+  const remplissageLib = (n) => (n ? `${n + 1}e remplissage` : '1er remplissage');
+  const histoire = (e) => e.futs.map((x) => `${ABR[x.type]} ${nf(x.ans, x.ans % 1 ? 1 : 0)} a`).join(e.assemblage ? ' + ' : ' → ') + (e.assemblage ? ` (assemblage de ${e.assemblage} lots)` : '');
+  const nomFut = (f) => `${CH.TAILLES[f.taille].nom} ${CH.TYPES[f.type].nom.toLowerCase()}`;
+  const occupant = (r, c, sauf) => chai().futs.find((f) => f !== sauf && f.pos && f.pos.r === r && c >= f.pos.c && c < f.pos.c + CH.TAILLES[f.taille].w);
+  function peutPlacer(f, r, c) {
+    const w = CH.TAILLES[f.taille].w;
+    if (c < 0 || c + w > chai().cols) return false;
+    for (let i = c; i < c + w; i++) if (occupant(r, i, f)) return false;
+    return true;
+  }
+  function placeLibre(f) {
+    for (const r of [1, 2, 0]) for (let c = 0; c < chai().cols; c++) if (peutPlacer(f, r, c)) return { r, c };
+    return null;
+  }
+  // Informations d'élevage d'une eau-de-vie du carnet (les entrées d'avant la V0.4 n'ont pas leur composition)
+  function infoEDV(x) {
+    const source = x.source || (/malt/i.test(x.style) ? 'malt' : /grain/i.test(x.style) ? 'grain' : 'biere');
+    return { source, comp: x.comp || null, fume: x.fume || 0, total: x.total, degre: x.coeur.degre, lap: x.lapRestant != null ? x.lapRestant : x.coeur.lap };
+  }
+  const edvDisponibles = () => S.carnet.filter((x) => x.type === 'edv' && x.coeur && x.coeur.lap > 0 && infoEDV(x).lap >= 0.5);
+  function apercu(f) {
+    const c = f.contenu; if (!c) return null;
+    return CH.vieillir(c.etat, { type: f.type, taille: f.taille, remplissages: f.rem }, f.pos ? f.pos.r : 1, c.ans);
+  }
+
+  let choixFut = null, modeChai = null, lotsChoisis = new Set();
+  function entrerChai() { chai(); rendreChai(); }
+
+  function rendreChai() {
+    const C = chai();
+    const f = C.futs.find((x) => x.id === choixFut) || null;
+    $('#chai-bourse').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${C.futs.length} fût${C.futs.length > 1 ? 's' : ''} · ${C.cols} travées sur ${PLAFOND_TRAVEES} · ${C.lots.length} lot${C.lots.length > 1 ? 's' : ''} en cuve d'attente</p>
+      <button class="btn btn-mini" data-aller="catalogue" data-catonglet="futs">Commander des fûts</button>`;
+    // Le casse-tête : trois rangées, des travées de largeur variable
+    const icone = ['☀', '≈', '❄'];
+    const rangees = CH.ZONES.map((z, r) => {
+      let cases = '';
+      for (let c = 0; c < C.cols; c++) {
+        const o = occupant(r, c);
+        if (o && o.pos.c === c) {
+          const w = CH.TAILLES[o.taille].w, e = o.contenu ? apercu(o) : null;
+          const plein = o.contenu ? Math.min(1, o.contenu.etat.V / CH.TAILLES[o.taille].L) : 0;
+          cases += `<button class="fut fut-${o.type} ${o.id === choixFut ? 'choisi' : ''} ${o.contenu ? 'rempli' : ''}" style="grid-column:span ${w}" data-fut="${o.id}" aria-label="${esc(nomFut(o))}${o.contenu ? ', rempli' : ', vide'}">
+            <span class="fut-abr">${ABR[o.type]}</span>${o.contenu ? `<span class="fut-age">${nf(o.contenu.ans, o.contenu.ans % 1 ? 1 : 0)} a</span>` : ''}
+            <span class="fut-jauge"><i style="width:${Math.round(plein * 100)}%;background:${e ? couleur(e.couleur * 0.6) : 'transparent'}"></i></span></button>`;
+          c += w - 1;
+        } else if (!o) {
+          const cible = modeChai && modeChai.type === 'placer' && peutPlacer(C.futs.find((x) => x.id === modeChai.fut), r, c);
+          cases += `<button class="case ${cible ? 'cible' : ''}" data-case="${r}:${c}" aria-label="Emplacement libre, rangée ${z.nom}"></button>`;
+        }
+      }
+      return `<div class="rangee" data-zone="${r}"><span class="zone-lib">${icone[r]} ${esc(z.nom)} · anges ${nf(CH.P.angePct * z.ange, 1)} %/an · degré ${z.deg > 0 ? '+' : ''}${nf(z.deg, 2)}/an</span>
+        <div class="cases" style="grid-template-columns:repeat(${C.cols},1fr)">${cases}</div></div>`;
+    }).join('');
+    const etendre = C.cols < PLAFOND_TRAVEES ? `<button class="btn btn-mini btn-sobre" id="chai-etendre" ${S.ecus < coutTravee(C.cols) ? 'disabled' : ''}>Agrandir d'une travée · ${coutTravee(C.cols)} écus</button>` : '<span class="etq">Plafond atteint : 10 travées</span>';
+    $('#chai-grille').innerHTML = `${modeChai ? `<p class="consigne-chai">${modeChai.type === 'placer' ? 'Touche un emplacement libre assez large (les cases qui clignotent).' : 'Touche un fût vide pour y verser le lot.'} <button class="btn btn-mini btn-sobre" id="chai-annuler">Annuler</button></p>` : ''}
+      <div class="chai-plan">${rangees}</div><div class="chai-pied">${etendre}</div>`;
+    // Cour de la tonnellerie : fûts pas encore rangés
+    const cour = C.futs.filter((x) => !x.pos);
+    $('#chai-cour').innerHTML = cour.length ? `<h2 class="sous-titre">Cour de la tonnellerie</h2><div class="cour">${cour.map((x) => `<button class="fut fut-${x.type} ${x.id === choixFut ? 'choisi' : ''}" style="width:${CH.TAILLES[x.taille].w * 44}px" data-fut="${x.id}"><span class="fut-abr">${ABR[x.type]}</span></button>`).join('')}</div>` : '';
+    $('#chai-detail').innerHTML = f ? detailFut(f) : '<p class="page-intro">Touche un fût pour le goûter à la pipette, le remplir ou le déplacer.</p>';
+    rendreLots(); majMentor();
+  }
+
+  function detailFut(f) {
+    const T = CH.TYPES[f.type], Z = CH.TAILLES[f.taille], zone = f.pos ? CH.ZONES[f.pos.r] : null;
+    const tete = `<div class="fut-tete"><h3>${esc(nomFut(f))}</h3><p>${Z.L} L · ${esc(T.bois)} · ${remplissageLib(f.rem)}${f.rem ? ` (extraction ${Math.round(CH.potentiel(f.rem) * 100)} %)` : ''} · ${zone ? esc(zone.nom) : 'dans la cour'}</p><p class="det">${esc(T.desc)}</p></div>`;
+    const actionsFut = `<div class="actions-fut"><button class="btn btn-mini btn-sobre" id="fut-deplacer">${f.pos ? 'Déplacer' : 'Ranger dans le chai'}</button>${!f.contenu && f.pos ? '<button class="btn btn-mini btn-sobre" id="fut-cour">Sortir dans la cour</button>' : ''}</div>`;
+    if (!f.contenu) {
+      if (!f.pos) return tete + '<p class="page-intro">Range d\'abord ce fût dans le chai pour pouvoir le remplir.</p>' + actionsFut;
+      const edv = edvDisponibles();
+      const lignes = edv.map((x) => { const i = infoEDV(x); return `<button class="ligne-choix" data-remplir="${x.id}"><b>${esc(x.nom)}</b><span>${nf(i.lap, 1)} LAP à ${nf(i.degre, 1)} % · ${nf(x.total, x.total % 1 ? 1 : 0)}/50</span></button>`; }).join('');
+      return `${tete}<h4 class="groupe-titre">REMPLIR AVEC UNE EAU-DE-VIE DU CARNET</h4>
+        <p class="page-intro">Firmin réduit le cœur à 63,5 % à l'eau de source avant l'entonnage : c'est le degré qui extrait le mieux tanins, sucres et vanilline.</p>
+        ${lignes || '<p class="vide">Aucune eau-de-vie au carnet. Distille une bière avec Ulysse, ou mieux, un wash de malt.</p>'}
+        ${chai().lots.length ? '<p class="page-intro">Pour une finition, choisis un lot dans les cuves d\'attente plus bas, puis « Finition ».</p>' : ''}${actionsFut}`;
+    }
+    const c = f.contenu, e = apercu(f), V0 = c.etat.V, pip = CH.pipette(e), n = CH.noter(e), bt = CH.bouteilles(e);
+    const max = c.finition ? 3 : 15, pas = c.finition ? 0.25 : 0.5;
+    const plein = V0 / Z.L;
+    const debutant = S.mode === 'debutant';
+    return `${tete}
+      <div class="fut-contenu"><p><b>${esc(c.noms.join(' + '))}</b>${c.finition ? ' · en finition' : ''} · ${nf(V0, 0)} L entonnés sur ${Z.L} L (${Math.round(plein * 100)} %)${plein < 0.6 ? ' · <span class="alerte-txt">beaucoup de vide : risque d\'oxydation</span>' : ''}</p>
+      <div class="dose"><label for="fut-ans">${c.finition ? 'Durée de la finition' : 'Années en fût'}</label><span class="val" id="fut-ans-val">${nf(c.ans, c.ans % 1 ? (pas < 0.5 ? 2 : 1) : 0)} an${c.ans >= 2 ? 's' : ''}</span>
+        <input type="range" id="fut-ans" min="0" max="${max}" step="${pas}" value="${c.ans}"></div>
+      <div class="apercu-chai" id="apercu-chai">${apercuHTML(f, e, pip, n, bt, debutant)}</div>
+      <div class="actions-fut">
+        <button class="btn btn-feu" id="fut-sortir" ${c.ans <= 0 ? 'disabled' : ''}>Sortir du fût à ${nf(c.ans, c.ans % 1 ? 1 : 0)} an${c.ans >= 2 ? 's' : ''}</button>
+        ${!c.finition && c.etat.V < Z.L - 0.5 && edvDisponibles().length ? '<button class="btn btn-sobre" id="fut-completer">Compléter</button>' : ''}
+        <button class="btn btn-sobre" id="fut-deplacer">Déplacer</button></div></div>`;
+  }
+  function apercuHTML(f, e, pip, n, bt, debutant) {
+    const ange = 1 - e.V / f.contenu.etat.V;
+    const axes = CH.AXES.map((k) => [k, CH.LIB_AXES[k]]);
+    return `<div class="apercu-haut"><span class="pastille" style="background:${couleur(e.couleur * 0.6)}"></span>
+        <div class="chiffres"><span>${nf(e.V, 1)} L</span><span>${nf(e.degre, 1)} %</span><span>anges ${Math.round(ange * 100)} %</span><span>${bt.n} bout. à ${nf(bt.degre, 1)} %</span></div></div>
+      <p class="nom-legal">${esc(CH.nom(e, bt.degre))}</p>
+      <div class="pipette"><b>À la pipette :</b> ${pip.notes.length ? pip.notes.map((x) => `${esc(x.mot)} <small>(${x.force})</small>`).join(' · ') : 'alcool blanc, céréale'}${pip.bouche.length ? `<br><b>En bouche :</b> ${esc(pip.bouche.join(', '))}` : ''}</div>
+      <div class="radar radar-chai">${radarSVG(axes, CH.profil(e))}</div>
+      ${debutant ? `<p class="det">Estimation du jury : <b>${nf(n.total, n.total % 1 ? 1 : 0)}/50</b>${n.medaille ? ` · ${n.medaille}` : ''} (affichée en mode débutant)</p>` : ''}
+      <p class="conseil-firmin">« ${esc(CH.conseil(e, { taille: f.taille }, f.pos ? f.pos.r : 1))} »</p>`;
+  }
+  function majApercu(f) {
+    const z = $('#apercu-chai'); if (!z) return;
+    const e = apercu(f);
+    z.innerHTML = apercuHTML(f, e, CH.pipette(e), CH.noter(e), CH.bouteilles(e), S.mode === 'debutant');
+    const c = f.contenu, pas = c.finition ? 0.25 : 0.5;
+    $('#fut-ans-val').textContent = `${nf(c.ans, c.ans % 1 ? (pas < 0.5 ? 2 : 1) : 0)} an${c.ans >= 2 ? 's' : ''}`;
+    const b = $('#fut-sortir'); b.disabled = c.ans <= 0; b.textContent = `Sortir du fût à ${nf(c.ans, c.ans % 1 ? 1 : 0)} an${c.ans >= 2 ? 's' : ''}`;
+    const fj = $(`[data-fut="${f.id}"] .fut-age`); if (fj) fj.textContent = `${nf(c.ans, c.ans % 1 ? 1 : 0)} a`;
+  }
+
+  function remplir(f, x) {
+    const Z = CH.TAILLES[f.taille], i = infoEDV(x);
+    const deja = f.contenu ? f.contenu.etat.V : 0, place = Z.L - deja;
+    if (place < 0.5) { toast('Ce fût est plein.'); return; }
+    // Réduction à 63,5 % (un cœur plus faible est entonné tel quel)
+    const degre = Math.min(63.5, i.degre);
+    const V = Math.min(place, i.lap / (degre / 100)), lap = (V * degre) / 100;
+    x.lapRestant = Math.max(0, i.lap - lap);
+    const e = CH.etatInitial({ V, degre, comp: i.comp, total: i.total, fume: i.fume, sources: [i.source] });
+    if (f.contenu) { f.contenu.etat = CH.assembler([f.contenu.etat, e]); if (!f.contenu.noms.includes(x.nom)) f.contenu.noms.push(x.nom); }
+    else f.contenu = { etat: e, ans: Math.max(1, Math.round(CH.P.maturationMois / 12)), noms: [x.nom], finition: false };
+    son('bulle');
+    toast(`${nf(V, 1)} L entonnés à ${nf(degre, 1)} %${x.lapRestant >= 0.5 ? ` · il reste ${nf(x.lapRestant, 1)} LAP au carnet` : ''}.`);
+    sauver(); rendreChai();
+  }
+  function sortirDuFut(f) {
+    const e = apercu(f);
+    if (e.V < 0.5) { toast('Les anges ont tout bu.'); return; }
+    const lot = { id: Date.now().toString(36), nom: CH.nom(e, CH.bouteilles(e).degre), etat: e, noms: f.contenu.noms.slice() };
+    chai().lots.push(lot);
+    f.contenu = null; f.rem++;
+    son('ok'); toast(`${lot.nom} : ${nf(e.V, 1)} L en cuve d'attente.`);
+    sauver(); rendreChai();
+    setTimeout(() => { const l = $('#chai-lots'); if (l) l.scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'start' }); }, 50);
+  }
+  function verserFinition(lot, f) {
+    const Z = CH.TAILLES[f.taille];
+    if (f.contenu || !f.pos) return;
+    const C = chai();
+    let etat = lot.etat;
+    if (etat.V > Z.L) { const part = Z.L / etat.V; etat = { ...etat, V: Z.L }; lot.etat = { ...lot.etat, V: lot.etat.V * (1 - part) }; }
+    else C.lots = C.lots.filter((l) => l !== lot);
+    f.contenu = { etat, ans: 1, noms: lot.noms.slice(), finition: true };
+    choixFut = f.id; modeChai = null;
+    son('bulle'); toast(`Finition en ${nomFut(f).toLowerCase()} : 6 à 24 mois suffisent.`);
+    sauver(); rendreChai();
+  }
+
+  function rendreLots() {
+    const C = chai();
+    if (!C.lots.length) { $('#chai-lots').innerHTML = ''; return; }
+    $('#chai-lots').innerHTML = `<h2 class="sous-titre">Cuves d'attente</h2><p class="page-intro">Les lots sortis des fûts attendent ici, en inox. Mets-les en bouteille, offre-leur une finition dans un autre fût, ou assemble-les.</p>
+      ${C.lots.map((l) => { const e = l.etat, bt = CH.bouteilles(e); return `<div class="lot ${lotsChoisis.has(l.id) ? 'choisi' : ''}"><label class="coche"><input type="checkbox" data-lotcoche="${l.id}" ${lotsChoisis.has(l.id) ? 'checked' : ''}><span class="pastille" style="background:${couleur(e.couleur * 0.6)}"></span><b>${esc(l.nom)}</b></label>
+        <p class="det">${esc(l.noms.join(' + '))} · ${nf(e.V, 1)} L à ${nf(e.degre, 1)} % · ${bt.n} bouteilles · ${histoire(e)}</p>
+        <div class="actions-fut"><button class="btn btn-feu btn-mini" data-embouteiller="${l.id}">Mettre en bouteille</button><button class="btn btn-mini btn-sobre" data-finition="${l.id}">Finition</button></div></div>`; }).join('')}
+      ${C.lots.length >= 2 ? `<button class="btn" id="chai-assembler" ${lotsChoisis.size < 2 ? 'disabled' : ''}>Assembler les ${lotsChoisis.size >= 2 ? lotsChoisis.size + ' ' : ''}lots cochés</button>` : ''}`;
+  }
+
+  $('#ecran-chai').addEventListener('click', (ev) => {
+    const t = ev.target, C = chai();
+    const b = t.closest('button'); if (!b) return;
+    const f = C.futs.find((x) => x.id === choixFut);
+    if (b.dataset.fut) {
+      const g = C.futs.find((x) => x.id === b.dataset.fut);
+      if (modeChai && modeChai.type === 'finition') { const lot = C.lots.find((l) => l.id === modeChai.lot); if (g.contenu || !g.pos) { toast('Il faut un fût vide, rangé dans le chai.'); return; } verserFinition(lot, g); return; }
+      choixFut = g.id; modeChai = null; son('clic'); rendreChai();
+      if (choixFut) setTimeout(() => $('#chai-detail').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'nearest' }), 30);
+      return;
+    }
+    if (b.dataset.case) {
+      const [r, c] = b.dataset.case.split(':').map(Number);
+      if (modeChai && modeChai.type === 'placer') {
+        const g = C.futs.find((x) => x.id === modeChai.fut);
+        if (!peutPlacer(g, r, c)) { son('rate'); toast(`Pas assez de place : ${CH.TAILLES[g.taille].nom.toLowerCase()} = ${CH.TAILLES[g.taille].w} case${CH.TAILLES[g.taille].w > 1 ? 's' : ''}.`); return; }
+        g.pos = { r, c }; modeChai = null; son('sac'); tuto('chai-place'); sauver(); rendreChai(); return;
+      }
+      return;
+    }
+    if (b.id === 'chai-annuler') { modeChai = null; rendreChai(); return; }
+    if (b.id === 'chai-etendre') {
+      const cout = coutTravee(C.cols);
+      if (S.ecus < cout || C.cols >= PLAFOND_TRAVEES) return;
+      S.ecus -= cout; C.cols++; son('ok'); toast(`Le chai gagne une travée : ${C.cols} sur ${PLAFOND_TRAVEES}.`); sauver(); majEntete(); rendreChai(); return;
+    }
+    if (b.id === 'fut-deplacer' && f) { modeChai = { type: 'placer', fut: f.id }; son('clic'); rendreChai(); $('#chai-grille').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'start' }); return; }
+    if (b.id === 'fut-cour' && f && !f.contenu) { f.pos = null; sauver(); rendreChai(); return; }
+    if (b.dataset.remplir && f) { const x = S.carnet.find((e) => e.id === b.dataset.remplir); if (x) remplir(f, x); return; }
+    if (b.id === 'fut-completer' && f) {
+      const edv = edvDisponibles();
+      direLise('Avec quelle eau-de-vie compléter ? Les profils se mélangent au prorata de l\'alcool.', edv.slice(0, 4).map((x) => ({ lib: x.nom.slice(0, 28), f: () => { messageMentor = null; remplir(f, x); majMentor(); } })));
+      return;
+    }
+    if (b.id === 'fut-sortir' && f && f.contenu) { sortirDuFut(f); return; }
+    if (b.dataset.embouteiller) { embouteiller(C.lots.find((l) => l.id === b.dataset.embouteiller)); return; }
+    if (b.dataset.finition) {
+      const vides = C.futs.filter((x) => x.pos && !x.contenu);
+      if (!vides.length) { direLise('Il te faut un fût vide rangé dans le chai. Commande un ex-sherry ou un ex-armagnac au pigeonnier : 6 à 24 mois suffisent pour une finition.'); return; }
+      modeChai = { type: 'finition', lot: b.dataset.finition }; choixFut = null; son('clic'); rendreChai(); $('#chai-grille').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'start' }); return;
+    }
+    if (b.id === 'chai-assembler' && lotsChoisis.size >= 2) {
+      const ls = C.lots.filter((l) => lotsChoisis.has(l.id));
+      const e = CH.assembler(ls.map((l) => l.etat));
+      const lot = { id: Date.now().toString(36), nom: CH.nom(e, CH.bouteilles(e).degre), etat: e, noms: [...new Set(ls.flatMap((l) => l.noms))] };
+      C.lots = C.lots.filter((l) => !lotsChoisis.has(l.id)); C.lots.push(lot); lotsChoisis = new Set();
+      son('ok'); toast(`Assemblage de ${ls.length} lots : l'âge retenu est celui du plus jeune.`); sauver(); rendreChai();
+    }
+  });
+  $('#ecran-chai').addEventListener('input', (ev) => {
+    if (ev.target.id !== 'fut-ans') return;
+    const f = chai().futs.find((x) => x.id === choixFut); if (!f || !f.contenu) return;
+    f.contenu.ans = +ev.target.value; majApercu(f); sauver();
+  });
+  $('#ecran-chai').addEventListener('change', (ev) => {
+    const id = ev.target.dataset.lotcoche; if (!id) return;
+    if (ev.target.checked) lotsChoisis.add(id); else lotsChoisis.delete(id);
+    rendreLots();
+  });
+
+  function embouteiller(lot) {
+    if (!lot) return;
+    const C = chai(), e = lot.etat, note = CH.noter(e), bt = CH.bouteilles(e), nomLegal = CH.nom(e, bt.degre);
+    const gain = S.bac || !note.presentable ? 0 : Math.round(note.total) + Math.min(15, Math.floor(bt.n / 20));
+    const palierAvant = palierAtteint();
+    S.points += gain;
+    const entree = {
+      id: Date.now().toString(36), type: 'vieilli', date: new Date().toISOString(), nom: `${nomLegal} · ${lot.noms[0]}`, style: nomLegal,
+      total: note.total, lignes: note.lignes, medaille: note.presentable ? note.medaille : null, defauts: note.defauts.map((d) => d.nom),
+      ebc: e.couleur * 0.6, abv: bt.degre, bouteilles: bt.n, volume: bt.V, age: e.ageMin, futs: e.futs, profil: CH.profil(e), sources: lot.noms,
+      mode: S.mode, bac: S.bac, gain, etoiles: {}, brutDeFut: bt.brutDeFut, assemblage: e.assemblage || 0,
+    };
+    S.carnet.unshift(entree);
+    C.lots = C.lots.filter((l) => l !== lot); lotsChoisis.delete(lot.id);
+    const nouveaux = verifierSuccesChai(entree);
+    const ecus = gagnerEcus(note.presentable ? Math.round(note.total / 2) + (BONUS_MEDAILLE[entree.medaille] || 0) + Math.floor(bt.n / 10) : 0);
+    dernier = { type: 'vieilli', entree, note, etat: e, bt, gain, ecus, nouveaux, palierMonte: palierAtteint() > palierAvant, cadeaux: [] };
+    dernier.cadeaux = verifierDecouvertes('vieilli', { entree, note });
+    sauver(); majEntete();
+    aller('degustation');
+    rendreDegustationVieilli();
+  }
+  function verifierSuccesChai(e) {
+    const gagne = [];
+    const ok = (id, cond) => { if (cond && !S.succes[id]) { S.succes[id] = e.date; gagne.push(SUCCES.find((x) => x.id === id).nom); } };
+    if (S.bac) return gagne;
+    ok('compte', true);
+    ok('whisky', /^Whisky/.test(e.style));
+    ok('double', e.futs.length >= 2 && new Set(e.futs.map((f) => f.type)).size >= 2);
+    ok('maitrechai', e.medaille === 'or');
+    ok('anges', e.age >= 12 && e.medaille);
+    return gagne;
+  }
+  function rendreDegustationVieilli() {
+    const { entree: e, note, etat, bt, gain, nouveaux, palierMonte } = dernier;
+    const liquide = couleur(etat.couleur * 0.6);
+    const ctx = $('#verre').getContext('2d');
+    // Verre tulipe de dégustation, robe ambrée
+    const dessin = (p) => {
+      const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
+      ctx.clearRect(0, 0, 64, 96); px(0, 0, 64, 96, '#221912');
+      const larg = (y) => (y < 30 ? 9 + (y - 10) * 0.25 : 14 - Math.max(0, y - 44) * 0.5);
+      for (let y = 10; y < 62; y++) {
+        const w = Math.max(1, larg(y));
+        px(32 - w - 1, y, 1, 1, '#9aa1a8'); px(32 + w, y, 1, 1, '#9aa1a8');
+        if (y > 62 - 14 * p) px(32 - w, y, w * 2, 1, liquide);
+      }
+      px(25, 49, 2, 8, 'rgba(255,255,255,.35)');
+      px(31, 62, 2, 20, '#9aa1a8'); px(22, 82, 20, 3, '#9aa1a8');
+    };
+    if (reduit) dessin(1); else { const t0 = performance.now(); const f = (ts) => { const p = Math.min(1, (ts - t0) / 1400); dessin(p); if (p < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); }
+    const med = e.medaille;
+    $('#verdict').innerHTML = `<span class="style">${esc(e.style)}</span>
+      <span class="total">${nf(note.total, note.total % 1 ? 1 : 0)}<small>/50</small></span>
+      <span class="medaille ${med || 'aucune'}">${!note.presentable ? 'Trop peu pour le jury' : med ? `Médaille ${med === 'or' ? "d'or" : med === 'argent' ? "d'argent" : 'de bronze'}` : 'Pas de médaille'}</span>
+      <span class="style">${bt.n} bouteilles de ${nf(CH.P.bouteilleL * 100, 0)} cl à ${nf(bt.degre, 1)} %${bt.brutDeFut ? ' (brut de fût)' : ''} · ${etat.assemblage ? `assemblage de ${etat.assemblage} lots` : e.futs.map((x) => `${CH.TYPES[x.type].nom} ${nf(x.ans, x.ans % 1 ? 1 : 0)} an${x.ans >= 2 ? 's' : ''}`).join(', puis ')}</span>`;
+    $('#radar').innerHTML = radarSVG(CH.AXES.map((k) => [k, CH.LIB_AXES[k]]), CH.profil(etat));
+    const rang = Object.entries(CH.LIB_LIGNES);
+    $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · SPIRITUEUX VIEILLI</h3><table>${rang.map(([k, [lib, max]], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><td>${lib}</td><td>${nf(note.lignes[k], note.lignes[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
+      <tr class="total lent" style="animation-delay:${0.4 + rang.length * 0.35}s"><td>Total</td><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
+    $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)}</span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p></div>`).join('') : '';
+    const pip = CH.pipette(etat);
+    const g = [];
+    g.push(`<b>À la pipette :</b> ${esc(pip.notes.map((x) => x.mot).join(', ') || 'alcool blanc')}${pip.bouche.length ? ` · ${esc(pip.bouche.join(', '))}` : ''}.`);
+    g.push(S.bac ? 'Bac à sable : cette mise ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} en bourse.`);
+    (dernier.cadeaux || []).forEach((c) => g.push(`Découverte : ${esc(c)}`));
+    if (!/^Whisky/.test(e.style) && etat.sources.every((s) => s !== 'biere') && etat.ageMin < 3) g.push(`Moins de trois ans en fût : pas encore le droit au nom de whisky (règlement UE 2019/787).`);
+    if (etat.sources.includes('biere')) g.push('Distillée d\'une bière houblonnée, elle reste une eau-de-vie de bière. Pour un whisky, distille un wash de malt sans houblon.');
+    if (palierMonte) g.push(`Nouveaux ingrédients débloqués : ${PALIERS[palierAtteint()].txt}.`);
+    nouveaux.forEach((n) => g.push(`★ Succès : ${esc(n)}`));
+    $('#degust-gains').innerHTML = `<div class="gains">${g.map((x) => `<p>${x}</p>`).join('')}</div>`;
+    $('#nom-cuvee').value = e.nom;
+    $('#btn-rebrasser').textContent = 'Retour au chai';
+    const bilan = med === 'or' ? 'Celui-là, je le garde pour les grandes occasions. Le bois et le distillat se parlent.' : med ? 'Un beau compte. Le temps a fait sa part, toi la tienne.' : 'Le bois ne rattrape pas tout. Écoute la pipette avant de sortir le fût.';
+    const pire = note.defauts.slice().sort((a, b) => b.gravite - a.gravite)[0];
+    setTimeout(() => { if (ecran === 'degustation') direLise(bilan + (pire ? ` À corriger d'abord : ${pire.nom.toLowerCase()}.` : '')); }, reduit ? 0 : 2400);
+    setTimeout(() => son(med ? 'medaille' : 'rate'), reduit ? 0 : 2200);
+    nouveaux.forEach((n, i) => setTimeout(() => toast('★ ' + n), 2600 + i * 900));
+  }
+  // Guide du chai : Firmin suit l'avancée tant que l'aide est active
+  let aideChaiFermee = false;
+  function conseilChai() {
+    if (!S.aide || aideChaiFermee) return null;
+    const C = chai();
+    if (modeChai) return null;
+    if (!C.futs.some((f) => f.contenu) && !C.lots.length) {
+      if (!edvDisponibles().length) return 'Le chai. En haut sous les tuiles il fait chaud et sec, en bas contre la pierre frais et humide. Je t\'ai prêté un quartaut ex-bourbon. Il te faut d\'abord une eau-de-vie : un wash de malt distillé dans Ulysse fera un vrai whisky.';
+      return 'Touche le quartaut, puis choisis une eau-de-vie du carnet pour le remplir. 57 litres : un cœur de 1000 L de wash y tient presque entier.';
+    }
+    if (C.futs.some((f) => f.contenu) && !C.lots.length && !S.succes.compte) return 'Le temps ici se règle au curseur. Fais glisser les années : regarde la couleur, les anges, la pipette. Monte ou descends le fût d\'une rangée pour sentir le climat. Sors-le quand c\'est mûr.';
+    return null;
+  }
+
+  // =====================================================================
+  // Recherche d'ingrédients
+  // =====================================================================
+  const normTxt = (t) => String(t ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const singulier = (w) => (w.length > 3 ? w.replace(/(s|x)$/, '') : w);
+  // Mots-clés élargis : « agrumes » trouve aussi citron, pamplemousse, orange…
+  const SYNONYMES = {
+    agrume: ['agrume', 'citron', 'pamplemousse', 'orange', 'citrus', 'lime', 'bergamote', 'yuzu', 'mandarine'],
+    tropical: ['tropical', 'mangue', 'ananas', 'passion', 'litchi', 'goyave', 'papaye', 'melon'],
+    noble: ['noble', 'hallertau', 'saaz', 'tettnang', 'spalt', 'mittelfruh', 'tradition'],
+    torrefie: ['torrefi', 'roast', 'cafe', 'chocolat', 'carafa', 'black', 'noir'],
+    neutre: ['neutre', 'propre', 'clean'],
+    banane: ['banane', 'weizen', 'hefe', 'clou de girofle'],
+    fume: ['fume', 'smok', 'tourb', 'peat', 'rauch'],
+    vanille: ['vanille', 'bourbon'],
+    epice: ['epic', 'poivre', 'girofle', 'cannelle', 'coriandre', 'muscade'],
+    miel: ['miel', 'honey'],
+    lager: ['lager', 'bock', 'helles'],
+    stout: ['stout', 'porter'],
+    resine: ['resin', 'pin', 'dank'],
+    fruit: ['fruit', 'frais', 'baie', 'cerise', 'framboise', 'peche', 'abricot'],
+    biscuit: ['biscuit', 'pain', 'grill', 'noisette', 'toast'],
+    caramel: ['caramel', 'crystal', 'cara', 'toffee'],
+    ble: ['ble', 'wheat', 'froment', 'weizen'],
+    seigle: ['seigle', 'rye'],
+    distillerie: ['distill', 'wash', 'whisky'],
+  };
+  const SUGGESTIONS = ['agrumes', 'tropical', 'noble', 'torréfié', 'caramel', 'neutre', 'banane', 'lager', 'IPA', 'stout', 'fumé', 'épicé', 'vanille', 'miel', 'seigle', 'distillerie'];
+  const CAT_RECH = {
+    cereales: { lib: 'Céréales', cat: 'cereales', liste: () => D.malts, texte: (m) => `${m.nom} ${FAMILLES[m.fam]} ${m.fam} ${m.saveurs || ''} ${m.pays || ''} malt cereale ${m.gel ? 'grain cru' : ''}` },
+    houblons: { lib: 'Houblons', cat: 'houblons', liste: () => D.houblons, texte: (h) => `${h.nom} ${h.pays} ${h.aromes || ''} ${h.styles || ''} ${{ bittering: 'amerisant', aroma: 'aromatique', dual: 'amerisant aromatique' }[h.usage] || ''} houblon` },
+    levures: { lib: 'Levures', cat: 'levures', liste: () => D.levures, texte: (y) => `${y.nom} ${y.fam} ${{ ale: 'ale', lager: 'lager basse', specialty: 'speciale', distilling: 'distillerie wash' }[y.fam]} ${y.desc || ''} levure ${y.ester > 1 ? 'fruite ester' : ''} ${y.phenol ? 'phenol epice' : ''} ${y.sauvage ? 'sauvage brett' : ''}` },
+    aromates: { lib: 'Aromates', cat: 'aromates', liste: () => D.aromates, texte: (a) => `${a.nom} ${a.type} ${a.notes} aromate` },
+    eau: { lib: 'Sels', cat: 'eau', liste: () => D.sels, texte: (x) => `${x.nom} ${x.note} sel eau mineral` },
+    auxiliaires: { lib: 'Auxiliaires', cat: 'auxiliaires', liste: () => D.auxiliaires, texte: (a) => `${a.nom} ${a.groupe} ${a.note} ${a.usage || ''}` },
+    grimoire: { lib: 'Recettes', cat: 'grimoire', liste: () => D.recettes, texte: (r) => `${r.nom} ${r.style || ''} recette` },
+    futs: { lib: 'Fûts', cat: 'futs', liste: () => ARTICLES_FUTS, texte: (f) => `${f.nom} ${CH.TYPES[f.type].bois} ${CH.TYPES[f.type].desc} ${CH.TYPES[f.type].vinNotes || ''} fut chai` },
+    fiches: { lib: 'Fiches', cat: 'fiches', liste: () => Object.entries(FICHES).map(([id, [titre, en, ps]]) => ({ id, nom: titre, en, ps })), texte: (f) => `${f.nom} ${f.en} ${f.ps.join(' ')}` },
+  };
+  let INDEX_RECH = null;
+  function indexRecherche() {
+    if (INDEX_RECH) return INDEX_RECH;
+    INDEX_RECH = [];
+    for (const [k, c] of Object.entries(CAT_RECH)) for (const x of c.liste()) INDEX_RECH.push({ k, x, nom: normTxt(x.nom), txt: normTxt(c.texte(x)) });
+    return INDEX_RECH;
+  }
+  const rq = { q: '', cat: 'tout', etat: 'tout', tri: 'pertinence' };
+  function chercher() {
+    const mots = normTxt(rq.q).split(' ').filter(Boolean).map(singulier);
+    const res = [];
+    for (const it of indexRecherche()) {
+      if (rq.cat !== 'tout' && it.k !== rq.cat) continue;
+      let score = 0, ok = true;
+      for (const m of mots) {
+        const alts = SYNONYMES[m] || Object.entries(SYNONYMES).find(([cle]) => cle.startsWith(m) && m.length >= 4)?.[1] || [m];
+        let s = 0;
+        for (const a of alts) {
+          if (it.nom.startsWith(a)) s = Math.max(s, 12);
+          else if (new RegExp('(^| )' + a).test(it.nom)) s = Math.max(s, 9);
+          else if (it.nom.includes(a)) s = Math.max(s, 6);
+          else if (new RegExp('(^| )' + a).test(it.txt)) s = Math.max(s, a === m ? 4 : 3);
+          else if (it.txt.includes(a)) s = Math.max(s, 2);
+        }
+        if (!s) { ok = false; break; }
+        score += s;
+      }
+      if (!ok) continue;
+      if (mots.length && it.nom === mots.join(' ')) score += 20;
+      // À score égal, les ingrédients passent devant les recettes et les fiches
+      if (it.k === 'grimoire' || it.k === 'fiches') score *= 0.6;
+      const poss = possedeArticle(it.k, it.x);
+      if (rq.etat === 'possede' && !poss) continue;
+      if (rq.etat === 'achat' && (poss || it.k === 'fiches')) continue;
+      res.push({ ...it, score, poss });
+    }
+    const val = { ebc: (r) => (r.k === 'cereales' ? r.x.ebc : -1), alpha: (r) => (r.k === 'houblons' ? r.x.alpha : -1), att: (r) => (r.k === 'levures' ? r.x.att[1] : -1) };
+    const tri = {
+      pertinence: (a, b) => b.score - a.score || (a.x.palier || 0) - (b.x.palier || 0) || a.x.nom.localeCompare(b.x.nom, 'fr'),
+      nom: (a, b) => a.x.nom.localeCompare(b.x.nom, 'fr'),
+      rarete: (a, b) => (a.x.palier || 0) - (b.x.palier || 0) || a.x.nom.localeCompare(b.x.nom, 'fr'),
+      ebc: (a, b) => val.ebc(b) - val.ebc(a), alpha: (a, b) => val.alpha(b) - val.alpha(a), att: (a, b) => val.att(b) - val.att(a),
+    }[rq.tri];
+    return res.sort(tri);
+  }
+  function possedeArticle(k, x) {
+    if (k === 'fiches') return true;
+    if (k === 'grimoire') return possedeRecette(x);
+    if (k === 'futs') return chai().futs.some((f) => f.type === x.type && f.taille === x.taille);
+    return dispo(x);
+  }
+  function entrerRecherche() {
+    $('#rech-suggestions').innerHTML = SUGGESTIONS.map((s) => `<button class="filtre" data-suggestion="${esc(s)}">${esc(s)}</button>`).join('');
+    rendreFiltresRecherche(); rendreResultats();
+    if (!rq.q && window.innerWidth > 700) setTimeout(() => $('#rech-champ').focus(), 50);
+  }
+  function rendreFiltresRecherche() {
+    const cats = [['tout', 'Tout'], ...Object.entries(CAT_RECH).map(([k, c]) => [k, c.lib])];
+    $('#rech-filtres').innerHTML = `<div class="filtres">${cats.map(([k, v]) => `<button class="filtre" data-rcat="${k}" aria-pressed="${rq.cat === k}">${v}</button>`).join('')}</div>
+      <div class="filtres">${[['tout', 'Tout'], ['possede', 'Possédés'], ['achat', 'À acheter']].map(([k, v]) => `<button class="filtre" data-retat="${k}" aria-pressed="${rq.etat === k}">${v}</button>`).join('')}
+      <label class="tri">Trier <select id="rech-tri">${[['pertinence', 'pertinence'], ['nom', 'nom'], ['rarete', 'rareté'], ['ebc', 'couleur EBC'], ['alpha', 'acides alpha'], ['att', 'atténuation']].map(([k, v]) => `<option value="${k}" ${rq.tri === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>`;
+  }
+  function rendreResultats() {
+    const res = chercher(), total = res.length;
+    const vue = res.slice(0, 40);
+    $('#rech-compte').textContent = rq.q || rq.cat !== 'tout' || rq.etat !== 'tout' ? `${total} résultat${total > 1 ? 's' : ''}` : `${total} fiches au total : tape un mot ou touche une suggestion`;
+    $('#rech-resultats').innerHTML = vue.map((r) => {
+      const c = CAT_RECH[r.k];
+      let carte;
+      if (r.k === 'fiches') carte = `<div class="article possede"><span class="nom">${esc(r.x.nom)}</span><button class="btn btn-sobre" data-fiche="${r.x.id}">Lire</button><span class="det">${esc(r.x.ps[0].slice(0, 140))}…</span></div>`;
+      else carte = carteArticle(r.x, c.cat);
+      const cuve = r.poss && ['cereales', 'houblons', 'levures', 'aromates', 'eau', 'auxiliaires'].includes(r.k)
+        ? `<button class="btn btn-mini btn-houblon" data-cuve="${r.k}:${esc(r.x.id)}">${r.k === 'levures' ? (R.levure === r.x.id ? 'Choisie' : 'Choisir pour la cuve') : r.k === 'eau' ? 'Doser à la brasserie' : r.k === 'auxiliaires' ? (R.auxiliaires.includes(r.x.id) ? 'Dans la cuve' : 'Ajouter au brassin') : 'Ajouter à la cuve'}</button>` : '';
+      const voirChai = r.k === 'futs' && r.poss ? '<button class="btn btn-mini btn-sobre" data-aller="chai">Voir au chai</button>' : '';
+      return `<div class="resultat"><span class="etq cat-etq">${c.lib}</span>${carte}${cuve || voirChai ? `<div class="actions-fut">${cuve}${voirChai}</div>` : ''}</div>`;
+    }).join('') || '<p class="vide">Rien ne correspond. Essaie un autre mot, ou retire un filtre.</p>';
+    if (total > 40) $('#rech-resultats').insertAdjacentHTML('beforeend', `<p class="page-intro">${total - 40} autres : ajoute un mot pour affiner.</p>`);
+  }
+  $('#rech-champ').addEventListener('input', (e) => { rq.q = e.target.value; rendreResultats(); });
+  $('#ecran-recherche').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button'); if (!b) return;
+    if (b.dataset.suggestion) { rq.q = b.dataset.suggestion; $('#rech-champ').value = rq.q; son('clic'); rendreResultats(); return; }
+    if (b.dataset.rcat) { rq.cat = b.dataset.rcat; son('clic'); rendreFiltresRecherche(); rendreResultats(); return; }
+    if (b.dataset.retat) { rq.etat = b.dataset.retat; son('clic'); rendreFiltresRecherche(); rendreResultats(); return; }
+    if (b.dataset.acheter) { const [cat, ...id] = b.dataset.acheter.split(':'); acheter(cat, id.join(':')); return; }
+    if (b.dataset.brasser) { brasserRecette(b.dataset.brasser); return; }
+    if (b.dataset.cuve) {
+      const [k, ...p] = b.dataset.cuve.split(':'), id = p.join(':');
+      if (k === 'cereales') ajouterMalt(id);
+      else if (k === 'houblons') ajouterHoublon(id);
+      else if (k === 'levures') { choisirLevure(id); tuto('levure'); }
+      else if (k === 'aromates') ajouterAromate(id);
+      else if (k === 'auxiliaires') { if (!R.auxiliaires.includes(id)) R.auxiliaires.push(id); son('clic'); }
+      else if (k === 'eau') { onglet = 'eau'; aller('brasserie'); return; }
+      sauver();
+      const x = CAT_RECH[k].liste().find((e) => e.id === id);
+      toast(`${x.nom} : dans la cuve. Densité ${sg(Moteur.calculer(R).og)}.`);
+      rendreResultats();
+    }
+  });
+  $('#ecran-recherche').addEventListener('change', (ev) => {
+    if (ev.target.id !== 'rech-tri') return;
+    rq.tri = ev.target.value;
+    // Trier par EBC, alpha ou atténuation n'a de sens que dans sa famille
+    const fam = { ebc: 'cereales', alpha: 'houblons', att: 'levures' }[rq.tri];
+    if (fam) rq.cat = fam;
+    rendreFiltresRecherche(); rendreResultats();
+  });
+
+  // =====================================================================
   // Pigeonnier : catalogue, découvertes, grimoire
   // =====================================================================
   let catOnglet = 'cereales', catFiltre = 'achat', catRecherche = '';
@@ -1584,9 +2075,14 @@
     eau: { lib: 'Sels', liste: () => D.sels, det: (x) => esc(x.note) },
     aromates: { lib: 'Aromates', liste: () => D.aromates, det: (a) => `<b>${esc(a.notes)}</b> · usage ${nf(a.dose[0], 1)}–${nf(a.dose[1], 0)} g/L` },
     auxiliaires: { lib: 'Auxiliaires', liste: () => D.auxiliaires, det: (a) => `<b>${esc(a.groupe)}</b> · ${esc(a.note)}` },
+    futs: { lib: 'Fûts', liste: () => ARTICLES_FUTS, det: (f) => `<b>${CH.TAILLES[f.taille].L} L</b> · ${CH.TAILLES[f.taille].w} case${CH.TAILLES[f.taille].w > 1 ? 's' : ''} au chai · ${esc(CH.TYPES[f.type].bois)} · ${esc(CH.TYPES[f.type].desc)}` },
     grimoire: { lib: 'Grimoire', liste: () => D.recettes, det: (r) => `<b>${esc(r.style || '')}</b>${r.og ? ` · OG ${sg(r.og)}` : ''}${r.ibu ? ` · ${Math.round(r.ibu)} IBU` : ''}` },
   };
   const possedeRecette = (r) => S.bac || S.grimoire.includes(r.id);
+  // Fûts : chaque combinaison type × taille, achetable plusieurs fois
+  const ARTICLES_FUTS = Object.keys(Chai.TYPES).flatMap((type) => Object.keys(Chai.TAILLES).map((taille) => ({
+    id: `${type}:${taille}`, type, taille, nom: `${Chai.TAILLES[taille].nom} ${Chai.TYPES[type].nom.toLowerCase()}`, palier: Chai.TYPES[type].rarete })));
+  const nbFuts = (x) => (S.chai ? S.chai.futs.filter((f) => f.type === x.type && f.taille === x.taille).length : 0);
   const etoilesRarete = (r) => '★'.repeat(Math.max(1, r)) + '☆'.repeat(Math.max(0, 5 - Math.max(1, r)));
 
   function rendreCatalogue() {
@@ -1594,13 +2090,13 @@
     $('#cat-bourse').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${niveau()} : tu peux acheter jusqu'à la rareté ${'★'.repeat(Math.min(5, p + 1))}. ${PALIERS[p + 1] ? `Au prochain niveau (${PALIERS[p + 1].pts} points) : ${PALIERS[p + 1].txt}.` : ''}</p>
       <button class="btn btn-mini btn-houblon" data-aller="veillee">Veillée : gagner des écus</button>`;
     $('#cat-onglets').innerHTML = Object.entries(CATEGORIES).map(([id, c]) => {
-      const l = c.liste(), n = id === 'grimoire' ? l.filter(possedeRecette).length : l.filter(dispo).length;
+      const l = c.liste(), n = id === 'grimoire' ? l.filter(possedeRecette).length : id === 'futs' ? l.filter((x) => nbFuts(x)).length : l.filter(dispo).length;
       return `<button class="onglet" role="tab" aria-selected="${catOnglet === id}" data-cat="${id}">${c.lib}<span class="badge">${n}/${l.length}</span></button>`;
     }).join('');
     const c = CATEGORIES[catOnglet];
     const filtres = [['achat', 'À acheter'], ['possede', 'Possédés'], ['tous', 'Tous']];
     let liste = c.liste().filter((x) => !catRecherche || `${x.nom} ${x.style || ''} ${x.aromes || ''} ${x.notes || ''}`.toLowerCase().includes(catRecherche.toLowerCase()));
-    const estPossede = (x) => (catOnglet === 'grimoire' ? possedeRecette(x) : dispo(x));
+    const estPossede = (x) => (catOnglet === 'grimoire' ? possedeRecette(x) : catOnglet === 'futs' ? nbFuts(x) > 0 : dispo(x));
     if (catFiltre === 'achat') liste = liste.filter((x) => !estPossede(x));
     if (catFiltre === 'possede') liste = liste.filter(estPossede);
     liste.sort((a, b) => (a.palier || 0) - (b.palier || 0) || a.nom.localeCompare(b.nom, 'fr'));
@@ -1613,6 +2109,12 @@
     rendreDecouvertes();
   }
   function carteArticle(x, cat) {
+    if (cat === 'futs') {
+      const prix = prixFut(x.type, x.taille), ok = achetable(x), n = nbFuts(x);
+      const action = ok ? `<button class="btn" data-acheter="futs:${esc(x.id)}" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>` : `<span class="etq ko">${PALIERS[Math.max(0, x.palier - 1)].pts} pts requis</span>`;
+      return `<div class="article ${n ? 'possede' : ''} ${!ok ? 'hors' : ''}"><span class="nom"><span class="fut-mini fut-${x.type}"></span>${esc(x.nom)} <span class="rarete">${etoilesRarete(x.palier)}</span></span>${action}
+        <span class="det">${CATEGORIES.futs.det(x)}${n ? ` · <b>${n} au chai</b>` : ''}</span></div>`;
+    }
     const recette = cat === 'grimoire';
     const possede = recette ? possedeRecette(x) : dispo(x);
     const prix = prixDe(x, cat), ok = recette || achetable(x);
@@ -1637,6 +2139,17 @@
     return m;
   }
   function acheter(cat, id) {
+    if (cat === 'futs') {
+      const a = ARTICLES_FUTS.find((e) => e.id === id); if (!a) return;
+      const prix = prixFut(a.type, a.taille);
+      if (S.ecus < prix || !achetable(a)) { son('rate'); return; }
+      S.ecus -= prix;
+      const f = nouveauFut(a.type, a.taille); chai().futs.push(f);
+      f.pos = placeLibre(f);
+      son('ok'); toast(`${a.nom} livré ${f.pos ? `au chai, rangée ${CH.ZONES[f.pos.r].id}` : 'dans la cour : le chai est plein'}.`);
+      sauver(); majEntete(); if (ecran === 'recherche') rendreResultats(); else rendreCatalogue();
+      return;
+    }
     const x = cat === 'grimoire' ? IDX.recette.get(id) : CATEGORIES[cat].liste().find((e) => e.id === id);
     if (!x) return;
     const prix = prixDe(x, cat);
@@ -1644,7 +2157,7 @@
     S.ecus -= prix;
     if (cat === 'grimoire') S.grimoire.push(id); else posseder(id);
     son('ok'); toast(`${x.nom} ${cat === 'grimoire' ? 'ajoutée au grimoire' : 'arrive par pigeon'}.`);
-    sauver(); majEntete(); rendreCatalogue();
+    sauver(); majEntete(); if (ecran === 'recherche') rendreResultats(); else rendreCatalogue();
   }
   function brasserRecette(id) {
     const r = IDX.recette.get(id); if (!r) return;
@@ -1675,6 +2188,9 @@
   // Découvertes : des exploits qui font arriver des ingrédients en cadeau
   const parNom = (liste, re) => liste.find((x) => re.test(x.nom));
   const DECOUVERTES = [
+    { id: 'tonnelier', titre: 'Le tonnelier passe', desc: 'Distiller un wash de malt', cadeaux: () => [{ fut: ['domaine', 'quartaut'], nom: 'Quartaut de chêne du domaine' }], test: (e, c) => e === 'edv' && c.entree.source !== 'biere' },
+    { id: 'jerez', titre: 'Retour de Jerez', desc: 'Mettre un premier fût en bouteille', cadeaux: () => [{ fut: ['sherry', 'quartaut'], nom: 'Quartaut ex-sherry' }], test: (e) => e === 'vieilli' },
+    { id: 'islay', titre: 'Un fût d\'Islay', desc: 'Un whisky médaillé', cadeaux: () => [{ fut: ['tourbe', 'barrique'], nom: 'Barrique ex-tourbé' }], test: (e, c) => e === 'vieilli' && c.note.medaille && /^Whisky/.test(c.entree.style) },
     { id: 'clarif', titre: 'Premier brassin', desc: 'Brasser une première bière', cadeaux: () => [parNom(D.auxiliaires, /^Whirlfloc/)], test: (e) => e === 'biere' },
     { id: 'hygiene', titre: 'Leçon d\'hygiène', desc: 'Subir une infection', cadeaux: () => [parNom(D.auxiliaires, /^Star San/)], test: (e, c) => c.infection },
     { id: 'noir', titre: 'Nuit noire', desc: 'Un stout ou un porter médaillé', cadeaux: () => [parNom(D.malts, /^CARAFA II Special/), parNom(D.malts, /^Special B Dingemans/)], test: (e, c) => e === 'biere' && c.note.medaille && ['stout', 'porter'].includes(c.res.style.style.sujet) },
@@ -1699,6 +2215,7 @@
       if (!ok) continue;
       S.decouvertes[d.id] = new Date().toISOString();
       for (const x of d.cadeaux().filter(Boolean)) {
+        if (x.fut) { const f = nouveauFut(...x.fut); chai().futs.push(f); f.pos = placeLibre(f); recus.push(`${d.titre} : ${nomFut(f)}`); continue; }
         if (dispo(x)) { gagnerEcus(10); recus.push(`${d.titre} : ${x.nom} déjà en réserve, +10 écus`); }
         else { posseder(x.id); recus.push(`${d.titre} : ${x.nom}`); }
       }
@@ -1764,6 +2281,12 @@
   // =====================================================================
   // Fiche technique du wash
   // =====================================================================
+  // Malts fumés ou tourbés : leurs phénols passent en partie à la distillation
+  function maltsFumes(b) {
+    const ms = (b.recette && b.recette.malts) || [], tot = ms.reduce((a, l) => a + l.kg, 0);
+    const fum = ms.filter((l) => /fum|smok|rauch|tourb|peat/i.test(IDX.malt.get(l.id)?.nom || '')).reduce((a, l) => a + l.kg, 0);
+    return tot ? Math.min(10, (fum / tot) * 12) : 0;
+  }
   function nomEauDeVie(b) {
     if (b.type !== 'wash') return 'Eau-de-vie de bière';
     const ms = (b.recette.malts || []).map((l) => IDX.malt.get(l.id)).filter(Boolean);
@@ -1817,7 +2340,7 @@
     const et = $('#etagere');
     if (!S.carnet.length) { et.innerHTML = '<p class="vide" style="grid-column:1/-1">L\'étagère est vide. Brasse ta première bière à la brasserie.</p>'; $('#carnet-detail').innerHTML = ''; }
     else {
-      et.innerHTML = S.carnet.map((x) => `<button class="bouteille" data-bouteille="${x.id}" aria-pressed="${choixCarnet === x.id}"><canvas width="16" height="36" data-ebc="${x.ebc}" data-med="${x.medaille || ''}" data-edv="${x.type === 'edv' ? 1 : ''}"></canvas><span>${esc(x.nom)}</span></button>`).join('');
+      et.innerHTML = S.carnet.map((x) => `<button class="bouteille" data-bouteille="${x.id}" aria-pressed="${choixCarnet === x.id}"><canvas width="16" height="36" data-ebc="${x.ebc}" data-med="${x.medaille || ''}" data-edv="${x.type === 'edv' ? 1 : x.type === 'vieilli' ? 2 : ''}"></canvas><span>${esc(x.nom)}</span></button>`).join('');
       $$('.bouteille canvas', et).forEach(dessinerBouteille);
       rendreDetailCarnet();
     }
@@ -1829,7 +2352,7 @@
     if (cv.dataset.edv) {
       // Flacon d'eau-de-vie : verre clair, bouchon de liège, étiquette cuivre
       px(6, 0, 4, 3, '#b9865a'); px(6, 3, 4, 7, '#c9ced6'); px(4, 10, 8, 2, '#c9ced6'); px(2, 12, 12, 24, '#c9ced6');
-      px(3, 14, 10, 21, '#ece8dc'); px(3, 20, 10, 9, '#d27b3e'); px(4, 23, 8, 1, '#ecdfc4'); px(3, 14, 1, 21, 'rgba(255,255,255,.6)');
+      px(3, 14, 10, 21, cv.dataset.edv === '2' ? col : '#ece8dc'); px(3, 20, 10, 9, cv.dataset.edv === '2' ? '#ecdfc4' : '#d27b3e'); px(4, 23, 8, 1, '#ecdfc4'); px(3, 14, 1, 21, 'rgba(255,255,255,.6)');
       if (med) { const m = { or: '#f2c94c', argent: '#c9ced6', bronze: '#c98552' }[med]; px(10, 30, 4, 4, m); px(11, 34, 2, 2, '#e3593d'); }
       return;
     }
@@ -1841,7 +2364,18 @@
   function rendreDetailCarnet() {
     const x = S.carnet.find((e) => e.id === choixCarnet);
     if (!x) { $('#carnet-detail').innerHTML = '<p class="page-intro">Touche une bouteille pour relire sa fiche.</p>'; return; }
+    if (x.type === 'vieilli') {
+      $('#carnet-detail').innerHTML = `<div class="carnet-detail"><h3>${esc(x.nom)}</h3>
+        <p>${esc(x.style)} · ${new Date(x.date).toLocaleDateString('fr-FR')} · chai du domaine${x.bac ? ' · bac à sable' : ''}</p>
+        <div class="chiffres"><span>${nf(x.total, x.total % 1 ? 1 : 0)}/50</span><span>${x.bouteilles} bouteilles</span><span>${nf(x.abv, 1)} %</span><span>${nf(x.age, 1)} ans</span></div>
+        <p>${x.medaille ? `Médaille ${x.medaille === 'or' ? "d'or" : x.medaille === 'argent' ? "d'argent" : 'de bronze'}` : 'Sans médaille'}${x.defauts.length ? ` · défauts : ${esc(x.defauts.join(', '))}` : ' · aucun défaut'}</p>
+        <p><b>Élevage :</b> ${x.futs.map((f) => `${esc(Chai.TAILLES[f.taille].nom.toLowerCase())} ${esc(Chai.TYPES[f.type].nom.toLowerCase())}, ${nf(f.ans, f.ans % 1 ? 1 : 0)} an(s), rangée ${Chai.ZONES[f.zone].id}${f.remplissages ? `, ${f.remplissages + 1}e remplissage` : ''}`).join(x.assemblage ? ' + ' : ' → ')}${x.assemblage ? ` (assemblage de ${x.assemblage} lots)` : ''}</p>
+        <p><b>Eaux-de-vie :</b> ${esc(x.sources.join(', '))}</p>
+        <button class="btn btn-feu" data-aller="chai">Aller au chai</button></div>`;
+      return;
+    }
     if (x.type === 'edv') {
+      const reste = x.lapRestant != null ? x.lapRestant : x.coeur.lap;
       $('#carnet-detail').innerHTML = `<div class="carnet-detail"><h3>${esc(x.nom)}</h3>
         <p>Eau-de-vie de bière · ${new Date(x.date).toLocaleDateString('fr-FR')} · Ulysse · mode ${x.mode === 'expert' ? 'expert' : 'débutant'}${x.bac ? ' · bac à sable' : ''}</p>
         <div class="chiffres"><span>${nf(x.total, x.total % 1 ? 1 : 0)}/50</span><span>${nf(x.coeur.V, 1)} L</span><span>${nf(x.coeur.degre, 1)} %</span><span>${nf(x.coeur.lap, 1)} LAP</span><span>${Math.round(x.rendement * 100)} % rendement</span></div>
@@ -1849,7 +2383,8 @@
         <p><b>Bière de départ :</b> ${esc(x.biere)}</p>
         <p><b>Coupes :</b> ${x.coupes.map((c, i) => `${i ? 'queues' : 'têtes'} à ${Math.round(c.recup * 100)} % de l'alcool${c.degre ? ` (${nf(c.degre, 0)} % au bec)` : ''}`).join(' · ') || '—'}${x.recyclees ? ` · ${nf(x.recyclees, 1)} LAP d'épaisses recyclées` : ''}</p>
         ${x.aveugle != null ? `<p><b>À l'aveugle :</b> ${x.aveugle}/3</p>` : ''}
-        <button class="btn btn-feu" data-aller="distillerie">Aller à l'alambic</button></div>`;
+        <p><b>En réserve :</b> ${nf(reste, 1)} LAP${reste >= 0.5 ? ' à mettre en fût' : ', tout est entonné'}</p>
+        <div class="actions-fut"><button class="btn btn-feu" data-aller="chai">Mettre en fût</button><button class="btn btn-sobre" data-aller="distillerie">Aller à l'alambic</button></div></div>`;
       return;
     }
     const rec = x.recette;
@@ -1967,9 +2502,33 @@
       "Le jury juge la conformité au style, les arômes attendus (houblon pour une IPA, esters et phénols pour une weizen, torréfaction pour un stout) et l'équilibre BU:GU. Chaque défaut retire des points selon sa gravité.",
       "En mode débutant, des gestes ratés coûtent des points de saveur et d'impression. En mode expert, ils changent la chimie elle-même.",
       "Étoiles : sans l'aide de Lise, en mode expert, gestes joués en mode expert. Chaque étoile ajoute 5 points de maîtrise à une bière médaillée."]],
+    elevage: ['Élevage en fût', 'cask maturation', [
+      "Un spiritueux mûrit par trois familles de réactions (Russell et al., 2003). Les réactions additives : l'éthanol extrait du bois la vanilline, le syringaldéhyde, les lactones, l'eugénol, les tanins et des sucres. Les réactions soustractives : le charbon des fûts charrés adsorbe les composés soufrés, l'acétaldéhyde se combine à l'éthanol en acétal (1,1-diéthoxyéthane). Les réactions interactives : l'oxygène qui traverse les douelles oxyde les alcools supérieurs en acides, que l'éthanol estérifie en esters fruités.",
+      "La lignine du chêne (20 à 30 %) se dégrade par éthanolyse : lignine → coniféraldéhyde → vanilline. L'hémicellulose chauffée au bousinage libère furfural et 5-méthylfurfural (amande grillée, caramel).",
+      "La cis-β-méthyl-γ-octalactone, ou whisky-lactone, donne la noix de coco. Son seuil de perception est environ 20 fois plus bas que celui de l'isomère trans. Le chêne blanc américain (Quercus alba) en contient bien plus que les chênes européens, et 2 à 5 fois plus de vanilline.",
+      "Les chênes français (Q. petraea, grain fin ; Q. robur, grain plus grossier) donnent davantage d'ellagitanins : épices, structure, mais une astringence qui peut sécher la bouche dans un fût neuf.",
+      "La couleur arrive vite : le quart environ se forme dans les six premiers mois. Les arômes de bois, eux, montent d'abord vite puis lentement, à mesure que le fût s'épuise.",
+      "Dans le jeu, l'extraction suit une composante rapide qui s'épuise (constante d'environ 1,2 an) et une hydrolyse lente et régulière. Un quartaut de 57 L a environ 1,6 fois plus de surface de bois par litre qu'une barrique de 225 L : il extrait 1,6 fois plus vite. Un demi-muid de 600 L, environ 0,7 fois."]],
+    futs: ['Fûts et finitions', 'casks and finishing', [
+      "Ex-bourbon : chêne blanc américain neuf, charré, qui a contenu du bourbon (vanille, caramel, noix de coco). Le charring, 15 à 55 secondes de flamme, laisse une couche de charbon actif qui retient le soufre.",
+      "Ex-sherry oloroso : fruits secs, raisins, noix, robe acajou. Ex-Cahors : le malbec du Lot, fruits noirs et tanins fins. Ex-armagnac : pruneau, cuir et rancio. Ex-tourbé : un fût qui a contenu un whisky d'Islay rend une partie de sa fumée.",
+      "Chaque remplissage extrait environ moitié moins que le précédent (first fill, puis refill). Un fût sert 6 à 8 fois avant d'être épuisé. Dans le jeu, le potentiel d'un fût vaut 0,5 puissance le nombre de remplissages déjà faits.",
+      "La finition (cask finishing) transfère un spiritueux déjà mûr dans un second fût, pour 6 à 24 mois. Elle ajoute une couche aromatique sans effacer la première.",
+      "Le degré d'entonnage compte : les distilleries de malt entonnent entre 57 et 70 %, souvent à 63,5 %. Plus bas, l'eau extrait mieux les composés hydrosolubles (tanins, sucres) ; plus haut, l'éthanol favorise les dérivés de la lignine.",
+      "Un fût à moitié vide laisse beaucoup d'air au contact : l'oxydation dépasse l'estérification et le spiritueux devient plat. Mieux vaut un petit fût plein qu'un grand fût vide."]],
+    anges: ['Part des anges et climat du chai', "angels' share", [
+      "Le bois respire : chaque année une part du volume s'évapore. Le Hub retient 3 % par an ; en Écosse on compte environ 2 %. Sur 10 ans à 3 %, il reste 0,97¹⁰ ≈ 74 % du volume.",
+      "Le climat décide de ce qui part. Dans un chai chaud et sec (Kentucky), l'eau s'évapore plus vite que l'alcool : le degré monte. Dans un chai frais et humide (Écosse), l'alcool part plus vite : le degré baisse.",
+      "Dans le jeu, la rangée du haut perd 1,35 fois plus que la moyenne et gagne 0,3 point de degré par an ; le milieu perd 3 % et 0,15 point ; le bas perd 0,7 fois moins et 0,6 point par an. La chaleur accélère aussi l'extraction.",
+      "Après huit ans environ apparaît le rancio : noix, cire, champignon, sous-bois, issu de l'oxydation lente des acides gras et des cétones."]],
+    whisky: ['Ce qu\'on a le droit d\'appeler whisky', 'EU regulation 2019/787', [
+      "Le règlement (UE) 2019/787 définit le whisky : un moût de céréales saccharifié par les diastases du malt, fermenté par la levure, distillé à moins de 94,8 %, vieilli au moins trois ans en fût de bois de 700 litres au plus, et mis en bouteille à 40 % vol au moins.",
+      "Une eau-de-vie de malt de moins de trois ans n'a pas droit au nom. Dans le jeu, elle s'appelle « eau-de-vie de malt, N ans de fût ».",
+      "Une bière houblonnée distillée donne une eau-de-vie de bière, même vieillie. Pour un whisky, brasse un wash : du malt, une levure de distillerie, pas de houblon.",
+      "À la mise en bouteille, Firmin réduit à 45 % (paramètre du Hub) avec de l'eau de source. Un compte descendu sous 45 % est mis brut de fût. L'âge affiché est celui du plus jeune spiritueux de l'assemblage."]]
   };
   let retourFiche = null;
-  const NOMS_ECRANS = { brasserie: 'la brasserie', catalogue: 'le pigeonnier', veillee: 'la veillée', distillerie: "l'alambic", degustation: 'la dégustation', carnet: 'le carnet', domaine: 'le domaine' };
+  const NOMS_ECRANS = { brasserie: 'la brasserie', catalogue: 'le pigeonnier', chai: 'le chai', recherche: 'la recherche', veillee: 'la veillée', distillerie: "l'alambic", degustation: 'la dégustation', carnet: 'le carnet', domaine: 'le domaine' };
   function rendreFiches() {
     const retour = retourFiche && NOMS_ECRANS[retourFiche] ? `<button class="btn btn-sobre" data-aller="${retourFiche}">← Retour à ${NOMS_ECRANS[retourFiche]}</button>` : '';
     retourFiche = null;
@@ -1996,7 +2555,7 @@
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir le tutoriel</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.3 · brasserie, alambic Ulysse, pigeonnier et veillée. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.4 · brasserie, alambic Ulysse, chai, pigeonnier, veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

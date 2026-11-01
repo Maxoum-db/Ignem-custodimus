@@ -434,3 +434,77 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
   .entete-nav button { padding: 6px 5px; font-size: 12px; }
   .mesure .v { font-size: 21px; }
 }
+
+/* ---------- Chai (V0.4) ---------- */
+.btn-loupe { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; }
+.chai-plan { display: grid; gap: 10px; background: linear-gradient(#2a2018, #1c150f); box-shadow: var(--cadre); padding: 10px 8px; }
+.rangee { display: grid; gap: 4px; }
+.rangee[data-zone="0"] .cases { background: rgba(243, 176, 74, .07); }
+.rangee[data-zone="2"] .cases { background: rgba(127, 182, 214, .07); }
+.zone-lib { font-size: 12px; color: var(--cendre); line-height: 1.2; }
+.cases { display: grid; gap: 3px; padding: 3px; box-shadow: inset 0 -3px 0 #5a4632; }
+.case { min-height: 40px; border: 0; background: rgba(0, 0, 0, .25); box-shadow: inset 0 0 0 1px var(--pierre); padding: 0; }
+.case.cible { box-shadow: inset 0 0 0 2px var(--houblon); animation: clignote .8s steps(2) infinite; }
+@keyframes clignote { 50% { background: rgba(156, 201, 94, .25); } }
+.fut {
+  --bois: #b9865a; --sombre: #7a5232;
+  position: relative; min-height: 40px; border: 0; padding: 2px 3px 8px; overflow: hidden; color: var(--nuit);
+  background:
+    linear-gradient(90deg, transparent 18%, #2a2a2a 18% 23%, transparent 23% 77%, #2a2a2a 77% 82%, transparent 82%),
+    repeating-linear-gradient(0deg, var(--bois) 0 5px, var(--sombre) 5px 6px);
+  border-radius: 10px / 50%;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, .25), inset 0 -3px 0 rgba(0, 0, 0, .35);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0;
+}
+.fut.choisi { outline: 3px solid var(--braise); outline-offset: 1px; }
+.fut-abr { font-family: var(--f-titre); font-size: 8px; letter-spacing: .02em; background: rgba(236, 223, 196, .85); padding: 1px 2px; line-height: 1.2; }
+.fut-age { font-family: var(--f-chiffre); font-size: 15px; line-height: 1; color: var(--calcaire); text-shadow: 1px 1px 0 #000; }
+.fut-jauge { position: absolute; left: 22%; right: 22%; bottom: 2px; height: 4px; background: rgba(0, 0, 0, .5); }
+.fut-jauge i { display: block; height: 100%; }
+.fut-bourbon { --bois: #c49563; --sombre: #3a2a1e; }
+.fut-francais { --bois: #d2a878; --sombre: #9a7148; }
+.fut-domaine { --bois: #a8743f; --sombre: #6b4524; }
+.fut-cahors { --bois: #8a4a46; --sombre: #4a2224; }
+.fut-sherry { --bois: #7a4a2a; --sombre: #4a2a16; }
+.fut-armagnac { --bois: #9a6234; --sombre: #5e3a1e; }
+.fut-tourbe { --bois: #8a7a62; --sombre: #3e3a34; }
+.fut-mini { display: inline-block; width: 14px; height: 10px; margin-right: 6px; vertical-align: -1px; border-radius: 4px / 50%; background: var(--bois); box-shadow: inset 3px 0 0 #2a2a2a, inset -3px 0 0 #2a2a2a; }
+.chai-pied { display: flex; justify-content: flex-end; margin-top: 8px; }
+.consigne-chai { background: var(--pierre); padding: 8px 10px; margin: 0 0 8px; font-size: 14px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.cour { display: flex; flex-wrap: wrap; gap: 8px; }
+.cour .fut { height: 44px; }
+.chai-detail { margin-top: 12px; display: grid; gap: 10px; }
+.fut-tete h3 { margin: 0 0 4px; font-family: var(--f-titre); font-size: 11px; color: var(--braise); line-height: 1.5; }
+.fut-tete p { margin: 0; font-size: 14px; color: var(--cendre); }
+.fut-contenu { display: grid; gap: 10px; }
+.fut-contenu > p { margin: 0; font-size: 14px; }
+.alerte-txt { color: var(--alerte); }
+.actions-fut { display: flex; flex-wrap: wrap; gap: 8px; }
+.ligne-choix { display: grid; gap: 2px; text-align: left; width: 100%; border: 0; background: var(--four); padding: 10px; box-shadow: 0 0 0 2px var(--pierre); margin-bottom: 6px; }
+.ligne-choix span { font-size: 13px; color: var(--cendre); }
+.apercu-chai { display: grid; gap: 8px; }
+.apercu-haut { display: flex; gap: 12px; align-items: center; }
+.pastille { display: inline-block; width: 34px; height: 34px; flex: none; box-shadow: 0 0 0 2px var(--calcaire), inset -4px -4px 0 rgba(0, 0, 0, .25); }
+.lot .pastille { width: 16px; height: 16px; margin-right: 6px; vertical-align: -3px; }
+.nom-legal { margin: 0; font-family: var(--f-titre); font-size: 10px; line-height: 1.6; color: var(--calcaire); }
+.pipette { background: var(--four); padding: 8px 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 0 0 2px var(--pierre); }
+.pipette small { color: var(--cendre); }
+.radar-chai { max-width: 320px; }
+.conseil-firmin { margin: 0; font-style: italic; color: var(--braise); font-size: 15px; }
+.lot { background: var(--four); padding: 10px; box-shadow: 0 0 0 2px var(--pierre); margin-bottom: 8px; display: grid; gap: 6px; }
+.lot.choisi { box-shadow: 0 0 0 2px var(--braise); }
+.lot .det { margin: 0; font-size: 13px; color: var(--cendre); }
+
+/* ---------- Recherche (V0.4) ---------- */
+.recherche-grande { font-size: 18px; padding: 12px; margin: 6px 0 10px; }
+.suggestions { display: flex; gap: 6px; overflow-x: auto; padding: 2px 2px 8px; scrollbar-width: thin; }
+.suggestions .filtre { flex: none; }
+#rech-filtres { display: grid; gap: 8px; margin-bottom: 4px; }
+.tri { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--cendre); margin-left: auto; }
+.tri select { background: var(--four); color: var(--calcaire); border: 0; box-shadow: 0 0 0 2px var(--pierre); padding: 4px 6px; font: inherit; }
+#rech-resultats { display: grid; gap: 10px; }
+.resultat { display: grid; gap: 6px; }
+.cat-etq { justify-self: start; font-size: 11px; padding: 1px 6px; background: var(--pierre); color: var(--cendre); }
+.entete-niveau .ligne2 { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.entete-niveau b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 440px) { .entete-nav { gap: 4px; } .entete-nav button { padding: 6px 6px; font-size: 12px; } }
