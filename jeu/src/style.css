@@ -624,3 +624,6 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .dh-bilan { font-family: var(--f-texte); font-size: 12px; letter-spacing: 0; color: var(--houblon); }
 .dh-bilan.alerte { color: var(--alerte); }
 .geste-evt.houblon { background: var(--houblon); }
+.lieu-cheval span { box-shadow: 0 0 0 2px var(--houblon); }
+.lieu-bas { align-items: flex-end; }
+.lieu-bas span { transform: translateY(70%); }

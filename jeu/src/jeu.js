@@ -358,8 +358,8 @@
     { id: 'brasserie', nom: 'Brasserie', r: [14, 108, 80, 76], ouvert: true },
     { id: 'chai', nom: 'Chai', r: [108, 120, 70, 54], ouvert: true },
     { id: 'distillerie', nom: 'Alambic Ulysse', r: [118, 178, 60, 32], ouvert: true },
-    { id: 'catalogue', nom: 'Pigeonnier', r: [92, 96, 22, 44], ouvert: true },
-    { id: 'comptoir', nom: 'Comptoir', r: [22, 200, 58, 38], msg: "Le comptoir de vente à la ferme ouvrira plus tard : les visiteurs viendront avec leurs goûts, à toi de conseiller la bonne bouteille." },
+    { id: 'catalogue', nom: 'Pigeonnier', r: [18, 186, 62, 50], ouvert: true, bas: true },
+    { id: 'veillee', nom: 'Leçons', r: [80, 172, 36, 30], ouvert: true, cheval: true, bas: true },
     { id: 'rucher', nom: 'Rucher', r: [130, 94, 58, 22], msg: "Le rucher viendra en extension. Le miel du domaine est déjà dans la brasserie : essaie un braggot." },
   ];
   function saisonCourante() {
@@ -383,6 +383,8 @@
       b.className = 'lieu ' + (l.ouvert ? 'ouvert' : 'ferme');
       Object.assign(b.style, { left: (l.r[0] / 192) * 100 + '%', top: (l.r[1] / 256) * 100 + '%', width: (l.r[2] / 192) * 100 + '%', height: (l.r[3] / 256) * 100 + '%' });
       b.innerHTML = `<span>${esc(l.nom)}</span>`;
+      if (l.cheval) b.classList.add('lieu-cheval');
+      if (l.bas) b.classList.add('lieu-bas');
       b.setAttribute('aria-label', l.nom + (l.ouvert ? '' : ', bientôt'));
       b.onclick = () => { son('clic'); if (l.ouvert) aller(l.id); else direLise(l.msg); };
       z.appendChild(b);
@@ -444,9 +446,6 @@
     fenetre(25, 150); fenetre(66, 150);
     if (!nuit) { px(68, 154, 4, 4, '#d27b3e'); }
     for (let i = 0; i < 7; i++) { const a = (t * 0.6 + i / 7) % 1; disque(77 + Math.sin(a * 6 + i) * 3 + a * 10, 106 - a * 40, 1 + Math.floor(a * 3), nuit ? '#4a4a58' : `rgba(240,240,240,${0.8 - a * 0.7})`); }
-    // Pigeonnier
-    mur(96, 112, 13, 28); for (let j = 0; j < 14; j++) px(102.5 - j * 0.5 - 1, 112 - j, j + 2, 1, j % 3 ? tuile : tuile2);
-    px(100, 120, 5, 2, '#3a2c22'); px(100, 128, 5, 2, '#3a2c22');
     // Chai et fûts
     mur(112, 134, 58, 26); toit(108, 174, 134, 12, 8);
     px(132, 144, 18, 16, '#4a3020'); px(134, 142, 14, 2, '#4a3020');
@@ -460,11 +459,28 @@
     disque(136, 192, 7, '#c8743a'); px(130, 186, 4, 3, '#f0a060'); px(135, 182, 3, 4, '#c8743a');
     for (let i = 0; i < 12; i++) px(137 + i, 182 - Math.min(i, 5) * 0.4, 1, 2, '#c8743a');
     px(150, 186, 9, 14, '#8a8f96'); px(151, 188, 7, 1, '#b9c0c8'); px(151, 193, 7, 1, '#b9c0c8');
-    // Comptoir
-    px(28, 210, 44, 24, nuit ? '#4a3020' : '#8a5a32');
-    for (let i = 0; i < 52; i += 8) px(24 + i, 205, 4, 6, '#ecdfc4'), px(28 + i, 205, 4, 6, '#d27b3e');
-    px(34, 216, 32, 10, nuit ? '#f3c45a' : '#3a2c22');
-    ['#f3b04a', '#6a3a1a', '#d9a03a', '#2a1408'].forEach((col, i) => px(38 + i * 7, 219, 3, 6, col));
+    // Pigeonnier : colombier rond du Quercy et étal des fournisseurs
+    mur(24, 196, 16, 38); for (let k = 0; k < 14; k++) { const w = 20 - k * 1.35; px(32 - w / 2, 196 - k, w, 1, k % 3 ? tuile : tuile2); } px(31, 180, 2, 3, '#3a2c22');
+    for (let k = 0; k < 3; k++) { px(28, 204 + k * 9, 3, 3, '#2a1d14'); px(34, 204 + k * 9, 3, 3, '#2a1d14'); }
+    px(23, 214, 18, 2, joint);
+    px(44, 212, 34, 22, nuit ? '#4a3020' : '#8a5a32');
+    for (let k = 0; k < 40; k += 8) px(42 + k, 207, 4, 6, '#ecdfc4'), px(46 + k, 207, 4, 6, '#d27b3e');
+    px(48, 218, 26, 10, nuit ? '#f3c45a' : '#3a2c22');
+    ['#efe2c4', '#9cc95e', '#c9a26b', '#7a4a28'].forEach((col, k) => px(51 + k * 6, 221, 4, 6, col));
+    // Pigeons qui tournent autour du colombier
+    if (!nuit) for (let k = 0; k < 3; k++) { const a = t * 1.3 + k * 2.1, x = 32 + Math.cos(a) * (14 + k * 3), y = 184 + Math.sin(a) * 6 - k * 3, aile = Math.floor(t * 8 + k) % 2; px(x, y, 3, 1, '#e8e4dc'); px(x + 1, y - aile, 1, 1, '#b9b2a6'); }
+    // Petit cheval de la leçon : il trotte sur le chemin de l'alambic, sacoche de livres sur le dos
+    {
+      const u = 0.06 + 0.42 * (0.5 - 0.5 * Math.cos(t * 0.45)), dir = Math.sin(t * 0.45) >= 0 ? 1 : -1;
+      const cx = 80 + u * 60, cy = 197 - u * 32, pas = Math.floor(t * 7) % 2;
+      const P = (dx, dy, w, h, col) => px(dir > 0 ? cx + dx : cx - dx - w + 1, cy + dy, w, h, col);
+      const robe = nuit ? '#6b3a20' : '#b0602e', crin = '#2a1a10';
+      P(-5, -7, 10, 4, robe); P(4, -10, 3, 5, robe); P(6, -11, 4, 3, robe); P(9, -10, 1, 1, crin); P(7, -12, 1, 1, robe);
+      P(3, -11, 1, 5, crin); P(-6, -7, 1, 1, crin); P(-7, -6, 1, 4, crin);
+      P(8, -10, 1, 2, '#f4ecd8'); P(-1, -8, 4, 2, '#4f6b3a'); P(0, -9, 2, 1, '#ecdfc4');
+      [[-4, 0], [-2, 1], [2, 0], [4, 1]].forEach(([dx, ph]) => P(dx, -3, 1, 3 - (pas === ph ? 1 : 0), robe));
+      px(cx - 4, cy, 9, 1, 'rgba(0,0,0,.2)');
+    }
     // Feuilles qui tombent
     if (saison === 'automne' && !nuit) for (let i = 0; i < 6; i++) { const a = (t * 0.12 + i / 6) % 1; px(20 + i * 30 + Math.sin(t + i) * 6, 90 + a * 160, 2, 1, P.feuille[i % 3]); }
   }
@@ -2930,7 +2946,7 @@
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.5 · brasserie, alambic Ulysse, chai, pigeonnier, école de la veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.5.1 · brasserie, alambic Ulysse, chai, pigeonnier, école de la veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
