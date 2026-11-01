@@ -506,20 +506,51 @@
     const fenetre = (x, y) => { px(x - 1, y - 1, 10, 10, joint); px(x, y, 8, 8, nuit ? '#f3c45a' : '#3a2c22'); px(x + 3, y, 2, 8, joint); };
     const mur = (x, y, w, h) => { px(x, y, w, h, pierre); for (let j = 3; j < h; j += 5) for (let i = (j % 10 === 3 ? 0 : 4); i < w; i += 8) px(x + i, y + j, 5, 1, joint); };
     const toit = (x1, x2, y, haut, retrait) => { for (let j = 0; j < haut; j++) { const k = (j / haut) * retrait; px(x1 + k, y - j, x2 - x1 - 2 * k, 1, j % 3 === 0 ? tuile2 : tuile); } };
-    // Brasserie
-    mur(18, 140, 70, 42); toit(14, 92, 140, 20, 16);
-    px(74, 110, 7, 18, pierre); px(73, 108, 9, 3, joint);
-    px(42, 160, 16, 22, '#5a3a22'); px(44, 158, 12, 2, '#5a3a22'); px(49, 162, 2, 20, '#3a2618');
-    fenetre(25, 150); fenetre(66, 150);
-    if (!nuit) { px(68, 154, 4, 4, '#d27b3e'); }
-    for (let i = 0; i < 7; i++) { const a = (t * 0.6 + i / 7) % 1; disque(77 + Math.sin(a * 6 + i) * 3 + a * 10, 106 - a * 40, 1 + Math.floor(a * 3), nuit ? '#4a4a58' : `rgba(240,240,240,${0.8 - a * 0.7})`); }
+    // Brasserie : la grange du pilote, puis la salle de 500 L en pierre, puis la brasserie du domaine avec ses cuves
+    const fumee = (x, y, n) => { for (let i = 0; i < n; i++) { const a = (t * 0.6 + i / n) % 1; disque(x + Math.sin(a * 6 + i) * 3 + a * 10, y - a * 40, 1 + Math.floor(a * 3), nuit ? '#4a4a58' : `rgba(240,240,240,${0.8 - a * 0.7})`); } };
+    const nb = niv('brasserie');
+    if (nb <= 1) {
+      // Grange en planches, toit de tuiles, grande porte, sacs de malt et un tonneau
+      const bois = nuit ? '#5a3a22' : '#9a6a3a', bois2 = nuit ? '#4a3020' : '#7a5230';
+      px(24, 146, 58, 36, bois); for (let i = 26; i < 82; i += 5) px(i, 146, 1, 36, bois2);
+      toit(20, 86, 146, 16, 14);
+      px(41, 158, 22, 24, '#3a2618'); px(42, 159, 10, 23, bois2); px(53, 159, 9, 23, bois2); px(42, 159, 20, 1, '#2a1a10');
+      for (let k = 0; k < 10; k++) { px(43 + k * 2, 160 + k * 2, 2, 2, '#2a1a10'); px(61 - k * 2, 160 + k * 2, 2, 2, '#2a1a10'); }
+      fenetre(29, 152);
+      px(66, 174, 7, 8, '#efe2c4'); px(74, 175, 6, 7, '#e4d3ac'); px(84, 172, 7, 10, '#7a4a28'); px(84, 175, 7, 1, '#3a2618'); px(84, 179, 7, 1, '#3a2618');
+      fumee(70, 138, 4); px(68, 134, 4, 10, '#6b5a48');
+    } else {
+      mur(18, 140, 70, 42); toit(14, 92, 140, 20, 16);
+      px(74, 110, 7, 18, pierre); px(73, 108, 9, 3, joint);
+      px(42, 160, 16, 22, '#5a3a22'); px(44, 158, 12, 2, '#5a3a22'); px(49, 162, 2, 20, '#3a2618');
+      fenetre(25, 150); fenetre(66, 150);
+      if (!nuit) { px(68, 154, 4, 4, '#d27b3e'); }
+      fumee(77, 106, 7);
+      if (nb >= 3) {
+        // Cuves de fermentation en inox et silo à malt, à gauche ; cuve d'ébullition en cuivre derrière la vitre
+        for (let k = 0; k < 2; k++) { const x = 3 + k * 8; px(x, 150, 6, 26, '#b9c0c8'); px(x + 1, 151, 1, 24, '#e2e6ea'); px(x, 176, 6, 3, '#8a8f96'); px(x + 2, 179, 1, 3, '#8a8f96'); px(x + 1, 148, 4, 2, '#b9c0c8'); }
+        px(4, 132, 9, 16, '#c9a26b'); px(3, 130, 11, 3, '#a87444'); px(7, 128, 3, 2, '#a87444');
+        px(65, 151, 10, 8, '#e08a4a'); px(67, 149, 6, 2, '#e08a4a');
+        px(86, 170, 4, 4, '#b9c0c8'); px(86, 166, 1, 4, '#8a8f96');
+      }
+    }
     // Terrain à bâtir (piquets et cordeau) et échafaudage des travaux
     const terrain = (x, y, w, h) => { for (let i = 0; i <= w; i += 6) { px(x + i, y + h - 6, 1, 6, '#7a4a28'); } px(x, y + h - 5, w + 1, 1, '#ecdfc4'); px(x + w / 2 - 6, y + h - 16, 12, 7, '#a87444'); px(x + w / 2 - 1, y + h - 9, 2, 6, '#7a4a28'); };
     const echafaudage = (x, y, w, h) => { for (let i = 0; i <= w; i += 10) px(x + i, y, 1, h, '#c9a26b'); for (let j = 0; j <= h; j += 8) px(x, y + j, w, 1, '#c9a26b'); };
     // Chai et fûts
-    if (niv('chai')) {
+    if (niv('chai') === 1) {
+      // Cave voûtée creusée dans le coteau : butte herbeuse, arche de pierre, porte cintrée
+      for (let y = 136; y < 160; y++) { const w = Math.min(30, (y - 134) * 2.2); px(141 - w, y, w * 2, 1, y % 4 ? (nuit ? '#27301f' : P.herbe2) : (nuit ? '#1f2a18' : P.herbe)); }
+      px(128, 142, 26, 18, pierre); for (let k = 0; k < 6; k++) px(130 + k * 4, 141 - Math.round(Math.sin((k / 5) * Math.PI) * 3), 4, 2, joint);
+      px(134, 146, 14, 14, '#3a2618'); px(136, 144, 10, 2, '#3a2618'); px(140, 146, 2, 14, '#2a1a10'); px(139, 141, 4, 3, '#efe2c4');
+      const fut1 = (x, y) => { px(x, y, 9, 8, '#7a4a28'); px(x, y + 2, 9, 1, '#3a2618'); px(x, y + 5, 9, 1, '#3a2618'); };
+      fut1(156, 152);
+      if (enTravaux('chai')) echafaudage(110, 120, 62, 40);
+    } else if (niv('chai')) {
       mur(112, 134, 58, 26); toit(108, 174, 134, 12, 8);
       px(132, 144, 18, 16, '#4a3020'); px(134, 142, 14, 2, '#4a3020');
+      // Troisième niveau : une rangée de lucarnes sous le toit
+      for (let k = 0; k < 3; k++) px(118 + k * 18, 137, 6, 4, nuit ? '#f3c45a' : '#3a2c22');
       const fut = (x, y) => { px(x, y, 9, 8, '#7a4a28'); px(x, y + 2, 9, 1, '#3a2618'); px(x, y + 5, 9, 1, '#3a2618'); px(x + 1, y - 1, 7, 1, '#7a4a28'); px(x + 1, y + 8, 7, 1, '#7a4a28'); };
       fut(152, 162); fut(162, 162); fut(157, 154);
       if (enTravaux('chai')) echafaudage(110, 120, 62, 40);
@@ -529,8 +560,10 @@
     if (!nuit) for (let i = 0; i < 4; i++) px(150 + Math.sin(t * 3 + i * 2) * 14, 98 + Math.cos(t * 4 + i) * 5, 1, 1, '#2a1d14');
     // Ulysse, l'alambic ambulant
     if (!niv('distillerie')) terrain(122, 182, 50, 24); else {
+    if (niv('distillerie') >= 2) { px(118, 168, 2, 34, '#5a3a22'); px(174, 168, 2, 34, '#5a3a22'); for (let k = 0; k < 60; k += 4) px(116 + k, 166 + Math.round(k / 20), 4, 3, k % 8 ? tuile : tuile2); }
+    if (equipe('grille') || niv('distillerie') >= 2) for (let k = 0; k < 3; k++) for (let j = 0; j < 3 - k; j++) { disque(180 + j * 4 + k * 2, 202 - k * 3, 1, '#8a5a32'); px(180 + j * 4 + k * 2, 202 - k * 3, 1, 1, '#c9a26b'); }
     px(122, 200, 50, 3, '#3a2c22'); disque(132, 205, 3, '#2a1d14'); disque(162, 205, 3, '#2a1d14');
-    disque(136, 192, 7, '#c8743a'); px(130, 186, 4, 3, '#f0a060'); px(135, 182, 3, 4, '#c8743a');
+    disque(136, 192, 7, niv('distillerie') >= 2 ? '#e0884a' : '#c8743a'); px(130, 186, 4, 3, '#f0a060'); if (niv('distillerie') >= 2 && !nuit) { px(132, 188, 2, 2, '#ffd2a0'); px(134, 186, 1, 1, '#fff0d8'); } px(135, 182, 3, 4, '#c8743a');
     for (let i = 0; i < 12; i++) px(137 + i, 182 - Math.min(i, 5) * 0.4, 1, 2, '#c8743a');
     px(150, 186, 9, 14, '#8a8f96'); px(151, 188, 7, 1, '#b9c0c8'); px(151, 193, 7, 1, '#b9c0c8');
     }
@@ -544,7 +577,11 @@
       for (let k = 0; k < 40; k += 8) px(42 + k, 207, 4, 6, '#ecdfc4'), px(46 + k, 207, 4, 6, '#d27b3e');
       px(48, 218, 26, 10, nuit ? '#f3c45a' : '#3a2c22');
       ['#efe2c4', '#9cc95e', '#c9a26b', '#7a4a28'].forEach((col, k) => px(51 + k * 6, 221, 4, 6, col));
-      if (niv('pigeonnier') >= 3) { px(80, 216, 10, 18, nuit ? '#4a3020' : '#8a5a32'); px(82, 220, 6, 6, nuit ? '#f3c45a' : '#3a2c22'); px(79, 213, 12, 3, tuile); }
+      if (niv('pigeonnier') >= 3) {
+        // Salle de dégustation : terrasse, deux tables et leurs parasols
+        px(78, 230, 22, 4, '#c9a26b');
+        for (let k = 0; k < 2; k++) { const x = 81 + k * 10; px(x + 2, 222, 1, 9, '#5a3a22'); for (let j = 0; j < 4; j++) px(x - j + 2, 218 + j, 1 + j * 2, 1, j % 2 ? '#ecdfc4' : '#e3593d'); px(x, 228, 6, 2, '#7a4a28'); }
+      }
     } else if (enTravaux('pigeonnier')) echafaudage(44, 210, 34, 24);
     if (enTravaux('brasserie')) echafaudage(16, 118, 76, 64);
     // Pigeons qui tournent autour du colombier
@@ -563,6 +600,19 @@
       [[-4, 0], [-2, 1], [2, 0], [4, 1]].forEach(([dx, ph]) => P(dx, -3, 1, 3 - (pas === ph ? 1 : 0), robe));
       px(cx - 4, cy, 9, 1, 'rgba(0,0,0,.2)');
     }
+    // Le domaine s'embellit avec les bâtiments : clôture et portail, lanternes, massifs fleuris, fanions
+    const total = niv('brasserie') + niv('distillerie') + niv('chai') + niv('pigeonnier');
+    if (total >= 5) {
+      for (let i = 0; i < 6; i++) { const u = i / 6, x = (1 - u) ** 2 * 100 + 2 * (1 - u) * u * 70 + u * u * 54, y = (1 - u) ** 2 * 256 + 2 * (1 - u) * u * 210 + u * u * 184; if (y > 214) { px(x - 8, y - 4, 1, 5, '#7a4a28'); px(x + 8, y - 4, 1, 5, '#7a4a28'); if (i) { px(x - 8, y - 3, 1, 1, '#a87444'); } } }
+      px(90, 240, 2, 14, '#5a3a22'); px(108, 240, 2, 14, '#5a3a22'); px(88, 238, 24, 3, '#7a4a28'); px(94, 236, 12, 2, '#a87444');
+    }
+    if (total >= 7) for (const [x, y] of [[84, 222], [66, 196], [118, 178]]) { px(x, y - 8, 1, 8, '#3a3a3a'); px(x - 1, y - 10, 3, 3, nuit ? '#f8d66a' : '#8a8f96'); if (nuit) disque(x, y - 9, 3, 'rgba(248,214,106,.25)'); }
+    if (total >= 9) {
+      for (let k = 0; k < 8; k++) px(20 + k * 8, 183, 3, 2, ['#e3593d', '#f3b04a', '#f2d0de', '#ecdfc4'][k % 4]);
+      for (let k = 0; k < 5; k++) { const x = 30 + k * 10, y = 121 + Math.abs(k - 2); px(x, y, 3, 3, ['#d27b3e', '#9cc95e', '#f3b04a'][k % 3]); }
+      px(28, 121, 54, 1, '#3a2618');
+    }
+    if (total >= 10) { px(52, 104, 1, 8, '#3a3a3a'); px(49, 103, 7, 1, '#d27b3e'); px(55, 102, 2, 2, '#d27b3e'); }
     // Feuilles qui tombent
     if (saison === 'automne' && !nuit) for (let i = 0; i < 6; i++) { const a = (t * 0.12 + i / 6) % 1; px(20 + i * 30 + Math.sin(t + i) * 6, 90 + a * 160, 2, 1, P.feuille[i % 3]); }
   }
@@ -3621,7 +3671,7 @@
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.8 · domaine à bâtir (bâtiments par niveaux, matériel, objectifs des gestes, difficulté progressive), style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.8.1 · domaine qui évolue au fil des bâtiments, domaine à bâtir (bâtiments par niveaux, matériel, objectifs des gestes, difficulté progressive), style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
