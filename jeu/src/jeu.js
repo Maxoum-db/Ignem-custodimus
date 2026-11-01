@@ -185,13 +185,18 @@
     majMentor(); cacherBulle(); tutoEcran(nom);
     const prec = pile[pile.length - 1];
     const vers = (prec && NOMS_ECRANS[prec] ? 'à ' + NOMS_ECRANS[prec] : 'au domaine').replace(/^à le /, 'au ').replace(/^à les /, 'aux ');
-    $$('[data-retour]').forEach((x) => { x.textContent = `← Retour ${vers}`; });
+    const rb = $('#retour-entete'); rb.setAttribute('aria-label', `Retour ${vers}`); rb.title = `Retour ${vers}`;
+    rb.disabled = nom === 'domaine' && !pile.length; delete rb.dataset.confirme; $('.retour-txt', rb).textContent = '';
   }
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-aller]');
     if (b) { son('clic'); if (b.dataset.catonglet) { catOnglet = b.dataset.catonglet; catFiltre = 'tous'; pigOnglet = 'achats'; } aller(b.dataset.aller); }
     const rt = e.target.closest('[data-retour]');
-    if (rt) { son('clic'); let cible = pile.pop(); while (cible === ecran) cible = pile.pop(); aller(cible || 'domaine', true); return; }
+    if (rt) {
+      // Pendant un geste, quitter abandonne le brassin ou la chauffe : on demande confirmation
+      if (SANS_RETOUR.includes(ecran) && rt.dataset.confirme !== '1') { rt.dataset.confirme = '1'; $('.retour-txt', rt).textContent = 'Abandonner ?'; setTimeout(() => { delete rt.dataset.confirme; $('.retour-txt', rt).textContent = ''; }, 2500); return; }
+      son('clic'); let cible = pile.pop(); while (cible === ecran) cible = pile.pop(); aller(cible || 'domaine', true); return;
+    }
     const f = e.target.closest('[data-fiche]');
     if (f) { e.preventDefault(); ouvrirFiche(f.dataset.fiche); }
   });
@@ -3455,7 +3460,7 @@
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.7.1 · style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.7.2 · style visé avec le plan de Lise, cinq gestes de brassage (empâtage, filtration, ébullition, fermentation avec dry hop, mise en bouteille), alambic Ulysse, chai, pigeonnier, école, calendrier et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

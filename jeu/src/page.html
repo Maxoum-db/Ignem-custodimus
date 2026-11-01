@@ -9,6 +9,7 @@
 
 <div id="app">
   <header class="entete">
+    <button class="retour-entete" id="retour-entete" data-retour aria-label="Retour"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M5 1h2v1H6v1H5v1H4v1h7v2H4v1h1v1h1v1h1v1H5v-1H4V9H3V8H2V7H1V5h1V4h1V3h1V2h1z"/></svg><span class="retour-txt"></span></button>
     <button class="marque" data-aller="domaine" aria-label="Retour au domaine">
       <img id="marque-feu" class="sprite" alt="" width="16" height="20">
       <span class="marque-nom">Ignem<br>custodimus</span>
@@ -214,7 +215,6 @@
 
     <!-- Pigeonnier : catalogue des fournisseurs -->
     <section id="ecran-catalogue" class="ecran" hidden>
-      <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
       <h1 class="page-titre">Pigeonnier <span class="en">vente et fournisseurs</span></h1>
       <p class="page-intro">Au pigeonnier, les clients viennent chercher tes bouteilles, et les fournisseurs envoient leurs catalogues par pigeon. Conseille bien tes clients : la réputation du domaine attire des restaurateurs, des cavistes et des commandes spéciales. Les ingrédients rares demandent un meilleur niveau de maîtrise.</p>
       <div class="onglets onglets-2" role="tablist" id="pig-onglets"></div>
@@ -231,7 +231,6 @@
 
     <!-- Chai -->
     <section id="ecran-chai" class="ecran" hidden>
-      <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
       <h1 class="page-titre">Chai <span class="en">cask warehouse</span></h1>
       <p class="page-intro">Range les fûts : en haut chaud et sec, en bas frais et humide. Remplis-les d'eau-de-vie, fais glisser les années, goûte à la pipette. <button class="btn btn-mini btn-sobre" data-fiche="elevage">Élevage</button> <button class="btn btn-mini btn-sobre" data-fiche="anges">Part des anges</button> <button class="btn btn-mini btn-sobre" data-fiche="whisky">Whisky</button></p>
       <div class="bourse" id="chai-bourse"></div>
@@ -243,7 +242,6 @@
 
     <!-- Recherche d'ingrédients -->
     <section id="ecran-recherche" class="ecran" hidden>
-      <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
       <h1 class="page-titre">Recherche <span class="en">ingrédients, fûts, recettes, fiches</span></h1>
       <input class="recherche recherche-grande" id="rech-champ" type="search" placeholder="citra, agrumes, 1150 EBC, lager…" autocomplete="off" enterkeyhint="search">
       <div class="suggestions" id="rech-suggestions"></div>
@@ -254,7 +252,6 @@
 
     <!-- Veillée : questions de Lise et Firmin -->
     <section id="ecran-veillee" class="ecran" hidden>
-      <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
       <h1 class="page-titre">La veillée <span class="en">leçons et questions</span></h1>
       <p class="page-intro">Au coin du feu, Lise et Firmin donnent leurs leçons : un peu de chimie, un défi à réussir à la brasserie, à l'alambic ou au chai, puis trois questions. Chaque leçon réussie offre des recettes au grimoire. Les questions du soir rapportent 4 écus chacune, cinq fois par jour.</p>
       <div class="onglets onglets-2" role="tablist" id="veillee-onglets"></div>
@@ -286,7 +283,6 @@
 
     <!-- Carnet -->
     <section id="ecran-carnet" class="ecran" hidden>
-      <button class="btn btn-mini btn-sobre btn-retour" data-retour>← Retour</button>
       <h1 class="page-titre">Carnet de brassage</h1>
       <div id="carnet-progression"></div>
       <h2 class="sous-titre">Étagère</h2>
