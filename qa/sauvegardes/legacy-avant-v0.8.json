@@ -1,0 +1,147 @@
+{
+  "mode": "debutant",
+  "aide": true,
+  "son": true,
+  "gestesExpert": false,
+  "bac": false,
+  "tuto": -1,
+  "tutoD": 0,
+  "points": 20,
+  "succes": {
+    "premier": "2026-11-01T16:26:49.557Z"
+  },
+  "carnet": [
+    {
+      "id": "mvy1lt1x",
+      "type": "biere",
+      "date": "2026-11-01T16:26:49.557Z",
+      "nom": "Special Bitter / ESB n° 1",
+      "style": "Special Bitter / ESB",
+      "sujet": "bitter",
+      "conformite": 0.6282641379724025,
+      "og": 1.0462804,
+      "fg": 1.009603183,
+      "abv": 4.813884731250001,
+      "ibu": 9.6594616177684,
+      "ebc": 5.9752992880387055,
+      "total": 19.5,
+      "lignes": {
+        "aspect": 2,
+        "arome": 6.5,
+        "bouche": 3,
+        "saveur": 5,
+        "impression": 3
+      },
+      "medaille": null,
+      "etoiles": {
+        "sansAide": false,
+        "expert": false,
+        "gestes": false
+      },
+      "defauts": [
+        "Trop gazeuse",
+        "DMS",
+        "Astringence"
+      ],
+      "recette": {
+        "volume": 100,
+        "rendement": 0.75,
+        "malts": [
+          {
+            "id": "malts_base_pilsner_soufflet_bio",
+            "kg": 20
+          }
+        ],
+        "houblons": [
+          {
+            "id": "hops_bittering_magnum",
+            "g": 30,
+            "min": 60
+          }
+        ],
+        "levure": "yeasts_ale_safale_us_05",
+        "eau": "causse",
+        "palier": 66,
+        "ebullition": 60,
+        "fermentation": {
+          "temp": 18,
+          "reposDiacetyle": false
+        },
+        "aromates": [],
+        "sels": {},
+        "auxiliaires": [],
+        "cuisson": false,
+        "destination": "biere",
+        "co2": 2.415138647999999
+      },
+      "mode": "debutant",
+      "bac": false,
+      "gain": 20,
+      "semaine": 35,
+      "stockL": 100
+    }
+  ],
+  "brassins": 1,
+  "recette": {
+    "volume": 100,
+    "rendement": 0.75,
+    "malts": [
+      {
+        "id": "malts_base_pilsner_soufflet_bio",
+        "kg": 20
+      }
+    ],
+    "houblons": [
+      {
+        "id": "hops_bittering_magnum",
+        "g": 30,
+        "min": 60
+      }
+    ],
+    "levure": "yeasts_ale_safale_us_05",
+    "eau": "causse",
+    "palier": 66,
+    "ebullition": 60,
+    "fermentation": {
+      "temp": 18,
+      "reposDiacetyle": false
+    },
+    "aromates": [],
+    "sels": {},
+    "auxiliaires": [],
+    "cuisson": false,
+    "destination": "biere"
+  },
+  "epaisses": null,
+  "reglagesD": null,
+  "possede": [
+    "clar_whirlfloc"
+  ],
+  "ecus": 40,
+  "decouvertes": {
+    "clarif": "2026-11-01T16:26:49.559Z"
+  },
+  "quiz": null,
+  "grimoire": [],
+  "ecole": {},
+  "cal": {
+    "s": 36
+  },
+  "vente": {
+    "rep": 10,
+    "clients": [],
+    "commandes": [],
+    "vendus": 0,
+    "ca": 0
+  },
+  "travaux": [],
+  "equip": {},
+  "vus": {
+    "empatage": true,
+    "filtration": true,
+    "ebullition": true,
+    "fermentation": true,
+    "bouteille": true
+  },
+  "objectifs": {}
+}

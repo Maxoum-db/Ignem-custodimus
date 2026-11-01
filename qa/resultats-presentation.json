@@ -1,0 +1,8 @@
+{
+  "errors": [],
+  "captures_identiques": true,
+  "toucher_chromium": true,
+  "fichier_autonome": false,
+  "demarrage_local_ms": 182,
+  "limite_file_url": "file:// interdit par la politique administrateur du Chromium fourni ; test non exécuté."
+}

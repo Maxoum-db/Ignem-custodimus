@@ -155,3 +155,12 @@ La branche `carte-illustree` prépare la migration progressive des scènes pixel
 - Les prochaines étapes remplaceront les dessins de présentation un écran à la fois, sans modifier les moteurs métier ni la sauvegarde `ignem.v1`.
 
 **Validation attendue avant fusion :** `node scripts/construire-jeu.mjs`, `npm run test:jeu`, puis parcours manuel mobile à 390 × 844 et vérification d'une ancienne sauvegarde. Cette préparation n'inclut pas encore les illustrations finales.
+
+### Phase 0 : référence mobile testable
+
+Le [rapport d'audit et de validation](qa/PHASE-0.md) décrit les branches et les
+PR examinées, les réparations du pipeline, les tests exécutés et leurs limites.
+`npm run test:images` vérifie le pipeline et le chargeur sans modifier les
+moteurs métier. Les captures et fixtures de sauvegarde de test sont dans `qa/`.
+Le [contrat des illustrations](jeu/src/images/README.md) précise les assets
+encore manquants. La refonte graphique n'est pas annoncée comme livrée dans ce lot.
