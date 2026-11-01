@@ -337,7 +337,7 @@ async function donneesJeu() {
 
 async function construire() {
   const D = await donneesJeu();
-  const [page, css, moteur, distillerie, chai, ecole, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'chai.js', 'ecole.js', 'jeu.js'].map(src));
+  const [page, css, moteur, distillerie, chai, ecole, vente, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'chai.js', 'ecole.js', 'vente.js', 'jeu.js'].map(src));
   const corps = page
     .replace('/*CSS*/', () => css)
     .replace('/*DONNEES*/', () => 'window.DONNEES_JEU = ' + JSON.stringify(D) + ';')
@@ -345,6 +345,7 @@ async function construire() {
     .replace('/*DISTILLERIE*/', () => distillerie)
     .replace('/*CHAI*/', () => chai)
     .replace('/*ECOLE*/', () => ecole)
+    .replace('/*VENTE*/', () => vente)
     .replace('/*JEU*/', () => jeu);
   const complet = `<!doctype html>\n<html lang="fr">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n</head>\n<body>\n${corps}\n</body>\n</html>\n`;
   await fs.mkdir(path.join(RACINE, 'dist'), { recursive: true });

@@ -625,3 +625,25 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .dh-bilan { font-family: var(--f-texte); font-size: 12px; letter-spacing: 0; color: var(--houblon); }
 .dh-bilan.alerte { color: var(--alerte); }
 .geste-evt.houblon { background: var(--houblon); }
+
+/* ---------- Vente au pigeonnier (V0.6) ---------- */
+.rep { display: grid; gap: 4px; flex: 1 1 100%; font-size: 14px; }
+.barre-rep { height: 10px; background: var(--nuit); box-shadow: 0 0 0 2px var(--pierre); }
+.barre-rep i { display: block; height: 100%; background: linear-gradient(90deg, var(--cuivre), var(--or)); }
+.vente-resultat { background: var(--four); padding: 10px 12px; box-shadow: 0 0 0 2px var(--pierre); line-height: 1.45; }
+.vente-resultat.ok { box-shadow: 0 0 0 2px var(--houblon); }
+.vente-resultat.ko { box-shadow: 0 0 0 2px var(--alerte); }
+.client { background: var(--four); padding: 10px; box-shadow: 0 0 0 2px var(--pierre); display: grid; gap: 6px; margin-bottom: 8px; justify-items: start; }
+.client.ouvert { box-shadow: 0 0 0 2px var(--braise); }
+.client.commande { box-shadow: 0 0 0 2px var(--or); }
+.client-tete { display: flex; gap: 10px; align-items: center; }
+.client-tete .corps, .produit .corps { display: grid; gap: 2px; min-width: 0; }
+.client-tete small, .produit small { color: var(--cendre); font-size: 13px; }
+.avatar { width: 36px; height: 36px; flex: none; display: grid; place-items: center; font-weight: 700; font-size: 18px; color: var(--calcaire); background: var(--pierre-clair); box-shadow: inset -3px -3px 0 rgba(0,0,0,.3); }
+.demande { margin: 0; font-style: italic; font-size: 16px; line-height: 1.4; }
+.client .det { margin: 0; font-size: 13px; color: var(--cendre); }
+.produit { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: center; width: 100%; background: var(--nuit); padding: 8px; box-shadow: 0 0 0 2px var(--pierre); margin-bottom: 6px; }
+.pastille-prod { width: 14px; height: 30px; box-shadow: 0 0 0 2px var(--calcaire); }
+.attendre { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; flex: 1 1 100%; font-size: 13px; color: var(--cendre); }
+.age-fut { margin: 0; font-size: 15px; }
+.prevision-txt { color: #7fb6d6; }

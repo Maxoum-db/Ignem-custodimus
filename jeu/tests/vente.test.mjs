@@ -1,0 +1,28 @@
+// Tests du calendrier et de la vente
+import fs from 'node:fs';
+import vm from 'node:vm';
+const ctx = { globalThis: {} };
+vm.runInNewContext(fs.readFileSync(new URL('../src/vente.js', import.meta.url), 'utf8'), ctx);
+const V = ctx.globalThis.Vente;
+let echecs = 0;
+const verifier = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (!c) echecs++; };
+verifier(V.saison(0) === 'printemps' && V.saison(14) === 'été' && V.saison(30) === 'automne' && V.saison(45) === 'hiver' && V.saison(52) === 'printemps', 'saisons : 13 semaines chacune, l\'année boucle à 52');
+verifier(V.saison(V.semaineDepuisDate(new Date(2026, 10, 1))) === 'automne', 'le 1er novembre tombe en automne');
+const ipa = { cat: 'biere', semaine: 0, abv: 6.5, houblon: 7 }, stout = { cat: 'biere', semaine: 0, abv: 9, houblon: 2 };
+verifier(V.fraicheur(ipa, 4) === 1 && V.fraicheur(ipa, 12) < 0.5 && V.fraicheur(stout, 12) === 1, 'une IPA s\'évente en quelques semaines, une bière forte se garde');
+const client = { demande: 'amere', type: 'particulier' };
+const bonne = { cat: 'biere', semaine: 0, abv: 6.5, amer: 8, houblon: 7, total: 42 }, fade = { cat: 'biere', semaine: 0, abv: 4.5, amer: 2, houblon: 1, total: 42 };
+const sb = V.satisfaction(client, bonne, 1), sf = V.satisfaction(client, fade, 1);
+console.log(`  IPA à un amateur d'amer : ${sb.s.toFixed(2)} ; blonde fade : ${sf.s.toFixed(2)}`);
+verifier(sb.s > 0.8 && sf.s < 0.6, 'conseiller la bonne bière satisfait, la mauvaise déçoit');
+verifier(V.satisfaction(client, { cat: 'edv', total: 45 }, 1).s < 0.1, 'une eau-de-vie à qui veut une bière : échec');
+verifier(V.prix(client, bonne, 4, sb.s, 10).ecus > V.prix(client, fade, 4, sf.s, 10).ecus && V.prix(client, bonne, 4, sb.s, 10).pourboire > 0, 'un bon conseil rapporte plus, avec pourboire');
+verifier(V.variationRep(0.9) > 0 && V.variationRep(0.2) < 0, 'la réputation suit la satisfaction');
+const c0 = V.clientsSemaine(10, 5, ['biere']), c1 = V.clientsSemaine(10, 80, ['biere', 'edv', 'vieilli']);
+verifier(c0.length >= 2 && c1.length > c0.length && c0.every((c) => c.type === 'particulier'), 'plus de clients et de types avec la réputation');
+verifier(JSON.stringify(V.clientsSemaine(7, 30, ['biere'])) === JSON.stringify(V.clientsSemaine(7, 30, ['biere'])), 'les clients d\'une semaine sont stables (graine)');
+const etes = Array.from({ length: 13 }, (_, k) => V.clientsSemaine(13 + k, 30, ['biere'])).flat(), hivers = Array.from({ length: 13 }, (_, k) => V.clientsSemaine(39 + k, 30, ['biere'])).flat();
+const part = (l, ids) => l.filter((c) => ids.includes(c.demande)).length / l.length;
+verifier(part(etes, ['blonde', 'blanche', 'apero']) > part(hivers, ['blonde', 'blanche', 'apero']) && part(hivers, ['forte', 'brune']) > part(etes, ['forte', 'brune']), 'blondes l\'été, bières fortes et brunes l\'hiver');
+console.log(echecs ? `\n${echecs} échec(s)` : '\nTous les tests passent.');
+process.exit(echecs ? 1 : 0);

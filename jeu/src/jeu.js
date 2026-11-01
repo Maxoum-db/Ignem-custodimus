@@ -27,6 +27,15 @@
     S.possede = [...D.malts, ...D.houblons, ...D.levures.filter((y) => y.fam !== 'distilling')].filter((x) => x.palier > 0 && x.palier <= ancien).map((x) => x.id);
     if (S.points > 0) S.ecus = 30 + Math.round(S.points / 2);
   }
+  // V0.6 : calendrier (52 semaines par an, semaine 0 = 1er mars), réputation et stock réel
+  if (!S.cal) S.cal = { s: Vente.semaineDepuisDate(new Date()) };
+  if (!S.vente) S.vente = { rep: 10, clients: [], commandes: [], vendus: 0, ca: 0 };
+  for (const x of S.carnet) {
+    if (x.semaine == null) x.semaine = S.cal.s - 6;
+    if ((x.type === 'biere' || x.type === 'wash') && x.stockL == null) x.stockL = x.distillee ? 0 : 1000;
+    if (x.type === 'vieilli' && x.stockB == null) x.stockB = x.bouteilles || 0;
+  }
+  if (S.chai) for (const f of S.chai.futs) if (f.contenu && f.contenu.debut == null) { f.contenu.debut = S.cal.s - Math.round((f.contenu.ans || 0) * 52); delete f.contenu.ans; }
   const POSSEDE = new Set(S.possede);
   const posseder = (id) => { if (!POSSEDE.has(id)) { POSSEDE.add(id); S.possede.push(id); } };
   const normaliser = (r) => Object.assign(recetteVide(), r, { fermentation: { ...recetteVide().fermentation, ...(r && r.fermentation) } });
@@ -50,7 +59,8 @@
   const niveau = () => (S.points >= 360 ? 'Maître brasseur' : S.points >= 140 ? 'Compagnon brasseur' : 'Apprenti brasseur');
   const dispo = (x) => S.bac || !x.palier || POSSEDE.has(x.id);
   const achetable = (x) => (x.palier || 0) <= palierAtteint() + 1;
-  const prixDe = (x, cat) => (cat === 'grimoire' ? 10 : D.prix[x.palier || 0]);
+  const recolte = () => saisonCourante() === 'automne';
+  const prixDe = (x, cat) => (cat === 'grimoire' ? 10 : Math.round(D.prix[x.palier || 0] * (cat === 'houblons' && recolte() ? 0.7 : 1)));
 
   const SUCCES = [
     { id: 'premier', nom: 'Premier brassin', desc: "Mener un brassin jusqu'à la dégustation." },
@@ -170,7 +180,7 @@
     $$('.ecran').forEach((s) => { s.hidden = s.id !== 'ecran-' + nom; });
     $$('.entete-nav button').forEach((b) => b.setAttribute('aria-current', b.dataset.aller === nom ? 'page' : 'false'));
     $('#scene').scrollTop = 0;
-    ({ domaine: entrerDomaine, brasserie: entrerBrasserie, distillerie: entrerDistillerie, catalogue: rendreCatalogue, chai: entrerChai, recherche: entrerRecherche, veillee: rendreVeillee, carnet: rendreCarnet, fiches: rendreFiches, reglages: rendreReglages }[nom] || (() => {}))();
+    ({ domaine: entrerDomaine, brasserie: entrerBrasserie, distillerie: entrerDistillerie, catalogue: entrerPigeonnier, chai: entrerChai, recherche: entrerRecherche, veillee: rendreVeillee, carnet: rendreCarnet, fiches: rendreFiches, reglages: rendreReglages }[nom] || (() => {}))();
     tuto('ecran:' + nom);
     majMentor(); cacherBulle(); tutoEcran(nom);
     const prec = pile[pile.length - 1];
@@ -179,7 +189,7 @@
   }
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-aller]');
-    if (b) { son('clic'); if (b.dataset.catonglet) { catOnglet = b.dataset.catonglet; catFiltre = 'tous'; } aller(b.dataset.aller); }
+    if (b) { son('clic'); if (b.dataset.catonglet) { catOnglet = b.dataset.catonglet; catFiltre = 'tous'; pigOnglet = 'achats'; } aller(b.dataset.aller); }
     const rt = e.target.closest('[data-retour]');
     if (rt) { son('clic'); let cible = pile.pop(); while (cible === ecran) cible = pile.pop(); aller(cible || 'domaine', true); return; }
     const f = e.target.closest('[data-fiche]');
@@ -268,6 +278,11 @@
     veillee: [
       ['Les leçons', 'Chaque leçon : un peu de chimie, un défi à réussir pour de vrai, puis trois questions. Réussie, elle offre des recettes au grimoire, des ingrédients ou des fûts.'],
       ['Le défi', 'Touche « Commencer » : le défi s\'affiche en haut de la brasserie. Le moteur le vérifie tout seul à la dégustation.'],
+    ],
+    catalogue: [
+      ['Les clients', 'Chaque semaine, des clients passent avec leurs goûts. Touche « Conseiller » et propose une bouteille de ta cave : satisfaction, prix et réputation en dépendent.'],
+      ['Le stock et le temps', 'Un brassin met 1000 L en cave, l\'alambic et le chai ajoutent des bouteilles. Une semaine passe à chaque brassin et chaque distillation : les bières perdent leur fraîcheur, les fûts vieillissent.'],
+      ['Les fournisseurs', 'L\'onglet Fournisseurs garde le catalogue : ingrédients, fûts et recettes contre des écus.'],
     ],
     recherche: [['Chercher partout', 'Tape un nom, un arôme, un style (« agrumes », « IPA », « 1150 »), ou touche une suggestion. Filtre par famille, trie, et ajoute directement à la cuve.']],
   };
@@ -362,9 +377,26 @@
     { id: 'veillee', nom: 'Leçons', r: [92, 222, 98, 32], ouvert: true, t: [113, 230] },
     { id: 'rucher', nom: 'Rucher', r: [130, 94, 58, 22], t: [160, 117], msg: "Le rucher viendra en extension. Le miel du domaine est déjà dans la brasserie : essaie un braggot." },
   ];
-  function saisonCourante() {
-    const m = new Date().getMonth();
-    return m >= 2 && m <= 4 ? 'printemps' : m >= 5 && m <= 7 ? 'été' : m >= 8 && m <= 10 ? 'automne' : 'hiver';
+  const saisonCourante = () => Vente.saison(S.cal.s);
+  const libCalendrier = () => `${saisonCourante()[0].toUpperCase() + saisonCourante().slice(1)} · ${Vente.mois(S.cal.s)} · année ${Vente.annee(S.cal.s)}`;
+  // Le temps passe : une semaine par brassin, par distillation, ou au chai. Nouveaux clients chaque semaine.
+  function avancer(n, raison) {
+    const avant = saisonCourante();
+    for (let k = 0; k < n; k++) {
+      S.cal.s++;
+      genererClients(S.cal.s);
+      const c = Vente.commandeSemaine(S.cal.s, S.vente.rep); if (c) S.vente.commandes.push(c);
+    }
+    const expirees = S.vente.commandes.filter((c) => c.echeance < S.cal.s);
+    if (expirees.length) { S.vente.rep = Math.max(0, S.vente.rep - 2 * expirees.length); S.vente.commandes = S.vente.commandes.filter((c) => c.echeance >= S.cal.s); }
+    const msg = `${n > 1 ? n + ' semaines passent' : 'Une semaine passe'}${raison ? ' (' + raison + ')' : ''} · ${libCalendrier()}`;
+    setTimeout(() => toast(saisonCourante() !== avant ? `${msg} · nouvelle saison !` : msg), 900);
+    sauver();
+  }
+  function genererClients(s) {
+    const cats = ['biere', 'edv', 'vieilli'].filter((c) => produits().some((p) => p.cat === c && p.stock > 0));
+    const nouveaux = Vente.clientsSemaine(s, S.vente.rep, cats);
+    S.vente.clients = S.vente.clients.filter((c) => s - c.semaine < 2).concat(nouveaux).slice(-6);
   }
   const SAISONS = {
     printemps: { herbe: '#7aa84a', herbe2: '#5f8c3a', feuille: ['#5f9a3a', '#7cb850', '#3f7029'], fleur: '#f2d0de', colline: '#6d8a4a' },
@@ -376,7 +408,7 @@
   let animCarte = null;
   function entrerDomaine() {
     const saison = saisonCourante();
-    $('#saison').textContent = saison[0].toUpperCase() + saison.slice(1);
+    $('#saison').textContent = libCalendrier();
     const z = $('#lieux'); z.innerHTML = '';
     for (const l of LIEUX) {
       const b = document.createElement('button');
@@ -714,7 +746,7 @@
     if (d.ajouter === 'levure') return choisirLevure(d.id);
     if (d.ajouter === 'eau') { R.eau = d.id; son('bulle'); maj(); rendreOnglet(); return; }
     if (d.ajouter === 'aromate') return ajouterAromate(d.id);
-    if (d.catalogue) { catOnglet = d.catalogue; aller('catalogue'); return; }
+    if (d.catalogue) { catOnglet = d.catalogue; pigOnglet = 'achats'; aller('catalogue'); return; }
     if (d.dest) { R.destination = d.dest; if (d.dest === 'biere' && R.levure && IDX.levure.get(R.levure).fam === 'distilling') R.levure = null; son('clic'); maj(); rendreOnglet(); return; }
     if (d.cuisson) { R.cuisson = d.cuisson === '1'; maj(); rendreOnglet(); return; }
     if (d.ebu) { R.ebullition = +d.ebu; maj(); rendreOnglet(); return; }
@@ -1100,7 +1132,7 @@
   function preparerFermentation() {
     const rec = session.recette, y = IDX.levure.get(rec.levure), consigne = rec.fermentation.temp;
     const repos = rec.fermentation.reposDiacetyle;
-    const DUREE = 18, AMB = 18, FROID = 2.2;
+    const DUREE = 18, AMB = Vente.CAVE[saisonCourante()], FROID = 2.2;
     const r0 = Moteur.calculer(rec), G = 0.75 * (r0.pts / 48);
     const cible = (j) => consigne + (repos && j >= 5 ? 4 : 0);
     const st = { T: consigne, u: 0, t: 0, dans: 0, duree: 0, somme: 0, max: consigne, min: consigne, histo: [] };
@@ -1208,8 +1240,10 @@
       style: res.style.style.nom, sujet: res.style.style.sujet, conformite: res.style.conformite,
       og: res.og, fg: res.fg, abv: res.abv, ibu: res.ibu, ebc: res.ebc, total: note.total, lignes: note.lignes, medaille: note.medaille,
       etoiles, defauts: note.defauts.map((d) => d.nom), recette: session.recette, mode: S.mode, bac: S.bac, gain,
+      semaine: S.cal.s, stockL: 1000,
     };
     S.carnet.unshift(entree);
+    avancer(1, 'brassin');
     const nouveaux = verifierSucces(entree, res, note);
     const ecus = gagnerEcus(Math.round(note.total / 2) + (BONUS_MEDAILLE[note.medaille] || 0) + (note.medaille ? 3 * nbEtoiles : 0));
     const cadeaux = verifierDecouvertes('biere', { entree, res, note, infection }).concat(verifierLecons('biere', { res, note, recette: session.recette, scores: session.scores }));
@@ -1230,8 +1264,10 @@
       id: Date.now().toString(36), type: 'wash', date: new Date().toISOString(), nom: `Wash n° ${S.brassins}`, style: 'Wash de distillation',
       og: res.og, fg: res.fg, abv: res.abv, ibu: res.ibu, ebc: res.ebc, total: fiche.total, lignes: fiche.lignes, medaille: null,
       etoiles: { sansAide: false, expert: false, gestes: false }, defauts: fiche.defauts.map((d) => d.nom), recette: session.recette, mode: S.mode, bac: S.bac, gain, lap: fiche.lap,
+      semaine: S.cal.s, stockL: 1000,
     };
     S.carnet.unshift(entree);
+    avancer(1, 'brassin');
     const ecus = gagnerEcus(Math.round(fiche.total) + 5);
     const cadeaux = verifierDecouvertes('wash', { entree, res, infection });
     sauver(); majEntete();
@@ -1347,7 +1383,8 @@
   const FEUX = { douce: 0.35, moyenne: 0.55, vive: 0.85 };
   let choixBiere = null, sessionD = null;
   const reglagesD = () => (S.reglagesD = S.reglagesD || { recycler: true, feu: 'moyenne', tetesPct: 4, queuesDegre: 60 });
-  const biereDistillable = (x) => x.type !== 'edv' && !x.distillee;
+  const volCave = (b) => Math.min(1000, b.stockL != null ? b.stockL : 1000);
+  const biereDistillable = (x) => (x.type === 'biere' || x.type === 'wash') && !x.distillee && volCave(x) >= 200;
 
   function entrerDistillerie() {
     dessinerUlysse($('#ulysse').getContext('2d'));
@@ -1363,7 +1400,7 @@
       if (b.defauts.some((d) => /infection/i.test(d))) notes.push('infection : beaucoup d\'acétate d\'éthyle dans les têtes');
       return `<button class="biere-carte" data-biere="${b.id}" aria-pressed="${choixBiere === b.id}">
         <span class="nom">${esc(b.nom)}</span><span class="lap">${nf(b.abv * 10, 0)} LAP</span>
-        <span class="det">${esc(b.style)} · 1000 L à ${nf(b.abv)} % · ${b.type === 'wash' ? `${nf(b.total, b.total % 1 ? 1 : 0)}/20` : `${nf(b.total, b.total % 1 ? 1 : 0)}/50`} · donnera une ${nomEauDeVie(b).toLowerCase()}</span>
+        <span class="det">${esc(b.style)} · ${nf(volCave(b), 0)} L à ${nf(b.abv)} % · ${b.type === 'wash' ? `${nf(b.total, b.total % 1 ? 1 : 0)}/20` : `${nf(b.total, b.total % 1 ? 1 : 0)}/50`} · donnera une ${nomEauDeVie(b).toLowerCase()}</span>
         ${notes.length ? `<span class="det">${esc(notes.join(' · '))}</span>` : ''}</button>`;
     }).join('') : '<p class="vide">Aucune bière à distiller. Brasse d\'abord à la brasserie : chaque bière du carnet peut passer une fois dans Ulysse.</p>';
     rendreReglagesD();
@@ -1464,7 +1501,7 @@
     const b = S.carnet.find((x) => x.id === choixBiere); if (!b) return;
     const res = Moteur.calculer(b.recette);
     const q = DI.congeneresBiere(res, b.defauts);
-    sessionD = { biere: b, res, q, prep: DI.preparerBrouillis(1000, b.abv, q), joue: S.mode === 'debutant' || S.gestesExpert, scoresFeu: [], incidents: { moussage: 0, coupDeFeu: 0 } };
+    sessionD = { biere: b, res, q, prep: DI.preparerBrouillis(volCave(b), b.abv, q), vol: volCave(b), joue: S.mode === 'debutant' || S.gestesExpert, scoresFeu: [], incidents: { moussage: 0, coupDeFeu: 0 } };
     son('ok'); tuto('lancer-d');
     if (!sessionD.joue && S.tutoD >= 0 && S.tutoD < TUTO_D.length - 1) S.tutoD = TUTO_D.length - 1;
     if (sessionD.joue) { aller('brouillis'); preparerBrouillisGeste(); }
@@ -1480,7 +1517,7 @@
   function preparerBrouillisGeste() {
     const st = { t: 0, prog: 0, mousse: 0, chaud: 0, dans: 0, duree: 0, feu: nouveauFeu() };
     const DUREE = 24;
-    $('#bro-consigne').innerHTML = `Épuise <b>1000 L à ${nf(sessionD.biere.abv)} %</b> en 24 s, sans mousser ${iBtn(`${sessionD.biere.nom}, en deux chauffes de 500 L. Garde la chaudière dans la bande verte : une bûche met une seconde à prendre, le registre d'air corrige vite. Au début, protéines et CO₂ font mousser la bière : chauffe doucement, puis nourris le feu.`)}`;
+    $('#bro-consigne').innerHTML = `Épuise <b>${nf(sessionD.vol || 1000, 0)} L à ${nf(sessionD.biere.abv)} %</b> en 24 s, sans mousser ${iBtn(`${sessionD.biere.nom}, en deux chauffes de 500 L. Garde la chaudière dans la bande verte : une bûche met une seconde à prendre, le registre d'air corrige vite. Au début, protéines et CO₂ font mousser la bière : chauffe doucement, puis nourris le feu.`)}`;
     $('#bro-bilan').hidden = true; $('#bro-pied').hidden = false; $('#bro-go').disabled = false;
     const btn = $('#bro-buche'); btn.disabled = true;
     const ctx = $('#bro-canvas').getContext('2d');
@@ -1659,7 +1696,7 @@
       sessionD.scoresFeu.push(borne(st.dans / Math.max(1, st.duree), 0, 1));
       const bl = DI.bilan(r);
       const ligne = (lib, f) => `<tr><td>${lib}</td><td>${nf(f.V, 1)} L</td><td>${nf(f.degre, 0)} %</td><td>${nf(f.lap, 1)}</td></tr>`;
-      const lapBiere = sessionD.biere.abv * 10;
+      const lapBiere = sessionD.biere.abv * (sessionD.vol || 1000) / 100;
       son('ok');
       bilanGeste('rep', [
         `<span class="gros">${nf(bl.coeur.V, 1)} L</span> de cœur à ${nf(bl.coeur.degre, 1)} %`,
@@ -1745,13 +1782,14 @@
     const scoreFeu = sessionD.scoresFeu.length ? sessionD.scoresFeu.reduce((a, x) => a + x, 0) / sessionD.scoresFeu.length : null;
     const note = DI.noterEDV(r, { mode: S.mode, scoreFeu: S.mode === 'debutant' ? scoreFeu : null, entrainement: S.mode === 'expert' && sessionD.brouillis.entrainement });
     const bl = DI.bilan(r);
-    const lapBiere = b.abv * 10, rendement = bl.coeur.lap / lapBiere;
+    const lapBiere = b.abv * (sessionD.vol || 1000) / 100, rendement = bl.coeur.lap / lapBiere;
     // Épaisses : têtes et queues mises de côté pour la prochaine chauffe
     const ep = { V: 0, A: 0, Q: Object.fromEntries(DI.CLES.map((k) => [k, 0])) };
     for (const f of [r.fractions[0], r.fractions[2], ...(sessionD.resteEpaisses ? [sessionD.resteEpaisses] : [])]) { ep.V += f.V; ep.A += f.A; for (const k of DI.CLES) ep.Q[k] += f.Q[k] || 0; }
     if (!reglagesD().recycler && S.epaisses) { ep.V += S.epaisses.V; ep.A += S.epaisses.A; for (const k of DI.CLES) ep.Q[k] += S.epaisses.Q[k] || 0; }
     S.epaisses = ep.A > 0.05 ? ep : null;
-    b.distillee = true;
+    b.distillee = true; b.stockL = 0;
+    avancer(1, 'distillation');
     const expertJoue = S.mode === 'expert' && sessionD.joue;
     const etoiles = { sansAide: !S.aide, expert: S.mode === 'expert', gestes: expertJoue };
     const nbEtoiles = Object.values(etoiles).filter(Boolean).length;
@@ -1766,7 +1804,7 @@
       ebc: 0, abv: bl.coeur.degre, coupes: r.coupes, incidents: { ...sessionD.incidents }, recyclees: sessionD.recyclees || 0,
       // Pour le chai : composition du cœur, céréale de départ, fumée des malts fumés, alcool encore disponible
       comp: note ? note.composition : null, source: b.type === 'wash' ? (/grain/.test(nomEauDeVie(b)) ? 'grain' : 'malt') : 'biere',
-      fume: maltsFumes(b), lapRestant: bl.coeur.lap,
+      fume: maltsFumes(b), lapRestant: bl.coeur.lap, semaine: S.cal.s,
     };
     S.carnet.unshift(entree);
     const nouveaux = verifierSuccesD(entree, note);
@@ -1897,10 +1935,13 @@
     return { source, comp: x.comp || null, fume: x.fume || 0, total: x.total, degre: x.coeur.degre, lap: x.lapRestant != null ? x.lapRestant : x.coeur.lap };
   }
   const edvDisponibles = () => S.carnet.filter((x) => x.type === 'edv' && x.coeur && x.coeur.lap > 0 && infoEDV(x).lap >= 0.5);
-  function apercu(f) {
+  const ageFut = (c) => Math.max(0, (S.cal.s - c.debut) / 52);
+  const prevision = {};
+  function apercu(f, plus = 0) {
     const c = f.contenu; if (!c) return null;
-    return CH.vieillir(c.etat, { type: f.type, taille: f.taille, remplissages: f.rem }, f.pos ? f.pos.r : 1, c.ans);
+    return CH.vieillir(c.etat, { type: f.type, taille: f.taille, remplissages: f.rem }, f.pos ? f.pos.r : 1, ageFut(c) + plus);
   }
+  const libAge = (a) => { const m = Math.round(a * 12); return m < 12 ? `${m} mois` : `${Math.floor(m / 12)} an${m >= 24 ? 's' : ''}${m % 12 ? ` ${m % 12} mois` : ''}`; };
 
   let choixFut = null, modeChai = null, lotsChoisis = new Set();
   function entrerChai() { chai(); rendreChai(); }
@@ -1909,7 +1950,8 @@
     const C = chai();
     const f = C.futs.find((x) => x.id === choixFut) || null;
     $('#chai-bourse').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${C.futs.length} fût${C.futs.length > 1 ? 's' : ''} · ${C.cols} travées sur ${PLAFOND_TRAVEES} · ${C.lots.length} lot${C.lots.length > 1 ? 's' : ''} en cuve d'attente</p>
-      <button class="btn btn-mini" data-aller="catalogue" data-catonglet="futs">Commander des fûts</button>`;
+      <button class="btn btn-mini" data-aller="catalogue" data-catonglet="futs">Commander des fûts</button>
+      <div class="attendre"><span>${esc(libCalendrier())} · laisser vieillir :</span><button class="btn btn-mini btn-sobre" data-attendre="4">1 mois</button><button class="btn btn-mini btn-sobre" data-attendre="26">6 mois</button><button class="btn btn-mini btn-sobre" data-attendre="52">1 an</button> ${iBtn("Le temps passe pour tout le domaine : les fûts vieillissent, mais les bières en cave perdent leur fraîcheur et les clients du pigeonnier ne t'attendent pas.")}</div>`;
     // Le casse-tête : trois rangées, des travées de largeur variable
     const icone = ['☀', '≈', '❄'];
     const rangees = CH.ZONES.map((z, r) => {
@@ -1920,7 +1962,7 @@
           const w = CH.TAILLES[o.taille].w, e = o.contenu ? apercu(o) : null;
           const plein = o.contenu ? Math.min(1, o.contenu.etat.V / CH.TAILLES[o.taille].L) : 0;
           cases += `<button class="fut fut-${o.type} ${o.id === choixFut ? 'choisi' : ''} ${o.contenu ? 'rempli' : ''}" style="grid-column:span ${w}" data-fut="${o.id}" aria-label="${esc(nomFut(o))}${o.contenu ? ', rempli' : ', vide'}">
-            <span class="fut-abr">${ABR[o.type]}</span>${o.contenu ? `<span class="fut-age">${nf(o.contenu.ans, o.contenu.ans % 1 ? 1 : 0)} a</span>` : ''}
+            <span class="fut-abr">${ABR[o.type]}</span>${o.contenu ? `<span class="fut-age">${nf(ageFut(o.contenu), ageFut(o.contenu) < 10 ? 1 : 0)} a</span>` : ''}
             <span class="fut-jauge"><i style="width:${Math.round(plein * 100)}%;background:${e ? couleur(e.couleur * 0.6) : 'transparent'}"></i></span></button>`;
           c += w - 1;
         } else if (!o) {
@@ -1953,21 +1995,21 @@
         ${lignes || '<p class="vide">Aucune eau-de-vie au carnet. Distille une bière avec Ulysse, ou mieux, un wash de malt.</p>'}
         ${chai().lots.length ? '<p class="page-intro">Pour une finition, choisis un lot dans les cuves d\'attente plus bas, puis « Finition ».</p>' : ''}${actionsFut}`;
     }
-    const c = f.contenu, e = apercu(f), V0 = c.etat.V, pip = CH.pipette(e), n = CH.noter(e), bt = CH.bouteilles(e);
-    const max = c.finition ? 3 : 15, pas = c.finition ? 0.25 : 0.5;
-    const plein = V0 / Z.L;
+    const c = f.contenu, plus = prevision[f.id] || 0, e = apercu(f, plus), V0 = c.etat.V, pip = CH.pipette(e), n = CH.noter(e), bt = CH.bouteilles(e);
+    const plein = V0 / Z.L, age = ageFut(c);
     const debutant = S.mode === 'debutant';
     return `${tete}
       <div class="fut-contenu"><p><b>${esc(c.noms.join(' + '))}</b>${c.finition ? ' · en finition' : ''} · ${nf(V0, 0)} L entonnés sur ${Z.L} L (${Math.round(plein * 100)} %)${plein < 0.6 ? ' · <span class="alerte-txt">beaucoup de vide : risque d\'oxydation</span>' : ''}</p>
-      <div class="dose"><label for="fut-ans">${c.finition ? 'Durée de la finition' : 'Années en fût'}</label><span class="val" id="fut-ans-val">${nf(c.ans, c.ans % 1 ? (pas < 0.5 ? 2 : 1) : 0)} an${c.ans >= 2 ? 's' : ''}</span>
-        <input type="range" id="fut-ans" min="0" max="${max}" step="${pas}" value="${c.ans}"></div>
-      <div class="apercu-chai" id="apercu-chai">${apercuHTML(f, e, pip, n, bt, debutant)}</div>
+      <p class="age-fut">En fût depuis <b>${libAge(age)}</b>${c.finition ? ' (finition : 6 à 24 mois)' : ''}</p>
+      <div class="dose"><label for="fut-ans">Prévoir : dans</label><span class="val" id="fut-ans-val">${plus ? libAge(plus) : 'aujourd\'hui'}</span>
+        <input type="range" id="fut-ans" min="0" max="${c.finition ? 2 : 12}" step="${c.finition ? 0.25 : 0.5}" value="${plus}"></div>
+      <div class="apercu-chai" id="apercu-chai">${apercuHTML(f, e, pip, n, bt, debutant, plus)}</div>
       <div class="actions-fut">
-        <button class="btn btn-feu" id="fut-sortir" ${c.ans <= 0 ? 'disabled' : ''}>Sortir du fût à ${nf(c.ans, c.ans % 1 ? 1 : 0)} an${c.ans >= 2 ? 's' : ''}</button>
-        ${!c.finition && c.etat.V < Z.L - 0.5 && edvDisponibles().length ? '<button class="btn btn-sobre" id="fut-completer">Compléter</button>' : ''}
+        <button class="btn btn-feu" id="fut-sortir" ${age < 1 / 52 ? 'disabled' : ''}>Sortir du fût (${libAge(age)})</button>
+        ${!c.finition && c.etat.V < Z.L - 0.5 && edvDisponibles().length && age < 0.1 ? '<button class="btn btn-sobre" id="fut-completer">Compléter</button>' : ''}
         <button class="btn btn-sobre" id="fut-deplacer">Déplacer</button></div></div>`;
   }
-  function apercuHTML(f, e, pip, n, bt, debutant) {
+  function apercuHTML(f, e, pip, n, bt, debutant, plus) {
     const ange = 1 - e.V / f.contenu.etat.V;
     const axes = CH.AXES.map((k) => [k, CH.LIB_AXES[k]]);
     return `<div class="apercu-haut"><span class="robe" style="background:${couleur(e.couleur * 0.6)}"></span>
@@ -1975,19 +2017,16 @@
       <p class="nom-legal">${esc(CH.nom(e, bt.degre))}</p>
       <div class="pipette"><b>À la pipette :</b> ${pip.notes.length ? pip.notes.map((x) => `${esc(x.mot)} <small>(${x.force})</small>`).join(' · ') : 'alcool blanc, céréale'}${pip.bouche.length ? `<br><b>En bouche :</b> ${esc(pip.bouche.join(', '))}` : ''}</div>
       <div class="radar radar-chai">${radarSVG(axes, CH.profil(e))}</div>
+      ${plus ? '<p class="det prevision-txt">Prévision : le fût n\'en est pas encore là.</p>' : ''}
       ${debutant ? `<p class="det">Estimation du jury : <b>${nf(n.total, n.total % 1 ? 1 : 0)}/50</b>${n.medaille ? ` · ${n.medaille}` : ''} (affichée en mode débutant)</p>` : ''}
       <p class="conseil-firmin">« ${esc(CH.conseil(e, { taille: f.taille }, f.pos ? f.pos.r : 1))} »</p>`;
   }
   function majApercu(f) {
     const z = $('#apercu-chai'); if (!z) return;
-    const e = apercu(f);
-    z.innerHTML = apercuHTML(f, e, CH.pipette(e), CH.noter(e), CH.bouteilles(e), S.mode === 'debutant');
-    const c = f.contenu, pas = c.finition ? 0.25 : 0.5;
-    $('#fut-ans-val').textContent = `${nf(c.ans, c.ans % 1 ? (pas < 0.5 ? 2 : 1) : 0)} an${c.ans >= 2 ? 's' : ''}`;
-    const b = $('#fut-sortir'); b.disabled = c.ans <= 0; b.textContent = `Sortir du fût à ${nf(c.ans, c.ans % 1 ? 1 : 0)} an${c.ans >= 2 ? 's' : ''}`;
-    const fj = $(`[data-fut="${f.id}"] .fut-age`); if (fj) fj.textContent = `${nf(c.ans, c.ans % 1 ? 1 : 0)} a`;
+    const plus = prevision[f.id] || 0, e = apercu(f, plus);
+    z.innerHTML = apercuHTML(f, e, CH.pipette(e), CH.noter(e), CH.bouteilles(e), S.mode === 'debutant', plus);
+    $('#fut-ans-val').textContent = plus ? libAge(plus) : 'aujourd\'hui';
   }
-
   function remplir(f, x) {
     const Z = CH.TAILLES[f.taille], i = infoEDV(x);
     const deja = f.contenu ? f.contenu.etat.V : 0, place = Z.L - deja;
@@ -1998,7 +2037,7 @@
     x.lapRestant = Math.max(0, i.lap - lap);
     const e = CH.etatInitial({ V, degre, comp: i.comp, total: i.total, fume: i.fume, sources: [i.source] });
     if (f.contenu) { f.contenu.etat = CH.assembler([f.contenu.etat, e]); if (!f.contenu.noms.includes(x.nom)) f.contenu.noms.push(x.nom); }
-    else f.contenu = { etat: e, ans: Math.max(1, Math.round(CH.P.maturationMois / 12)), noms: [x.nom], finition: false };
+    else f.contenu = { etat: e, debut: S.cal.s, noms: [x.nom], finition: false };
     son('bulle');
     toast(`${nf(V, 1)} L entonnés à ${nf(degre, 1)} %${x.lapRestant >= 0.5 ? ` · il reste ${nf(x.lapRestant, 1)} LAP au carnet` : ''}.`);
     sauver(); rendreChai();
@@ -2020,7 +2059,7 @@
     let etat = lot.etat;
     if (etat.V > Z.L) { const part = Z.L / etat.V; etat = { ...etat, V: Z.L }; lot.etat = { ...lot.etat, V: lot.etat.V * (1 - part) }; }
     else C.lots = C.lots.filter((l) => l !== lot);
-    f.contenu = { etat, ans: 1, noms: lot.noms.slice(), finition: true };
+    f.contenu = { etat, debut: S.cal.s, noms: lot.noms.slice(), finition: true };
     choixFut = f.id; modeChai = null;
     son('bulle'); toast(`Finition en ${nomFut(f).toLowerCase()} : 6 à 24 mois suffisent.`);
     sauver(); rendreChai();
@@ -2057,6 +2096,7 @@
       return;
     }
     if (b.id === 'chai-annuler') { modeChai = null; rendreChai(); return; }
+    if (b.dataset.attendre) { avancer(+b.dataset.attendre, 'chai'); son('ok'); rendreChai(); majEntete(); return; }
     if (b.id === 'chai-etendre') {
       const cout = coutTravee(C.cols);
       if (S.ecus < cout || C.cols >= PLAFOND_TRAVEES) return;
@@ -2088,7 +2128,7 @@
   $('#ecran-chai').addEventListener('input', (ev) => {
     if (ev.target.id !== 'fut-ans') return;
     const f = chai().futs.find((x) => x.id === choixFut); if (!f || !f.contenu) return;
-    f.contenu.ans = +ev.target.value; majApercu(f); sauver();
+    prevision[f.id] = +ev.target.value; majApercu(f);
   });
   $('#ecran-chai').addEventListener('change', (ev) => {
     const id = ev.target.dataset.lotcoche; if (!id) return;
@@ -2106,7 +2146,7 @@
       id: Date.now().toString(36), type: 'vieilli', date: new Date().toISOString(), nom: `${nomLegal} · ${lot.noms[0]}`, style: nomLegal,
       total: note.total, lignes: note.lignes, medaille: note.presentable ? note.medaille : null, defauts: note.defauts.map((d) => d.nom),
       ebc: e.couleur * 0.6, abv: bt.degre, bouteilles: bt.n, volume: bt.V, age: e.ageMin, futs: e.futs, profil: CH.profil(e), sources: lot.noms,
-      mode: S.mode, bac: S.bac, gain, etoiles: {}, brutDeFut: bt.brutDeFut, assemblage: e.assemblage || 0,
+      mode: S.mode, bac: S.bac, gain, etoiles: {}, brutDeFut: bt.brutDeFut, assemblage: e.assemblage || 0, semaine: S.cal.s, stockB: bt.n,
     };
     S.carnet.unshift(entree);
     C.lots = C.lots.filter((l) => l !== lot); lotsChoisis.delete(lot.id);
@@ -2338,6 +2378,125 @@
   });
 
   // =====================================================================
+  // Pigeonnier : vente aux clients (stock réel, réputation, commandes)
+  // =====================================================================
+  let pigOnglet = 'vente', clientOuvert = null, commandeOuverte = null, derniereVente = null;
+  const cacheAttr = new Map();
+  // Ce que le client peut goûter : bières en cave, eaux-de-vie blanches, spiritueux vieillis
+  function produits() {
+    const out = [];
+    for (const x of S.carnet) {
+      if (x.type === 'biere' && (x.stockL || 0) >= 1) {
+        let a = cacheAttr.get(x.id);
+        if (!a) { const r = Moteur.calculer(x.recette); a = { amer: r.profil.amer, houblon: r.profil.houblon, fruite: r.profil.fruite, torrefie: r.profil.torrefie, malte: r.profil.malte }; cacheAttr.set(x.id, a); }
+        out.push({ ...a, cat: 'biere', x, nom: x.nom, abv: x.abv, ibu: x.ibu, ebc: x.ebc, sujet: x.sujet, total: x.total, semaine: x.semaine, stock: Math.floor(x.stockL) });
+      } else if (x.type === 'edv' && x.coeur && x.coeur.lap > 0) {
+        const lap = x.lapRestant != null ? x.lapRestant : x.coeur.lap, c = x.comp || {};
+        const n = Math.floor(lap / 0.225);
+        if (n >= 1) out.push({ cat: 'edv', x, nom: x.nom, total: x.total, fruite: (c.esters || 0.8) * 2.5 + (c.terpenes || 0) * 1.5, chaleur: (c.fusels || 1) * 4, semaine: x.semaine, stock: n });
+      } else if (x.type === 'vieilli' && (x.stockB || 0) >= 1) {
+        const p = x.profil || {};
+        out.push({ cat: 'vieilli', x, nom: x.nom, total: x.total, age: x.age, whisky: /^Whisky/.test(x.style), fume: p.fume || 0, vanille: p.vanille || 0, semaine: x.semaine, stock: x.stockB });
+      }
+    }
+    return out;
+  }
+  function retirerStock(p, q) {
+    if (p.cat === 'biere') p.x.stockL = Math.max(0, p.x.stockL - q);
+    else if (p.cat === 'edv') p.x.lapRestant = Math.max(0, (p.x.lapRestant != null ? p.x.lapRestant : p.x.coeur.lap) - q * 0.225);
+    else p.x.stockB = Math.max(0, p.x.stockB - q);
+  }
+  const uniteQ = (cat, q) => (cat === 'biere' ? `${q} L` : `${q} bouteille${q > 1 ? 's' : ''}`);
+  const demandeDe = (c) => Vente.DEMANDES.find((d) => d.id === c.demande);
+  function niveauRep() { const r = S.vente.rep; return r >= 75 ? 'renommé dans tout le Quercy' : r >= 55 ? 'réputé' : r >= 35 ? 'apprécié' : r >= 20 ? 'connu au village' : 'inconnu'; }
+  function entrerPigeonnier() {
+    $('#pig-onglets').innerHTML = [['vente', 'Clients', S.vente.clients.length + S.vente.commandes.length], ['achats', 'Fournisseurs', null]].map(([k, v, n]) => `<button class="onglet" role="tab" aria-selected="${pigOnglet === k}" data-pigonglet="${k}">${v}${n ? `<span class="badge">${n}</span>` : ''}</button>`).join('');
+    $('#pig-vente').hidden = pigOnglet !== 'vente'; $('#pig-achats').hidden = pigOnglet !== 'achats';
+    if (pigOnglet === 'vente') rendreVente(); else rendreCatalogue();
+  }
+  $('#pig-onglets').addEventListener('click', (e) => { const b = e.target.closest('[data-pigonglet]'); if (!b) return; pigOnglet = b.dataset.pigonglet; son('clic'); entrerPigeonnier(); });
+  function ligneProduit(p, q, action) {
+    const fr = Vente.fraicheur(p, S.cal.s);
+    const det = p.cat === 'biere' ? `${nf(p.abv)} % · ${nf(p.ibu, 0)} IBU · ${nf(p.ebc, 0)} EBC · ${nf(p.total, p.total % 1 ? 1 : 0)}/50 · fraîcheur ${Math.round(fr * 100)} %`
+      : p.cat === 'edv' ? `${nf(p.total, p.total % 1 ? 1 : 0)}/50 · eau-de-vie blanche` : `${nf(p.age, 1)} ans · ${nf(p.total, p.total % 1 ? 1 : 0)}/50`;
+    return `<div class="produit"><span class="pastille-prod" style="background:${p.cat === 'biere' ? couleur(p.ebc) : p.cat === 'vieilli' ? couleur(p.x.ebc || 20) : '#ece8dc'}"></span>
+      <span class="corps"><b>${esc(p.nom)}</b><small>${det}</small><small>En cave : ${uniteQ(p.cat, p.stock)}${p.stock < q ? ' · <span class="alerte-txt">pas assez pour toute la demande</span>' : ''}</small></span>${action}</div>`;
+  }
+  function rendreVente() {
+    const V = S.vente, sais = saisonCourante();
+    const prods = produits();
+    $('#pig-vente').innerHTML = `<div class="bourse"><span class="ecus">${S.ecus} écus</span><p>${esc(libCalendrier())} · cave à ${Vente.CAVE[sais]} °C${recolte() ? ' · <b>récolte du houblon : −30 % chez les fournisseurs</b>' : ''}</p>
+        <div class="rep"><span>Réputation : <b>${niveauRep()}</b></span><span class="barre-rep"><i style="width:${Math.min(100, V.rep)}%"></i></span><span class="det">${V.vendus} ventes · ${V.ca} écus encaissés</span></div></div>
+      ${derniereVente ? `<div class="vente-resultat ${derniereVente.s > 0.65 ? 'ok' : derniereVente.s < 0.45 ? 'ko' : ''}"><b>${esc(derniereVente.nom)} :</b> « ${esc(derniereVente.detail)} »<br>${derniereVente.txt}</div>` : ''}
+      <h2 class="sous-titre">Clients du jour ${iBtn("Chaque semaine, de nouveaux clients passent : ils décrivent ce qu'ils cherchent. Propose une bouteille de ta cave. Leur satisfaction dépend des critères respectés, de la qualité au jury et de la fraîcheur : elle fixe le prix, le pourboire et la réputation. Les clients repartent au bout de deux semaines.")}</h2>
+      ${V.clients.length ? V.clients.map((c) => carteClient(c, prods)).join('') : '<p class="vide">Personne pour l\'instant. De nouveaux clients viendront la semaine prochaine : un brassin, une distillation ou un passage au chai font avancer le temps.</p>'}
+      ${V.commandes.length ? `<h2 class="sous-titre">Commandes spéciales</h2>${V.commandes.map((c) => carteCommande(c, prods)).join('')}` : V.rep < 35 ? '<p class="page-intro">Les commandes spéciales (fêtes, marchés, auberges) arrivent quand le domaine est apprécié.</p>' : ''}
+      <h2 class="sous-titre">Ta cave</h2>
+      ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<p class="vide">La cave est vide. Chaque brassin met 1000 L en cave ; l\'alambic et le chai ajoutent des bouteilles.</p>'}`;
+  }
+  function carteClient(c, prods) {
+    const d = demandeDe(c), t = Vente.TYPES[c.type], ouvert = clientOuvert === c.id;
+    const choix = prods.filter((p) => p.cat === d.cat);
+    return `<div class="client ${ouvert ? 'ouvert' : ''}"><div class="client-tete"><span class="avatar" style="background:hsl(${(c.nom.length * 47) % 360} 35% 45%)">${esc(c.nom.split(' ').pop()[0])}</span>
+      <span class="corps"><b>${esc(c.nom)}</b><small>${esc(t.nom)} · ${esc(c.lieu)}${t.exigence ? ` · exigeant (${t.exigence}/50)` : ''}</small></span></div>
+      <p class="demande">« ${esc(d.txt)} »</p><p class="det">Il voudrait ${uniteQ(d.cat, c.qte)} ${d.cat === 'biere' ? 'de bière' : d.cat === 'edv' ? 'd\'eau-de-vie' : 'de spiritueux vieilli'}.</p>
+      ${ouvert ? (choix.length ? choix.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-proposer="${c.id}|${p.x.id}">Proposer</button>`)).join('') : '<p class="vide">Rien de ce genre en cave.</p>') + `<button class="btn btn-mini btn-sobre" data-congedier="${c.id}">Je n'ai rien pour vous</button>`
+        : `<button class="btn btn-mini" data-conseiller="${c.id}">Conseiller</button>`}</div>`;
+  }
+  function carteCommande(c, prods) {
+    const d = demandeDe(c), ouvert = commandeOuverte === c.id;
+    const ok = prods.filter((p) => p.cat === d.cat && p.stock >= c.qte && p.total >= c.note);
+    return `<div class="client commande"><div class="client-tete"><span class="avatar">★</span><span class="corps"><b>${esc(c.nom)}</b><small>${c.qte} L · ${c.note}/50 au moins · avant ${Math.max(0, c.echeance - S.cal.s)} semaine(s) · prime ${c.prime} écus</small></span></div>
+      <p class="demande">« ${esc(d.txt)} »</p>
+      ${ouvert ? (ok.length ? ok.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-livrer="${c.id}|${p.x.id}">Livrer</button>`)).join('') : '<p class="vide">Aucune bière en cave n\'a le volume et la note demandés.</p>') : `<button class="btn btn-mini" data-ouvrircommande="${c.id}">Voir ce que je peux livrer</button>`}</div>`;
+  }
+  $('#pig-vente').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button'); if (!b) return;
+    const V = S.vente;
+    if (b.dataset.conseiller) { clientOuvert = b.dataset.conseiller; son('clic'); rendreVente(); return; }
+    if (b.dataset.ouvrircommande) { commandeOuverte = b.dataset.ouvrircommande; son('clic'); rendreVente(); return; }
+    if (b.dataset.congedier) { V.clients = V.clients.filter((c) => c.id !== b.dataset.congedier); clientOuvert = null; derniereVente = null; sauver(); entrerPigeonnier(); return; }
+    if (b.dataset.proposer) {
+      const [cid, pid] = b.dataset.proposer.split('|');
+      const c = V.clients.find((x) => x.id === cid), p = produits().find((x) => x.x.id === pid); if (!c || !p) return;
+      const q = Math.min(c.qte, p.stock);
+      const sat = Vente.satisfaction(c, p, S.cal.s);
+      const sAjuste = q < c.qte ? sat.s * 0.9 : sat.s;
+      const pr = Vente.prix(c, p, q, sAjuste, V.rep);
+      const dr = Vente.variationRep(sAjuste);
+      retirerStock(p, q);
+      const gagne = gagnerEcus(pr.ecus + pr.pourboire);
+      V.rep = Math.max(0, Math.min(100, V.rep + dr)); V.vendus++; V.ca += gagne;
+      V.clients = V.clients.filter((x) => x.id !== cid); clientOuvert = null;
+      derniereVente = { nom: c.nom, s: sAjuste, detail: sat.detail, txt: `${uniteQ(p.cat, q)} de ${esc(p.nom)} · <b style="color:var(--or)">+${pr.ecus} écus</b>${pr.pourboire ? ` + ${pr.pourboire} de pourboire` : ''} · réputation ${dr >= 0 ? '+' : ''}${dr}` };
+      son(sAjuste > 0.65 ? 'ok' : 'rate');
+      sauver(); majEntete(); entrerPigeonnier(); $('#scene').scrollTop = 0;
+      return;
+    }
+    if (b.dataset.livrer) {
+      const [cid, pid] = b.dataset.livrer.split('|');
+      const c = V.commandes.find((x) => x.id === cid), p = produits().find((x) => x.x.id === pid); if (!c || !p) return;
+      const sat = Vente.satisfaction({ demande: c.demande, type: 'restaurateur' }, p, S.cal.s);
+      if (sat.accord < 0.6) { son('rate'); toast('Ce n\'est pas le style demandé : la commande attend autre chose.'); return; }
+      retirerStock(p, c.qte);
+      const gagne = gagnerEcus(c.prime);
+      V.rep = Math.min(100, V.rep + c.rep); V.vendus++; V.ca += gagne;
+      V.commandes = V.commandes.filter((x) => x.id !== cid); commandeOuverte = null;
+      derniereVente = { nom: c.nom, s: 0.9, detail: 'Livré à temps, tout le monde a apprécié.', txt: `${c.qte} L de ${esc(p.nom)} · <b style="color:var(--or)">+${c.prime} écus</b> · réputation +${c.rep}` };
+      son('medaille'); sauver(); majEntete(); entrerPigeonnier(); $('#scene').scrollTop = 0;
+      return;
+    }
+    if (b.dataset.negociant) {
+      const p = produits().find((x) => x.x.id === b.dataset.negociant); if (!p) return;
+      const e = Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))));
+      if (b.dataset.confirme !== '1') { b.dataset.confirme = '1'; b.textContent = `Céder ${p.stock} L ?`; return; }
+      retirerStock(p, p.stock); gagnerEcus(e); V.ca += e;
+      derniereVente = { nom: 'Le négociant de Caussade', s: 0.5, detail: 'Je vous prends tout, au prix du vrac.', txt: `${p.stock} L de ${esc(p.nom)} · <b style="color:var(--or)">+${e} écus</b>` };
+      son('ok'); sauver(); majEntete(); entrerPigeonnier();
+    }
+  });
+
+  // =====================================================================
   // Pigeonnier : catalogue, découvertes, grimoire
   // =====================================================================
   let catOnglet = 'cereales', catFiltre = 'achat', catRecherche = '';
@@ -2420,7 +2579,7 @@
       const f = nouveauFut(a.type, a.taille); chai().futs.push(f);
       f.pos = placeLibre(f);
       son('ok'); toast(`${a.nom} livré ${f.pos ? `au chai, rangée ${CH.ZONES[f.pos.r].id}` : 'dans la cour : le chai est plein'}.`);
-      sauver(); majEntete(); if (ecran === 'recherche') rendreResultats(); else rendreCatalogue();
+      sauver(); majEntete(); if (ecran === 'recherche') rendreResultats(); else entrerPigeonnier();
       return;
     }
     const x = cat === 'grimoire' ? IDX.recette.get(id) : CATEGORIES[cat].liste().find((e) => e.id === id);
@@ -2430,7 +2589,7 @@
     S.ecus -= prix;
     if (cat === 'grimoire') S.grimoire.push(id); else posseder(id);
     son('ok'); toast(`${x.nom} ${cat === 'grimoire' ? 'ajoutée au grimoire' : 'arrive par pigeon'}.`);
-    sauver(); majEntete(); if (ecran === 'recherche') rendreResultats(); else rendreCatalogue();
+    sauver(); majEntete(); if (ecran === 'recherche') rendreResultats(); else entrerPigeonnier();
   }
   function brasserRecette(id) {
     const r = IDX.recette.get(id); if (!r) return;
@@ -2783,7 +2942,7 @@
       <div class="chiffres"><span>${nf(x.total, x.total % 1 ? 1 : 0)}/${x.type === 'wash' ? 20 : 50}</span><span>${sg(x.og)} → ${sg(x.fg)}</span><span>${nf(x.abv)} %</span><span>${nf(x.ibu, 0)} IBU</span><span>${nf(x.ebc, 0)} EBC</span></div>
       <p>${x.medaille ? `Médaille ${x.medaille === 'or' ? "d'or" : x.medaille === 'argent' ? "d'argent" : 'de bronze'}` : 'Sans médaille'}${x.defauts.length ? ` · défauts : ${esc(x.defauts.join(', '))}` : ' · aucun défaut'}</p>
       <p><b>Malts :</b> ${esc(malts)}</p><p><b>Houblons :</b> ${esc(hops) || 'aucun'}</p>
-      ${x.distillee ? '<p><b>Distillée</b> dans Ulysse.</p>' : ''}<p><b>Levure :</b> ${esc(IDX.levure.get(rec.levure)?.nom || '?')} à ${nf(rec.fermentation.temp)} °C · eau ${esc(IDX.eau.get(rec.eau)?.nom || '?')} · palier ${nf(rec.palier)} °C · ${rec.ebullition} min</p>
+      ${x.distillee ? '<p><b>Distillée</b> dans Ulysse.</p>' : ''}${x.type === 'biere' && x.stockL > 0 ? `<p><b>En cave :</b> ${nf(x.stockL, 0)} L · brassée il y a ${S.cal.s - x.semaine} semaine(s) · fraîcheur ${Math.round(Vente.fraicheur({ cat: 'biere', semaine: x.semaine, abv: x.abv, houblon: (cacheAttr.get(x.id) || {}).houblon || 3 }, S.cal.s) * 100)} %</p>` : ''}<p><b>Levure :</b> ${esc(IDX.levure.get(rec.levure)?.nom || '?')} à ${nf(rec.fermentation.temp)} °C · eau ${esc(IDX.eau.get(rec.eau)?.nom || '?')} · palier ${nf(rec.palier)} °C · ${rec.ebullition} min</p>
       <button class="btn btn-feu" id="carnet-rebrasser">Rebrasser cette recette</button></div>`;
     $('#carnet-rebrasser').onclick = () => { R = clone(x.recette); onglet = 'cuve'; aller('brasserie'); };
   }
@@ -2949,7 +3108,7 @@
       <div class="reglage"><span class="lib">Tutoriel</span><p>Lise reprend la visite depuis le début, et chaque atelier remontre sa carte de premier passage.</p><button class="btn btn-sobre" id="revoir-tuto">Revoir les tutoriels</button></div>
       <div class="reglage danger"><span class="lib">Effacer la partie</span><p>Carnet, points et succès seront perdus. La partie est enregistrée sur ce téléphone uniquement.</p>
         <div class="bascule" id="zone-effacer"><button id="effacer">Tout effacer</button></div></div>
-      <p class="infos-version">Version 0.5.2 · brasserie, alambic Ulysse, chai, pigeonnier, école de la veillée et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
+      <p class="infos-version">Version 0.6 · brasserie, alambic Ulysse, chai, pigeonnier (vente et fournisseurs), école de la veillée, calendrier des saisons et recherche. Données du Hub Prométhée : ${D.malts.length} céréales et sucres, ${D.houblons.length} houblons, ${D.levures.length} levures, ${D.aromates.length} aromates, ${D.sels.length} sels, ${D.auxiliaires.length} auxiliaires, ${D.recettes.length} recettes, ${D.quiz.cartes.length} questions, ${D.styles.length} styles.</p></div>`;
   }
   $('#reglages-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
@@ -2968,6 +3127,7 @@
   // =====================================================================
   // Démarrage
   // =====================================================================
+  if (!S.vente.clients.length) genererClients(S.cal.s);
   majEntete();
   aller('domaine');
 })();
