@@ -335,12 +335,38 @@ async function donneesJeu() {
   };
 }
 
+// Illustrations WebP intégrées à la page autonome, sans requêtes réseau.
+// Aucun visuel n'est requis pour construire la version existante du jeu.
+async function imagesJeu() {
+  const dossier = path.join(RACINE, 'jeu', 'src', 'images');
+  let fichiers;
+  try { fichiers = await fs.readdir(dossier); }
+  catch (e) { if (e.code === 'ENOENT') return {}; throw e; }
+  const images = {};
+  let total = 0;
+  for (const nom of fichiers.sort()) {
+    if (!nom.endsWith('.webp')) continue;
+    if (!/^[a-z0-9][a-z0-9_-]*\.webp$/.test(nom)) {
+      throw new Error('Nom de visuel non conforme : ' + nom);
+    }
+    const donnees = await fs.readFile(path.join(dossier, nom));
+    total += donnees.length;
+    if (total > 6 * 1024 * 1024) {
+      throw new Error('Budget images dépassé : 6 Mio maximum');
+    }
+    images[nom.slice(0, -5)] = 'data:image/webp;base64,' + donnees.toString('base64');
+  }
+  return images;
+}
+
 async function construire() {
   const D = await donneesJeu();
+  const IMAGES = await imagesJeu();
   const [page, css, moteur, distillerie, chai, ecole, vente, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'chai.js', 'ecole.js', 'vente.js', 'jeu.js'].map(src));
   const corps = page
     .replace('/*CSS*/', () => css)
     .replace('/*DONNEES*/', () => 'window.DONNEES_JEU = ' + JSON.stringify(D) + ';')
+    .replace('/*IMAGES*/', () => 'window.IMAGES_JEU = ' + JSON.stringify(IMAGES) + ';')
     .replace('/*MOTEUR*/', () => moteur)
     .replace('/*DISTILLERIE*/', () => distillerie)
     .replace('/*CHAI*/', () => chai)
