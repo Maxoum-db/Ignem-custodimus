@@ -103,6 +103,14 @@
       const y = 65.2 - borne(1 - (s.prog || 0)) * 10.4;
       c.fillStyle = s.couleur;
       c.fillRect(64, y, 12, 66 - y);
+      if (y < 65) {
+        c.beginPath();
+        c.moveTo(64, y);
+        c.quadraticCurveTo(68, y + Math.sin(fx.t * 2.5) * 0.3, 75, y);
+        c.strokeStyle = "rgba(255,237,174,.7)";
+        c.lineWidth = 0.35;
+        c.stroke();
+      }
       if (s.mousse > 0) {
         c.fillStyle = "#fff2ce";
         c.fillRect(64, y - s.mousse * 8, 12, s.mousse * 8);
@@ -127,6 +135,21 @@
         2,
       );
     if (force > 0.05 && !fx.reduit) vapeur(c, 84, 30, fx.t, 0.45);
+    if (force > 0.05 && !fx.reduit)
+      for (let i = 0; i < 3; i++) {
+        const a = (fx.t * 0.65 + i / 3) % 1;
+        c.save();
+        c.globalAlpha = Math.sin(a * Math.PI) * Math.min(force, 1) * 0.6;
+        ellipse(
+          c,
+          62 + i * 4 + Math.sin(a * 4 + i),
+          86 - a * 12,
+          0.25,
+          0.55,
+          "#ffd38a",
+        );
+        c.restore();
+      }
     if (s.evenement === "humide" && !fx.reduit)
       vapeur(c, 56, 73, fx.t, 0.6, true);
   }

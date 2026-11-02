@@ -75,11 +75,11 @@ Le registre `UniversJeu` et les modules `activites-illustrees.js`,
 
 Les six bâtiments partagent le canevas 768 × 512 et l'ancrage normalisé
 `(0.5, 0.9004)`. Les niveaux restent superposables au même point de sol.
-Lise et Firmin ont chacun **un sprite source** : les portraits sont des recadrages
+Lise et Firmin ont chacun **un sprite de référence** : les portraits sont des recadrages
 Canvas de ces sprites, et non des visages régénérés. Les clients emploient des
 portraits SVG déterministes originaux.
 
-Le total actuel, les dimensions et les SHA256 exacts des **25 WebP** sont dans
+Le total actuel, les dimensions et les SHA256 exacts des **29 WebP** sont dans
 `manifest.json` ; le pipeline impose toujours le plafond source de 6 Mio.
 Les cinq assets A–E sont inchangés. Les nouvelles illustrations sont produites
 avec `image_gen`, et non simulées par des emplacements vides.
@@ -90,15 +90,41 @@ Le feu conserve six images Canvas indépendantes à ancrage constant, espacées 
 120 ms, avec un fondu entre les images. La carte et les panoramas animés sont
 repeints au rythme de requestAnimationFrame, plafonné à 60 peintures/s. Les
 personnages et animaux suivent des trajectoires courbes avec freinage et pauses ;
-les sprites existants restent les sources, sans prétendre à six nouvelles poses
-anatomiques dessinées. L’horloge décorative se suspend hors écran et ne pilote
+quatre atlas contiennent désormais chacun six dessins de poses : marche de Lise,
+Firmin et du cheval, picorage de la poule blanche. Les jambes et les bras varient
+réellement. Les poses de marche suivent la distance parcourue ; le picorage se
+produit pendant les pauses. Les sprites de référence restent le repli et les
+portraits restent leurs recadrages d'origine. L’horloge décorative se suspend hors écran et ne pilote
 aucun temps de jeu. Les abeilles sont décoratives, actives le jour hors hiver.
 Vapeur, écoulement, reflets et liquides restent procéduraux. Le mouvement réduit
 fige les décorations, pas les mesures nécessaires au déroulement d'un geste.
 Les vues cachées ou hors écran ne sont pas repeintes.
 
 Aucun asset n'est nécessaire pour jouer au lot livré : le dessin historique reste
-le repli. Restent des enrichissements facultatifs : vraies poses de marche/travail
-à six dessins pour les mentors/animaux, portraits peints individualisés des clients,
+le repli. Restent des enrichissements facultatifs : poses de travail des mentors, cycles
+articulés du chat, des autres volailles et du canard, portraits peints des clients,
 variantes peintes de végétation hivernale (actuellement dessinées par code).
 Le rucher reste l'extension « bientôt » du vrai jeu ; cette refonte ne l'ouvre pas.
+
+## Atlas et détails internes
+
+| Atlas Q82 | Action | Cellules | Ancrage par cellule |
+| --- | --- | --- | --- |
+| `marche-lise.webp` | Bras, jambes et robe pendant la marche | 3 × 2 de 128 × 128 | (64, 120) |
+| `marche-firmin.webp` | Bras, jambes et bretelles pendant la marche | 3 × 2 de 128 × 128 | (64, 120) |
+| `pas-cheval.webp` | Sabots alternés, tête et queue | 3 × 2 de 128 × 128 | (64, 126) |
+| `picorer-poule-blanche.webp` | Cou et bec abaissés puis redressés | 3 × 2 de 128 × 128 | (64, 126) |
+
+Ces 24 dessins sont originaux, produits avec `image_gen` en référence aux sprites
+existants, puis extraits, ancrés et regroupés techniquement avec ImageMagick.
+Chaque atlas statique mesure 384 × 256 ; les WebP animés restent interdits.
+Le rendu conserve échelle et sol, avec un fondu aux départs/arrêts. Un atlas absent
+ou aux dimensions invalides laisse le sprite historique. La marche est stylisée,
+au pas marqué ; les six vues ne constituent pas une capture biomécanique.
+
+La végétation est séparée du décor statique : tronc ancré, feuillage déformé par
+bandes légères ; petites textures et teintes saisonnières sont mises en cache.
+Les auvents ondulent, les personnages de la boutique et de la veillée respirent,
+les braises montent, les surfaces liquides portent de petites rides et le hublot
+d'Ulysse reflète le niveau réellement calculé. Le chai reste statique pour éviter
+une boucle d'animation inutile.

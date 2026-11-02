@@ -76,6 +76,10 @@
       ellipse(c,x+Math.cos(a)*rx*d,y+Math.sin(a)*ry*d,grain?1.3:.8,grain?.55:.7,grain?'#dbc089':'rgba(255,238,183,.65)');
     }
     ligne(c, [[x-rx*.6,y-ry*.3],[x-rx*.3,y-ry*.55],[x,y-ry*.52]], 'rgba(255,245,210,.5)', .7);
+    for(let i=0;i<3;i++){
+      const a=(temps*.18+i/3)%1;c.save();c.globalAlpha=Math.sin(a*Math.PI)*.18;
+      ellipse(c,x+Math.sin(i*2)*rx*.4,y+Math.cos(i)*ry*.25,Math.max(.1,rx*a*.6),Math.max(.1,ry*a*.55),'rgba(255,242,196,0)','#f6df9e');c.restore();
+    }
     c.restore();
   }
 

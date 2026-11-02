@@ -3,8 +3,19 @@
   "use strict";
   const U = window.UniversJeu,
     I = window.IllustrationsJeu,
-    { C, ellipse, ligne, boite, polygone, image, contenir, feu, verre, fut } =
-      U.art;
+    {
+      C,
+      ellipse,
+      ligne,
+      boite,
+      polygone,
+      image,
+      contenir,
+      feu,
+      verre,
+      fut,
+      acteur,
+    } = U.art;
   const svg = (corps) =>
     "data:image/svg+xml;charset=utf-8," +
     encodeURIComponent(
@@ -260,7 +271,6 @@
       U.arbre(c, 179, 72, 21, p, 32, false, im["decor-arbre"]);
       U.batiment(c, im["domaine-pigeonnier-batiment"], 83, 83, 133);
       if (s.niveau >= 2) {
-        U.auvent(c, 59, 54, 53);
         for (let i = 0; i < 6; i++) {
           boite(c, 62 + i * 7, 65, 3, 8, 0.7, i % 2 ? "#ac8048" : "#6e8249");
           boite(c, 63 + i * 7, 62, 1, 4, 0.3, "#ac8048");
@@ -298,9 +308,10 @@
           0.8,
         );
       }
-      contenir(c, im["personnage-lise"], 130, 45, 22, 40);
     },
     dessin(c, im, s, fx) {
+      if (s.niveau >= 2) U.auvent(c, 59, 54, 53, fx.reduit ? null : fx.t);
+      acteur(c, im["personnage-lise"], 141, 85, 22, 40, fx.t);
       for (let i = 0; i < 2; i++) {
         const x = 37 + i * 88 + Math.sin(fx.t * 0.45 + i) * 3,
           y = 81 + Math.sin(fx.t * 3 + i) * 0.12;
@@ -355,8 +366,6 @@
           1.2,
         );
       }
-      contenir(c, im["personnage-lise"], 52, 35, 25, 48);
-      contenir(c, im["personnage-firmin"], 122, 36, 28, 47);
       for (let i = 0; i < 9; i++) {
         const a = (i * Math.PI * 2) / 9;
         ellipse(
@@ -390,12 +399,32 @@
       );
     },
     dessin(c, im, s, fx) {
+      acteur(c, im["personnage-lise"], 64.5, 83, 25, 48, fx.t, 0, 1, 1);
+      acteur(c, im["personnage-firmin"], 136, 83, 28, 47, fx.t, 0, 1, 3);
       const g = c.createRadialGradient(99, 71, 1, 99, 71, 34);
-      g.addColorStop(0, "rgba(255,185,70,.35)");
+      g.addColorStop(
+        0,
+        `rgba(255,185,70,${0.31 + 0.025 * Math.sin(fx.t * 2.7) + 0.015 * Math.sin(fx.t * 4.1)})`,
+      );
       g.addColorStop(1, "rgba(255,185,70,0)");
       c.fillStyle = g;
       c.fillRect(64, 36, 70, 52);
       feu(c, 88, 55, 23, 25, fx.phase, 0.9);
+      if (!fx.reduit)
+        for (let i = 0; i < 5; i++) {
+          const a = (fx.t * 0.32 + i / 5) % 1;
+          c.save();
+          c.globalAlpha = Math.sin(a * Math.PI) * 0.7;
+          ellipse(
+            c,
+            96 + i * 1.6 + Math.sin(a * 6 + i) * 2,
+            73 - a * 28,
+            0.3,
+            0.65,
+            "#ffd17a",
+          );
+          c.restore();
+        }
     },
   });
   const panoramas = new Map();

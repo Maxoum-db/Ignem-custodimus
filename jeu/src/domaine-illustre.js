@@ -42,6 +42,7 @@
     "personnage-firmin",
     "f-alambic-vide",
     "f-condenseur",
+    ...Object.values(U.mouvements).map((m) => m.cle),
   ];
   // Petites promenades sur les chemins et berges, hors de l'emprise des bâtiments.
   const promenades = [
@@ -175,11 +176,70 @@
       fleurs: null,
     },
   };
-  function arbre(c, x, y, s, p, seed = 1, fruit = false, img = null) {
+  const texturesArbres = new WeakMap();
+  function textureArbre(img, s, automne) {
+    let cache = texturesArbres.get(img);
+    if (!cache) {
+      cache = new Map();
+      texturesArbres.set(img, cache);
+    }
+    const w = Math.ceil(s * 2.4 * 2.5),
+      cle = w + ":" + !!automne;
+    if (!cache.has(cle)) {
+      const cv = document.createElement("canvas");
+      cv.width = w;
+      cv.height = Math.ceil((w * img.height) / img.width);
+      const c = cv.getContext("2d");
+      c.imageSmoothingQuality = "high";
+      if (automne) c.filter = "sepia(.65) saturate(1.7) hue-rotate(-28deg)";
+      c.drawImage(img, 0, 0, cv.width, cv.height);
+      cache.set(cle, cv);
+    }
+    return cache.get(cle);
+  }
+  function arbre(
+    c,
+    x,
+    y,
+    s,
+    p,
+    seed = 1,
+    fruit = false,
+    img = null,
+    vent = null,
+  ) {
     if (img && p.feuilles) {
       c.save();
-      if (p.automne) c.filter = "sepia(.65) saturate(1.7) hue-rotate(-28deg)";
-      contenir(c, img, x - s * 1.2, y - s * 2.8, s * 2.4, s * 2.8);
+      // Teinte et réduction raster en cache, aucun filtre lourd par bande.
+      img = textureArbre(img, s, p.automne);
+      if (vent == null)
+        contenir(c, img, x - s * 1.2, y - s * 2.8, s * 2.4, s * 2.8);
+      else {
+        const ratio = Math.min((s * 2.4) / img.width, (s * 2.8) / img.height),
+          w = img.width * ratio,
+          h = img.height * ratio;
+        // Déformation légère du feuillage ; le tronc reste ancré au sol.
+        for (let i = 0; i < 6; i++) {
+          const sy = (img.height * i) / 6,
+            sh = Math.min(img.height - sy, img.height / 6 + 0.5);
+          const dx =
+            Math.sin(vent * 1.25 + seed * 0.03 + i * 0.07) *
+            s *
+            0.04 *
+            (1 - i / 5) ** 2;
+          c.drawImage(
+            img,
+            0,
+            sy,
+            img.width,
+            sh,
+            x - w / 2 + dx,
+            y - h + sy * ratio,
+            w,
+            sh * ratio,
+          );
+        }
+      }
       c.restore();
       if (fruit) {
         for (let i = 0; i < 5; i++)
@@ -460,7 +520,7 @@
   function batiment(c, img, cx, sol, w) {
     image(c, img, cx - w / 2, sol - (w / 1.5) * 0.9004, w, w / 1.5);
   }
-  function auvent(c, x, y, w) {
+  function auvent(c, x, y, w, temps = null) {
     ligne(
       c,
       [
@@ -472,19 +532,21 @@
       "#78502e",
       1,
     );
-    for (let i = 0; i < 8; i++)
+    for (let i = 0; i < 8; i++) {
+      const vague = temps == null ? 0 : Math.sin(temps * 1.8 + i * 0.65) * 0.28;
       polygone(
         c,
         [
           [x + (i * w) / 8, y],
           [x + ((i + 1) * w) / 8, y],
-          [x + ((i + 1) * w) / 8 + 2, y + 6],
-          [x + (i * w) / 8 + 2, y + 6],
+          [x + ((i + 1) * w) / 8 + 2, y + 6 + vague],
+          [x + (i * w) / 8 + 2, y + 6 + vague],
         ],
         i % 2 ? "#fff0cc" : "#df8948",
         "#9c6838",
         0.3,
       );
+    }
     boite(c, x - 1, y + 16, w + 3, 3, 1, "#a7743e");
   }
   function table(c, x, y) {
@@ -596,21 +658,6 @@
       }
       vignes(c, p);
       potager(c, 103, 75, p);
-      for (const [x, y, z] of [
-        [8, 61, 9],
-        [24, 58, 10],
-        [42, 65, 8],
-        [155, 64, 11],
-        [174, 67, 10],
-        [188, 61, 10],
-      ])
-        arbre(c, x, y, z, p, Math.round(x * 31), false, im["decor-arbre"]);
-      for (const [x, y] of [
-        [38, 82],
-        [54, 89],
-        [67, 95],
-      ])
-        arbre(c, x, y, 5.5, p, x + 100, true, im["decor-arbre"]);
       muret(c, 0, 107, 39);
       muret(c, 164, 96, 28);
       chemin(
@@ -821,7 +868,6 @@
       } else terrain(c, 123, 188, 49, 22, tr("distillerie"));
       batiment(c, im["domaine-pigeonnier-batiment"], 49, 233, 82);
       if (s.bat.pigeonnier >= 2) {
-        auvent(c, 25, 215, 49);
         fut(c, 21, 222, 7, 9);
         fut(c, 73, 222, 7, 9);
       }
@@ -894,14 +940,6 @@
           0.8,
         );
       }
-      for (const [x, y, z] of [
-        [3, 133, 6],
-        [190, 138, 7],
-        [7, 249, 8],
-        [188, 239, 9],
-        [185, 175, 6],
-      ])
-        arbre(c, x, y, z, p, x * 17, false, im["decor-arbre"]);
       if (s.saison === "hiver") {
         for (let i = 0; i < 80; i++)
           ellipse(
@@ -923,6 +961,29 @@
         ellipse(c, x - 3, y - 3, 6, 4, "#fffaf0");
         ellipse(c, x + 5, y - 2, 7, 3, "#fffaf0");
       }
+      const p = saisons[s.saison] || saisons.printemps,
+        vent = fx.reduit ? null : t;
+      for (const [x, y, z] of [
+        [8, 61, 9],
+        [24, 58, 10],
+        [42, 65, 8],
+        [155, 64, 11],
+        [174, 67, 10],
+        [188, 61, 10],
+        [3, 133, 6],
+        [190, 138, 7],
+        [7, 249, 8],
+        [188, 239, 9],
+        [185, 175, 6],
+      ])
+        arbre(c, x, y, z, p, x * 31, false, im["decor-arbre"], vent);
+      for (const [x, y] of [
+        [38, 82],
+        [54, 89],
+        [67, 95],
+      ])
+        arbre(c, x, y, 5.5, p, x + 100, true, im["decor-arbre"], vent);
+      if (s.bat.pigeonnier >= 2) auvent(c, 25, 215, 49, vent);
       const passants = promenades.map(
         ([cle, w, h, points, duree, pause, phase]) => ({
           cle,
@@ -946,6 +1007,12 @@
             fx.reduit ? 0 : p.marche,
             p.direction,
             p.phase,
+            {
+              profil: U.mouvements[p.cle],
+              atlas: im[U.mouvements[p.cle]?.cle],
+              distance: p.distance,
+              repos: p.repos,
+            },
           ),
         );
       const canard = {

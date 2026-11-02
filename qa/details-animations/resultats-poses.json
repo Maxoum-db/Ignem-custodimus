@@ -1,0 +1,251 @@
+{
+  "errors": [],
+  "checks": [
+    "Quatre atlas 384×256 : six dessins distincts, alpha réel, jambes distinctes, baseline commune",
+    "Le renderer découpe les six cellules ; atlas absent ou invalide laisse le sprite historique",
+    "Plusieurs poses observées dans le vrai domaine, sauvegarde identique, mouvement réduit stable",
+    "Quatre atlas absents : vraie carte et navigation toujours utilisables"
+  ],
+  "atlas": {
+    "personnage-lise": {
+      "atlas": "marche-lise",
+      "cellules": [
+        {
+          "minY": 10,
+          "maxY": 119,
+          "alpha0": 12537,
+          "opaques": 3292,
+          "bas_sha256": "22a98b1ff62dccd51574d9d649497dfee93751e7ac0d4b3deeefaafbd81a0393"
+        },
+        {
+          "minY": 9,
+          "maxY": 119,
+          "alpha0": 12852,
+          "opaques": 3010,
+          "bas_sha256": "89b8c60eeafaf3dac2e633d4b64adea511df3a3c01b6416b71d024b9addf571d"
+        },
+        {
+          "minY": 10,
+          "maxY": 119,
+          "alpha0": 13358,
+          "opaques": 2601,
+          "bas_sha256": "5682f6dc586282e680bab940885a7efaa98c467448053dab0be93abf6b65ce5e"
+        },
+        {
+          "minY": 10,
+          "maxY": 119,
+          "alpha0": 12411,
+          "opaques": 3248,
+          "bas_sha256": "1806f3d8488a4755ca0ff771b6f942b905ab0ba95b860a083ffe14d922890784"
+        },
+        {
+          "minY": 9,
+          "maxY": 119,
+          "alpha0": 12945,
+          "opaques": 2955,
+          "bas_sha256": "9f64b9153902c3121c6845e57e9f51005a363f92509f63024d1e6f248d792ea2"
+        },
+        {
+          "minY": 8,
+          "maxY": 119,
+          "alpha0": 13249,
+          "opaques": 2710,
+          "bas_sha256": "b7c610e7f9baaab559f6c2fe21610b50c40e43a1c4e7da3f6456c0c6ac7b53f1"
+        }
+      ],
+      "ancre": 0.9375
+    },
+    "personnage-firmin": {
+      "atlas": "marche-firmin",
+      "cellules": [
+        {
+          "minY": 9,
+          "maxY": 119,
+          "alpha0": 11645,
+          "opaques": 4227,
+          "bas_sha256": "98abddfbe2d79aac92dcd16ac10913a4b34c0a26bc01ba476541280de2a668e0"
+        },
+        {
+          "minY": 10,
+          "maxY": 119,
+          "alpha0": 12097,
+          "opaques": 3827,
+          "bas_sha256": "3b0c63f8b81745c50f164489f0b0bbe6c4ebfb0e9fe46099e117192a14133da4"
+        },
+        {
+          "minY": 9,
+          "maxY": 119,
+          "alpha0": 12283,
+          "opaques": 3687,
+          "bas_sha256": "eacafc3ee003163cd4b8b8704bd47d57aec54488a530b8192a54ec73e43d416a"
+        },
+        {
+          "minY": 9,
+          "maxY": 119,
+          "alpha0": 11479,
+          "opaques": 4336,
+          "bas_sha256": "58fc4b44246c56d20a1228054a6e77eb03aa3b81a895ca860bdc86274ebbc918"
+        },
+        {
+          "minY": 9,
+          "maxY": 119,
+          "alpha0": 11977,
+          "opaques": 3955,
+          "bas_sha256": "87867f9be5e97344b58043f5cb7020ec62adebcfca653e0531a5e05c6c91b765"
+        },
+        {
+          "minY": 8,
+          "maxY": 119,
+          "alpha0": 12313,
+          "opaques": 3645,
+          "bas_sha256": "eae9135c7f5be5f6a7cf3a7722b00c4c8ded76f57447bbcb8798fcf1e2fe1aed"
+        }
+      ],
+      "ancre": 0.9375
+    },
+    "animal-cheval": {
+      "atlas": "pas-cheval",
+      "cellules": [
+        {
+          "minY": 7,
+          "maxY": 125,
+          "alpha0": 9678,
+          "opaques": 5929,
+          "bas_sha256": "e729a2545d395551787c8e0b6ef2540de12b629515240db5665c491fbca5829d"
+        },
+        {
+          "minY": 8,
+          "maxY": 125,
+          "alpha0": 9799,
+          "opaques": 5862,
+          "bas_sha256": "35bc77941a5d54ac84901d78420ef9373a35c446680f96795bc4c824716b47bc"
+        },
+        {
+          "minY": 7,
+          "maxY": 125,
+          "alpha0": 9911,
+          "opaques": 5666,
+          "bas_sha256": "998d638c17df5010ada4e48bfb1b016a7fa821c10bed3493333ad48023392128"
+        },
+        {
+          "minY": 11,
+          "maxY": 125,
+          "alpha0": 9715,
+          "opaques": 5816,
+          "bas_sha256": "07c6a220f3af24d34739b0e3a4ff272d43d11ba2c777c8d027b30f95a69488a6"
+        },
+        {
+          "minY": 10,
+          "maxY": 125,
+          "alpha0": 10018,
+          "opaques": 5659,
+          "bas_sha256": "b96a5d106e65dcfea7b76feb088ab27dfed13cc177bcd02dfe021ef07db3fc20"
+        },
+        {
+          "minY": 9,
+          "maxY": 125,
+          "alpha0": 9717,
+          "opaques": 5815,
+          "bas_sha256": "130d20571bbe1eaf4a6b47c43c73319fcec55fbcf5e03cabbaffa594ce20c507"
+        }
+      ],
+      "ancre": 0.984375
+    },
+    "animal-poule-blanche": {
+      "atlas": "picorer-poule-blanche",
+      "cellules": [
+        {
+          "minY": 2,
+          "maxY": 125,
+          "alpha0": 9613,
+          "opaques": 6172,
+          "bas_sha256": "df9032f49b96fb28b9bbf283fab3bcea0df54b0d0814e6990ecbc4c2fe9a0faa"
+        },
+        {
+          "minY": 20,
+          "maxY": 125,
+          "alpha0": 9715,
+          "opaques": 6104,
+          "bas_sha256": "d4c7925483200be9f356ff622ed4b94e4084904cb722726db73071d05ef64516"
+        },
+        {
+          "minY": 17,
+          "maxY": 125,
+          "alpha0": 10179,
+          "opaques": 5655,
+          "bas_sha256": "936a3ae47e8dfe46e4eb29aa8164b6c31c382f75351da79af6e5b50ae8680591"
+        },
+        {
+          "minY": 16,
+          "maxY": 125,
+          "alpha0": 10184,
+          "opaques": 5528,
+          "bas_sha256": "f3f3047c8bfe3b49ac9ae992f720dfcee579480844b55bf92f967898658fdec9"
+        },
+        {
+          "minY": 18,
+          "maxY": 125,
+          "alpha0": 10038,
+          "opaques": 5840,
+          "bas_sha256": "6246f720e79a50bb6693de8f10e21c48add9d18b02d7b7c008d15bb5d9f6aade"
+        },
+        {
+          "minY": 3,
+          "maxY": 125,
+          "alpha0": 9232,
+          "opaques": 6559,
+          "bas_sha256": "c62567213443bcadb1c53ce5c0b4ed609613d3bd50b636d6e2e40c596ee13f9e"
+        }
+      ],
+      "ancre": 0.984375
+    }
+  },
+  "rendu": {
+    "rects": [
+      [
+        0,
+        0,
+        128,
+        128
+      ],
+      [
+        128,
+        0,
+        128,
+        128
+      ],
+      [
+        256,
+        0,
+        128,
+        128
+      ],
+      [
+        0,
+        128,
+        128,
+        128
+      ],
+      [
+        128,
+        128,
+        128,
+        128
+      ],
+      [
+        256,
+        128,
+        128,
+        128
+      ]
+    ]
+  },
+  "poses_dans_le_vrai_domaine": [
+    "0:0",
+    "128:0",
+    "256:0",
+    "0:128",
+    "128:128",
+    "256:128"
+  ]
+}

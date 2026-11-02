@@ -1,5 +1,5 @@
 {
-  "lot": "univers-illustre",
+  "lot": "poses-et-details",
   "origine": "Illustrations originales image_gen ; redimensionnement et conversion WebP Q82 avec ImageMagick. Effets, interfaces et icônes vectoriels séparés.",
   "fichiers": [
     {
@@ -210,6 +210,69 @@
       "alpha": true
     },
     {
+      "fichier": "marche-firmin.webp",
+      "octets": 22912,
+      "sha256": "c160037a9eb57b2cb664b75acdcc6b7d4201817ef066f34813d7c48dce6a6f97",
+      "largeur": 384,
+      "hauteur": 256,
+      "qualite_webp": 82,
+      "alpha": true,
+      "atlas": {
+        "colonnes": 3,
+        "rangees": 2,
+        "cellule": [
+          128,
+          128
+        ],
+        "ancrage": [
+          64,
+          120
+        ]
+      }
+    },
+    {
+      "fichier": "marche-lise.webp",
+      "octets": 21926,
+      "sha256": "b72c6797993d2037816f75a511425b00983aaf4a63d24e359561bdd137529be9",
+      "largeur": 384,
+      "hauteur": 256,
+      "qualite_webp": 82,
+      "alpha": true,
+      "atlas": {
+        "colonnes": 3,
+        "rangees": 2,
+        "cellule": [
+          128,
+          128
+        ],
+        "ancrage": [
+          64,
+          120
+        ]
+      }
+    },
+    {
+      "fichier": "pas-cheval.webp",
+      "octets": 31784,
+      "sha256": "d98bccd7a4d21ea374ff93e452db66556831da4200fa4e3a87a1ca1a5d10563e",
+      "largeur": 384,
+      "hauteur": 256,
+      "qualite_webp": 82,
+      "alpha": true,
+      "atlas": {
+        "colonnes": 3,
+        "rangees": 2,
+        "cellule": [
+          128,
+          128
+        ],
+        "ancrage": [
+          64,
+          126
+        ]
+      }
+    },
+    {
       "fichier": "personnage-firmin.webp",
       "octets": 17914,
       "sha256": "4493cc6998c148e8f23497856138d4e019ab37e0b4562bde27ca577d0c2252ae",
@@ -226,7 +289,28 @@
       "hauteur": 384,
       "qualite_webp": 82,
       "alpha": true
+    },
+    {
+      "fichier": "picorer-poule-blanche.webp",
+      "octets": 30532,
+      "sha256": "95af5b4d8fc2386b058c46522e5e8e78587b87083ff571d8bd8986f5d79d9ed9",
+      "largeur": 384,
+      "hauteur": 256,
+      "qualite_webp": 82,
+      "alpha": true,
+      "atlas": {
+        "colonnes": 3,
+        "rangees": 2,
+        "cellule": [
+          128,
+          128
+        ],
+        "ancrage": [
+          64,
+          126
+        ]
+      }
     }
   ],
-  "total_octets": 1317438
+  "total_octets": 1424592
 }

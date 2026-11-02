@@ -198,3 +198,10 @@ La carte, le rucher et Ulysse bénéficient maintenant de déplacements continus
 de pauses naturelles, de transitions de feu adoucies et d'effets sans apparition
 brutale. Le mouvement réduit et l'arrêt hors écran restent actifs ; aucun calcul
 ni aucune sauvegarde n'est changé. [Bilan, mesures et vidéo](qa/animations/BILAN.md).
+
+### Poses et détails animés
+
+Lise, Firmin, le cheval et la poule blanche possèdent maintenant chacun six dessins
+de poses ; le décor ajoute du vent dans le feuillage, des auvents souples, une
+respiration discrète et des braises. 29 WebP restent sous 1,4 Mio. Les règles et
+sauvegardes sont inchangées. [Bilan, poses et vidéo](qa/details-animations/BILAN.md).
