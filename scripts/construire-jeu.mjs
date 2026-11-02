@@ -339,11 +339,12 @@ async function donneesJeu() {
 async function construire() {
   const D = await donneesJeu();
   const IMAGES = await imagesJeu(path.join(RACINE, 'jeu', 'src', 'images'));
-  const [page, css, moteur, distillerie, chai, ecole, vente, illustrations, ateliers, univers, activites, domaine, habillage, finitions, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'chai.js', 'ecole.js', 'vente.js', 'illustrations.js', 'ateliers.js', 'univers.js', 'activites-illustrees.js', 'domaine-illustre.js', 'habillage.js', 'finitions.js', 'jeu.js'].map(src));
+  const [page, css, moteur, distillerie, chai, ecole, vente, illustrations, ateliers, univers, activites, domaine, habillage, finitions, graphiques, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'chai.js', 'ecole.js', 'vente.js', 'illustrations.js', 'ateliers.js', 'univers.js', 'activites-illustrees.js', 'domaine-illustre.js', 'habillage.js', 'finitions.js', 'graphiques.js', 'jeu.js'].map(src));
   const police = await fs.readFile(path.join(RACINE, 'jeu', 'src', 'fonts', 'lilita-one.woff'));
   const comic = await Promise.all(['regular','bold'].map(n => fs.readFile(path.join(RACINE, 'jeu', 'src', 'fonts', `comic-neue-${n}.woff`))));
   const fontesComic = comic.map((b,i) => `@font-face{font-family:"Comic Neue";font-style:normal;font-weight:${i ? 700 : 400};font-display:swap;src:url(data:font/woff;base64,${b.toString('base64')}) format("woff");}`).join('');
-  const corps = page
+  const icone = page.match(/<link rel="icon"[^>]*>/)?.[0] || '';
+  const corps = page.replace(icone, '')
     .replace('/*POLICES*/', () => '@font-face{font-family:"Lilita One";font-style:normal;font-weight:400;font-display:swap;src:url(data:font/woff;base64,' + police.toString('base64') + ') format("woff");}' + fontesComic)
     .replace('/*CSS*/', () => css)
     .replace('/*DONNEES*/', () => 'window.DONNEES_JEU = ' + JSON.stringify(D) + ';')
@@ -360,8 +361,9 @@ async function construire() {
     .replace('/*DOMAINE_ILLUSTRE*/', () => domaine)
     .replace('/*HABILLAGE*/', () => habillage)
     .replace('/*FINITIONS*/', () => finitions)
+    .replace('/*GRAPHIQUES*/', () => graphiques)
     .replace('/*JEU*/', () => jeu);
-  const complet = `<!doctype html>\n<html lang="fr">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n</head>\n<body>\n${corps}\n</body>\n</html>\n`;
+  const complet = `<!doctype html>\n<html lang="fr">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n${icone}\n</head>\n<body>\n${corps}\n</body>\n</html>\n`;
   await fs.mkdir(path.join(RACINE, 'dist'), { recursive: true });
   await fs.writeFile(path.join(RACINE, 'dist', 'artefact.html'), corps);
   await fs.writeFile(path.join(RACINE, 'dist', 'index.html'), complet);

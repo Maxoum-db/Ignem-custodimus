@@ -98,7 +98,7 @@
     if (s.couleur) {
       c.save();
       c.beginPath();
-      c.ellipse(69.5, 60, 4.3, 5.2, 0, 0, Math.PI * 2);
+      c.ellipse(69.5, 60, 6.5, 5.2, 0, 0, Math.PI * 2);
       c.clip();
       const y = 65.2 - borne(1 - (s.prog || 0)) * 10.4;
       c.fillStyle = s.couleur;
@@ -207,66 +207,6 @@
     queues: "#8f7ad0",
     furfural: "#b9865a",
   };
-  function courbes(c, s) {
-    const gx = 22,
-      gw = 164,
-      gy = 6,
-      gh = 100;
-    boite(c, 9, 2, 181, 114, 5, "rgba(28,23,18,.96)", "#9b784b");
-    const Y = (v) =>
-        gy + gh - borne((Math.log10(Math.max(v, 0.01)) + 2) / 4) * gh,
-      Yd = (d) => gy + gh - (d / 100) * gh;
-    for (const v of [0.01, 0.1, 1, 10, 100]) {
-      const y = Y(v);
-      ligne(
-        c,
-        [
-          [gx, y],
-          [gx + gw, y],
-        ],
-        "#564431",
-        0.4,
-      );
-      texte(c, String(v), 20, y + 2, 4.2, "#d8c6a5", "right");
-    }
-    for (const f of [0.25, 0.5, 0.75])
-      ligne(
-        c,
-        [
-          [gx + f * gw, gy],
-          [gx + f * gw, gy + gh],
-        ],
-        "#493a2d",
-        0.4,
-      );
-    for (const coupe of s.coupes)
-      ligne(
-        c,
-        [
-          [gx + coupe.recup * gw, gy],
-          [gx + coupe.recup * gw, gy + gh],
-        ],
-        "#f6edd9",
-        0.7,
-      );
-    c.save();
-    c.beginPath();
-    c.rect(gx, gy, gw, gh);
-    c.clip();
-    for (const k in couleurs) {
-      const pts = s.courbe.map((p) => [gx + p.recup * gw, Y(p[k])]);
-      if (pts.length) ligne(c, pts, couleurs[k], 0.8);
-    }
-    if (s.courbe.length)
-      ligne(
-        c,
-        s.courbe.map((p) => [gx + p.recup * gw, Yd(p.degre)]),
-        "#fff9e5",
-        1,
-      );
-    c.restore();
-    texte(c, "Alcool recueilli", 103, 114, 4.7, "#ead7b4", "center");
-  }
   U.inscrire("repasse", {
     w: 192,
     h: 120,
@@ -276,7 +216,9 @@
     fond: (c, im) => fond(c, im),
     dessin(c, im, s, fx) {
       if (s.expert) {
-        courbes(c, s);
+        // Le vrai historique est lisible sous l'alambic ; la scène garde l'équipement.
+        c.save();c.translate(25,4);c.scale(.72,.85);machine(c,im,s,fx);c.restore();
+        boite(c,6,99,180,17,4,'#f6ead0');texte(c,'Courbes de repasse ci-dessous',96,111,7,'#3b2a1e','center');
         return;
       }
       c.save();
@@ -297,6 +239,7 @@
         null,
       );
       ellipse(c, 135.5, 104 - d * 0.8, 4, 2, "#efe1ba", "#7a654b");
+      texte(c,'% vol',159,116,7,'#3b2a1e','center');
       for (const g of [40, 50, 60, 70, 80]) {
         const y = 104 - g * 0.8;
         ligne(
@@ -308,7 +251,7 @@
           g === 60 ? "#bd7d32" : "#6c5a42",
           0.5,
         );
-        texte(c, String(g), 148, y + 1.5, 4.3);
+        texte(c, String(g), 148, y + 1.5, 6.5);
       }
       const teintes = ["#df7554", "#87a753", "#9b83c6"];
       for (let i = 0; i < 3; i++) {

@@ -33,7 +33,7 @@
     c.lineWidth = ep; c.strokeStyle = couleur; c.lineJoin = c.lineCap = 'round'; c.stroke();
   }
   function texte(c, txt, x, y, taille = 6, couleur = brun, align = 'left') {
-    c.font = `600 ${taille}px system-ui, sans-serif`; c.fillStyle = couleur; c.textAlign = align; c.fillText(txt, x, y);
+    c.font = `700 ${taille}px "Comic Neue", sans-serif`; c.fillStyle = couleur; c.textAlign = align; c.fillText(txt, x, y);
   }
   function tuyau(c, points) { ligne(c, points, brun, 4.5); ligne(c, points, '#b9834b', 2.6); }
   function vanne(c, x, y, valeur, couleur = cuivre) {
@@ -108,7 +108,7 @@
       tuyau(c,[[137,87],[137,77],[120,77],[120,88],[110,88]]);
       tuyau(c,[[144,87],[144,70]]);
       arrondi(c,153,16,23,99,9,creme); arrondi(c,162,27,5,76,2,'#dfcba4',null);
-      for (const t of [55,60,65,70,75]) { const y = 105-(t-55)/23*78; ligne(c,[[156,y],[160,y]],'#88745a',.7); texte(c,String(t),178,y+2,5); }
+      for (const t of [55,60,65,70,75]) { const y = 105-(t-55)/23*78; ligne(c,[[156,y],[160,y]],'#88745a',.7); texte(c,String(t),178,y+2,6.5); }
       ellipse(c,135,43,11,11,creme,brun);
     }
     if (nom === 'fil') {
@@ -163,6 +163,7 @@
       arrondi(c,162,y(s.T),5,Math.max(.1,105-y(s.T)),2,Math.abs(s.T-s.cible)<=1?'#71943c':'#c85d3f',null);
       ellipse(c,164.5,105,5,5,Math.abs(s.T-s.cible)<=1?'#71943c':'#c85d3f',brun);
       if (s.prevision != null) ligne(c,[[156,y(s.prevision)],[171,y(s.prevision)]],'#427da3',1.3);
+      arrondi(c,8,4,75,15,4,'#f6ead0'); texte(c,'Cible '+s.cible+' °C',45,15,7,brun,'center');
       if(event==='fourquet') { const x=73+(reduit?0:Math.sin(t*9)*12); ligne(c,[[x,22],[x+3,65]],'#78502f',2.4); arrondi(c,x,62,7,13,2,'#b38249'); }
       if(event==='air') for(let i=0;i<3;i++) ligne(c,[[15,44+i*6],[34,43+i*6],[45,45+i*6]],'#6d9fae',1.4);
       if(event==='humide') vapeur(c,132,69,t,.8);
@@ -175,9 +176,12 @@
       const eau=limite(s.niveau/10)*11;
       if(eau>0) arrondi(c,35,83-eau,43,eau,1,'rgba(92,164,183,.65)',null);
       if(s.colmate) ligne(c,[[38,86],[47,88],[56,85],[67,88],[75,86]],brun,1);
+      texte(c,s.niveau.toFixed(1)+' cm',56,77,7,brun,'center');
       const h=limite(s.volumeFraction)*31;
       if(h>0) arrondi(c,142,112-h,36,h,2,s.couleur,null);
-      ligne(c,[[140,85],[180,85]],vert,.8);
+      const cibleY=112-limite(s.volumeCible/(1300*s.facteurAffichage))*31;
+      ligne(c,[[140,cibleY],[180,cibleY]],vert,1.1);
+      arrondi(c,130,37,59,25,4,'#f6ead0');texte(c,Math.round(s.V)+' L',160,48,8,brun,'center');texte(c,'Cible '+s.volumeCible+' L',160,58,6.5,brun,'center');
       vanne(c,109,99,s.u);
       if(s.t>0&&s.u>.02&&!s.colmate) ligne(c,[[122,108],[124,115],[139,116]],s.couleur,1.3);
       if(s.rince) for(let i=0;i<8;i++){const a=reduit?.4:(t*3+i/8)%1; ellipse(c,27+i*8,33+a*15,.6,1.7,'#91c8d4');}
@@ -191,6 +195,7 @@
       if(chaleur>0){flamme(c,88,110,t,chaleur); if(!reduit){vapeur(c,79,31,t,chaleur); for(let i=0;i<9;i++){const a=(t*1.8+i*.37)%1; ellipse(c,64+(i*17)%68,42+Math.sin(i)*7-a*3,1+a,1+a*.5,'rgba(255,239,186,.7)');}}}
       for(const chute of s.chutes||[]){if(!chutes.has(chute))chutes.set(chute,performance.now());const p=(performance.now()-chutes.get(chute))/650;if(p<1)houblon(c,limite(chute.x,60,130),reduit?40:5+p*38,.8);}
       vanne(c,164,82,chaleur);
+      arrondi(c,6,4,115,16,4,'#f6ead0');texte(c,s.minutesRestantes.toFixed(0)+' min restantes',63,15,7,brun,'center');
       return;
     }
     if (nom === 'fer') {
@@ -198,21 +203,12 @@
       if(Math.abs(s.e)>.05) { c.strokeStyle=s.e<0?'rgba(70,154,191,.65)':'rgba(213,103,63,.65)';c.lineWidth=3; c.beginPath();c.ellipse(37,62,20,5,0,0,Math.PI*2);c.stroke(); }
       if(s.chuteDH!=null&&s.t-s.chuteDH<1.6)for(let i=0;i<3;i++)houblon(c,28+i*5,reduit?14:4+(s.t-s.chuteDH)*16,.65);
       if(s.activite>.05&&!reduit)ellipse(c,44,16-((t*2)%1)*5,1,1,'#8eb7bd');
-      const gx=86,gy=24,gw=90,gh=75,tMin=Math.min(s.consigne-6,4),tMax=s.consigne+10;
-      const Y=T=>gy+gh-(T-tMin)/(tMax-tMin)*gh;
-      c.save();c.beginPath();c.rect(gx,gy,gw,gh);c.clip();
-      for(let j=0;j<=7;j++)ligne(c,[[gx+j/7*gw,gy],[gx+j/7*gw,gy+gh]],'#e7d8b8',.5);
-      for(let x=0;x<gw;x++){const cible=s.cible(x/gw*7);c.fillStyle='#dbe4bc';c.fillRect(gx+x,Y(cible+1.5),1,Y(cible-1.5)-Y(cible+1.5));}
-      for(const [a,b,m,n] of [[1.5,3.2,-2,1],[4.2,6,-1,2]]) if(s.houblons.some(h=>h.min===m)){
-        c.fillStyle='rgba(105,148,54,.2)';c.fillRect(gx+a/7*gw,gy,(b-a)/7*gw,gh);
-        if(s.dhJours&&s.dhJours[n]!=null)ligne(c,[[gx+s.dhJours[n]/7*gw,gy],[gx+s.dhJours[n]/7*gw,gy+gh]],vert,1.5);
-      }
-      for(const point of s.histo)ellipse(c,gx+point.j/7*gw,Y(point.T),.8,.8,Math.abs(point.T-s.cible(point.j))<=1.5?vert:'#bd5034');
-      ligne(c,[[gx+s.t/18*gw,gy],[gx+s.t/18*gw,gy+gh]],'#b76535',1);
-      c.restore();
-      texte(c,'TEMPÉRATURE',130,19,5.5,brun,'center'); texte(c,tMax+'°',79,28,4.5); texte(c,tMin+'°',79,99,4.5);
-      texte(c,'J0',86,109,5);texte(c,'J7',176,109,5,brun,'right');
-      texte(c,'Cible '+s.consigne+' °C',37,124,5.5,brun,'center');
+      arrondi(c,80,18,99,94,8,'#f6ead0');
+      texte(c,'TEMPÉRATURE',130,33,7,brun,'center');
+      texte(c,s.T.toFixed(1)+' °C',130,55,15,brun,'center');
+      texte(c,'Cible '+s.cible(s.t/18*7).toFixed(1)+' °C',130,72,8,brun,'center');
+      texte(c,'J'+(s.t/18*7).toFixed(1),130,89,8,brun,'center');
+      texte(c,'Courbe ci-dessous',130,102,6.5,brun,'center');
       return;
     }
     if (nom === 'bou') {
@@ -246,6 +242,8 @@
     vue.redessiner=redessiner;
     const images=charger(nom,canvas,vue);
     if(!images)return false;
+    window.GraphiquesJeu?.atelier(nom,canvas,etat);
+    if(nom==='fil')canvas.setAttribute('aria-label',`Filtration : ${Math.round(etat.V)} L recueillis ; cible ${etat.volumeCible} L ; eau ${etat.niveau.toFixed(1)} cm.`);
     if(!visible(canvas))return true;
     const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2.5);
     const w=Math.max(1,Math.round(rect.width*dpr)),h=Math.max(1,Math.round(w*cfg.h/cfg.w));

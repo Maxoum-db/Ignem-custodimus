@@ -1443,7 +1443,7 @@
     const ctx = $('#fil-canvas').getContext('2d');
     const teinteFiltration = couleur(Math.max(6, session.recette.malts.length ? Moteur.calculer(session.recette).ebc : 10));
     const dessin = () => {
-      if (window.AteliersIllustres?.rendre('fil', ctx, { ...st, volumeFraction: borne(st.V / (1300 * f), 0, 1), couleur: teinteFiltration }, dessin)) return;
+      if (window.AteliersIllustres?.rendre('fil', ctx, { ...st, volumeFraction: borne(st.V / (1300 * f), 0, 1), volumeCible:FIL.cible, facteurAffichage:f, couleur: teinteFiltration }, dessin)) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve-filtre en coupe : faux fond, lit de drêches, eau au-dessus
@@ -1549,6 +1549,7 @@
     };
     const maj = () => {
       const g = +champ.value, co2 = resid + g / Moteur.G_SUCRE_PAR_VOLUME, d = co2 - cible;
+      window.GraphiquesJeu?.co2({co2,cible,resid,sucre:g});
       $('#bou-sucre-val').textContent = `${nf(g, 1)} g/L`;
       $('#bou-infos').innerHTML = infoBloc(nf(co2, 1), 'vol. de CO₂') + infoBloc(nf(cible, 1), 'cible du style') + infoBloc(nf(resid, 2), 'déjà dissous');
       $('#bou-verdict').innerHTML = co2 > (equipe('bouteilles') ? 4.6 : 4) ? '<b style="color:var(--alerte)">Danger : des bouteilles vont éclater.</b>' : d > 0.7 ? '<b style="color:var(--alerte)">Trop gazeuse : elle jaillira à l\'ouverture.</b>' : d < -0.6 ? '<b style="color:var(--alerte)">Trop peu : la bière sera plate.</b>' : Math.abs(d) <= 0.25 ? '<b style="color:var(--houblon)">Juste pour le style.</b>' : 'Acceptable.';
@@ -1599,7 +1600,7 @@
     const ctx = $('#ebu-canvas').getContext('2d');
     const teinteMout = couleur(Moteur.calculer(rec).ebc);
     const dessin = () => {
-      if (window.AteliersIllustres?.rendre('ebu', ctx, { ...st, couleur: teinteMout }, dessin)) return;
+      if (window.AteliersIllustres?.rendre('ebu', ctx, { ...st, minutesRestantes:minutes(), couleur: teinteMout }, dessin)) return;
       const px = (x, y, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 112, '#221912');
       px(40, 34, 112, 70, '#d27b3e'); px(40, 34, 6, 70, '#f0a060'); px(146, 34, 6, 70, '#8a4a22');

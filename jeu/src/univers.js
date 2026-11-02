@@ -99,7 +99,7 @@
     }
   }
   function texte(c, txt, x, y, size = 5.5, col = C.trait, align = "left") {
-    c.font = `600 ${size}px system-ui,sans-serif`;
+    c.font = `700 ${size}px "Comic Neue",sans-serif`;
     c.textAlign = align;
     c.fillStyle = col;
     c.fillText(txt, x, y);
@@ -531,6 +531,7 @@
     return r.images;
   }
   function rendre(nom, ctx, etat, redessiner) {
+    if(nom==='repasse' && ctx)window.GraphiquesJeu?.repasse(ctx.canvas,etat);
     const cfg = registres.get(nom);
     if (!cfg || !ctx || !I) return false;
     const canvas = ctx.canvas;
