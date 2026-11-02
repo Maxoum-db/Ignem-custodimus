@@ -1,0 +1,390 @@
+{
+  "mode": "expert",
+  "aide": true,
+  "son": false,
+  "gestesExpert": true,
+  "bac": false,
+  "tuto": -1,
+  "tutoD": 5,
+  "points": 655,
+  "succes": {
+    "premier": "2026-11-01T16:26:49.557Z",
+    "goutte": "2026-06-15T12:03:01.020Z",
+    "chauffe": "2026-06-15T12:03:01.020Z",
+    "coeurnet": "2026-06-15T12:03:01.020Z"
+  },
+  "carnet": [
+    {
+      "id": "mqf5z50c",
+      "type": "edv",
+      "date": "2026-06-15T12:03:01.020Z",
+      "nom": "Eau-de-vie de bière · Special Bitter / ESB n° 1",
+      "style": "Eau-de-vie de bière",
+      "biere": "Special Bitter / ESB n° 1",
+      "total": 41,
+      "lignes": {
+        "aspect": 5,
+        "nez": 11.5,
+        "bouche": 12.5,
+        "finale": 8,
+        "harmonie": 4
+      },
+      "medaille": "argent",
+      "etoiles": {
+        "sansAide": false,
+        "expert": true,
+        "gestes": true
+      },
+      "defauts": [],
+      "coeur": {
+        "V": 11.037371981474406,
+        "lap": 8.12291085239471,
+        "degre": 73.59460989471542
+      },
+      "rendement": 0.16873920556642552,
+      "aveugle": 1,
+      "mode": "expert",
+      "bac": false,
+      "gain": 55,
+      "ebc": 0,
+      "abv": 73.59460989471542,
+      "coupes": [
+        {
+          "recup": 0.09140300028432446,
+          "degre": 72.16528637227574
+        },
+        {
+          "recup": 0.2950106200650292,
+          "degre": 75.62036742339814
+        }
+      ],
+      "incidents": {
+        "moussage": 0,
+        "coupDeFeu": 0
+      },
+      "recyclees": 0,
+      "comp": {
+        "tetes": 0.006808545603477213,
+        "soufre": 0.309476370435689,
+        "methanol": 0.2631296708522144,
+        "esters": 2.4416169373176166,
+        "terpenes": 0.020992197521538553,
+        "fusels": 0.8642363155419529,
+        "cereale": 0.7975446275078201,
+        "queues": 0.5256649160953335,
+        "furfural": 0.08938812150176151,
+        "degre": 73.59460989471542
+      },
+      "source": "biere",
+      "fume": 0,
+      "lapRestant": 8.12291085239471,
+      "semaine": 37
+    },
+    {
+      "id": "mvy1lt1x",
+      "type": "biere",
+      "date": "2026-11-01T16:26:49.557Z",
+      "nom": "Special Bitter / ESB n° 1",
+      "style": "Special Bitter / ESB",
+      "sujet": "bitter",
+      "conformite": 0.6282641379724025,
+      "og": 1.0462804,
+      "fg": 1.009603183,
+      "abv": 4.813884731250001,
+      "ibu": 9.6594616177684,
+      "ebc": 5.9752992880387055,
+      "total": 19.5,
+      "lignes": {
+        "aspect": 2,
+        "arome": 6.5,
+        "bouche": 3,
+        "saveur": 5,
+        "impression": 3
+      },
+      "medaille": null,
+      "etoiles": {
+        "sansAide": false,
+        "expert": false,
+        "gestes": false
+      },
+      "defauts": [
+        "Trop gazeuse",
+        "DMS",
+        "Astringence"
+      ],
+      "recette": {
+        "volume": 100,
+        "rendement": 0.75,
+        "malts": [
+          {
+            "id": "malts_base_pilsner_soufflet_bio",
+            "kg": 20
+          }
+        ],
+        "houblons": [
+          {
+            "id": "hops_bittering_magnum",
+            "g": 30,
+            "min": 60
+          }
+        ],
+        "levure": "yeasts_ale_safale_us_05",
+        "eau": "causse",
+        "palier": 66,
+        "ebullition": 60,
+        "fermentation": {
+          "temp": 18,
+          "reposDiacetyle": false
+        },
+        "aromates": [],
+        "sels": {},
+        "auxiliaires": [],
+        "cuisson": false,
+        "destination": "biere",
+        "co2": 2.415138647999999
+      },
+      "mode": "debutant",
+      "bac": false,
+      "gain": 20,
+      "semaine": 35,
+      "stockL": 0,
+      "distillee": true
+    },
+    {
+      "id": "mvy1lt1x-reserve",
+      "type": "biere",
+      "date": "2026-11-01T16:26:49.557Z",
+      "nom": "Special Bitter / ESB n° 1",
+      "style": "Special Bitter / ESB",
+      "sujet": "bitter",
+      "conformite": 0.6282641379724025,
+      "og": 1.0462804,
+      "fg": 1.009603183,
+      "abv": 4.813884731250001,
+      "ibu": 9.6594616177684,
+      "ebc": 5.9752992880387055,
+      "total": 19.5,
+      "lignes": {
+        "aspect": 2,
+        "arome": 6.5,
+        "bouche": 3,
+        "saveur": 5,
+        "impression": 3
+      },
+      "medaille": null,
+      "etoiles": {
+        "sansAide": false,
+        "expert": false,
+        "gestes": false
+      },
+      "defauts": [
+        "Trop gazeuse",
+        "DMS",
+        "Astringence"
+      ],
+      "recette": {
+        "volume": 100,
+        "rendement": 0.75,
+        "malts": [
+          {
+            "id": "malts_base_pilsner_soufflet_bio",
+            "kg": 20
+          }
+        ],
+        "houblons": [
+          {
+            "id": "hops_bittering_magnum",
+            "g": 30,
+            "min": 60
+          }
+        ],
+        "levure": "yeasts_ale_safale_us_05",
+        "eau": "causse",
+        "palier": 66,
+        "ebullition": 60,
+        "fermentation": {
+          "temp": 18,
+          "reposDiacetyle": false
+        },
+        "aromates": [],
+        "sels": {},
+        "auxiliaires": [],
+        "cuisson": false,
+        "destination": "biere",
+        "co2": 2.415138647999999
+      },
+      "mode": "debutant",
+      "bac": false,
+      "gain": 20,
+      "semaine": 35,
+      "stockL": 500
+    }
+  ],
+  "brassins": 2,
+  "recette": {
+    "volume": 1000,
+    "rendement": 0.75,
+    "malts": [
+      {
+        "id": "malts_base_pilsner_soufflet_bio",
+        "kg": 200
+      }
+    ],
+    "houblons": [
+      {
+        "id": "hops_bittering_magnum",
+        "g": 300,
+        "min": 60
+      }
+    ],
+    "levure": "yeasts_ale_safale_us_05",
+    "eau": "causse",
+    "palier": 66,
+    "ebullition": 60,
+    "fermentation": {
+      "temp": 18,
+      "reposDiacetyle": false
+    },
+    "aromates": [],
+    "sels": {},
+    "auxiliaires": [],
+    "cuisson": false,
+    "destination": "biere"
+  },
+  "epaisses": {
+    "V": 6.358309416359965,
+    "A": 4.658981040530127,
+    "Q": {
+      "tetes": 53.79555133973224,
+      "soufre": 2.7790873469668096,
+      "methanol": 1.3336081326664766,
+      "esters": 7.105454762025883,
+      "terpenes": 0.02878390135038972,
+      "fusels": 2.7780474189592343,
+      "cereale": 0.8815373389266645,
+      "queues": 0.6293950155104948,
+      "furfural": 0.11389697076883629
+    }
+  },
+  "reglagesD": {
+    "recycler": true,
+    "feu": "moyenne",
+    "tetesPct": 4,
+    "queuesDegre": 60
+  },
+  "possede": [
+    "clar_whirlfloc",
+    "yeasts_distilling_distilamax_xp",
+    "nutrients_dap"
+  ],
+  "ecus": 3035,
+  "decouvertes": {
+    "clarif": "2026-11-01T16:26:49.559Z",
+    "distil": "2026-06-15T12:03:01.020Z"
+  },
+  "quiz": null,
+  "grimoire": [],
+  "ecole": {},
+  "cal": {
+    "s": 37
+  },
+  "vente": {
+    "rep": 80,
+    "clients": [
+      {
+        "id": "36-4",
+        "nom": "M. Lafon",
+        "type": "restaurateur",
+        "lieu": "l'auberge de Septfonds",
+        "demande": "amere",
+        "txt": "Quelque chose de bien amer et houblonné, qui réveille.",
+        "qte": 24,
+        "semaine": 36
+      },
+      {
+        "id": "37-0",
+        "nom": "M. Couderc",
+        "type": "chef",
+        "lieu": "l'auberge du château de Cayriech",
+        "demande": "brune",
+        "txt": "Une brune : café, chocolat, du torréfié.",
+        "qte": 20,
+        "semaine": 37
+      },
+      {
+        "id": "37-1",
+        "nom": "M. Pélissier",
+        "type": "particulier",
+        "lieu": "de Montpezat",
+        "demande": "forte",
+        "txt": "Une bière forte pour les soirées d'hiver, au coin du feu.",
+        "qte": 5,
+        "semaine": 37
+      },
+      {
+        "id": "37-2",
+        "nom": "Mme Lagarde",
+        "type": "particulier",
+        "lieu": "de Montpezat",
+        "demande": "noel",
+        "txt": "Pour le réveillon : forte, avec des épices.",
+        "qte": 3,
+        "semaine": 37
+      },
+      {
+        "id": "37-3",
+        "nom": "Mme Lagarde",
+        "type": "touriste",
+        "lieu": "venu des Pays-Bas",
+        "demande": "oktober",
+        "txt": "Une märzen pour notre fête d'octobre.",
+        "qte": 5,
+        "semaine": 37
+      },
+      {
+        "id": "37-4",
+        "nom": "Mme Delpech",
+        "type": "caviste",
+        "lieu": "la boutique du terroir de Cayriech",
+        "demande": "miel",
+        "txt": "Une bière au miel du pays.",
+        "qte": 14,
+        "semaine": 37
+      }
+    ],
+    "commandes": [
+      {
+        "id": "c37",
+        "nom": "Le mariage du château de Cas",
+        "cat": "biere",
+        "demande": "forte",
+        "txt": "Une bière forte pour les soirées d'hiver, au coin du feu.",
+        "qte": 100,
+        "note": 34,
+        "echeance": 41,
+        "prime": 160,
+        "rep": 6
+      }
+    ],
+    "vendus": 0,
+    "ca": 0
+  },
+  "travaux": [],
+  "equip": {},
+  "vus": {
+    "empatage": true,
+    "filtration": true,
+    "ebullition": true,
+    "fermentation": true,
+    "bouteille": true,
+    "brouillis": true,
+    "repasse": true
+  },
+  "objectifs": {},
+  "bat": {
+    "brasserie": 3,
+    "distillerie": 2,
+    "chai": 2,
+    "pigeonnier": 3
+  }
+}
