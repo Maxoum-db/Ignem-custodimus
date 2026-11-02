@@ -135,11 +135,11 @@
         });
       document
         .querySelectorAll(
-          "[data-cat]:not([data-icone]),[data-rcat]:not([data-icone]),[data-onglet]:not([data-icone])",
+          "[data-rcat]:not([data-icone])",
         )
         .forEach((el) => {
           const cle =
-            familles[el.dataset.cat || el.dataset.rcat || el.dataset.onglet];
+            familles[el.dataset.rcat];
           el.dataset.icone = "oui";
           if (cle) {
             el.classList.add("icone-famille");

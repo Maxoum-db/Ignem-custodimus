@@ -1,0 +1,42 @@
+{
+  "errors": [],
+  "checks": [
+    "Police Lilita One intégrée, sans requête externe",
+    "Glisser-déposer vers la vraie cuve après défilement",
+    "Maintien et annulation par vrais événements Touch Chromium",
+    "Aucune peinture lorsque le Canvas actif est hors écran",
+    "Dessin historique et gestes accessibles, images absentes",
+    "Dessin historique et gestes accessibles, images corrompues",
+    "Dessin historique et gestes accessibles, images erreur-canvas",
+    "Captures comparatives A–E et décors stables avec prefers-reduced-motion",
+    "Largeurs 320, 360, 390 et 720 px sans débordement ; backing store DPR 2"
+  ],
+  "images": {
+    "a-cuve-vide": {
+      "largeur": 512,
+      "hauteur": 427,
+      "pixels_transparents": 79642
+    },
+    "b-filtre-vide": {
+      "largeur": 512,
+      "hauteur": 468,
+      "pixels_transparents": 69470
+    },
+    "d-fermenteur-vide": {
+      "largeur": 341,
+      "hauteur": 512,
+      "pixels_transparents": 88778
+    },
+    "e-capsuleuse": {
+      "largeur": 485,
+      "hauteur": 512,
+      "pixels_transparents": 185701
+    }
+  },
+  "performance_simulee": {
+    "gzip_octets": 1681781,
+    "dom_content_loaded_ms": 9023,
+    "atelier_pret_ms": 10478,
+    "profil": "Vrai HTTP gzip ; 150 ms RTT, 1,6 Mbit/s, CPU ×4, cache navigateur vide. Simulation Chromium, pas un Android physique."
+  }
+}

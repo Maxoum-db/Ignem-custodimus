@@ -766,7 +766,8 @@ body { background: #100d0b; line-height: 1.5; }
 .charge-v { color: #f0c48b; }
 .charge-l { font-size: 12px; }
 .charge { border-radius: 12px; border: 1px solid #5e4530; box-shadow: none; padding: 9px; }
-.bandeau-mesures { top: 149px; padding-top: 4px; padding-bottom: 7px; box-shadow: none; background: var(--nuit); }
+#ecran-brasserie { padding-top: 0; }
+.bandeau-mesures { top: 0; margin-top: 0; padding-top: 8px; padding-bottom: 7px; box-shadow: none; background: var(--nuit); }
 .bandeau-mesures .mesure { box-shadow: none; border: 1px solid #59412e; border-radius: 9px; padding: 7px 1px 5px; background: #2a2018; }
 .bandeau-mesures .mesure .v { font-size: clamp(16px,4.4vw,23px); font-weight: 750; line-height: 1.2; }
 .bandeau-mesures .mesure .l { font-size: 9px; }
@@ -827,7 +828,6 @@ input[type="range"] { accent-color: #d9935b; }
 .toasts { top: calc(env(safe-area-inset-top, 0px) + 76px); }
 @media (max-width: 359px) {
   .atelier { grid-template-columns: 128px minmax(0,1fr); gap: 12px; }
-  .bandeau-mesures { top: 129px; }
   .geste-titre { font-size: 25px; }
   .geste-infos .v { font-size: 18px; }
   .retour-entete, .btn-entete { min-width: 40px; }
