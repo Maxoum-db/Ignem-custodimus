@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+"""QA des atlas réellement dessinés : poses, alpha, ancrages et repli."""
+import base64,json
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+ROOT=Path(__file__).resolve().parent;OUT=ROOT/'details-animations';(OUT/'captures').mkdir(parents=True,exist_ok=True)
+fixture=json.loads((ROOT/'sauvegardes/legacy-avant-v0.8.json').read_text());report={'errors':[],'checks':[]}
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
+ c=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,is_mobile=True,has_touch=True,reduced_motion='no-preference')
+ c.add_init_script('localStorage.setItem("ignem.v1",'+json.dumps(json.dumps(fixture))+')');pg=c.new_page();pg.on('pageerror',lambda e:report['errors'].append(str(e)));pg.goto('http://127.0.0.1:8000/dist/index.html');pg.locator('#carte[data-univers]').wait_for()
+ if pg.locator('#tuto-voile').is_visible():pg.locator('#tuto-passer').tap()
+ pg.wait_for_timeout(400);save=pg.evaluate('localStorage.getItem("ignem.v1")')
+ report['atlas']=pg.evaluate('''async()=>{const r={};for(const [cle,m]of Object.entries(UniversJeu.mouvements)){const atlas=await IllustrationsJeu.charger(m.cle);if(!atlas||atlas.width!==384||atlas.height!==256)throw Error(m.cle+' taille');const cv=document.createElement('canvas');cv.width=cv.height=128;const c=cv.getContext('2d');const cellules=[];for(let i=0;i<6;i++){c.clearRect(0,0,128,128);c.drawImage(atlas,i%3*128,Math.floor(i/3)*128,128,128,0,0,128,128);const d=c.getImageData(0,0,128,128).data;let a=0,o=0,minY=128,maxY=0;for(let j=3;j<d.length;j+=4){if(d[j]===0)a++;if(d[j]>128){o++;const y=Math.floor((j-3)/4/128);minY=Math.min(minY,y);maxY=Math.max(maxY,y);}}if(a<4000||o<1200)throw Error(m.cle+' transparence '+i);const bas=c.getImageData(0,64,128,64).data;const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bas))).map(x=>x.toString(16).padStart(2,'0')).join('');cellules.push({minY,maxY,alpha0:a,opaques:o,bas_sha256:hash});}if(new Set(cellules.map(x=>x.bas_sha256)).size!==6)throw Error(m.cle+' jambes dupliquees');if(Math.max(...cellules.map(x=>x.maxY))-Math.min(...cellules.map(x=>x.maxY))>2)throw Error(m.cle+' ancrage');r[cle]={atlas:m.cle,cellules,ancre:m.ancre};}return r;}''')
+ report['checks'].append('Quatre atlas 384×256 : six dessins distincts, alpha réel, jambes distinctes, baseline commune')
+ report['rendu']=pg.evaluate('''async()=>{const cv=document.createElement('canvas');cv.width=600;cv.height=190;const c=cv.getContext('2d'),r={};const m=UniversJeu.mouvements['personnage-lise'],img=await IllustrationsJeu.charger('personnage-lise'),atlas=await IllustrationsJeu.charger(m.cle),ancien=c.drawImage.bind(c);const rects=[];c.drawImage=(...a)=>{if(a.length===9)rects.push([a[1],a[2],a[3],a[4]]);return ancien(...a);};for(let i=0;i<6;i++){UniversJeu.art.acteur(c,img,50+i*100,175,72,120,0,1,1,0,{profil:m,atlas,distance:i*2.2/6+.001});}if(new Set(rects.map(JSON.stringify)).size!==6)throw Error('Six poses non rendues');r.poses_lise_png=cv.toDataURL();r.rects=rects;const avant=rects.length;UniversJeu.art.acteur(c,img,40,170,72,120,1,1,1,0,{profil:m,atlas:null});if(rects.length!==avant)throw Error('Repli atlas absent');const invalide=document.createElement('canvas');invalide.width=invalide.height=8;UniversJeu.art.acteur(c,img,40,170,72,120,1,1,1,0,{profil:m,atlas:invalide});if(rects.length!==avant)throw Error('Repli atlas invalide');return r;}''')
+ png=report['rendu'].pop('poses_lise_png');(OUT/'captures/poses-lise.png').write_bytes(base64.b64decode(png.split(',')[1]))
+ report['checks'].append('Le renderer découpe les six cellules ; atlas absent ou invalide laisse le sprite historique')
+ pg.evaluate('''()=>{window.qaPoses=new Set();const old=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(...a){if(this.canvas.id==='carte'&&a.length===9&&a[0]?.src===IMAGES_JEU['marche-lise'])qaPoses.add(a[1]+':'+a[2]);return old.apply(this,a);};}''');pg.wait_for_timeout(2600)
+ report['poses_dans_le_vrai_domaine']=pg.evaluate('Array.from(qaPoses)');assert len(report['poses_dans_le_vrai_domaine'])>=3
+ pg.screenshot(path=str(OUT/'captures/domaine-details.png'))
+ assert pg.evaluate('localStorage.getItem("ignem.v1")')==save
+ pg.emulate_media(reduced_motion='reduce');pg.wait_for_timeout(100);im=pg.locator('#carte').evaluate('(c)=>c.toDataURL()');pg.wait_for_timeout(300);assert pg.locator('#carte').evaluate('(c)=>c.toDataURL()')==im
+ report['checks'].append('Plusieurs poses observées dans le vrai domaine, sauvegarde identique, mouvement réduit stable')
+ # L'absence ciblée des quatre atlas doit conserver la carte et ses commandes.
+ c.close();c=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,is_mobile=True,has_touch=True,reduced_motion='reduce');c.add_init_script('localStorage.setItem("ignem.v1",'+json.dumps(json.dumps(fixture))+')');c.add_init_script("let qaImages={};Object.defineProperty(window,'IMAGES_JEU',{get:()=>qaImages,set:r=>{for(const k of ['marche-lise','marche-firmin','pas-cheval','picorer-poule-blanche'])delete r[k];qaImages=r;}});");pg=c.new_page();pg.on('pageerror',lambda e:report['errors'].append(str(e)));pg.goto('http://127.0.0.1:8000/dist/index.html');pg.locator('#carte[data-univers="domaine"]').wait_for();pg.locator('#lieux [aria-label="Brasserie"]').tap();assert pg.locator('#ecran-brasserie').is_visible();report['checks'].append('Quatre atlas absents : vraie carte et navigation toujours utilisables');b.close()
+assert not report['errors'],report['errors']
+(OUT/'resultats-poses.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2))

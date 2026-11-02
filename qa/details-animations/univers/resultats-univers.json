@@ -1,0 +1,166 @@
+{
+  "errors": [],
+  "checks": [
+    "Nouvelle partie vierge, ajout tactile de malt, sauvegarde et rechargement",
+    "Panoramas, portraits et vrai catalogue accessibles, transparence de tous les objets décodée",
+    "Quatre saisons et niveaux maximum rendus à repères constants (états visuels synthétiques)",
+    "Mouvement réduit stable, écrans 320/360/390/720 sans débordement",
+    "Courbes expert, état gelé en lecture seule, arrêt hors écran, six flammes distinctes, verrerie aveugle uniforme ; sauvegarde identique",
+    "Images absentes ou corrompues : navigation et anciens dessins utilisables"
+  ],
+  "images": {
+    "a-cuve-vide": {
+      "width": 512,
+      "height": 427,
+      "transparent": 79642
+    },
+    "animal-canard": {
+      "width": 171,
+      "height": 256,
+      "transparent": 26953
+    },
+    "animal-chat-noir": {
+      "width": 171,
+      "height": 256,
+      "transparent": 24834
+    },
+    "animal-cheval": {
+      "width": 256,
+      "height": 384,
+      "transparent": 52824
+    },
+    "animal-coq": {
+      "width": 171,
+      "height": 256,
+      "transparent": 23131
+    },
+    "animal-poule-blanche": {
+      "width": 171,
+      "height": 256,
+      "transparent": 23101
+    },
+    "animal-poule-brune": {
+      "width": 213,
+      "height": 256,
+      "transparent": 31862
+    },
+    "b-filtre-vide": {
+      "width": 512,
+      "height": 468,
+      "transparent": 69470
+    },
+    "brasserie-fond": {
+      "width": 1024,
+      "height": 683,
+      "transparent": 0
+    },
+    "chai-fond": {
+      "width": 1024,
+      "height": 683,
+      "transparent": 0
+    },
+    "d-fermenteur-vide": {
+      "width": 341,
+      "height": 512,
+      "transparent": 88778
+    },
+    "decor-arbre": {
+      "width": 505,
+      "height": 512,
+      "transparent": 107653
+    },
+    "domaine-brasserie-1-batiment": {
+      "width": 768,
+      "height": 512,
+      "transparent": 230687
+    },
+    "domaine-brasserie-2-batiment": {
+      "width": 768,
+      "height": 512,
+      "transparent": 191726
+    },
+    "domaine-brasserie-3-batiment": {
+      "width": 768,
+      "height": 512,
+      "transparent": 201111
+    },
+    "domaine-chai-1-batiment": {
+      "width": 768,
+      "height": 512,
+      "transparent": 220667
+    },
+    "domaine-chai-2-batiment": {
+      "width": 768,
+      "height": 512,
+      "transparent": 180785
+    },
+    "domaine-pigeonnier-batiment": {
+      "width": 768,
+      "height": 512,
+      "transparent": 280893
+    },
+    "e-capsuleuse": {
+      "width": 485,
+      "height": 512,
+      "transparent": 185701
+    },
+    "f-alambic-vide": {
+      "width": 512,
+      "height": 468,
+      "transparent": 154215
+    },
+    "f-condenseur": {
+      "width": 469,
+      "height": 512,
+      "transparent": 127249
+    },
+    "f-fond": {
+      "width": 1024,
+      "height": 683,
+      "transparent": 0
+    },
+    "fut-chene": {
+      "width": 493,
+      "height": 512,
+      "transparent": 89615
+    },
+    "marche-firmin": {
+      "width": 384,
+      "height": 256,
+      "transparent": 71794
+    },
+    "marche-lise": {
+      "width": 384,
+      "height": 256,
+      "transparent": 77352
+    },
+    "pas-cheval": {
+      "width": 384,
+      "height": 256,
+      "transparent": 58838
+    },
+    "personnage-firmin": {
+      "width": 256,
+      "height": 384,
+      "transparent": 55421
+    },
+    "personnage-lise": {
+      "width": 256,
+      "height": 384,
+      "transparent": 67355
+    },
+    "picorer-poule-blanche": {
+      "width": 384,
+      "height": 256,
+      "transparent": 58961
+    }
+  },
+  "presentation": {
+    "courbes_expert": true,
+    "changement_verrerie_async": true,
+    "etat_gele": true,
+    "hors_ecran_sans_dessin": true,
+    "six_frames_distinctes": true,
+    "verre_aveugle_sans_code_couleur": true
+  }
+}

@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Mesure les peintures réelles, trajectoires, pauses et réglages de mouvement."""
-import base64,json,subprocess
+import argparse,base64,json,subprocess
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-ROOT=Path(__file__).resolve().parent;OUT=ROOT/'animations';(OUT/'captures').mkdir(parents=True,exist_ok=True)
+ROOT=Path(__file__).resolve().parent
+parser=argparse.ArgumentParser();parser.add_argument('--sortie',type=Path,default=ROOT/'animations');parser.add_argument('--reference',default='c3ab02a');opt=parser.parse_args()
+OUT=opt.sortie;(OUT/'captures').mkdir(parents=True,exist_ok=True)
 fixture=json.loads((ROOT/'sauvegardes/legacy-avant-v0.8.json').read_text())
-reference=subprocess.check_output(['git','show','c3ab02a:dist/index.html'])
-report={'errors':[],'checks':[],'mesures':{}}
+reference=subprocess.check_output(['git','show',opt.reference+':dist/index.html'])
+report={'errors':[],'checks':[],'mesures':{},'reference':opt.reference}
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
  def ouvrir(avant=False):
@@ -16,7 +18,7 @@ with sync_playwright() as p:
   if avant:c.route('**/index.html',lambda r:r.fulfill(body=reference,content_type='text/html'))
   pg.goto('http://127.0.0.1:8000/dist/index.html');pg.locator('#carte[data-univers="domaine"]').wait_for()
   if pg.locator('#tuto-voile').is_visible():pg.locator('#tuto-passer').tap()
-  pg.evaluate('''()=>{window.peintures={};window.lise=[];const ancien=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(...a){const id=this.canvas.id;if(a.length===3)(peintures[id]??=[]).push(performance.now());if(id==='carte'&&a[0]?.src===IMAGES_JEU['personnage-lise']){const m=this.getTransform();lise.push({t:performance.now(),x:m.e/(this.canvas.width/192),y:m.f/(this.canvas.height/256)});}return ancien.apply(this,a);};}''')
+  pg.evaluate('''()=>{window.peintures={};window.lise=[];const ancien=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(...a){const id=this.canvas.id;if(a.length===3)(peintures[id]??=[]).push(performance.now());if(id==='carte'&&(a[0]?.src===IMAGES_JEU['personnage-lise']||a[0]?.src===IMAGES_JEU['marche-lise'])){const m=this.getTransform();lise.push({t:performance.now(),x:m.e/(this.canvas.width/192),y:m.f/(this.canvas.height/256)});}return ancien.apply(this,a);};}''')
   return c,pg
  for avant in [True,False]:
   c,pg=ouvrir(avant);pg.wait_for_timeout(250);pg.evaluate('peintures={};lise=[]');pg.wait_for_timeout(1200)
@@ -62,7 +64,8 @@ with sync_playwright() as p:
   assert pg.locator('[data-illustration-erreur]').count()==0
   assert pg.evaluate('document.documentElement.scrollWidth<=innerWidth')
   c.close()
- assert report['mesures']['apres']['peintures_carte']>report['mesures']['avant']['peintures_carte']*2
+ if opt.reference=='c3ab02a':assert report['mesures']['apres']['peintures_carte']>report['mesures']['avant']['peintures_carte']*2
+ else:assert report['mesures']['apres']['peintures_carte']>=report['mesures']['avant']['peintures_carte']*.8,'Régression de cadence supérieure à 20 %'
  b.close()
 assert not report['errors'],report['errors']
 report['checks']=['Peintures réelles avant/après à 390×844 DPR2','Déplacements, freinage et pauses sans saut de position','Fondu continu aux six frontières de sprites de feu','Abeilles décoratives de jour hors hiver','Pause/reprise sans rattrapage, arrêt hors écran','Mouvement réduit stable, sauvegarde inchangée','Vidéo WebM du vrai Canvas du domaine']

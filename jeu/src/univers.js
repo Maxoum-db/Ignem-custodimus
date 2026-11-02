@@ -9,6 +9,37 @@
     ressources = new Map(),
     vues = new WeakMap();
   const media = matchMedia("(prefers-reduced-motion: reduce)");
+  // Atlas statiques, six dessins à ancrage commun ; aucune règle de jeu.
+  const mouvements = Object.freeze({
+    "personnage-lise": Object.freeze({
+      cle: "marche-lise",
+      ancre: 0.9375,
+      echelle: 1.1041666667,
+      orientation: 1,
+      type: "marche",
+    }),
+    "personnage-firmin": Object.freeze({
+      cle: "marche-firmin",
+      ancre: 0.9375,
+      echelle: 1.119047619,
+      orientation: 1,
+      type: "marche",
+    }),
+    "animal-cheval": Object.freeze({
+      cle: "pas-cheval",
+      ancre: 0.984375,
+      echelle: 0.99025,
+      orientation: -1,
+      type: "marche",
+    }),
+    "animal-poule-blanche": Object.freeze({
+      cle: "picorer-poule-blanche",
+      ancre: 0.984375,
+      echelle: 0.9658,
+      orientation: -1,
+      type: "picorer",
+    }),
+  });
   const C = {
     trait: "#3b2a1e",
     papier: "#fff0cd",
@@ -210,17 +241,79 @@
       y,
       marche: local < duree ? Math.sin(q * Math.PI) : 0,
       direction: (retour ? -1 : 1) * (dx < 0 ? -1 : 1),
+      repos: Math.max(0, local - duree),
+      distance: (retour ? 2 - u : u) * Math.hypot(d[0] - a[0], d[1] - a[1]),
     };
   }
-  function acteur(c, img, x, y, w, h, t, marche = 0, direction = 1, phase = 0) {
+  function acteur(
+    c,
+    img,
+    x,
+    y,
+    w,
+    h,
+    t,
+    marche = 0,
+    direction = 1,
+    phase = 0,
+    detail = null,
+  ) {
+    if (!img) return;
     const pas = t * 8 + phase,
       leve = Math.sin(pas) ** 2 * 0.32 * marche;
     ellipse(c, x, y, w * 0.32, h * 0.045, "rgba(45,35,19,.19)");
     c.save();
     c.translate(x, y - leve);
     c.rotate(Math.sin(pas) * 0.012 * marche);
-    c.scale(direction, 1);
-    contenir(c, img, -w / 2, -h, w, h);
+    const respiration = Math.sin(t * 1.7 + phase);
+    c.scale(direction, 1 - respiration * 0.004);
+    const profil = detail?.profil;
+    const atlas =
+      detail?.atlas?.width === 384 && detail?.atlas?.height === 256
+        ? detail.atlas
+        : null;
+    let poids = 0,
+      pose = 0;
+    if (atlas && profil) {
+      if (profil.type === "marche") {
+        poids = borne(marche * 5);
+        pose = Math.floor(
+          (((detail.distance ?? t) * 6) /
+            (profil.cle === "pas-cheval" ? 4.5 : 2.2)) %
+            6,
+        );
+      } else if (marche < 0.05) {
+        poids = 1;
+        pose = Math.min(5, Math.floor((detail.repos || 0) / 0.24));
+        if ((detail.repos || 0) > 1.44) pose = 0;
+      }
+    }
+    if (poids < 1) {
+      c.save();
+      c.globalAlpha *= 1 - poids;
+      // L'animal source regarde à gauche, les mentors vers la droite.
+      if (profil?.orientation === -1) c.scale(-1, 1);
+      contenir(c, img, -w / 2, -h, w, h);
+      c.restore();
+    }
+    if (poids > 0) {
+      c.save();
+      c.globalAlpha *= poids;
+      c.scale(profil.orientation, 1);
+      const taille = Math.min(h, (w * img.height) / img.width) * profil.echelle;
+      c.drawImage(
+        atlas,
+        (pose % 3) * 128,
+        Math.floor(pose / 3) * 128,
+        128,
+        128,
+        -taille / 2,
+        -taille * profil.ancre,
+        taille,
+        taille,
+      );
+      c.restore();
+    }
     c.restore();
   }
   function fut(c, x, y, w = 12, h = 15) {
@@ -580,6 +673,7 @@
     visible,
     media,
     ressources,
+    mouvements,
     art: Object.freeze({
       C,
       borne,
