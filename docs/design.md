@@ -29,3 +29,11 @@ Grille 4px ; espacements 4/8/12/16/24/32. Rayons 8/12/18. Contour 3px encre. Omb
 ## Livraison et preuve
 
 Voir `docs/audit-design.md` et `qa/finition/`. `dist/index.html` est toujours le vrai jeu reconstruit. Les fixtures de QA sont isolées des sauvegardes personnelles. L'absence de défrichage est documentée ; aucun mécanisme fictif n'est ajouté.
+
+## Graphiques et jauges (étape 2)
+
+`graphiques.js` reçoit exclusivement les historiques et valeurs existants. SVG pleine largeur, axes ≥12px au format de référence ; DPR natif du SVG et Canvas lissés à DPR plafonné 2,5. Température : cuivre sombre `#a55224` pour la courbe lisible sur papier, froid `#244f72`, bande cible verte. Les cibles restent en marches, notamment +4°C à J5. La pastille suit le dernier échantillon observé, sans interpolation qui dépasserait les données.
+
+Repasse : récupération de l'alcool initial en %, degré en % vol sur l'axe droit, congénères en × seuil de perception sur l'axe logarithmique. Les coupes réelles sont des repères verticaux. Pas de mol ni de masse inventée. Le comparateur de CO₂ lit les valeurs de `maj()` : volumes de CO₂ et g/L ; aucune formule métier dupliquée. Filtration : L et cm instantanés ; SG reste la valeur calculée déjà affichée. Le chai étiquette sa **prévision**, distincte de l'âge réel.
+
+Les jauges HTML portent une valeur sémantique et le texte exact de l'instrument. La normalisation 0–100 représente seulement la longueur de la barre ; aria-valuetext conserve les bar, %, ou autres valeurs réellement affichées. Les pastilles EBC sont un disque à reflet ; leur couleur inline reste celle du moteur.

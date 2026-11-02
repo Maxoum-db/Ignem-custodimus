@@ -211,10 +211,10 @@ input[type="range"] { width: 100%; height: 28px; }
 .geste-bilan { display: flex; flex-direction: column; gap: 4px; }
 .geste-bilan p { margin: 0; }
 .geste-bilan .gros { font-family: var(--f-chiffre); line-height: 1; color: var(--braise); }
-.frise { position: relative; height: 44px; background: var(--four); }
+.frise { position: relative; }
 .frise .repere-h { position: absolute; top: 4px; bottom: 16px; width: 3px; margin-left: -1px; background: var(--houblon); }
 .frise .repere-h.fait { background: var(--pierre-clair); }
-.frise .repere-h b { position: absolute; top: 0; left: 5px; font-family: var(--f-chiffre); font-size: 16px; font-weight: 400; white-space: nowrap; color: var(--calcaire); }
+.frise .repere-h b { position: absolute; top: 0; left: 5px; font-family: var(--f-chiffre); font-weight: 400; white-space: nowrap; color: var(--calcaire); }
 .frise .curseur { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1px; background: var(--braise); }
 .frise .graduation { position: absolute; bottom: 1px; font-family: var(--f-chiffre); color: var(--cendre); transform: translateX(-50%); }
 
@@ -227,11 +227,11 @@ input[type="range"] { width: 100%; height: 28px; }
 .biere-carte .det { grid-column: 1 / -1; font-size: 13px; color: var(--cendre); }
 .biere-carte .lap { font-family: var(--f-chiffre); font-size: 22px; color: var(--braise); }
 .jauges-feu { display: flex; flex-direction: column; gap: 6px; }
-.jauge-feu { display: grid; gap: 8px; align-items: center; color: var(--cendre); }
+.jauge-feu { display: grid; align-items: center; }
 .jauge-feu .barre { height: 12px; background: var(--nuit); box-shadow: 0 0 0 2px var(--pierre); position: relative; }
-.jauge-feu .zone { position: absolute; top: 0; bottom: 0; background: rgba(156, 201, 94, .28); }
+.jauge-feu .zone { position: absolute; top: 0; bottom: 0; }
 .jauge-feu .niv { position: absolute; inset: 0 auto 0 0; }
-.jauge-feu .val { font-family: var(--f-chiffre); color: var(--calcaire); text-align: right; }
+.jauge-feu .val { font-family: var(--f-chiffre); text-align: right; }
 .geste-controles.rangee { flex-direction: row; }
 .geste-controles.rangee .btn-geste { flex: 1; }
 .nez-ligne { margin: 0; padding: 8px 10px; background: var(--four); box-shadow: var(--cadre); min-height: 2.6em; }
@@ -473,11 +473,10 @@ input[type="range"] { width: 100%; height: 28px; }
 @media (max-width: 440px) { .entete-nav { gap: 4px; } .entete-nav button { padding: 6px 6px; font-size: 12px; } }
 
 /* ---------- Chauffes nerveuses et retour (V0.4.1) ---------- */
-.jauge-feu .prev { position: absolute; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: #7fb6d6; }
-.registre { display: grid; gap: 4px; font-size: 13px; color: var(--cendre); }
+.jauge-feu .prev { position: absolute; top: -3px; bottom: -3px; margin-left: -1px; }
+.registre { display: grid; }
 .registre input { width: 100%; }
 .btn-retour { justify-self: start; align-self: flex-start; width: auto; margin-bottom: 4px; }
-.jauge-feu { grid-template-columns: 70px 1fr 68px; }
 .jauge-feu .val { white-space: nowrap; }
 
 /* ---------- Bulles « i », tutoriels, événements, charge (V0.4.2) ---------- */
@@ -724,12 +723,9 @@ body { background: #100d0b; line-height: 1.5; }
 .geste-bilan .gros { font-size: 30px; font-weight: 750; }
 .geste-evt { border-radius: 9px; border: 1px solid #775332; box-shadow: 0 2px 8px #00000055; }
 .jauge-feu .barre, .jauge, .barre-rep { border-radius: 10px; background: #423223; box-shadow: inset 0 1px 2px #00000044; }
-.jauge-feu .niv { border-radius: 10px; }
 .jauge-feu .val { font-size: 13px; font-weight: 700; }
-.jauge-feu { font-size: 12px; }
 input[type="range"] { accent-color: #d9935b; }
-.frise { border: 1px solid #63472f; border-radius: 9px; box-shadow: none; margin-top: 0; }
-.frise .graduation { font-size: 11px; }
+.frise { box-shadow: none; margin-top: 0; }
 .registre { border-radius: 12px; }
 .mentor img { border-radius: 9px; box-shadow: 0 0 0 2px #c49c64; }
 .mentor-nom { font-size: 17px; font-weight: 400; }
@@ -871,3 +867,41 @@ h1,h2,h3,.page-titre,.geste-titre,.sous-titre { font-family:var(--f-titre); font
 .choix-style small { font:400 var(--t16)/1.4 var(--f-texte); color:var(--encre); }
 @media(min-width:600px) { .bandeau-mesures .mesures { grid-template-columns:repeat(6,minmax(0,1fr)); } }
 @media(prefers-reduced-motion:reduce) { .toast { animation:none !important; opacity:1 !important; transform:none !important; } }
+
+/* Instruments communs : axes en unités réelles et couleur EBC inchangée. */
+.graphique { margin:0; border:var(--trait); border-radius:var(--r2); padding:12px; background:var(--parchemin); color:var(--encre); box-shadow:var(--relief); }
+.graphique figcaption { font:400 18px/1.3 var(--f-titre); margin-bottom:8px; }
+.graphique svg { width:100%; height:auto; display:block; overflow:visible; }
+.graphique svg text { font:700 12px var(--f-texte); }
+.graphique p,.legende-graphique { font-size:14px; line-height:1.4; margin:8px 0 0; }
+.legende-series { display:flex; flex-wrap:wrap; gap:8px 12px; font-size:14px; }
+.legende-series span::before { content:''; display:inline-block; width:16px; height:4px; margin-right:4px; background:var(--serie); vertical-align:middle; }
+.comparateur-co2 { height:20px; border:2px solid var(--encre); border-radius:8px; position:relative; background:var(--pierre-calcaire); margin:16px 0; }
+.comparateur-co2 i { display:block; height:100%; border-radius:6px; background:var(--cuivre); }
+.comparateur-co2 b { position:absolute; top:-6px; bottom:-6px; width:4px; margin-left:-2px; background:#416c28; }
+.jauge-feu { grid-template-columns:minmax(64px,auto) minmax(50px,1fr) 76px; font-size:14px; gap:8px; color:var(--parchemin); }
+.jauge-feu .val { font:400 16px var(--f-chiffre); color:var(--parchemin); }
+.jauge-feu .barre,.jauge,.barre-rep { height:16px; border:2px solid var(--encre); border-radius:8px; background:var(--four); box-shadow:none; }
+.jauge-feu .zone { background:#9cc94a66; border-left:2px solid var(--prairie); border-right:2px solid var(--prairie); }
+.jauge-feu .niv { border-radius:6px; background:var(--cuivre) !important; }
+#fer-jauges .jauge-feu:first-child .niv { background:var(--glycol) !important; }
+.jauge-feu .prev { background:var(--glycol); width:3px; }
+input[type=range] { min-height:44px; accent-color:var(--cuivre); cursor:pointer; }
+input[type=range]::-webkit-slider-thumb { cursor:grab; }
+.registre { font-size:16px; color:var(--parchemin); gap:8px; }
+.frise { height:56px; border:var(--trait); border-radius:12px; background:var(--four); }
+.frise .graduation { font-size:14px; padding:0 4px; }
+.frise .graduation:first-child { transform:none; }.frise .graduation:last-child { transform:translateX(-100%); }
+.frise .repere-h b { font-size:14px; }
+.radar svg text,#radar svg text { font-family:var(--f-texte); font-size:12px; font-weight:700; }
+.radar svg>polygon[fill=none],#radar svg>polygon[fill=none] { stroke:#af9878; stroke-width:1; }
+.pastille,.robe,.pastille-prod,.teinte { display:inline-block; position:relative; width:28px; height:28px; min-width:28px; border:2px solid var(--encre); border-radius:50%; overflow:hidden; vertical-align:middle; flex-shrink:0; box-shadow:none; }
+.pastille::after,.robe::after,.pastille-prod::after,.teinte::after { content:''; position:absolute; top:3px; left:4px; width:50%; height:30%; border-radius:50%; background:#ffffff9c; transform:rotate(-30deg); }
+.mesure .pastille { width:16px; height:16px; min-width:16px; margin-left:4px; }
+.prevision-badge { display:inline-block; padding:4px 8px; border:2px solid var(--encre); border-radius:8px; background:var(--parchemin); color:var(--encre); font:700 14px var(--f-texte); }
+
+.geste-controles { position:sticky; bottom:8px; z-index:3; background:var(--nuit); padding-block:8px; border-radius:12px; }
+@media(max-width:359px){.graphique svg text { font-size:15px; }}
+
+#fer-infos .mesure:last-child .v { font:700 16px/1.3 var(--f-texte); overflow-wrap:anywhere; max-width:100%; }
+.geste-infos .mesure { min-width:0; }

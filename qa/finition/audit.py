@@ -9,7 +9,7 @@ rapport={'viewport':[o.largeur,o.hauteur],'captures':[],'errors':[],'limites':['
 if o.reprise:rapport=json.loads((o.sortie/'rapport.json').read_text())
 base=json.loads((ROOT/'qa/sauvegardes/legacy-avant-v0.8.json').read_text())
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);c=b.new_context(viewport={'width':o.largeur,'height':o.hauteur},device_scale_factor=1,is_mobile=o.largeur<500,has_touch=True,reduced_motion='reduce');pg=c.new_page();pg.set_default_timeout(5000);pg.on('pageerror',lambda e:rapport['errors'].append(str(e)));pg.clock.install(time='2026-06-15T12:00:00Z');pg.clock.pause_at('2026-06-15T12:00:01Z');c.add_init_script('let qaSeed=2026;Math.random=()=>((qaSeed=qaSeed*16807%2147483647)-1)/2147483646;');pg.goto('http://127.0.0.1:8000/dist/index.html')
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);c=b.new_context(viewport={'width':o.largeur,'height':o.hauteur},device_scale_factor=1,is_mobile=o.largeur<500,has_touch=True,reduced_motion='reduce');pg=c.new_page();pg.set_default_timeout(5000);pg.on('pageerror',lambda e:rapport['errors'].append(str(e)));pg.on('console',lambda e:rapport['errors'].append(e.text) if e.type=='error' else None);pg.clock.install(time='2026-06-15T12:00:00Z');pg.clock.pause_at('2026-06-15T12:00:01Z');c.add_init_script('let qaSeed=2026;Math.random=()=>((qaSeed=qaSeed*16807%2147483647)-1)/2147483646;');pg.goto('http://127.0.0.1:8000/dist/index.html')
  def tick(ms=32):pg.clock.run_for(ms)
  def photo(nom,scroll=True):
   tick();pg.evaluate('document.fonts.ready')

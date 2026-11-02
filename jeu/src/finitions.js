@@ -34,4 +34,7 @@
     if(boutons.length>3){ const suite=document.createElement('details'); suite.className='mentor-plus'; const titre=document.createElement('summary'); titre.textContent='Autres choix'; suite.append(titre,...boutons.slice(2)); actions.append(suite); }
   }).observe(actions,{childList:true});
   new ResizeObserver(()=>document.documentElement.style.setProperty('--pied-mentor',$('#mentor').hidden?'0px':$('#mentor').offsetHeight+'px')).observe($('#mentor'));
+  let jaugesPrevues=false;
+  const jauges=()=>{jaugesPrevues=false;document.querySelectorAll('.jauge-feu').forEach(e=>{const niv=e.querySelector('.niv'),val=e.querySelector('.val'),barre=e.querySelector('.barre');if(!niv||!val||!barre)return;const q=parseFloat(niv.style.width);if(!Number.isFinite(q))return;barre.setAttribute('role','meter');barre.setAttribute('aria-label',e.firstElementChild?.textContent||'Jauge');barre.setAttribute('aria-valuemin','0');barre.setAttribute('aria-valuemax','100');barre.setAttribute('aria-valuenow',String(Math.min(100,Math.max(0,q))));barre.setAttribute('aria-valuetext',val.textContent);});const champ=$('#fut-ans');if(champ&&!$('#prevision-badge')){const b=document.createElement('span');b.id='prevision-badge';b.className='prevision-badge';b.textContent='PRÉVISION · ne fait pas vieillir le lot';champ.closest('.dose')?.prepend(b);}};
+  new MutationObserver(()=>{if(!jaugesPrevues){jaugesPrevues=true;requestAnimationFrame(jauges);}}).observe($('#scene'),{childList:true,subtree:true});
 })();
