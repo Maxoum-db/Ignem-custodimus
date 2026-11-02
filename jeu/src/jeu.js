@@ -220,6 +220,7 @@
   });
   function majEntete() {
     $('#entete-niveau').innerHTML = `<b class="ecus-entete">${S.ecus} écus</b><span class="ligne2">${S.bac ? 'bac à sable' : `${S.points} pts`}</span>`;
+    window.Finitions?.ressources({ecus:S.ecus,points:S.points,reputation:S.vente?.rep,bac:S.bac,produits:S.carnet.map(x=>({type:x.type,stockL:x.stockL,lap:x.lapRestant ?? x.coeur?.lap}))});
   }
   function toast(txt) {
     const t = document.createElement('div'); t.className = 'toast'; t.textContent = txt;
