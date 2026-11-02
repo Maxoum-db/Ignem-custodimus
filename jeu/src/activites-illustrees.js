@@ -281,7 +281,7 @@
     },
   });
 
-  for (const nom of ["verre-biere", "verre-edv", "verre-vieilli"])
+  for (const nom of ["verre-biere", "verre-edv", "verre-vieilli", "verre-wash"])
     U.inscrire(nom, {
       w: 64,
       h: 96,

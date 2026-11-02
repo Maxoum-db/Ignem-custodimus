@@ -1,4 +1,4 @@
-// Garde-fou du lot graphique : les vingt-deux raccords de dessin doivent être les
+// Garde-fou du lot graphique : les vingt-quatre raccords de dessin doivent être les
 // seules différences dans le contrôleur historique. Aucun calcul ni événement
 // ne peut être modifié discrètement pendant cette intégration.
 import assert from 'node:assert/strict';
@@ -17,6 +17,6 @@ for (const [nom, hash] of Object.entries(reference)) assert.equal(sha(await fs.r
 const controleur = await fs.readFile(new URL('../src/jeu.js', import.meta.url), 'utf8');
 const lignes = controleur.split('\n');
 const ponts = lignes.filter(l => l.includes('window.AteliersIllustres?.rendre') || l.includes('const teinteFiltration =') || l.includes('window.UniversJeu?.') || l.includes('window.Finitions?.') || l.includes('window.GraphiquesJeu?.'));
-assert.equal(ponts.length, 22, 'Vingt-deux raccords de présentation exclusivement');
+assert.equal(ponts.length, 24, 'Vingt-quatre raccords de présentation exclusivement');
 assert.equal(sha(lignes.filter(l => !ponts.includes(l)).join('\n')), '08c64d760a2518d236920d03bb331c32dec8827e4ac9689c8b1913067b1f270b', 'Le contrôleur hors dessin doit rester identique à la phase 0');
-console.log('✓ cinq moteurs strictement identiques ; seuls les vingt-deux raccords de dessin changent dans jeu.js');
+console.log('✓ cinq moteurs strictement identiques ; seuls les vingt-quatre raccords de dessin changent dans jeu.js');

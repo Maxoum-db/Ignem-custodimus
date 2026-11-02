@@ -1,0 +1,15 @@
+{
+  "errors": [],
+  "ciblesPlan44px": true,
+  "deplacementReel": {
+    "r": 0,
+    "c": 8
+  },
+  "previsionSansVieillissement": true,
+  "satisfaction": {
+    "valeur": 0.15600000000000003,
+    "min": 0,
+    "max": 1
+  },
+  "colonnes": 10
+}

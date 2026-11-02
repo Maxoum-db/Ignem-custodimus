@@ -1,0 +1,1299 @@
+{
+  "viewport": [
+    768,
+    1024
+  ],
+  "captures": [
+    {
+      "etat": "tutoriel-demarrage",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "domaine-nouvelle-partie",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "tutoriel-lise",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "domaine-printemps-jour",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "domaine-printemps-nuit",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "domaine-ete-jour",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "domaine-ete-nuit",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "domaine-automne-jour",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "domaine-automne-nuit",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "domaine-hiver-jour",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "domaine-hiver-nuit",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "menu-entete",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "batiments-construction",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-batiments"
+      ]
+    },
+    {
+      "etat": "batiments-travaux",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-batiments"
+      ]
+    },
+    {
+      "etat": "domaine-travaux",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-domaine"
+      ]
+    },
+    {
+      "etat": "brasserie-composition",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "brasserie-onglet-malts",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "brasserie-onglet-houblons",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "brasserie-onglet-levure",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "brasserie-onglet-eau",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "brasserie-onglet-aromates",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "brasserie-onglet-procede",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "brasserie-onglet-cuve",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "style-detail",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "fenetre-style-vise",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "plan-lise",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "recherche-ingredients",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-recherche"
+      ]
+    },
+    {
+      "etat": "bandeau-mesures",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brasserie"
+      ]
+    },
+    {
+      "etat": "empatage-debut",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-empatage"
+      ]
+    },
+    {
+      "etat": "empatage-cours",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-empatage"
+      ]
+    },
+    {
+      "etat": "empatage-bilan",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-empatage"
+      ]
+    },
+    {
+      "etat": "filtration-debut",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-filtration"
+      ]
+    },
+    {
+      "etat": "filtration-cours",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-filtration"
+      ]
+    },
+    {
+      "etat": "filtration-bilan",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-filtration"
+      ]
+    },
+    {
+      "etat": "ebullition-debut",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-ebullition"
+      ]
+    },
+    {
+      "etat": "ebullition-cours",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-ebullition"
+      ]
+    },
+    {
+      "etat": "ebullition-bilan",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-ebullition"
+      ]
+    },
+    {
+      "etat": "fermentation-debut",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-fermentation"
+      ]
+    },
+    {
+      "etat": "fermentation-cours",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-fermentation"
+      ]
+    },
+    {
+      "etat": "fermentation-bilan",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-fermentation"
+      ]
+    },
+    {
+      "etat": "bouteille-debut",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-bouteille"
+      ]
+    },
+    {
+      "etat": "bouteille-cours",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-bouteille"
+      ]
+    },
+    {
+      "etat": "bouteille-bilan",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-bouteille"
+      ]
+    },
+    {
+      "etat": "jury-biere",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-degustation"
+      ]
+    },
+    {
+      "etat": "jury-fiche",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-degustation"
+      ]
+    },
+    {
+      "etat": "fermentation-dryhop-attente",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-fermentation"
+      ]
+    },
+    {
+      "etat": "fermentation-dryhop-ajout",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-fermentation"
+      ]
+    },
+    {
+      "etat": "fermentation-dryhop-bilan",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-fermentation"
+      ]
+    },
+    {
+      "etat": "ulysse-choix",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-distillerie"
+      ]
+    },
+    {
+      "etat": "brouillis-debut",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brouillis"
+      ]
+    },
+    {
+      "etat": "brouillis-cours",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brouillis"
+      ]
+    },
+    {
+      "etat": "brouillis-bilan",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-brouillis"
+      ]
+    },
+    {
+      "etat": "repasse-expert-debut",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-repasse"
+      ]
+    },
+    {
+      "etat": "repasse-expert-cours",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-repasse"
+      ]
+    },
+    {
+      "etat": "repasse-expert-bilan",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-repasse"
+      ]
+    },
+    {
+      "etat": "aveugle-choix",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-aveugle"
+      ]
+    },
+    {
+      "etat": "aveugle-bilan",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-aveugle"
+      ]
+    },
+    {
+      "etat": "jury-edv",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-degustation"
+      ]
+    },
+    {
+      "etat": "repasse-novice-debut",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-repasse"
+      ]
+    },
+    {
+      "etat": "repasse-novice-cours",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-repasse"
+      ]
+    },
+    {
+      "etat": "repasse-novice-bilan",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-repasse"
+      ]
+    },
+    {
+      "etat": "chai-vue",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-chai"
+      ]
+    },
+    {
+      "etat": "mentor-firmin",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-chai"
+      ]
+    },
+    {
+      "etat": "chai-fut-vide",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-chai"
+      ]
+    },
+    {
+      "etat": "chai-fut-rempli",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-chai"
+      ]
+    },
+    {
+      "etat": "chai-prevision",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-chai"
+      ]
+    },
+    {
+      "etat": "chai-vieilli",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-chai"
+      ]
+    },
+    {
+      "etat": "chai-lot",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-chai"
+      ]
+    },
+    {
+      "etat": "chai-assemblage-choix",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-chai"
+      ]
+    },
+    {
+      "etat": "chai-assemblage-resultat",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-chai"
+      ]
+    },
+    {
+      "etat": "jury-vieilli",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-degustation"
+      ]
+    },
+    {
+      "etat": "pigeonnier-clients",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "pigeonnier-conseil",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "pigeonnier-satisfaction",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "pigeonnier-commande",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "pigeonnier-commande-produits",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "fournisseurs-cereales",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "fournisseurs-houblons",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "fournisseurs-levures",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "fournisseurs-eau",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "fournisseurs-aromates",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "fournisseurs-auxiliaires",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "fournisseurs-futs",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "fournisseurs-grimoire",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-catalogue"
+      ]
+    },
+    {
+      "etat": "batiments-materiel",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-batiments"
+      ]
+    },
+    {
+      "etat": "toast-achat",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-batiments"
+      ]
+    },
+    {
+      "etat": "carnet",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-carnet"
+      ]
+    },
+    {
+      "etat": "carnet-detail-0",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-carnet"
+      ]
+    },
+    {
+      "etat": "carnet-detail-1",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-carnet"
+      ]
+    },
+    {
+      "etat": "carnet-detail-2",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-carnet"
+      ]
+    },
+    {
+      "etat": "carnet-detail-3",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-carnet"
+      ]
+    },
+    {
+      "etat": "fiches",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-fiches"
+      ]
+    },
+    {
+      "etat": "fiche-ouverte",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-fiches"
+      ]
+    },
+    {
+      "etat": "reglages",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-reglages"
+      ]
+    },
+    {
+      "etat": "veillee",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-veillee"
+      ]
+    },
+    {
+      "etat": "lecon-detail",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-veillee"
+      ]
+    },
+    {
+      "etat": "lecon-quiz",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-veillee"
+      ]
+    },
+    {
+      "etat": "lecon-quiz-reponse",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-veillee"
+      ]
+    },
+    {
+      "etat": "veillee-questions",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-veillee"
+      ]
+    },
+    {
+      "etat": "veillee-reponse",
+      "largeur": 768,
+      "scene": 720,
+      "visible": [
+        "ecran-veillee"
+      ]
+    }
+  ],
+  "errors": [],
+  "limites": [
+    "Défrichage : aucune action existante ; terrains libres et travaux capturés."
+  ],
+  "fixtures": "États QA dérivés des sauvegardes main ; aucun compte ou fichier data/ modifié.",
+  "final": {
+    "mode": "expert",
+    "aide": true,
+    "son": false,
+    "gestesExpert": true,
+    "bac": false,
+    "tuto": -1,
+    "tutoD": 5,
+    "points": 681,
+    "succes": {
+      "premier": "2026-11-01T16:26:49.557Z",
+      "goutte": "2026-06-15T12:03:01.020Z",
+      "chauffe": "2026-06-15T12:03:01.020Z",
+      "coeurnet": "2026-06-15T12:03:01.020Z",
+      "compte": "2026-06-15T12:03:11.608Z"
+    },
+    "carnet": [
+      {
+        "id": "mqf5zd6g",
+        "type": "vieilli",
+        "date": "2026-06-15T12:03:11.608Z",
+        "nom": "Eau-de-vie de bière, 1 an de fût · Eau-de-vie de bière · Special Bitter / ESB n° 1",
+        "style": "Eau-de-vie de bière, 1 an de fût",
+        "total": 24,
+        "lignes": {
+          "maturite": 1,
+          "equilibre": 3.5,
+          "complexite": 8,
+          "distillat": 8,
+          "harmonie": 3.5
+        },
+        "medaille": null,
+        "defauts": [
+          "Trop jeune"
+        ],
+        "ebc": 12.306349509568758,
+        "abv": 45,
+        "bouteilles": 49,
+        "volume": 34.54070301224329,
+        "age": 1,
+        "futs": [
+          {
+            "type": "bourbon",
+            "taille": "quartaut",
+            "zone": 1,
+            "ans": 1,
+            "remplissages": 0
+          },
+          {
+            "type": "bourbon",
+            "taille": "quartaut",
+            "zone": 1,
+            "ans": 1,
+            "remplissages": 0
+          }
+        ],
+        "profil": {
+          "fruite": 5.748398927082947,
+          "cereale": 2.27562733086958,
+          "vanille": 2.38573776185539,
+          "coco": 2.2871162083038277,
+          "epice": 0.935638448851566,
+          "vineux": 0,
+          "fume": 0,
+          "rancio": 0
+        },
+        "sources": [
+          "Eau-de-vie de bière · Special Bitter / ESB n° 1"
+        ],
+        "mode": "expert",
+        "bac": false,
+        "gain": 26,
+        "etoiles": {},
+        "brutDeFut": false,
+        "assemblage": 2,
+        "semaine": 89,
+        "stockB": 49
+      },
+      {
+        "id": "mqf5z50c",
+        "type": "edv",
+        "date": "2026-06-15T12:03:01.020Z",
+        "nom": "Eau-de-vie de bière · Special Bitter / ESB n° 1",
+        "style": "Eau-de-vie de bière",
+        "biere": "Special Bitter / ESB n° 1",
+        "total": 41,
+        "lignes": {
+          "aspect": 5,
+          "nez": 11.5,
+          "bouche": 12.5,
+          "finale": 8,
+          "harmonie": 4
+        },
+        "medaille": "argent",
+        "etoiles": {
+          "sansAide": false,
+          "expert": true,
+          "gestes": true
+        },
+        "defauts": [],
+        "coeur": {
+          "V": 11.050597770898309,
+          "lap": 8.132271470895542,
+          "degre": 73.5912358724325
+        },
+        "rendement": 0.16893365597443105,
+        "aveugle": 1,
+        "mode": "expert",
+        "bac": false,
+        "gain": 55,
+        "ebc": 0,
+        "abv": 73.5912358724325,
+        "coupes": [
+          {
+            "recup": 0.09106752849610655,
+            "degre": 72.16494174493755
+          },
+          {
+            "recup": 0.29490978008396285,
+            "degre": 75.6209392970192
+          }
+        ],
+        "incidents": {
+          "moussage": 0,
+          "coupDeFeu": 0
+        },
+        "recyclees": 0,
+        "comp": {
+          "tetes": 0.007049708732129465,
+          "soufre": 0.3118759724094994,
+          "methanol": 0.26318641000923054,
+          "esters": 2.442961022172183,
+          "terpenes": 0.020991147785385595,
+          "fusels": 0.864203641962925,
+          "cereale": 0.7974337463555033,
+          "queues": 0.5255540694669216,
+          "furfural": 0.0893695833645131,
+          "degre": 73.5912358724325
+        },
+        "source": "biere",
+        "fume": 0,
+        "lapRestant": 0,
+        "semaine": 37
+      },
+      {
+        "id": "mvy1lt1x",
+        "type": "biere",
+        "date": "2026-11-01T16:26:49.557Z",
+        "nom": "Special Bitter / ESB n° 1",
+        "style": "Special Bitter / ESB",
+        "sujet": "bitter",
+        "conformite": 0.6282641379724025,
+        "og": 1.0462804,
+        "fg": 1.009603183,
+        "abv": 4.813884731250001,
+        "ibu": 9.6594616177684,
+        "ebc": 5.9752992880387055,
+        "total": 19.5,
+        "lignes": {
+          "aspect": 2,
+          "arome": 6.5,
+          "bouche": 3,
+          "saveur": 5,
+          "impression": 3
+        },
+        "medaille": null,
+        "etoiles": {
+          "sansAide": false,
+          "expert": false,
+          "gestes": false
+        },
+        "defauts": [
+          "Trop gazeuse",
+          "DMS",
+          "Astringence"
+        ],
+        "recette": {
+          "volume": 100,
+          "rendement": 0.75,
+          "malts": [
+            {
+              "id": "malts_base_pilsner_soufflet_bio",
+              "kg": 20
+            }
+          ],
+          "houblons": [
+            {
+              "id": "hops_bittering_magnum",
+              "g": 30,
+              "min": 60
+            }
+          ],
+          "levure": "yeasts_ale_safale_us_05",
+          "eau": "causse",
+          "palier": 66,
+          "ebullition": 60,
+          "fermentation": {
+            "temp": 18,
+            "reposDiacetyle": false
+          },
+          "aromates": [],
+          "sels": {},
+          "auxiliaires": [],
+          "cuisson": false,
+          "destination": "biere",
+          "co2": 2.415138647999999
+        },
+        "mode": "debutant",
+        "bac": false,
+        "gain": 20,
+        "semaine": 35,
+        "stockL": 0,
+        "distillee": true
+      },
+      {
+        "id": "mvy1lt1x-reserve",
+        "type": "biere",
+        "date": "2026-11-01T16:26:49.557Z",
+        "nom": "Special Bitter / ESB n° 1",
+        "style": "Special Bitter / ESB",
+        "sujet": "bitter",
+        "conformite": 0.6282641379724025,
+        "og": 1.0462804,
+        "fg": 1.009603183,
+        "abv": 4.813884731250001,
+        "ibu": 9.6594616177684,
+        "ebc": 5.9752992880387055,
+        "total": 19.5,
+        "lignes": {
+          "aspect": 2,
+          "arome": 6.5,
+          "bouche": 3,
+          "saveur": 5,
+          "impression": 3
+        },
+        "medaille": null,
+        "etoiles": {
+          "sansAide": false,
+          "expert": false,
+          "gestes": false
+        },
+        "defauts": [
+          "Trop gazeuse",
+          "DMS",
+          "Astringence"
+        ],
+        "recette": {
+          "volume": 100,
+          "rendement": 0.75,
+          "malts": [
+            {
+              "id": "malts_base_pilsner_soufflet_bio",
+              "kg": 20
+            }
+          ],
+          "houblons": [
+            {
+              "id": "hops_bittering_magnum",
+              "g": 30,
+              "min": 60
+            }
+          ],
+          "levure": "yeasts_ale_safale_us_05",
+          "eau": "causse",
+          "palier": 66,
+          "ebullition": 60,
+          "fermentation": {
+            "temp": 18,
+            "reposDiacetyle": false
+          },
+          "aromates": [],
+          "sels": {},
+          "auxiliaires": [],
+          "cuisson": false,
+          "destination": "biere",
+          "co2": 2.415138647999999
+        },
+        "mode": "debutant",
+        "bac": false,
+        "gain": 20,
+        "semaine": 35,
+        "stockL": 496
+      }
+    ],
+    "brassins": 2,
+    "recette": {
+      "volume": 1000,
+      "rendement": 0.75,
+      "malts": [
+        {
+          "id": "malts_base_pilsner_soufflet_bio",
+          "kg": 200
+        }
+      ],
+      "houblons": [
+        {
+          "id": "hops_bittering_magnum",
+          "g": 300,
+          "min": 60
+        }
+      ],
+      "levure": "yeasts_ale_safale_us_05",
+      "eau": "causse",
+      "palier": 66,
+      "ebullition": 60,
+      "fermentation": {
+        "temp": 18,
+        "reposDiacetyle": false
+      },
+      "aromates": [],
+      "sels": {},
+      "auxiliaires": [],
+      "cuisson": false,
+      "destination": "biere"
+    },
+    "epaisses": {
+      "V": 6.3397636269360635,
+      "A": 4.6456086967269625,
+      "Q": {
+        "tetes": 53.79538934483393,
+        "soufre": 2.776397434309593,
+        "methanol": 1.3297631475638412,
+        "esters": 7.085106631227864,
+        "terpenes": 0.0287014139172697,
+        "fusels": 2.770083491069517,
+        "cereale": 0.8790208145781597,
+        "queues": 0.6275838190983543,
+        "furfural": 0.11356483385252206
+      }
+    },
+    "reglagesD": {
+      "recycler": true,
+      "feu": "moyenne",
+      "tetesPct": 4,
+      "queuesDegre": 60
+    },
+    "possede": [
+      "clar_whirlfloc",
+      "yeasts_distilling_distilamax_xp",
+      "nutrients_dap"
+    ],
+    "ecus": 2994,
+    "decouvertes": {
+      "clarif": "2026-11-01T16:26:49.559Z",
+      "distil": "2026-06-15T12:03:01.020Z",
+      "jerez": "2026-06-15T12:03:11.608Z"
+    },
+    "quiz": {
+      "jour": "2026-06-15",
+      "faits": 1,
+      "bonnes": 0,
+      "serie": 0
+    },
+    "grimoire": [],
+    "ecole": {
+      "empatage": {
+        "debut": "2026-06-15T12:03:14.384Z"
+      }
+    },
+    "cal": {
+      "s": 89
+    },
+    "vente": {
+      "rep": 47,
+      "clients": [
+        {
+          "id": "89-0",
+          "nom": "M. Lafon",
+          "type": "fromager",
+          "lieu": "la fromagerie de Caussade",
+          "demande": "oktober",
+          "txt": "Une märzen pour notre fête d'octobre.",
+          "qte": 10,
+          "semaine": 89
+        },
+        {
+          "id": "89-1",
+          "nom": "M. Fabre",
+          "type": "chef",
+          "lieu": "l'auberge du château de Caylus",
+          "demande": "fumee",
+          "txt": "Quelque chose de fumé, comme à Bamberg.",
+          "qte": 16,
+          "semaine": 89
+        },
+        {
+          "id": "89-2",
+          "nom": "M. Fabre",
+          "type": "fromager",
+          "lieu": "la fromagerie de Caussade",
+          "demande": "session",
+          "txt": "Quelque chose qu'on peut boire toute la journée des vendanges, très léger.",
+          "qte": 10,
+          "semaine": 89
+        },
+        {
+          "id": "89-3",
+          "nom": "Mme Vidal",
+          "type": "touriste",
+          "lieu": "venu du Québec",
+          "demande": "oktober",
+          "txt": "Une märzen pour notre fête d'octobre.",
+          "qte": 5,
+          "semaine": 89
+        },
+        {
+          "id": "89-4",
+          "nom": "Mme Roques",
+          "type": "particulier",
+          "lieu": "de Montauban",
+          "demande": "oktober",
+          "txt": "Une bière d'Oktoberfest, ambrée et maltée.",
+          "qte": 2,
+          "semaine": 89
+        }
+      ],
+      "commandes": [
+        {
+          "id": "c89",
+          "nom": "Le comité des fêtes de Cayriech",
+          "cat": "biere",
+          "demande": "mariage",
+          "txt": "Pour un mariage : une blonde qui plaise à tout le monde.",
+          "qte": 100,
+          "note": 34,
+          "echeance": 93,
+          "prime": 160,
+          "rep": 6
+        }
+      ],
+      "vendus": 1,
+      "ca": 3
+    },
+    "travaux": [],
+    "equip": {
+      "vanne": true
+    },
+    "vus": {
+      "empatage": true,
+      "filtration": true,
+      "ebullition": true,
+      "fermentation": true,
+      "bouteille": true,
+      "brouillis": true,
+      "repasse": true,
+      "chai": true,
+      "catalogue": true,
+      "veillee": true
+    },
+    "objectifs": {},
+    "bat": {
+      "brasserie": 3,
+      "distillerie": 2,
+      "chai": 2,
+      "pigeonnier": 3
+    },
+    "chai": {
+      "cols": 6,
+      "futs": [
+        {
+          "id": "mqf5zce40kjs",
+          "type": "bourbon",
+          "taille": "quartaut",
+          "rem": 1,
+          "pos": {
+            "r": 1,
+            "c": 0
+          },
+          "contenu": null
+        },
+        {
+          "id": "mqf5zd6g0kjs",
+          "type": "sherry",
+          "taille": "quartaut",
+          "rem": 0,
+          "pos": {
+            "r": 1,
+            "c": 1
+          },
+          "contenu": null
+        }
+      ],
+      "lots": []
+    }
+  },
+  "termine": true
+}
