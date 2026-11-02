@@ -769,7 +769,8 @@ body { background: #100d0b; line-height: 1.5; }
 .charge-v { color: #f0c48b; }
 .charge-l { font-size: 12px; }
 .charge { border-radius: 12px; border: 1px solid #5e4530; box-shadow: none; padding: 9px; }
-.bandeau-mesures { top: 149px; padding-top: 4px; padding-bottom: 7px; box-shadow: none; background: var(--nuit); }
+#ecran-brasserie { padding-top: 0; }
+.bandeau-mesures { top: 0; margin-top: 0; padding-top: 8px; padding-bottom: 7px; box-shadow: none; background: var(--nuit); }
 .bandeau-mesures .mesure { box-shadow: none; border: 1px solid #59412e; border-radius: 9px; padding: 7px 1px 5px; background: #2a2018; }
 .bandeau-mesures .mesure .v { font-size: clamp(16px,4.4vw,23px); font-weight: 750; line-height: 1.2; }
 .bandeau-mesures .mesure .l { font-size: 9px; }
@@ -830,7 +831,6 @@ input[type="range"] { accent-color: #d9935b; }
 .toasts { top: calc(env(safe-area-inset-top, 0px) + 76px); }
 @media (max-width: 359px) {
   .atelier { grid-template-columns: 128px minmax(0,1fr); gap: 12px; }
-  .bandeau-mesures { top: 129px; }
   .geste-titre { font-size: 25px; }
   .geste-infos .v { font-size: 18px; }
   .retour-entete, .btn-entete { min-width: 40px; }
@@ -896,6 +896,7 @@ input[type="range"] { accent-color: #d9935b; }
 
     <!-- Brasserie -->
     <section id="ecran-brasserie" class="ecran" hidden>
+      <div class="bandeau-mesures"><div class="mesures" id="mesures"></div></div>
       <div class="atelier-titre"><span class="atelier-surtitre">Les ateliers du domaine</span><h1>La brasserie</h1><p>Du grain au verre, le goût des gestes justes.</p></div>
       <div class="atelier">
         <div class="cuve-zone" id="cuve-zone">
@@ -904,7 +905,6 @@ input[type="range"] { accent-color: #d9935b; }
         </div>
         <div class="charge" id="charge"></div>
       </div>
-      <div class="bandeau-mesures"><div class="mesures" id="mesures"></div></div>
       <button class="style-ligne" id="style-ligne" aria-expanded="false"></button>
       <div class="style-detail" id="style-detail" hidden></div>
       <button class="btn btn-mini btn-sobre" id="btn-viser">◎ Viser un style : Lise t'aide</button>
@@ -5410,11 +5410,11 @@ input[type="range"] { accent-color: #d9935b; }
         });
       document
         .querySelectorAll(
-          "[data-cat]:not([data-icone]),[data-rcat]:not([data-icone]),[data-onglet]:not([data-icone])",
+          "[data-rcat]:not([data-icone])",
         )
         .forEach((el) => {
           const cle =
-            familles[el.dataset.cat || el.dataset.rcat || el.dataset.onglet];
+            familles[el.dataset.rcat];
           el.dataset.icone = "oui";
           if (cle) {
             el.classList.add("icone-famille");

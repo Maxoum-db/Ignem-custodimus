@@ -1,0 +1,102 @@
+{
+  "errors": [],
+  "checks": [
+    "Bandeau aligné au haut de la scène dès l’entrée et aux quatre positions de scroll, en 320/390/720",
+    "Sept onglets de recette et huit onglets fournisseurs : texte seul, sélections fonctionnelles après rerendu",
+    "Ajout tactile de malt, mesures actualisées et pH ouvrant la vraie fiche",
+    "Grandes illustrations et scènes de travail conservées"
+  ],
+  "positions": [
+    {
+      "largeur": 320,
+      "scroll": 0,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 131.078125
+    },
+    {
+      "largeur": 320,
+      "scroll": 160,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 131.078125
+    },
+    {
+      "largeur": 320,
+      "scroll": 550,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 131.078125
+    },
+    {
+      "largeur": 320,
+      "scroll": 1932,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 131.078125
+    },
+    {
+      "largeur": 390,
+      "scroll": 0,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 132.46875
+    },
+    {
+      "largeur": 390,
+      "scroll": 160,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 132.46875
+    },
+    {
+      "largeur": 390,
+      "scroll": 550,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 132.46875
+    },
+    {
+      "largeur": 390,
+      "scroll": 1649,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 132.46875
+    },
+    {
+      "largeur": 720,
+      "scroll": 0,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 139.484375
+    },
+    {
+      "largeur": 720,
+      "scroll": 160,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 139.484375
+    },
+    {
+      "largeur": 720,
+      "scroll": 550,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 139.484375
+    },
+    {
+      "largeur": 720,
+      "scroll": 1273,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 139.484375
+    },
+    {
+      "largeur": 390,
+      "scroll": 450,
+      "scene_top": 69,
+      "bandeau_top": 69,
+      "bandeau_bottom": 132.46875
+    }
+  ]
+}
