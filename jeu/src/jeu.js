@@ -3005,6 +3005,7 @@
       ${V.commandes.length ? `<h2 class="sous-titre">Commandes spéciales</h2>${V.commandes.map((c) => carteCommande(c, prods)).join('')}` : V.rep < 35 ? '<p class="page-intro">Les commandes spéciales (fêtes, marchés, auberges) arrivent quand le domaine est apprécié.</p>' : ''}
       <h2 class="sous-titre">Ta cave</h2>
       ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<p class="vide">La cave est vide. Chaque brassin y met le volume de ta brasserie ; l\'alambic et le chai ajoutent des bouteilles.</p>'}`;
+    window.Finitions?.satisfaction(derniereVente?.s);
   }
   function carteClient(c, prods) {
     const d = demandeDe(c), t = Vente.TYPES[c.type], ouvert = clientOuvert === c.id;
@@ -3423,6 +3424,7 @@
     px(16, 14, 32, 70, '#9aa1a8'); px(18, 16, 28, 66, '#3b2d22'); px(18, 30, 28, 52, `rgba(${Moteur.couleurRVB(res.ebc).join(',')},.75)`);
     for (let i = 0; i < 14; i++) px(20 + (i * 7) % 24, 32 + (i * 11) % 46, 2, 2, 'rgba(236,223,196,.5)');
     px(18, 26, 28, 4, '#e8dcc0');
+    window.UniversJeu?.rendre('verre-wash',ctx,{p:1,couleur:couleur(res.ebc)},()=>window.UniversJeu?.rendre('verre-wash',ctx,{p:1,couleur:couleur(res.ebc)}));
     $('#verdict').innerHTML = `<span class="style">Wash de distillation · ${esc(res.levure.nom)}</span>
       <span class="total">${nf(fiche.total, fiche.total % 1 ? 1 : 0)}<small>/20</small></span>
       <span class="medaille aucune">Fiche du bouilleur</span>

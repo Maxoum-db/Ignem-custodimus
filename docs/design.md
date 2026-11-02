@@ -37,3 +37,9 @@ Voir `docs/audit-design.md` et `qa/finition/`. `dist/index.html` est toujours le
 Repasse : récupération de l'alcool initial en %, degré en % vol sur l'axe droit, congénères en × seuil de perception sur l'axe logarithmique. Les coupes réelles sont des repères verticaux. Pas de mol ni de masse inventée. Le comparateur de CO₂ lit les valeurs de `maj()` : volumes de CO₂ et g/L ; aucune formule métier dupliquée. Filtration : L et cm instantanés ; SG reste la valeur calculée déjà affichée. Le chai étiquette sa **prévision**, distincte de l'âge réel.
 
 Les jauges HTML portent une valeur sémantique et le texte exact de l'instrument. La normalisation 0–100 représente seulement la longueur de la barre ; aria-valuetext conserve les bar, %, ou autres valeurs réellement affichées. Les pastilles EBC sont un disque à reflet ; leur couleur inline reste celle du moteur.
+
+## Listes et pages (étape 3)
+
+Cartes de chêne foncé, noms 18/22px, détails de lecture 16px, badges 14px. Quantités éditables à 44px de haut ; poignée 44 × 48, glisser/déposer inchangé. Les pages de carnet/chimie/jury sont sur parchemin avec texte encre, tableaux alternés et valeurs tabulaires. Médailles et gouttes de gravité restent fondées sur les notes/gravités existantes. Les formules ne changent pas.
+
+Le client garde son portrait ; sa demande est une bulle, sa satisfaction un `<meter>` à partir du résultat réel. Les niveaux de bâtiments ont un libellé. Le plan de chai garde chaque travée et chaque fût : minimum 44px par case, défilement **interne** si nécessaire, repères Haut/Milieu/Bas et légende des types. Un petit SVG frontal est le composant du plan ; le décor conserve le fût peint. L'horizon de prévision n'est jamais présenté comme un vieillissement acquis.
