@@ -860,3 +860,5 @@ input[type="range"] { accent-color: #d9935b; }
 @media(max-width: 350px) { .ulysse-haut { grid-template-columns: 112px 1fr; } #ulysse { width: 112px; height: 84px; } .lieu span { font-size: 9px; padding: 4px; } }
 .icone-famille { background-repeat: no-repeat; background-size: 24px 24px; background-position: 7px center; padding-left: 36px; }
 .lieu.ouvert span { animation: none; }
+/* Le nom du rucher reste lisible sans masquer les ruches et leurs abeilles. */
+.lieu.ferme span { bottom: -16px; white-space: nowrap; max-width: none; }

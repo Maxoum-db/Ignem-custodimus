@@ -191,3 +191,10 @@ détaille les parcours exécutés et les poses supplémentaires restant à dessi
 [Jouer à la version mobile privée](https://promethee-ignem-custodimus.ivorycow37.chatgpt.site).
 Le HTML autonome réel reste disponible dans `dist/index.html` et dans l'artefact
 GitHub Actions des PR. Aucune PR de ce chantier n'est fusionnée automatiquement.
+
+### Animations fluides
+
+La carte, le rucher et Ulysse bénéficient maintenant de déplacements continus,
+de pauses naturelles, de transitions de feu adoucies et d'effets sans apparition
+brutale. Le mouvement réduit et l'arrêt hors écran restent actifs ; aucun calcul
+ni aucune sauvegarde n'est changé. [Bilan, mesures et vidéo](qa/animations/BILAN.md).

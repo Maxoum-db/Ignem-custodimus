@@ -45,7 +45,7 @@
   function vapeur(c, x, y, temps, force = 1) {
     for (let i = 0; i < 4; i++) {
       const a = (temps * .6 + i / 4) % 1;
-      ligne(c, [[x + i * 7, y - a * 23], [x + i * 7 + 3, y - a * 23 - 5], [x + i * 7, y - a * 23 - 9]], `rgba(255,249,224,${(1 - a) * .65 * force})`, 2.5 + a * 2);
+      ligne(c, [[x + i * 7, y - a * 23], [x + i * 7 + 3, y - a * 23 - 5], [x + i * 7, y - a * 23 - 9]], `rgba(255,249,224,${Math.sin(a * Math.PI) * .65 * force})`, 2.5 + a * 2);
     }
   }
   function flamme(c, x, y, temps, force) {

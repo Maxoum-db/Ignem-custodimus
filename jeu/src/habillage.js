@@ -246,7 +246,8 @@
     h: 88,
     images: ["decor-arbre", "domaine-pigeonnier-batiment", "personnage-lise"],
     requises: ["domaine-pigeonnier-batiment"],
-    discret: true,
+    continu: true,
+    ambiance: true,
     cle: (s) => s.niveau,
     fond(c, im, s) {
       const g = c.createLinearGradient(0, 0, 192, 88);
@@ -301,15 +302,15 @@
     },
     dessin(c, im, s, fx) {
       for (let i = 0; i < 2; i++) {
-        const x = 37 + i * 88,
-          y = 81;
+        const x = 37 + i * 88 + Math.sin(fx.t * 0.45 + i) * 3,
+          y = 81 + Math.sin(fx.t * 3 + i) * 0.12;
         ellipse(c, x, y, 2, 1.4, "#f2edcf", C.trait, 0.25);
         ellipse(c, x + 1.8, y - 1.7, 0.9, 0.9, "#f2edcf");
         ligne(
           c,
           [
             [x - 2, y],
-            [x - 3, y - 1 - fx.frame * 0.12],
+            [x - 3, y - 1 - Math.sin(fx.t * 3 + i) * 0.3],
           ],
           "#ccc2a5",
           0.5,
@@ -322,7 +323,8 @@
     h: 88,
     images: ["decor-arbre", "personnage-lise", "personnage-firmin"],
     requises: ["personnage-lise", "personnage-firmin"],
-    discret: true,
+    continu: true,
+    ambiance: true,
     fond(c, im) {
       const g = c.createLinearGradient(0, 0, 0, 88);
       g.addColorStop(0, "#172638");
@@ -393,12 +395,11 @@
       g.addColorStop(1, "rgba(255,185,70,0)");
       c.fillStyle = g;
       c.fillRect(64, 36, 70, 52);
-      feu(c, 88, 55, 23, 25, fx.frame, 0.9);
+      feu(c, 88, 55, 23, 25, fx.phase, 0.9);
     },
   });
   const panoramas = new Map();
-  let raf = 0,
-    dernier = 0;
+  let raf = 0;
   function peindre(v, t) {
     if (!U.visible(v.cv)) return;
     const ok = U.rendre(
@@ -416,13 +417,12 @@
   }
   function animer(t) {
     raf = 0;
-    if (t - dernier >= 120) {
-      dernier = t;
-      panoramas.forEach((v) => peindre(v, t / 1000));
-    }
+    panoramas.forEach((v) => {
+      if (v.anime) peindre(v, t / 1000);
+    });
     if (
       !U.media.matches &&
-      [...panoramas.values()].some((v) => U.visible(v.cv))
+      [...panoramas.values()].some((v) => v.anime && U.visible(v.cv))
     )
       raf = requestAnimationFrame(animer);
   }
@@ -431,7 +431,7 @@
     if (
       !raf &&
       !U.media.matches &&
-      [...panoramas.values()].some((v) => U.visible(v.cv))
+      [...panoramas.values()].some((v) => v.anime && U.visible(v.cv))
     )
       raf = requestAnimationFrame(animer);
   }
@@ -440,7 +440,7 @@
     const cv = document.getElementById("panorama-" + nom);
     if (!cv) return;
     cv.parentElement.hidden = false;
-    const v = { cv, nom, etat };
+    const v = { cv, nom, etat, anime: nom !== "chai" };
     if (!panoramas.has(cv)) observateur.observe(cv);
     panoramas.set(cv, v);
     reveiller();

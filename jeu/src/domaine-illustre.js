@@ -15,6 +15,8 @@
       feu,
       vapeur,
       fut,
+      trajet,
+      acteur,
     } = U.art;
   const batiments = [
     "domaine-brasserie-1-batiment",
@@ -40,6 +42,107 @@
     "personnage-firmin",
     "f-alambic-vide",
     "f-condenseur",
+  ];
+  // Petites promenades sur les chemins et berges, hors de l'emprise des bâtiments.
+  const promenades = [
+    [
+      "personnage-lise",
+      10,
+      17,
+      [
+        [83, 194],
+        [88, 205],
+        [104, 211],
+        [103, 225],
+      ],
+      17,
+      5,
+      0,
+    ],
+    [
+      "personnage-firmin",
+      12,
+      18,
+      [
+        [114, 238],
+        [126, 236],
+        [124, 232],
+        [122, 226],
+      ],
+      17,
+      6,
+      13,
+    ],
+    [
+      "animal-cheval",
+      18,
+      24,
+      [
+        [42, 103],
+        [45, 100],
+        [56, 109],
+        [64, 107],
+      ],
+      24,
+      7,
+      9,
+    ],
+    [
+      "animal-poule-blanche",
+      7,
+      10,
+      [
+        [83, 189],
+        [88, 194],
+        [91, 201],
+        [100, 207],
+      ],
+      13,
+      4,
+      7,
+    ],
+    [
+      "animal-poule-brune",
+      7,
+      9,
+      [
+        [105, 213],
+        [112, 213],
+        [113, 220],
+        [110, 227],
+      ],
+      15,
+      5,
+      14,
+    ],
+    [
+      "animal-coq",
+      7,
+      10,
+      [
+        [81, 226],
+        [89, 229],
+        [88, 236],
+        [85, 240],
+      ],
+      17,
+      6,
+      11,
+    ],
+    [
+      "animal-chat-noir",
+      8,
+      10,
+      [
+        [63, 235],
+        [77, 243],
+        [81, 224],
+        [96, 216],
+      ],
+      19,
+      9,
+      20,
+    ],
   ];
   const saisons = {
     printemps: {
@@ -402,7 +505,8 @@
     h: 256,
     images,
     requises: batiments,
-    discret: true,
+    continu: true,
+    ambiance: true,
     cle: (s) =>
       [
         s.saison,
@@ -616,6 +720,41 @@
           "#675237",
           0.8,
         );
+        // Retour de façade, planche d'envol, hausses et pieds distincts.
+        polygone(
+          c,
+          [
+            [x + 8, 99 + (i % 2)],
+            [x + 10, 101 + (i % 2)],
+            [x + 10, 110 + (i % 2)],
+            [x + 8, 109 + (i % 2)],
+          ],
+          "#aa8544",
+          C.trait,
+          0.45,
+        );
+        for (const y of [102, 105, 108])
+          ligne(
+            c,
+            [
+              [x + 0.5, y + (i % 2)],
+              [x + 7.5, y + (i % 2)],
+            ],
+            "#ad813d",
+            0.35,
+          );
+        boite(c, x + 1, 109 + (i % 2), 7, 1.3, 0.3, "#bf9454", C.trait, 0.4);
+        for (const dx of [1.5, 6.5])
+          ligne(
+            c,
+            [
+              [x + dx, 111 + (i % 2)],
+              [x + dx, 113 + (i % 2)],
+            ],
+            "#795733",
+            0.7,
+          );
+        ellipse(c, x + 4, 106 + (i % 2), 1.2, 0.55, "#3b2a1e");
       }
       const tr = (nom) => (s.travaux || []).some((t) => t.bat === nom);
       batiment(
@@ -776,45 +915,117 @@
       }
     },
     dessin(c, im, s, fx) {
-      const bob = [0, 0.25, 0.5, 0.25, 0, -0.2][fx.frame];
+      const t = fx.t;
       for (let i = 0; i < 3; i++) {
-        const x = ((i * 76 + fx.frame * 0.6) % 230) - 18,
+        const x = ((i * 83 + t * 0.85) % 252) - 30,
           y = 17 + i * 9;
         ellipse(c, x, y, 14, 3, "#fff7e6");
         ellipse(c, x - 3, y - 3, 6, 4, "#fffaf0");
         ellipse(c, x + 5, y - 2, 7, 3, "#fffaf0");
       }
-      const positions = [
-        ["animal-cheval", 41, 79, 18, 24],
-        ["animal-canard", 10, 79, 7, 9],
-        ["animal-poule-blanche", 80, 179, 7, 10],
-        ["animal-poule-brune", 98, 198, 7, 9],
-        ["animal-coq", 83, 216, 7, 10],
-        ["animal-chat-noir", 61, 220, 8, 10],
-        ["personnage-lise", 89, 177, 10, 17],
-        ["personnage-firmin", 112, 220, 12, 18],
-      ];
-      for (const [cle, x, y, w, h] of positions) {
+      const passants = promenades.map(
+        ([cle, w, h, points, duree, pause, phase]) => ({
+          cle,
+          w,
+          h,
+          phase,
+          ...trajet(t, points, duree, pause, phase),
+        }),
+      );
+      passants
+        .sort((a, b) => a.y - b.y)
+        .forEach((p) =>
+          acteur(
+            c,
+            im[p.cle],
+            p.x,
+            p.y,
+            p.w,
+            p.h,
+            t,
+            fx.reduit ? 0 : p.marche,
+            p.direction,
+            p.phase,
+          ),
+        );
+      const canard = {
+        x: 15 + Math.cos(t * 0.22) * 6,
+        y: 87 + Math.sin(t * 0.22) * 2,
+      };
+      for (let i = 0; i < 3; i++) {
+        const a = (t * 0.4 + i / 3) % 1;
+        c.save();
+        c.globalAlpha = 0.6 * Math.sin(a * Math.PI);
         ellipse(
           c,
-          x + w * 0.5,
-          y + h,
-          w * 0.35,
-          h * 0.045,
-          "rgba(45,35,19,.2)",
+          canard.x,
+          canard.y + 0.4,
+          2 + a * 5,
+          0.7 + a * 1.7,
+          "rgba(255,255,255,0)",
+          "#dce9c4",
+          0.3,
         );
-        contenir(c, im[cle], x, y + bob, w, h);
+        c.restore();
       }
-      for (let i = 0; i < 3; i++)
+      acteur(
+        c,
+        im["animal-canard"],
+        canard.x,
+        canard.y,
+        7,
+        9,
+        t,
+        0,
+        Math.sin(t * 0.22) >= 0 ? -1 : 1,
+      );
+      // Le rucher reste une extension fermée : abeilles uniquement décoratives.
+      if (s.saison !== "hiver" && !s.nuit)
+        for (let i = 0; i < 6; i++) {
+          const angle = t * (0.75 + i * 0.04) + i * 1.7;
+          const x =
+            143 +
+            (i % 4) * 11 +
+            Math.sin(angle) * 5 +
+            Math.sin(angle * 0.5) * 2;
+          const y = 103 + Math.cos(angle * 0.8) * 4;
+          const ailes = 0.3 + Math.abs(Math.sin(t * 25 + i)) * 0.45;
+          ellipse(c, x - 0.45, y - 0.5, 0.6, ailes, "rgba(249,245,210,.7)");
+          ellipse(c, x + 0.45, y - 0.5, 0.6, ailes, "rgba(249,245,210,.7)");
+          ellipse(c, x, y, 0.65, 0.38, "#efc85a", C.trait, 0.25);
+          ligne(
+            c,
+            [
+              [x, y - 0.25],
+              [x, y + 0.25],
+            ],
+            C.trait,
+            0.25,
+          );
+        }
+      if (s.bat.distillerie) {
+        c.save();
+        c.globalAlpha = 0.2 + 0.1 * Math.sin(t * 0.9);
         ligne(
           c,
           [
-            [5 + i * 6, 86 + (i % 2) * 2 + bob],
-            [9 + i * 6, 86 + (i % 2) * 2 + bob],
+            [127, 194],
+            [128, 187],
           ],
-          "rgba(234,247,226,.6)",
+          "#fff1bb",
+          0.65,
+        );
+        ligne(
+          c,
+          [
+            [161, 194],
+            [162, 201],
+          ],
+          "#fff1bb",
           0.5,
         );
+        c.restore();
+      }
       if (s.nuit) {
         c.fillStyle = "rgba(12,22,39,.57)";
         c.fillRect(0, 0, 192, 256);
@@ -838,14 +1049,14 @@
       halo.addColorStop(1, "rgba(255,179,50,0)");
       c.fillStyle = halo;
       c.fillRect(126, 220, 39, 36);
-      feu(c, 138, 231, 14, 12, fx.frame, 0.85);
+      feu(c, 138, 231, 14, 12, fx.phase, 0.85);
       if (!fx.reduit && s.bat.brasserie > 1) vapeur(c, 34, 122, fx.t, 0.28);
       if (!fx.reduit && s.saison === "automne")
         for (let i = 0; i < 5; i++)
           ellipse(
             c,
-            9 + i * 41 + bob * 2,
-            108 + i * 19 + fx.frame * 0.4,
+            9 + i * 41 + Math.sin(t * 0.8 + i) * 3,
+            108 + i * 19 + Math.sin(t * 0.25 + i) * 7,
             0.6,
             0.3,
             "#c18b40",
@@ -856,15 +1067,18 @@
           [67, 87],
           [114, 94],
         ]) {
-          ellipse(c, x - bob, y, 1, 0.45, "#f1cf82");
-          ellipse(c, x + 1 + bob, y - 0.3, 1, 0.5, "#f4dd96");
+          const dx = Math.sin(t * 0.65 + x) * 3,
+            dy = Math.cos(t * 0.9 + x) * 1.5,
+            ailes = 0.3 + Math.abs(Math.sin(t * 7 + x)) * 0.7;
+          ellipse(c, x + dx - ailes, y + dy, ailes, 0.45, "#f1cf82");
+          ellipse(c, x + dx + ailes, y + dy - 0.3, ailes, 0.5, "#f4dd96");
         }
       if (s.saison === "hiver" && !fx.reduit)
         for (let i = 0; i < 11; i++)
           ellipse(
             c,
-            (i * 43 + fx.frame * 0.6) % 192,
-            80 + ((i * 29 + fx.frame * 0.7) % 170),
+            (i * 43 + t * 1.6) % 192,
+            80 + ((i * 29 + t * 2.4) % 170),
             0.45,
             0.6,
             "rgba(255,255,244,.8)",

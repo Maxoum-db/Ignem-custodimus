@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """QA de présentation : vrais écrans, états de test explicitement synthétiques."""
-import json, subprocess
+import argparse, json, subprocess
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parent
-OUT=ROOT/'univers';(OUT/'captures').mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser();parser.add_argument('--sortie',type=Path,default=ROOT/'univers');parser.add_argument('--reference',default='40210bc');opt=parser.parse_args()
+OUT=opt.sortie;(OUT/'captures').mkdir(parents=True,exist_ok=True)
 fixture=json.loads((ROOT/'sauvegardes/legacy-avant-v0.8.json').read_text())
-REFERENCE=subprocess.check_output(['git','show','40210bc:dist/index.html'])
+REFERENCE=subprocess.check_output(['git','show',opt.reference+':dist/index.html'])
 report={'errors':[],'checks':[],'images':{}}
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
