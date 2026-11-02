@@ -243,6 +243,7 @@
     const images=charger(nom,canvas,vue);
     if(!images)return false;
     window.GraphiquesJeu?.atelier(nom,canvas,etat);
+    if(nom==='fil')canvas.setAttribute('aria-label',`Filtration : ${Math.round(etat.V)} L recueillis ; cible ${etat.volumeCible} L ; eau ${etat.niveau.toFixed(1)} cm.`);
     if(!visible(canvas))return true;
     const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2.5);
     const w=Math.max(1,Math.round(rect.width*dpr)),h=Math.max(1,Math.round(w*cfg.h/cfg.w));

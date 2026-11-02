@@ -1443,7 +1443,7 @@
     const ctx = $('#fil-canvas').getContext('2d');
     const teinteFiltration = couleur(Math.max(6, session.recette.malts.length ? Moteur.calculer(session.recette).ebc : 10));
     const dessin = () => {
-      if (window.AteliersIllustres?.rendre('fil', ctx, { ...st, volumeFraction: borne(st.V / (1300 * f), 0, 1), volumeCible:R.volume, facteurAffichage:f, couleur: teinteFiltration }, dessin)) return;
+      if (window.AteliersIllustres?.rendre('fil', ctx, { ...st, volumeFraction: borne(st.V / (1300 * f), 0, 1), volumeCible:FIL.cible, facteurAffichage:f, couleur: teinteFiltration }, dessin)) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve-filtre en coupe : faux fond, lit de drêches, eau au-dessus

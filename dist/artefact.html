@@ -2979,6 +2979,7 @@ input[type=range]::-webkit-slider-thumb { cursor:grab; }
     const images=charger(nom,canvas,vue);
     if(!images)return false;
     window.GraphiquesJeu?.atelier(nom,canvas,etat);
+    if(nom==='fil')canvas.setAttribute('aria-label',`Filtration : ${Math.round(etat.V)} L recueillis ; cible ${etat.volumeCible} L ; eau ${etat.niveau.toFixed(1)} cm.`);
     if(!visible(canvas))return true;
     const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2.5);
     const w=Math.max(1,Math.round(rect.width*dpr)),h=Math.max(1,Math.round(w*cfg.h/cfg.w));
@@ -7291,7 +7292,7 @@ input[type=range]::-webkit-slider-thumb { cursor:grab; }
     const ctx = $('#fil-canvas').getContext('2d');
     const teinteFiltration = couleur(Math.max(6, session.recette.malts.length ? Moteur.calculer(session.recette).ebc : 10));
     const dessin = () => {
-      if (window.AteliersIllustres?.rendre('fil', ctx, { ...st, volumeFraction: borne(st.V / (1300 * f), 0, 1), volumeCible:R.volume, facteurAffichage:f, couleur: teinteFiltration }, dessin)) return;
+      if (window.AteliersIllustres?.rendre('fil', ctx, { ...st, volumeFraction: borne(st.V / (1300 * f), 0, 1), volumeCible:FIL.cible, facteurAffichage:f, couleur: teinteFiltration }, dessin)) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve-filtre en coupe : faux fond, lit de drêches, eau au-dessus

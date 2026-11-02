@@ -15,7 +15,10 @@ with sync_playwright() as p:
  def photo(nom,sel):
   pg.locator(sel).scroll_into_view_if_needed();pg.clock.run_for(32);pg.screenshot(path=str(o.sortie/(nom+'.jpg')),type='jpeg',quality=85,scale='css')
  ferme();click('#lieux [aria-label="Brasserie"]');ferme();click('#btn-lancer');ferme()
- for pre in ['emp','fil','ebu']:click('#'+pre+'-passer');ferme()
+ for pre in ['emp','fil','ebu']:
+  if pre=='fil':
+   photo('filtration-cible-detail','#fil-canvas');assert 'cible 1150 L' in pg.locator('#fil-canvas').get_attribute('aria-label')
+  click('#'+pre+'-passer');ferme()
  click('#fer-go');pg.clock.run_for(14000);ferme();photo('fermentation-courbe-detail','#graphique-fermentation');
  points=pg.locator('#graphique-fermentation polygon').get_attribute('points').split();xy=[tuple(map(float,x.split(','))) for x in points];vertical=any(abs(a[0]-b[0])<.0001 and abs(a[1]-b[1])>1 for a,b in zip(xy,xy[1:]));assert vertical,'Le palier de repos doit rester vertical à J5'
  pg.clock.run_for(5000);click('#fer-suite');ferme();photo('co2-comparatif','#graphique-co2');assert 'g/L' in pg.locator('#graphique-co2').inner_text();click('#bou-go');pg.clock.run_for(2000);click('#bou-suite');ferme();photo('jury-fiche-detail','#fiche-jury')
