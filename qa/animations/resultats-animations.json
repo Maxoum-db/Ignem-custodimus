@@ -1,0 +1,36 @@
+{
+  "errors": [],
+  "checks": [
+    "Peintures réelles avant/après à 390×844 DPR2",
+    "Déplacements, freinage et pauses sans saut de position",
+    "Fondu continu aux six frontières de sprites de feu",
+    "Abeilles décoratives de jour hors hiver",
+    "Pause/reprise sans rattrapage, arrêt hors écran",
+    "Mouvement réduit stable, sauvegarde inchangée",
+    "Vidéo WebM du vrai Canvas du domaine"
+  ],
+  "mesures": {
+    "avant": {
+      "peintures_carte": 10,
+      "fenetre_ms": 1200,
+      "ecart_max_ms": 133.7
+    },
+    "apres": {
+      "peintures_carte": 72,
+      "fenetre_ms": 1200,
+      "ecart_max_ms": 17.1
+    },
+    "cpu_x4_peintures_1200ms": 72,
+    "continuite": {
+      "pas_max_trajet": 0.04001928233817548,
+      "ecart_relatif_frontiere_feu": 0
+    },
+    "abeilles": {
+      "jour": 6,
+      "nuit": 0,
+      "hiver": 0
+    },
+    "veillee_peintures_650ms": 39,
+    "chai_statique_sans_animation": true
+  }
+}

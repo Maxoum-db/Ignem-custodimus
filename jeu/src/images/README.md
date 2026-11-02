@@ -86,9 +86,13 @@ avec `image_gen`, et non simulées par des emplacements vides.
 
 ## Animation et limites
 
-Le feu comporte six images Canvas indépendantes à ancrage constant, espacées de
-120 ms. Les poses au repos des personnages utilisent une séquence discrète de
-six positions. Il ne s'agit pas de six nouvelles poses anatomiques dessinées.
+Le feu conserve six images Canvas indépendantes à ancrage constant, espacées de
+120 ms, avec un fondu entre les images. La carte et les panoramas animés sont
+repeints au rythme de requestAnimationFrame, plafonné à 60 peintures/s. Les
+personnages et animaux suivent des trajectoires courbes avec freinage et pauses ;
+les sprites existants restent les sources, sans prétendre à six nouvelles poses
+anatomiques dessinées. L’horloge décorative se suspend hors écran et ne pilote
+aucun temps de jeu. Les abeilles sont décoratives, actives le jour hors hiver.
 Vapeur, écoulement, reflets et liquides restent procéduraux. Le mouvement réduit
 fige les décorations, pas les mesures nécessaires au déroulement d'un geste.
 Les vues cachées ou hors écran ne sont pas repeintes.

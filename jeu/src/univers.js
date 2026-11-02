@@ -125,7 +125,10 @@
   function gouttes(c, x, y, t, col = C.papier, force = 1) {
     for (let i = 0; i < 3; i++) {
       const a = (t * 2.2 + i / 3) % 1;
+      c.save();
+      c.globalAlpha *= Math.sin(a * Math.PI);
       ellipse(c, x, y + a * 9, 0.6 * force, 1.2 * force, col);
+      c.restore();
     }
   }
   // Six images en mémoire, ancrage constant ; cadence commune de 120 ms.
@@ -150,7 +153,19 @@
   }
   function feu(c, x, y, w, h, frame, force = 1) {
     if (force <= 0) return;
-    image(c, flammes[frame % 6], x, y + h - h * force, w, h * force);
+    // Les six sprites sont conservés ; fondu entre deux images sans saut.
+    const phase = ((frame % 6) + 6) % 6,
+      k = Math.floor(phase),
+      f = phase - k;
+    c.save();
+    const alpha = c.globalAlpha;
+    c.globalAlpha = alpha * (1 - f);
+    image(c, flammes[k], x, y + h - h * force, w, h * force);
+    if (f > 0) {
+      c.globalAlpha = alpha * f;
+      image(c, flammes[(k + 1) % 6], x, y + h - h * force, w, h * force);
+    }
+    c.restore();
   }
   function vapeur(c, x, y, t, force = 1, noire = false) {
     for (let i = 0; i < 4; i++) {
@@ -161,9 +176,52 @@
         y - a * 24,
         2 + a * 3,
         1.5 + a * 2,
-        `rgba(${noire ? "42,34,29" : "255,248,220"},${(1 - a) * force * 0.55})`,
+        `rgba(${noire ? "42,34,29" : "255,248,220"},${Math.sin(a * Math.PI) * force * 0.45})`,
       );
     }
+  }
+  // Parcours décoratif aller/retour sur une Bézier, avec freinage et pauses.
+  // Aucune position de jeu ni sauvegarde n'est écrite par cette animation.
+  function trajet(t, points, duree = 14, pause = 3, decalage = 0) {
+    const cycle = (t + decalage) % (2 * (duree + pause));
+    const retour = cycle >= duree + pause;
+    const local = retour ? cycle - duree - pause : cycle;
+    const q = borne(local / duree),
+      lisse = q * q * (3 - 2 * q);
+    const u = retour ? 1 - lisse : lisse,
+      v = 1 - u;
+    const [a, b, c, d] = points;
+    const x =
+      v * v * v * a[0] +
+      3 * v * v * u * b[0] +
+      3 * v * u * u * c[0] +
+      u * u * u * d[0];
+    const y =
+      v * v * v * a[1] +
+      3 * v * v * u * b[1] +
+      3 * v * u * u * c[1] +
+      u * u * u * d[1];
+    const dx =
+      3 * v * v * (b[0] - a[0]) +
+      6 * v * u * (c[0] - b[0]) +
+      3 * u * u * (d[0] - c[0]);
+    return {
+      x,
+      y,
+      marche: local < duree ? Math.sin(q * Math.PI) : 0,
+      direction: (retour ? -1 : 1) * (dx < 0 ? -1 : 1),
+    };
+  }
+  function acteur(c, img, x, y, w, h, t, marche = 0, direction = 1, phase = 0) {
+    const pas = t * 8 + phase,
+      leve = Math.sin(pas) ** 2 * 0.32 * marche;
+    ellipse(c, x, y, w * 0.32, h * 0.045, "rgba(45,35,19,.19)");
+    c.save();
+    c.translate(x, y - leve);
+    c.rotate(Math.sin(pas) * 0.012 * marche);
+    c.scale(direction, 1);
+    contenir(c, img, -w / 2, -h, w, h);
+    c.restore();
   }
   function fut(c, x, y, w = 12, h = 15) {
     ellipse(
@@ -398,16 +456,33 @@
     vue.redessiner = redessiner;
     const images = charger(nom, vue, canvas);
     if (!images) return false;
-    if (!visible(canvas)) return true;
+    if (!visible(canvas)) {
+      vue.dernierTemps = null;
+      return true;
+    }
     try {
       const rect = canvas.getBoundingClientRect(),
         dpr = Math.min(devicePixelRatio || 1, 2.5),
         w = Math.max(1, Math.round(rect.width * dpr)),
         h = Math.max(1, Math.round((w * cfg.h) / cfg.w));
-      const key = cfg.cle ? cfg.cle(etat) : "",
-        frame = media.matches
-          ? 0
-          : Math.floor(((etat.t || 0) * 1000) / 120) % 6;
+      let temps = media.matches ? 0 : etat.t || 0;
+      if (cfg.ambiance) {
+        if (!media.matches) {
+          const maintenant = performance.now();
+          vue.temps =
+            (vue.temps || 0) +
+            (vue.dernierTemps == null
+              ? 0
+              : Math.min(0.05, (maintenant - vue.dernierTemps) / 1000));
+          vue.dernierTemps = maintenant;
+        } else vue.dernierTemps = null;
+        // Le mouvement réduit fige la promenade à sa position actuelle.
+        temps = vue.temps || 0;
+      }
+      const key = cfg.cle ? cfg.cle(etat) : "";
+      const phase = ((temps * 1000) / 120) % 6,
+        frame = Math.floor(phase);
+      const tick = cfg.continu ? Math.floor(temps * 60) : frame;
       let change = false;
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
@@ -422,7 +497,12 @@
       }
       canvas.classList.add("canvas-illustre");
       canvas.dataset.univers = nom;
-      if (cfg.discret && vue.frame === frame && !change && vue.peint)
+      if (
+        (cfg.continu || cfg.discret) &&
+        vue.tick === tick &&
+        !change &&
+        vue.peint
+      )
         return true;
       if (!vue.fond) {
         const fond = document.createElement("canvas");
@@ -442,11 +522,13 @@
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
       cfg.dessin(ctx, images, etat, {
-        t: media.matches ? 0 : etat.t || 0,
+        t: temps,
         frame,
+        phase,
         reduit: media.matches,
       });
       vue.frame = frame;
+      vue.tick = tick;
       vue.peint = true;
       return true;
     } catch (e) {
@@ -474,7 +556,13 @@
     },
     { passive: true },
   );
-  document.addEventListener("visibilitychange", repeindre);
+  document.addEventListener("visibilitychange", () => {
+    document.querySelectorAll("canvas[data-univers]").forEach((cv) => {
+      const v = vues.get(cv);
+      if (v) v.dernierTemps = null;
+    });
+    repeindre();
+  });
   document.addEventListener("scroll", repeindre, {
     capture: true,
     passive: true,
@@ -509,6 +597,8 @@
       gouttes,
       feu,
       vapeur,
+      trajet,
+      acteur,
       fut,
       verre,
     }),

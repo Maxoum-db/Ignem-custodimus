@@ -59,7 +59,30 @@
     const force =
       borne(s.feu?.flamme ?? s.force ?? 0, 0, 1.35) *
       (s.evenement === "humide" ? 0.4 : 1);
-    feu(c, 60, 77, 20, 12, fx.frame, force);
+    feu(c, 60, 77, 20, 12, fx.phase, force);
+    // Reflets décoratifs discrets ; les jauges continuent de lire le moteur.
+    c.save();
+    c.globalAlpha = 0.22 + 0.1 * Math.sin(fx.t * 0.8);
+    ligne(
+      c,
+      [
+        [38, 56],
+        [37, 61],
+        [38, 66],
+      ],
+      "#fff2bf",
+      0.9,
+    );
+    ligne(
+      c,
+      [
+        [120, 62],
+        [120, 80],
+      ],
+      "#fff2bf",
+      0.65,
+    );
+    c.restore();
     if (s.feu?.buches)
       for (let i = 0; i < Math.min(4, s.feu.buches.length); i++)
         ligne(
