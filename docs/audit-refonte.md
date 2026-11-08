@@ -38,3 +38,11 @@ Aucun test complet des parcours brassage, distillation, vieillissement et vente 
 Le lot 0 reste ouvert jusqu'à validation mobile et des sauvegardes. Les lots graphiques 1 à 6 ne sont pas terminés.
 Conserver les visuels actuels tant que leurs remplaçants ne sont pas intégrés et contrôlés. Brancher les scènes sur leurs états réels, avec rendu haute densité, puis tester chaque geste et fournir des captures avant/après.
 Aucune fusion main, publication ou modification des règles métier.
+
+## Vérification GitHub Actions effectuée
+
+Run 42516008684, commit 97fcf868f1cf9b11d19598cc9d4948fd9d2612f5 : build, six suites et test mobile Playwright réussis sur Ubuntu 24.04. Captures domaine/options à 390 × 844 produites et inspectées. Le rendu est encore celui du jeu original, sans refonte artistique.
+
+Le contrôle mobile valide le démarrage sans les polices réseau, la largeur de page, le chargement d'une fixture ancienne minimale, les points/brassins conservés et la navigation vers les options sans exception JavaScript. Il ne valide pas les parcours complets ni la reprise des gestes.
+
+Artefact HTML et captures : https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/42516008684/artifacts/13631251902
