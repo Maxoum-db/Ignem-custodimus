@@ -1,10 +1,5 @@
 <title>Ignem custodimus</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&family=VT323&display=swap">
-<!-- Texte : Comic Neue, l'équivalent libre et lisse de Comic Sans MS (absente des téléphones Android) -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap">
 <style>/* Un seul monde visuel, assumé : la brasserie la nuit, à la lueur du feu.
    Pierre calcaire du Quercy, cuivre de l'alambic, braise, houblon.
    Mise en page : une app plein écran, en-tête fixe, scène qui défile, mentor en bas. */
@@ -726,15 +721,56 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
 
 .geste:has(.atelier-illustre) .mesure .l { white-space: normal; overflow: visible; line-height: 1.25; }
 .geste:has(.atelier-illustre) .mesure .v { font-family: system-ui, sans-serif; font-size: clamp(17px, 5vw, 23px); font-weight: 650; }
+
+/* Interface artisanale : polices locales lisses, panneaux et commandes tactiles. */
+:root { --f-titre: ui-rounded, system-ui, sans-serif; --f-texte: system-ui, sans-serif; --f-chiffre: system-ui, sans-serif; --relief: inset 0 1px 0 #ffffff18, 0 3px 8px #0002; --cadre: 0 0 0 1px #725238; --cendre: #c3b39b; }
+.entete { background: linear-gradient(120deg,#38291e,#241d17); border-bottom:1px solid #745233; box-shadow:0 4px 18px #0003; }
+.btn,.onglet,.filtre,.btn-entete,.retour-entete,.entete-nav button { border-radius:12px; min-height:44px; }
+.btn-entete,.retour-entete { min-width:44px; }
+.btn { border:1px solid #ffffff15; }
+.btn:active:not(:disabled) { transform:translateY(1px); box-shadow:inset 0 2px 4px #0003; }
+.btn-feu { background:linear-gradient(#e6a363,#ce7d3b); color:#2b1b10; }
+.entete-nav { border-radius:16px; border:1px solid #b48551; box-shadow:0 10px 30px #0006; }
+.page-titre,.geste-titre { font-size:26px; font-weight:800; letter-spacing:-.03em; }
+.sous-titre { font-size:18px; letter-spacing:0; }
+.groupe-titre,.fiche-jury h3,.mentor-nom,.fut-tete h3,.nom-legal { font-size:14px; }
+.mesure,.style-ligne,.style-detail,.conseil,.charge,.reglage,.fiche,.ingredient { border-radius:12px; }
+.mesure .v { font-size:clamp(16px,4.6vw,23px); font-weight:700; line-height:1.2; }
+.onglet { font-size:12px; padding:8px 3px; }
+.onglet[aria-selected="true"] { background:#f0d9ac; box-shadow:0 2px 8px #0003; }
+.filtre { border-radius:24px; padding:8px 12px; }
+input[type="search"],input[type="text"],select { border-radius:12px; }
+.recette-entete span { color:#dba365; font-size:11px; letter-spacing:.13em; font-weight:750; }
+.recette-entete h1 { margin:4px 0; font-size:28px; letter-spacing:-.04em; line-height:1.15; }
+.recette-entete p { margin:6px 0 2px; color:var(--cendre); font-size:13px; }
+#ecran-brasserie .atelier { grid-template-columns:1fr; gap:0; border-radius:18px; overflow:hidden; border:1px solid #a67a48; background:#30241a; }
+#ecran-brasserie .cuve-zone { border-radius:0; box-shadow:none; }
+#cuve.atelier-illustre { width:100%; height:auto; }
+.cuve-aide { bottom:8px; left:20%; right:20%; border-radius:20px; background:#2f241ddd; color:#f6e6c5; padding:4px; font-size:11px; }
+#ecran-brasserie .charge { box-shadow:none; border-radius:0; padding:12px 16px; background:#34271d; }
+.charge-v { font-size:26px; font-weight:750; line-height:1.2; }
+.bandeau-mesures { border-radius:12px; }
+.barre-brassin { border-top:1px solid #745233; }
+.jauge,.jauge i { border-radius:5px; }
+@media(prefers-reduced-motion:reduce) { #scene { scroll-behavior:auto; } }
+
+.poignee img,.marque img { image-rendering:auto; }
+.carte-ing { border-radius:14px; border:1px solid #725238; box-shadow:0 3px 10px #0002; }
+.bandeau-mesures .mesure .v { font-size:clamp(12px,3.6vw,19px); font-weight:750; }
+.bandeau-mesures .mesure { padding:8px 2px; box-shadow:none; border:1px solid #634931; border-radius:9px; }
+#glisse img { image-rendering:auto; }
+body:has(#glisse:not([hidden])) #cuve-zone { position:fixed; right:max(18px,env(safe-area-inset-right)); top:calc(76px + env(safe-area-inset-top,0px)); width:152px; z-index:40; border:2px solid #e8b260; border-radius:14px; box-shadow:0 8px 25px #0007; }
+body:has(#glisse:not([hidden])) .cuve-aide { left:4px; right:4px; font-size:10px; bottom:3px; }
+html,body { margin:0; }
 </style>
 
 <div id="app">
   <header class="entete">
-    <button class="retour-entete" id="retour-entete" data-retour aria-label="Retour"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M5 1h2v1H6v1H5v1H4v1h7v2H4v1h1v1h1v1h1v1H5v-1H4V9H3V8H2V7H1V5h1V4h1V3h1V2h1z"/></svg><span class="retour-txt"></span></button>
+    <button class="retour-entete" id="retour-entete" data-retour aria-label="Retour"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5l-7 7 7 7M7 12h14"/></svg><span class="retour-txt"></span></button>
     <button class="marque" data-aller="domaine" aria-label="Retour au domaine"><img id="marque-feu" class="sprite" alt="" width="16" height="20"></button>
     <div class="entete-niveau" id="entete-niveau"></div>
-    <button data-aller="recherche" class="btn-entete btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 0h4v1H3zM2 1h1v1H2zM7 1h1v1H7zM1 2h1v4H1zM8 2h1v4H8zM2 6h1v1H2zM7 6h1v1H7zM3 7h4v1H3zM8 7h1v1H8zM9 8h1v1H9zM10 9h1v1h-1zM11 10h1v2h-1zM10 11h1v1h-1z"/></svg></button>
-    <button class="btn-entete" id="btn-menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M1 2h10v2H1zM1 5h10v2H1zM1 8h10v2H1z"/></svg></button>
+    <button data-aller="recherche" class="btn-entete btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/></svg></button>
+    <button class="btn-entete" id="btn-menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     <nav class="entete-nav" id="menu-entete" aria-label="Menu" hidden>
       <button data-aller="domaine">Domaine</button>
       <button data-aller="carnet">Carnet de brassage</button>
@@ -757,6 +793,7 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
 
     <!-- Brasserie -->
     <section id="ecran-brasserie" class="ecran" hidden>
+      <div class="recette-entete"><span>LE DOMAINE · BRASSERIE</span><h1>Composer votre bière</h1><p>Choisissez vos ingrédients, puis lancez le brassin.</p></div>
       <div class="atelier">
         <div class="cuve-zone" id="cuve-zone">
           <canvas id="cuve" width="120" height="96" aria-label="Cuve de brassage"></canvas>
@@ -2698,7 +2735,19 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
     }
     text(c,`${Math.round(clamp(s.fill)*100)} %`,112,373,19,ink,'center');
   }
-  const painters={emp:mash,fil:filter,ebu:boil,fer:ferment,bou:bottling};
+  function recipe(c,s){
+    // Charge de grain indicative, calculée par le contrôleur ; aucune chauffe avant le geste.
+    sack(c,105,318);sack(c,175,341);
+    kettle(c,288,186,260,210,{level:s.level,color:s.color});
+    ellipse(c,417,188,112,16,s.level>0?'#d5b578':'#49392c',null);
+    if(s.level>0)for(let i=0;i<48;i++){const x=317+(i*47)%196,y=184+Math.sin(i*2.4)*10;ellipse(c,x,y,3,1.5,i%3?'#ead09a':'#ac793f',null,1)}
+    pipe(c,'M549 349H592V384');valve(c,574,349,0);
+    path(c,'M329 154L383 285',null,'#765132',10);path(c,'M375 263l-10 21 19 20 15 -25Z','#bb8950');
+    box(c,602,338,106,18,'#997044',5);pipe(c,'M615 356V415M695 356V415',false,8);
+    for(let i=0;i<Math.min(4,s.hops);i++)hops(c,620+i*23,322,.8);
+    if(s.yeast){box(c,640,267,43,58,'#eee0b9',5);path(c,'M647 280h29M647 286h29',null,'#739251',4);ellipse(c,661,308,7,7,'#b68742',null)}
+  }
+  const painters={recette:recipe,emp:mash,fil:filter,ebu:boil,fer:ferment,bou:bottling};
   function render(ctx,name,state){
     if(!ctx||!painters[name])return false;
     const cv=ctx.canvas,width=cv.getBoundingClientRect().width||360,dpr=Math.min(devicePixelRatio||1,3),height=width*H/W;
@@ -2891,6 +2940,16 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
     '..sssssssssss...', '..sssssnsssss...', '..smmmmmmmmms...', '...sssssssss....', '....ssssss......', '..vvvvccvvvv....',
     '.vvvvvccvvvvv...', '.vvvvvvvvvvvv...', '.vvvvvvvvvvvv...', '.vvvvvvvvvvvv...'],
     { b: '#2a2a3a', g: '#c9c2b4', s: '#d9a07a', E: '#2a1a10', n: '#b9785a', m: '#ecdfc4', c: '#d27b3e', v: '#5a4632' }, 3);
+  // Petites illustrations vectorielles originales, également utilisées pendant le glisser-déposer.
+  const iconeAtelier = (corps) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72"><g stroke="#3b2a1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${corps}</g></svg>`);
+  Object.assign(SPR, {
+    sac: iconeAtelier('<path d="M19 9q13 6 26 0l-4 13q17 25 10 40q-19 11 -39 0q-7 -15 11 -40Z" fill="#d7b477"/><path d="M22 21q10 5 20 0M17 51q15 8 31 0" fill="none" stroke="#a77948"/><path d="M32 53V30m0 10l-7 -5m7 12l7 -5" fill="none"/><path d="M18 34q-6 15 -3 22" fill="none" stroke="#f5dfab"/>'),
+    cone: iconeAtelier('<path d="M32 6q-21 8 -23 29q-2 20 23 31q25 -11 23 -31Q53 14 32 6Z" fill="#9cc94a"/><path d="M32 11v49M32 24l-12 -6m12 19l-18 -9m18 22l-17 -9m17 -17l12 -6m-12 19l18 -9m-18 22l17 -9" fill="none" stroke="#587332"/>'),
+    sachet: iconeAtelier('<path d="M12 8h40l-2 56H14Z" fill="#f0dfb5"/><path d="M14 12h36M14 60h36" stroke="#a78250"/><path d="M14 21h36v29H14Z" fill="#708d68"/><ellipse cx="32" cy="35" rx="9" ry="11" fill="#f3ce73"/><path d="M29 32l6 7" fill="none"/>'),
+    goutte: iconeAtelier('<path d="M32 5C26 19 10 31 10 46a22 22 0 0 0 44 0C54 31 38 19 32 5Z" fill="#81bcd0"/><path d="M20 36q-7 13 2 20" fill="none" stroke="#e8f4e7" stroke-width="5"/>'),
+    bocal: iconeAtelier('<rect x="13" y="18" width="38" height="46" rx="10" fill="#9cbbb0"/><rect x="16" y="8" width="32" height="12" rx="3" fill="#ad7749"/><path d="M17 42q15 -7 30 0v16H17Z" fill="#b66c3e"/><rect x="20" y="28" width="24" height="20" rx="3" fill="#f2deac"/><path d="M32 43V33m0 5l6 -4m-6 6l-5 -3" fill="none"/>'),
+    feu: iconeAtelier('<path d="M34 4q4 20 15 27q12 10 7 25q-8 16 -26 12Q8 67 7 49q-1 -12 12 -25q-2 17 7 17Q38 30 34 4Z" fill="#d97643"/><path d="M33 32q-2 13 -11 20q-6 13 10 15q19 -1 13 -15q-9 -8 -12 -20Z" fill="#ffd47b"/>')
+  });
   $('#marque-feu').src = SPR.feu;
   $('#mentor-portrait').src = SPR.lise;
   const couleur = (ebc) => `rgb(${Moteur.couleurRVB(ebc).join(',')})`;
@@ -3748,6 +3807,7 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
       { v: r.aDesMalts ? nf(r.ph, 2) : '—', l: 'pH', f: 'eau', c: r.aDesMalts ? etat(r.ph >= 5.2 && r.ph <= 5.6, r.ph > 5.78 || r.ph < 5.15) : '' },
     ];
     rendreCharge(r);
+    if(reduit && ecran === 'brasserie') dessinerCuve(0);
     $('#mesures').innerHTML = m.map((x) => `<button class="mesure ${x.c}" data-fiche="${x.f}"><span class="v">${x.v}</span><span class="l">${x.l}</span></button>`).join('');
     const ligne = $('#style-ligne');
     if (r.wash && r.aDesMalts && r.levure) {
@@ -3941,6 +4001,7 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
   let splash = 0, animCuve = null;
   function dessinerCuve(t) {
     const c = $('#cuve').getContext('2d'), W = 120, H = 96, r = dernierCalc;
+    if(window.AteliersJeu?.render(c,'recette',{level:borne((r?.kgTotal||0)/(260*fv()),0,1),color:couleur(r?.ebc||0),hops:R.houblons.length,yeast:!!R.levure})) return;
     const px = (x, y, w, h, col) => { c.fillStyle = col; c.fillRect(Math.round(x), Math.round(y), w, h); };
     px(0, 0, W, H, '#221912');
     for (let y = 6; y < H; y += 10) for (let x = (y % 20 === 6 ? 0 : 10); x < W; x += 20) px(x, y, 16, 1, '#2c2118');
@@ -4605,7 +4666,7 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
     const anneaux = [0.25, 0.5, 0.75, 1].map((f) => `<polygon points="${axes.map((_, k) => pt(k, f).join(',')).join(' ')}" fill="none" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const rayons = axes.map((_, k) => `<line x1="${C}" y1="${C}" x2="${pt(k, 1)[0]}" y2="${pt(k, 1)[1]}" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const poly = axes.map(([cle], k) => pt(k, res.profil[cle] / 10).join(',')).join(' ');
-    const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="Pixelify Sans, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(res.profil[cle], 0)}</text>`; }).join('');
+    const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="system-ui, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(res.profil[cle], 0)}</text>`; }).join('');
     $('#radar').innerHTML = `<svg viewBox="0 0 220 220" role="img" aria-label="Profil aromatique">${anneaux}${rayons}<polygon class="poly" points="${poly}" fill="rgba(243,176,74,.35)" stroke="var(--braise)" stroke-width="2"/>${libs}</svg>`;
 
     // Fiche de jury
@@ -5163,7 +5224,7 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
     const anneaux = [0.25, 0.5, 0.75, 1].map((f) => `<polygon points="${axes.map((_, k) => pt(k, f).join(',')).join(' ')}" fill="none" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const rayons = axes.map((_, k) => `<line x1="${C}" y1="${C}" x2="${pt(k, 1)[0]}" y2="${pt(k, 1)[1]}" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const poly = axes.map(([cle], k) => pt(k, Math.max(0.04, profil[cle] / 10)).join(',')).join(' ');
-    const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="Pixelify Sans, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(profil[cle], 0)}</text>`; }).join('');
+    const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="system-ui, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(profil[cle], 0)}</text>`; }).join('');
     return `<svg viewBox="0 0 220 220" role="img" aria-label="Profil aromatique">${anneaux}${rayons}<polygon class="poly" points="${poly}" fill="rgba(243,176,74,.35)" stroke="var(--braise)" stroke-width="2"/>${libs}</svg>`;
   }
 

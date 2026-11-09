@@ -11,7 +11,7 @@ const nav=async(n)=>{await page.locator('.marque').click();await page.locator('#
 try{
 await page.goto(`http://127.0.0.1:${server.address().port}`);
 await page.evaluate(()=>localStorage.setItem('ignem.v1',JSON.stringify({mode:'expert',gestesExpert:true,aide:false,son:false,tuto:-1,tutoD:-1,points:150,brassins:2,carnet:[],grimoire:[],ecole:{},succes:{},ecus:500})));
-await page.reload();await nav('brasserie');await page.locator('#tab-malts').click();await page.locator('#recherche').fill('Pilsner Soufflet Bio');for(let i=0;i<8;i++)await page.locator('[data-ajouter="malt"]').click();
+await page.reload();await nav('brasserie');await snap('recette-vide');await page.locator('#tab-malts').click();await page.locator('#recherche').fill('Pilsner Soufflet Bio');for(let i=0;i<8;i++)await page.locator('[data-ajouter="malt"]').click();
 await page.locator('#tab-houblons').click();await page.locator('#recherche').fill('Saaz');await page.locator('[data-ajouter="houblon"]').first().click();
 await page.locator('#tab-levure').click();await page.locator('#recherche').fill('Safale US-05');await page.locator('[data-ajouter="levure"]').click();
 let s=await save();assert.ok(s.recette.malts.length);assert.ok(s.recette.levure);await page.reload();await nav('brasserie');await snap('recette');await page.locator('#btn-lancer').click();await snap('empatage');if(process.env.GESTES_REELS==='1') {

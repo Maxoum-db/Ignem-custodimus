@@ -164,7 +164,19 @@
     }
     text(c,`${Math.round(clamp(s.fill)*100)} %`,112,373,19,ink,'center');
   }
-  const painters={emp:mash,fil:filter,ebu:boil,fer:ferment,bou:bottling};
+  function recipe(c,s){
+    // Charge de grain indicative, calculée par le contrôleur ; aucune chauffe avant le geste.
+    sack(c,105,318);sack(c,175,341);
+    kettle(c,288,186,260,210,{level:s.level,color:s.color});
+    ellipse(c,417,188,112,16,s.level>0?'#d5b578':'#49392c',null);
+    if(s.level>0)for(let i=0;i<48;i++){const x=317+(i*47)%196,y=184+Math.sin(i*2.4)*10;ellipse(c,x,y,3,1.5,i%3?'#ead09a':'#ac793f',null,1)}
+    pipe(c,'M549 349H592V384');valve(c,574,349,0);
+    path(c,'M329 154L383 285',null,'#765132',10);path(c,'M375 263l-10 21 19 20 15 -25Z','#bb8950');
+    box(c,602,338,106,18,'#997044',5);pipe(c,'M615 356V415M695 356V415',false,8);
+    for(let i=0;i<Math.min(4,s.hops);i++)hops(c,620+i*23,322,.8);
+    if(s.yeast){box(c,640,267,43,58,'#eee0b9',5);path(c,'M647 280h29M647 286h29',null,'#739251',4);ellipse(c,661,308,7,7,'#b68742',null)}
+  }
+  const painters={recette:recipe,emp:mash,fil:filter,ebu:boil,fer:ferment,bou:bottling};
   function render(ctx,name,state){
     if(!ctx||!painters[name])return false;
     const cv=ctx.canvas,width=cv.getBoundingClientRect().width||360,dpr=Math.min(devicePixelRatio||1,3),height=width*H/W;
