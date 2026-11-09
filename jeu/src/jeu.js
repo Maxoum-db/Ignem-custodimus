@@ -188,6 +188,7 @@
     feu: iconeAtelier('<path d="M34 4q4 20 15 27q12 10 7 25q-8 16 -26 12Q8 67 7 49q-1 -12 12 -25q-2 17 7 17Q38 30 34 4Z" fill="#d97643"/><path d="M33 32q-2 13 -11 20q-6 13 10 15q19 -1 13 -15q-9 -8 -12 -20Z" fill="#ffd47b"/>')
   });
   $('#marque-feu').src = SPR.feu;
+  if(window.IMAGES_JEU?.['lise-portrait']) SPR.lise=window.IMAGES_JEU['lise-portrait'];
   $('#mentor-portrait').src = SPR.lise;
   const couleur = (ebc) => `rgb(${Moteur.couleurRVB(ebc).join(',')})`;
 

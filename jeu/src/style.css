@@ -763,3 +763,5 @@ html,body { margin:0; }
 
 #ulysse.atelier-illustre { width:100%; height:auto; border-radius:16px; border:1px solid #a67a48; }
 .ulysse-haut:has(.atelier-illustre) { grid-template-columns:1fr; }
+
+#mentor-portrait,.plan-tete img { image-rendering:auto; object-fit:contain; }
