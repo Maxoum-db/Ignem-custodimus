@@ -49,7 +49,15 @@
   let R = S.recette = normaliser(S.recette);
   { const vol = [0, 100, 500, 1000][S.bat.brasserie] || 1000; if (R.volume !== vol) { const f = vol / (R.volume || 1000); R.malts.forEach((l) => { l.kg = Math.round(l.kg * f * 2) / 2; }); R.houblons.forEach((l) => { l.g = Math.round(l.g * f / 10) * 10; }); (R.aromates || []).forEach((l) => { l.g = Math.round(l.g * f / 10) * 10; }); R.volume = vol; } }
   let minuterieSauve = null;
-  function sauver() { clearTimeout(minuterieSauve); minuterieSauve = setTimeout(() => { try { S.recette = R; localStorage.setItem(CLE, JSON.stringify(S)); } catch (e) { /* stockage indisponible */ } }, 250); }
+  function sauverMaintenant() {
+    if (minuterieSauve == null) return;
+    clearTimeout(minuterieSauve); minuterieSauve = null;
+    try { S.recette = R; localStorage.setItem(CLE, JSON.stringify(S)); } catch (e) { /* stockage indisponible */ }
+  }
+  function sauver() { clearTimeout(minuterieSauve); minuterieSauve = setTimeout(sauverMaintenant, 250); }
+  // Terminer une écriture en attente lorsque le téléphone masque ou quitte la page.
+  window.addEventListener('pagehide', sauverMaintenant);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) sauverMaintenant(); });
 
   // =====================================================================
   // Progression
@@ -1325,6 +1333,7 @@
     const enzyme = (T) => T < 60 ? ['β', 'au ralenti'] : T < 65 ? ['β', 'maltose'] : T < 68 ? ['α + β', 'équilibre'] : T < 72.5 ? ['α', 'dextrines'] : ['—', 'dénaturées'];
     const ctx = $('#emp-canvas').getContext('2d');
     const dessin = () => {
+      if (window.AteliersJeu?.render(ctx, 'emp', { ...st, target: cible, prediction: S.aide && st.t > 0 ? prevoirVapeur(st) : null, volume: session.recette.volume, capacity: session.recette.volume / .8 })) return;
       const px = (x, y, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve-matière et sa double enveloppe (rougit avec la chaleur stockée)
@@ -1437,6 +1446,7 @@
     maintenir(bR, () => { st.rince = true; }, () => { st.rince = false; });
     const ctx = $('#fil-canvas').getContext('2d');
     const dessin = () => {
+      if (window.AteliersJeu?.render(ctx, 'fil', { ...st, capacity: 1300 * f, color: couleur(Moteur.calculer(session.recette).ebc) })) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve-filtre en coupe : faux fond, lit de drêches, eau au-dessus
@@ -1527,6 +1537,7 @@
     const ctx = $('#bou-canvas').getContext('2d');
     let anim = null;
     const dessin = (rempli, eclats) => {
+      if (window.AteliersJeu?.render(ctx, 'bou', { fill: rempli ?? 1, broken: eclats, co2: +champ.value / Moteur.G_SUCRE_PAR_VOLUME + resid, color: couleur(res.ebc) })) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 112, '#221912'); px(0, 96, 192, 16, '#3b2d22');
       for (let i = 0; i < 8; i++) {
@@ -1591,6 +1602,7 @@
     const ctx = $('#ebu-canvas').getContext('2d');
     const teinteMout = couleur(Moteur.calculer(rec).ebc);
     const dessin = () => {
+      if (window.AteliersJeu) { st.chutes = st.chutes.filter(c => c.y < 34); st.chutes.forEach(c => { c.y += 1.6; }); if (window.AteliersJeu.render(ctx, 'ebu', { ...st, heat: st.t > 0 ? 1 : st.montee ? st.chauffe : 0, color: teinteMout, volume: rec.volume, capacity: rec.volume / .8 })) return; }
       const px = (x, y, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 112, '#221912');
       px(40, 34, 112, 70, '#d27b3e'); px(40, 34, 6, 70, '#f0a060'); px(146, 34, 6, 70, '#8a4a22');
@@ -1683,6 +1695,7 @@
     const phase = (j) => j < 1 ? 'Latence' : j < 3.2 ? 'Tumultueuse' : j < 5 ? 'Atténuation' : 'Maturation';
     const ctx = $('#fer-canvas').getContext('2d');
     const dessin = () => {
+      if (window.AteliersJeu?.render(ctx, 'fer', { ...st, G, target: consigne, rest: repos, color: couleur(r0.ebc), dhDays: rec.dhJours, dhWindows: [[1.5,3.2,-2,1],[4.2,6,-1,2]].filter(x => rec.houblons.some(h => h.min === x[2])).map(x => [x[0],x[1],x[3]]) })) return;
       const px = (x, yy, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(yy), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve cylindro-conique
@@ -3694,3 +3707,4 @@
   majEntete();
   aller('domaine');
 })();
+

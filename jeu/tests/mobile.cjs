@@ -33,6 +33,15 @@ const assert = require('node:assert/strict');
   await page.locator('#menu-entete [data-aller="reglages"]').click();
   await page.locator('#ecran-reglages').waitFor({state:'visible'});
   await page.screenshot({path:'qa/captures/options-390x844.png'});
+  // Une modification suivie immédiatement de pagehide doit être persistée,
+  // sans attendre les 250 ms du debounce.
+  const flushed = await page.evaluate(() => {
+    document.querySelector('[data-reglage="aide"][data-val="true"]').click();
+    window.dispatchEvent(new Event('pagehide'));
+    return JSON.parse(localStorage.getItem('ignem.v1')).aide;
+  });
+  assert.equal(flushed,true);
+  await page.reload();
   const preserved=await page.evaluate(()=>JSON.parse(localStorage.getItem('ignem.v1')));
   assert.equal(preserved.points,150);assert.equal(preserved.brassins,2);
   assert.deepEqual(errors,[]);
