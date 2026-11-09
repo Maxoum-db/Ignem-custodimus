@@ -1,19 +1,14 @@
 <title>Ignem custodimus</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&family=VT323&display=swap">
-<!-- Texte : Comic Neue, l'équivalent libre et lisse de Comic Sans MS (absente des téléphones Android) -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap">
 <style>/*CSS*/</style>
 
 <div id="app">
   <header class="entete">
-    <button class="retour-entete" id="retour-entete" data-retour aria-label="Retour"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M5 1h2v1H6v1H5v1H4v1h7v2H4v1h1v1h1v1h1v1H5v-1H4V9H3V8H2V7H1V5h1V4h1V3h1V2h1z"/></svg><span class="retour-txt"></span></button>
+    <button class="retour-entete" id="retour-entete" data-retour aria-label="Retour"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5l-7 7 7 7M7 12h14"/></svg><span class="retour-txt"></span></button>
     <button class="marque" data-aller="domaine" aria-label="Retour au domaine"><img id="marque-feu" class="sprite" alt="" width="16" height="20"></button>
     <div class="entete-niveau" id="entete-niveau"></div>
-    <button data-aller="recherche" class="btn-entete btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 0h4v1H3zM2 1h1v1H2zM7 1h1v1H7zM1 2h1v4H1zM8 2h1v4H8zM2 6h1v1H2zM7 6h1v1H7zM3 7h4v1H3zM8 7h1v1H8zM9 8h1v1H9zM10 9h1v1h-1zM11 10h1v2h-1zM10 11h1v1h-1z"/></svg></button>
-    <button class="btn-entete" id="btn-menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 12 12" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M1 2h10v2H1zM1 5h10v2H1zM1 8h10v2H1z"/></svg></button>
+    <button data-aller="recherche" class="btn-entete btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/></svg></button>
+    <button class="btn-entete" id="btn-menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     <nav class="entete-nav" id="menu-entete" aria-label="Menu" hidden>
       <button data-aller="domaine">Domaine</button>
       <button data-aller="carnet">Carnet de brassage</button>
@@ -36,6 +31,7 @@
 
     <!-- Brasserie -->
     <section id="ecran-brasserie" class="ecran" hidden>
+      <div class="recette-entete"><span>LE DOMAINE · BRASSERIE</span><h1>Composer votre bière</h1><p>Choisissez vos ingrédients, puis lancez le brassin.</p></div>
       <div class="atelier">
         <div class="cuve-zone" id="cuve-zone">
           <canvas id="cuve" width="120" height="96" aria-label="Cuve de brassage"></canvas>

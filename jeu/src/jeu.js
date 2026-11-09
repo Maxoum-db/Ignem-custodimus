@@ -177,6 +177,16 @@
     '..sssssssssss...', '..sssssnsssss...', '..smmmmmmmmms...', '...sssssssss....', '....ssssss......', '..vvvvccvvvv....',
     '.vvvvvccvvvvv...', '.vvvvvvvvvvvv...', '.vvvvvvvvvvvv...', '.vvvvvvvvvvvv...'],
     { b: '#2a2a3a', g: '#c9c2b4', s: '#d9a07a', E: '#2a1a10', n: '#b9785a', m: '#ecdfc4', c: '#d27b3e', v: '#5a4632' }, 3);
+  // Petites illustrations vectorielles originales, également utilisées pendant le glisser-déposer.
+  const iconeAtelier = (corps) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72"><g stroke="#3b2a1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${corps}</g></svg>`);
+  Object.assign(SPR, {
+    sac: iconeAtelier('<path d="M19 9q13 6 26 0l-4 13q17 25 10 40q-19 11 -39 0q-7 -15 11 -40Z" fill="#d7b477"/><path d="M22 21q10 5 20 0M17 51q15 8 31 0" fill="none" stroke="#a77948"/><path d="M32 53V30m0 10l-7 -5m7 12l7 -5" fill="none"/><path d="M18 34q-6 15 -3 22" fill="none" stroke="#f5dfab"/>'),
+    cone: iconeAtelier('<path d="M32 6q-21 8 -23 29q-2 20 23 31q25 -11 23 -31Q53 14 32 6Z" fill="#9cc94a"/><path d="M32 11v49M32 24l-12 -6m12 19l-18 -9m18 22l-17 -9m17 -17l12 -6m-12 19l18 -9m-18 22l17 -9" fill="none" stroke="#587332"/>'),
+    sachet: iconeAtelier('<path d="M12 8h40l-2 56H14Z" fill="#f0dfb5"/><path d="M14 12h36M14 60h36" stroke="#a78250"/><path d="M14 21h36v29H14Z" fill="#708d68"/><ellipse cx="32" cy="35" rx="9" ry="11" fill="#f3ce73"/><path d="M29 32l6 7" fill="none"/>'),
+    goutte: iconeAtelier('<path d="M32 5C26 19 10 31 10 46a22 22 0 0 0 44 0C54 31 38 19 32 5Z" fill="#81bcd0"/><path d="M20 36q-7 13 2 20" fill="none" stroke="#e8f4e7" stroke-width="5"/>'),
+    bocal: iconeAtelier('<rect x="13" y="18" width="38" height="46" rx="10" fill="#9cbbb0"/><rect x="16" y="8" width="32" height="12" rx="3" fill="#ad7749"/><path d="M17 42q15 -7 30 0v16H17Z" fill="#b66c3e"/><rect x="20" y="28" width="24" height="20" rx="3" fill="#f2deac"/><path d="M32 43V33m0 5l6 -4m-6 6l-5 -3" fill="none"/>'),
+    feu: iconeAtelier('<path d="M34 4q4 20 15 27q12 10 7 25q-8 16 -26 12Q8 67 7 49q-1 -12 12 -25q-2 17 7 17Q38 30 34 4Z" fill="#d97643"/><path d="M33 32q-2 13 -11 20q-6 13 10 15q19 -1 13 -15q-9 -8 -12 -20Z" fill="#ffd47b"/>')
+  });
   $('#marque-feu').src = SPR.feu;
   $('#mentor-portrait').src = SPR.lise;
   const couleur = (ebc) => `rgb(${Moteur.couleurRVB(ebc).join(',')})`;
@@ -1034,6 +1044,7 @@
       { v: r.aDesMalts ? nf(r.ph, 2) : '—', l: 'pH', f: 'eau', c: r.aDesMalts ? etat(r.ph >= 5.2 && r.ph <= 5.6, r.ph > 5.78 || r.ph < 5.15) : '' },
     ];
     rendreCharge(r);
+    if(reduit && ecran === 'brasserie') dessinerCuve(0);
     $('#mesures').innerHTML = m.map((x) => `<button class="mesure ${x.c}" data-fiche="${x.f}"><span class="v">${x.v}</span><span class="l">${x.l}</span></button>`).join('');
     const ligne = $('#style-ligne');
     if (r.wash && r.aDesMalts && r.levure) {
@@ -1227,6 +1238,7 @@
   let splash = 0, animCuve = null;
   function dessinerCuve(t) {
     const c = $('#cuve').getContext('2d'), W = 120, H = 96, r = dernierCalc;
+    if(window.AteliersJeu?.render(c,'recette',{level:borne((r?.kgTotal||0)/(260*fv()),0,1),color:couleur(r?.ebc||0),hops:R.houblons.length,yeast:!!R.levure})) return;
     const px = (x, y, w, h, col) => { c.fillStyle = col; c.fillRect(Math.round(x), Math.round(y), w, h); };
     px(0, 0, W, H, '#221912');
     for (let y = 6; y < H; y += 10) for (let x = (y % 20 === 6 ? 0 : 10); x < W; x += 20) px(x, y, 16, 1, '#2c2118');
@@ -1891,7 +1903,7 @@
     const anneaux = [0.25, 0.5, 0.75, 1].map((f) => `<polygon points="${axes.map((_, k) => pt(k, f).join(',')).join(' ')}" fill="none" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const rayons = axes.map((_, k) => `<line x1="${C}" y1="${C}" x2="${pt(k, 1)[0]}" y2="${pt(k, 1)[1]}" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const poly = axes.map(([cle], k) => pt(k, res.profil[cle] / 10).join(',')).join(' ');
-    const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="Pixelify Sans, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(res.profil[cle], 0)}</text>`; }).join('');
+    const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="system-ui, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(res.profil[cle], 0)}</text>`; }).join('');
     $('#radar').innerHTML = `<svg viewBox="0 0 220 220" role="img" aria-label="Profil aromatique">${anneaux}${rayons}<polygon class="poly" points="${poly}" fill="rgba(243,176,74,.35)" stroke="var(--braise)" stroke-width="2"/>${libs}</svg>`;
 
     // Fiche de jury
@@ -2449,7 +2461,7 @@
     const anneaux = [0.25, 0.5, 0.75, 1].map((f) => `<polygon points="${axes.map((_, k) => pt(k, f).join(',')).join(' ')}" fill="none" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const rayons = axes.map((_, k) => `<line x1="${C}" y1="${C}" x2="${pt(k, 1)[0]}" y2="${pt(k, 1)[1]}" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const poly = axes.map(([cle], k) => pt(k, Math.max(0.04, profil[cle] / 10)).join(',')).join(' ');
-    const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="Pixelify Sans, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(profil[cle], 0)}</text>`; }).join('');
+    const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="system-ui, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(profil[cle], 0)}</text>`; }).join('');
     return `<svg viewBox="0 0 220 220" role="img" aria-label="Profil aromatique">${anneaux}${rayons}<polygon class="poly" points="${poly}" fill="rgba(243,176,74,.35)" stroke="var(--braise)" stroke-width="2"/>${libs}</svg>`;
   }
 

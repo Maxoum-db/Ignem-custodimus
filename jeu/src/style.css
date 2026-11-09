@@ -719,3 +719,44 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
 
 .geste:has(.atelier-illustre) .mesure .l { white-space: normal; overflow: visible; line-height: 1.25; }
 .geste:has(.atelier-illustre) .mesure .v { font-family: system-ui, sans-serif; font-size: clamp(17px, 5vw, 23px); font-weight: 650; }
+
+/* Interface artisanale : polices locales lisses, panneaux et commandes tactiles. */
+:root { --f-titre: ui-rounded, system-ui, sans-serif; --f-texte: system-ui, sans-serif; --f-chiffre: system-ui, sans-serif; --relief: inset 0 1px 0 #ffffff18, 0 3px 8px #0002; --cadre: 0 0 0 1px #725238; --cendre: #c3b39b; }
+.entete { background: linear-gradient(120deg,#38291e,#241d17); border-bottom:1px solid #745233; box-shadow:0 4px 18px #0003; }
+.btn,.onglet,.filtre,.btn-entete,.retour-entete,.entete-nav button { border-radius:12px; min-height:44px; }
+.btn-entete,.retour-entete { min-width:44px; }
+.btn { border:1px solid #ffffff15; }
+.btn:active:not(:disabled) { transform:translateY(1px); box-shadow:inset 0 2px 4px #0003; }
+.btn-feu { background:linear-gradient(#e6a363,#ce7d3b); color:#2b1b10; }
+.entete-nav { border-radius:16px; border:1px solid #b48551; box-shadow:0 10px 30px #0006; }
+.page-titre,.geste-titre { font-size:26px; font-weight:800; letter-spacing:-.03em; }
+.sous-titre { font-size:18px; letter-spacing:0; }
+.groupe-titre,.fiche-jury h3,.mentor-nom,.fut-tete h3,.nom-legal { font-size:14px; }
+.mesure,.style-ligne,.style-detail,.conseil,.charge,.reglage,.fiche,.ingredient { border-radius:12px; }
+.mesure .v { font-size:clamp(16px,4.6vw,23px); font-weight:700; line-height:1.2; }
+.onglet { font-size:12px; padding:8px 3px; }
+.onglet[aria-selected="true"] { background:#f0d9ac; box-shadow:0 2px 8px #0003; }
+.filtre { border-radius:24px; padding:8px 12px; }
+input[type="search"],input[type="text"],select { border-radius:12px; }
+.recette-entete span { color:#dba365; font-size:11px; letter-spacing:.13em; font-weight:750; }
+.recette-entete h1 { margin:4px 0; font-size:28px; letter-spacing:-.04em; line-height:1.15; }
+.recette-entete p { margin:6px 0 2px; color:var(--cendre); font-size:13px; }
+#ecran-brasserie .atelier { grid-template-columns:1fr; gap:0; border-radius:18px; overflow:hidden; border:1px solid #a67a48; background:#30241a; }
+#ecran-brasserie .cuve-zone { border-radius:0; box-shadow:none; }
+#cuve.atelier-illustre { width:100%; height:auto; }
+.cuve-aide { bottom:8px; left:20%; right:20%; border-radius:20px; background:#2f241ddd; color:#f6e6c5; padding:4px; font-size:11px; }
+#ecran-brasserie .charge { box-shadow:none; border-radius:0; padding:12px 16px; background:#34271d; }
+.charge-v { font-size:26px; font-weight:750; line-height:1.2; }
+.bandeau-mesures { border-radius:12px; }
+.barre-brassin { border-top:1px solid #745233; }
+.jauge,.jauge i { border-radius:5px; }
+@media(prefers-reduced-motion:reduce) { #scene { scroll-behavior:auto; } }
+
+.poignee img,.marque img { image-rendering:auto; }
+.carte-ing { border-radius:14px; border:1px solid #725238; box-shadow:0 3px 10px #0002; }
+.bandeau-mesures .mesure .v { font-size:clamp(12px,3.6vw,19px); font-weight:750; }
+.bandeau-mesures .mesure { padding:8px 2px; box-shadow:none; border:1px solid #634931; border-radius:9px; }
+#glisse img { image-rendering:auto; }
+body:has(#glisse:not([hidden])) #cuve-zone { position:fixed; right:max(18px,env(safe-area-inset-right)); top:calc(76px + env(safe-area-inset-top,0px)); width:152px; z-index:40; border:2px solid #e8b260; border-radius:14px; box-shadow:0 8px 25px #0007; }
+body:has(#glisse:not([hidden])) .cuve-aide { left:4px; right:4px; font-size:10px; bottom:3px; }
+html,body { margin:0; }

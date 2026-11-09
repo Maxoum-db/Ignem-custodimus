@@ -21,6 +21,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: node jeu/tests/mobile.cjs
       - run: node jeu/tests/rendu.cjs
+      - run: node jeu/tests/recette-mobile.cjs
       - run: node jeu/tests/parcours.cjs
       - run: GESTES_REELS=1 CAPTURE_DIR=qa/captures/gestes node jeu/tests/parcours.cjs
       - uses: actions/upload-artifact@v4
