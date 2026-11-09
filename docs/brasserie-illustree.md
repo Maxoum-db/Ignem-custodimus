@@ -25,3 +25,9 @@ Les fixtures appartiennent aux tests ; aucune sauvegarde personnelle n'est lue n
 ## Reste à faire
 
 Carte, personnages, portraits, interface globale, Ulysse et activités complémentaires gardent leurs graphismes antérieurs. La brasserie a une première illustration fonctionnelle ; l'enrichissement artistique et la cohérence avec la future carte restent à poursuivre. La reprise complète d'une activité en cours après rechargement reste une condition ouverte du lot 0. Aucune fusion ni publication de production.
+
+## Intégration contrôlée du 9 novembre 2026
+
+Main vérifié avant fusion : `a1ecd70bb4df8a12a1f25902f266ce3f6c925bec`, inchangé depuis la base auditée. Les deux derniers commits correspondent à V0.8 (bâtiments, matériel et difficulté) et V0.8.1 (apparence évolutive du domaine). Aucun retour arbitraire à une version plus ancienne : cela retirerait des fonctionnalités. Aucun commit identifié avec certitude comme essai défectueux dans cette comparaison ciblée ; ce contrôle ne constitue pas un audit exhaustif de tout l’historique.
+
+Les cinq moteurs scientifiques ne présentent aucune modification entre main et cette branche. Le run GitHub 42566417685 a réussi, y compris les gestes chronométrés. Les deux HTML suivis dans dist sont maintenant régénérés depuis les sources de la branche. La CI refuse désormais un décalage entre ces livrables et le build. Fusion autorisée par le propriétaire le 9 novembre ; aucun déploiement de production demandé.
