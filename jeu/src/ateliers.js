@@ -176,7 +176,40 @@
     for(let i=0;i<Math.min(4,s.hops);i++)hops(c,620+i*23,322,.8);
     if(s.yeast){box(c,640,267,43,58,'#eee0b9',5);path(c,'M647 280h29M647 286h29',null,'#739251',4);ellipse(c,661,308,7,7,'#b68742',null)}
   }
-  const painters={recette:recipe,emp:mash,fil:filter,ebu:boil,fer:ferment,bou:bottling};
+  function still(c,s){
+    const active=s.active,level=clamp(s.level),heat=clamp(s.heat,0,1.5);
+    box(c,93,400,550,24,'#6a6658',6);pipe(c,'M644 412H718',true,14);
+    for(const x of [177,546]){ellipse(c,x,439,33,33,'#34342e');ellipse(c,x,439,18,18,'#929889');ellipse(c,x,439,6,6,ink,null)}
+    box(c,129,330,222,69,'#655b49',12);flame(c,240,383,s.t,heat,145);
+    for(let i=0;i<Math.min(7,s.logs||0);i++){path(c,`M${158+i*22} 388l16 -9`,null,'#68452b',10);ellipse(c,158+i*22,388,5,5,'#ba8b56',ink,1)}
+    kettle(c,138,181,208,125,{level,color:s.color||'#d5b679',open:false});
+    path(c,'M138 181Q143 133 217 125L219 107H265L267 125Q340 133 346 181Z',metal(c,138,208));
+    pipe(c,'M242 108V75Q242 61 258 61H386Q409 61 409 83V117',false,20);
+    // Colonne et condenseur : enveloppe d'eau en coupe, serpentin séparé.
+    box(c,386,112,46,123,metal(c,386,46,true),12);for(let i=0;i<5;i++)box(c,389,127+i*19,40,6,'#bb814e',2,ink,2);
+    pipe(c,'M432 131H508V169');box(c,475,169,129,173,metal(c,475,129,true),18);
+    box(c,487,183,105,145,'#93bfbd',10);for(let i=0;i<5;i++)path(c,`M500 ${199+i*25}q74 -13 78 4q1 10 -77 16`,null,'#bc7842',7);
+    pipe(c,'M579 322V352H647V371');pipe(c,'M475 303H453V365',true,8);valve(c,453,336,active?1:0,'#438b9f');pipe(c,'M604 194H624V166',true,8);
+    const gx=311,gy=220;
+    if(s.foam>0)box(c,gx+3,gy+3+52*(1-level),9,Math.min(20,s.foam*20),'#f5e9ce',2,null);
+    if(s.hot){path(c,'M145 309q96 28 194 0',null,'#e66c3d',9);steam(c,250,130,s.t,.65,70)}
+    if(s.overflow)path(c,'M249 108q44 -16 75 0',null,'#f8e9c8',10);
+    if(active&&s.flow)for(let i=0;i<3;i++)ellipse(c,647,376+(reduced()?i*8:((s.t*28+i*8)%24)),2.5,4,'#e8f1dc',null);
+    if(s.fractions){
+      for(let i=0;i<3;i++){const x=610+i*45,h=clamp(s.fractions[i].V/Math.max(1,s.capacity))*72;box(c,x,402,36,82,'#e1e6d455',5);if(h>0)box(c,x+4,480-h,28,h,'#dce7cb',3,null);if(i===s.phase)path(c,`M${x} 396h36`,null,['#b94e32','#7eaa43','#8166a3'][i],5);text(c,['T','C','Q'][i],x+18,500,16,ink,'center')}
+    }else{box(c,623,402,55,76,'#e1e6d466',8);box(c,628,472-clamp(s.collected)*60,45,clamp(s.collected)*60,'#dce7cb',3,null)}
+    if(Number.isFinite(s.degree))text(c,`${s.degree.toFixed(0)} % vol`,644,151,20,ink,'center');
+  }
+  function distillationChart(c,s){
+    box(c,38,34,690,435,'#fcf1d8',15);const x=103,y=76,w=563,h=310;
+    for(let i=0;i<=4;i++){const yy=y+h-i*h/4;path(c,`M${x} ${yy}h${w}`,null,'#cbb990',1);text(c,String(10**(i-2)),x-12,yy+5,15,ink,'right');text(c,String(i*25),x+w+12,yy+5,15)}
+    for(let i=0;i<=4;i++){const xx=x+i*w/4;path(c,`M${xx} ${y}v${h}`,null,'#cbb990',1);text(c,`${i*25}%`,xx,y+h+27,16,ink,'center')}
+    const colors={tetes:'#b94132',esters:'#b47a0f',terpenes:'#5f8b34',cereale:'#936a32',queues:'#8060a5',furfural:'#97533b',degre:'#243f49'};
+    for(const [k,color] of Object.entries(colors)){let d='';for(const p of s.curve){const yy=y+h-h*(k==='degre'?clamp(p.degre/100):clamp((Math.log10(Math.max(p[k]||.01,.01))+2)/4));d+=`${d?'L':'M'}${x+clamp(p.recup)*w} ${yy} `}if(d)path(c,d,null,color,3)}
+    for(const cut of s.cuts)path(c,`M${x+clamp(cut.recup)*w} ${y}v${h}`,null,'#443628',2);
+    text(c,'Seuils × · logarithme',64,58,17);text(c,'Degré %',673,58,17,ink,'right');text(c,'Alcool recueilli',384,446,19,ink,'center');
+  }
+  const painters={ulysse:still,courbes:distillationChart,recette:recipe,emp:mash,fil:filter,ebu:boil,fer:ferment,bou:bottling};
   function render(ctx,name,state){
     if(!ctx||!painters[name])return false;
     const cv=ctx.canvas,width=cv.getBoundingClientRect().width||360,dpr=Math.min(devicePixelRatio||1,3),height=width*H/W;

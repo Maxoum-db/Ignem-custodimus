@@ -2005,6 +2005,7 @@
   });
 
   function dessinerUlysse(c, t = 0, feu = 0.5) {
+    if(window.AteliersJeu?.render(c,'ulysse',{t,heat:0,active:false,level:0,collected:0,logs:0})) return;
     const px = (x, y, w, h, k) => { c.fillStyle = k; c.fillRect(Math.round(x), Math.round(y), w, h); };
     const disque = (cx, cy, r, k) => { c.fillStyle = k; for (let y = -r; y <= r; y++) { const w = Math.round(Math.sqrt(r * r - y * y)); c.fillRect(Math.round(cx - w), Math.round(cy + y), w * 2 + 1, 1); } };
     px(0, 0, 96, 72, '#221912'); px(0, 60, 96, 12, '#3b2d22');
@@ -2090,6 +2091,7 @@
     const btn = $('#bro-buche'); btn.disabled = true;
     const ctx = $('#bro-canvas').getContext('2d');
     const dessin = () => {
+      if(window.AteliersJeu?.render(ctx,'ulysse',{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,active:st.t>0,level:1-st.prog,collected:st.prog,flow:st.prog>0&&st.prog<1,foam:st.mousse,hot:st.chaud>.4||(st.coup!=null&&st.t-st.coup<2),overflow:st.debord!=null&&st.t-st.debord<2.2,color:couleur(sessionD.biere.ebc)})) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       px(24, 90, 70, 22, '#574332');
@@ -2189,7 +2191,7 @@
     const st = { t: 0, dans: 0, duree: 0, feu: nouveauFeu() };
     const DUREE = 55, expertVue = S.mode === 'expert';
     $('#rep-consigne').innerHTML = `<b>${nf(charge.V, 0)} L à ${nf((charge.A / charge.V) * 100)} %</b> · coupe deux fois ${iBtn(`${sessionD.recyclees ? `Dont ${nf(sessionD.recyclees, 1)} LAP d'épaisses recyclées. ` : ''}Première coupe des têtes au cœur, quand la colle laisse place au fruit propre ; seconde du cœur aux queues, quand le degré tombe et que le carton mouillé arrive. Garde la chaudière entre 30 et 70 % : plus de reflux, cœur plus propre.`)}`
-      + (expertVue ? `<br><small>Courbes : <b style="color:#e3593d">têtes</b> · <b style="color:#f3b04a">esters</b> · <b style="color:#9cc95e">houblon</b> · <b style="color:#d9c7a0">céréale</b> · <b style="color:#8f7ad0">queues</b> · <b style="color:#b9865a">furfural</b> ${iBtn("Au bec, en multiples du seuil de perception (échelle logarithmique). Trait clair : degré. En abscisse, l'alcool recueilli.")}</small>` : '');
+      + (expertVue ? `<br><small>Courbes : <b style="color:#e3593d">têtes</b> · <b style="color:#f3b04a">esters</b> · <b style="color:#9cc95e">houblon</b> · <b style="color:#d9c7a0">céréale</b> · <b style="color:#8f7ad0">queues</b> · <b style="color:#b9865a">furfural</b> ${iBtn("Au bec, en multiples du seuil de perception (échelle logarithmique). Trait bleu sombre : degré. En abscisse, l'alcool recueilli.")}</small>` : '');
     $('#rep-bilan').hidden = true; $('#rep-pied').hidden = false; $('#rep-go').disabled = false;
     const btnB = $('#rep-buche'), btnC = $('#rep-couper');
     btnB.disabled = btnC.disabled = true;
@@ -2198,6 +2200,7 @@
     const ctx = $('#rep-canvas').getContext('2d');
     const COUL = { tetes: '#e3593d', esters: '#f3b04a', terpenes: '#9cc95e', cereale: '#d9c7a0', queues: '#8f7ad0', furfural: '#b9865a' };
     const dessin = () => {
+      if(window.AteliersJeu?.render(ctx,expertVue?'courbes':'ulysse',expertVue?{curve:r.courbe,cuts:r.coupes}:{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,active:st.t>0,level:r.ch.V/charge.V,flow:!!r.dernier&&!r.fini,degree:r.dernier?.degre,fractions:r.fractions,phase:r.phase,capacity:charge.V})) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       if (expertVue) {
