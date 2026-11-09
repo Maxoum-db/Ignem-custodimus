@@ -335,17 +335,50 @@ async function donneesJeu() {
   };
 }
 
+// Illustrations WebP intégrées à la page autonome, sans requêtes réseau.
+// Aucun visuel n'est requis pour construire la version existante du jeu.
+async function imagesJeu(dossier = path.join(RACINE, 'jeu', 'src', 'images'), budget = 6 * 1024 * 1024) {
+  let fichiers;
+  try { fichiers = await fs.readdir(dossier); }
+  catch (e) { if (e.code === 'ENOENT') return {}; throw e; }
+  const images = {};
+  let total = 0;
+  for (const nom of fichiers.sort()) {
+    if (!nom.endsWith('.webp')) continue;
+    if (!/^[a-z0-9][a-z0-9_-]*\.webp$/.test(nom)) {
+      throw new Error('Nom de visuel non conforme : ' + nom);
+    }
+    const donnees = await fs.readFile(path.join(dossier, nom));
+    total += donnees.length;
+    if (total > budget) {
+      throw new Error('Budget images dépassé : 6 Mio maximum');
+    }
+    // Refuser un faux WebP ou un conteneur tronqué avant l'intégration base64.
+    if (donnees.length < 20 || donnees.toString('ascii', 0, 4) !== 'RIFF'
+        || donnees.toString('ascii', 8, 12) !== 'WEBP'
+        || donnees.readUInt32LE(4) + 8 !== donnees.length
+        || !['VP8 ', 'VP8L', 'VP8X'].includes(donnees.toString('ascii', 12, 16))) {
+      throw new Error('Conteneur WebP invalide : ' + nom);
+    }
+    images[nom.slice(0, -5)] = 'data:image/webp;base64,' + donnees.toString('base64');
+  }
+  return images;
+}
+
 async function construire() {
   const D = await donneesJeu();
-  const [page, css, moteur, distillerie, chai, ecole, vente, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'chai.js', 'ecole.js', 'vente.js', 'jeu.js'].map(src));
+  const IMAGES = await imagesJeu();
+  const [page, css, moteur, distillerie, chai, ecole, vente, illustrations, jeu] = await Promise.all(['page.html', 'style.css', 'moteur.js', 'distillerie.js', 'chai.js', 'ecole.js', 'vente.js', 'illustrations.js', 'jeu.js'].map(src));
   const corps = page
     .replace('/*CSS*/', () => css)
     .replace('/*DONNEES*/', () => 'window.DONNEES_JEU = ' + JSON.stringify(D) + ';')
+    .replace('/*IMAGES*/', () => 'window.IMAGES_JEU = ' + JSON.stringify(IMAGES) + ';')
     .replace('/*MOTEUR*/', () => moteur)
     .replace('/*DISTILLERIE*/', () => distillerie)
     .replace('/*CHAI*/', () => chai)
     .replace('/*ECOLE*/', () => ecole)
     .replace('/*VENTE*/', () => vente)
+    .replace('/*ILLUSTRATIONS*/', () => illustrations)
     .replace('/*JEU*/', () => jeu);
   const complet = `<!doctype html>\n<html lang="fr">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n</head>\n<body>\n${corps}\n</body>\n</html>\n`;
   await fs.mkdir(path.join(RACINE, 'dist'), { recursive: true });
@@ -360,4 +393,5 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   if (process.argv.includes('--donnees')) donneesJeu().then((d) => console.log(JSON.stringify(d, null, 1)));
   else construire().catch((e) => { console.error(e); process.exit(1); });
 }
-export { donneesJeu };
+export { donneesJeu, imagesJeu };
+

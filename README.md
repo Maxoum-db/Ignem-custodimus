@@ -142,3 +142,17 @@ Chaque fichier de `data/` a la forme `{ version_contrat, exporte_le, nb, donnees
 | `reperes.json` | Repères chiffrés |
 | `economie.json` | Coûts fixes et variables par lot |
 | `parametres.json` | Paramètres techniques en liste blanche |
+
+
+## Carte illustrée (chantier en cours)
+
+La branche `carte-illustree` prépare la migration progressive des scènes pixel-art vers des illustrations WebP sans modifier la logique du jeu.
+
+- Déposer les illustrations détourées dans `jeu/src/images/`, avec des noms en minuscules, chiffres, tirets ou underscores et l'extension `.webp`.
+- Lancer `node scripts/construire-jeu.mjs` : le constructeur intègre automatiquement les fichiers dans `dist/index.html` et `dist/artefact.html` sous `window.IMAGES_JEU` (clés sans extension).
+- Le budget total des WebP source est limité à **6 Mio**. Le build échoue explicitement en cas de dépassement ou de nom invalide.
+- Si le dossier n'existe pas ou ne contient pas d'images, `window.IMAGES_JEU` vaut `{}` et le jeu actuel continue de fonctionner.
+- Les prochaines étapes remplaceront les dessins de présentation un écran à la fois, sans modifier les moteurs métier ni la sauvegarde `ignem.v1`.
+
+**Validation attendue avant fusion :** `node scripts/construire-jeu.mjs`, `npm run test:jeu`, puis parcours manuel mobile à 390 × 844 et vérification d'une ancienne sauvegarde. Cette préparation n'inclut pas encore les illustrations finales.
+
