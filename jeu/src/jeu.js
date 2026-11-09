@@ -415,16 +415,29 @@
   }
 
   // =====================================================================
-  // Domaine : carte pixel animée
+  // Domaine : carte illustrée, ancien rendu conservé en repli
   // =====================================================================
   const LIEUX = [
-    { id: 'brasserie', nom: 'Brasserie', r: [14, 108, 80, 76], ouvert: true, t: [53, 131] },
-    { id: 'chai', nom: 'Chai', r: [108, 120, 70, 54], ouvert: true, t: [141, 128] },
-    { id: 'distillerie', nom: 'Alambic Ulysse', r: [118, 178, 60, 34], ouvert: true, t: [147, 212] },
-    { id: 'catalogue', nom: 'Pigeonnier', r: [18, 186, 62, 50], ouvert: true, t: [61, 202] },
-    { id: 'veillee', nom: 'Leçons', r: [92, 222, 98, 32], ouvert: true, t: [113, 230] },
-    { id: 'rucher', nom: 'Rucher', r: [130, 94, 58, 22], t: [160, 117], msg: "Le rucher viendra en extension. Le miel du domaine est déjà dans la brasserie : essaie un braggot." },
+    { id: 'brasserie', nom: 'Brasserie', r: [7, 46, 92, 77], ouvert: true, t: [53, 117] },
+    { id: 'chai', nom: 'Chai', r: [108, 92, 76, 56], ouvert: true, t: [146, 143] },
+    { id: 'distillerie', nom: 'Alambic Ulysse', r: [102, 150, 82, 58], ouvert: true, t: [143, 202] },
+    { id: 'catalogue', nom: 'Pigeonnier', r: [8, 139, 76, 69], ouvert: true, t: [46, 203] },
+    { id: 'veillee', nom: 'Leçons', r: [94, 211, 90, 34], ouvert: true, t: [139, 241] },
+    { id: 'rucher', nom: 'Rucher', r: [113, 45, 69, 39], t: [147, 79], msg: "Le rucher viendra en extension. Le miel du domaine est déjà dans la brasserie : essaie un braggot." },
   ];
+  // Le repli conserve aussi les zones de l'ancienne carte, pas seulement son dessin.
+  const LIEUX_PIXEL = [
+    {r:[14,108,80,76],t:[53,131]}, {r:[108,120,70,54],t:[141,128]},
+    {r:[118,178,60,34],t:[147,212]}, {r:[18,186,62,50],t:[61,202]},
+    {r:[92,222,98,32],t:[113,230]}, {r:[130,94,58,22],t:[160,117]}
+  ];
+  function placerLieux(illustre) {
+    const z=$('#lieux'),mode=illustre?'illustre':'pixel';if(z.dataset.rendu===mode)return;z.dataset.rendu=mode;
+    [...z.children].forEach((b,i)=>{const l=(illustre?LIEUX:LIEUX_PIXEL)[i];
+      Object.assign(b.style,{left:l.r[0]/192*100+'%',top:l.r[1]/256*100+'%',width:l.r[2]/192*100+'%',height:l.r[3]/256*100+'%'});
+      Object.assign($('span',b).style,{left:(l.t[0]-l.r[0])/l.r[2]*100+'%',top:(l.t[1]-l.r[1])/l.r[3]*100+'%'});
+    });
+  }
   const saisonCourante = () => Vente.saison(S.cal.s);
   const libCalendrier = () => `${saisonCourante()[0].toUpperCase() + saisonCourante().slice(1)} · ${Vente.mois(S.cal.s)} · année ${Vente.annee(S.cal.s)}`;
   // Le temps passe : une semaine par brassin, par distillation, ou au chai. Nouveaux clients chaque semaine.
@@ -459,31 +472,40 @@
   function entrerDomaine() {
     const saison = saisonCourante();
     $('#saison').textContent = libCalendrier();
-    const z = $('#lieux'); z.innerHTML = '';
+    const z = $('#lieux'); z.innerHTML = ''; delete z.dataset.rendu;
     for (const l of LIEUX) {
       const b = document.createElement('button');
       b.className = 'lieu ' + (l.ouvert ? 'ouvert' : 'ferme');
       Object.assign(b.style, { left: (l.r[0] / 192) * 100 + '%', top: (l.r[1] / 256) * 100 + '%', width: (l.r[2] / 192) * 100 + '%', height: (l.r[3] / 256) * 100 + '%' });
-      // Le nom est peint sur le bâtiment, à l'endroit prévu
+      // Étiquettes HTML accessibles, coordonnées communes au décor et aux zones tactiles.
       const tx = l.t ? ((l.t[0] - l.r[0]) / l.r[2]) * 100 : 50, ty = l.t ? ((l.t[1] - l.r[1]) / l.r[3]) * 100 : 50;
-      b.innerHTML = `<span style="left:${tx}%;top:${ty}%">${esc(l.nom)}</span>`;
+      const nomCourt = l.id === 'distillerie' ? 'Ulysse' : l.nom;
+      b.innerHTML = `<span style="left:${tx}%;top:${ty}%">${esc(nomCourt)}</span>`;
       b.setAttribute('aria-label', l.nom + (l.ouvert ? '' : ', bientôt'));
       const bk = Object.keys(BATIMENTS).find((k) => BATIMENTS[k].lieu === l.id);
       const nu = bk && niv(bk) === 0, tr = bk && enTravaux(bk);
-      if (nu || (tr && niv(bk) === 0)) { b.classList.add('a-batir'); $('span', b).textContent = `${l.nom} · ${tr ? `travaux, ${tr.fin - S.cal.s} sem.` : 'à bâtir'}`; }
-      else if (tr) $('span', b).textContent = `${l.nom} · travaux`;
+      if (nu || (tr && niv(bk) === 0)) { b.classList.add('a-batir'); $('span', b).textContent = `${nomCourt} · ${tr ? `travaux, ${tr.fin - S.cal.s} sem.` : 'à bâtir'}`; }
+      else if (tr) $('span', b).textContent = `${nomCourt} · travaux`;
       b.onclick = () => { son('clic'); if (nu) { aller('batiments'); return; } if (l.ouvert) aller(l.id); else direLise(l.msg); };
       z.appendChild(b);
     }
     const ctx = $('#carte').getContext('2d');
     const t0 = performance.now();
     cancelAnimationFrame(animCarte);
-    const boucle = (ts) => { dessinerDomaine(ctx, (ts - t0) / 1000, saison); if (!reduit && ecran === 'domaine') animCarte = requestAnimationFrame(boucle); };
+    let dernier = -Infinity;
+    const boucle = (ts) => { if(ts-dernier >= 1000/30){dessinerDomaine(ctx, (ts - t0) / 1000, saison); dernier=ts;} if (!reduit && ecran === 'domaine') animCarte = requestAnimationFrame(boucle); };
     animCarte = requestAnimationFrame(boucle);
+    window.DomaineIllustre?.ready.then(() => { if(ecran === 'domaine') dessinerDomaine(ctx, 0, saisonCourante()); });
   }
   quitteurs.domaine = () => cancelAnimationFrame(animCarte);
+  new ResizeObserver(() => { if(ecran === 'domaine') dessinerDomaine($('#carte').getContext('2d'),0,saisonCourante()); }).observe($('#carte'));
 
   function dessinerDomaine(c, t, saison) {
+    const hour = new Date().getHours();
+    if(window.DomaineIllustre?.render(c, reduit ? 0 : t, { saison, nuit:hour >= 21 || hour < 7, bat:S.bat, travaux:S.travaux || [], equip:S.equip || {} })) { placerLieux(true); return; }
+    placerLieux(false);
+    if(c.canvas.width !== 192 || c.canvas.height !== 256){c.canvas.width=192;c.canvas.height=256;}
+
     const P = SAISONS[saison], W = 192, H = 256;
     const heure = new Date().getHours(), nuit = heure >= 21 || heure < 7;
     const px = (x, y, w, h, col) => { c.fillStyle = col; c.fillRect(Math.round(x), Math.round(y), w, h); };
