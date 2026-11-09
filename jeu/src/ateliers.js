@@ -72,14 +72,19 @@
     const gx=x+w-35,gy=y+39,gh=h-67;box(c,gx,gy,15,gh,'#e9e5cb',5,ink,3);box(c,gx+3,gy+3+(gh-6)*(1-clamp(level)),9,(gh-6)*clamp(level),color,2,null);
     for(let i=1;i<5;i++)path(c,`M${gx+2} ${gy+i*gh/5}h5`,null,ink,1);
   }
-  function thermometer(c,x,y,temp,target,min=55,max=78,prediction){
-    box(c,x,y,64,235,'#fbefd3',18);box(c,x+24,y+20,16,184,'#c9b99a',8);
-    const Y=t=>y+204-clamp((t-min)/(max-min))*184;
-    box(c,x+10,Y(target+1),44,Y(target-1)-Y(target+1),'#9cc94a66',3,null);
-    box(c,x+27,Y(temp),10,y+211-Y(temp),Math.abs(temp-target)<=1?'#78a647':'#c75e3e',4,null);ellipse(c,x+32,y+211,12,12,'#c75e3e',ink,2);
-    for(let t=Math.ceil(min/5)*5;t<=max;t+=5){path(c,`M${x+9} ${Y(t)}h9`,null,ink,2);text(c,String(t),x+44,Y(t)+4,11)}
-    if(Number.isFinite(prediction))path(c,`M${x+9} ${Y(prediction)}h46`,null,'#438ca6',3);
-    text(c,`${temp.toFixed(1)} °C`,x+32,y-12,18,ink,'center');
+  function thermometer(c,x,y,temp,target,min=target-4,max=target+4,prediction){
+    // Loupe visuelle centrée sur la consigne : la tolérance métier reste ±1 °C.
+    box(c,x,y,126,300,'#fbefd3',18);const top=y+45,bottom=y+251,h=bottom-top;
+    const Y=t=>bottom-clamp((t-min)/(max-min))*h;
+    box(c,x+12,Y(target+1),102,Y(target-1)-Y(target+1),'#9cc94a99',4,null);
+    path(c,`M${x+12} ${Y(target+1)}h102M${x+12} ${Y(target-1)}h102`,null,'#648532',2);
+    box(c,x+26,top,18,h,'#d7c6a3',8);
+    box(c,x+30,Y(temp),10,bottom-Y(temp),Math.abs(temp-target)<=1?'#78a647':'#c75e3e',4,null);ellipse(c,x+35,bottom+7,13,13,Math.abs(temp-target)<=1?'#78a647':'#c75e3e',ink,2);
+    for(let t=min;t<=max+.01;t+=2){path(c,`M${x+49} ${Y(t)}h9`,null,ink,2);text(c,String(Math.round(t*10)/10),x+68,Y(t)+6,19)}
+    if(Number.isFinite(prediction))path(c,`M${x+12} ${Y(prediction)}h102`,null,'#438ca6',3);
+    text(c,`${temp.toFixed(1)} °C`,x+63,y+28,25,ink,'center');
+    text(c,`Cible ${target.toFixed(0)} ±1`,x+63,y+285,17,ink,'center');
+    if(temp<min||temp>max)text(c,temp<min?'▼':'▲',x+15,temp<min?bottom:top+12,18,'#b34832');
   }
   function mash(c,s){
     sack(c,66,310);kettle(c,178,192,260,195,{level:clamp(s.volume/s.capacity),color:'#c7a262'});
@@ -91,7 +96,7 @@
     const stir=s.evt?.id==='fourquet'&&s.t-s.evt.t0<2.2;const dx=stir&&!reduced()?Math.sin(s.t*9)*30:0;
     pipe(c,`M${293+dx} 122L${318+dx} 230`,false,8);path(c,`M${309+dx} 208l-10 23 18 19 15 -25Z`,'#a87444');
     if(s.evt?.id==='air'&&s.t-s.evt.t0<2.2)for(let i=0;i<3;i++)path(c,`M130 ${155+i*16}q70 -20 145 10`,null,'#b6dfeb',4);
-    thermometer(c,630,171,s.T,s.target,55,78,s.prediction);
+    thermometer(c,608,137,s.T,s.target,s.target-4,s.target+4,s.prediction);
   }
   function filter(c,s){
     shadow(c,277,440,195);kettle(c,134,172,290,238,{steel:true,level:0,open:false});
@@ -138,15 +143,15 @@
     pipe(c,'M310 333H345V353',true,8);box(c,335,369,28,64,'#c6d4c5',6,ink,2);path(c,'M340 425V376',null,'#f3f2df',2);
     if(s.chuteDH!=null&&s.t-s.chuteDH<1.6)for(let i=0;i<6;i++)hops(c,185+i*13,116+(s.t-s.chuteDH)*52+(i%3)*5,.55);
     // Courbe mesurée, bande cible et fenêtres DH : tous les repères restent en code.
-    const gx=420,gy=170,gw=285,gh=222,min=Math.min(s.target-6,4),max=s.target+10;
+    const gx=432,gy=157,gw=267,gh=258,min=Math.floor(Math.min(s.target-4,s.T-1,...s.histo.map(p=>p.T-1))),max=Math.ceil(Math.max(s.target+(s.rest?8:4),s.T+1,...s.histo.map(p=>p.T+1)));
     const Y=t=>gy+gh-(t-min)/(max-min)*gh;
-    box(c,gx-22,gy-34,gw+42,gh+78,'#fbefd7',12);
+    box(c,gx-42,gy-38,gw+66,gh+85,'#fbefd7',12);
     for(let j=0;j<=7;j++){path(c,`M${gx+j/7*gw} ${gy}v${gh}`,null,'#d1c0a1',1);text(c,String(j),gx+j/7*gw,gy+gh+20,13,ink,'center')}
-    for(let t=Math.ceil(min/5)*5;t<=max;t+=5){path(c,`M${gx} ${Y(t)}h${gw}`,null,'#d1c0a1',1);text(c,String(t),gx-5,Y(t)+4,11,ink,'right')}
-    for(let x=0;x<gw;x++){const target=s.target+(s.rest&&x/gw*7>=5?4:0);c.fillStyle='#9cc94a55';c.fillRect(gx+x,Y(target+1.5),1,Y(target-1.5)-Y(target+1.5))}
+    for(let t=Math.ceil(min/2)*2;t<=max;t+=Math.max(2,Math.ceil((max-min)/12)*2)){path(c,`M${gx} ${Y(t)}h${gw}`,null,'#d1c0a1',1);text(c,String(t),gx-8,Y(t)+5,17,ink,'right')}
+    for(let x=0;x<gw;x++){const target=s.target+(s.rest&&x/gw*7>=5?4:0);c.fillStyle='#9cc94a88';c.fillRect(gx+x,Y(target+1.5),1,Y(target-1.5)-Y(target+1.5))}
     for(const [a,b,n] of s.dhWindows){c.fillStyle='#7ba45122';c.fillRect(gx+a/7*gw,gy,(b-a)/7*gw,gh);if(s.dhDays?.[n]!=null)path(c,`M${gx+s.dhDays[n]/7*gw} ${gy}v${gh}`,null,'#5c852e',3)}
     if(s.histo.length)path(c,s.histo.map((p,i)=>`${i?'L':'M'}${gx+p.j/7*gw} ${Y(p.T)}`).join(' '),null,'#ac5738',3);
-    path(c,`M${gx+s.t/18*gw} ${gy}v${gh}`,null,'#af7134',2);text(c,'Température · 7 jours',gx,gy-13,17);text(c,`${s.T.toFixed(1)} °C`,222,482,22,ink,'center');
+    path(c,`M${gx+s.t/18*gw} ${gy}v${gh}`,null,'#af7134',2);text(c,'Cible ±1,5 °C · 7 jours',gx-24,gy-14,19);text(c,`${s.T.toFixed(1)} °C`,222,482,22,ink,'center');
   }
   function bottling(c,s){
     shadow(c,383,446,310);path(c,'M39 344L654 323L718 367L93 391Z','#bd915e');path(c,'M93 391L718 367V395L93 420Z','#8c5e38');pipe(c,'M110 418V480M677 397V461',false,17);
@@ -176,7 +181,40 @@
     for(let i=0;i<Math.min(4,s.hops);i++)hops(c,620+i*23,322,.8);
     if(s.yeast){box(c,640,267,43,58,'#eee0b9',5);path(c,'M647 280h29M647 286h29',null,'#739251',4);ellipse(c,661,308,7,7,'#b68742',null)}
   }
-  const painters={recette:recipe,emp:mash,fil:filter,ebu:boil,fer:ferment,bou:bottling};
+  function still(c,s){
+    const active=s.active,level=clamp(s.level),heat=clamp(s.heat,0,1.5);
+    box(c,93,400,550,24,'#6a6658',6);pipe(c,'M644 412H718',true,14);
+    for(const x of [177,546]){ellipse(c,x,439,33,33,'#34342e');ellipse(c,x,439,18,18,'#929889');ellipse(c,x,439,6,6,ink,null)}
+    box(c,129,330,222,69,'#655b49',12);flame(c,240,383,s.t,heat,145);
+    for(let i=0;i<Math.min(7,s.logs||0);i++){path(c,`M${158+i*22} 388l16 -9`,null,'#68452b',10);ellipse(c,158+i*22,388,5,5,'#ba8b56',ink,1)}
+    kettle(c,138,181,208,125,{level,color:s.color||'#d5b679',open:false});
+    path(c,'M138 181Q143 133 217 125L219 107H265L267 125Q340 133 346 181Z',metal(c,138,208));
+    pipe(c,'M242 108V75Q242 61 258 61H386Q409 61 409 83V117',false,20);
+    // Colonne et condenseur : enveloppe d'eau en coupe, serpentin séparé.
+    box(c,386,112,46,123,metal(c,386,46,true),12);for(let i=0;i<5;i++)box(c,389,127+i*19,40,6,'#bb814e',2,ink,2);
+    pipe(c,'M432 131H508V169');box(c,475,169,129,173,metal(c,475,129,true),18);
+    box(c,487,183,105,145,'#93bfbd',10);for(let i=0;i<5;i++)path(c,`M500 ${199+i*25}q74 -13 78 4q1 10 -77 16`,null,'#bc7842',7);
+    pipe(c,'M579 322V352H647V371');pipe(c,'M475 303H453V365',true,8);valve(c,453,336,active?1:0,'#438b9f');pipe(c,'M604 194H624V166',true,8);
+    const gx=311,gy=220;
+    if(s.foam>0)box(c,gx+3,gy+3+52*(1-level),9,Math.min(20,s.foam*20),'#f5e9ce',2,null);
+    if(s.hot){path(c,'M145 309q96 28 194 0',null,'#e66c3d',9);steam(c,250,130,s.t,.65,70)}
+    if(s.overflow)path(c,'M249 108q44 -16 75 0',null,'#f8e9c8',10);
+    if(active&&s.flow)for(let i=0;i<3;i++)ellipse(c,647,376+(reduced()?i*8:((s.t*28+i*8)%24)),2.5,4,'#e8f1dc',null);
+    if(s.fractions){
+      for(let i=0;i<3;i++){const x=610+i*45,h=clamp(s.fractions[i].V/Math.max(1,s.capacity))*72;box(c,x,402,36,82,'#e1e6d455',5);if(h>0)box(c,x+4,480-h,28,h,'#dce7cb',3,null);if(i===s.phase)path(c,`M${x} 396h36`,null,['#b94e32','#7eaa43','#8166a3'][i],5);text(c,['T','C','Q'][i],x+18,500,16,ink,'center')}
+    }else{box(c,623,402,55,76,'#e1e6d466',8);box(c,628,472-clamp(s.collected)*60,45,clamp(s.collected)*60,'#dce7cb',3,null)}
+    if(Number.isFinite(s.degree))text(c,`${s.degree.toFixed(0)} % vol`,644,151,20,ink,'center');
+  }
+  function distillationChart(c,s){
+    box(c,38,34,690,435,'#fcf1d8',15);const x=103,y=76,w=563,h=310;
+    for(let i=0;i<=4;i++){const yy=y+h-i*h/4;path(c,`M${x} ${yy}h${w}`,null,'#cbb990',1);text(c,String(10**(i-2)),x-12,yy+5,15,ink,'right');text(c,String(i*25),x+w+12,yy+5,15)}
+    for(let i=0;i<=4;i++){const xx=x+i*w/4;path(c,`M${xx} ${y}v${h}`,null,'#cbb990',1);text(c,`${i*25}%`,xx,y+h+27,16,ink,'center')}
+    const colors={tetes:'#b94132',esters:'#b47a0f',terpenes:'#5f8b34',cereale:'#936a32',queues:'#8060a5',furfural:'#97533b',degre:'#243f49'};
+    for(const [k,color] of Object.entries(colors)){let d='';for(const p of s.curve){const yy=y+h-h*(k==='degre'?clamp(p.degre/100):clamp((Math.log10(Math.max(p[k]||.01,.01))+2)/4));d+=`${d?'L':'M'}${x+clamp(p.recup)*w} ${yy} `}if(d)path(c,d,null,color,3)}
+    for(const cut of s.cuts)path(c,`M${x+clamp(cut.recup)*w} ${y}v${h}`,null,'#443628',2);
+    text(c,'Seuils × · logarithme',64,58,17);text(c,'Degré %',673,58,17,ink,'right');text(c,'Alcool recueilli',384,446,19,ink,'center');
+  }
+  const painters={ulysse:still,courbes:distillationChart,recette:recipe,emp:mash,fil:filter,ebu:boil,fer:ferment,bou:bottling};
   function render(ctx,name,state){
     if(!ctx||!painters[name])return false;
     const cv=ctx.canvas,width=cv.getBoundingClientRect().width||360,dpr=Math.min(devicePixelRatio||1,3),height=width*H/W;

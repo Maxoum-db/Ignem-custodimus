@@ -22,6 +22,7 @@ const assert = require('node:assert/strict');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),true,'Débordement horizontal');
   fs.mkdirSync('qa/captures',{recursive:true});
   await page.screenshot({path:'qa/captures/domaine-390x844.png'});
+  await page.locator('#mentor-portrait').evaluate(async img => { await img.decode(); if(img.naturalWidth !== 512 || !img.src.startsWith('data:image/webp')) throw new Error('Portrait Lise non intégré'); });
   // Fixture de compatibilité V0.2 : absence de possede/bat/cal/vente.
   // Ce n'est pas une sauvegarde personnelle du joueur.
   const legacy={mode:'expert',aide:false,son:false,tuto:-1,tutoD:-1,points:150,brassins:2,carnet:[],grimoire:[],ecole:{},succes:{},recette:{volume:1000,malts:[],houblons:[],levure:null,eau:'causse'}};

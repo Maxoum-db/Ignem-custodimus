@@ -760,3 +760,8 @@ input[type="search"],input[type="text"],select { border-radius:12px; }
 body:has(#glisse:not([hidden])) #cuve-zone { position:fixed; right:max(18px,env(safe-area-inset-right)); top:calc(76px + env(safe-area-inset-top,0px)); width:152px; z-index:40; border:2px solid #e8b260; border-radius:14px; box-shadow:0 8px 25px #0007; }
 body:has(#glisse:not([hidden])) .cuve-aide { left:4px; right:4px; font-size:10px; bottom:3px; }
 html,body { margin:0; }
+
+#ulysse.atelier-illustre { width:100%; height:auto; border-radius:16px; border:1px solid #a67a48; }
+.ulysse-haut:has(.atelier-illustre) { grid-template-columns:1fr; }
+
+#mentor-portrait,.plan-tete img { image-rendering:auto; object-fit:contain; }

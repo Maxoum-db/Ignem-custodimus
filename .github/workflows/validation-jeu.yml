@@ -24,6 +24,8 @@ jobs:
       - run: node jeu/tests/recette-mobile.cjs
       - run: node jeu/tests/parcours.cjs
       - run: GESTES_REELS=1 CAPTURE_DIR=qa/captures/gestes node jeu/tests/parcours.cjs
+      - run: ULYSSE_REEL=1 CAPTURE_DIR=qa/captures/ulysse node jeu/tests/parcours.cjs
+      - run: MODE_JEU=debutant ULYSSE_REEL=1 CAPTURE_DIR=qa/captures/ulysse-debutant node jeu/tests/parcours.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
