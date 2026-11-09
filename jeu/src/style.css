@@ -708,3 +708,14 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .objectif { font-size: 14px; color: var(--cendre); }
 .objectif.ok { color: var(--or); font-weight: 700; }
 .objectif-gain { font-size: 14px; color: var(--or); }
+
+
+/* Ateliers vectoriels : la simulation conserve ses contrôles et ses valeurs. */
+.geste-scene:has(.atelier-illustre) { border: 2px solid #68472e; border-radius: 18px; overflow: hidden; box-shadow: 0 5px 16px #0003; }
+canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; height: auto; }
+.geste:has(.atelier-illustre) .geste-titre { font-family: ui-rounded, system-ui, sans-serif; font-weight: 850; font-size: 26px; letter-spacing: -.035em; }
+.geste:has(.atelier-illustre) .btn { min-height: 48px; border-radius: 10px; }
+.geste:has(.atelier-illustre) .geste-infos { border-radius: 12px; }
+
+.geste:has(.atelier-illustre) .mesure .l { white-space: normal; overflow: visible; line-height: 1.25; }
+.geste:has(.atelier-illustre) .mesure .v { font-family: system-ui, sans-serif; font-size: clamp(17px, 5vw, 23px); font-weight: 650; }
