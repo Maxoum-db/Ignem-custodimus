@@ -1627,7 +1627,6 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
   racine.Moteur = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
-
 </script>
 <script>/* Ignem custodimus — moteur de distillation (Ulysse, alambic ambulant à bois)
  * Fonctions pures, sans DOM. Unités : L, % vol, LAP (litres d'alcool pur), °C.
@@ -1906,7 +1905,6 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
   racine.Distillerie = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
-
 </script>
 <script>/* Ignem custodimus — moteur du chai : élevage en fût, part des anges, finitions, assemblage
  *
@@ -2155,7 +2153,6 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
 
   racine.Chai = { TYPES, TAILLES, ZONES, AXES, LIB_AXES, DEFAUTS, LIB_LIGNES, init, potentiel, etatInitial, vieillir, assembler, profil, pipette, noter, bouteilles, nom, conseil, get P() { return P; } };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
-
 </script>
 <script>/* Ignem custodimus — l'école du domaine : leçons (théorie + défi + quiz) qui débloquent des recettes
  * Chaque défi est vérifié par le moteur à la fin d'un brassin, d'une distillation ou d'une mise en bouteille.
@@ -2319,7 +2316,6 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
   ];
   racine.Ecole = { LECONS, fr };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
-
 </script>
 <script>/* Ignem custodimus — calendrier des saisons et vente au pigeonnier
  * Une semaine passe à chaque brassin et à chaque distillation ; l'année compte 52 semaines, la semaine 0 tombe le 1er mars.
@@ -2491,7 +2487,6 @@ canvas.atelier-illustre { image-rendering: auto; display: block; width: 100%; he
 
   racine.Vente = { SAISONS, saison, annee, semaineAn, mois, semaineDepuisDate, CAVE, fraicheur, PRIX, UNITE, TYPES, DEMANDES, clientsSemaine, commandeSemaine, satisfaction, prix, variationRep, verifier };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
-
 </script>
 <script>/* Ignem custodimus — présentation illustrée, sans dépendance métier.
  * Le jeu pixel-art reste inchangé tant que les visuels définitifs sont absents.
