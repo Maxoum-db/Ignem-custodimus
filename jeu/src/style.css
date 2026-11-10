@@ -877,3 +877,8 @@ html,body { margin:0; }
 .produit small { line-height:1.45; }
 .produit .btn { min-height:44px; white-space:normal; }
 @media(max-width:440px) { .produit { grid-template-columns:30px minmax(0,1fr); } .produit > .btn { grid-column:1 / -1; width:100%; } }
+
+/* Réputation : valeur réelle et jauge lisible indépendamment de la couleur. */
+.rep { gap:8px; }
+.rep-val { display:inline-block; font-size:17px; color:var(--or); margin-left:6px; }
+.barre-rep { min-height:12px; border-radius:10px; border:1px solid #977145; overflow:hidden; }
