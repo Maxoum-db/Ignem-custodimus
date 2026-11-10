@@ -2638,7 +2638,7 @@
       <div class="fut-contenu"><p><b>${esc(c.noms.join(' + '))}</b>${c.finition ? ' · en finition' : ''} · ${nf(V0, 0)} L entonnés sur ${Z.L} L (${Math.round(plein * 100)} %)${plein < 0.6 ? ' · <span class="alerte-txt">beaucoup de vide : risque d\'oxydation</span>' : ''}</p>
       <p class="age-fut">En fût depuis <b>${libAge(age)}</b>${c.finition ? ' (finition : 6 à 24 mois)' : ''}</p>
       <div class="dose"><label for="fut-ans">Prévoir : dans</label><span class="val" id="fut-ans-val">${plus ? libAge(plus) : 'aujourd\'hui'}</span>
-        <input type="range" id="fut-ans" min="0" max="${c.finition ? 2 : 12}" step="${c.finition ? 0.25 : 0.5}" value="${plus}"></div>
+        <input type="range" id="fut-ans" aria-describedby="prevision-statut" min="0" max="${c.finition ? 2 : 12}" step="${c.finition ? 0.25 : 0.5}" value="${plus}"></div>
       <div class="apercu-chai" id="apercu-chai">${apercuHTML(f, e, pip, n, bt, debutant, plus)}</div>
       <div class="actions-fut">
         <button class="btn btn-feu" id="fut-sortir" ${age < 1 / 52 ? 'disabled' : ''}>Sortir du fût (${libAge(age)})</button>
@@ -2648,7 +2648,7 @@
   function apercuHTML(f, e, pip, n, bt, debutant, plus) {
     const ange = 1 - e.V / f.contenu.etat.V;
     const axes = CH.AXES.map((k) => [k, CH.LIB_AXES[k]]);
-    return `<div class="apercu-haut"><span class="robe" style="background:${couleur(e.couleur * 0.6)}"></span>
+    return `<p class="prevision-statut ${plus ? "projetee" : "actuelle"}" id="prevision-statut" role="status">${plus ? `Prévision dans ${libAge(plus)} · le calendrier reste inchangé` : "État actuel du fût"}</p><div class="apercu-haut"><span class="robe" style="background:${couleur(e.couleur * 0.6)}"></span>
         <div class="chiffres"><span>${nf(e.V, 1)} L</span><span>${nf(e.degre, 1)} %</span><span>anges ${Math.round(ange * 100)} %</span><span>${bt.n} bout. à ${nf(bt.degre, 1)} %</span></div></div>
       <p class="nom-legal">${esc(CH.nom(e, bt.degre))}</p>
       <div class="pipette"><b>À la pipette :</b> ${pip.notes.length ? pip.notes.map((x) => `${esc(x.mot)} <small>(${x.force})</small>`).join(' · ') : 'alcool blanc, céréale'}${pip.bouche.length ? `<br><b>En bouche :</b> ${esc(pip.bouche.join(', '))}` : ''}</div>

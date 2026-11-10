@@ -822,3 +822,7 @@ html,body { margin:0; }
 .chai-defilement { font-size:13px; color:var(--cendre); margin:8px 0; }
 .chai-plan .zone-lib { position:sticky; left:0; width:calc(100vw - 64px); max-width:100%; white-space:normal; line-height:1.4; padding:4px 0; background:#261c14; }
 .chai-plan:focus-visible { outline:3px solid var(--braise); outline-offset:2px; }
+
+/* L’aperçu du chai annonce clairement la projection demandée. */
+.prevision-statut { margin:0; padding:8px 10px; border:1px solid #94734d; border-radius:10px; font-size:13px; font-weight:700; color:#f2dfbc; background:#34291e; }
+.prevision-statut.projetee { border-color:#e2a15a; background:#49311e; }

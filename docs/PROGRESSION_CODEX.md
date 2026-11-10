@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Série autorisée — mission 05/10 : Chai : distinguer la prévision du vieillissement réel
+
+Statut : terminée sur `work/serie-05-prevision`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Bandeau de statut actuel ou projeté, relié au curseur et actualisé depuis la valeur de prévision existante. Valeurs réellement mises à jour ; lot en fût et calendrier strictement inchangés lors de la projection et du retour à zéro.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/05-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/05-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Remplacer le carré de robe par un verre de dégustation lisse.
+
+
 ## Série autorisée — mission 04/10 : Chai : repères lisibles pendant le défilement
 
 Statut : terminée sur `work/serie-04-reperes-chai`, sans fusion. Autorisation utilisateur d’enchaîner
