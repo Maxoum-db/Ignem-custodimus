@@ -2648,7 +2648,7 @@
   function apercuHTML(f, e, pip, n, bt, debutant, plus) {
     const ange = 1 - e.V / f.contenu.etat.V;
     const axes = CH.AXES.map((k) => [k, CH.LIB_AXES[k]]);
-    return `<p class="prevision-statut ${plus ? "projetee" : "actuelle"}" id="prevision-statut" role="status">${plus ? `Prévision dans ${libAge(plus)} · le calendrier reste inchangé` : "État actuel du fût"}</p><div class="apercu-haut"><span class="robe" style="background:${couleur(e.couleur * 0.6)}"></span>
+    return `<p class="prevision-statut ${plus ? "projetee" : "actuelle"}" id="prevision-statut" role="status">${plus ? `Prévision dans ${libAge(plus)} · le calendrier reste inchangé` : "État actuel du fût"}</p><div class="apercu-haut"><span class="robe robe-verre" role="img" aria-label="Robe du spiritueux, ${nf(e.couleur * 0.6, 0)} EBC" style="--robe:${couleur(e.couleur * 0.6)}"></span>
         <div class="chiffres"><span>${nf(e.V, 1)} L</span><span>${nf(e.degre, 1)} %</span><span>anges ${Math.round(ange * 100)} %</span><span>${bt.n} bout. à ${nf(bt.degre, 1)} %</span></div></div>
       <p class="nom-legal">${esc(CH.nom(e, bt.degre))}</p>
       <div class="pipette"><b>À la pipette :</b> ${pip.notes.length ? pip.notes.map((x) => `${esc(x.mot)} <small>(${x.force})</small>`).join(' · ') : 'alcool blanc, céréale'}${pip.bouche.length ? `<br><b>En bouche :</b> ${esc(pip.bouche.join(', '))}` : ''}</div>
