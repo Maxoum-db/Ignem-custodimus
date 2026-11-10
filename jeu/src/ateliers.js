@@ -217,10 +217,13 @@
   const painters={ulysse:still,courbes:distillationChart,recette:recipe,emp:mash,fil:filter,ebu:boil,fer:ferment,bou:bottling};
   function render(ctx,name,state){
     if(!ctx||!painters[name])return false;
-    const cv=ctx.canvas,width=cv.getBoundingClientRect().width||360,dpr=Math.min(devicePixelRatio||1,3),height=width*H/W;
+    const cv=ctx.canvas,dpr=Math.min(devicePixelRatio||1,3);
+    // La classe modifie parfois la grille parente (Ulysse passe de 96 px à pleine largeur).
+    // Appliquer le style avant de mesurer évite d’agrandir une petite image basse résolution.
+    cv.classList.add('atelier-illustre');cv.style.aspectRatio=`${W} / ${H}`;
+    const width=cv.getBoundingClientRect().width||360,height=width*H/W;
     const rw=Math.round(width*dpr),rh=Math.round(height*dpr);
     if(cv.width!==rw||cv.height!==rh){cv.width=rw;cv.height=rh}
-    cv.classList.add('atelier-illustre');cv.style.aspectRatio=`${W} / ${H}`;
     ctx.setTransform(rw/W,0,0,rh/H,0,0);ctx.clearRect(0,0,W,H);ctx.imageSmoothingEnabled=true;
     room(ctx,name);painters[name](ctx,state);ctx.setTransform(1,0,0,1,0,0);
     return true;
