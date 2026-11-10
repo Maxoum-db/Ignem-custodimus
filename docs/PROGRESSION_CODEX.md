@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Série autorisée — mission 02/10 : Catalogue : miniatures de fûts illustrées
+
+Statut : terminée sur `work/serie-02-catalogue`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+SVG mutualisé dans une variable CSS, sans duplication ni image réseau. Miniatures agrandies ; vrai achat vérifié, fût sauvegardé et écus débités. Sélecteurs du test corrigés pour utiliser Fournisseurs puis Fûts.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/02-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/02-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre sélection et remplissage des fûts explicites.
+
+
 ## Série autorisée — mission 01/10 : Cour : fûts illustrés et rangement mobile vérifié
 
 Statut : terminée sur `work/serie-01-cour`, sans fusion. Autorisation utilisateur d’enchaîner
