@@ -1,5 +1,57 @@
 # Progression Codex
 
+## Pigeonnier — mission 10/10 : Pigeonnier : états vides utiles et navigation de reprise
+
+Statut : terminée sur `work/pigeonnier-10-etats-vides`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Comptoir sans client et cave vide affichés en cartes lisibles. Le bouton Préparer une bière ouvre réellement la brasserie sans modifier stock, points ou écus. Validation commune et correctif des fixtures CI documentés ; aucune autre mission commencée.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/10-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p10-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Harmoniser les cartes de leçons de la veillée sans modifier les quiz.
+
+
+## Pigeonnier — validation commune de la deuxième série
+
+Dix missions depuis le main intégré `a0a536d` : portraits SVG historiques,
+demandes sur parchemin, bouteilles de cave, propositions tactiles, réputation,
+satisfaction, échéances, stocks partiels, négociant et états vides. Aucun nouveau
+travail fusionné ; première série intégrée auparavant via #37 sur autorisation.
+Branches/PR empilées pour une revue et une reprise indépendantes.
+
+Validation finale locale : six suites Node, les vingt scénarios des deux séries
+à 320/390 px, smoke mobile, huit rendus et parcours complet jusqu’au spiritueux
+vieilli/vente réussis. Reconstruction des deux HTML reproductible par SHA-256,
+syntaxe JS et diff contrôlés. Aucun diff dans les moteurs métier ni le format de
+sauvegarde. Captures réelles du code final actualisées. Pas d’Android physique,
+Safari ni rejeu des gestes chronométrés complets dans cette exécution.
+
+Les CI initiales des missions 1–4 sont réussies. Les runs 42898154811 et
+42898500140 ont révélé des cartes absentes à la lecture immédiate dans les tests
+01/03. Correctif du support QA dans la dernière mission : attente du domaine prêt
+et de l’écran réellement visible ; fixture injectée une seule fois avant le
+lancement du jeu avec addInitScript, plutôt que sur une page active. Les dix
+contrôles pigeonnier et les deux destinations de navigation ont réussi après ce
+correctif. Le délai du job CI passe à 15 minutes pour les vingt scénarios et les
+parcours existants. La CI du dernier commit corrigé est à vérifier après push.
+Les échecs intermédiaires ne sont pas présentés comme des validations réussies.
+
+Pour les états sans client, le test utilise les vrais boutons de congé après la
+génération normale du jeu ; il ne suppose pas que le chargement laisse le comptoir
+vide. Les écus des fixtures sont normalisés pour éviter la migration historique.
+La pénalité de vente partielle est comparée au moteur avant tout arrondi.
+
+Arrêt après la dixième mission. Prochaine proposition unique : harmoniser les
+cartes de leçons de la veillée sans modifier les quiz. Aucun déploiement Sites
+pendant cette série ; la publication existante est conservée.
+
+
 ## Pigeonnier — mission 09/10 : Négociant : confirmation avec quantité et prix exacts
 
 Statut : terminée sur `work/pigeonnier-09-negociant`, sans fusion. Autorisation utilisateur d’enchaîner

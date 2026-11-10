@@ -904,3 +904,8 @@ html,body { margin:0; }
 
 /* Cession au négociant : la seconde action affiche quantité et prix exacts. */
 .produit [data-negociant][data-confirme="1"] { background:#e0a05b; color:#2b1c11; border:2px solid #f0c486; font-weight:750; }
+
+/* États vides : une indication utile, reliée aux écrans de production existants. */
+.vente-vide { display:grid; justify-items:start; gap:10px; border:1px dashed #9a794e; border-radius:14px; padding:16px; background:#2d2319; margin-bottom:12px; }
+.vente-vide > b { font-size:18px; color:#e6c58e; }
+.vente-vide p { margin:0; font-size:15px; line-height:1.5; color:var(--cendre); }

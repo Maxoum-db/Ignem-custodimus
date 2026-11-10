@@ -913,6 +913,11 @@ html,body { margin:0; }
 
 /* Cession au négociant : la seconde action affiche quantité et prix exacts. */
 .produit [data-negociant][data-confirme="1"] { background:#e0a05b; color:#2b1c11; border:2px solid #f0c486; font-weight:750; }
+
+/* États vides : une indication utile, reliée aux écrans de production existants. */
+.vente-vide { display:grid; justify-items:start; gap:10px; border:1px dashed #9a794e; border-radius:14px; padding:16px; background:#2d2319; margin-bottom:12px; }
+.vente-vide > b { font-size:18px; color:#e6c58e; }
+.vente-vide p { margin:0; font-size:15px; line-height:1.5; color:var(--cendre); }
 </style>
 
 <div id="app">
@@ -6072,10 +6077,10 @@ html,body { margin:0; }
         <div class="rep"><span>Réputation : <b>${niveauRep()}</b> <strong class="rep-val">${V.rep}/100</strong></span><span class="barre-rep" role="meter" aria-label="Réputation du domaine" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${V.rep}"><i style="width:${Math.min(100, V.rep)}%"></i></span><span class="det">${V.vendus} ventes · ${V.ca} écus encaissés</span></div></div>
       ${derniereVente ? `<div role="status" class="vente-resultat ${derniereVente.s > 0.65 ? 'ok' : derniereVente.s < 0.45 ? 'ko' : ''}"><b>${esc(derniereVente.nom)} :</b> « ${esc(derniereVente.detail)} »<br>${derniereVente.txt}<div class="satisfaction" role="meter" aria-label="Satisfaction du client" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(derniereVente.s * 100)}"><span>Satisfaction : ${Math.round(derniereVente.s * 100)} %</span><span class="satisfaction-barre" aria-hidden="true"><i style="width:${Math.round(derniereVente.s * 100)}%"></i></span></div></div>` : ''}
       <h2 class="sous-titre">Clients du jour ${iBtn("Chaque semaine, de nouveaux clients passent : ils décrivent ce qu'ils cherchent. Propose une bouteille de ta cave. Leur satisfaction dépend des critères respectés, de la qualité au jury et de la fraîcheur : elle fixe le prix, le pourboire et la réputation. Les clients repartent au bout de deux semaines.")}</h2>
-      ${V.clients.length ? V.clients.map((c) => carteClient(c, prods)).join('') : '<p class="vide">Personne pour l\'instant. De nouveaux clients viendront la semaine prochaine : un brassin, une distillation ou un passage au chai font avancer le temps.</p>'}
+      ${V.clients.length ? V.clients.map((c) => carteClient(c, prods)).join('') : '<div class="vente-vide"><b>Le comptoir est calme</b><p>Personne pour l\'instant. De nouveaux clients viendront la semaine prochaine : un brassin, une distillation ou un passage au chai font avancer le temps.</p></div>'}
       ${V.commandes.length ? `<h2 class="sous-titre">Commandes spéciales</h2>${V.commandes.map((c) => carteCommande(c, prods)).join('')}` : V.rep < 35 ? '<p class="page-intro">Les commandes spéciales (fêtes, marchés, auberges) arrivent quand le domaine est apprécié.</p>' : ''}
       <h2 class="sous-titre">Ta cave</h2>
-      ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · tout le stock · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<p class="vide">La cave est vide. Chaque brassin y met le volume de ta brasserie ; l\'alambic et le chai ajoutent des bouteilles.</p>'}`;
+      ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · tout le stock · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<div class="vente-vide"><b>La cave est vide</b><p>Chaque brassin y met le volume de ta brasserie ; l\'alambic et le chai ajoutent des bouteilles.</p><button class="btn btn-feu" data-aller="brasserie">Préparer une bière</button></div>'}`;
   }
   function portraitClient(nom) {
     const svg = corps => "data:image/svg+xml;charset=utf-8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g stroke="#3b2a1e" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">' + corps + "</g></svg>");

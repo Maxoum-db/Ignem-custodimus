@@ -18,7 +18,7 @@ module.exports=async function run(name,check){
     ],lots:[{id:'lot1',nom:'Cuve témoin',noms:['Lot témoin'],etat},{id:'lot2',nom:'Deuxième cuve',noms:['Autre lot'],etat} ]}}));
    });await page.reload();
    const dismiss=async()=>{if(await page.locator('#tuto-passer').isVisible())await page.locator('#tuto-passer').click()};
-   const nav=async(screen)=>{await dismiss();await page.locator('.marque').click();await page.locator('#lieux').getByRole('button',{name:{chai:'Chai',catalogue:'Pigeonnier'}[screen],exact:true}).click();await dismiss();await page.waitForTimeout(350)};
+   const nav=async(screen)=>{await dismiss();await page.locator('.marque').click();await page.evaluate(()=>window.DomaineIllustre?.ready);await page.locator('#lieux').getByRole('button',{name:{chai:'Chai',catalogue:'Pigeonnier'}[screen],exact:true}).click();await page.locator('#ecran-'+screen).waitFor({state:'visible'});await dismiss();await page.waitForTimeout(350)};
    const save=async()=>{await page.waitForTimeout(350);return page.evaluate(()=>JSON.parse(localStorage.getItem('ignem.v1')))};
    const snap=async(selector)=>{fs.mkdirSync('docs/captures/serie',{recursive:true});const el=selector?page.locator(selector):page;await el.screenshot({path:`docs/captures/serie/${name}-${width}.png`})};
    await check({page,width,nav,save,snap,assert,dismiss});
