@@ -962,3 +962,9 @@ html,body { margin:0; }
 #veillee-question .reponses button { min-height:48px; border:1px solid #826441; border-radius:12px; padding:12px; font-size:16px; line-height:1.45; }
 #veillee-question .reponses button:focus-visible { outline:3px solid var(--calcaire); outline-offset:2px; }
 .question-retour { font-size:16px; line-height:1.5; margin:0; }
+
+/* Les mentors des leçons réutilisent les mêmes portraits que le dialogue du jeu. */
+.lecon-mentor { display:flex; gap:12px; align-items:flex-start; }
+.lecon-mentor img { width:48px; height:48px; flex:none; border-radius:12px; object-fit:contain; image-rendering:auto; background:#d9c398; }
+.lecon-mentor div { min-width:0; }
+.lecon-mentor .module { margin:0 0 4px; }

@@ -1,5 +1,53 @@
 # Progression Codex
 
+## Veillée — mission 10/10 : Leçons : portraits réutilisés de Lise et Firmin
+
+Statut : terminée sur `work/veillee-10-mentors`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+La fiche indique son mentor avec le portrait existant du dialogue. Décodages Lise 512 px et Firmin 144 px vérifiés ; mise à jour prévue si Firmin finit son chargement après ouverture. École et écus inchangés pendant la lecture. Validation commune des trois séries consignée.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/10-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v10-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Harmoniser la lecture des fiches techniques liées aux leçons, sans modifier leurs textes.
+
+
+## Veillée — validation commune finale
+
+Dix missions depuis main `9680401` : cartes, statuts/prérequis, théorie,
+étapes, progression, réponses de leçons, correction textuelle, quota quotidien,
+questions du soir et portraits réutilisés des mentors. Aucune nouvelle fusion
+ni publication. Les neuf premières PR de veillée ont leur CI réussie au relevé.
+Le run 42901927573 du correctif de parcours précédent est confirmé entièrement
+réussi, y compris gestes chronométrés et Ulysse expert/débutant.
+
+Validation locale finale : six suites Node, vingt scénarios des deux séries
+précédentes et dix scénarios veillée à 320/390 px, smoke mobile, huit rendus et
+parcours complet réussis. Le passage groupé a terminé les vingt anciens scénarios
+puis rencontré un timeout de 30 s sur le chargement global pendant v01. Le support
+QA attend désormais DOMContentLoaded puis les écrans visés et les décodages
+explicites ; les dix scénarios veillée ont été rejoués avec succès, ainsi que les
+deux familles de navigation précédentes. Assertions et règles du jeu inchangées.
+HTML reproductibles par SHA-256, syntaxe JS et diff vérifiés. Aucun diff des moteurs.
+Les parcours chronométrés ont été rejoués au préalable avant fusion du pigeonnier.
+
+Fichiers de cette série : `jeu/src/style.css`, `jeu/src/jeu.js` (présentation),
+`dist/index.html`, `dist/artefact.html`, `jeu/tests/veillee/`, support partagé
+`jeu/tests/finitions/support.cjs`, workflow de validation, présent journal et
+captures réelles `docs/captures/serie/v01-*` à `v10-*`, actualisées sur le code final.
+Aucun nouveau format de sauvegarde ni nouvelle ressource graphique source :
+les portraits sont ceux déjà intégrés au dialogue du jeu. Pas de test sur appareil
+Android physique ou Safari ; nouvelle CI du dernier commit à vérifier après push.
+
+Arrêt après la dixième mission. Prochaine proposition unique : harmoniser la
+lecture des fiches techniques accessibles depuis les leçons, sans changer les textes.
+
+
 ## Veillée — mission 09/10 : Questions du soir : réponses tactiles et correction textuelle
 
 Statut : terminée sur `work/veillee-09-questions`, sans fusion. Autorisation utilisateur d’enchaîner

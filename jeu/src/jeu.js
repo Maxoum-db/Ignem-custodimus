@@ -202,6 +202,7 @@
           .4 * portrait.width, .2667 * portrait.height, 0, 0, 144, 144);
         const ancien = SPR.firmin; SPR.firmin = cv.toDataURL();
         if ($('#mentor-portrait').src === ancien) $('#mentor-portrait').src = SPR.firmin;
+        $$('[data-portrait-mentor="Firmin"]').forEach(img => { if (img.src === ancien) img.src = SPR.firmin; });
       } catch { /* Conserver le portrait historique si le dessin échoue. */ }
     };
     portrait.src = window.IMAGES_JEU['personnage-firmin'];
@@ -3410,7 +3411,7 @@
     else bas = `<div class="lecon-etapes"><div class="etape ${e.defi ? 'ok' : ''}"><b>${e.defi ? '✓' : '1'} Défi</b><p>${esc(l.defi.txt)}</p>${e.defi ? '' : `<button class="btn btn-mini btn-sobre" data-aller="${{ biere: 'brasserie', edv: 'distillerie', vieilli: 'chai' }[l.defi.type]}">Y aller</button>`}</div>
       <div class="etape ${e.quiz ? 'ok' : ''}"><b>${e.quiz ? '✓' : '2'} Trois questions</b>${e.quiz ? '<p>Réussies.</p>' : quiz ? quizHTML(l, quiz) : `<p>Deux bonnes réponses sur trois suffisent.</p><button class="btn btn-mini" data-quizlecon="${l.id}">Répondre</button>`}</div></div>`;
     return `<button class="btn btn-mini btn-sobre" data-retourlecons>← Toutes les leçons</button>
-      <article class="lecon-detail"><p class="module">${esc(l.mentor)} · leçon</p><h2>${esc(l.titre)}</h2>
+      <article class="lecon-detail"><header class="lecon-mentor"><img src="${l.mentor === "Firmin" ? SPR.firmin : SPR.lise}" data-portrait-mentor="${esc(l.mentor)}" alt="" width="48" height="48"><div><p class="module">${esc(l.mentor)} · leçon</p><h2>${esc(l.titre)}</h2></div></header>
       ${l.theorie.map((p) => `<p>${esc(p)}</p>`).join('')}
       <p><button class="btn btn-mini btn-sobre" data-fiche="${l.fiche}">Fiche complète</button></p>
       <p class="recomp-ligne"><b>Récompense :</b> ${esc(recompenseTexte(l))}</p><div class="lecon-progression" role="meter" aria-label="Étapes de la leçon validées" aria-valuemin="0" aria-valuemax="2" aria-valuenow="${avance}"><span>Étapes validées : ${avance}/2</span><span class="lecon-progression-barre" aria-hidden="true"><i style="width:${avance * 50}%"></i></span></div>${bas}</article>`;
