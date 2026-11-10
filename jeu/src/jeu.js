@@ -3403,6 +3403,7 @@
   function detailLecon(l) {
     const e = etatLecon(l.id);
     const quiz = quizLecon && quizLecon.id === l.id ? quizLecon : null;
+    const avance = e?.faite ? 2 : Number(!!e?.defi) + Number(!!e?.quiz);
     let bas;
     if (!e) bas = `<button class="btn btn-feu" data-commencer="${l.id}">Commencer la leçon</button>`;
     else if (e.faite) bas = `<p class="lecon-ok">Leçon réussie. Reçu : ${esc((e.recus || []).join(' · ') || recompenseTexte(l))}</p>`;
@@ -3412,7 +3413,7 @@
       <article class="lecon-detail"><p class="module">${esc(l.mentor)} · leçon</p><h2>${esc(l.titre)}</h2>
       ${l.theorie.map((p) => `<p>${esc(p)}</p>`).join('')}
       <p><button class="btn btn-mini btn-sobre" data-fiche="${l.fiche}">Fiche complète</button></p>
-      <p class="recomp-ligne"><b>Récompense :</b> ${esc(recompenseTexte(l))}</p>${bas}</article>`;
+      <p class="recomp-ligne"><b>Récompense :</b> ${esc(recompenseTexte(l))}</p><div class="lecon-progression" role="meter" aria-label="Étapes de la leçon validées" aria-valuemin="0" aria-valuemax="2" aria-valuenow="${avance}"><span>Étapes validées : ${avance}/2</span><span class="lecon-progression-barre" aria-hidden="true"><i style="width:${avance * 50}%"></i></span></div>${bas}</article>`;
   }
   function quizHTML(l, q) {
     const [enonce, bonne, faux] = l.quiz[q.i];
