@@ -1,0 +1,3 @@
+require('./support.cjs')('03-lecture',async({page,save,assert})=>{
+ const before=await save();await page.locator('[data-lecon="empatage"]').click();const texts=await page.evaluate(()=>Ecole.LECONS[0].theorie);for(const t of texts)assert.ok(await page.getByText(t,{exact:true}).isVisible());assert.ok(await page.locator('.lecon-detail h2').evaluate(e=>parseFloat(getComputedStyle(e).fontSize)>=22));assert.match(await page.locator('.recomp-ligne').textContent(),/15 écus/);await page.locator('.lecon-detail').screenshot({path:`docs/captures/serie/v03-lecture-${await page.evaluate(()=>innerWidth)}.png`});assert.deepEqual((await save()).ecole,before.ecole);
+}).catch(e=>{console.error(e);process.exitCode=1});

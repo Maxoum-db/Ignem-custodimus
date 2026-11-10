@@ -922,3 +922,10 @@ html,body { margin:0; }
 #veillee-lecons .lecon-statut { padding:4px 7px; border-radius:7px; background:#453624; color:#f0ddba; }
 #veillee-lecons .lecon.faite { border-color:var(--houblon); box-shadow:inset 0 0 0 1px var(--houblon); }
 #veillee-lecons .lecon.cours { border-color:var(--braise); box-shadow:inset 0 0 0 1px var(--braise); }
+
+/* Lecture : même texte de théorie, rythme et largeur adaptés au téléphone. */
+.lecon-detail { border:1px solid #8b6a44; border-radius:16px; padding:16px; gap:14px; box-shadow:0 4px 12px #0003; }
+.lecon-detail h2 { font-size:22px; line-height:1.3; }
+.lecon-detail > p { font-size:16px; line-height:1.65; max-width:62ch; overflow-wrap:anywhere; }
+.lecon-detail .module { font-size:14px; color:#dac6a3; }
+.lecon-detail .recomp-ligne { padding:10px; border-radius:10px; border:1px solid #80693d; background:#352c1c; color:#f5d791; }
