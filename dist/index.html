@@ -835,6 +835,10 @@ html,body { margin:0; }
 /* L’aperçu du chai annonce clairement la projection demandée. */
 .prevision-statut { margin:0; padding:8px 10px; border:1px solid #94734d; border-radius:10px; font-size:13px; font-weight:700; color:#f2dfbc; background:#34291e; }
 .prevision-statut.projetee { border-color:#e2a15a; background:#49311e; }
+
+/* Verre de pipette : la couleur vient toujours du lot ou de sa projection. */
+.robe.robe-verre { position:relative; width:46px; height:62px; border:2px solid #d5e3d2; border-radius:6px 6px 20px 20px; box-shadow:inset 4px 0 0 #fff3,inset -5px 0 0 #1b171933,0 3px 6px #0005; background:linear-gradient(to bottom,#d5e3d233 0 20%,var(--robe) 20% 100%); }
+.robe-verre::after { content:""; position:absolute; inset:6px auto 12px 7px; width:3px; border-radius:3px; background:#fff7; }
 </style>
 
 <div id="app">
@@ -5586,7 +5590,7 @@ html,body { margin:0; }
   function apercuHTML(f, e, pip, n, bt, debutant, plus) {
     const ange = 1 - e.V / f.contenu.etat.V;
     const axes = CH.AXES.map((k) => [k, CH.LIB_AXES[k]]);
-    return `<p class="prevision-statut ${plus ? "projetee" : "actuelle"}" id="prevision-statut" role="status">${plus ? `Prévision dans ${libAge(plus)} · le calendrier reste inchangé` : "État actuel du fût"}</p><div class="apercu-haut"><span class="robe" style="background:${couleur(e.couleur * 0.6)}"></span>
+    return `<p class="prevision-statut ${plus ? "projetee" : "actuelle"}" id="prevision-statut" role="status">${plus ? `Prévision dans ${libAge(plus)} · le calendrier reste inchangé` : "État actuel du fût"}</p><div class="apercu-haut"><span class="robe robe-verre" role="img" aria-label="Robe du spiritueux, ${nf(e.couleur * 0.6, 0)} EBC" style="--robe:${couleur(e.couleur * 0.6)}"></span>
         <div class="chiffres"><span>${nf(e.V, 1)} L</span><span>${nf(e.degre, 1)} %</span><span>anges ${Math.round(ange * 100)} %</span><span>${bt.n} bout. à ${nf(bt.degre, 1)} %</span></div></div>
       <p class="nom-legal">${esc(CH.nom(e, bt.degre))}</p>
       <div class="pipette"><b>À la pipette :</b> ${pip.notes.length ? pip.notes.map((x) => `${esc(x.mot)} <small>(${x.force})</small>`).join(' · ') : 'alcool blanc, céréale'}${pip.bouche.length ? `<br><b>En bouche :</b> ${esc(pip.bouche.join(', '))}` : ''}</div>

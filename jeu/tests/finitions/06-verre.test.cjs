@@ -1,0 +1,4 @@
+require('./support.cjs')('06-verre',async({page,nav,save,snap,assert})=>{
+ await nav('chai');await page.locator('[data-fut="plein"]').click();const before=await save();const glass=page.locator('.robe-verre');assert.equal(await glass.getAttribute('role'),'img');assert.match(await glass.getAttribute('aria-label'),/EBC/);const color=await glass.evaluate(e=>getComputedStyle(e).getPropertyValue('--robe'));assert.match(color,/rgb/);assert.ok(await glass.evaluate(e=>parseFloat(getComputedStyle(e).borderBottomLeftRadius)>0));
+ await page.locator('#fut-ans').fill('4');await page.locator('#fut-ans').dispatchEvent('input');const changed=await page.locator('.robe-verre').evaluate(e=>getComputedStyle(e).getPropertyValue('--robe'));assert.notEqual(changed,color);assert.deepEqual((await save()).chai,before.chai);await snap('.apercu-haut');
+}).catch(e=>{console.error(e);process.exitCode=1});
