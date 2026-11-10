@@ -1,5 +1,54 @@
 # Progression Codex
 
+## Série autorisée — mission 10/10 : Bâtiments : niveaux lisibles et travaux vérifiés
+
+Statut : terminée sur `work/serie-10-batiments`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Niveaux affichés en texte et accessibles, pastilles lisses et cartes lisibles à 320 px. Lancement réel des travaux vérifié : débit des écus et chantier sauvegardé, niveau inchangé avant la fin. Validation commune de la série consignée ci-dessous, avec captures finales actualisées.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/10-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/10-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Auditer puis réutiliser les portraits illustrés des clients du pigeonnier, sans commencer ici.
+
+
+## Série de dix — validation commune avant livraison
+
+Demande utilisateur : « Étape — Peux-tu en enchaîner une dizaine ? ».
+Dix missions successives, branches/PR empilées depuis main `de0d7cc` ; aucune
+fusion ni publication pendant cette série. La version Sites 11 reste inchangée.
+Les anciennes PR #1–#13 ont été examinées à la reprise et restent hors périmètre.
+Aucune modification locale préalable ; aucune branche main utilisée pour travailler.
+
+Les dix scénarios mobiles indépendants ont été rejoués sur le code final, à
+320/390 px, DPR 2 : rangement/sortie de la cour, achat catalogue, sélection/états,
+repères du plan, prévision non destructive, robe de la pipette, assemblage de cuves,
+profil aromatique, notifications/mouvement réduit et lancement de travaux.
+Le premier passage groupé a rencontré un timeout de navigation à 7 secondes sous
+charge ; délai de navigation du support de test porté à 30 secondes, puis les
+scénarios restants ont réussi. Délai des assertions inchangé. Fixture bâtiment
+complétée avec les listes normales de vente et tolérance du tableau travaux absent ;
+aucun correctif du moteur nécessaire. Captures de la série actualisées sur le code
+final, plutôt que des maquettes.
+
+Validation commune : six suites Node, smoke mobile, huit rendus et parcours
+complet jusqu’au spiritueux vieilli/vente réussis. Reconstruction reproductible des
+deux HTML par comparaison SHA-256 avant/après build, `node --check` et
+`git diff --check` réussis. Diff nul sur les moteurs métier. Pas de test sur
+Android physique ni Safari ; gestes chronométrés complets non rejoués localement.
+CI GitHub confirmée réussie pour les missions 1–8 ; mission 9 encore en cours
+au relevé. La CI du dernier commit sera à vérifier après son push.
+
+Après la dixième mission, arrêt de la série. Prochaine proposition unique :
+réutiliser les portraits illustrés des clients du pigeonnier, après audit des
+branches historiques pour éviter toute recréation.
+
+
 ## Série autorisée — mission 09/10 : Animations : notifications et radar lisibles en mouvement réduit
 
 Statut : terminée sur `work/serie-09-notifications`, sans fusion. Autorisation utilisateur d’enchaîner

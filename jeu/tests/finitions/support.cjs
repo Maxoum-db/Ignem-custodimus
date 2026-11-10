@@ -6,7 +6,7 @@ module.exports=async function run(name,check){
  try{
   browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{})});
   for(const width of [320,390]){
-   const page=await browser.newPage({viewport:{width,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:'reduce'});page.setDefaultTimeout(7000);
+   const page=await browser.newPage({viewport:{width,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:'reduce'});page.setDefaultTimeout(7000);page.setDefaultNavigationTimeout(30000);
    const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});await page.route('https://**/*',r=>r.abort());
    await page.goto(`http://127.0.0.1:${server.address().port}`);
    await page.evaluate(()=>{

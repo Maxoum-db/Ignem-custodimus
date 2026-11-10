@@ -846,3 +846,10 @@ html,body { margin:0; }
 /* Le profil reste visible immédiatement, même lorsque l’animation est réduite. */
 .radar-chai .poly { animation:deploie .45s ease-out both; }
 @media(prefers-reduced-motion:reduce) { .radar .poly { animation:none !important; transform:none; } }
+
+/* Bâtiments : les niveaux se lisent aussi en texte, sans compter les carrés. */
+.bat-tete { gap:12px; align-items:flex-start; flex-wrap:wrap; }
+.bat-progression { display:grid; gap:5px; justify-items:end; flex:none; }
+.niveau-lib { color:var(--cendre); font-size:12px; font-weight:600; }
+.bat-progression .niveaux i { width:12px; height:12px; border:1px solid #a68457; border-radius:50%; box-shadow:none; }
+.batiment { border-radius:14px; border:1px solid #725238; padding:12px; box-shadow:0 3px 8px #0003; }

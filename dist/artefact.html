@@ -848,6 +848,13 @@ html,body { margin:0; }
 /* Le profil reste visible immédiatement, même lorsque l’animation est réduite. */
 .radar-chai .poly { animation:deploie .45s ease-out both; }
 @media(prefers-reduced-motion:reduce) { .radar .poly { animation:none !important; transform:none; } }
+
+/* Bâtiments : les niveaux se lisent aussi en texte, sans compter les carrés. */
+.bat-tete { gap:12px; align-items:flex-start; flex-wrap:wrap; }
+.bat-progression { display:grid; gap:5px; justify-items:end; flex:none; }
+.niveau-lib { color:var(--cendre); font-size:12px; font-weight:600; }
+.bat-progression .niveaux i { width:12px; height:12px; border:1px solid #a68457; border-radius:50%; box-shadow:none; }
+.batiment { border-radius:14px; border:1px solid #725238; padding:12px; box-shadow:0 3px 8px #0003; }
 </style>
 
 <div id="app">
@@ -3696,7 +3703,7 @@ html,body { margin:0; }
           <button class="btn btn-feu btn-mini" data-construire="${k}" ${manqueRep || manqueEcus ? 'disabled' : ''}>${manqueRep ? `Réputation ${S.vente.rep}/${suiv.rep}` : manqueEcus ? `Il manque ${suiv.prix - S.ecus} écus` : `Lancer les travaux · ${suiv.prix} écus`}</button></div>`;
       } else action = '<p class="det">Niveau maximal.</p>';
       const nivMax = B.niveaux.length - 1;
-      return `<div class="batiment ${n ? '' : 'nu'}"><div class="bat-tete"><b>${esc(B.nom)}</b><span class="niveaux">${Array.from({ length: nivMax }, (_, i) => `<i class="${i + 1 <= n ? 'plein' : ''}"></i>`).join('')}</span></div>
+      return `<div class="batiment ${n ? '' : 'nu'}"><div class="bat-tete"><b>${esc(B.nom)}</b><span class="bat-progression"><span class="niveaux" role="img" aria-label="${esc(B.nom)} : niveau ${n} sur ${nivMax}">${Array.from({ length: nivMax }, (_, i) => `<i aria-hidden="true" class="${i + 1 <= n ? 'plein' : ''}"></i>`).join('')}</span><span class="niveau-lib" aria-hidden="true">Niveau ${n}/${nivMax}</span></span></div>
         <p><b>${esc(cur.nom)}</b> · ${esc(cur.desc)}</p>${action}</div>`;
     }).join('');
     $('#bat-equip').innerHTML = Object.entries(EQUIPEMENTS).map(([k, e]) => {

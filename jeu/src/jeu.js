@@ -745,7 +745,7 @@
           <button class="btn btn-feu btn-mini" data-construire="${k}" ${manqueRep || manqueEcus ? 'disabled' : ''}>${manqueRep ? `Réputation ${S.vente.rep}/${suiv.rep}` : manqueEcus ? `Il manque ${suiv.prix - S.ecus} écus` : `Lancer les travaux · ${suiv.prix} écus`}</button></div>`;
       } else action = '<p class="det">Niveau maximal.</p>';
       const nivMax = B.niveaux.length - 1;
-      return `<div class="batiment ${n ? '' : 'nu'}"><div class="bat-tete"><b>${esc(B.nom)}</b><span class="niveaux">${Array.from({ length: nivMax }, (_, i) => `<i class="${i + 1 <= n ? 'plein' : ''}"></i>`).join('')}</span></div>
+      return `<div class="batiment ${n ? '' : 'nu'}"><div class="bat-tete"><b>${esc(B.nom)}</b><span class="bat-progression"><span class="niveaux" role="img" aria-label="${esc(B.nom)} : niveau ${n} sur ${nivMax}">${Array.from({ length: nivMax }, (_, i) => `<i aria-hidden="true" class="${i + 1 <= n ? 'plein' : ''}"></i>`).join('')}</span><span class="niveau-lib" aria-hidden="true">Niveau ${n}/${nivMax}</span></span></div>
         <p><b>${esc(cur.nom)}</b> · ${esc(cur.desc)}</p>${action}</div>`;
     }).join('');
     $('#bat-equip').innerHTML = Object.entries(EQUIPEMENTS).map(([k, e]) => {
