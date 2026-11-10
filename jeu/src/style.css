@@ -276,11 +276,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .tableau-wrap { overflow-x: auto; }
 .verres-aveugle { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .verre-a { background: var(--four); box-shadow: var(--cadre); padding: 8px; display: flex; flex-direction: column; gap: 6px; align-items: center; text-align: center; min-width: 0; }
-.verre-a canvas { width: 40px; height: 60px; }
+.verre-a .verre-degustation { width: 46px; height: auto; }
 .verre-a .lettre { font-family: var(--f-titre); font-size: 12px; color: var(--braise); }
 .verre-a .odeurs { font-size: 13px; min-height: 3.2em; }
 .verre-a .choix { display: flex; flex-direction: column; gap: 4px; width: 100%; }
-.verre-a .choix button { border: 0; padding: 5px 2px; font-size: 13px; background: var(--nuit); color: var(--cendre); box-shadow: 0 0 0 2px var(--pierre); }
+.verre-a .choix button { min-height: 44px; border: 0; padding: 5px 2px; font-size: 13px; background: var(--nuit); color: var(--cendre); box-shadow: 0 0 0 2px var(--pierre); }
 .verre-a .choix button[aria-pressed="true"] { background: var(--calcaire); color: var(--nuit); }
 .verre-a.juste { box-shadow: 0 0 0 3px var(--houblon); }
 .verre-a.faux { box-shadow: 0 0 0 3px var(--alerte); }
@@ -325,7 +325,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 
 /* ---------- Dégustation ---------- */
 .degust-haut { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; }
-#verre { width: 96px; height: 144px; display: block; }
+#verre { width: 96px; min-height: 132px; border-radius: 12px; background: radial-gradient(ellipse at 50% 47%, #554536, #221912 78%); }
+.verre-degustation { display: block; width: 100%; height: auto; }
+.verre-liquide-anime { animation: remplir-verre 1.3s ease-out both; }
+@keyframes remplir-verre { from { transform: translateY(100px); } }
+@media (prefers-reduced-motion: reduce) { .verre-liquide-anime { animation: none; } }
 .verdict { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .verdict .style { color: var(--cendre); font-size: 14px; }
 .verdict .total { font-family: var(--f-chiffre); font-size: 52px; line-height: .9; }
