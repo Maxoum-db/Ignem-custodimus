@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Pigeonnier — mission 02/10 : Clients : demandes sur parchemin et cartes lisibles
+
+Statut : terminée sur `work/pigeonnier-02-demandes`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Cartes arrondies, paroles sur parchemin et typographie lisible. Ouverture du conseil sans mutation et congé du seul client choisi sans transaction vérifiés. Fixture complétée avec possede pour ne pas déclencher une migration historique des écus au premier enregistrement.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/02-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p02-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Illustrer les bouteilles des produits en cave.
+
+
 ## Pigeonnier — mission 01/10 : Pigeonnier : portraits illustrés des clients
 
 Statut : terminée sur `work/pigeonnier-01-portraits`, sans fusion. Autorisation utilisateur d’enchaîner
