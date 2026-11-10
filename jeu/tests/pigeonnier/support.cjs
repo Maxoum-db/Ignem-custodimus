@@ -2,7 +2,7 @@ const run=require('../finitions/support.cjs');
 module.exports=(name,check)=>run('p'+name,async ctx=>{
  const {page,nav}=ctx;
  await page.evaluate(()=>{
-  const s=JSON.parse(localStorage.getItem('ignem.v1'));
+  const s=JSON.parse(localStorage.getItem('ignem.v1'));s.possede=[];
   const recette={volume:1000,rendement:.75,malts:[{id:'malts_base_pilsner_soufflet_bio',kg:200}],houblons:[{id:'hops_aroma_saaz',g:250,min:10}],levure:'yeasts_ale_safale_us_05',eau:'causse',palier:66,ebullition:60,fermentation:{temp:18,reposDiacetyle:false}};
   const r=Moteur.calculer(recette);
   s.carnet=[{id:'biere',nom:'Blonde du Quercy',type:'biere',stockL:100,recette,og:r.og,fg:r.fg,abv:r.abv,ibu:r.ibu,ebc:r.ebc,total:42,defauts:[],style:'Blonde',sujet:'blonde',semaine:2000},

@@ -856,3 +856,11 @@ html,body { margin:0; }
 
 /* Portraits des clients : SVG historique, identité stable à chaque rendu. */
 .avatar-client { width:48px; height:48px; border-radius:50%; object-fit:contain; box-shadow:none; image-rendering:auto; }
+
+/* Clients : carte illustrée et parole sur parchemin, actions existantes conservées. */
+.client:not(.commande) { width:100%; min-width:0; border-radius:16px; border:1px solid #82603d; background:linear-gradient(#382b20,#281f17); padding:14px; gap:10px; box-shadow:0 4px 10px #0003; }
+.client.ouvert { border-color:var(--braise); box-shadow:inset 0 0 0 1px var(--braise); }
+.client-tete { width:100%; min-width:0; }
+.client-tete .corps { overflow-wrap:anywhere; }
+.client .demande { width:100%; padding:10px 12px; background:#ead8b3; color:#342419; border-radius:4px 14px 14px; font-size:16px; font-style:normal; line-height:1.5; overflow-wrap:anywhere; }
+.client .det { font-size:14px; line-height:1.5; }
