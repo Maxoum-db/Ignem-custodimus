@@ -3059,7 +3059,7 @@
       ${V.clients.length ? V.clients.map((c) => carteClient(c, prods)).join('') : '<p class="vide">Personne pour l\'instant. De nouveaux clients viendront la semaine prochaine : un brassin, une distillation ou un passage au chai font avancer le temps.</p>'}
       ${V.commandes.length ? `<h2 class="sous-titre">Commandes spéciales</h2>${V.commandes.map((c) => carteCommande(c, prods)).join('')}` : V.rep < 35 ? '<p class="page-intro">Les commandes spéciales (fêtes, marchés, auberges) arrivent quand le domaine est apprécié.</p>' : ''}
       <h2 class="sous-titre">Ta cave</h2>
-      ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<p class="vide">La cave est vide. Chaque brassin y met le volume de ta brasserie ; l\'alambic et le chai ajoutent des bouteilles.</p>'}`;
+      ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · tout le stock · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<p class="vide">La cave est vide. Chaque brassin y met le volume de ta brasserie ; l\'alambic et le chai ajoutent des bouteilles.</p>'}`;
   }
   function portraitClient(nom) {
     const svg = corps => "data:image/svg+xml;charset=utf-8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g stroke="#3b2a1e" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">' + corps + "</g></svg>");
@@ -3131,7 +3131,7 @@
     if (b.dataset.negociant) {
       const p = produits().find((x) => x.x.id === b.dataset.negociant); if (!p) return;
       const e = Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))));
-      if (b.dataset.confirme !== '1') { b.dataset.confirme = '1'; b.textContent = `Céder ${p.stock} L ?`; return; }
+      if (b.dataset.confirme !== '1') { b.dataset.confirme = '1'; b.textContent = `Confirmer : ${p.stock} L pour ${e} écus`; return; }
       retirerStock(p, p.stock); gagnerEcus(e); V.ca += e;
       derniereVente = { nom: 'Le négociant de Caussade', s: 0.5, detail: 'Je vous prends tout, au prix du vrac.', txt: `${p.stock} L de ${esc(p.nom)} · <b style="color:var(--or)">+${e} écus</b>` };
       son('ok'); sauver(); majEntete(); entrerPigeonnier();

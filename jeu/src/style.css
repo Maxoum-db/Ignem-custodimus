@@ -901,3 +901,6 @@ html,body { margin:0; }
 .stock-prod strong { font-size:15px; color:var(--calcaire); white-space:nowrap; }
 .produit.stock-insuffisant { border-color:#d7a15b; background:#35251b; }
 .stock-insuffisant .alerte-txt { display:block; margin-top:4px; color:#ffd39c; font-weight:600; }
+
+/* Cession au négociant : la seconde action affiche quantité et prix exacts. */
+.produit [data-negociant][data-confirme="1"] { background:#e0a05b; color:#2b1c11; border:2px solid #f0c486; font-weight:750; }
