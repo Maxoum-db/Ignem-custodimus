@@ -1,5 +1,36 @@
 # Progression Codex
 
+## Intégration générale demandée — 2026-11-10
+
+Demande : « Push en main tout tes travaux, dis moi si tout est à jours sur github
+et comment y avoir acces ». État local propre avant reprise et fetch effectué.
+Les séries Chai et Pigeonnier sont déjà dans main `9680401` ; les dix branches
+Veillée restantes aboutissent au commit `2a0b124a113b47830f4798674a4bd1af99912452`.
+La branche `work/integration-generale` rassemble ces travaux et ce relevé, pour
+fusion autorisée dans main. Aucun changement de code supplémentaire.
+
+CI finale **entièrement réussie** sur le code de la dernière série :
+https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/42905561181
+Build reproductible, six suites Node, trente scénarios mobiles, rendus et parcours
+normal/gestes chronométrés/Ulysse expert et débutant tous réussis. Le présent
+complément est documentaire ; identité du code et des HTML vérifiée avant fusion.
+L’état effectif de fusion et le SHA final sont consultables dans la PR
+« Intégrer tous les travaux validés dans main » et dans l’historique de main.
+
+Accès GitHub : https://github.com/Maxoum-db/Ignem-custodimus/tree/main
+Jeu autonome : https://github.com/Maxoum-db/Ignem-custodimus/blob/main/dist/index.html
+Télécharger ce HTML via le bouton de téléchargement GitHub, puis l’ouvrir dans
+un navigateur ; pour les tests automatisés, le servir par HTTP local.
+Site existant vérifié actif, version 11 :
+https://promethee-ignem-custodimus.maximilien92.chatgpt.site
+Ce site n’a pas été republié pendant l’intégration GitHub. Ses droits sont inchangés.
+
+Les anciennes branches des PR #1–#13 sont des travaux historiques antérieurs aux
+trois séries de cette conversation et ne sont pas fusionnées sans réconciliation.
+Les branches de travail sont conservées. Prochaine proposition unique : synchroniser
+la publication du site avec main, si une version jouable en ligne à jour est souhaitée.
+
+
 ## Veillée — mission 10/10 : Leçons : portraits réutilisés de Lise et Firmin
 
 Statut : terminée sur `work/veillee-10-mentors`, sans fusion. Autorisation utilisateur d’enchaîner
