@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Veillée — mission 03/10 : Leçons : lecture confortable de la théorie
+
+Statut : terminée sur `work/veillee-03-lecture`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Titres et paragraphes agrandis, interlignage et largeur de lecture adaptés, récompense dans un encadré. Texte de théorie comparé exactement au moteur école ; lecture sans début ni progression supplémentaire vérifiée.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/03-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v03-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Habiller les deux étapes sans déplacer leurs commandes.
+
+
 ## Veillée — mission 02/10 : Leçons : états et prérequis lisibles
 
 Statut : terminée sur `work/veillee-02-statuts`, sans fusion. Autorisation utilisateur d’enchaîner
