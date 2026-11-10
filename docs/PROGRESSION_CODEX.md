@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Pigeonnier — mission 09/10 : Négociant : confirmation avec quantité et prix exacts
+
+Statut : terminée sur `work/pigeonnier-09-negociant`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+La première action précise que tout le stock est concerné ; la seconde affiche quantité et montant. Premier clic sans mutation, second clic avec 100 L retirés et 12 écus crédités vérifiés ; clients et ventes au détail inchangés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/09-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p09-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre les états de cave vide utiles et cohérents avec le jeu.
+
+
 ## Pigeonnier — mission 08/10 : Stocks : alerte lisible et ventes partielles conservées
 
 Statut : terminée sur `work/pigeonnier-08-stocks`, sans fusion. Autorisation utilisateur d’enchaîner
