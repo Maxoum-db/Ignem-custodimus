@@ -1,5 +1,26 @@
 # Progression Codex
 
+## Pigeonnier — mission 01/10 : Pigeonnier : portraits illustrés des clients
+
+Statut : terminée sur `work/pigeonnier-01-portraits`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Réutilise exactement les visages SVG du habillage historique, sans observer ni système parallèle. Les portraits sont déterministes par nom, décodés hors réseau et stables en ouvrant une fiche ; état de vente inchangé. Fusion autorisée de la première série dans main consignée dans le journal.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/01-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p01-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Habiller les demandes des clients en cartes lisibles.
+
+
+## Reprise de la deuxième série
+
+Demande : « Etape une dizaine apres push en main ». État local propre, main/branches/journal et PR vérifiés. CI finale de la première série réussie (run 42895803234). PR #37 reciblée sur main puis fusionnée avec SHA attendu ; les dix commits précédents sont intégrés à `a0a536d5b0c8cd628127fdcf1f32071cb098e991`, confirmé par fetch. Nouvelle série de dix branches et PR empilées depuis ce main. Les nouveaux travaux ne seront pas fusionnés sans nouvelle autorisation. Le site reste à sa publication existante.
+
 ## Série autorisée — mission 10/10 : Bâtiments : niveaux lisibles et travaux vérifiés
 
 Statut : terminée sur `work/serie-10-batiments`, sans fusion. Autorisation utilisateur d’enchaîner

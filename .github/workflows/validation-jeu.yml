@@ -22,7 +22,7 @@ jobs:
       - run: node jeu/tests/mobile.cjs
       - run: node jeu/tests/rendu.cjs
       - run: node jeu/tests/chai-plan.cjs
-      - run: for test in jeu/tests/finitions/*.test.cjs; do node "$test" || exit 1; done
+      - run: for test in jeu/tests/finitions/*.test.cjs jeu/tests/pigeonnier/*.test.cjs; do node "$test" || exit 1; done
       - run: node jeu/tests/ulysse-entree.cjs
       - run: node jeu/tests/firmin-portrait.cjs
       - run: node jeu/tests/domaine.cjs

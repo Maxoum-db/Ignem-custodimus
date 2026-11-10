@@ -855,6 +855,9 @@ html,body { margin:0; }
 .niveau-lib { color:var(--cendre); font-size:12px; font-weight:600; }
 .bat-progression .niveaux i { width:12px; height:12px; border:1px solid #a68457; border-radius:50%; box-shadow:none; }
 .batiment { border-radius:14px; border:1px solid #725238; padding:12px; box-shadow:0 3px 8px #0003; }
+
+/* Portraits des clients : SVG historique, identité stable à chaque rendu. */
+.avatar-client { width:48px; height:48px; border-radius:50%; object-fit:contain; box-shadow:none; image-rendering:auto; }
 </style>
 
 <div id="app">
@@ -6019,10 +6022,24 @@ html,body { margin:0; }
       <h2 class="sous-titre">Ta cave</h2>
       ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<p class="vide">La cave est vide. Chaque brassin y met le volume de ta brasserie ; l\'alambic et le chai ajoutent des bouteilles.</p>'}`;
   }
+  function portraitClient(nom) {
+    const svg = corps => "data:image/svg+xml;charset=utf-8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g stroke="#3b2a1e" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">' + corps + "</g></svg>");
+    let h = 0;
+    for (const l of nom) h = (h * 31 + l.charCodeAt(0)) >>> 0;
+    const peau = ["#e6b58c", "#ca946a", "#a87350"][h % 3],
+      cheveux = ["#6c4328", "#bd8050", "#5b493c", "#c0b29a"][h % 4];
+    return svg(
+      '<circle fill="#8c9a65" cx="32" cy="32" r="29"/><path fill="#677b80" d="M8 64Q9 46 32 45Q55 46 56 64"/><ellipse fill="' +
+        peau +
+        '" cx="32" cy="29" rx="16" ry="20"/><path fill="' +
+        cheveux +
+        '" d="M15 28Q8 5 33 7Q58 9 48 29L42 19Q25 22 21 17Z"/><path fill="none" d="M25 29H26M38 29H39M28 39Q32 42 37 38"/>',
+    );
+  }
   function carteClient(c, prods) {
     const d = demandeDe(c), t = Vente.TYPES[c.type], ouvert = clientOuvert === c.id;
     const choix = prods.filter((p) => p.cat === d.cat);
-    return `<div class="client ${ouvert ? 'ouvert' : ''}"><div class="client-tete"><span class="avatar" style="background:hsl(${(c.nom.length * 47) % 360} 35% 45%)">${esc(c.nom.split(' ').pop()[0])}</span>
+    return `<div class="client ${ouvert ? 'ouvert' : ''}"><div class="client-tete"><img class="avatar avatar-client" src="${portraitClient(c.nom)}" alt="" width="48" height="48">
       <span class="corps"><b>${esc(c.nom)}</b><small>${esc(t.nom)} · ${esc(c.lieu)}${t.exigence ? ` · exigeant (${t.exigence}/50)` : ''}</small></span></div>
       <p class="demande">« ${esc(c.txt || (Array.isArray(d.txt) ? d.txt[0] : d.txt))} »</p><p class="det">Il voudrait ${uniteQ(d.cat, c.qte)} ${d.cat === 'biere' ? 'de bière' : d.cat === 'edv' ? 'd\'eau-de-vie' : 'de spiritueux vieilli'}.</p>
       ${ouvert ? (choix.length ? choix.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-proposer="${c.id}|${p.x.id}">Proposer</button>`)).join('') : '<p class="vide">Rien de ce genre en cave.</p>') + `<button class="btn btn-mini btn-sobre" data-congedier="${c.id}">Je n'ai rien pour vous</button>`

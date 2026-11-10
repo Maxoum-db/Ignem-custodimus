@@ -853,3 +853,6 @@ html,body { margin:0; }
 .niveau-lib { color:var(--cendre); font-size:12px; font-weight:600; }
 .bat-progression .niveaux i { width:12px; height:12px; border:1px solid #a68457; border-radius:50%; box-shadow:none; }
 .batiment { border-radius:14px; border:1px solid #725238; padding:12px; box-shadow:0 3px 8px #0003; }
+
+/* Portraits des clients : SVG historique, identité stable à chaque rendu. */
+.avatar-client { width:48px; height:48px; border-radius:50%; object-fit:contain; box-shadow:none; image-rendering:auto; }
