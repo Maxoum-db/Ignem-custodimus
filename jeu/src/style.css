@@ -765,3 +765,19 @@ html,body { margin:0; }
 .ulysse-haut:has(.atelier-illustre) { grid-template-columns:1fr; }
 
 #mentor-portrait,.plan-tete img { image-rendering:auto; object-fit:contain; }
+
+/* Accueil illustré : labels HTML et cibles indépendants des pixels du Canvas. */
+.domaine-titre { text-align:center; padding:0 0 12px; }
+.domaine-titre p { margin:0 0 5px; color:#c9a66f; font-size:10px; letter-spacing:.14em; }
+.domaine-titre h1 { margin:0; color:#f4dfb6; font-size:clamp(21px,6vw,30px); line-height:1.2; }
+.domaine-titre small { display:block; margin-top:6px; color:#c0b098; font-size:12px; }
+.domaine-cadre { border-radius:20px; overflow:hidden; border:2px solid #85643f; box-shadow:0 8px 28px #0005; }
+#carte.domaine-illustre { image-rendering:auto; }
+.lieu { min-height:44px; min-width:44px; border-radius:12px; }
+.lieu span { color:#f9eccd; background:#392a1eed; padding:7px 9px; border:1px solid #d7b77f; border-radius:9px; font-size:clamp(10px,3vw,12px); line-height:1.2; letter-spacing:0; white-space:normal; width:max-content; max-width:140px; text-shadow:none; box-shadow:0 2px 5px #0005; }
+.lieu.ouvert span { animation:none; }
+.lieu.a-batir span { background:#eee0bfeF; color:#5c432b; border-style:dashed; max-width:125px; }
+.lieu.ferme span { background:#3f482eea; color:#f0e7bd; }
+.lieu:hover span,.lieu:focus-visible span { color:#fff4d6; background:#78522e; }
+.lieu:focus-visible { outline:3px solid #fff1b7; outline-offset:-3px; }
+.domaine-legende { padding:10px 2px 0; justify-content:center; font-size:12px; }
