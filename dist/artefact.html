@@ -884,6 +884,14 @@ html,body { margin:0; }
 .rep { gap:8px; }
 .rep-val { display:inline-block; font-size:17px; color:var(--or); margin-left:6px; }
 .barre-rep { min-height:12px; border-radius:10px; border:1px solid #977145; overflow:hidden; }
+
+/* Résultat de la vraie vente : satisfaction mesurée et lisible. */
+.vente-resultat { border:1px solid #98744b; border-radius:14px; box-shadow:0 3px 10px #0003; }
+.vente-resultat.ok { border-color:var(--houblon); box-shadow:inset 0 0 0 1px var(--houblon); }
+.vente-resultat.ko { border-color:var(--alerte); box-shadow:inset 0 0 0 1px var(--alerte); }
+.satisfaction { display:grid; gap:6px; margin-top:10px; font-size:14px; font-weight:700; }
+.satisfaction-barre { height:12px; border-radius:8px; overflow:hidden; background:#191510; }
+.satisfaction-barre i { display:block; height:100%; background:var(--or); border-radius:inherit; }
 </style>
 
 <div id="app">
@@ -6041,7 +6049,7 @@ html,body { margin:0; }
     const prods = produits();
     $('#pig-vente').innerHTML = `<div class="bourse"><span class="ecus">${S.ecus} écus</span><p>${esc(libCalendrier())} · cave à ${Vente.CAVE[sais]} °C${recolte() ? ' · <b>récolte du houblon : −30 % chez les fournisseurs</b>' : ''}</p>
         <div class="rep"><span>Réputation : <b>${niveauRep()}</b> <strong class="rep-val">${V.rep}/100</strong></span><span class="barre-rep" role="meter" aria-label="Réputation du domaine" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${V.rep}"><i style="width:${Math.min(100, V.rep)}%"></i></span><span class="det">${V.vendus} ventes · ${V.ca} écus encaissés</span></div></div>
-      ${derniereVente ? `<div class="vente-resultat ${derniereVente.s > 0.65 ? 'ok' : derniereVente.s < 0.45 ? 'ko' : ''}"><b>${esc(derniereVente.nom)} :</b> « ${esc(derniereVente.detail)} »<br>${derniereVente.txt}</div>` : ''}
+      ${derniereVente ? `<div role="status" class="vente-resultat ${derniereVente.s > 0.65 ? 'ok' : derniereVente.s < 0.45 ? 'ko' : ''}"><b>${esc(derniereVente.nom)} :</b> « ${esc(derniereVente.detail)} »<br>${derniereVente.txt}<div class="satisfaction" role="meter" aria-label="Satisfaction du client" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(derniereVente.s * 100)}"><span>Satisfaction : ${Math.round(derniereVente.s * 100)} %</span><span class="satisfaction-barre" aria-hidden="true"><i style="width:${Math.round(derniereVente.s * 100)}%"></i></span></div></div>` : ''}
       <h2 class="sous-titre">Clients du jour ${iBtn("Chaque semaine, de nouveaux clients passent : ils décrivent ce qu'ils cherchent. Propose une bouteille de ta cave. Leur satisfaction dépend des critères respectés, de la qualité au jury et de la fraîcheur : elle fixe le prix, le pourboire et la réputation. Les clients repartent au bout de deux semaines.")}</h2>
       ${V.clients.length ? V.clients.map((c) => carteClient(c, prods)).join('') : '<p class="vide">Personne pour l\'instant. De nouveaux clients viendront la semaine prochaine : un brassin, une distillation ou un passage au chai font avancer le temps.</p>'}
       ${V.commandes.length ? `<h2 class="sous-titre">Commandes spéciales</h2>${V.commandes.map((c) => carteCommande(c, prods)).join('')}` : V.rep < 35 ? '<p class="page-intro">Les commandes spéciales (fêtes, marchés, auberges) arrivent quand le domaine est apprécié.</p>' : ''}

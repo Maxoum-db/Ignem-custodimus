@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Pigeonnier — mission 06/10 : Vente : satisfaction réelle dans le bilan
+
+Statut : terminée sur `work/pigeonnier-06-satisfaction`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Le bilan annonce poliment le résultat et affiche une jauge de satisfaction issue de derniereVente.s. Pourcentage comparé au moteur Vente.satisfaction ; recette encaissée comparée au crédit réel. Aucun nouveau calcul commercial.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/06-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p06-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre les échéances des commandes spéciales explicites.
+
+
 ## Pigeonnier — mission 05/10 : Pigeonnier : réputation chiffrée et accessible
 
 Statut : terminée sur `work/pigeonnier-05-reputation`, sans fusion. Autorisation utilisateur d’enchaîner

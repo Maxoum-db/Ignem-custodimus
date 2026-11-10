@@ -882,3 +882,11 @@ html,body { margin:0; }
 .rep { gap:8px; }
 .rep-val { display:inline-block; font-size:17px; color:var(--or); margin-left:6px; }
 .barre-rep { min-height:12px; border-radius:10px; border:1px solid #977145; overflow:hidden; }
+
+/* Résultat de la vraie vente : satisfaction mesurée et lisible. */
+.vente-resultat { border:1px solid #98744b; border-radius:14px; box-shadow:0 3px 10px #0003; }
+.vente-resultat.ok { border-color:var(--houblon); box-shadow:inset 0 0 0 1px var(--houblon); }
+.vente-resultat.ko { border-color:var(--alerte); box-shadow:inset 0 0 0 1px var(--alerte); }
+.satisfaction { display:grid; gap:6px; margin-top:10px; font-size:14px; font-weight:700; }
+.satisfaction-barre { height:12px; border-radius:8px; overflow:hidden; background:#191510; }
+.satisfaction-barre i { display:block; height:100%; background:var(--or); border-radius:inherit; }
