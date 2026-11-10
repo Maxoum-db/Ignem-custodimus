@@ -3045,8 +3045,8 @@
     const fr = Vente.fraicheur(p, S.cal.s);
     const det = p.cat === 'biere' ? `${nf(p.abv)} % · ${nf(p.ibu, 0)} IBU · ${nf(p.ebc, 0)} EBC · ${nf(p.total, p.total % 1 ? 1 : 0)}/50 · fraîcheur ${Math.round(fr * 100)} %`
       : p.cat === 'edv' ? `${nf(p.total, p.total % 1 ? 1 : 0)}/50 · eau-de-vie blanche` : `${nf(p.age, 1)} ans · ${nf(p.total, p.total % 1 ? 1 : 0)}/50`;
-    return `<div class="produit"><span class="pastille-prod" style="background:${p.cat === 'biere' ? couleur(p.ebc) : p.cat === 'vieilli' ? couleur(p.x.ebc || 20) : '#ece8dc'}"></span>
-      <span class="corps"><b>${esc(p.nom)}</b><small>${det}</small><small>En cave : ${uniteQ(p.cat, p.stock)}${p.stock < q ? ' · <span class="alerte-txt">pas assez pour toute la demande</span>' : ''}</small></span>${action}</div>`;
+    return `<div class="produit ${p.stock < q ? "stock-insuffisant" : ""}"><span class="pastille-prod" style="background:${p.cat === 'biere' ? couleur(p.ebc) : p.cat === 'vieilli' ? couleur(p.x.ebc || 20) : '#ece8dc'}"></span>
+      <span class="corps"><b>${esc(p.nom)}</b><small>${det}</small><small class="stock-prod">En cave : <strong>${uniteQ(p.cat, p.stock)}</strong>${p.stock < q ? ' · <span class="alerte-txt">pas assez pour toute la demande</span>' : ''}</small></span>${action}</div>`;
   }
   function rendreVente() {
     const V = S.vente, sais = saisonCourante();
