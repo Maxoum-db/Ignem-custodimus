@@ -18,6 +18,8 @@ const fs=require('node:fs'),http=require('node:http'),assert=require('node:asser
   const carnet=[
     {...biere,id:'blonde',nom:'Blonde des Braises',style:'Blonde',ebc:6,medaille:'or'},
     {...biere,id:'brune',nom:'Brune du Quercy',style:'Brune',ebc:65,medaille:'bronze'},
+    {...biere,id:'wash',type:'wash',nom:'Moût de malt',style:'Wash de malt',ebc:12,total:16,
+      recette:{...recette,destination:'wash',houblons:[]}},
     {...base,id:'edv',type:'edv',nom:'Eau-de-vie Ulysse',ebc:0,abv:60,medaille:'argent',
       coeur:{V:40,degre:60,lap:24},rendement:0.8,coupes:[],biere:'Blonde des Braises'},
     {...base,id:'vieilli',type:'vieilli',nom:'Réserve du domaine',style:'Whisky de malt',
@@ -26,9 +28,10 @@ const fs=require('node:fs'),http=require('node:http'),assert=require('node:asser
   ];
   await page.evaluate(carnet=>localStorage.setItem('ignem.v1',JSON.stringify({mode:'expert',aide:false,son:false,tuto:-1,tutoD:-1,points:150,brassins:2,carnet,grimoire:[],ecole:{},succes:{}})),carnet);await page.reload();
   await page.locator('#btn-menu').click();await page.locator('#menu-entete [data-aller="carnet"]').click();
-  const bottles=page.locator('.bouteille');assert.equal(await bottles.count(),4);
+  const bottles=page.locator('.bouteille');assert.equal(await bottles.count(),carnet.length);
+  assert.equal(await page.locator('[data-bouteille="wash"] small').textContent(),'Moût à distiller');
   const images=await bottles.locator('canvas').evaluateAll(cs=>cs.map(c=>({w:c.width,h:c.height,mode:getComputedStyle(c).imageRendering,image:c.toDataURL()})));
-  assert.ok(images.every(c=>c.w===128&&c.h===240&&c.mode==='auto'));assert.equal(new Set(images.map(c=>c.image)).size,4);
+  assert.ok(images.every(c=>c.w===128&&c.h===240&&c.mode==='auto'));assert.equal(new Set(images.map(c=>c.image)).size,carnet.length);
   for(const {id,nom} of carnet){
    const bottle=page.locator(`[data-bouteille="${id}"]`);
    await bottle.click();
@@ -41,6 +44,6 @@ const fs=require('node:fs'),http=require('node:http'),assert=require('node:asser
   await page.evaluate(()=>window.dispatchEvent(new Event('pagehide')));
   const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('ignem.v1')).carnet);
   assert.deepEqual(saved,carnet);assert.deepEqual(errors,[]);
-  console.log('✓ Carnet : quatre rendus distincts, DPR 2, fiche et sélection, 320/390 px, sauvegarde intacte, aucune erreur JS.');
+  console.log('✓ Carnet : cinq rendus distincts, DPR 2, fiches et sélection, 320/390 px, sauvegarde intacte, aucune erreur JS.');
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1});

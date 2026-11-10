@@ -6384,7 +6384,7 @@ html,body { margin:0; }
     const et = $('#etagere');
     if (!S.carnet.length) { et.innerHTML = '<p class="vide" style="grid-column:1/-1">L\'étagère est vide. Brasse ta première bière à la brasserie.</p>'; $('#carnet-detail').innerHTML = ''; }
     else {
-      et.innerHTML = S.carnet.map((x) => `<button class="bouteille" data-bouteille="${x.id}" aria-pressed="${choixCarnet === x.id}"><canvas aria-hidden="true" width="64" height="120" data-ebc="${x.ebc}" data-med="${x.medaille || ''}" data-edv="${x.type === 'edv' ? 1 : x.type === 'vieilli' ? 2 : ''}"></canvas><span>${esc(x.nom)}</span><small>${x.type === 'vieilli' ? 'Spiritueux vieilli' : x.type === 'edv' ? 'Eau-de-vie' : 'Bière'}${x.medaille ? ' · ' + esc(x.medaille) : ''}</small></button>`).join('');
+      et.innerHTML = S.carnet.map((x) => `<button class="bouteille" data-bouteille="${x.id}" aria-pressed="${choixCarnet === x.id}"><canvas aria-hidden="true" width="64" height="120" data-ebc="${x.ebc}" data-med="${x.medaille || ''}" data-edv="${x.type === 'edv' ? 1 : x.type === 'vieilli' ? 2 : ''}"></canvas><span>${esc(x.nom)}</span><small>${x.type === 'vieilli' ? 'Spiritueux vieilli' : x.type === 'edv' ? 'Eau-de-vie' : x.type === 'wash' ? 'Moût à distiller' : 'Bière'}${x.medaille ? ' · ' + esc(x.medaille) : ''}</small></button>`).join('');
       $$('.bouteille canvas', et).forEach(dessinerBouteille);
       rendreDetailCarnet();
     }
