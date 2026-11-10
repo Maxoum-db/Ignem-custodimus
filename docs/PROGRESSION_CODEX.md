@@ -1,5 +1,39 @@
 # Progression Codex
 
+## 2026-11-10 — Synchronisation des missions récentes et du site
+
+Autorisation : « Étape, mais avant je veux que tout soit bien à jour », après
+la demande explicite de mise à jour de main. Une seule mission de synchronisation,
+sans commencer les fûts de la cour. Branche `work/synchronisation-jeu` depuis
+`b545d6e`. État local propre, fetch, PR ouvertes et version Sites contrôlés.
+
+Branches #20 (dégustation), #21 (audit historique), #22 (Ulysse), #23 (Firmin)
+et #25 (journal) réunies par merges sur cette branche. Conflits limités au workflow
+et aux journaux : les trois tests ciblés et leurs captures sont tous conservés.
+HTML reconstruits depuis les sources réunies. Anciennes chaînes #1–#13 non
+fusionnées : elles contiennent des approches historiques et ne représentent pas
+le plan courant. `.openai/hosting.json` restaure l’identité du site existant,
+`appgprj_6ae768c368fc819193e73dfa24c45f27`, sortie statique `dist`.
+
+Validation exécutée : build, six suites Node, smoke mobile, huit rendus,
+`chai-plan.cjs`, `firmin-portrait.cjs`, `ulysse-entree.cjs` à 320/390 px et parcours
+complet `parcours.cjs` réussis (brassage, vente, brouillis, repasse, aveugle,
+dégustation, vieillissement et bouteille). Zéro exception JS observée par ces
+contrôles, SVG embarqués et portrait décodés ; repli Firmin testé sans asset.
+Captures réelles actualisées pour Firmin ; captures Ulysse et plan du chai conservées.
+Tests Chromium système hors bac à sable pour le serveur local. Pas d’Android
+physique/Safari ; les gestes chronométrés complets n’ont pas été rejoués localement.
+
+Site observé avant synchronisation : version 10, commit source Sites
+`daa36c8a3c843e143dc35870aac4b80cec46879a`, à une autre révision que main.
+Publication de la version réunifiée prévue après push et fusion confirmés ; les
+identifiants finaux de publication seront retournés dans le rapport. Accès et
+adresse conservés. Aucun changement de format de sauvegarde.
+
+Prochaine mission non commencée : illustrer les fûts de la cour et tester leur
+rangement. Aucun autre développement graphique dans cette synchronisation.
+
+
 ## 2026-11-10 — Intégration du plan du chai dans main
 
 Autorisation utilisateur : « Étape (push en main avant) Et redonne moi l'accès ».
