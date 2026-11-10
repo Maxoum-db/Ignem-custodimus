@@ -839,3 +839,10 @@ html,body { margin:0; }
 #chai-lots .lot .det { font-size:14px; line-height:1.45; }
 #chai-lots .coche:focus-within { outline:3px solid var(--calcaire); outline-offset:2px; }
 @media(max-width:360px) { #chai-lots .actions-fut .btn { width:100%; } }
+
+/* Notifications lisses ; le retrait à 3,3 s reste piloté par le contrôleur. */
+.toast { border-radius:12px; border:1px solid var(--braise); box-shadow:0 4px 16px #0005; max-width:min(420px,100%); box-sizing:border-box; animation-timing-function:ease-out; }
+@media(prefers-reduced-motion:reduce) { .toast { animation:none !important; opacity:1; transform:none; } }
+/* Le profil reste visible immédiatement, même lorsque l’animation est réduite. */
+.radar-chai .poly { animation:deploie .45s ease-out both; }
+@media(prefers-reduced-motion:reduce) { .radar .poly { animation:none !important; transform:none; } }
