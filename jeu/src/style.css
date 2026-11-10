@@ -941,3 +941,7 @@ html,body { margin:0; }
 .lecon-progression { display:grid; gap:6px; font-size:14px; font-weight:700; color:#e6c58e; }
 .lecon-progression-barre { height:10px; border-radius:8px; background:#15120e; overflow:hidden; }
 .lecon-progression-barre i { display:block; height:100%; border-radius:inherit; background:var(--houblon); }
+
+/* Réponses des leçons : cibles au pouce, contour de focus et texte complet. */
+.lecon-etapes .reponses button { min-height:48px; border:1px solid #826441; border-radius:12px; padding:12px; font-size:16px; line-height:1.45; overflow-wrap:anywhere; }
+.lecon-etapes .reponses button:focus-visible { outline:3px solid var(--calcaire); outline-offset:2px; }

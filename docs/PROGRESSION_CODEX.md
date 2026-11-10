@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Veillée — mission 06/10 : Quiz de leçon : réponses au pouce et focus visible
+
+Statut : terminée sur `work/veillee-06-reponses`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Quatre cibles au moins 48 px, texte lisible et focus clavier. Une réponse réelle verrouille les quatre choix et indique la bonne réponse ; le quiz ne se valide pas après une seule question.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/06-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v06-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Ajouter une correction textuelle et un repère de question.
+
+
 ## Veillée — mission 05/10 : Leçons : progression réelle du défi et du quiz
 
 Statut : terminée sur `work/veillee-05-progression`, sans fusion. Autorisation utilisateur d’enchaîner
