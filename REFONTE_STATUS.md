@@ -21,6 +21,7 @@ Le Chromium local n’est pas disponible dans cet espace. Pour la PR #20, le run
 | #1 à #13 | Ouvertes | Anciennes branches et chaînes de PR, plusieurs bases ne sont pas `main`. Les PR #2 et #3 sont encore en brouillon ; #3 dépend de #2. Leur statut ouvert prévaut, même si la réponse API de #3 contient un champ de commit de fusion incohérent. |
 | #14 à #19 | Fusionnées | Validations du pipeline, des scènes de brasserie, de l’interface, d’Ulysse, de l’accueil et du carnet. |
 | #20 | Ouverte, non fusionnée | Dégustation : verres du jury et des fractions. CI réussie sur son commit. |
+| #21 | Ouverte, non fusionnée | Présent journal d’audit ; PR documentaire basée sur le `main` vérifié. |
 
 Les branches historiques `carte-illustree` et `illustrations-scenes-a-f` existent encore et ne sont pas intégrées à `main` par les PR #2/#3. Les branches de travail des PR #14 à #20 sont également encore présentes. Ne pas réutiliser ou fusionner une branche ancienne sans comparer son contenu à `main`.
 
@@ -67,3 +68,4 @@ Examiner les captures de la PR #20 et valider sur téléphone les scènes réell
 
 - 2026-11-10 — Audit du dépôt et des PR #1–#20 ; état de `main` relevé à `929fd430eb98929cd6b7d7580fd83f9b179f758b`.
 - 2026-11-10 — CI de la PR #20 vérifiée : run `42801588345`, conclusion `success`.
+- 2026-11-10 — Journal ajouté sur `work/refonte-status-2026-11-10` ; PR #21 ouverte, sans fusion.
