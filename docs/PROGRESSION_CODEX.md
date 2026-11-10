@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Pigeonnier — mission 05/10 : Pigeonnier : réputation chiffrée et accessible
+
+Statut : terminée sur `work/pigeonnier-05-reputation`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Affiche la valeur réelle sur 100 et le rôle meter sur la jauge. Vente réelle vérifiée : texte, attribut et sauvegarde suivent exactement la réputation calculée par le jeu.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/05-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p05-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre la satisfaction réelle visible dans le bilan de vente.
+
+
 ## Pigeonnier — mission 04/10 : Vente : propositions tactiles sans texte comprimé
 
 Statut : terminée sur `work/pigeonnier-04-propositions`, sans fusion. Autorisation utilisateur d’enchaîner
