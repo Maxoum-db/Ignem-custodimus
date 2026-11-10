@@ -1,5 +1,31 @@
 # Progression Codex
 
+## 2026-11-10 — Intégration du plan du chai dans main
+
+Autorisation utilisateur : « Étape (push en main avant) Et redonne moi l'accès ».
+Périmètre retenu : intégration de la dernière mission #24, sans fusion des autres
+PR et sans commencer la cour de la tonnellerie. État local propre avant reprise.
+
+CI du commit `0ec885e318f3b22d9ebf6a82d61a3725cd0af018` vérifiée réussie :
+https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/42889443045
+PR #24 ouverte, fusionnable et head vérifié avant fusion. Fusion autorisée via
+GitHub avec SHA attendu : commit `b545d6e761d086ef730bd1ce8f729861d2a11211`.
+Fetch puis historique distant confirment `origin/main` à ce commit.
+
+Build, six suites Node et absence de diff des deux HTML reconstruits vérifiés
+sur ce main intégré, depuis la branche documentaire `work/journal-integration-chai`.
+Pas de changement de code ni nouvelle capture pour cette intégration ; preuves
+graphiques existantes dans `docs/captures/chai-plan-320.png` et `chai-plan-390.png`.
+
+Accès retrouvé via le project_id historique et l’outil Sites : site actif,
+version publiée 10, droits `custom` inchangés :
+https://promethee-ignem-custodimus.maximilien92.chatgpt.site
+La fusion GitHub ne prouve pas un déploiement Sites ; aucune publication réalisée
+pendant cette mission. Le lien donne accès à la version déjà publiée.
+
+Prochaine mission non commencée : illustrer les fûts de la cour de la tonnellerie
+et vérifier leur rangement. Aucun blocage à l’intégration #24.
+
 ## 2026-11-10 — Fûts illustrés du plan du chai
 
 Statut : terminée sur `work/chai-futs-illustres`, créée depuis `origin/main`
