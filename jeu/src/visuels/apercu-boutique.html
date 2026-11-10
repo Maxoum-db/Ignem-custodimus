@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ignem custodimus — Boutique du colombier</title>
+<style>
+:root{color-scheme:dark;--nuit:#17110d;--four:#221912;--pierre:#3b2d22;--calcaire:#ecdfc4;--braise:#f3b04a}
+*{box-sizing:border-box}body{margin:0;padding:22px;background:var(--nuit);color:var(--calcaire);font:16px system-ui,sans-serif}
+main{max-width:1120px;margin:auto}h1{font:700 clamp(18px,3vw,28px) Georgia,serif;color:var(--braise);margin:0 0 8px}
+p{color:#c4b49c;margin:0 0 18px}.scene{overflow:hidden;border:5px solid var(--pierre);border-radius:12px;background:var(--four);box-shadow:0 12px 36px #0008}.scene svg{display:block;width:100%;height:auto}
+h2{font:700 17px Georgia,serif;color:var(--braise);margin:28px 0 12px}.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px}
+.person{background:var(--four);border:2px solid var(--pierre);border-radius:10px;padding:8px;text-align:center}.person svg{width:100%;max-width:170px;display:block;margin:auto}.person span{font-size:13px}
+.note{font-size:12px;margin-top:18px;color:#a9967c}
+</style></head><body><main><h1>Le Colombier — boutique du domaine</h1>
+<p>Prototype SVG autonome · décor 3:2 et sept portraits indépendants</p>
+<div class="scene" id="scene"></div><h2>Les visiteurs du domaine</h2><div class="people" id="people"></div>
+<div class="note">Éléments vectoriels redimensionnables et modifiables. Aucune image externe.</div></main>
+<script src="boutique.js"></script><script>
+var V=window.IgnemVisuels.boutique;
+document.getElementById('scene').innerHTML=V.boutique.decor();
+document.getElementById('people').innerHTML=V.portraits.map(function(p){return '<div class="person">'+p.svg()+'<span>'+p.name+'</span></div>';}).join('');
+</script></body></html>
