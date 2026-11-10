@@ -909,3 +909,10 @@ html,body { margin:0; }
 .vente-vide { display:grid; justify-items:start; gap:10px; border:1px dashed #9a794e; border-radius:14px; padding:16px; background:#2d2319; margin-bottom:12px; }
 .vente-vide > b { font-size:18px; color:#e6c58e; }
 .vente-vide p { margin:0; font-size:15px; line-height:1.5; color:var(--cendre); }
+
+/* Veillée : cartes de leçons reprises de la finition historique, adaptées au thème courant. */
+#veillee-lecons .lecon { border:1px solid #80613e; border-radius:14px; box-shadow:0 3px 9px #0003; padding:14px; grid-template-columns:36px minmax(0,1fr); gap:12px; min-height:72px; }
+#veillee-lecons .lecon .num { font-size:22px; color:var(--or); }
+#veillee-lecons .lecon .corps b { font-size:18px; line-height:1.35; }
+#veillee-lecons .lecon small { font-size:14px; line-height:1.45; }
+#veillee-lecons .lecon .corps { min-width:0; overflow-wrap:anywhere; }

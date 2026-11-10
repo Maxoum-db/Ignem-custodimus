@@ -1,5 +1,26 @@
 # Progression Codex
 
+## Veillée — mission 01/10 : Veillée : cartes de leçons lisibles au pouce
+
+Statut : terminée sur `work/veillee-01-lecons`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Reprend les tailles et arrondis utiles de la finition historique. Les dix leçons et leurs actions restent identiques ; ouverture/retour sans modification de école vérifiés. Intégration préalable du pigeonnier et rejeu des gestes consignés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/01-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v01-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Distinguer les états et prérequis des leçons.
+
+
+## Troisième série — reprise vérifiée
+
+Demande : « Push en main puis etape sur 10 d’affiler ». État propre, journal/main et PR #47 relus. Après correction minimale du contrôle de navigation, les trois parcours locaux GESTES_REELS, ULYSSE_REEL expert et débutant ont réussi. PR #47 reciblée sur main et fusionnée avec SHA attendu 9c9c032 ; origin/main confirmé à `9680401271eace9de15ff62b9b301fa714f8b51a`. CI du correctif encore en cours au moment de cette intégration ; tests locaux concernés réussis. Nouvelle série de dix branches/PR empilées, sans fusion ni publication de ces nouveaux travaux. Styles historiques comparés avant reprise.
+
 ## Reprise avant intégration du pigeonnier
 
 Autorisation : « Push en main puis etape sur 10 d’affiler ». Audit du run 42900258537 : les vingt scénarios et le parcours normal ont réussi ; le parcours GESTES_REELS a échoué en cherchant tab-malts sans écran de destination confirmé. Correction minimale de jeu/tests/parcours.cjs : attendre le domaine prêt, cliquer le vrai lieu, puis attendre son écran visible. Aucun code du jeu modifié. Rejeu local des gestes et des parcours Ulysse expert/débutant lancé avant fusion ; les résultats seront consignés dans la reprise de la série veillée. Syntaxe et diff contrôlés.
