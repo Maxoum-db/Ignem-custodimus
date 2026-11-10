@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Série autorisée — mission 09/10 : Animations : notifications et radar lisibles en mouvement réduit
+
+Statut : terminée sur `work/serie-09-notifications`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Supprime le rendu en pas des notifications et conserve leur retrait normal à 3,3 s. En mouvement réduit, toast visible sans translation ni disparition immédiate et radar visible sans délai. Capture radar actualisée après constat du délai de animation. Test de notification déclenché par assemblage puis vraie erreur de finition, le déplacement normal ne produisant pas de toast.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/09-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/09-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre les niveaux des bâtiments lisibles et vérifier le lancement des travaux.
+
+
 ## Série autorisée — mission 08/10 : Chai : profil aromatique sans libellés coupés
 
 Statut : terminée sur `work/serie-08-profil`, sans fusion. Autorisation utilisateur d’enchaîner
