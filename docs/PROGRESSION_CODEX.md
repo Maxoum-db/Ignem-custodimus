@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Pigeonnier — mission 08/10 : Stocks : alerte lisible et ventes partielles conservées
+
+Statut : terminée sur `work/pigeonnier-08-stocks`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Quantité de cave mise en évidence et avertissement distinct si le stock ne couvre pas la demande. Vente partielle réelle de 4 L sur une demande de 10 L vérifiée, stock vidé et pénalité comparée au moteur non arrondi. Première attente de test corrigée pour ne pas arrondir avant la pénalité.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/08-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p08-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Clarifier la confirmation de cession au négociant.
+
+
 ## Pigeonnier — mission 07/10 : Commandes : échéances explicites et livraison limite vérifiée
 
 Statut : terminée sur `work/pigeonnier-07-commandes`, sans fusion. Autorisation utilisateur d’enchaîner

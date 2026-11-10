@@ -896,3 +896,8 @@ html,body { margin:0; }
 .commande .avatar { width:48px; height:48px; border-radius:50%; background:#d7b05c; color:#382719; box-shadow:inset 0 0 0 3px #f2d9a2; }
 .commande-echeance { margin:0; border:1px solid #967748; border-radius:20px; padding:6px 10px; font-size:14px; background:#34291e; color:#efdcad; }
 .commande-echeance.urgente { background:#5b321d; border-color:#e4a65b; color:#ffe2b7; font-weight:700; }
+
+/* Stocks : quantité lisible et avertissement distinct, vente partielle conservée. */
+.stock-prod strong { font-size:15px; color:var(--calcaire); white-space:nowrap; }
+.produit.stock-insuffisant { border-color:#d7a15b; background:#35251b; }
+.stock-insuffisant .alerte-txt { display:block; margin-top:4px; color:#ffd39c; font-weight:600; }
