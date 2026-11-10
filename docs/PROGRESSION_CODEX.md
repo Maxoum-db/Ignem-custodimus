@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Veillée — mission 02/10 : Leçons : états et prérequis lisibles
+
+Statut : terminée sur `work/veillee-02-statuts`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Statuts distincts et noms accessibles explicites ; cartes verrouillées lisibles sans transparence. Le prérequis réel continue de désactiver la leçon et sa validation la déverrouille. Lecture seule sans mutation vérifiée.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/02-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v02-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Améliorer la lecture des textes de théorie et des récompenses.
+
+
 ## Veillée — mission 01/10 : Veillée : cartes de leçons lisibles au pouce
 
 Statut : terminée sur `work/veillee-01-lecons`, sans fusion. Autorisation utilisateur d’enchaîner
