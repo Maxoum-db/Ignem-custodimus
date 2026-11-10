@@ -745,7 +745,7 @@
           <button class="btn btn-feu btn-mini" data-construire="${k}" ${manqueRep || manqueEcus ? 'disabled' : ''}>${manqueRep ? `Réputation ${S.vente.rep}/${suiv.rep}` : manqueEcus ? `Il manque ${suiv.prix - S.ecus} écus` : `Lancer les travaux · ${suiv.prix} écus`}</button></div>`;
       } else action = '<p class="det">Niveau maximal.</p>';
       const nivMax = B.niveaux.length - 1;
-      return `<div class="batiment ${n ? '' : 'nu'}"><div class="bat-tete"><b>${esc(B.nom)}</b><span class="niveaux">${Array.from({ length: nivMax }, (_, i) => `<i class="${i + 1 <= n ? 'plein' : ''}"></i>`).join('')}</span></div>
+      return `<div class="batiment ${n ? '' : 'nu'}"><div class="bat-tete"><b>${esc(B.nom)}</b><span class="bat-progression"><span class="niveaux" role="img" aria-label="${esc(B.nom)} : niveau ${n} sur ${nivMax}">${Array.from({ length: nivMax }, (_, i) => `<i aria-hidden="true" class="${i + 1 <= n ? 'plein' : ''}"></i>`).join('')}</span><span class="niveau-lib" aria-hidden="true">Niveau ${n}/${nivMax}</span></span></div>
         <p><b>${esc(cur.nom)}</b> · ${esc(cur.desc)}</p>${action}</div>`;
     }).join('');
     $('#bat-equip').innerHTML = Object.entries(EQUIPEMENTS).map(([k, e]) => {
@@ -2520,14 +2520,14 @@
     nouveaux.forEach((n, i) => setTimeout(() => toast('★ ' + n), 2600 + i * 900));
   }
 
-  function radarSVG(axes, profil) {
+  function radarSVG(axes, profil, marge = false) {
     const C = 110, Rr = 72;
     const pt = (k, v) => { const a = -Math.PI / 2 + (k / axes.length) * Math.PI * 2; return [C + Math.cos(a) * Rr * v, C + Math.sin(a) * Rr * v]; };
     const anneaux = [0.25, 0.5, 0.75, 1].map((f) => `<polygon points="${axes.map((_, k) => pt(k, f).join(',')).join(' ')}" fill="none" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const rayons = axes.map((_, k) => `<line x1="${C}" y1="${C}" x2="${pt(k, 1)[0]}" y2="${pt(k, 1)[1]}" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const poly = axes.map(([cle], k) => pt(k, Math.max(0.04, profil[cle] / 10)).join(',')).join(' ');
     const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="system-ui, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(profil[cle], 0)}</text>`; }).join('');
-    return `<svg viewBox="0 0 220 220" role="img" aria-label="Profil aromatique">${anneaux}${rayons}<polygon class="poly" points="${poly}" fill="rgba(243,176,74,.35)" stroke="var(--braise)" stroke-width="2"/>${libs}</svg>`;
+    return `<svg viewBox="${marge ? "-25 -15 270 250" : "0 0 220 220"}" role="img" aria-label="Profil aromatique : ${esc(axes.map(([cle, lib]) => `${lib} ${nf(profil[cle], 1)} sur 10`).join(", "))}">${anneaux}${rayons}<polygon class="poly" points="${poly}" fill="rgba(243,176,74,.35)" stroke="var(--braise)" stroke-width="2"/>${libs}</svg>`;
   }
 
   // =====================================================================
@@ -2597,8 +2597,8 @@
         if (o && o.pos.c === c) {
           const w = CH.TAILLES[o.taille].w, e = o.contenu ? apercu(o) : null;
           const plein = o.contenu ? Math.min(1, o.contenu.etat.V / CH.TAILLES[o.taille].L) : 0;
-          cases += `<button class="fut fut-${o.type} ${o.id === choixFut ? 'choisi' : ''} ${o.contenu ? 'rempli' : ''}" style="grid-column:span ${w}" data-fut="${o.id}" aria-label="${esc(nomFut(o))}${o.contenu ? ', rempli' : ', vide'}">
-            <span class="fut-abr">${ABR[o.type]}</span>${o.contenu ? `<span class="fut-age">${nf(ageFut(o.contenu), ageFut(o.contenu) < 10 ? 1 : 0)} a</span>` : ''}
+          cases += `<button class="fut fut-${o.type} ${o.id === choixFut ? 'choisi' : ''} ${o.contenu ? 'rempli' : ''}" style="grid-column:span ${w}" data-fut="${o.id}" aria-pressed="${o.id === choixFut}" aria-label="${esc(nomFut(o))}${o.contenu ? ', rempli' : ', vide'}">
+            <span class="fut-abr">${ABR[o.type]}</span><span class="fut-etat">${o.contenu ? "En fût" : "Vide"}</span>${o.contenu ? `<span class="fut-age">${nf(ageFut(o.contenu), ageFut(o.contenu) < 10 ? 1 : 0)} a</span>` : ''}
             <span class="fut-jauge"><i style="width:${Math.round(plein * 100)}%;background:${e ? couleur(e.couleur * 0.6) : 'transparent'}"></i></span></button>`;
           c += w - 1;
         } else if (!o) {
@@ -2611,10 +2611,10 @@
     }).join('');
     const etendre = C.cols < PLAFOND_TRAVEES ? `<button class="btn btn-mini btn-sobre" id="chai-etendre" ${S.ecus < coutTravee(C.cols) ? 'disabled' : ''}>Agrandir d'une travée · ${coutTravee(C.cols)} écus</button>` : '<span class="etq">Plafond atteint : 10 travées</span>';
     $('#chai-grille').innerHTML = `${modeChai ? `<p class="consigne-chai">${modeChai.type === 'placer' ? 'Touche un emplacement libre assez large (les cases qui clignotent).' : 'Touche un fût vide pour y verser le lot.'} <button class="btn btn-mini btn-sobre" id="chai-annuler">Annuler</button></p>` : ''}
-      <div class="chai-plan">${rangees}</div><div class="chai-pied">${etendre}</div>`;
+      <p class="chai-defilement" id="chai-defilement">Fais glisser le plan pour voir toutes les travées.</p><div class="chai-plan" tabindex="0" role="region" aria-label="Plan du chai" aria-describedby="chai-defilement">${rangees}</div><div class="chai-pied">${etendre}</div>`;
     // Cour de la tonnellerie : fûts pas encore rangés
     const cour = C.futs.filter((x) => !x.pos);
-    $('#chai-cour').innerHTML = cour.length ? `<h2 class="sous-titre">Cour de la tonnellerie</h2><div class="cour">${cour.map((x) => `<button class="fut fut-${x.type} ${x.id === choixFut ? 'choisi' : ''}" style="width:${CH.TAILLES[x.taille].w * 44}px" data-fut="${x.id}"><span class="fut-abr">${ABR[x.type]}</span></button>`).join('')}</div>` : '';
+    $('#chai-cour').innerHTML = cour.length ? `<h2 class="sous-titre">Cour de la tonnellerie</h2><div class="cour">${cour.map((x) => `<button class="fut fut-${x.type} ${x.id === choixFut ? 'choisi' : ''}" style="width:${CH.TAILLES[x.taille].w * 44}px" data-fut="${x.id}" aria-pressed="${x.id === choixFut}" aria-label="${esc(nomFut(x))}, dans la cour"><span class="fut-abr">${ABR[x.type]}</span></button>`).join('')}</div>` : '';
     $('#chai-detail').innerHTML = f ? detailFut(f) : '<p class="page-intro">Touche un fût pour le goûter à la pipette, le remplir ou le déplacer.</p>';
     rendreLots(); majMentor();
   }
@@ -2638,7 +2638,7 @@
       <div class="fut-contenu"><p><b>${esc(c.noms.join(' + '))}</b>${c.finition ? ' · en finition' : ''} · ${nf(V0, 0)} L entonnés sur ${Z.L} L (${Math.round(plein * 100)} %)${plein < 0.6 ? ' · <span class="alerte-txt">beaucoup de vide : risque d\'oxydation</span>' : ''}</p>
       <p class="age-fut">En fût depuis <b>${libAge(age)}</b>${c.finition ? ' (finition : 6 à 24 mois)' : ''}</p>
       <div class="dose"><label for="fut-ans">Prévoir : dans</label><span class="val" id="fut-ans-val">${plus ? libAge(plus) : 'aujourd\'hui'}</span>
-        <input type="range" id="fut-ans" min="0" max="${c.finition ? 2 : 12}" step="${c.finition ? 0.25 : 0.5}" value="${plus}"></div>
+        <input type="range" id="fut-ans" aria-describedby="prevision-statut" min="0" max="${c.finition ? 2 : 12}" step="${c.finition ? 0.25 : 0.5}" value="${plus}"></div>
       <div class="apercu-chai" id="apercu-chai">${apercuHTML(f, e, pip, n, bt, debutant, plus)}</div>
       <div class="actions-fut">
         <button class="btn btn-feu" id="fut-sortir" ${age < 1 / 52 ? 'disabled' : ''}>Sortir du fût (${libAge(age)})</button>
@@ -2648,11 +2648,11 @@
   function apercuHTML(f, e, pip, n, bt, debutant, plus) {
     const ange = 1 - e.V / f.contenu.etat.V;
     const axes = CH.AXES.map((k) => [k, CH.LIB_AXES[k]]);
-    return `<div class="apercu-haut"><span class="robe" style="background:${couleur(e.couleur * 0.6)}"></span>
+    return `<p class="prevision-statut ${plus ? "projetee" : "actuelle"}" id="prevision-statut" role="status">${plus ? `Prévision dans ${libAge(plus)} · le calendrier reste inchangé` : "État actuel du fût"}</p><div class="apercu-haut"><span class="robe robe-verre" role="img" aria-label="Robe du spiritueux, ${nf(e.couleur * 0.6, 0)} EBC" style="--robe:${couleur(e.couleur * 0.6)}"></span>
         <div class="chiffres"><span>${nf(e.V, 1)} L</span><span>${nf(e.degre, 1)} %</span><span>anges ${Math.round(ange * 100)} %</span><span>${bt.n} bout. à ${nf(bt.degre, 1)} %</span></div></div>
       <p class="nom-legal">${esc(CH.nom(e, bt.degre))}</p>
       <div class="pipette"><b>À la pipette :</b> ${pip.notes.length ? pip.notes.map((x) => `${esc(x.mot)} <small>(${x.force})</small>`).join(' · ') : 'alcool blanc, céréale'}${pip.bouche.length ? `<br><b>En bouche :</b> ${esc(pip.bouche.join(', '))}` : ''}</div>
-      <div class="radar radar-chai">${radarSVG(axes, CH.profil(e))}</div>
+      <div class="radar radar-chai">${radarSVG(axes, CH.profil(e), true)}</div>
       ${plus ? '<p class="det prevision-txt">Prévision : le fût n\'en est pas encore là.</p>' : ''}
       ${debutant ? `<p class="det">Estimation du jury : <b>${nf(n.total, n.total % 1 ? 1 : 0)}/50</b>${n.medaille ? ` · ${n.medaille}` : ''} (affichée en mode débutant)</p>` : ''}
       <p class="conseil-firmin">« ${esc(CH.conseil(e, { taille: f.taille }, f.pos ? f.pos.r : 1))} »</p>`;

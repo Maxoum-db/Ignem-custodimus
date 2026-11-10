@@ -1,0 +1,4 @@
+require('./support.cjs')('07-cuves',async({page,nav,save,snap,assert})=>{
+ await nav('chai');const before=await save();assert.equal(await page.locator('#chai-lots .lot').count(),2);assert.ok(await page.locator('#chai-lots .coche').evaluateAll(nodes=>nodes.every(e=>e.getBoundingClientRect().height>=44)));
+ await page.locator('[data-lotcoche="lot1"]').check();await page.locator('[data-lotcoche="lot2"]').check();assert.equal(await page.locator('#chai-lots .lot.choisi').count(),2);assert.deepEqual((await save()).chai,before.chai);await snap('#chai-lots');await page.locator('#chai-assembler').click();const after=await save();assert.equal(after.chai.lots.length,1);assert.equal(after.chai.lots[0].etat.V,100);assert.deepEqual(after.chai.futs,before.chai.futs);
+}).catch(e=>{console.error(e);process.exitCode=1});

@@ -1,5 +1,207 @@
 # Progression Codex
 
+## Série autorisée — mission 10/10 : Bâtiments : niveaux lisibles et travaux vérifiés
+
+Statut : terminée sur `work/serie-10-batiments`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Niveaux affichés en texte et accessibles, pastilles lisses et cartes lisibles à 320 px. Lancement réel des travaux vérifié : débit des écus et chantier sauvegardé, niveau inchangé avant la fin. Validation commune de la série consignée ci-dessous, avec captures finales actualisées.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/10-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/10-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Auditer puis réutiliser les portraits illustrés des clients du pigeonnier, sans commencer ici.
+
+
+## Série de dix — validation commune avant livraison
+
+Demande utilisateur : « Étape — Peux-tu en enchaîner une dizaine ? ».
+Dix missions successives, branches/PR empilées depuis main `de0d7cc` ; aucune
+fusion ni publication pendant cette série. La version Sites 11 reste inchangée.
+Les anciennes PR #1–#13 ont été examinées à la reprise et restent hors périmètre.
+Aucune modification locale préalable ; aucune branche main utilisée pour travailler.
+
+Les dix scénarios mobiles indépendants ont été rejoués sur le code final, à
+320/390 px, DPR 2 : rangement/sortie de la cour, achat catalogue, sélection/états,
+repères du plan, prévision non destructive, robe de la pipette, assemblage de cuves,
+profil aromatique, notifications/mouvement réduit et lancement de travaux.
+Le premier passage groupé a rencontré un timeout de navigation à 7 secondes sous
+charge ; délai de navigation du support de test porté à 30 secondes, puis les
+scénarios restants ont réussi. Délai des assertions inchangé. Fixture bâtiment
+complétée avec les listes normales de vente et tolérance du tableau travaux absent ;
+aucun correctif du moteur nécessaire. Captures de la série actualisées sur le code
+final, plutôt que des maquettes.
+
+Validation commune : six suites Node, smoke mobile, huit rendus et parcours
+complet jusqu’au spiritueux vieilli/vente réussis. Reconstruction reproductible des
+deux HTML par comparaison SHA-256 avant/après build, `node --check` et
+`git diff --check` réussis. Diff nul sur les moteurs métier. Pas de test sur
+Android physique ni Safari ; gestes chronométrés complets non rejoués localement.
+CI GitHub confirmée réussie pour les missions 1–8 ; mission 9 encore en cours
+au relevé. La CI du dernier commit sera à vérifier après son push.
+
+Après la dixième mission, arrêt de la série. Prochaine proposition unique :
+réutiliser les portraits illustrés des clients du pigeonnier, après audit des
+branches historiques pour éviter toute recréation.
+
+
+## Série autorisée — mission 09/10 : Animations : notifications et radar lisibles en mouvement réduit
+
+Statut : terminée sur `work/serie-09-notifications`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Supprime le rendu en pas des notifications et conserve leur retrait normal à 3,3 s. En mouvement réduit, toast visible sans translation ni disparition immédiate et radar visible sans délai. Capture radar actualisée après constat du délai de animation. Test de notification déclenché par assemblage puis vraie erreur de finition, le déplacement normal ne produisant pas de toast.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/09-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/09-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre les niveaux des bâtiments lisibles et vérifier le lancement des travaux.
+
+
+## Série autorisée — mission 08/10 : Chai : profil aromatique sans libellés coupés
+
+Statut : terminée sur `work/serie-08-profil`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Ajoute une marge au radar du chai sans changer les points ni son échelle. Tous les libellés sont contrôlés à intérieur du SVG. Le nom accessible donne les valeurs calculées sur 10, mises à jour avec la prévision.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/08-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/08-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Conserver les notifications lisibles en mouvement réduit et lisser leur entrée.
+
+
+## Série autorisée — mission 07/10 : Chai : cuves attente lisibles et tactiles
+
+Statut : terminée sur `work/serie-07-cuves`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Cartes arrondies, sélection visuelle claire, libellés au moins 44 px et actions empilées à 320 px. Assemblage réel de deux cuves de 50 L testé : 100 L conservés, fûts inchangés. La simple sélection ne modifie pas les cuves.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/07-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/07-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Corriger les libellés coupés du profil aromatique du chai.
+
+
+## Série autorisée — mission 06/10 : Chai : verre de pipette illustré et robe réelle
+
+Statut : terminée sur `work/serie-06-verre-chai`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Remplace le carré de couleur de la fiche du fût par un verre lisse à reflets, avec un nom accessible en EBC. Le rendu reprend strictement la couleur calculée du lot ; son changement avec la prévision et la conservation du contenu sont vérifiés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/06-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/06-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre les cuves attente et leur sélection confortables sur mobile.
+
+
+## Série autorisée — mission 05/10 : Chai : distinguer la prévision du vieillissement réel
+
+Statut : terminée sur `work/serie-05-prevision`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Bandeau de statut actuel ou projeté, relié au curseur et actualisé depuis la valeur de prévision existante. Valeurs réellement mises à jour ; lot en fût et calendrier strictement inchangés lors de la projection et du retour à zéro.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/05-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/05-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Remplacer le carré de robe par un verre de dégustation lisse.
+
+
+## Série autorisée — mission 04/10 : Chai : repères lisibles pendant le défilement
+
+Statut : terminée sur `work/serie-04-reperes-chai`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Repères de rangées fixes pendant le défilement horizontal, retour à la ligne sur petit écran, consigne de glissement et région du plan focalisable au clavier. Position des repères et focus vérifiés après défilement complet à dix travées.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/04-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/04-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Distinguer clairement prévision et vieillissement réel.
+
+
+## Série autorisée — mission 03/10 : Chai : états des fûts et sélection accessibles
+
+Statut : terminée sur `work/serie-03-etats-futs`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Ajoute aria-pressed sur les fûts du plan et de la cour et un nom complet dans la cour. Les badges Vide et En fût correspondent à la présence réelle du contenu. Changement de sélection et conservation intégrale du chai vérifiés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/03-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/03-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Conserver les repères du plan pendant le défilement mobile.
+
+
+## Série autorisée — mission 02/10 : Catalogue : miniatures de fûts illustrées
+
+Statut : terminée sur `work/serie-02-catalogue`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+SVG mutualisé dans une variable CSS, sans duplication ni image réseau. Miniatures agrandies ; vrai achat vérifié, fût sauvegardé et écus débités. Sélecteurs du test corrigés pour utiliser Fournisseurs puis Fûts.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/02-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/02-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre sélection et remplissage des fûts explicites.
+
+
+## Série autorisée — mission 01/10 : Cour : fûts illustrés et rangement mobile vérifié
+
+Statut : terminée sur `work/serie-01-cour`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Style partagé avec le plan, silhouette liée à la taille réelle, cible au moins 44 px. Rangement dans une case libre et retour dans la cour vérifiés par les vrais boutons et sauvegardes. Le support de QA réutilise des fixtures synthétiques issues du moteur ; ces tests seront conservés par la CI.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/01-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/01-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Illustrer les miniatures de fûts du catalogue.
+
+
 ## 2026-11-10 — Synchronisation des missions récentes et du site
 
 Autorisation : « Étape, mais avant je veux que tout soit bien à jour », après

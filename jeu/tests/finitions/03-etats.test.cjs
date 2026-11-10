@@ -1,0 +1,4 @@
+require('./support.cjs')('03-etats',async({page,nav,save,snap,assert})=>{
+ await nav('chai');const before=await save();const empty=page.locator('[data-fut="vide"]'),full=page.locator('[data-fut="plein"]');assert.equal(await empty.locator('.fut-etat').textContent(),'Vide');assert.equal(await full.locator('.fut-etat').textContent(),'En fût');assert.equal(await empty.getAttribute('aria-pressed'),'false');
+ await empty.click();assert.equal(await page.locator('[data-fut="vide"]').getAttribute('aria-pressed'),'true');await full.click();assert.equal(await page.locator('[data-fut="vide"]').getAttribute('aria-pressed'),'false');assert.equal(await page.locator('[data-fut="plein"]').getAttribute('aria-pressed'),'true');assert.deepEqual((await save()).chai,before.chai);await snap('.chai-plan');
+}).catch(e=>{console.error(e);process.exitCode=1});

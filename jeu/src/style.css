@@ -799,9 +799,57 @@ html,body { margin:0; }
 .chai-plan { overflow-x:auto; }
 .chai-plan .cases { min-width:calc(var(--travees) * 47px); }
 .chai-plan .case { min-width:44px; min-height:88px; }
-.chai-plan .fut { min-width:44px; min-height:88px; border-radius:12px;
- background: #39291d url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20128%20152%22%3E%3Cg%20stroke%3D%22%233b2a1e%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%22143%22%20rx%3D%2254%22%20ry%3D%227%22%20fill%3D%22%233b2a1e%22%20opacity%3D%22.18%22%20stroke%3D%22none%22%2F%3E%3Cpath%20d%3D%22M17%20128H111L118%20141H10Z%22%20fill%3D%22%23a87444%22%2F%3E%3Cpath%20d%3D%22M19%20124L27%20112H101L109%20124L101%20136H27Z%22%20fill%3D%22%23d2ab6e%22%2F%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2268%22%20rx%3D%2249%22%20ry%3D%2261%22%20fill%3D%22%236b4426%22%2F%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2265%22%20rx%3D%2246%22%20ry%3D%2257%22%20fill%3D%22%23a9a38b%22%2F%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2265%22%20rx%3D%2240%22%20ry%3D%2251%22%20fill%3D%22%23d3a66a%22%2F%3E%3Cpath%20d%3D%22M64%2015Q105%2023%20104%2065Q104%20107%2064%20116Q86%2094%2085%2065Q85%2036%2064%2015%22%20fill%3D%22%23b5834b%22%20stroke%3D%22none%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%238b6038%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M41%2024Q34%2065%2041%20107%20M58%2015Q54%2065%2058%20115%20M76%2018Q79%2065%2076%20112%20M91%2031Q98%2065%2091%2099%22%2F%3E%3Cpath%20d%3D%22M26%2057L29%2052M36%2088L39%2083M62%2032L63%2040M77%2086L78%2093%22%2F%3E%3C%2Fg%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2265%22%20rx%3D%2240%22%20ry%3D%2251%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M27%2054Q29%2027%2050%2020%22%20fill%3D%22none%22%20stroke%3D%22%23f0d29c%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2264%22%20cy%3D%2275%22%20r%3D%226%22%20fill%3D%22%23a87444%22%2F%3E%3Cpath%20d%3D%22M60%2073H68%22%20stroke%3D%22%23e2cfa4%22%20stroke-width%3D%222%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") center / auto 78px no-repeat;
+.chai-plan .fut,.cour .fut { min-width:44px; min-height:88px; border-radius:12px;
+ background: #39291d var(--face-fut) center / auto 78px no-repeat;
  justify-content:space-between; padding:3px 2px 12px; }
-.chai-plan .fut-abr { font-size:11px; border-radius:4px; }
+.chai-plan .fut-abr,.cour .fut-abr { font-size:11px; border-radius:4px; }
 .chai-plan .fut-age { background:#39291dcc; border-radius:4px; padding:2px; }
-.chai-plan .fut:focus-visible { outline:3px solid var(--calcaire); outline-offset:-3px; }
+.chai-plan .fut:focus-visible,.cour .fut:focus-visible { outline:3px solid var(--calcaire); outline-offset:-3px; }
+
+/* Cour : même silhouette que les fûts rangés, largeur liée à la taille réelle. */
+.cour .fut { height:88px; flex-shrink:0; }
+
+/* Illustration unique partagée : plan, cour et miniatures du tonnelier. */
+:root { --face-fut:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20128%20152%22%3E%3Cg%20stroke%3D%22%233b2a1e%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%22143%22%20rx%3D%2254%22%20ry%3D%227%22%20fill%3D%22%233b2a1e%22%20opacity%3D%22.18%22%20stroke%3D%22none%22%2F%3E%3Cpath%20d%3D%22M17%20128H111L118%20141H10Z%22%20fill%3D%22%23a87444%22%2F%3E%3Cpath%20d%3D%22M19%20124L27%20112H101L109%20124L101%20136H27Z%22%20fill%3D%22%23d2ab6e%22%2F%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2268%22%20rx%3D%2249%22%20ry%3D%2261%22%20fill%3D%22%236b4426%22%2F%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2265%22%20rx%3D%2246%22%20ry%3D%2257%22%20fill%3D%22%23a9a38b%22%2F%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2265%22%20rx%3D%2240%22%20ry%3D%2251%22%20fill%3D%22%23d3a66a%22%2F%3E%3Cpath%20d%3D%22M64%2015Q105%2023%20104%2065Q104%20107%2064%20116Q86%2094%2085%2065Q85%2036%2064%2015%22%20fill%3D%22%23b5834b%22%20stroke%3D%22none%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%238b6038%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M41%2024Q34%2065%2041%20107%20M58%2015Q54%2065%2058%20115%20M76%2018Q79%2065%2076%20112%20M91%2031Q98%2065%2091%2099%22%2F%3E%3Cpath%20d%3D%22M26%2057L29%2052M36%2088L39%2083M62%2032L63%2040M77%2086L78%2093%22%2F%3E%3C%2Fg%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2265%22%20rx%3D%2240%22%20ry%3D%2251%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M27%2054Q29%2027%2050%2020%22%20fill%3D%22none%22%20stroke%3D%22%23f0d29c%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2264%22%20cy%3D%2275%22%20r%3D%226%22%20fill%3D%22%23a87444%22%2F%3E%3Cpath%20d%3D%22M60%2073H68%22%20stroke%3D%22%23e2cfa4%22%20stroke-width%3D%222%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"); }
+.fut-mini { width:30px; height:38px; margin-right:8px; vertical-align:middle; border-radius:0; box-shadow:none; background:var(--face-fut) center / contain no-repeat; }
+
+/* Les états des fûts restent lisibles indépendamment de la couleur. */
+.fut-etat { font-size:10px; line-height:1.2; border-radius:4px; padding:1px 3px; color:#f4e2bf; background:#302116e6; }
+.fut.rempli .fut-etat { color:#251b12; background:#e6c58b; }
+.fut[aria-pressed="true"] { outline:3px solid var(--braise); outline-offset:1px; }
+
+/* Repères mobiles du plan : ils restent visibles en défilant les travées. */
+.chai-defilement { font-size:13px; color:var(--cendre); margin:8px 0; }
+.chai-plan .zone-lib { position:sticky; left:0; width:calc(100vw - 64px); max-width:100%; white-space:normal; line-height:1.4; padding:4px 0; background:#261c14; }
+.chai-plan:focus-visible { outline:3px solid var(--braise); outline-offset:2px; }
+
+/* L’aperçu du chai annonce clairement la projection demandée. */
+.prevision-statut { margin:0; padding:8px 10px; border:1px solid #94734d; border-radius:10px; font-size:13px; font-weight:700; color:#f2dfbc; background:#34291e; }
+.prevision-statut.projetee { border-color:#e2a15a; background:#49311e; }
+
+/* Verre de pipette : la couleur vient toujours du lot ou de sa projection. */
+.robe.robe-verre { position:relative; width:46px; height:62px; border:2px solid #d5e3d2; border-radius:6px 6px 20px 20px; box-shadow:inset 4px 0 0 #fff3,inset -5px 0 0 #1b171933,0 3px 6px #0005; background:linear-gradient(to bottom,#d5e3d233 0 20%,var(--robe) 20% 100%); }
+.robe-verre::after { content:""; position:absolute; inset:6px auto 12px 7px; width:3px; border-radius:3px; background:#fff7; }
+
+/* Cuves d’attente : cartes au pouce, sélection et actions sur petit écran. */
+#chai-lots .lot { min-width:0; border:1px solid #7b5c3c; border-radius:14px; background:linear-gradient(#35291f,#261e17); padding:12px; gap:10px; box-shadow:0 3px 8px #0003; }
+#chai-lots .lot.choisi { border-color:var(--braise); box-shadow:inset 0 0 0 2px var(--braise); }
+#chai-lots .coche { min-height:44px; border-radius:10px; align-items:center; padding:10px; box-sizing:border-box; cursor:pointer; }
+#chai-lots .coche b { overflow-wrap:anywhere; }
+#chai-lots .lot .det { font-size:14px; line-height:1.45; }
+#chai-lots .coche:focus-within { outline:3px solid var(--calcaire); outline-offset:2px; }
+@media(max-width:360px) { #chai-lots .actions-fut .btn { width:100%; } }
+
+/* Notifications lisses ; le retrait à 3,3 s reste piloté par le contrôleur. */
+.toast { border-radius:12px; border:1px solid var(--braise); box-shadow:0 4px 16px #0005; max-width:min(420px,100%); box-sizing:border-box; animation-timing-function:ease-out; }
+@media(prefers-reduced-motion:reduce) { .toast { animation:none !important; opacity:1; transform:none; } }
+/* Le profil reste visible immédiatement, même lorsque l’animation est réduite. */
+.radar-chai .poly { animation:deploie .45s ease-out both; }
+@media(prefers-reduced-motion:reduce) { .radar .poly { animation:none !important; transform:none; } }
+
+/* Bâtiments : les niveaux se lisent aussi en texte, sans compter les carrés. */
+.bat-tete { gap:12px; align-items:flex-start; flex-wrap:wrap; }
+.bat-progression { display:grid; gap:5px; justify-items:end; flex:none; }
+.niveau-lib { color:var(--cendre); font-size:12px; font-weight:600; }
+.bat-progression .niveaux i { width:12px; height:12px; border:1px solid #a68457; border-radius:50%; box-shadow:none; }
+.batiment { border-radius:14px; border:1px solid #725238; padding:12px; box-shadow:0 3px 8px #0003; }
