@@ -952,6 +952,11 @@ html,body { margin:0; }
 .quiz-compteur { margin:0; font-size:14px; font-weight:700; color:#e8c58b; }
 .reponse-statut { display:block; margin-top:5px; font-size:12px; font-weight:700; color:#e4c58f; }
 .quiz-retour { margin:0; padding:8px; border-radius:8px; background:#3b3021; color:#f1dfbc; font-size:15px; }
+
+/* Questions du soir : progression réelle des cinq questions récompensables. */
+.quiz-recompenses { display:grid; gap:6px; font-size:15px; color:#ecd0a0; font-weight:700; margin:8px 0; }
+.quiz-jour-barre { height:10px; border-radius:8px; background:#15120e; overflow:hidden; }
+.quiz-jour-barre i { display:block; height:100%; background:var(--or); border-radius:inherit; }
 </style>
 
 <div id="app">
@@ -6500,7 +6505,7 @@ html,body { margin:0; }
   function rendreQuestions() {
     const q = etatQuiz();
     const reste = Math.max(0, 5 - q.faits);
-    $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
+    $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><div class="quiz-recompenses" role="meter" aria-label="Progression quotidienne des questions" aria-valuemin="0" aria-valuemax="5" aria-valuenow="${q.faits}"><span>Questions du jour : ${q.faits}/5</span><span class="quiz-jour-barre" aria-hidden="true"><i style="width:${q.faits * 20}%"></i></span></div><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
     if (!questionCourante) nouvelleQuestion();
     const { carte, options, repondu } = questionCourante;
     const qui = Math.random() < 0.5 ? 'Lise' : 'Firmin';

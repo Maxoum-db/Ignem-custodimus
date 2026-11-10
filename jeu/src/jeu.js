@@ -3445,7 +3445,7 @@
   function rendreQuestions() {
     const q = etatQuiz();
     const reste = Math.max(0, 5 - q.faits);
-    $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
+    $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><div class="quiz-recompenses" role="meter" aria-label="Progression quotidienne des questions" aria-valuemin="0" aria-valuemax="5" aria-valuenow="${q.faits}"><span>Questions du jour : ${q.faits}/5</span><span class="quiz-jour-barre" aria-hidden="true"><i style="width:${q.faits * 20}%"></i></span></div><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
     if (!questionCourante) nouvelleQuestion();
     const { carte, options, repondu } = questionCourante;
     const qui = Math.random() < 0.5 ? 'Lise' : 'Firmin';

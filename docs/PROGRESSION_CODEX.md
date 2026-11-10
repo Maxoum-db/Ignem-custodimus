@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Veillée — mission 08/10 : Questions du soir : progression quotidienne visible
+
+Statut : terminée sur `work/veillee-08-quotidien`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Jauge accessible de zéro à cinq reprenant le compteur existant. Cinquième question correcte : +4 écus et compteur à cinq ; question suivante en entraînement sans gain ni dépassement du compteur, conformément aux règles existantes.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/08-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v08-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre la correction des questions du soir lisible sans couleur.
+
+
 ## Veillée — mission 07/10 : Quiz de leçon : correction textuelle et repère de question
 
 Statut : terminée sur `work/veillee-07-correction`, sans fusion. Autorisation utilisateur d’enchaîner
