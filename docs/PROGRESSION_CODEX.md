@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Série autorisée — mission 07/10 : Chai : cuves attente lisibles et tactiles
+
+Statut : terminée sur `work/serie-07-cuves`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Cartes arrondies, sélection visuelle claire, libellés au moins 44 px et actions empilées à 320 px. Assemblage réel de deux cuves de 50 L testé : 100 L conservés, fûts inchangés. La simple sélection ne modifie pas les cuves.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/07-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/07-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Corriger les libellés coupés du profil aromatique du chai.
+
+
 ## Série autorisée — mission 06/10 : Chai : verre de pipette illustré et robe réelle
 
 Statut : terminée sur `work/serie-06-verre-chai`, sans fusion. Autorisation utilisateur d’enchaîner
