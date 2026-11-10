@@ -1,0 +1,3 @@
+require('./support.cjs')('01-lecons',async({page,save,assert})=>{
+ const before=await save();assert.equal(await page.locator('.lecon').count(),10);assert.ok(await page.locator('.lecon').evaluateAll(nodes=>nodes.every(e=>e.offsetHeight>=44)));await page.locator('.lecons').screenshot({path:`docs/captures/serie/v01-lecons-${await page.evaluate(()=>innerWidth)}.png`});await page.locator('[data-lecon="empatage"]').click();assert.ok(await page.locator('.lecon-detail').isVisible());await page.locator('[data-retourlecons]').click();assert.equal(await page.locator('.lecon').count(),10);assert.deepEqual((await save()).ecole,before.ecole);
+}).catch(e=>{console.error(e);process.exitCode=1});

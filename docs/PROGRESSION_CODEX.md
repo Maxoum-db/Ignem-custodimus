@@ -1,5 +1,241 @@
 # Progression Codex
 
+## Intégration générale demandée — 2026-11-10
+
+Demande : « Push en main tout tes travaux, dis moi si tout est à jours sur github
+et comment y avoir acces ». État local propre avant reprise et fetch effectué.
+Les séries Chai et Pigeonnier sont déjà dans main `9680401` ; les dix branches
+Veillée restantes aboutissent au commit `2a0b124a113b47830f4798674a4bd1af99912452`.
+La branche `work/integration-generale` rassemble ces travaux et ce relevé, pour
+fusion autorisée dans main. Aucun changement de code supplémentaire.
+
+CI finale **entièrement réussie** sur le code de la dernière série :
+https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/42905561181
+Build reproductible, six suites Node, trente scénarios mobiles, rendus et parcours
+normal/gestes chronométrés/Ulysse expert et débutant tous réussis. Le présent
+complément est documentaire ; identité du code et des HTML vérifiée avant fusion.
+L’état effectif de fusion et le SHA final sont consultables dans la PR
+« Intégrer tous les travaux validés dans main » et dans l’historique de main.
+
+Accès GitHub : https://github.com/Maxoum-db/Ignem-custodimus/tree/main
+Jeu autonome : https://github.com/Maxoum-db/Ignem-custodimus/blob/main/dist/index.html
+Télécharger ce HTML via le bouton de téléchargement GitHub, puis l’ouvrir dans
+un navigateur ; pour les tests automatisés, le servir par HTTP local.
+Site existant vérifié actif, version 11 :
+https://promethee-ignem-custodimus.maximilien92.chatgpt.site
+Ce site n’a pas été republié pendant l’intégration GitHub. Ses droits sont inchangés.
+
+Les anciennes branches des PR #1–#13 sont des travaux historiques antérieurs aux
+trois séries de cette conversation et ne sont pas fusionnées sans réconciliation.
+Les branches de travail sont conservées. Prochaine proposition unique : synchroniser
+la publication du site avec main, si une version jouable en ligne à jour est souhaitée.
+
+
+## Veillée — mission 10/10 : Leçons : portraits réutilisés de Lise et Firmin
+
+Statut : terminée sur `work/veillee-10-mentors`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+La fiche indique son mentor avec le portrait existant du dialogue. Décodages Lise 512 px et Firmin 144 px vérifiés ; mise à jour prévue si Firmin finit son chargement après ouverture. École et écus inchangés pendant la lecture. Validation commune des trois séries consignée.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/10-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v10-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Harmoniser la lecture des fiches techniques liées aux leçons, sans modifier leurs textes.
+
+
+## Veillée — validation commune finale
+
+Dix missions depuis main `9680401` : cartes, statuts/prérequis, théorie,
+étapes, progression, réponses de leçons, correction textuelle, quota quotidien,
+questions du soir et portraits réutilisés des mentors. Aucune nouvelle fusion
+ni publication. Les neuf premières PR de veillée ont leur CI réussie au relevé.
+Le run 42901927573 du correctif de parcours précédent est confirmé entièrement
+réussi, y compris gestes chronométrés et Ulysse expert/débutant.
+
+Validation locale finale : six suites Node, vingt scénarios des deux séries
+précédentes et dix scénarios veillée à 320/390 px, smoke mobile, huit rendus et
+parcours complet réussis. Le passage groupé a terminé les vingt anciens scénarios
+puis rencontré un timeout de 30 s sur le chargement global pendant v01. Le support
+QA attend désormais DOMContentLoaded puis les écrans visés et les décodages
+explicites ; les dix scénarios veillée ont été rejoués avec succès, ainsi que les
+deux familles de navigation précédentes. Assertions et règles du jeu inchangées.
+HTML reproductibles par SHA-256, syntaxe JS et diff vérifiés. Aucun diff des moteurs.
+Les parcours chronométrés ont été rejoués au préalable avant fusion du pigeonnier.
+
+Fichiers de cette série : `jeu/src/style.css`, `jeu/src/jeu.js` (présentation),
+`dist/index.html`, `dist/artefact.html`, `jeu/tests/veillee/`, support partagé
+`jeu/tests/finitions/support.cjs`, workflow de validation, présent journal et
+captures réelles `docs/captures/serie/v01-*` à `v10-*`, actualisées sur le code final.
+Aucun nouveau format de sauvegarde ni nouvelle ressource graphique source :
+les portraits sont ceux déjà intégrés au dialogue du jeu. Pas de test sur appareil
+Android physique ou Safari ; nouvelle CI du dernier commit à vérifier après push.
+
+Arrêt après la dixième mission. Prochaine proposition unique : harmoniser la
+lecture des fiches techniques accessibles depuis les leçons, sans changer les textes.
+
+
+## Veillée — mission 09/10 : Questions du soir : réponses tactiles et correction textuelle
+
+Statut : terminée sur `work/veillee-09-questions`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Cibles de 48 px et texte de correction indépendant de la couleur. Une réponse erronée ne rapporte rien et consomme une question ; la correcte suivante rapporte quatre écus. Verrouillage et passage à la suivante conservés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/09-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v09-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Réutiliser les portraits de Lise et Firmin dans les fiches de leçons.
+
+
+## Veillée — mission 08/10 : Questions du soir : progression quotidienne visible
+
+Statut : terminée sur `work/veillee-08-quotidien`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Jauge accessible de zéro à cinq reprenant le compteur existant. Cinquième question correcte : +4 écus et compteur à cinq ; question suivante en entraînement sans gain ni dépassement du compteur, conformément aux règles existantes.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/08-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v08-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre la correction des questions du soir lisible sans couleur.
+
+
+## Veillée — mission 07/10 : Quiz de leçon : correction textuelle et repère de question
+
+Statut : terminée sur `work/veillee-07-correction`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Ajoute Bonne réponse et Ton choix en texte, un statut de correction et Question N sur 3. Erreur réelle, conservation de la validation incomplète et passage à la question suivante vérifiés. Contrôle des cibles de la mission 6 rejoué avec les nouveaux libellés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/07-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v07-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre la limite quotidienne des questions visible et vérifiable.
+
+
+## Veillée — mission 06/10 : Quiz de leçon : réponses au pouce et focus visible
+
+Statut : terminée sur `work/veillee-06-reponses`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Quatre cibles au moins 48 px, texte lisible et focus clavier. Une réponse réelle verrouille les quatre choix et indique la bonne réponse ; le quiz ne se valide pas après une seule question.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/06-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v06-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Ajouter une correction textuelle et un repère de question.
+
+
+## Veillée — mission 05/10 : Leçons : progression réelle du défi et du quiz
+
+Statut : terminée sur `work/veillee-05-progression`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Jauge accessible sur deux étapes en lecture seule. Contrôle 0/2 puis défi validé 1/2, trois réponses correctes via les vrais boutons et complétion 2/2 ; récompense exacte de 15 écus vérifiée.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/05-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v05-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Agrandir les cibles des réponses du quiz de leçon.
+
+
+## Veillée — mission 04/10 : Leçons : deux étapes lisibles et actions préservées
+
+Statut : terminée sur `work/veillee-04-etapes`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Défi et Trois questions dans des cartes séparées et arrondies. Démarrage réel de la leçon et bouton Y aller vers la brasserie vérifiés ; école et écus conservés pendant cette navigation.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/04-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v04-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Afficher la progression réelle des deux étapes.
+
+
+## Veillée — mission 03/10 : Leçons : lecture confortable de la théorie
+
+Statut : terminée sur `work/veillee-03-lecture`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Titres et paragraphes agrandis, interlignage et largeur de lecture adaptés, récompense dans un encadré. Texte de théorie comparé exactement au moteur école ; lecture sans début ni progression supplémentaire vérifiée.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/03-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v03-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Habiller les deux étapes sans déplacer leurs commandes.
+
+
+## Veillée — mission 02/10 : Leçons : états et prérequis lisibles
+
+Statut : terminée sur `work/veillee-02-statuts`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Statuts distincts et noms accessibles explicites ; cartes verrouillées lisibles sans transparence. Le prérequis réel continue de désactiver la leçon et sa validation la déverrouille. Lecture seule sans mutation vérifiée.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/02-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v02-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Améliorer la lecture des textes de théorie et des récompenses.
+
+
+## Veillée — mission 01/10 : Veillée : cartes de leçons lisibles au pouce
+
+Statut : terminée sur `work/veillee-01-lecons`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Reprend les tailles et arrondis utiles de la finition historique. Les dix leçons et leurs actions restent identiques ; ouverture/retour sans modification de école vérifiés. Intégration préalable du pigeonnier et rejeu des gestes consignés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/01-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v01-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Distinguer les états et prérequis des leçons.
+
+
+## Troisième série — reprise vérifiée
+
+Demande : « Push en main puis etape sur 10 d’affiler ». État propre, journal/main et PR #47 relus. Après correction minimale du contrôle de navigation, les trois parcours locaux GESTES_REELS, ULYSSE_REEL expert et débutant ont réussi. PR #47 reciblée sur main et fusionnée avec SHA attendu 9c9c032 ; origin/main confirmé à `9680401271eace9de15ff62b9b301fa714f8b51a`. CI du correctif encore en cours au moment de cette intégration ; tests locaux concernés réussis. Nouvelle série de dix branches/PR empilées, sans fusion ni publication de ces nouveaux travaux. Styles historiques comparés avant reprise.
+
 ## Reprise avant intégration du pigeonnier
 
 Autorisation : « Push en main puis etape sur 10 d’affiler ». Audit du run 42900258537 : les vingt scénarios et le parcours normal ont réussi ; le parcours GESTES_REELS a échoué en cherchant tab-malts sans écran de destination confirmé. Correction minimale de jeu/tests/parcours.cjs : attendre le domaine prêt, cliquer le vrai lieu, puis attendre son écran visible. Aucun code du jeu modifié. Rejeu local des gestes et des parcours Ulysse expert/débutant lancé avant fusion ; les résultats seront consignés dans la reprise de la série veillée. Syntaxe et diff contrôlés.

@@ -202,6 +202,7 @@
           .4 * portrait.width, .2667 * portrait.height, 0, 0, 144, 144);
         const ancien = SPR.firmin; SPR.firmin = cv.toDataURL();
         if ($('#mentor-portrait').src === ancien) $('#mentor-portrait').src = SPR.firmin;
+        $$('[data-portrait-mentor="Firmin"]').forEach(img => { if (img.src === ancien) img.src = SPR.firmin; });
       } catch { /* Conserver le portrait historique si le dessin échoue. */ }
     };
     portrait.src = window.IMAGES_JEU['personnage-firmin'];
@@ -3397,29 +3398,30 @@
     z.innerHTML = `<div class="lecons">${LECONS.map((l, i) => {
       const e = etatLecon(l.id), ouv = leconOuvrable(l);
       const etat = e && e.faite ? ['faite', 'Réussie'] : e ? ['cours', `${e.defi ? 'Défi ✓' : 'Défi'} · ${e.quiz ? 'Quiz ✓' : 'Quiz'}`] : ouv ? ['ouverte', 'Nouvelle'] : ['verrou', `Après : ${(l.requiert || []).map((r) => LECONS.find((x) => x.id === r).titre).join(', ')}`];
-      return `<button class="lecon ${etat[0]}" data-lecon="${l.id}" ${etat[0] === 'verrou' ? 'disabled' : ''}><span class="num">${i + 1}</span><span class="corps"><b>${esc(l.titre)}</b><small>${esc(l.mentor)} · ${esc(etat[1])}</small><small class="recomp">${esc(recompenseTexte(l))}</small></span></button>`;
+      return `<button class="lecon ${etat[0]}" data-lecon="${l.id}" aria-label="${esc(l.titre)} · ${esc(etat[1])}" ${etat[0] === 'verrou' ? 'disabled' : ''}><span class="num">${i + 1}</span><span class="corps"><b>${esc(l.titre)}</b><small>${esc(l.mentor)}</small><small class="lecon-statut">${esc(etat[1])}</small><small class="recomp">${esc(recompenseTexte(l))}</small></span></button>`;
     }).join('')}</div>`;
   }
   function detailLecon(l) {
     const e = etatLecon(l.id);
     const quiz = quizLecon && quizLecon.id === l.id ? quizLecon : null;
+    const avance = e?.faite ? 2 : Number(!!e?.defi) + Number(!!e?.quiz);
     let bas;
     if (!e) bas = `<button class="btn btn-feu" data-commencer="${l.id}">Commencer la leçon</button>`;
     else if (e.faite) bas = `<p class="lecon-ok">Leçon réussie. Reçu : ${esc((e.recus || []).join(' · ') || recompenseTexte(l))}</p>`;
     else bas = `<div class="lecon-etapes"><div class="etape ${e.defi ? 'ok' : ''}"><b>${e.defi ? '✓' : '1'} Défi</b><p>${esc(l.defi.txt)}</p>${e.defi ? '' : `<button class="btn btn-mini btn-sobre" data-aller="${{ biere: 'brasserie', edv: 'distillerie', vieilli: 'chai' }[l.defi.type]}">Y aller</button>`}</div>
       <div class="etape ${e.quiz ? 'ok' : ''}"><b>${e.quiz ? '✓' : '2'} Trois questions</b>${e.quiz ? '<p>Réussies.</p>' : quiz ? quizHTML(l, quiz) : `<p>Deux bonnes réponses sur trois suffisent.</p><button class="btn btn-mini" data-quizlecon="${l.id}">Répondre</button>`}</div></div>`;
     return `<button class="btn btn-mini btn-sobre" data-retourlecons>← Toutes les leçons</button>
-      <article class="lecon-detail"><p class="module">${esc(l.mentor)} · leçon</p><h2>${esc(l.titre)}</h2>
+      <article class="lecon-detail"><header class="lecon-mentor"><img src="${l.mentor === "Firmin" ? SPR.firmin : SPR.lise}" data-portrait-mentor="${esc(l.mentor)}" alt="" width="48" height="48"><div><p class="module">${esc(l.mentor)} · leçon</p><h2>${esc(l.titre)}</h2></div></header>
       ${l.theorie.map((p) => `<p>${esc(p)}</p>`).join('')}
       <p><button class="btn btn-mini btn-sobre" data-fiche="${l.fiche}">Fiche complète</button></p>
-      <p class="recomp-ligne"><b>Récompense :</b> ${esc(recompenseTexte(l))}</p>${bas}</article>`;
+      <p class="recomp-ligne"><b>Récompense :</b> ${esc(recompenseTexte(l))}</p><div class="lecon-progression" role="meter" aria-label="Étapes de la leçon validées" aria-valuemin="0" aria-valuemax="2" aria-valuenow="${avance}"><span>Étapes validées : ${avance}/2</span><span class="lecon-progression-barre" aria-hidden="true"><i style="width:${avance * 50}%"></i></span></div>${bas}</article>`;
   }
   function quizHTML(l, q) {
     const [enonce, bonne, faux] = l.quiz[q.i];
     const opts = q.ordre[q.i].map((k) => (k === 0 ? bonne : faux[k - 1]));
     const rep = q.rep[q.i];
-    return `<p class="enonce">${q.i + 1}/3 · ${esc(enonce)}</p><div class="reponses">${opts.map((o, k) => `<button data-replecon="${k}" ${rep != null ? 'disabled' : ''} class="${rep != null ? (q.ordre[q.i][k] === 0 ? 'juste' : k === rep ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
-      ${rep != null ? `<button class="btn btn-mini btn-feu" data-quizsuite>${q.i < 2 ? 'Question suivante' : 'Voir le résultat'}</button>` : ''}`;
+    return `<p class="quiz-compteur" role="status">Question ${q.i + 1} sur 3</p><p class="enonce">${esc(enonce)}</p><div class="reponses">${opts.map((o, k) => `<button data-replecon="${k}" ${rep != null ? 'disabled' : ''} class="${rep != null ? (q.ordre[q.i][k] === 0 ? 'juste' : k === rep ? 'faux' : '') : ''}">${esc(o)}${rep != null && q.ordre[q.i][k] === 0 ? '<span class="reponse-statut">Bonne réponse</span>' : rep === k ? '<span class="reponse-statut">Ton choix</span>' : ''}</button>`).join('')}</div>
+      ${rep != null ? `<p class="quiz-retour" role="status">${q.ordre[q.i][rep] === 0 ? "Bonne réponse." : "Réponse incorrecte. La bonne réponse est indiquée."}</p><button class="btn btn-mini btn-feu" data-quizsuite>${q.i < 2 ? 'Question suivante' : 'Voir le résultat'}</button>` : ''}`;
   }
   $('#veillee-lecons').addEventListener('click', (ev) => {
     const b = ev.target.closest('button'); if (!b) return;
@@ -3444,14 +3446,14 @@
   function rendreQuestions() {
     const q = etatQuiz();
     const reste = Math.max(0, 5 - q.faits);
-    $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
+    $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><div class="quiz-recompenses" role="meter" aria-label="Progression quotidienne des questions" aria-valuemin="0" aria-valuemax="5" aria-valuenow="${q.faits}"><span>Questions du jour : ${q.faits}/5</span><span class="quiz-jour-barre" aria-hidden="true"><i style="width:${q.faits * 20}%"></i></span></div><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
     if (!questionCourante) nouvelleQuestion();
     const { carte, options, repondu } = questionCourante;
     const qui = Math.random() < 0.5 ? 'Lise' : 'Firmin';
     $('#veillee-question').innerHTML = `<div class="question"><span class="module">${esc(D.quiz.modules[carte.d] || '')}</span>
       <p class="page-intro">Quelle réponse correspond à :</p><p class="enonce">${esc(carte.q)}</p>
-      <div class="reponses">${options.map((o, i) => `<button data-rep="${i}" ${repondu != null ? 'disabled' : ''} class="${repondu != null ? (o === carte.r ? 'juste' : i === repondu ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
-      ${repondu != null ? `<p>${options[repondu] === carte.r ? '<b style="color:var(--houblon)">Juste.</b>' : '<b style="color:var(--alerte)">Raté.</b> La bonne réponse est encadrée en vert.'}</p><button class="btn btn-feu" id="veillee-suivante">Question suivante</button>` : `<p class="page-intro">${qui} attend ta réponse.</p>`}</div>`;
+      <div class="reponses">${options.map((o, i) => `<button data-rep="${i}" ${repondu != null ? 'disabled' : ''} class="${repondu != null ? (o === carte.r ? 'juste' : i === repondu ? 'faux' : '') : ''}">${esc(o)}${repondu != null && o === carte.r ? '<span class="reponse-statut">Bonne réponse</span>' : repondu === i ? '<span class="reponse-statut">Ton choix</span>' : ''}</button>`).join('')}</div>
+      ${repondu != null ? `<p class="question-retour" role="status">${options[repondu] === carte.r ? '<b style="color:var(--houblon)">Juste.</b>' : '<b style="color:var(--alerte)">Raté.</b> La bonne réponse est indiquée.'}</p><button class="btn btn-feu" id="veillee-suivante">Question suivante</button>` : `<p class="page-intro">${qui} attend ta réponse.</p>`}</div>`;
   }
   $('#veillee-question').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

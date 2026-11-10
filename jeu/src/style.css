@@ -909,3 +909,62 @@ html,body { margin:0; }
 .vente-vide { display:grid; justify-items:start; gap:10px; border:1px dashed #9a794e; border-radius:14px; padding:16px; background:#2d2319; margin-bottom:12px; }
 .vente-vide > b { font-size:18px; color:#e6c58e; }
 .vente-vide p { margin:0; font-size:15px; line-height:1.5; color:var(--cendre); }
+
+/* Veillée : cartes de leçons reprises de la finition historique, adaptées au thème courant. */
+#veillee-lecons .lecon { border:1px solid #80613e; border-radius:14px; box-shadow:0 3px 9px #0003; padding:14px; grid-template-columns:36px minmax(0,1fr); gap:12px; min-height:72px; }
+#veillee-lecons .lecon .num { font-size:22px; color:var(--or); }
+#veillee-lecons .lecon .corps b { font-size:18px; line-height:1.35; }
+#veillee-lecons .lecon small { font-size:14px; line-height:1.45; }
+#veillee-lecons .lecon .corps { min-width:0; overflow-wrap:anywhere; }
+
+/* États lisibles sans déduire le verrouillage de la seule transparence. */
+#veillee-lecons .lecon.verrou { opacity:1; background:#30271e; border-style:dashed; }
+#veillee-lecons .lecon-statut { padding:4px 7px; border-radius:7px; background:#453624; color:#f0ddba; }
+#veillee-lecons .lecon.faite { border-color:var(--houblon); box-shadow:inset 0 0 0 1px var(--houblon); }
+#veillee-lecons .lecon.cours { border-color:var(--braise); box-shadow:inset 0 0 0 1px var(--braise); }
+
+/* Lecture : même texte de théorie, rythme et largeur adaptés au téléphone. */
+.lecon-detail { border:1px solid #8b6a44; border-radius:16px; padding:16px; gap:14px; box-shadow:0 4px 12px #0003; }
+.lecon-detail h2 { font-size:22px; line-height:1.3; }
+.lecon-detail > p { font-size:16px; line-height:1.65; max-width:62ch; overflow-wrap:anywhere; }
+.lecon-detail .module { font-size:14px; color:#dac6a3; }
+.lecon-detail .recomp-ligne { padding:10px; border-radius:10px; border:1px solid #80693d; background:#352c1c; color:#f5d791; }
+
+/* Défi et quiz : deux cartes indépendantes, mêmes actions et validation. */
+.lecon-etapes { gap:12px; }
+.lecon-etapes .etape { border:1px solid #73593b; border-radius:12px; padding:14px; gap:10px; box-shadow:none; }
+.lecon-etapes .etape > b:first-child { background:#493622; color:#efd5a8; border-radius:16px; padding:5px 10px; font-size:15px; }
+.lecon-etapes .etape > p { font-size:16px; line-height:1.5; }
+.lecon-etapes .etape.ok { border-color:var(--houblon); box-shadow:inset 0 0 0 1px var(--houblon); }
+
+/* Progression : lecture seule des validations Défi et Quiz. */
+.lecon-progression { display:grid; gap:6px; font-size:14px; font-weight:700; color:#e6c58e; }
+.lecon-progression-barre { height:10px; border-radius:8px; background:#15120e; overflow:hidden; }
+.lecon-progression-barre i { display:block; height:100%; border-radius:inherit; background:var(--houblon); }
+
+/* Réponses des leçons : cibles au pouce, contour de focus et texte complet. */
+.lecon-etapes .reponses button { min-height:48px; border:1px solid #826441; border-radius:12px; padding:12px; font-size:16px; line-height:1.45; overflow-wrap:anywhere; }
+.lecon-etapes .reponses button:focus-visible { outline:3px solid var(--calcaire); outline-offset:2px; }
+
+/* Correction du quiz : le texte accompagne les contours de couleur. */
+.quiz-compteur { margin:0; font-size:14px; font-weight:700; color:#e8c58b; }
+.reponse-statut { display:block; margin-top:5px; font-size:12px; font-weight:700; color:#e4c58f; }
+.quiz-retour { margin:0; padding:8px; border-radius:8px; background:#3b3021; color:#f1dfbc; font-size:15px; }
+
+/* Questions du soir : progression réelle des cinq questions récompensables. */
+.quiz-recompenses { display:grid; gap:6px; font-size:15px; color:#ecd0a0; font-weight:700; margin:8px 0; }
+.quiz-jour-barre { height:10px; border-radius:8px; background:#15120e; overflow:hidden; }
+.quiz-jour-barre i { display:block; height:100%; background:var(--or); border-radius:inherit; }
+
+/* Questions du soir : même confort que le quiz de leçon, correction en texte. */
+#veillee-question .question { border:1px solid #82613d; border-radius:16px; padding:16px; gap:12px; }
+#veillee-question .enonce { font-size:18px; line-height:1.45; }
+#veillee-question .reponses button { min-height:48px; border:1px solid #826441; border-radius:12px; padding:12px; font-size:16px; line-height:1.45; }
+#veillee-question .reponses button:focus-visible { outline:3px solid var(--calcaire); outline-offset:2px; }
+.question-retour { font-size:16px; line-height:1.5; margin:0; }
+
+/* Les mentors des leçons réutilisent les mêmes portraits que le dialogue du jeu. */
+.lecon-mentor { display:flex; gap:12px; align-items:flex-start; }
+.lecon-mentor img { width:48px; height:48px; flex:none; border-radius:12px; object-fit:contain; image-rendering:auto; background:#d9c398; }
+.lecon-mentor div { min-width:0; }
+.lecon-mentor .module { margin:0 0 4px; }

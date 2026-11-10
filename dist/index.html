@@ -918,6 +918,65 @@ html,body { margin:0; }
 .vente-vide { display:grid; justify-items:start; gap:10px; border:1px dashed #9a794e; border-radius:14px; padding:16px; background:#2d2319; margin-bottom:12px; }
 .vente-vide > b { font-size:18px; color:#e6c58e; }
 .vente-vide p { margin:0; font-size:15px; line-height:1.5; color:var(--cendre); }
+
+/* Veillée : cartes de leçons reprises de la finition historique, adaptées au thème courant. */
+#veillee-lecons .lecon { border:1px solid #80613e; border-radius:14px; box-shadow:0 3px 9px #0003; padding:14px; grid-template-columns:36px minmax(0,1fr); gap:12px; min-height:72px; }
+#veillee-lecons .lecon .num { font-size:22px; color:var(--or); }
+#veillee-lecons .lecon .corps b { font-size:18px; line-height:1.35; }
+#veillee-lecons .lecon small { font-size:14px; line-height:1.45; }
+#veillee-lecons .lecon .corps { min-width:0; overflow-wrap:anywhere; }
+
+/* États lisibles sans déduire le verrouillage de la seule transparence. */
+#veillee-lecons .lecon.verrou { opacity:1; background:#30271e; border-style:dashed; }
+#veillee-lecons .lecon-statut { padding:4px 7px; border-radius:7px; background:#453624; color:#f0ddba; }
+#veillee-lecons .lecon.faite { border-color:var(--houblon); box-shadow:inset 0 0 0 1px var(--houblon); }
+#veillee-lecons .lecon.cours { border-color:var(--braise); box-shadow:inset 0 0 0 1px var(--braise); }
+
+/* Lecture : même texte de théorie, rythme et largeur adaptés au téléphone. */
+.lecon-detail { border:1px solid #8b6a44; border-radius:16px; padding:16px; gap:14px; box-shadow:0 4px 12px #0003; }
+.lecon-detail h2 { font-size:22px; line-height:1.3; }
+.lecon-detail > p { font-size:16px; line-height:1.65; max-width:62ch; overflow-wrap:anywhere; }
+.lecon-detail .module { font-size:14px; color:#dac6a3; }
+.lecon-detail .recomp-ligne { padding:10px; border-radius:10px; border:1px solid #80693d; background:#352c1c; color:#f5d791; }
+
+/* Défi et quiz : deux cartes indépendantes, mêmes actions et validation. */
+.lecon-etapes { gap:12px; }
+.lecon-etapes .etape { border:1px solid #73593b; border-radius:12px; padding:14px; gap:10px; box-shadow:none; }
+.lecon-etapes .etape > b:first-child { background:#493622; color:#efd5a8; border-radius:16px; padding:5px 10px; font-size:15px; }
+.lecon-etapes .etape > p { font-size:16px; line-height:1.5; }
+.lecon-etapes .etape.ok { border-color:var(--houblon); box-shadow:inset 0 0 0 1px var(--houblon); }
+
+/* Progression : lecture seule des validations Défi et Quiz. */
+.lecon-progression { display:grid; gap:6px; font-size:14px; font-weight:700; color:#e6c58e; }
+.lecon-progression-barre { height:10px; border-radius:8px; background:#15120e; overflow:hidden; }
+.lecon-progression-barre i { display:block; height:100%; border-radius:inherit; background:var(--houblon); }
+
+/* Réponses des leçons : cibles au pouce, contour de focus et texte complet. */
+.lecon-etapes .reponses button { min-height:48px; border:1px solid #826441; border-radius:12px; padding:12px; font-size:16px; line-height:1.45; overflow-wrap:anywhere; }
+.lecon-etapes .reponses button:focus-visible { outline:3px solid var(--calcaire); outline-offset:2px; }
+
+/* Correction du quiz : le texte accompagne les contours de couleur. */
+.quiz-compteur { margin:0; font-size:14px; font-weight:700; color:#e8c58b; }
+.reponse-statut { display:block; margin-top:5px; font-size:12px; font-weight:700; color:#e4c58f; }
+.quiz-retour { margin:0; padding:8px; border-radius:8px; background:#3b3021; color:#f1dfbc; font-size:15px; }
+
+/* Questions du soir : progression réelle des cinq questions récompensables. */
+.quiz-recompenses { display:grid; gap:6px; font-size:15px; color:#ecd0a0; font-weight:700; margin:8px 0; }
+.quiz-jour-barre { height:10px; border-radius:8px; background:#15120e; overflow:hidden; }
+.quiz-jour-barre i { display:block; height:100%; background:var(--or); border-radius:inherit; }
+
+/* Questions du soir : même confort que le quiz de leçon, correction en texte. */
+#veillee-question .question { border:1px solid #82613d; border-radius:16px; padding:16px; gap:12px; }
+#veillee-question .enonce { font-size:18px; line-height:1.45; }
+#veillee-question .reponses button { min-height:48px; border:1px solid #826441; border-radius:12px; padding:12px; font-size:16px; line-height:1.45; }
+#veillee-question .reponses button:focus-visible { outline:3px solid var(--calcaire); outline-offset:2px; }
+.question-retour { font-size:16px; line-height:1.5; margin:0; }
+
+/* Les mentors des leçons réutilisent les mêmes portraits que le dialogue du jeu. */
+.lecon-mentor { display:flex; gap:12px; align-items:flex-start; }
+.lecon-mentor img { width:48px; height:48px; flex:none; border-radius:12px; object-fit:contain; image-rendering:auto; background:#d9c398; }
+.lecon-mentor div { min-width:0; }
+.lecon-mentor .module { margin:0 0 4px; }
 </style>
 
 <div id="app">
@@ -3223,6 +3282,7 @@ html,body { margin:0; }
           .4 * portrait.width, .2667 * portrait.height, 0, 0, 144, 144);
         const ancien = SPR.firmin; SPR.firmin = cv.toDataURL();
         if ($('#mentor-portrait').src === ancien) $('#mentor-portrait').src = SPR.firmin;
+        $$('[data-portrait-mentor="Firmin"]').forEach(img => { if (img.src === ancien) img.src = SPR.firmin; });
       } catch { /* Conserver le portrait historique si le dessin échoue. */ }
     };
     portrait.src = window.IMAGES_JEU['personnage-firmin'];
@@ -6418,29 +6478,30 @@ html,body { margin:0; }
     z.innerHTML = `<div class="lecons">${LECONS.map((l, i) => {
       const e = etatLecon(l.id), ouv = leconOuvrable(l);
       const etat = e && e.faite ? ['faite', 'Réussie'] : e ? ['cours', `${e.defi ? 'Défi ✓' : 'Défi'} · ${e.quiz ? 'Quiz ✓' : 'Quiz'}`] : ouv ? ['ouverte', 'Nouvelle'] : ['verrou', `Après : ${(l.requiert || []).map((r) => LECONS.find((x) => x.id === r).titre).join(', ')}`];
-      return `<button class="lecon ${etat[0]}" data-lecon="${l.id}" ${etat[0] === 'verrou' ? 'disabled' : ''}><span class="num">${i + 1}</span><span class="corps"><b>${esc(l.titre)}</b><small>${esc(l.mentor)} · ${esc(etat[1])}</small><small class="recomp">${esc(recompenseTexte(l))}</small></span></button>`;
+      return `<button class="lecon ${etat[0]}" data-lecon="${l.id}" aria-label="${esc(l.titre)} · ${esc(etat[1])}" ${etat[0] === 'verrou' ? 'disabled' : ''}><span class="num">${i + 1}</span><span class="corps"><b>${esc(l.titre)}</b><small>${esc(l.mentor)}</small><small class="lecon-statut">${esc(etat[1])}</small><small class="recomp">${esc(recompenseTexte(l))}</small></span></button>`;
     }).join('')}</div>`;
   }
   function detailLecon(l) {
     const e = etatLecon(l.id);
     const quiz = quizLecon && quizLecon.id === l.id ? quizLecon : null;
+    const avance = e?.faite ? 2 : Number(!!e?.defi) + Number(!!e?.quiz);
     let bas;
     if (!e) bas = `<button class="btn btn-feu" data-commencer="${l.id}">Commencer la leçon</button>`;
     else if (e.faite) bas = `<p class="lecon-ok">Leçon réussie. Reçu : ${esc((e.recus || []).join(' · ') || recompenseTexte(l))}</p>`;
     else bas = `<div class="lecon-etapes"><div class="etape ${e.defi ? 'ok' : ''}"><b>${e.defi ? '✓' : '1'} Défi</b><p>${esc(l.defi.txt)}</p>${e.defi ? '' : `<button class="btn btn-mini btn-sobre" data-aller="${{ biere: 'brasserie', edv: 'distillerie', vieilli: 'chai' }[l.defi.type]}">Y aller</button>`}</div>
       <div class="etape ${e.quiz ? 'ok' : ''}"><b>${e.quiz ? '✓' : '2'} Trois questions</b>${e.quiz ? '<p>Réussies.</p>' : quiz ? quizHTML(l, quiz) : `<p>Deux bonnes réponses sur trois suffisent.</p><button class="btn btn-mini" data-quizlecon="${l.id}">Répondre</button>`}</div></div>`;
     return `<button class="btn btn-mini btn-sobre" data-retourlecons>← Toutes les leçons</button>
-      <article class="lecon-detail"><p class="module">${esc(l.mentor)} · leçon</p><h2>${esc(l.titre)}</h2>
+      <article class="lecon-detail"><header class="lecon-mentor"><img src="${l.mentor === "Firmin" ? SPR.firmin : SPR.lise}" data-portrait-mentor="${esc(l.mentor)}" alt="" width="48" height="48"><div><p class="module">${esc(l.mentor)} · leçon</p><h2>${esc(l.titre)}</h2></div></header>
       ${l.theorie.map((p) => `<p>${esc(p)}</p>`).join('')}
       <p><button class="btn btn-mini btn-sobre" data-fiche="${l.fiche}">Fiche complète</button></p>
-      <p class="recomp-ligne"><b>Récompense :</b> ${esc(recompenseTexte(l))}</p>${bas}</article>`;
+      <p class="recomp-ligne"><b>Récompense :</b> ${esc(recompenseTexte(l))}</p><div class="lecon-progression" role="meter" aria-label="Étapes de la leçon validées" aria-valuemin="0" aria-valuemax="2" aria-valuenow="${avance}"><span>Étapes validées : ${avance}/2</span><span class="lecon-progression-barre" aria-hidden="true"><i style="width:${avance * 50}%"></i></span></div>${bas}</article>`;
   }
   function quizHTML(l, q) {
     const [enonce, bonne, faux] = l.quiz[q.i];
     const opts = q.ordre[q.i].map((k) => (k === 0 ? bonne : faux[k - 1]));
     const rep = q.rep[q.i];
-    return `<p class="enonce">${q.i + 1}/3 · ${esc(enonce)}</p><div class="reponses">${opts.map((o, k) => `<button data-replecon="${k}" ${rep != null ? 'disabled' : ''} class="${rep != null ? (q.ordre[q.i][k] === 0 ? 'juste' : k === rep ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
-      ${rep != null ? `<button class="btn btn-mini btn-feu" data-quizsuite>${q.i < 2 ? 'Question suivante' : 'Voir le résultat'}</button>` : ''}`;
+    return `<p class="quiz-compteur" role="status">Question ${q.i + 1} sur 3</p><p class="enonce">${esc(enonce)}</p><div class="reponses">${opts.map((o, k) => `<button data-replecon="${k}" ${rep != null ? 'disabled' : ''} class="${rep != null ? (q.ordre[q.i][k] === 0 ? 'juste' : k === rep ? 'faux' : '') : ''}">${esc(o)}${rep != null && q.ordre[q.i][k] === 0 ? '<span class="reponse-statut">Bonne réponse</span>' : rep === k ? '<span class="reponse-statut">Ton choix</span>' : ''}</button>`).join('')}</div>
+      ${rep != null ? `<p class="quiz-retour" role="status">${q.ordre[q.i][rep] === 0 ? "Bonne réponse." : "Réponse incorrecte. La bonne réponse est indiquée."}</p><button class="btn btn-mini btn-feu" data-quizsuite>${q.i < 2 ? 'Question suivante' : 'Voir le résultat'}</button>` : ''}`;
   }
   $('#veillee-lecons').addEventListener('click', (ev) => {
     const b = ev.target.closest('button'); if (!b) return;
@@ -6465,14 +6526,14 @@ html,body { margin:0; }
   function rendreQuestions() {
     const q = etatQuiz();
     const reste = Math.max(0, 5 - q.faits);
-    $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
+    $('#veillee-etat').innerHTML = `<span class="ecus">${S.ecus} écus</span><div class="quiz-recompenses" role="meter" aria-label="Progression quotidienne des questions" aria-valuemin="0" aria-valuemax="5" aria-valuenow="${q.faits}"><span>Questions du jour : ${q.faits}/5</span><span class="quiz-jour-barre" aria-hidden="true"><i style="width:${q.faits * 20}%"></i></span></div><p>${reste ? `Encore ${reste} question${reste > 1 ? 's' : ''} récompensée${reste > 1 ? 's' : ''} aujourd'hui.` : 'Les récompenses du jour sont prises : tu peux continuer pour t\'entraîner.'} Série en cours : ${q.serie} bonne${q.serie > 1 ? 's' : ''} réponse${q.serie > 1 ? 's' : ''} d'affilée.</p>`;
     if (!questionCourante) nouvelleQuestion();
     const { carte, options, repondu } = questionCourante;
     const qui = Math.random() < 0.5 ? 'Lise' : 'Firmin';
     $('#veillee-question').innerHTML = `<div class="question"><span class="module">${esc(D.quiz.modules[carte.d] || '')}</span>
       <p class="page-intro">Quelle réponse correspond à :</p><p class="enonce">${esc(carte.q)}</p>
-      <div class="reponses">${options.map((o, i) => `<button data-rep="${i}" ${repondu != null ? 'disabled' : ''} class="${repondu != null ? (o === carte.r ? 'juste' : i === repondu ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
-      ${repondu != null ? `<p>${options[repondu] === carte.r ? '<b style="color:var(--houblon)">Juste.</b>' : '<b style="color:var(--alerte)">Raté.</b> La bonne réponse est encadrée en vert.'}</p><button class="btn btn-feu" id="veillee-suivante">Question suivante</button>` : `<p class="page-intro">${qui} attend ta réponse.</p>`}</div>`;
+      <div class="reponses">${options.map((o, i) => `<button data-rep="${i}" ${repondu != null ? 'disabled' : ''} class="${repondu != null ? (o === carte.r ? 'juste' : i === repondu ? 'faux' : '') : ''}">${esc(o)}${repondu != null && o === carte.r ? '<span class="reponse-statut">Bonne réponse</span>' : repondu === i ? '<span class="reponse-statut">Ton choix</span>' : ''}</button>`).join('')}</div>
+      ${repondu != null ? `<p class="question-retour" role="status">${options[repondu] === carte.r ? '<b style="color:var(--houblon)">Juste.</b>' : '<b style="color:var(--alerte)">Raté.</b> La bonne réponse est indiquée.'}</p><button class="btn btn-feu" id="veillee-suivante">Question suivante</button>` : `<p class="page-intro">${qui} attend ta réponse.</p>`}</div>`;
   }
   $('#veillee-question').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
