@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Pigeonnier — mission 04/10 : Vente : propositions tactiles sans texte comprimé
+
+Statut : terminée sur `work/pigeonnier-04-propositions`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Cartes de produits arrondies et commandes sur une rangée dédiée jusque 440 px. Vente réelle testée : 10 L retirés, écus crédités, client retiré et compteur incrémenté. Les noms longs gardent leur largeur utile.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/04-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p04-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Afficher la réputation réelle en chiffres et jauge accessible.
+
+
 ## Pigeonnier — mission 03/10 : Cave : bouteilles lisses aux couleurs réelles
 
 Statut : terminée sur `work/pigeonnier-03-bouteilles`, sans fusion. Autorisation utilisateur d’enchaîner
