@@ -3419,8 +3419,8 @@
     const [enonce, bonne, faux] = l.quiz[q.i];
     const opts = q.ordre[q.i].map((k) => (k === 0 ? bonne : faux[k - 1]));
     const rep = q.rep[q.i];
-    return `<p class="enonce">${q.i + 1}/3 · ${esc(enonce)}</p><div class="reponses">${opts.map((o, k) => `<button data-replecon="${k}" ${rep != null ? 'disabled' : ''} class="${rep != null ? (q.ordre[q.i][k] === 0 ? 'juste' : k === rep ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
-      ${rep != null ? `<button class="btn btn-mini btn-feu" data-quizsuite>${q.i < 2 ? 'Question suivante' : 'Voir le résultat'}</button>` : ''}`;
+    return `<p class="quiz-compteur" role="status">Question ${q.i + 1} sur 3</p><p class="enonce">${esc(enonce)}</p><div class="reponses">${opts.map((o, k) => `<button data-replecon="${k}" ${rep != null ? 'disabled' : ''} class="${rep != null ? (q.ordre[q.i][k] === 0 ? 'juste' : k === rep ? 'faux' : '') : ''}">${esc(o)}${rep != null && q.ordre[q.i][k] === 0 ? '<span class="reponse-statut">Bonne réponse</span>' : rep === k ? '<span class="reponse-statut">Ton choix</span>' : ''}</button>`).join('')}</div>
+      ${rep != null ? `<p class="quiz-retour" role="status">${q.ordre[q.i][rep] === 0 ? "Bonne réponse." : "Réponse incorrecte. La bonne réponse est indiquée."}</p><button class="btn btn-mini btn-feu" data-quizsuite>${q.i < 2 ? 'Question suivante' : 'Voir le résultat'}</button>` : ''}`;
   }
   $('#veillee-lecons').addEventListener('click', (ev) => {
     const b = ev.target.closest('button'); if (!b) return;
