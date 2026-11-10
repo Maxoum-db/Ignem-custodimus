@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Série autorisée — mission 04/10 : Chai : repères lisibles pendant le défilement
+
+Statut : terminée sur `work/serie-04-reperes-chai`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Repères de rangées fixes pendant le défilement horizontal, retour à la ligne sur petit écran, consigne de glissement et région du plan focalisable au clavier. Position des repères et focus vérifiés après défilement complet à dix travées.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/04-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/04-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Distinguer clairement prévision et vieillissement réel.
+
+
 ## Série autorisée — mission 03/10 : Chai : états des fûts et sélection accessibles
 
 Statut : terminée sur `work/serie-03-etats-futs`, sans fusion. Autorisation utilisateur d’enchaîner

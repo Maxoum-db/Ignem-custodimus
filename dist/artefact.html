@@ -819,6 +819,11 @@ html,body { margin:0; }
 .fut-etat { font-size:10px; line-height:1.2; border-radius:4px; padding:1px 3px; color:#f4e2bf; background:#302116e6; }
 .fut.rempli .fut-etat { color:#251b12; background:#e6c58b; }
 .fut[aria-pressed="true"] { outline:3px solid var(--braise); outline-offset:1px; }
+
+/* Repères mobiles du plan : ils restent visibles en défilant les travées. */
+.chai-defilement { font-size:13px; color:var(--cendre); margin:8px 0; }
+.chai-plan .zone-lib { position:sticky; left:0; width:calc(100vw - 64px); max-width:100%; white-space:normal; line-height:1.4; padding:4px 0; background:#261c14; }
+.chai-plan:focus-visible { outline:3px solid var(--braise); outline-offset:2px; }
 </style>
 
 <div id="app">
@@ -5533,7 +5538,7 @@ html,body { margin:0; }
     }).join('');
     const etendre = C.cols < PLAFOND_TRAVEES ? `<button class="btn btn-mini btn-sobre" id="chai-etendre" ${S.ecus < coutTravee(C.cols) ? 'disabled' : ''}>Agrandir d'une travée · ${coutTravee(C.cols)} écus</button>` : '<span class="etq">Plafond atteint : 10 travées</span>';
     $('#chai-grille').innerHTML = `${modeChai ? `<p class="consigne-chai">${modeChai.type === 'placer' ? 'Touche un emplacement libre assez large (les cases qui clignotent).' : 'Touche un fût vide pour y verser le lot.'} <button class="btn btn-mini btn-sobre" id="chai-annuler">Annuler</button></p>` : ''}
-      <div class="chai-plan">${rangees}</div><div class="chai-pied">${etendre}</div>`;
+      <p class="chai-defilement" id="chai-defilement">Fais glisser le plan pour voir toutes les travées.</p><div class="chai-plan" tabindex="0" role="region" aria-label="Plan du chai" aria-describedby="chai-defilement">${rangees}</div><div class="chai-pied">${etendre}</div>`;
     // Cour de la tonnellerie : fûts pas encore rangés
     const cour = C.futs.filter((x) => !x.pos);
     $('#chai-cour').innerHTML = cour.length ? `<h2 class="sous-titre">Cour de la tonnellerie</h2><div class="cour">${cour.map((x) => `<button class="fut fut-${x.type} ${x.id === choixFut ? 'choisi' : ''}" style="width:${CH.TAILLES[x.taille].w * 44}px" data-fut="${x.id}" aria-pressed="${x.id === choixFut}" aria-label="${esc(nomFut(x))}, dans la cour"><span class="fut-abr">${ABR[x.type]}</span></button>`).join('')}</div>` : '';

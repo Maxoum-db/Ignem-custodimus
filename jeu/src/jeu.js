@@ -2611,7 +2611,7 @@
     }).join('');
     const etendre = C.cols < PLAFOND_TRAVEES ? `<button class="btn btn-mini btn-sobre" id="chai-etendre" ${S.ecus < coutTravee(C.cols) ? 'disabled' : ''}>Agrandir d'une travée · ${coutTravee(C.cols)} écus</button>` : '<span class="etq">Plafond atteint : 10 travées</span>';
     $('#chai-grille').innerHTML = `${modeChai ? `<p class="consigne-chai">${modeChai.type === 'placer' ? 'Touche un emplacement libre assez large (les cases qui clignotent).' : 'Touche un fût vide pour y verser le lot.'} <button class="btn btn-mini btn-sobre" id="chai-annuler">Annuler</button></p>` : ''}
-      <div class="chai-plan">${rangees}</div><div class="chai-pied">${etendre}</div>`;
+      <p class="chai-defilement" id="chai-defilement">Fais glisser le plan pour voir toutes les travées.</p><div class="chai-plan" tabindex="0" role="region" aria-label="Plan du chai" aria-describedby="chai-defilement">${rangees}</div><div class="chai-pied">${etendre}</div>`;
     // Cour de la tonnellerie : fûts pas encore rangés
     const cour = C.futs.filter((x) => !x.pos);
     $('#chai-cour').innerHTML = cour.length ? `<h2 class="sous-titre">Cour de la tonnellerie</h2><div class="cour">${cour.map((x) => `<button class="fut fut-${x.type} ${x.id === choixFut ? 'choisi' : ''}" style="width:${CH.TAILLES[x.taille].w * 44}px" data-fut="${x.id}" aria-pressed="${x.id === choixFut}" aria-label="${esc(nomFut(x))}, dans la cour"><span class="fut-abr">${ABR[x.type]}</span></button>`).join('')}</div>` : '';
