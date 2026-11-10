@@ -1,5 +1,65 @@
 # Progression Codex
 
+## 2026-11-10 — Synchronisation des missions récentes et du site
+
+Autorisation : « Étape, mais avant je veux que tout soit bien à jour », après
+la demande explicite de mise à jour de main. Une seule mission de synchronisation,
+sans commencer les fûts de la cour. Branche `work/synchronisation-jeu` depuis
+`b545d6e`. État local propre, fetch, PR ouvertes et version Sites contrôlés.
+
+Branches #20 (dégustation), #21 (audit historique), #22 (Ulysse), #23 (Firmin)
+et #25 (journal) réunies par merges sur cette branche. Conflits limités au workflow
+et aux journaux : les trois tests ciblés et leurs captures sont tous conservés.
+HTML reconstruits depuis les sources réunies. Anciennes chaînes #1–#13 non
+fusionnées : elles contiennent des approches historiques et ne représentent pas
+le plan courant. `.openai/hosting.json` restaure l’identité du site existant,
+`appgprj_6ae768c368fc819193e73dfa24c45f27`, sortie statique `dist`.
+
+Validation exécutée : build, six suites Node, smoke mobile, huit rendus,
+`chai-plan.cjs`, `firmin-portrait.cjs`, `ulysse-entree.cjs` à 320/390 px et parcours
+complet `parcours.cjs` réussis (brassage, vente, brouillis, repasse, aveugle,
+dégustation, vieillissement et bouteille). Zéro exception JS observée par ces
+contrôles, SVG embarqués et portrait décodés ; repli Firmin testé sans asset.
+Captures réelles actualisées pour Firmin ; captures Ulysse et plan du chai conservées.
+Tests Chromium système hors bac à sable pour le serveur local. Pas d’Android
+physique/Safari ; les gestes chronométrés complets n’ont pas été rejoués localement.
+
+Site observé avant synchronisation : version 10, commit source Sites
+`daa36c8a3c843e143dc35870aac4b80cec46879a`, à une autre révision que main.
+Publication de la version réunifiée prévue après push et fusion confirmés ; les
+identifiants finaux de publication seront retournés dans le rapport. Accès et
+adresse conservés. Aucun changement de format de sauvegarde.
+
+Prochaine mission non commencée : illustrer les fûts de la cour et tester leur
+rangement. Aucun autre développement graphique dans cette synchronisation.
+
+
+## 2026-11-10 — Intégration du plan du chai dans main
+
+Autorisation utilisateur : « Étape (push en main avant) Et redonne moi l'accès ».
+Périmètre retenu : intégration de la dernière mission #24, sans fusion des autres
+PR et sans commencer la cour de la tonnellerie. État local propre avant reprise.
+
+CI du commit `0ec885e318f3b22d9ebf6a82d61a3725cd0af018` vérifiée réussie :
+https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/42889443045
+PR #24 ouverte, fusionnable et head vérifié avant fusion. Fusion autorisée via
+GitHub avec SHA attendu : commit `b545d6e761d086ef730bd1ce8f729861d2a11211`.
+Fetch puis historique distant confirment `origin/main` à ce commit.
+
+Build, six suites Node et absence de diff des deux HTML reconstruits vérifiés
+sur ce main intégré, depuis la branche documentaire `work/journal-integration-chai`.
+Pas de changement de code ni nouvelle capture pour cette intégration ; preuves
+graphiques existantes dans `docs/captures/chai-plan-320.png` et `chai-plan-390.png`.
+
+Accès retrouvé via le project_id historique et l’outil Sites : site actif,
+version publiée 10, droits `custom` inchangés :
+https://promethee-ignem-custodimus.maximilien92.chatgpt.site
+La fusion GitHub ne prouve pas un déploiement Sites ; aucune publication réalisée
+pendant cette mission. Le lien donne accès à la version déjà publiée.
+
+Prochaine mission non commencée : illustrer les fûts de la cour de la tonnellerie
+et vérifier leur rangement. Aucun blocage à l’intégration #24.
+
 ## 2026-11-10 — Fûts illustrés du plan du chai
 
 Statut : terminée sur `work/chai-futs-illustres`, créée depuis `origin/main`
