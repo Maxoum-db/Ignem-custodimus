@@ -2568,7 +2568,7 @@
         }
       }
       return `<div class="rang-chai" data-zone="${r}"><span class="zone-lib">${icone[r]} ${esc(z.nom)} · anges ${nf(CH.P.angePct * z.ange, 1)} %/an · degré ${z.deg > 0 ? '+' : ''}${nf(z.deg, 2)}/an</span>
-        <div class="cases" style="grid-template-columns:repeat(${C.cols},1fr)">${cases}</div></div>`;
+        <div class="cases" style="--travees:${C.cols};grid-template-columns:repeat(${C.cols},1fr)">${cases}</div></div>`;
     }).join('');
     const etendre = C.cols < PLAFOND_TRAVEES ? `<button class="btn btn-mini btn-sobre" id="chai-etendre" ${S.ecus < coutTravee(C.cols) ? 'disabled' : ''}>Agrandir d'une travée · ${coutTravee(C.cols)} écus</button>` : '<span class="etq">Plafond atteint : 10 travées</span>';
     $('#chai-grille').innerHTML = `${modeChai ? `<p class="consigne-chai">${modeChai.type === 'placer' ? 'Touche un emplacement libre assez large (les cases qui clignotent).' : 'Touche un fût vide pour y verser le lot.'} <button class="btn btn-mini btn-sobre" id="chai-annuler">Annuler</button></p>` : ''}
