@@ -964,6 +964,13 @@ html,body { margin:0; }
 .quiz-recompenses { display:grid; gap:6px; font-size:15px; color:#ecd0a0; font-weight:700; margin:8px 0; }
 .quiz-jour-barre { height:10px; border-radius:8px; background:#15120e; overflow:hidden; }
 .quiz-jour-barre i { display:block; height:100%; background:var(--or); border-radius:inherit; }
+
+/* Questions du soir : même confort que le quiz de leçon, correction en texte. */
+#veillee-question .question { border:1px solid #82613d; border-radius:16px; padding:16px; gap:12px; }
+#veillee-question .enonce { font-size:18px; line-height:1.45; }
+#veillee-question .reponses button { min-height:48px; border:1px solid #826441; border-radius:12px; padding:12px; font-size:16px; line-height:1.45; }
+#veillee-question .reponses button:focus-visible { outline:3px solid var(--calcaire); outline-offset:2px; }
+.question-retour { font-size:16px; line-height:1.5; margin:0; }
 </style>
 
 <div id="app">
@@ -6518,8 +6525,8 @@ html,body { margin:0; }
     const qui = Math.random() < 0.5 ? 'Lise' : 'Firmin';
     $('#veillee-question').innerHTML = `<div class="question"><span class="module">${esc(D.quiz.modules[carte.d] || '')}</span>
       <p class="page-intro">Quelle réponse correspond à :</p><p class="enonce">${esc(carte.q)}</p>
-      <div class="reponses">${options.map((o, i) => `<button data-rep="${i}" ${repondu != null ? 'disabled' : ''} class="${repondu != null ? (o === carte.r ? 'juste' : i === repondu ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
-      ${repondu != null ? `<p>${options[repondu] === carte.r ? '<b style="color:var(--houblon)">Juste.</b>' : '<b style="color:var(--alerte)">Raté.</b> La bonne réponse est encadrée en vert.'}</p><button class="btn btn-feu" id="veillee-suivante">Question suivante</button>` : `<p class="page-intro">${qui} attend ta réponse.</p>`}</div>`;
+      <div class="reponses">${options.map((o, i) => `<button data-rep="${i}" ${repondu != null ? 'disabled' : ''} class="${repondu != null ? (o === carte.r ? 'juste' : i === repondu ? 'faux' : '') : ''}">${esc(o)}${repondu != null && o === carte.r ? '<span class="reponse-statut">Bonne réponse</span>' : repondu === i ? '<span class="reponse-statut">Ton choix</span>' : ''}</button>`).join('')}</div>
+      ${repondu != null ? `<p class="question-retour" role="status">${options[repondu] === carte.r ? '<b style="color:var(--houblon)">Juste.</b>' : '<b style="color:var(--alerte)">Raté.</b> La bonne réponse est indiquée.'}</p><button class="btn btn-feu" id="veillee-suivante">Question suivante</button>` : `<p class="page-intro">${qui} attend ta réponse.</p>`}</div>`;
   }
   $('#veillee-question').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

@@ -3451,8 +3451,8 @@
     const qui = Math.random() < 0.5 ? 'Lise' : 'Firmin';
     $('#veillee-question').innerHTML = `<div class="question"><span class="module">${esc(D.quiz.modules[carte.d] || '')}</span>
       <p class="page-intro">Quelle réponse correspond à :</p><p class="enonce">${esc(carte.q)}</p>
-      <div class="reponses">${options.map((o, i) => `<button data-rep="${i}" ${repondu != null ? 'disabled' : ''} class="${repondu != null ? (o === carte.r ? 'juste' : i === repondu ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
-      ${repondu != null ? `<p>${options[repondu] === carte.r ? '<b style="color:var(--houblon)">Juste.</b>' : '<b style="color:var(--alerte)">Raté.</b> La bonne réponse est encadrée en vert.'}</p><button class="btn btn-feu" id="veillee-suivante">Question suivante</button>` : `<p class="page-intro">${qui} attend ta réponse.</p>`}</div>`;
+      <div class="reponses">${options.map((o, i) => `<button data-rep="${i}" ${repondu != null ? 'disabled' : ''} class="${repondu != null ? (o === carte.r ? 'juste' : i === repondu ? 'faux' : '') : ''}">${esc(o)}${repondu != null && o === carte.r ? '<span class="reponse-statut">Bonne réponse</span>' : repondu === i ? '<span class="reponse-statut">Ton choix</span>' : ''}</button>`).join('')}</div>
+      ${repondu != null ? `<p class="question-retour" role="status">${options[repondu] === carte.r ? '<b style="color:var(--houblon)">Juste.</b>' : '<b style="color:var(--alerte)">Raté.</b> La bonne réponse est indiquée.'}</p><button class="btn btn-feu" id="veillee-suivante">Question suivante</button>` : `<p class="page-intro">${qui} attend ta réponse.</p>`}</div>`;
   }
   $('#veillee-question').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;

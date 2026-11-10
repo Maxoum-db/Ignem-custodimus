@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Veillée — mission 09/10 : Questions du soir : réponses tactiles et correction textuelle
+
+Statut : terminée sur `work/veillee-09-questions`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Cibles de 48 px et texte de correction indépendant de la couleur. Une réponse erronée ne rapporte rien et consomme une question ; la correcte suivante rapporte quatre écus. Verrouillage et passage à la suivante conservés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/09-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v09-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Réutiliser les portraits de Lise et Firmin dans les fiches de leçons.
+
+
 ## Veillée — mission 08/10 : Questions du soir : progression quotidienne visible
 
 Statut : terminée sur `work/veillee-08-quotidien`, sans fusion. Autorisation utilisateur d’enchaîner
