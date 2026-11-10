@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Veillée — mission 04/10 : Leçons : deux étapes lisibles et actions préservées
+
+Statut : terminée sur `work/veillee-04-etapes`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Défi et Trois questions dans des cartes séparées et arrondies. Démarrage réel de la leçon et bouton Y aller vers la brasserie vérifiés ; école et écus conservés pendant cette navigation.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/04-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v04-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Afficher la progression réelle des deux étapes.
+
+
 ## Veillée — mission 03/10 : Leçons : lecture confortable de la théorie
 
 Statut : terminée sur `work/veillee-03-lecture`, sans fusion. Autorisation utilisateur d’enchaîner

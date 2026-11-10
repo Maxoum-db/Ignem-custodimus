@@ -1,0 +1,3 @@
+require('./support.cjs')('04-etapes',async({page,start,save,assert})=>{
+ await start();const before=await save();assert.ok(before.ecole.empatage.debut);assert.equal(await page.locator('.lecon-etapes .etape').count(),2);await page.locator('.lecon-etapes').screenshot({path:`docs/captures/serie/v04-etapes-${await page.evaluate(()=>innerWidth)}.png`});const button=page.locator('.lecon-etapes [data-aller="brasserie"]');assert.ok((await button.boundingBox()).height>=44);await button.click();await page.locator('#ecran-brasserie').waitFor({state:'visible'});const after=await save();assert.deepEqual(after.ecole,before.ecole);assert.equal(after.ecus,before.ecus);
+}).catch(e=>{console.error(e);process.exitCode=1});

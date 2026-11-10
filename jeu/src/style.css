@@ -929,3 +929,10 @@ html,body { margin:0; }
 .lecon-detail > p { font-size:16px; line-height:1.65; max-width:62ch; overflow-wrap:anywhere; }
 .lecon-detail .module { font-size:14px; color:#dac6a3; }
 .lecon-detail .recomp-ligne { padding:10px; border-radius:10px; border:1px solid #80693d; background:#352c1c; color:#f5d791; }
+
+/* Défi et quiz : deux cartes indépendantes, mêmes actions et validation. */
+.lecon-etapes { gap:12px; }
+.lecon-etapes .etape { border:1px solid #73593b; border-radius:12px; padding:14px; gap:10px; box-shadow:none; }
+.lecon-etapes .etape > b:first-child { background:#493622; color:#efd5a8; border-radius:16px; padding:5px 10px; font-size:15px; }
+.lecon-etapes .etape > p { font-size:16px; line-height:1.5; }
+.lecon-etapes .etape.ok { border-color:var(--houblon); box-shadow:inset 0 0 0 1px var(--houblon); }
