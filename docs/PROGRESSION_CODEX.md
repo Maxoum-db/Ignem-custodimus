@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Veillée — mission 07/10 : Quiz de leçon : correction textuelle et repère de question
+
+Statut : terminée sur `work/veillee-07-correction`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Ajoute Bonne réponse et Ton choix en texte, un statut de correction et Question N sur 3. Erreur réelle, conservation de la validation incomplète et passage à la question suivante vérifiés. Contrôle des cibles de la mission 6 rejoué avec les nouveaux libellés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/veillee/07-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/v07-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre la limite quotidienne des questions visible et vérifiable.
+
+
 ## Veillée — mission 06/10 : Quiz de leçon : réponses au pouce et focus visible
 
 Statut : terminée sur `work/veillee-06-reponses`, sans fusion. Autorisation utilisateur d’enchaîner

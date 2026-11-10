@@ -945,3 +945,8 @@ html,body { margin:0; }
 /* Réponses des leçons : cibles au pouce, contour de focus et texte complet. */
 .lecon-etapes .reponses button { min-height:48px; border:1px solid #826441; border-radius:12px; padding:12px; font-size:16px; line-height:1.45; overflow-wrap:anywhere; }
 .lecon-etapes .reponses button:focus-visible { outline:3px solid var(--calcaire); outline-offset:2px; }
+
+/* Correction du quiz : le texte accompagne les contours de couleur. */
+.quiz-compteur { margin:0; font-size:14px; font-weight:700; color:#e8c58b; }
+.reponse-statut { display:block; margin-top:5px; font-size:12px; font-weight:700; color:#e4c58f; }
+.quiz-retour { margin:0; padding:8px; border-radius:8px; background:#3b3021; color:#f1dfbc; font-size:15px; }

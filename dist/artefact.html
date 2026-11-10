@@ -947,6 +947,11 @@ html,body { margin:0; }
 /* Réponses des leçons : cibles au pouce, contour de focus et texte complet. */
 .lecon-etapes .reponses button { min-height:48px; border:1px solid #826441; border-radius:12px; padding:12px; font-size:16px; line-height:1.45; overflow-wrap:anywhere; }
 .lecon-etapes .reponses button:focus-visible { outline:3px solid var(--calcaire); outline-offset:2px; }
+
+/* Correction du quiz : le texte accompagne les contours de couleur. */
+.quiz-compteur { margin:0; font-size:14px; font-weight:700; color:#e8c58b; }
+.reponse-statut { display:block; margin-top:5px; font-size:12px; font-weight:700; color:#e4c58f; }
+.quiz-retour { margin:0; padding:8px; border-radius:8px; background:#3b3021; color:#f1dfbc; font-size:15px; }
 </style>
 
 <div id="app">
@@ -6469,8 +6474,8 @@ html,body { margin:0; }
     const [enonce, bonne, faux] = l.quiz[q.i];
     const opts = q.ordre[q.i].map((k) => (k === 0 ? bonne : faux[k - 1]));
     const rep = q.rep[q.i];
-    return `<p class="enonce">${q.i + 1}/3 · ${esc(enonce)}</p><div class="reponses">${opts.map((o, k) => `<button data-replecon="${k}" ${rep != null ? 'disabled' : ''} class="${rep != null ? (q.ordre[q.i][k] === 0 ? 'juste' : k === rep ? 'faux' : '') : ''}">${esc(o)}</button>`).join('')}</div>
-      ${rep != null ? `<button class="btn btn-mini btn-feu" data-quizsuite>${q.i < 2 ? 'Question suivante' : 'Voir le résultat'}</button>` : ''}`;
+    return `<p class="quiz-compteur" role="status">Question ${q.i + 1} sur 3</p><p class="enonce">${esc(enonce)}</p><div class="reponses">${opts.map((o, k) => `<button data-replecon="${k}" ${rep != null ? 'disabled' : ''} class="${rep != null ? (q.ordre[q.i][k] === 0 ? 'juste' : k === rep ? 'faux' : '') : ''}">${esc(o)}${rep != null && q.ordre[q.i][k] === 0 ? '<span class="reponse-statut">Bonne réponse</span>' : rep === k ? '<span class="reponse-statut">Ton choix</span>' : ''}</button>`).join('')}</div>
+      ${rep != null ? `<p class="quiz-retour" role="status">${q.ordre[q.i][rep] === 0 ? "Bonne réponse." : "Réponse incorrecte. La bonne réponse est indiquée."}</p><button class="btn btn-mini btn-feu" data-quizsuite>${q.i < 2 ? 'Question suivante' : 'Voir le résultat'}</button>` : ''}`;
   }
   $('#veillee-lecons').addEventListener('click', (ev) => {
     const b = ev.target.closest('button'); if (!b) return;
