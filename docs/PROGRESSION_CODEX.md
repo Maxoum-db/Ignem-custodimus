@@ -26,9 +26,18 @@ physique/Safari ; les gestes chronométrés complets n’ont pas été rejoués 
 
 Site observé avant synchronisation : version 10, commit source Sites
 `daa36c8a3c843e143dc35870aac4b80cec46879a`, à une autre révision que main.
-Publication de la version réunifiée prévue après push et fusion confirmés ; les
-identifiants finaux de publication seront retournés dans le rapport. Accès et
-adresse conservés. Aucun changement de format de sauvegarde.
+Publication confirmée : PR #26 fusionnée, main à
+`7f648a954a38d5a0e561b2fea128639c9c2f0e92`. Version Sites **11**, commit source
+Sites `e4aae3ba3164e76b309ca80d2d40f65e3df206bc`, déploiement
+`appgdep_6af37976bdd08191ba4b0afa13d72d82` en état `succeeded`.
+HTML testé et publié identiques par SHA-256 :
+`236f3b77d4c495f2da6b9ab6b73776e0541450b4a36d9e181e96a635b2a1c2a2`.
+Accès et adresse conservés :
+https://promethee-ignem-custodimus.maximilien92.chatgpt.site
+Le helper Sites indiqué par le skill n’était pas installé ; synchronisation Git
+avec credential temporaire transmis uniquement sur stdin, puis archive de sortie
+`.openai/hosting.json` + `dist/`, sauvegarde et déploiement natifs Sites confirmés.
+Le présent complément est documentaire ; le code publié reste identique. Aucun changement de format de sauvegarde.
 
 Prochaine mission non commencée : illustrer les fûts de la cour et tester leur
 rangement. Aucun autre développement graphique dans cette synchronisation.
