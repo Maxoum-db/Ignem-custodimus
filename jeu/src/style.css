@@ -950,3 +950,8 @@ html,body { margin:0; }
 .quiz-compteur { margin:0; font-size:14px; font-weight:700; color:#e8c58b; }
 .reponse-statut { display:block; margin-top:5px; font-size:12px; font-weight:700; color:#e4c58f; }
 .quiz-retour { margin:0; padding:8px; border-radius:8px; background:#3b3021; color:#f1dfbc; font-size:15px; }
+
+/* Questions du soir : progression réelle des cinq questions récompensables. */
+.quiz-recompenses { display:grid; gap:6px; font-size:15px; color:#ecd0a0; font-weight:700; margin:8px 0; }
+.quiz-jour-barre { height:10px; border-radius:8px; background:#15120e; overflow:hidden; }
+.quiz-jour-barre i { display:block; height:100%; background:var(--or); border-radius:inherit; }
