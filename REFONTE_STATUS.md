@@ -51,21 +51,33 @@ Les statuts ci-dessous décrivent l’intégration rapportée par les PR fusionn
 
 La PR #18 est fusionnée. Sa description documente le terrain peint, les bâtiments séparés, les quatre saisons, les six accès et les zones tactiles d’au moins 44 px. Le rucher est encore marqué « bientôt » ; le cheval n’a pas de marche articulée et Lise/Firmin ne se déplacent pas. Les captures de la PR montrent les états rapportés, mais une validation visuelle sur téléphone reste à faire.
 
+## Vérification visuelle par captures CI
+
+Artefact du run `42801588345`, captures mobile Chromium au viewport 390 × 844 (DPR 2), issues du vrai `dist/index.html` de la PR #20 : [artefact du jeu et des captures](https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/42801588345/artifacts/13755633468).
+
+- Carte : illustration peinte affichée ; six accès visibles et libellés lisibles. Le rucher reste explicitement « bientôt ».
+- Brasserie : empâtage, filtration, brouillis et embouteillage montrent les nouvelles scènes lisses dans le jeu.
+- Dégustation : verres vectoriels de bière, eau-de-vie et spiritueux vieilli visibles ; les trois verres de l’exercice à l’aveugle restent distinguables et leurs commandes sont larges.
+- Écart : l’écran d’entrée « Alambic Ulysse » reste pixelisé, même si ses écrans de gestes sont illustrés. Firmin est encore pixelisé dans les écrans de résultats et l’aperçu du chai.
+
+Cette vérification porte sur les captures d’un navigateur en viewport mobile ; aucun appareil Android physique n’est connecté à cette session.
+
 ## Étape courante
 
-- Numéro : 0 — réconciliation initiale.
-- Statut : audit GitHub terminé ; journal créé sur branche dédiée.
-- Périmètre : état des branches, PR, CI et travaux déjà intégrés.
+- Numéro : 1 — vérification visuelle sur l’artefact mobile.
+- Statut : terminée ; résultats visuels consignés sur la branche dédiée.
+- Périmètre : captures du jeu généré, scènes réellement affichées, écarts visuels.
 - Tests locaux : non exécutés, car ce workspace ne contient pas de clone du dépôt.
-- Validation CI observée : run #20 réussi, avec les étapes de build, tests et parcours mobile complétées.
-- Blocages : pas de vérification visuelle directe sur Android dans cette session.
+- Validation CI observée : run #20 réussi, avec build, six suites Node, rendu et parcours mobile.
+- Blocages : pas de validation sur appareil Android physique dans cette session.
 
 ## Prochaine étape
 
-Examiner les captures de la PR #20 et valider sur téléphone les scènes réellement visibles à partir du jeu généré, sans modifier les moteurs métier.
+Remplacer l’illustration pixelisée de l’écran d’entrée de distillerie par un visuel cohérent avec Ulysse, sans toucher au moteur ni aux scènes de gestes déjà illustrées.
 
 ## Historique
 
 - 2026-11-10 — Audit du dépôt et des PR #1–#20 ; état de `main` relevé à `929fd430eb98929cd6b7d7580fd83f9b179f758b`.
 - 2026-11-10 — CI de la PR #20 vérifiée : run `42801588345`, conclusion `success`.
 - 2026-11-10 — Journal ajouté sur `work/refonte-status-2026-11-10` ; PR #21 ouverte, sans fusion.
+- 2026-11-10 — Captures mobiles de l’artefact #20 inspectées ; écart pixelisé de l’écran d’entrée Ulysse documenté.
