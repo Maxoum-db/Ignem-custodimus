@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Pigeonnier — mission 07/10 : Commandes : échéances explicites et livraison limite vérifiée
+
+Statut : terminée sur `work/pigeonnier-07-commandes`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Badge calculé depuis échéance moins calendrier, avec texte cette semaine au dernier délai. Livraison au dernier délai vérifiée : 20 L retirés, prime 60 écus et réputation +4, commande supprimée. Le médaillon distingue la commande spéciale.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/07-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p07-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Signaler les stocks insuffisants sans bloquer les ventes partielles existantes.
+
+
 ## Pigeonnier — mission 06/10 : Vente : satisfaction réelle dans le bilan
 
 Statut : terminée sur `work/pigeonnier-06-satisfaction`, sans fusion. Autorisation utilisateur d’enchaîner

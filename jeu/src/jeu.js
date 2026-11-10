@@ -3087,8 +3087,8 @@
   function carteCommande(c, prods) {
     const d = demandeDe(c), ouvert = commandeOuverte === c.id;
     const ok = prods.filter((p) => p.cat === d.cat && p.stock >= c.qte && p.total >= c.note);
-    return `<div class="client commande"><div class="client-tete"><span class="avatar">★</span><span class="corps"><b>${esc(c.nom)}</b><small>${uniteQ(d.cat, c.qte)} · ${c.note}/50 au moins · avant ${Math.max(0, c.echeance - S.cal.s)} semaine(s) · prime ${c.prime} écus</small></span></div>
-      <p class="demande">« ${esc(c.txt || (Array.isArray(d.txt) ? d.txt[0] : d.txt))} »</p>
+    return `<div class="client commande"><div class="client-tete"><span class="avatar">★</span><span class="corps"><b>${esc(c.nom)}</b><small>${uniteQ(d.cat, c.qte)} · ${c.note}/50 au moins · prime ${c.prime} écus</small></span></div>
+      <p class="commande-echeance ${c.echeance - S.cal.s <= 1 ? "urgente" : ""}">${c.echeance <= S.cal.s ? "À livrer cette semaine" : `Encore ${c.echeance - S.cal.s} semaine${c.echeance - S.cal.s > 1 ? "s" : ""} pour livrer`}</p><p class="demande">« ${esc(c.txt || (Array.isArray(d.txt) ? d.txt[0] : d.txt))} »</p>
       ${ouvert ? (ok.length ? ok.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-livrer="${c.id}|${p.x.id}">Livrer</button>`)).join('') : '<p class="vide">Rien en cave n\'a la quantité et la note demandées.</p>') : `<button class="btn btn-mini" data-ouvrircommande="${c.id}">Voir ce que je peux livrer</button>`}</div>`;
   }
   $('#pig-vente').addEventListener('click', (ev) => {
