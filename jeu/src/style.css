@@ -817,3 +817,8 @@ html,body { margin:0; }
 .fut-etat { font-size:10px; line-height:1.2; border-radius:4px; padding:1px 3px; color:#f4e2bf; background:#302116e6; }
 .fut.rempli .fut-etat { color:#251b12; background:#e6c58b; }
 .fut[aria-pressed="true"] { outline:3px solid var(--braise); outline-offset:1px; }
+
+/* Repères mobiles du plan : ils restent visibles en défilant les travées. */
+.chai-defilement { font-size:13px; color:var(--cendre); margin:8px 0; }
+.chai-plan .zone-lib { position:sticky; left:0; width:calc(100vw - 64px); max-width:100%; white-space:normal; line-height:1.4; padding:4px 0; background:#261c14; }
+.chai-plan:focus-visible { outline:3px solid var(--braise); outline-offset:2px; }
