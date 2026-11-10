@@ -790,6 +790,15 @@ html,body { margin:0; }
 .lieu:hover span,.lieu:focus-visible span { color:#fff4d6; background:#78522e; }
 .lieu:focus-visible { outline:3px solid #fff1b7; outline-offset:-3px; }
 .domaine-legende { padding:10px 2px 0; justify-content:center; font-size:12px; }
+
+/* Carnet : flacons illustrés et sélection lisible sur téléphone. */
+.etagere { grid-template-columns: repeat(auto-fill,minmax(96px,1fr)); gap:12px; padding:16px 4px; background:none; }
+.bouteille { min-width:0; min-height:180px; padding:12px 6px; gap:6px; border:1px solid #6d5437; border-radius:14px; background:linear-gradient(#30271e,#211b15); box-shadow:0 4px 0 #493522; }
+.bouteille canvas { width:64px; height:120px; image-rendering:auto; }
+.bouteille span { max-width:100%; font-size:13px; line-height:1.3; color:var(--calcaire); }
+.bouteille small { font-size:11px; line-height:1.3; color:var(--cendre); }
+.bouteille[aria-pressed="true"] { border-color:#efbd67; background:linear-gradient(#594025,#302317); box-shadow:0 0 0 2px #efbd67; }
+.bouteille:focus-visible { outline:3px solid #efbd67; outline-offset:4px; }
 </style>
 
 <div id="app">
@@ -6382,26 +6391,57 @@ html,body { margin:0; }
     const et = $('#etagere');
     if (!S.carnet.length) { et.innerHTML = '<p class="vide" style="grid-column:1/-1">L\'étagère est vide. Brasse ta première bière à la brasserie.</p>'; $('#carnet-detail').innerHTML = ''; }
     else {
-      et.innerHTML = S.carnet.map((x) => `<button class="bouteille" data-bouteille="${x.id}" aria-pressed="${choixCarnet === x.id}"><canvas width="16" height="36" data-ebc="${x.ebc}" data-med="${x.medaille || ''}" data-edv="${x.type === 'edv' ? 1 : x.type === 'vieilli' ? 2 : ''}"></canvas><span>${esc(x.nom)}</span></button>`).join('');
+      et.innerHTML = S.carnet.map((x) => `<button class="bouteille" data-bouteille="${x.id}" aria-pressed="${choixCarnet === x.id}"><canvas aria-hidden="true" width="64" height="120" data-ebc="${x.ebc}" data-med="${x.medaille || ''}" data-edv="${x.type === 'edv' ? 1 : x.type === 'vieilli' ? 2 : ''}"></canvas><span>${esc(x.nom)}</span><small>${x.type === 'vieilli' ? 'Spiritueux vieilli' : x.type === 'edv' ? 'Eau-de-vie' : 'Bière'}${x.medaille ? ' · ' + esc(x.medaille) : ''}</small></button>`).join('');
       $$('.bouteille canvas', et).forEach(dessinerBouteille);
       rendreDetailCarnet();
     }
     $('#succes').innerHTML = SUCCES.map((s) => `<div class="succes-item ${S.succes[s.id] ? 'obtenu' : ''}"><b>${esc(s.nom)}</b>${esc(s.desc)}</div>`).join('');
   }
   function dessinerBouteille(cv) {
-    const c = cv.getContext('2d'), col = couleur(+cv.dataset.ebc), med = cv.dataset.med;
-    const px = (x, y, w, h, k) => { c.fillStyle = k; c.fillRect(x, y, w, h); };
-    if (cv.dataset.edv) {
-      // Flacon d'eau-de-vie : verre clair, bouchon de liège, étiquette cuivre
-      px(6, 0, 4, 3, '#b9865a'); px(6, 3, 4, 7, '#c9ced6'); px(4, 10, 8, 2, '#c9ced6'); px(2, 12, 12, 24, '#c9ced6');
-      px(3, 14, 10, 21, cv.dataset.edv === '2' ? col : '#ece8dc'); px(3, 20, 10, 9, cv.dataset.edv === '2' ? '#ecdfc4' : '#d27b3e'); px(4, 23, 8, 1, '#ecdfc4'); px(3, 14, 1, 21, 'rgba(255,255,255,.6)');
-      if (med) { const m = { or: '#f2c94c', argent: '#c9ced6', bronze: '#c98552' }[med]; px(10, 30, 4, 4, m); px(11, 34, 2, 2, '#e3593d'); }
-      return;
+    // Coordonnées logiques indépendantes de la densité de l'écran.
+    const dpr = Math.min(3, window.devicePixelRatio || 1);
+    cv.width = Math.round(64 * dpr); cv.height = Math.round(120 * dpr);
+    const c = cv.getContext('2d'), col = couleur(+cv.dataset.ebc);
+    const spiritueux = !!cv.dataset.edv, vieilli = cv.dataset.edv === '2';
+    const encre = '#3b2a1e';
+    c.scale(dpr, dpr); c.lineJoin = 'round'; c.lineCap = 'round';
+    function forme(d, fill, stroke = encre, width = 1.8) {
+      const p = new Path2D(d);
+      if (fill) { c.fillStyle = fill; c.fill(p); }
+      if (stroke) { c.strokeStyle = stroke; c.lineWidth = width; c.stroke(p); }
     }
-    px(6, 0, 4, 2, '#d27b3e'); px(6, 2, 4, 8, '#2f4a2a'); px(5, 10, 6, 2, '#2f4a2a'); px(3, 12, 10, 24, '#2f4a2a');
-    px(4, 13, 8, 22, col); px(4, 20, 8, 8, '#ecdfc4'); px(5, 22, 6, 1, '#d27b3e'); px(5, 25, 4, 1, '#ab9a7f');
-    px(4, 13, 1, 22, 'rgba(255,255,255,.25)');
-    if (med) { const m = { or: '#f2c94c', argent: '#c9ced6', bronze: '#c98552' }[med]; px(9, 29, 4, 4, m); px(10, 33, 2, 2, '#e3593d'); }
+    function rond(x, y, r, fill, stroke = encre) {
+      c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fillStyle = fill; c.fill();
+      if (stroke) { c.strokeStyle = stroke; c.lineWidth = 1.5; c.stroke(); }
+    }
+    c.fillStyle = 'rgba(0,0,0,.24)'; c.beginPath(); c.ellipse(32,114,24,4,0,0,Math.PI*2); c.fill();
+    const silhouette = spiritueux
+      ? 'M25 14H39V36Q39 40 47 44Q54 48 54 55V104Q54 111 47 111H17Q10 111 10 104V55Q10 48 17 44Q25 40 25 36Z'
+      : 'M26 12H38V36Q38 44 44 49Q49 54 49 63V104Q49 111 42 111H22Q15 111 15 104V63Q15 54 20 49Q26 44 26 36Z';
+    const verre = c.createLinearGradient(10,0,54,0);
+    verre.addColorStop(0,spiritueux?'#9eaaa0':'#304a30');
+    verre.addColorStop(.3,spiritueux?'#edf2df':'#7a8c4e');
+    verre.addColorStop(1,spiritueux?'#84978c':'#263c29');
+    forme(silhouette,verre);
+    c.save(); c.clip(new Path2D(silhouette));
+    c.fillStyle = spiritueux && !vieilli ? '#d9e4d5' : col;
+    c.fillRect(13,53,38,56);
+    c.fillStyle = 'rgba(255,245,206,.25)'; c.fillRect(13,53,38,3);
+    forme('M20 59V102M29 20V34',null,'rgba(255,255,235,.65)',3);
+    forme('M46 61V103',null,'rgba(40,25,15,.25)',3);
+    c.restore(); forme(silhouette,null);
+    forme(spiritueux?'M24 7Q32 4 40 7V16H24Z':'M24 7Q32 4 40 7V14H24Z',spiritueux?'#ba8751':'#bd6038');
+    forme('M27 9H36',null,'#efd19b',1.5);
+    const label = spiritueux && !vieilli ? '#d98b50' : '#f1dfb7';
+    forme('M17 69Q32 72 47 69V94Q32 98 17 94Z',label);
+    forme('M21 75H43M23 91H41',null,'#9a683d',1);
+    // Petit emblème de flamme, sans texte illisible à cette échelle.
+    forme('M32 77C33 81 39 82 36 87C33 92 27 88 28 84C28 82 31 81 32 77Z','#a4492e',null);
+    const med = {or:'#f2cb67',argent:'#cbd4d4',bronze:'#c88851'}[cv.dataset.med];
+    if (med) {
+      forme('M43 101L40 115L46 112L50 116L51 102Z','#af4934');
+      rond(47,101,8,med); rond(47,101,5,med,'#8c6135');
+    }
   }
   function rendreDetailCarnet() {
     const x = S.carnet.find((e) => e.id === choixCarnet);
