@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Pigeonnier — mission 03/10 : Cave : bouteilles lisses aux couleurs réelles
+
+Statut : terminée sur `work/pigeonnier-03-bouteilles`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Transforme les pastilles rectangulaires en bouteilles à col et étiquette, sans image réseau. Les trois catégories bière, eau-de-vie et spiritueux vieilli gardent leurs couleurs calculées distinctes. Stock strictement conservé pendant le rendu.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/03-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p03-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Adapter les cartes de proposition au pouce sur petit écran.
+
+
 ## Pigeonnier — mission 02/10 : Clients : demandes sur parchemin et cartes lisibles
 
 Statut : terminée sur `work/pigeonnier-02-demandes`, sans fusion. Autorisation utilisateur d’enchaîner
