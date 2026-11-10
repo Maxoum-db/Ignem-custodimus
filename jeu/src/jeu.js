@@ -190,6 +190,22 @@
   $('#marque-feu').src = SPR.feu;
   if(window.IMAGES_JEU?.['lise-portrait']) SPR.lise=window.IMAGES_JEU['lise-portrait'];
   $('#mentor-portrait').src = SPR.lise;
+  // Portrait recadré depuis le personnage illustré existant ; repli pixel conservé.
+  if (window.IMAGES_JEU?.['personnage-firmin']) {
+    const portrait = new Image();
+    portrait.onload = () => {
+      try {
+        const cv = document.createElement('canvas'); cv.width = cv.height = 144;
+        const c = cv.getContext('2d'); c.imageSmoothingQuality = 'high';
+        c.fillStyle = '#ead6ac'; c.fillRect(0, 0, 144, 144);
+        c.drawImage(portrait, .285 * portrait.width, .005 * portrait.height,
+          .4 * portrait.width, .2667 * portrait.height, 0, 0, 144, 144);
+        const ancien = SPR.firmin; SPR.firmin = cv.toDataURL();
+        if ($('#mentor-portrait').src === ancien) $('#mentor-portrait').src = SPR.firmin;
+      } catch { /* Conserver le portrait historique si le dessin échoue. */ }
+    };
+    portrait.src = window.IMAGES_JEU['personnage-firmin'];
+  }
   const couleur = (ebc) => `rgb(${Moteur.couleurRVB(ebc).join(',')})`;
 
   // =====================================================================
