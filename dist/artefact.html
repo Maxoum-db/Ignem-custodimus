@@ -814,6 +814,11 @@ html,body { margin:0; }
 /* Illustration unique partagée : plan, cour et miniatures du tonnelier. */
 :root { --face-fut:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20128%20152%22%3E%3Cg%20stroke%3D%22%233b2a1e%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%22143%22%20rx%3D%2254%22%20ry%3D%227%22%20fill%3D%22%233b2a1e%22%20opacity%3D%22.18%22%20stroke%3D%22none%22%2F%3E%3Cpath%20d%3D%22M17%20128H111L118%20141H10Z%22%20fill%3D%22%23a87444%22%2F%3E%3Cpath%20d%3D%22M19%20124L27%20112H101L109%20124L101%20136H27Z%22%20fill%3D%22%23d2ab6e%22%2F%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2268%22%20rx%3D%2249%22%20ry%3D%2261%22%20fill%3D%22%236b4426%22%2F%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2265%22%20rx%3D%2246%22%20ry%3D%2257%22%20fill%3D%22%23a9a38b%22%2F%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2265%22%20rx%3D%2240%22%20ry%3D%2251%22%20fill%3D%22%23d3a66a%22%2F%3E%3Cpath%20d%3D%22M64%2015Q105%2023%20104%2065Q104%20107%2064%20116Q86%2094%2085%2065Q85%2036%2064%2015%22%20fill%3D%22%23b5834b%22%20stroke%3D%22none%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%238b6038%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M41%2024Q34%2065%2041%20107%20M58%2015Q54%2065%2058%20115%20M76%2018Q79%2065%2076%20112%20M91%2031Q98%2065%2091%2099%22%2F%3E%3Cpath%20d%3D%22M26%2057L29%2052M36%2088L39%2083M62%2032L63%2040M77%2086L78%2093%22%2F%3E%3C%2Fg%3E%3Cellipse%20cx%3D%2264%22%20cy%3D%2265%22%20rx%3D%2240%22%20ry%3D%2251%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M27%2054Q29%2027%2050%2020%22%20fill%3D%22none%22%20stroke%3D%22%23f0d29c%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2264%22%20cy%3D%2275%22%20r%3D%226%22%20fill%3D%22%23a87444%22%2F%3E%3Cpath%20d%3D%22M60%2073H68%22%20stroke%3D%22%23e2cfa4%22%20stroke-width%3D%222%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"); }
 .fut-mini { width:30px; height:38px; margin-right:8px; vertical-align:middle; border-radius:0; box-shadow:none; background:var(--face-fut) center / contain no-repeat; }
+
+/* Les états des fûts restent lisibles indépendamment de la couleur. */
+.fut-etat { font-size:10px; line-height:1.2; border-radius:4px; padding:1px 3px; color:#f4e2bf; background:#302116e6; }
+.fut.rempli .fut-etat { color:#251b12; background:#e6c58b; }
+.fut[aria-pressed="true"] { outline:3px solid var(--braise); outline-offset:1px; }
 </style>
 
 <div id="app">
@@ -5514,8 +5519,8 @@ html,body { margin:0; }
         if (o && o.pos.c === c) {
           const w = CH.TAILLES[o.taille].w, e = o.contenu ? apercu(o) : null;
           const plein = o.contenu ? Math.min(1, o.contenu.etat.V / CH.TAILLES[o.taille].L) : 0;
-          cases += `<button class="fut fut-${o.type} ${o.id === choixFut ? 'choisi' : ''} ${o.contenu ? 'rempli' : ''}" style="grid-column:span ${w}" data-fut="${o.id}" aria-label="${esc(nomFut(o))}${o.contenu ? ', rempli' : ', vide'}">
-            <span class="fut-abr">${ABR[o.type]}</span>${o.contenu ? `<span class="fut-age">${nf(ageFut(o.contenu), ageFut(o.contenu) < 10 ? 1 : 0)} a</span>` : ''}
+          cases += `<button class="fut fut-${o.type} ${o.id === choixFut ? 'choisi' : ''} ${o.contenu ? 'rempli' : ''}" style="grid-column:span ${w}" data-fut="${o.id}" aria-pressed="${o.id === choixFut}" aria-label="${esc(nomFut(o))}${o.contenu ? ', rempli' : ', vide'}">
+            <span class="fut-abr">${ABR[o.type]}</span><span class="fut-etat">${o.contenu ? "En fût" : "Vide"}</span>${o.contenu ? `<span class="fut-age">${nf(ageFut(o.contenu), ageFut(o.contenu) < 10 ? 1 : 0)} a</span>` : ''}
             <span class="fut-jauge"><i style="width:${Math.round(plein * 100)}%;background:${e ? couleur(e.couleur * 0.6) : 'transparent'}"></i></span></button>`;
           c += w - 1;
         } else if (!o) {
@@ -5531,7 +5536,7 @@ html,body { margin:0; }
       <div class="chai-plan">${rangees}</div><div class="chai-pied">${etendre}</div>`;
     // Cour de la tonnellerie : fûts pas encore rangés
     const cour = C.futs.filter((x) => !x.pos);
-    $('#chai-cour').innerHTML = cour.length ? `<h2 class="sous-titre">Cour de la tonnellerie</h2><div class="cour">${cour.map((x) => `<button class="fut fut-${x.type} ${x.id === choixFut ? 'choisi' : ''}" style="width:${CH.TAILLES[x.taille].w * 44}px" data-fut="${x.id}"><span class="fut-abr">${ABR[x.type]}</span></button>`).join('')}</div>` : '';
+    $('#chai-cour').innerHTML = cour.length ? `<h2 class="sous-titre">Cour de la tonnellerie</h2><div class="cour">${cour.map((x) => `<button class="fut fut-${x.type} ${x.id === choixFut ? 'choisi' : ''}" style="width:${CH.TAILLES[x.taille].w * 44}px" data-fut="${x.id}" aria-pressed="${x.id === choixFut}" aria-label="${esc(nomFut(x))}, dans la cour"><span class="fut-abr">${ABR[x.type]}</span></button>`).join('')}</div>` : '';
     $('#chai-detail').innerHTML = f ? detailFut(f) : '<p class="page-intro">Touche un fût pour le goûter à la pipette, le remplir ou le déplacer.</p>';
     rendreLots(); majMentor();
   }

@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Série autorisée — mission 03/10 : Chai : états des fûts et sélection accessibles
+
+Statut : terminée sur `work/serie-03-etats-futs`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Ajoute aria-pressed sur les fûts du plan et de la cour et un nom complet dans la cour. Les badges Vide et En fût correspondent à la présence réelle du contenu. Changement de sélection et conservation intégrale du chai vérifiés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/03-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/03-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Conserver les repères du plan pendant le défilement mobile.
+
+
 ## Série autorisée — mission 02/10 : Catalogue : miniatures de fûts illustrées
 
 Statut : terminée sur `work/serie-02-catalogue`, sans fusion. Autorisation utilisateur d’enchaîner

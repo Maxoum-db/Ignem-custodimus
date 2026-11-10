@@ -2597,8 +2597,8 @@
         if (o && o.pos.c === c) {
           const w = CH.TAILLES[o.taille].w, e = o.contenu ? apercu(o) : null;
           const plein = o.contenu ? Math.min(1, o.contenu.etat.V / CH.TAILLES[o.taille].L) : 0;
-          cases += `<button class="fut fut-${o.type} ${o.id === choixFut ? 'choisi' : ''} ${o.contenu ? 'rempli' : ''}" style="grid-column:span ${w}" data-fut="${o.id}" aria-label="${esc(nomFut(o))}${o.contenu ? ', rempli' : ', vide'}">
-            <span class="fut-abr">${ABR[o.type]}</span>${o.contenu ? `<span class="fut-age">${nf(ageFut(o.contenu), ageFut(o.contenu) < 10 ? 1 : 0)} a</span>` : ''}
+          cases += `<button class="fut fut-${o.type} ${o.id === choixFut ? 'choisi' : ''} ${o.contenu ? 'rempli' : ''}" style="grid-column:span ${w}" data-fut="${o.id}" aria-pressed="${o.id === choixFut}" aria-label="${esc(nomFut(o))}${o.contenu ? ', rempli' : ', vide'}">
+            <span class="fut-abr">${ABR[o.type]}</span><span class="fut-etat">${o.contenu ? "En fût" : "Vide"}</span>${o.contenu ? `<span class="fut-age">${nf(ageFut(o.contenu), ageFut(o.contenu) < 10 ? 1 : 0)} a</span>` : ''}
             <span class="fut-jauge"><i style="width:${Math.round(plein * 100)}%;background:${e ? couleur(e.couleur * 0.6) : 'transparent'}"></i></span></button>`;
           c += w - 1;
         } else if (!o) {
@@ -2614,7 +2614,7 @@
       <div class="chai-plan">${rangees}</div><div class="chai-pied">${etendre}</div>`;
     // Cour de la tonnellerie : fûts pas encore rangés
     const cour = C.futs.filter((x) => !x.pos);
-    $('#chai-cour').innerHTML = cour.length ? `<h2 class="sous-titre">Cour de la tonnellerie</h2><div class="cour">${cour.map((x) => `<button class="fut fut-${x.type} ${x.id === choixFut ? 'choisi' : ''}" style="width:${CH.TAILLES[x.taille].w * 44}px" data-fut="${x.id}"><span class="fut-abr">${ABR[x.type]}</span></button>`).join('')}</div>` : '';
+    $('#chai-cour').innerHTML = cour.length ? `<h2 class="sous-titre">Cour de la tonnellerie</h2><div class="cour">${cour.map((x) => `<button class="fut fut-${x.type} ${x.id === choixFut ? 'choisi' : ''}" style="width:${CH.TAILLES[x.taille].w * 44}px" data-fut="${x.id}" aria-pressed="${x.id === choixFut}" aria-label="${esc(nomFut(x))}, dans la cour"><span class="fut-abr">${ABR[x.type]}</span></button>`).join('')}</div>` : '';
     $('#chai-detail').innerHTML = f ? detailFut(f) : '<p class="page-intro">Touche un fût pour le goûter à la pipette, le remplir ou le déplacer.</p>';
     rendreLots(); majMentor();
   }
