@@ -955,3 +955,10 @@ html,body { margin:0; }
 .quiz-recompenses { display:grid; gap:6px; font-size:15px; color:#ecd0a0; font-weight:700; margin:8px 0; }
 .quiz-jour-barre { height:10px; border-radius:8px; background:#15120e; overflow:hidden; }
 .quiz-jour-barre i { display:block; height:100%; background:var(--or); border-radius:inherit; }
+
+/* Questions du soir : même confort que le quiz de leçon, correction en texte. */
+#veillee-question .question { border:1px solid #82613d; border-radius:16px; padding:16px; gap:12px; }
+#veillee-question .enonce { font-size:18px; line-height:1.45; }
+#veillee-question .reponses button { min-height:48px; border:1px solid #826441; border-radius:12px; padding:12px; font-size:16px; line-height:1.45; }
+#veillee-question .reponses button:focus-visible { outline:3px solid var(--calcaire); outline-offset:2px; }
+.question-retour { font-size:16px; line-height:1.5; margin:0; }
