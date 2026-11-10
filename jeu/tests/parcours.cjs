@@ -31,7 +31,7 @@ const verifierAveugle = async () => {
  await page.setViewportSize({width:390,height:844});
 };
 const save=async()=>{await page.waitForTimeout(350);return page.evaluate(()=>JSON.parse(localStorage.getItem('ignem.v1')))};
-const nav=async(n)=>{await page.locator('.marque').click();await page.locator('#lieux').getByRole('button',{name:({brasserie:'Brasserie',distillerie:'Alambic Ulysse',chai:'Chai',catalogue:'Pigeonnier'})[n],exact:true}).click();await dismiss()};
+const nav=async(n)=>{await page.locator('.marque').click();await page.evaluate(()=>window.DomaineIllustre?.ready);await page.locator('#lieux').getByRole('button',{name:({brasserie:'Brasserie',distillerie:'Alambic Ulysse',chai:'Chai',catalogue:'Pigeonnier'})[n],exact:true}).click();await page.locator('#ecran-'+n).waitFor({state:'visible'});await dismiss()};
 try{
 await page.goto(`http://127.0.0.1:${server.address().port}`);
 await page.evaluate(()=>localStorage.setItem('ignem.v1',JSON.stringify({mode:'expert',gestesExpert:true,aide:false,son:false,tuto:-1,tutoD:-1,points:150,brassins:2,carnet:[],grimoire:[],ecole:{},succes:{},ecus:500})));

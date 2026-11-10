@@ -1,5 +1,9 @@
 # Progression Codex
 
+## Reprise avant intégration du pigeonnier
+
+Autorisation : « Push en main puis etape sur 10 d’affiler ». Audit du run 42900258537 : les vingt scénarios et le parcours normal ont réussi ; le parcours GESTES_REELS a échoué en cherchant tab-malts sans écran de destination confirmé. Correction minimale de jeu/tests/parcours.cjs : attendre le domaine prêt, cliquer le vrai lieu, puis attendre son écran visible. Aucun code du jeu modifié. Rejeu local des gestes et des parcours Ulysse expert/débutant lancé avant fusion ; les résultats seront consignés dans la reprise de la série veillée. Syntaxe et diff contrôlés.
+
 ## Pigeonnier — mission 10/10 : Pigeonnier : états vides utiles et navigation de reprise
 
 Statut : terminée sur `work/pigeonnier-10-etats-vides`, sans fusion. Autorisation utilisateur d’enchaîner
