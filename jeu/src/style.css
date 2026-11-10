@@ -853,3 +853,59 @@ html,body { margin:0; }
 .niveau-lib { color:var(--cendre); font-size:12px; font-weight:600; }
 .bat-progression .niveaux i { width:12px; height:12px; border:1px solid #a68457; border-radius:50%; box-shadow:none; }
 .batiment { border-radius:14px; border:1px solid #725238; padding:12px; box-shadow:0 3px 8px #0003; }
+
+/* Portraits des clients : SVG historique, identité stable à chaque rendu. */
+.avatar-client { width:48px; height:48px; border-radius:50%; object-fit:contain; box-shadow:none; image-rendering:auto; }
+
+/* Clients : carte illustrée et parole sur parchemin, actions existantes conservées. */
+.client:not(.commande) { width:100%; min-width:0; border-radius:16px; border:1px solid #82603d; background:linear-gradient(#382b20,#281f17); padding:14px; gap:10px; box-shadow:0 4px 10px #0003; }
+.client.ouvert { border-color:var(--braise); box-shadow:inset 0 0 0 1px var(--braise); }
+.client-tete { width:100%; min-width:0; }
+.client-tete .corps { overflow-wrap:anywhere; }
+.client .demande { width:100%; padding:10px 12px; background:#ead8b3; color:#342419; border-radius:4px 14px 14px; font-size:16px; font-style:normal; line-height:1.5; overflow-wrap:anywhere; }
+.client .det { font-size:14px; line-height:1.5; }
+
+/* Bouteilles de cave : silhouette lisse, robe réelle déjà calculée en HTML. */
+.produit { grid-template-columns:30px minmax(0,1fr) auto; }
+.pastille-prod { position:relative; width:26px; height:38px; margin-top:8px; border:2px solid #b7c6ad; border-radius:5px 5px 7px 7px; box-shadow:inset 4px 0 0 #fff3,inset -4px 0 0 #0002; }
+.pastille-prod::before { content:""; position:absolute; top:-10px; left:5px; width:12px; height:10px; border:2px solid #b7c6ad; border-bottom:0; border-radius:3px 3px 0 0; background:inherit; }
+.pastille-prod::after { content:""; position:absolute; left:2px; right:2px; top:12px; height:13px; background:#f0dfba; border-radius:2px; box-shadow:inset 0 -2px 0 #ccb385; }
+
+/* Propositions : texte et commande gardent leur place sur les téléphones étroits. */
+.produit { border:1px solid #6e543a; border-radius:12px; padding:12px; gap:10px; box-shadow:0 2px 6px #0003; }
+.produit .corps b { overflow-wrap:anywhere; line-height:1.35; }
+.produit small { line-height:1.45; }
+.produit .btn { min-height:44px; white-space:normal; }
+@media(max-width:440px) { .produit { grid-template-columns:30px minmax(0,1fr); } .produit > .btn { grid-column:1 / -1; width:100%; } }
+
+/* Réputation : valeur réelle et jauge lisible indépendamment de la couleur. */
+.rep { gap:8px; }
+.rep-val { display:inline-block; font-size:17px; color:var(--or); margin-left:6px; }
+.barre-rep { min-height:12px; border-radius:10px; border:1px solid #977145; overflow:hidden; }
+
+/* Résultat de la vraie vente : satisfaction mesurée et lisible. */
+.vente-resultat { border:1px solid #98744b; border-radius:14px; box-shadow:0 3px 10px #0003; }
+.vente-resultat.ok { border-color:var(--houblon); box-shadow:inset 0 0 0 1px var(--houblon); }
+.vente-resultat.ko { border-color:var(--alerte); box-shadow:inset 0 0 0 1px var(--alerte); }
+.satisfaction { display:grid; gap:6px; margin-top:10px; font-size:14px; font-weight:700; }
+.satisfaction-barre { height:12px; border-radius:8px; overflow:hidden; background:#191510; }
+.satisfaction-barre i { display:block; height:100%; background:var(--or); border-radius:inherit; }
+
+/* Commandes spéciales : échéance réelle visible sans lire toute la fiche. */
+.client.commande { border:1px solid #b79751; border-radius:16px; padding:14px; width:100%; gap:10px; box-shadow:0 3px 10px #0003; }
+.commande .avatar { width:48px; height:48px; border-radius:50%; background:#d7b05c; color:#382719; box-shadow:inset 0 0 0 3px #f2d9a2; }
+.commande-echeance { margin:0; border:1px solid #967748; border-radius:20px; padding:6px 10px; font-size:14px; background:#34291e; color:#efdcad; }
+.commande-echeance.urgente { background:#5b321d; border-color:#e4a65b; color:#ffe2b7; font-weight:700; }
+
+/* Stocks : quantité lisible et avertissement distinct, vente partielle conservée. */
+.stock-prod strong { font-size:15px; color:var(--calcaire); white-space:nowrap; }
+.produit.stock-insuffisant { border-color:#d7a15b; background:#35251b; }
+.stock-insuffisant .alerte-txt { display:block; margin-top:4px; color:#ffd39c; font-weight:600; }
+
+/* Cession au négociant : la seconde action affiche quantité et prix exacts. */
+.produit [data-negociant][data-confirme="1"] { background:#e0a05b; color:#2b1c11; border:2px solid #f0c486; font-weight:750; }
+
+/* États vides : une indication utile, reliée aux écrans de production existants. */
+.vente-vide { display:grid; justify-items:start; gap:10px; border:1px dashed #9a794e; border-radius:14px; padding:16px; background:#2d2319; margin-bottom:12px; }
+.vente-vide > b { font-size:18px; color:#e6c58e; }
+.vente-vide p { margin:0; font-size:15px; line-height:1.5; color:var(--cendre); }

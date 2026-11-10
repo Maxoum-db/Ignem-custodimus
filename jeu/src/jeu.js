@@ -3045,26 +3045,40 @@
     const fr = Vente.fraicheur(p, S.cal.s);
     const det = p.cat === 'biere' ? `${nf(p.abv)} % · ${nf(p.ibu, 0)} IBU · ${nf(p.ebc, 0)} EBC · ${nf(p.total, p.total % 1 ? 1 : 0)}/50 · fraîcheur ${Math.round(fr * 100)} %`
       : p.cat === 'edv' ? `${nf(p.total, p.total % 1 ? 1 : 0)}/50 · eau-de-vie blanche` : `${nf(p.age, 1)} ans · ${nf(p.total, p.total % 1 ? 1 : 0)}/50`;
-    return `<div class="produit"><span class="pastille-prod" style="background:${p.cat === 'biere' ? couleur(p.ebc) : p.cat === 'vieilli' ? couleur(p.x.ebc || 20) : '#ece8dc'}"></span>
-      <span class="corps"><b>${esc(p.nom)}</b><small>${det}</small><small>En cave : ${uniteQ(p.cat, p.stock)}${p.stock < q ? ' · <span class="alerte-txt">pas assez pour toute la demande</span>' : ''}</small></span>${action}</div>`;
+    return `<div class="produit ${p.stock < q ? "stock-insuffisant" : ""}"><span class="pastille-prod" style="background:${p.cat === 'biere' ? couleur(p.ebc) : p.cat === 'vieilli' ? couleur(p.x.ebc || 20) : '#ece8dc'}"></span>
+      <span class="corps"><b>${esc(p.nom)}</b><small>${det}</small><small class="stock-prod">En cave : <strong>${uniteQ(p.cat, p.stock)}</strong>${p.stock < q ? ' · <span class="alerte-txt">pas assez pour toute la demande</span>' : ''}</small></span>${action}</div>`;
   }
   function rendreVente() {
     const V = S.vente, sais = saisonCourante();
     if (niv('pigeonnier') < 2) { $('#pig-vente').innerHTML = `<div class="batiment nu"><p><b>Pas encore de boutique.</b> Le colombier sert aux commandes chez les fournisseurs. Construis la boutique pour recevoir des clients et vendre ta production.</p><button class="btn btn-feu btn-mini" data-aller="batiments">Voir les bâtiments</button></div>`; return; }
     const prods = produits();
     $('#pig-vente').innerHTML = `<div class="bourse"><span class="ecus">${S.ecus} écus</span><p>${esc(libCalendrier())} · cave à ${Vente.CAVE[sais]} °C${recolte() ? ' · <b>récolte du houblon : −30 % chez les fournisseurs</b>' : ''}</p>
-        <div class="rep"><span>Réputation : <b>${niveauRep()}</b></span><span class="barre-rep"><i style="width:${Math.min(100, V.rep)}%"></i></span><span class="det">${V.vendus} ventes · ${V.ca} écus encaissés</span></div></div>
-      ${derniereVente ? `<div class="vente-resultat ${derniereVente.s > 0.65 ? 'ok' : derniereVente.s < 0.45 ? 'ko' : ''}"><b>${esc(derniereVente.nom)} :</b> « ${esc(derniereVente.detail)} »<br>${derniereVente.txt}</div>` : ''}
+        <div class="rep"><span>Réputation : <b>${niveauRep()}</b> <strong class="rep-val">${V.rep}/100</strong></span><span class="barre-rep" role="meter" aria-label="Réputation du domaine" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${V.rep}"><i style="width:${Math.min(100, V.rep)}%"></i></span><span class="det">${V.vendus} ventes · ${V.ca} écus encaissés</span></div></div>
+      ${derniereVente ? `<div role="status" class="vente-resultat ${derniereVente.s > 0.65 ? 'ok' : derniereVente.s < 0.45 ? 'ko' : ''}"><b>${esc(derniereVente.nom)} :</b> « ${esc(derniereVente.detail)} »<br>${derniereVente.txt}<div class="satisfaction" role="meter" aria-label="Satisfaction du client" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(derniereVente.s * 100)}"><span>Satisfaction : ${Math.round(derniereVente.s * 100)} %</span><span class="satisfaction-barre" aria-hidden="true"><i style="width:${Math.round(derniereVente.s * 100)}%"></i></span></div></div>` : ''}
       <h2 class="sous-titre">Clients du jour ${iBtn("Chaque semaine, de nouveaux clients passent : ils décrivent ce qu'ils cherchent. Propose une bouteille de ta cave. Leur satisfaction dépend des critères respectés, de la qualité au jury et de la fraîcheur : elle fixe le prix, le pourboire et la réputation. Les clients repartent au bout de deux semaines.")}</h2>
-      ${V.clients.length ? V.clients.map((c) => carteClient(c, prods)).join('') : '<p class="vide">Personne pour l\'instant. De nouveaux clients viendront la semaine prochaine : un brassin, une distillation ou un passage au chai font avancer le temps.</p>'}
+      ${V.clients.length ? V.clients.map((c) => carteClient(c, prods)).join('') : '<div class="vente-vide"><b>Le comptoir est calme</b><p>Personne pour l\'instant. De nouveaux clients viendront la semaine prochaine : un brassin, une distillation ou un passage au chai font avancer le temps.</p></div>'}
       ${V.commandes.length ? `<h2 class="sous-titre">Commandes spéciales</h2>${V.commandes.map((c) => carteCommande(c, prods)).join('')}` : V.rep < 35 ? '<p class="page-intro">Les commandes spéciales (fêtes, marchés, auberges) arrivent quand le domaine est apprécié.</p>' : ''}
       <h2 class="sous-titre">Ta cave</h2>
-      ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<p class="vide">La cave est vide. Chaque brassin y met le volume de ta brasserie ; l\'alambic et le chai ajoutent des bouteilles.</p>'}`;
+      ${prods.length ? prods.map((p) => ligneProduit(p, 0, p.cat === 'biere' ? `<button class="btn btn-mini btn-sobre" data-negociant="${p.x.id}">Négociant · tout le stock · ${Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))))} écus</button>` : '')).join('') : '<div class="vente-vide"><b>La cave est vide</b><p>Chaque brassin y met le volume de ta brasserie ; l\'alambic et le chai ajoutent des bouteilles.</p><button class="btn btn-feu" data-aller="brasserie">Préparer une bière</button></div>'}`;
+  }
+  function portraitClient(nom) {
+    const svg = corps => "data:image/svg+xml;charset=utf-8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g stroke="#3b2a1e" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">' + corps + "</g></svg>");
+    let h = 0;
+    for (const l of nom) h = (h * 31 + l.charCodeAt(0)) >>> 0;
+    const peau = ["#e6b58c", "#ca946a", "#a87350"][h % 3],
+      cheveux = ["#6c4328", "#bd8050", "#5b493c", "#c0b29a"][h % 4];
+    return svg(
+      '<circle fill="#8c9a65" cx="32" cy="32" r="29"/><path fill="#677b80" d="M8 64Q9 46 32 45Q55 46 56 64"/><ellipse fill="' +
+        peau +
+        '" cx="32" cy="29" rx="16" ry="20"/><path fill="' +
+        cheveux +
+        '" d="M15 28Q8 5 33 7Q58 9 48 29L42 19Q25 22 21 17Z"/><path fill="none" d="M25 29H26M38 29H39M28 39Q32 42 37 38"/>',
+    );
   }
   function carteClient(c, prods) {
     const d = demandeDe(c), t = Vente.TYPES[c.type], ouvert = clientOuvert === c.id;
     const choix = prods.filter((p) => p.cat === d.cat);
-    return `<div class="client ${ouvert ? 'ouvert' : ''}"><div class="client-tete"><span class="avatar" style="background:hsl(${(c.nom.length * 47) % 360} 35% 45%)">${esc(c.nom.split(' ').pop()[0])}</span>
+    return `<div class="client ${ouvert ? 'ouvert' : ''}"><div class="client-tete"><img class="avatar avatar-client" src="${portraitClient(c.nom)}" alt="" width="48" height="48">
       <span class="corps"><b>${esc(c.nom)}</b><small>${esc(t.nom)} · ${esc(c.lieu)}${t.exigence ? ` · exigeant (${t.exigence}/50)` : ''}</small></span></div>
       <p class="demande">« ${esc(c.txt || (Array.isArray(d.txt) ? d.txt[0] : d.txt))} »</p><p class="det">Il voudrait ${uniteQ(d.cat, c.qte)} ${d.cat === 'biere' ? 'de bière' : d.cat === 'edv' ? 'd\'eau-de-vie' : 'de spiritueux vieilli'}.</p>
       ${ouvert ? (choix.length ? choix.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-proposer="${c.id}|${p.x.id}">Proposer</button>`)).join('') : '<p class="vide">Rien de ce genre en cave.</p>') + `<button class="btn btn-mini btn-sobre" data-congedier="${c.id}">Je n'ai rien pour vous</button>`
@@ -3073,8 +3087,8 @@
   function carteCommande(c, prods) {
     const d = demandeDe(c), ouvert = commandeOuverte === c.id;
     const ok = prods.filter((p) => p.cat === d.cat && p.stock >= c.qte && p.total >= c.note);
-    return `<div class="client commande"><div class="client-tete"><span class="avatar">★</span><span class="corps"><b>${esc(c.nom)}</b><small>${uniteQ(d.cat, c.qte)} · ${c.note}/50 au moins · avant ${Math.max(0, c.echeance - S.cal.s)} semaine(s) · prime ${c.prime} écus</small></span></div>
-      <p class="demande">« ${esc(c.txt || (Array.isArray(d.txt) ? d.txt[0] : d.txt))} »</p>
+    return `<div class="client commande"><div class="client-tete"><span class="avatar">★</span><span class="corps"><b>${esc(c.nom)}</b><small>${uniteQ(d.cat, c.qte)} · ${c.note}/50 au moins · prime ${c.prime} écus</small></span></div>
+      <p class="commande-echeance ${c.echeance - S.cal.s <= 1 ? "urgente" : ""}">${c.echeance <= S.cal.s ? "À livrer cette semaine" : `Encore ${c.echeance - S.cal.s} semaine${c.echeance - S.cal.s > 1 ? "s" : ""} pour livrer`}</p><p class="demande">« ${esc(c.txt || (Array.isArray(d.txt) ? d.txt[0] : d.txt))} »</p>
       ${ouvert ? (ok.length ? ok.map((p) => ligneProduit(p, c.qte, `<button class="btn btn-mini btn-feu" data-livrer="${c.id}|${p.x.id}">Livrer</button>`)).join('') : '<p class="vide">Rien en cave n\'a la quantité et la note demandées.</p>') : `<button class="btn btn-mini" data-ouvrircommande="${c.id}">Voir ce que je peux livrer</button>`}</div>`;
   }
   $('#pig-vente').addEventListener('click', (ev) => {
@@ -3117,7 +3131,7 @@
     if (b.dataset.negociant) {
       const p = produits().find((x) => x.x.id === b.dataset.negociant); if (!p) return;
       const e = Math.max(1, Math.round(p.stock * 0.12 * (0.15 + 0.85 * Vente.fraicheur(p, S.cal.s))));
-      if (b.dataset.confirme !== '1') { b.dataset.confirme = '1'; b.textContent = `Céder ${p.stock} L ?`; return; }
+      if (b.dataset.confirme !== '1') { b.dataset.confirme = '1'; b.textContent = `Confirmer : ${p.stock} L pour ${e} écus`; return; }
       retirerStock(p, p.stock); gagnerEcus(e); V.ca += e;
       derniereVente = { nom: 'Le négociant de Caussade', s: 0.5, detail: 'Je vous prends tout, au prix du vrac.', txt: `${p.stock} L de ${esc(p.nom)} · <b style="color:var(--or)">+${e} écus</b>` };
       son('ok'); sauver(); majEntete(); entrerPigeonnier();

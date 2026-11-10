@@ -1,5 +1,218 @@
 # Progression Codex
 
+## Reprise avant intégration du pigeonnier
+
+Autorisation : « Push en main puis etape sur 10 d’affiler ». Audit du run 42900258537 : les vingt scénarios et le parcours normal ont réussi ; le parcours GESTES_REELS a échoué en cherchant tab-malts sans écran de destination confirmé. Correction minimale de jeu/tests/parcours.cjs : attendre le domaine prêt, cliquer le vrai lieu, puis attendre son écran visible. Aucun code du jeu modifié. Rejeu local des gestes et des parcours Ulysse expert/débutant lancé avant fusion ; les résultats seront consignés dans la reprise de la série veillée. Syntaxe et diff contrôlés.
+
+## Pigeonnier — mission 10/10 : Pigeonnier : états vides utiles et navigation de reprise
+
+Statut : terminée sur `work/pigeonnier-10-etats-vides`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Comptoir sans client et cave vide affichés en cartes lisibles. Le bouton Préparer une bière ouvre réellement la brasserie sans modifier stock, points ou écus. Validation commune et correctif des fixtures CI documentés ; aucune autre mission commencée.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/10-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p10-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Harmoniser les cartes de leçons de la veillée sans modifier les quiz.
+
+
+## Pigeonnier — validation commune de la deuxième série
+
+Dix missions depuis le main intégré `a0a536d` : portraits SVG historiques,
+demandes sur parchemin, bouteilles de cave, propositions tactiles, réputation,
+satisfaction, échéances, stocks partiels, négociant et états vides. Aucun nouveau
+travail fusionné ; première série intégrée auparavant via #37 sur autorisation.
+Branches/PR empilées pour une revue et une reprise indépendantes.
+
+Validation finale locale : six suites Node, les vingt scénarios des deux séries
+à 320/390 px, smoke mobile, huit rendus et parcours complet jusqu’au spiritueux
+vieilli/vente réussis. Reconstruction des deux HTML reproductible par SHA-256,
+syntaxe JS et diff contrôlés. Aucun diff dans les moteurs métier ni le format de
+sauvegarde. Captures réelles du code final actualisées. Pas d’Android physique,
+Safari ni rejeu des gestes chronométrés complets dans cette exécution.
+
+Les CI initiales des missions 1–4 sont réussies. Les runs 42898154811 et
+42898500140 ont révélé des cartes absentes à la lecture immédiate dans les tests
+01/03. Correctif du support QA dans la dernière mission : attente du domaine prêt
+et de l’écran réellement visible ; fixture injectée une seule fois avant le
+lancement du jeu avec addInitScript, plutôt que sur une page active. Les dix
+contrôles pigeonnier et les deux destinations de navigation ont réussi après ce
+correctif. Le délai du job CI passe à 15 minutes pour les vingt scénarios et les
+parcours existants. La CI du dernier commit corrigé est à vérifier après push.
+Les échecs intermédiaires ne sont pas présentés comme des validations réussies.
+
+Pour les états sans client, le test utilise les vrais boutons de congé après la
+génération normale du jeu ; il ne suppose pas que le chargement laisse le comptoir
+vide. Les écus des fixtures sont normalisés pour éviter la migration historique.
+La pénalité de vente partielle est comparée au moteur avant tout arrondi.
+
+Arrêt après la dixième mission. Prochaine proposition unique : harmoniser les
+cartes de leçons de la veillée sans modifier les quiz. Aucun déploiement Sites
+pendant cette série ; la publication existante est conservée.
+
+
+## Pigeonnier — mission 09/10 : Négociant : confirmation avec quantité et prix exacts
+
+Statut : terminée sur `work/pigeonnier-09-negociant`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+La première action précise que tout le stock est concerné ; la seconde affiche quantité et montant. Premier clic sans mutation, second clic avec 100 L retirés et 12 écus crédités vérifiés ; clients et ventes au détail inchangés.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/09-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p09-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre les états de cave vide utiles et cohérents avec le jeu.
+
+
+## Pigeonnier — mission 08/10 : Stocks : alerte lisible et ventes partielles conservées
+
+Statut : terminée sur `work/pigeonnier-08-stocks`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Quantité de cave mise en évidence et avertissement distinct si le stock ne couvre pas la demande. Vente partielle réelle de 4 L sur une demande de 10 L vérifiée, stock vidé et pénalité comparée au moteur non arrondi. Première attente de test corrigée pour ne pas arrondir avant la pénalité.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/08-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p08-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Clarifier la confirmation de cession au négociant.
+
+
+## Pigeonnier — mission 07/10 : Commandes : échéances explicites et livraison limite vérifiée
+
+Statut : terminée sur `work/pigeonnier-07-commandes`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Badge calculé depuis échéance moins calendrier, avec texte cette semaine au dernier délai. Livraison au dernier délai vérifiée : 20 L retirés, prime 60 écus et réputation +4, commande supprimée. Le médaillon distingue la commande spéciale.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/07-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p07-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Signaler les stocks insuffisants sans bloquer les ventes partielles existantes.
+
+
+## Pigeonnier — mission 06/10 : Vente : satisfaction réelle dans le bilan
+
+Statut : terminée sur `work/pigeonnier-06-satisfaction`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Le bilan annonce poliment le résultat et affiche une jauge de satisfaction issue de derniereVente.s. Pourcentage comparé au moteur Vente.satisfaction ; recette encaissée comparée au crédit réel. Aucun nouveau calcul commercial.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/06-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p06-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre les échéances des commandes spéciales explicites.
+
+
+## Pigeonnier — mission 05/10 : Pigeonnier : réputation chiffrée et accessible
+
+Statut : terminée sur `work/pigeonnier-05-reputation`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Affiche la valeur réelle sur 100 et le rôle meter sur la jauge. Vente réelle vérifiée : texte, attribut et sauvegarde suivent exactement la réputation calculée par le jeu.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/05-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p05-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Rendre la satisfaction réelle visible dans le bilan de vente.
+
+
+## Pigeonnier — mission 04/10 : Vente : propositions tactiles sans texte comprimé
+
+Statut : terminée sur `work/pigeonnier-04-propositions`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Cartes de produits arrondies et commandes sur une rangée dédiée jusque 440 px. Vente réelle testée : 10 L retirés, écus crédités, client retiré et compteur incrémenté. Les noms longs gardent leur largeur utile.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/04-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p04-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Afficher la réputation réelle en chiffres et jauge accessible.
+
+
+## Pigeonnier — mission 03/10 : Cave : bouteilles lisses aux couleurs réelles
+
+Statut : terminée sur `work/pigeonnier-03-bouteilles`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Transforme les pastilles rectangulaires en bouteilles à col et étiquette, sans image réseau. Les trois catégories bière, eau-de-vie et spiritueux vieilli gardent leurs couleurs calculées distinctes. Stock strictement conservé pendant le rendu.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/03-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p03-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Adapter les cartes de proposition au pouce sur petit écran.
+
+
+## Pigeonnier — mission 02/10 : Clients : demandes sur parchemin et cartes lisibles
+
+Statut : terminée sur `work/pigeonnier-02-demandes`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Cartes arrondies, paroles sur parchemin et typographie lisible. Ouverture du conseil sans mutation et congé du seul client choisi sans transaction vérifiés. Fixture complétée avec possede pour ne pas déclencher une migration historique des écus au premier enregistrement.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/02-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p02-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Illustrer les bouteilles des produits en cave.
+
+
+## Pigeonnier — mission 01/10 : Pigeonnier : portraits illustrés des clients
+
+Statut : terminée sur `work/pigeonnier-01-portraits`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Réutilise exactement les visages SVG du habillage historique, sans observer ni système parallèle. Les portraits sont déterministes par nom, décodés hors réseau et stables en ouvrant une fiche ; état de vente inchangé. Fusion autorisée de la première série dans main consignée dans le journal.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/pigeonnier/01-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/p01-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Habiller les demandes des clients en cartes lisibles.
+
+
+## Reprise de la deuxième série
+
+Demande : « Etape une dizaine apres push en main ». État local propre, main/branches/journal et PR vérifiés. CI finale de la première série réussie (run 42895803234). PR #37 reciblée sur main puis fusionnée avec SHA attendu ; les dix commits précédents sont intégrés à `a0a536d5b0c8cd628127fdcf1f32071cb098e991`, confirmé par fetch. Nouvelle série de dix branches et PR empilées depuis ce main. Les nouveaux travaux ne seront pas fusionnés sans nouvelle autorisation. Le site reste à sa publication existante.
+
 ## Série autorisée — mission 10/10 : Bâtiments : niveaux lisibles et travaux vérifiés
 
 Statut : terminée sur `work/serie-10-batiments`, sans fusion. Autorisation utilisateur d’enchaîner

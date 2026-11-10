@@ -1,0 +1,3 @@
+require('./support.cjs')('05-reputation',async({page,sell,save,assert})=>{
+ const before=await save();const meter=page.locator('.barre-rep');assert.equal(Number(await meter.getAttribute('aria-valuenow')),before.vente.rep);assert.equal(await page.locator('.rep-val').textContent(),'40/100');const after=await sell();assert.equal(Number(await page.locator('.barre-rep').getAttribute('aria-valuenow')),after.vente.rep);assert.equal(await page.locator('.rep-val').textContent(),after.vente.rep+'/100');assert.notEqual(after.vente.rep,before.vente.rep);await page.locator('.rep').screenshot({path:`docs/captures/serie/p05-reputation-${await page.evaluate(()=>innerWidth)}.png`});
+}).catch(e=>{console.error(e);process.exitCode=1});

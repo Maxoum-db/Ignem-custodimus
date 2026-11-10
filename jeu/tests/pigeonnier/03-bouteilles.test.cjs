@@ -1,0 +1,3 @@
+require('./support.cjs')('03-bouteilles',async({page,save,assert})=>{
+ const before=await save();const icons=page.locator('.pastille-prod');assert.equal(await icons.count(),3);const colors=await icons.evaluateAll(nodes=>nodes.map(e=>getComputedStyle(e).backgroundColor));assert.equal(new Set(colors).size,3);assert.ok(await icons.evaluateAll(nodes=>nodes.every(e=>getComputedStyle(e,'::before').content!=='none'&&parseFloat(getComputedStyle(e).borderBottomLeftRadius)>0)));await page.locator('.produit').first().screenshot({path:`docs/captures/serie/p03-bouteilles-${await page.evaluate(()=>innerWidth)}.png`});assert.deepEqual((await save()).carnet,before.carnet);
+}).catch(e=>{console.error(e);process.exitCode=1});
