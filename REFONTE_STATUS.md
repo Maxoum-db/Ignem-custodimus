@@ -36,14 +36,14 @@ Les statuts ci-dessous décrivent l’intégration rapportée par les PR fusionn
 | C. Ébullition | Intégré et testé dans la brasserie illustrée. |
 | D. Fermentation | Intégré et testé dans la brasserie illustrée. |
 | E. Embouteillage | Intégré et testé dans la brasserie illustrée. |
-| F. Ulysse | Scène et interactions illustrées ; tests expert/débutant rapportés. |
-| G. Chai | Fonctionnel dans le parcours ; finition graphique encore ouverte dans les anciennes PR #12/#13. |
+| F. Ulysse | Gestes brouillis/repasse illustrés et testés ; l’écran d’entrée de distillerie montre encore Ulysse en pixel art dans la capture CI. |
+| G. Chai | Fonctionnel dans le parcours ; finition graphique encore ouverte. Capture CI : icônes de fût et portrait de Firmin restent pixelisés. |
 | H. Pigeonnier-boutique | Parcours de vente présent ; finition visuelle et listes en cours dans l’ancienne PR #13. |
 | I. Dégustation | PR #20 ouverte ; CI réussie, intégration à `main` non faite. |
 | J. Ingrédients | Fonctionnels ; finition des listes et pages encore proposée par #13. |
 | K. Veillée | Présente dans le jeu ; finition visuelle non réconciliée. |
 | L. Interface | Préparation et styles lissés intégrés par #16 ; finition globale non terminée. |
-| M. Mentors | Portrait de Lise intégré ; Firmin et les autres portraits restent à traiter. |
+| M. Mentors | Portrait de Lise intégré ; le portrait de Firmin reste pixelisé sur les captures de résultats. |
 | N–Q. Domaine | Accueil peint et quatre saisons intégrés par #18 ; animaux et personnages animés restent partiels. |
 | R. Animations | Présentes par endroits ; harmonisation et finitions restent à poursuivre. |
 
