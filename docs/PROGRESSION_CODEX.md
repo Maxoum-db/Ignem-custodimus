@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Série autorisée — mission 01/10 : Cour : fûts illustrés et rangement mobile vérifié
+
+Statut : terminée sur `work/serie-01-cour`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Style partagé avec le plan, silhouette liée à la taille réelle, cible au moins 44 px. Rangement dans une case libre et retour dans la cour vérifiés par les vrais boutons et sauvegardes. Le support de QA réutilise des fixtures synthétiques issues du moteur ; ces tests seront conservés par la CI.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/01-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/01-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Illustrer les miniatures de fûts du catalogue.
+
+
 ## 2026-11-10 — Synchronisation des missions récentes et du site
 
 Autorisation : « Étape, mais avant je veux que tout soit bien à jour », après
