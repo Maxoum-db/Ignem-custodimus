@@ -285,11 +285,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .tableau-wrap { overflow-x: auto; }
 .verres-aveugle { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .verre-a { background: var(--four); box-shadow: var(--cadre); padding: 8px; display: flex; flex-direction: column; gap: 6px; align-items: center; text-align: center; min-width: 0; }
-.verre-a canvas { width: 40px; height: 60px; }
+.verre-a .verre-degustation { width: 46px; height: auto; }
 .verre-a .lettre { font-family: var(--f-titre); font-size: 12px; color: var(--braise); }
 .verre-a .odeurs { font-size: 13px; min-height: 3.2em; }
 .verre-a .choix { display: flex; flex-direction: column; gap: 4px; width: 100%; }
-.verre-a .choix button { border: 0; padding: 5px 2px; font-size: 13px; background: var(--nuit); color: var(--cendre); box-shadow: 0 0 0 2px var(--pierre); }
+.verre-a .choix button { min-height: 44px; border: 0; padding: 5px 2px; font-size: 13px; background: var(--nuit); color: var(--cendre); box-shadow: 0 0 0 2px var(--pierre); }
 .verre-a .choix button[aria-pressed="true"] { background: var(--calcaire); color: var(--nuit); }
 .verre-a.juste { box-shadow: 0 0 0 3px var(--houblon); }
 .verre-a.faux { box-shadow: 0 0 0 3px var(--alerte); }
@@ -334,7 +334,11 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 
 /* ---------- Dégustation ---------- */
 .degust-haut { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; }
-#verre { width: 96px; height: 144px; display: block; }
+#verre { width: 96px; min-height: 132px; border-radius: 12px; background: radial-gradient(ellipse at 50% 47%, #554536, #221912 78%); }
+.verre-degustation { display: block; width: 100%; height: auto; }
+.verre-liquide-anime { animation: remplir-verre 1.3s ease-out both; }
+@keyframes remplir-verre { from { transform: translateY(100px); } }
+@media (prefers-reduced-motion: reduce) { .verre-liquide-anime { animation: none; } }
 .verdict { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .verdict .style { color: var(--cendre); font-size: 14px; }
 .verdict .total { font-family: var(--f-chiffre); font-size: 52px; line-height: .9; }
@@ -1080,7 +1084,7 @@ html,body { margin:0; }
     <!-- Dégustation -->
     <section id="ecran-degustation" class="ecran" hidden>
       <div class="degust-haut">
-        <canvas id="verre" width="64" height="96" aria-label="Verre de la cuvée"></canvas>
+        <div id="verre" role="img" aria-label="Verre de la cuvée"></div>
         <div class="verdict" id="verdict"></div>
       </div>
       <div class="degust-grille">
@@ -4799,27 +4803,67 @@ html,body { margin:0; }
   // =====================================================================
   // Dégustation
   // =====================================================================
+  const VERRES_DEGUSTATION = {
+    biere: {
+      bol: 'M23 22 Q50 16 77 22 C82 40 78 54 69 71 Q64 87 62 112 Q50 120 38 112 Q36 87 31 71 C22 54 18 40 23 22Z',
+      pied: 'M38 111 Q50 116 62 111 L64 118 Q50 125 36 118Z',
+      reflet: 'M28 30 C25 48 35 63 38 80', bord: [23, 77], niveau: 37,
+    },
+    wash: {
+      bol: 'M22 23 Q50 16 78 23 L72 109 Q70 117 50 117 Q30 117 28 109Z',
+      pied: 'M28 108 Q50 116 72 108 L71 118 Q50 126 29 118Z',
+      reflet: 'M28 32 L33 89', bord: [22, 78], niveau: 45,
+    },
+    spiritueux: {
+      bol: 'M35 20 Q50 16 65 20 C63 35 76 47 76 62 Q76 85 50 89 Q24 85 24 62 C24 47 37 35 35 20Z',
+      pied: 'M47 86 L53 86 L54 109 Q55 114 70 116 Q77 120 68 122 Q50 126 32 122 Q23 120 30 116 Q45 114 46 109Z',
+      reflet: 'M35 45 Q25 64 33 74', bord: [35, 65], niveau: 64,
+    },
+  };
+
+  function verreDegustation(id, forme, teinte, options = {}) {
+    const { bol, pied, reflet, bord, niveau: niveauDefaut } = VERRES_DEGUSTATION[forme];
+    const { mousse, niveau = niveauDefaut, anime } = options;
+    const [gauche, droite] = bord;
+    const ref = (nom) => `verre-${id}-${nom}`;
+    const bulles = forme === 'biere' || forme === 'wash'
+      ? '<g fill="#fff1cf" opacity=".52"><circle cx="41" cy="59" r="1.5"/><circle cx="57" cy="74" r="1.2"/><circle cx="47" cy="89" r="1.5"/><circle cx="55" cy="99" r="1"/><circle cx="62" cy="53" r="1.3"/></g>'
+      : '';
+    return `<svg class="verre-degustation" data-forme="${forme}" viewBox="0 0 100 136" aria-hidden="true">
+      <defs>
+        <clipPath id="${ref('bol')}"><path d="${bol}"/></clipPath>
+        <linearGradient id="${ref('verre')}">
+          <stop stop-color="#98c7c5" stop-opacity=".33"/><stop offset=".32" stop-color="#fff5d6" stop-opacity=".06"/>
+          <stop offset=".77" stop-color="#fff5d6" stop-opacity=".13"/><stop offset="1" stop-color="#98c7c5" stop-opacity=".45"/>
+        </linearGradient>
+        <linearGradient id="${ref('robe')}">
+          <stop stop-color="#fff0bc" stop-opacity=".28"/><stop offset=".34" stop-color="#fff0bc" stop-opacity=".05"/>
+          <stop offset="1" stop-color="#23170e" stop-opacity=".38"/>
+        </linearGradient>
+      </defs>
+      <ellipse cx="50" cy="124" rx="35" ry="6" fill="#100a07" opacity=".55"/>
+      <path d="${pied}" fill="url(#${ref('verre')})" stroke="#a9c3bd" stroke-width="1.6"/>
+      <path d="${bol}" fill="url(#${ref('verre')})"/>
+      <g clip-path="url(#${ref('bol')})">
+        <g class="verre-liquide${anime ? ' verre-liquide-anime' : ''}">
+          <path d="M14 ${niveau} Q50 ${niveau + 6} 86 ${niveau} V130 H14Z" fill="${teinte}" opacity="${forme === 'spiritueux' ? '.83' : '.96'}"/>
+          <path d="M14 ${niveau} Q50 ${niveau + 6} 86 ${niveau} V130 H14Z" fill="url(#${ref('robe')})"/>
+          ${bulles}
+          ${mousse
+            ? `<path d="M16 ${niveau - 3} Q21 ${niveau - 11} 30 ${niveau - 8} Q38 ${niveau - 13} 46 ${niveau - 8} Q55 ${niveau - 12} 62 ${niveau - 7} Q74 ${niveau - 12} 84 ${niveau - 3} V${niveau + 3} Q50 ${niveau + 10} 16 ${niveau + 3}Z" fill="${mousse}"/>`
+            : `<path d="M16 ${niveau} Q50 ${niveau + 6} 84 ${niveau}" fill="none" stroke="#fff1cf" opacity=".6"/>`}
+        </g>
+      </g>
+      <path d="${bol}" fill="none" stroke="#b6cbc0" stroke-width="1.6"/>
+      <path d="M${gauche} 21 Q50 28 ${droite} 21" fill="none" stroke="#f9ecd2" stroke-width="1.4" opacity=".7"/>
+      <path d="${reflet}" fill="none" stroke="#fff5dd" stroke-width="2.4" stroke-linecap="round" opacity=".62"/>
+    </svg>`;
+  }
+
   function rendreDegustation() {
     const { entree: e, res, note, gain, palierMonte, nouveaux } = dernier;
-    // Verre qui se remplit
-    const ctx = $('#verre').getContext('2d');
-    const rgb = Moteur.couleurRVB(res.ebc), mousse = res.ebc > 60 ? '#d8b98a' : '#f4ecd8';
-    const dessinVerre = (p) => {
-      const px = (x, y, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
-      ctx.clearRect(0, 0, 64, 96); px(0, 0, 64, 96, '#221912');
-      const larg = (y) => (y < 20 ? 18 + (y - 6) * 0.25 : y < 60 ? 21 - (y - 20) * 0.14 : 15.4 - (y - 60) * 0.1);
-      const bas = 84, haut = 10, niv = bas - (bas - haut - 6) * p;
-      for (let y = haut; y < bas; y++) {
-        const w = larg(y);
-        px(32 - w - 1, y, 1, 1, '#9aa1a8'); px(32 + w, y, 1, 1, '#9aa1a8');
-        if (y >= niv) px(32 - w, y, w * 2, 1, `rgb(${rgb.join(',')})`);
-        else if (y >= niv - 6 * p) px(32 - w, y, w * 2, 1, mousse);
-      }
-      px(18, bas, 28, 3, '#9aa1a8'); px(24, bas + 3, 16, 5, '#7a8088');
-      for (let i = 0; i < 6 * p; i++) px(26 + (i * 5) % 14, niv + 8 + ((i * 17 + Math.floor(p * 40)) % Math.max(1, bas - niv - 10)), 1, 1, 'rgba(255,255,255,.6)');
-      px(32 - larg(30) + 2, 24, 2, 40, 'rgba(255,255,255,.14)');
-    };
-    if (reduit) dessinVerre(1); else { const t0 = performance.now(); const f = (ts) => { const p = Math.min(1, (ts - t0) / 1600); dessinVerre(p); if (p < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); }
+    $('#verre').innerHTML = verreDegustation('jury', 'biere', couleur(res.ebc),
+      { mousse: res.ebc > 60 ? '#d8b98a' : '#f4ecd8', anime: true });
 
     const med = note.medaille;
     const etoiles = Object.entries(e.etoiles).filter(([, v]) => v).map(([k]) => ({ sansAide: 'sans aide', expert: 'mode expert', gestes: 'gestes joués' }[k]));
@@ -5244,14 +5288,10 @@ html,body { margin:0; }
     const NOMS = ['Têtes', 'Cœur', 'Queues'];
     $('#aveugle-verres').innerHTML = ordre.map((iFr, k) => {
       const odeurs = DI.descripteurs(r.fractions[iFr]);
-      return `<div class="verre-a" id="verre-a-${k}"><canvas width="10" height="15" data-iverre="${k}"></canvas><span class="lettre">${'ABC'[k]}</span>
+      return `<div class="verre-a" id="verre-a-${k}">${verreDegustation('fraction-' + k, 'spiritueux', '#c5dcdf')}<span class="lettre">${'ABC'[k]}</span>
         <span class="odeurs">${odeurs.map((o) => `${esc(o.odeur)} <small>(${o.force})</small>`).join('<br>') || 'presque rien'}</span>
         <div class="choix">${NOMS.map((n, j) => `<button data-av="${k}:${j}" aria-pressed="false">${n}</button>`).join('')}</div><span class="reponse"></span></div>`;
     }).join('');
-    $$('#aveugle-verres canvas').forEach((cv) => {
-      const c = cv.getContext('2d'); const px = (x, y, w, h, k) => { c.fillStyle = k; c.fillRect(x, y, w, h); };
-      px(1, 0, 1, 9, '#9aa1a8'); px(8, 0, 1, 9, '#9aa1a8'); px(2, 4, 6, 5, 'rgba(236,232,220,.85)'); px(2, 9, 6, 1, '#9aa1a8'); px(4, 10, 2, 3, '#9aa1a8'); px(2, 13, 6, 1, '#9aa1a8');
-    });
     $('#aveugle-bilan').hidden = true;
     $('#aveugle-valider').disabled = true; $('#aveugle-valider').textContent = 'Valider';
     $('#aveugle-valider').onclick = () => {
@@ -5334,21 +5374,8 @@ html,body { margin:0; }
 
   function rendreDegustationEDV() {
     const { entree: e, note, bl, gain, rendement, palierMonte, nouveaux } = dernier;
-    // Verre tulipe d'eau-de-vie, avec ses larmes
-    const ctx = $('#verre').getContext('2d');
-    const dessin = (p) => {
-      const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
-      ctx.clearRect(0, 0, 64, 96); px(0, 0, 64, 96, '#221912');
-      const larg = (y) => (y < 30 ? 9 + (y - 10) * 0.25 : 14 - Math.abs(y - 44) * 0.0 - Math.max(0, y - 44) * 0.5);
-      for (let y = 10; y < 62; y++) {
-        const w = Math.max(1, larg(y));
-        px(32 - w - 1, y, 1, 1, '#9aa1a8'); px(32 + w, y, 1, 1, '#9aa1a8');
-        if (y > 62 - 14 * p) px(32 - w, y, w * 2, 1, e.medaille || note ? 'rgba(236,232,220,.8)' : 'rgba(236,232,220,.5)');
-      }
-      for (let i = 0; i < 3; i++) px(24 + i * 6, 26 + ((i * 7 + Math.floor(p * 20)) % 14), 1, 4, 'rgba(236,232,220,.5)');
-      px(31, 62, 2, 20, '#9aa1a8'); px(22, 82, 20, 3, '#9aa1a8');
-    };
-    if (reduit) dessin(1); else { const t0 = performance.now(); const f = (ts) => { const p = Math.min(1, (ts - t0) / 1400); dessin(p); if (p < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); }
+    $('#verre').innerHTML = verreDegustation('jury', 'spiritueux', '#c5dcdf',
+      { niveau: bl.coeur.V > 0 ? 64 : 89, anime: true });
     const med = note && note.medaille;
     const etoiles = Object.entries(e.etoiles).filter(([, v]) => v).map(([k]) => ({ sansAide: 'sans aide', expert: 'mode expert', gestes: 'gestes joués' }[k]));
     $('#verdict').innerHTML = `<span class="style">Eau-de-vie de bière · ${esc(e.biere)}</span>
@@ -5678,22 +5705,7 @@ html,body { margin:0; }
   }
   function rendreDegustationVieilli() {
     const { entree: e, note, etat, bt, gain, nouveaux, palierMonte } = dernier;
-    const liquide = couleur(etat.couleur * 0.6);
-    const ctx = $('#verre').getContext('2d');
-    // Verre tulipe de dégustation, robe ambrée
-    const dessin = (p) => {
-      const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
-      ctx.clearRect(0, 0, 64, 96); px(0, 0, 64, 96, '#221912');
-      const larg = (y) => (y < 30 ? 9 + (y - 10) * 0.25 : 14 - Math.max(0, y - 44) * 0.5);
-      for (let y = 10; y < 62; y++) {
-        const w = Math.max(1, larg(y));
-        px(32 - w - 1, y, 1, 1, '#9aa1a8'); px(32 + w, y, 1, 1, '#9aa1a8');
-        if (y > 62 - 14 * p) px(32 - w, y, w * 2, 1, liquide);
-      }
-      px(25, 49, 2, 8, 'rgba(255,255,255,.35)');
-      px(31, 62, 2, 20, '#9aa1a8'); px(22, 82, 20, 3, '#9aa1a8');
-    };
-    if (reduit) dessin(1); else { const t0 = performance.now(); const f = (ts) => { const p = Math.min(1, (ts - t0) / 1400); dessin(p); if (p < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); }
+    $('#verre').innerHTML = verreDegustation('jury', 'spiritueux', couleur(etat.couleur * 0.6), { anime: true });
     const med = e.medaille;
     $('#verdict').innerHTML = `<span class="style">${esc(e.style)}</span>
       <span class="total">${nf(note.total, note.total % 1 ? 1 : 0)}<small>/50</small></span>
@@ -6357,12 +6369,7 @@ html,body { margin:0; }
   }
   function rendreDegustationWash() {
     const { entree: e, res, fiche, gain } = dernier;
-    const ctx = $('#verre').getContext('2d');
-    const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
-    ctx.clearRect(0, 0, 64, 96); px(0, 0, 64, 96, '#221912');
-    px(16, 14, 32, 70, '#9aa1a8'); px(18, 16, 28, 66, '#3b2d22'); px(18, 30, 28, 52, `rgba(${Moteur.couleurRVB(res.ebc).join(',')},.75)`);
-    for (let i = 0; i < 14; i++) px(20 + (i * 7) % 24, 32 + (i * 11) % 46, 2, 2, 'rgba(236,223,196,.5)');
-    px(18, 26, 28, 4, '#e8dcc0');
+    $('#verre').innerHTML = verreDegustation('jury', 'wash', couleur(res.ebc));
     $('#verdict').innerHTML = `<span class="style">Wash de distillation · ${esc(res.levure.nom)}</span>
       <span class="total">${nf(fiche.total, fiche.total % 1 ? 1 : 0)}<small>/20</small></span>
       <span class="medaille aucune">Fiche du bouilleur</span>
