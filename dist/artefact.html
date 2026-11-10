@@ -5464,14 +5464,14 @@ html,body { margin:0; }
     nouveaux.forEach((n, i) => setTimeout(() => toast('★ ' + n), 2600 + i * 900));
   }
 
-  function radarSVG(axes, profil) {
+  function radarSVG(axes, profil, marge = false) {
     const C = 110, Rr = 72;
     const pt = (k, v) => { const a = -Math.PI / 2 + (k / axes.length) * Math.PI * 2; return [C + Math.cos(a) * Rr * v, C + Math.sin(a) * Rr * v]; };
     const anneaux = [0.25, 0.5, 0.75, 1].map((f) => `<polygon points="${axes.map((_, k) => pt(k, f).join(',')).join(' ')}" fill="none" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const rayons = axes.map((_, k) => `<line x1="${C}" y1="${C}" x2="${pt(k, 1)[0]}" y2="${pt(k, 1)[1]}" stroke="var(--pierre)" stroke-width="1"/>`).join('');
     const poly = axes.map(([cle], k) => pt(k, Math.max(0.04, profil[cle] / 10)).join(',')).join(' ');
     const libs = axes.map(([cle, lib], k) => { const [x, y] = pt(k, 1.22); return `<text x="${x}" y="${y}" fill="var(--calcaire)" font-size="11" font-family="system-ui, sans-serif" text-anchor="middle" dominant-baseline="middle">${lib} ${nf(profil[cle], 0)}</text>`; }).join('');
-    return `<svg viewBox="0 0 220 220" role="img" aria-label="Profil aromatique">${anneaux}${rayons}<polygon class="poly" points="${poly}" fill="rgba(243,176,74,.35)" stroke="var(--braise)" stroke-width="2"/>${libs}</svg>`;
+    return `<svg viewBox="${marge ? "-25 -15 270 250" : "0 0 220 220"}" role="img" aria-label="Profil aromatique : ${esc(axes.map(([cle, lib]) => `${lib} ${nf(profil[cle], 1)} sur 10`).join(", "))}">${anneaux}${rayons}<polygon class="poly" points="${poly}" fill="rgba(243,176,74,.35)" stroke="var(--braise)" stroke-width="2"/>${libs}</svg>`;
   }
 
   // =====================================================================
@@ -5596,7 +5596,7 @@ html,body { margin:0; }
         <div class="chiffres"><span>${nf(e.V, 1)} L</span><span>${nf(e.degre, 1)} %</span><span>anges ${Math.round(ange * 100)} %</span><span>${bt.n} bout. à ${nf(bt.degre, 1)} %</span></div></div>
       <p class="nom-legal">${esc(CH.nom(e, bt.degre))}</p>
       <div class="pipette"><b>À la pipette :</b> ${pip.notes.length ? pip.notes.map((x) => `${esc(x.mot)} <small>(${x.force})</small>`).join(' · ') : 'alcool blanc, céréale'}${pip.bouche.length ? `<br><b>En bouche :</b> ${esc(pip.bouche.join(', '))}` : ''}</div>
-      <div class="radar radar-chai">${radarSVG(axes, CH.profil(e))}</div>
+      <div class="radar radar-chai">${radarSVG(axes, CH.profil(e), true)}</div>
       ${plus ? '<p class="det prevision-txt">Prévision : le fût n\'en est pas encore là.</p>' : ''}
       ${debutant ? `<p class="det">Estimation du jury : <b>${nf(n.total, n.total % 1 ? 1 : 0)}/50</b>${n.medaille ? ` · ${n.medaille}` : ''} (affichée en mode débutant)</p>` : ''}
       <p class="conseil-firmin">« ${esc(CH.conseil(e, { taille: f.taille }, f.pos ? f.pos.r : 1))} »</p>`;

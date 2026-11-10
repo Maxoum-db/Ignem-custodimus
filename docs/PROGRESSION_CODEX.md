@@ -1,5 +1,22 @@
 # Progression Codex
 
+## Série autorisée — mission 08/10 : Chai : profil aromatique sans libellés coupés
+
+Statut : terminée sur `work/serie-08-profil`, sans fusion. Autorisation utilisateur d’enchaîner
+une dizaine de missions ; branches et PR empilées pour conserver l’ordre.
+
+Ajoute une marge au radar du chai sans changer les points ni son échelle. Tous les libellés sont contrôlés à intérieur du SVG. Le nom accessible donne les valeurs calculées sur 10, mises à jour avec la prévision.
+
+Validation locale : build, six suites Node et test navigateur
+`jeu/tests/finitions/08-*.test.cjs` réussis à 320/390 px, DPR 2 ; zéro erreur
+console/pageerror ni débordement horizontal. Captures réelles dans
+`docs/captures/serie/08-*`, inspection de la capture 390. `git diff --check`
+contrôlé avant commit. Chromium système hors bac à sable pour le serveur local.
+Pas d’Android physique ni Safari. Aucun moteur ni format de sauvegarde modifié.
+
+Prochaine mission : Conserver les notifications lisibles en mouvement réduit et lisser leur entrée.
+
+
 ## Série autorisée — mission 07/10 : Chai : cuves attente lisibles et tactiles
 
 Statut : terminée sur `work/serie-07-cuves`, sans fusion. Autorisation utilisateur d’enchaîner
