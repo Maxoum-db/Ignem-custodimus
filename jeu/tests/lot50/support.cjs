@@ -9,6 +9,6 @@ module.exports=(id,check)=>run('lot50-'+id,async ctx=>{
   else {await page.locator('#btn-menu').click();await page.locator(`#menu-entete [data-aller="${screen}"]`).click()}
   await page.locator('#ecran-'+screen).waitFor({state:'visible'});await ctx.dismiss();
  };
- ctx.capture=async selector=>{fs.mkdirSync('docs/captures/lot50',{recursive:true});await page.locator(selector).first().evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));await page.screenshot({path:`docs/captures/lot50/${id}-${await page.evaluate(()=>innerWidth)}.png`})};
+ ctx.capture=async selector=>{fs.mkdirSync('docs/captures/lot50',{recursive:true});await page.locator(selector).first().evaluate(el=>{el.scrollIntoView({block:'start',behavior:'instant'});const scene=el.closest('#scene'),band=scene?.querySelector('#ecran-brasserie:not([hidden]) .bandeau-mesures');if(band)scene.scrollBy({top:-band.getBoundingClientRect().height-12,behavior:'instant'})});await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));await page.screenshot({path:`docs/captures/lot50/${id}-${await page.evaluate(()=>innerWidth)}.png`})};
  await check(ctx);
 });

@@ -3,6 +3,7 @@
 ## Lot autorisé de 50 — mission 12 : Plan de Lise : portrait net et étapes tactiles
 
 Statut : terminée sur `work/lot50-12-plan-lise`, sans fusion.
+Capture ajustée au bandeau fixe des mesures pour garder le portrait dans le viewport, puis scénario 320/390 rejoué.
 Portrait illustré en rendu lisse, étapes lisibles, liens de fiche de 44 px et actions de 48 px. Application effective du plan à une cuve vide, levure et malts obtenus, cible conservée, aller-retour fiche et abandon de cible sans vider la recette vérifiés.
 
 Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
