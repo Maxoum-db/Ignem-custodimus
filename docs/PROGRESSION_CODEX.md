@@ -1,5 +1,31 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 01 : publier le main validé
+
+2026-11-11 — reprise après interruption. La branche `work/lot50-01-publication`
+était propre et sans commit supplémentaire ; aucune version 12 ni archive locale
+n’existait. État GitHub vérifié par fetch : main `43ab1dfa8de628a19b3e1bf72bfe80a7c5932f6d`.
+Aucun ancien travail graphique recommencé et aucune PR intermédiaire clôturée.
+
+Publication terminée via le skill Sites : version **12**, source Sites
+`9dc6b243987ae16e53cbc3062af9561aa7549925`, déploiement
+`appgdep_6af4a86d84a881919fd170c092d54288`, état confirmé `succeeded`.
+Adresse et droits `custom` conservés :
+https://promethee-ignem-custodimus.maximilien92.chatgpt.site
+
+Build et six suites Node réussis après reprise. Jeu publié et dist/index.html
+identiques par SHA-256 :
+`6cd7ed5b361c6dd9f1048ff0323ae2b4d440a3720b2a5a9d308ae046cb06665a`.
+Archive de sortie avec manifeste existant et dist ; aucun code du jeu ni format
+ignem.v1 changé. Les captures réelles et CI complète du code sont déjà conservées
+dans main ; cette mission modifie uniquement la publication et le présent journal.
+Identifiant temporaire renouvelé après reprise, transmis uniquement sur stdin au
+script de synchronisation Git, puis sauvegarde et déploiement natifs Sites.
+
+Prochaine mission : harmoniser les accordéons des fiches techniques, sans changer
+les explications scientifiques ni leurs liens depuis les leçons.
+
+
 ## Intégration générale demandée — 2026-11-10
 
 Demande : « Push en main tout tes travaux, dis moi si tout est à jours sur github
