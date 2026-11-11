@@ -1074,7 +1074,7 @@ html,body { margin:0; }
 /* Choix du style : seule la liste défile, l’annulation reste visible. */
 #style-voile .style-carte { width:min(480px,100%); max-height:85vh; max-height:85dvh; grid-template-rows:auto minmax(0,1fr) auto; border:1px solid #a67a48; border-radius:18px; box-shadow:0 10px 35px #0008; }
 #style-voile h2 { font-size:21px; line-height:1.35; }
-#style-liste { overflow:auto; overscroll-behavior:contain; padding:4px; gap:10px; }
+#style-liste { grid-auto-rows:max-content; align-content:start; overflow:auto; overscroll-behavior:contain; padding:4px; gap:10px; }
 #style-liste .groupe-titre { font-size:14px; line-height:1.5; margin-top:12px; }
 #style-liste .choix-style { min-height:72px; padding:14px; gap:6px; border:1px solid #82613e; border-radius:12px; box-shadow:none; font-size:17px; }
 #style-liste .choix-style small { font-size:14px; line-height:1.5; }

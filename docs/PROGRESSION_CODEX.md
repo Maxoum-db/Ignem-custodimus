@@ -3,6 +3,7 @@
 ## Lot autorisé de 50 — mission 11 : Style visé : sélecteur mobile accessible
 
 Statut : terminée sur `work/lot50-11-styles`, sans fusion.
+Contrôle visuel initial : descriptions débordantes dans la grille ; corrigé par des lignes de hauteur intrinsèque. Contrôle supplémentaire : aucun texte ne dépasse sa carte à 320/390 px.
 Liste interne défilante, annulation toujours visible, choix lisibles et état sélectionné explicite. Focus initial, boucle Tab, Échap, retour du focus, choix du dernier style et sauvegarde de la cible vérifiés.
 
 Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
