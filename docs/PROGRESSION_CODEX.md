@@ -1,5 +1,41 @@
 # Progression Codex
 
+## Lot de 50 — point de reprise après la mission 18
+
+Dix-huit missions sauvegardées, PR #59 à #76 empilées et ouvertes. Le lot demandé
+de 50 n’est pas terminé. Aucun travail nouveau fusionné dans main pendant ce lot.
+
+Validation commune confirmée : [run 43076308757](https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/43076308757),
+conclusion **success**, code du commit `71f45ec7f924fe172d819d9293a04274cc869cfb`.
+Build reproductible, six suites Node, mobile, huit rendus, plan du chai,
+suites finitions/pigeonnier/veillée/lot50, entrée Ulysse, portrait de Firmin,
+domaine, carnet, recette mobile, parcours standard, gestes réels, Ulysse expert
+et Ulysse débutant : tous réussis. L’échec initial du run 43074048328 est
+corrigé par la mission 18 (questions homonymes, tests seulement).
+
+Contrôles locaux supplémentaires au même code : mobile et huit rendus réussis ;
+aucun changement des moteurs `moteur.js`, `distillerie.js`, `chai.js`, `ecole.js`,
+`vente.js` ni du dossier data par rapport à main. Les captures de contrôle
+générées hors livraison sont conservées dans `/tmp/ignem-qa-lot50-18-mobile` et
+`/tmp/ignem-qa-lot50-18` ; les preuves livrées sont dans `docs/captures/lot50`.
+Aucun Android physique ni Safari disponible. Le document de ce point de reprise
+est ajouté après la validation : aucune modification du code testé.
+
+`origin/main` vérifié à `43ab1dfa8de628a19b3e1bf72bfe80a7c5932f6d` ; le site
+publié reste la version 12 issue de ce main :
+https://promethee-ignem-custodimus.maximilien92.chatgpt.site
+Les missions 02 à 18 sont sur les branches et PR, pas encore sur le site.
+
+Prochaine mission unique, non commencée : composition des malts lisible au
+pouce, noms complets et proportions réelles conservées. Audit préalable :
+le contrôle actuel mesure une petite cible et tronque les noms par ellipsis.
+Ne pas refaire les bâtiments (déjà intégrés par 0607f21).
+
+Reprise : `git fetch origin`, vérifier main et les PR #59–#76, vérifier que le
+répertoire est propre, partir de `work/lot50-18-validation-quiz` sur une nouvelle
+branche dédiée. Ne pas fusionner sans nouvelle autorisation explicite.
+
+
 ## Lot autorisé de 50 — mission 18 : Validation : distinguer les questions homonymes par module
 
 Statut : terminée sur `work/lot50-18-validation-quiz`, sans fusion.
