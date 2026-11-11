@@ -1,5 +1,73 @@
 # Progression Codex
 
+## Mission demandée — cinq secondes d’approche avant le premier houblon
+
+Branche : `work/houblon-preparation-5s`, créée depuis le main distant
+`39778b2398b5fe211ca4129a92bdd6efa84afd11`. Dépôt initial propre ; PR #78
+confirmée fusionnée. Les 19 missions précédentes sont donc déjà intégrées.
+Autorisation explicite pour cette mission et sa fusion : demande utilisateur
+« Lance la barre de progression 5s avant ... Push en main la totale ».
+
+Constat : l’ancienne montée à ébullition durait trois secondes, curseur immobile.
+Le bouton s’activait au moment où le curseur démarrait déjà sur le repère d’un
+ajout prévu au début de l’ébullition. La nouvelle frise possède une zone
+préparatoire de cinq secondes réellement parcourue avant les repères. Un compte
+à rebours persistant annonce le départ ; le premier ajout est désactivé pendant
+ces cinq secondes. Le temps scientifique de recette ne commence qu’ensuite.
+La durée de jeu de l’ébullition reste de 18 secondes, après cette approche.
+Le calcul des écarts, la notation et les minutes de recette restent inchangés.
+La préparation est un état local du geste ; aucun format de sauvegarde modifié.
+
+Fichiers : `jeu/src/jeu.js`, `jeu/src/page.html`, `jeu/src/style.css`,
+`jeu/tests/lot50/houblon-preparation.test.cjs`, `jeu/tests/parcours.cjs`,
+`.github/workflows/validation-jeu.yml` (archivage des captures), les deux HTML
+dans `dist`, ce journal et huit captures réelles dans
+`docs/captures/houblon-preparation/`.
+
+Validation locale réussie :
+- Build et six suites Node, dont validation des ressources ; syntaxe JS et
+  `git diff --check`.
+- Huit scénarios navigateur : expert/débutant, 320/390 px DPR 2, ajouts à l’heure
+  et premier ajout en retard d’une seconde. L’horloge du navigateur est pilotée
+  pour vérifier la frontière de cinq secondes et les instants exacts, sans
+  simuler le moteur ni appeler les fonctions privées du jeu.
+- Curseur en mouvement avant le premier repère, ajout interdit avant 5 s,
+  compte à rebours, deux ajouts aux repères donnant **100 %** de précision.
+  Les retards restent pénalisés. Recettes de 60 min (expert) et 90 min (débutant),
+  dry hop et recette prévue conservés, accès à la fermentation vérifié.
+- Deux parcours complets avec `GESTES_REELS=1`, en temps naturel : expert et
+  débutant, de la recette à la boutique, réussis sans exception JS.
+  Captures supplémentaires dans `/tmp/ignem-hop-real-expert` et
+  `/tmp/ignem-hop-real-debutant`. Le parcours attend désormais l’activation
+  réelle du bouton plutôt qu’un délai fixe de quatre secondes.
+- Captures réelles du compte à rebours et du 100 % inspectées ; aucune erreur JS
+  ni débordement horizontal. Pas d’Android physique ni de Safari disponibles.
+
+Commandes de reprise : `npm run build:jeu && npm run test:jeu`, puis
+`CHROMIUM_PATH=/usr/bin/chromium node jeu/tests/lot50/houblon-preparation.test.cjs`.
+Parcours naturel : `GESTES_REELS=1 node jeu/tests/parcours.cjs` ; ajouter
+`MODE_JEU=debutant` pour l’autre mode. Ici Chromium système et serveur local
+requièrent l’exécution hors bac à sable.
+
+CI complète confirmée réussie sur le code `e2b3616104500b52c9934f08d77c06733f274845` :
+[run 43083739020](https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/43083739020).
+Build reproductible, six suites Node, mobile, huit rendus, toutes les suites de
+fonctionnalités (dont les huit nouveaux scénarios), parcours standard et gestes
+réels, Ulysse expert et débutant : tous réussis. Le commit suivant ne complète
+que ce journal, sans modification du code validé.
+PR de livraison autorisée : [#79](https://github.com/Maxoum-db/Ignem-custodimus/pull/79) ;
+son état GitHub porte la confirmation effective de fusion dans main.
+Les moteurs `moteur.js`, `distillerie.js`, `chai.js`, `ecole.js`,
+`vente.js` et les données scientifiques restent identiques à main.
+Le site reste sur sa dernière publication consignée (version 12) tant qu’une
+nouvelle publication distincte n’est pas effectuée.
+
+Prochaine mission unique proposée, non commencée : publier le main actualisé
+pour une revue commune de la version jouable. Les autres priorités déjà
+auditées restent les libellés des doses de houblon, les contrôles Ulysse/mentors
+et les finitions de dégustation, puis les essais sur appareils physiques.
+
+
 ## Intégration demandée dans main — lot jusqu’à la mission 19
 
 Autorisation explicite : « Push en main, puis dis moi ce qu’il reste a faire ? ».

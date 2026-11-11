@@ -251,6 +251,10 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .frise .curseur { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1px; background: var(--braise); }
 .frise .graduation { position: absolute; bottom: 1px; font-family: var(--f-chiffre); font-size: 14px; color: var(--cendre); transform: translateX(-50%); }
 
+/* Approche du premier repère : cinq secondes hors du temps de recette. */
+.preparation-houblon { margin:0; padding:10px 12px; border:1px solid #987149; border-radius:12px; background:#34271d; color:#f1d7a7; font-size:16px; line-height:1.45; }
+#ebu-frise .phase-preparation { position:absolute; left:0; top:0; bottom:0; display:grid; place-items:center; border-right:1px dashed #d3ad70; background:#70523166; font-size:14px; color:#ead2a9; }
+
 /* ---------- Distillerie ---------- */
 .ulysse-haut { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; }
 #ulysse { width: 96px; height: 72px; box-shadow: var(--cadre); background: var(--four); }

@@ -1686,20 +1686,20 @@
 
   // ---- Ébullition ----
   function preparerEbullition() {
-    const rec = session.recette, total = rec.ebullition, DUREE = 18;
+    const rec = session.recette, total = rec.ebullition, DUREE = 18, PREPARATION = 5;
     const file = rec.houblons.map((h, i) => ({ i, nom: IDX.houblon.get(h.id).nom, g: h.g, prevu: Math.min(h.min, total) }))
       .filter((x) => x.prevu >= 0).sort((a, b) => b.prevu - a.prevu);
     const aCru = rec.houblons.filter((h) => h.min < 0);
-    const st = { t: 0, k: 0, ecarts: [], chutes: [] };
+    const st = { t: 0, preparation: PREPARATION, k: 0, ecarts: [], chutes: [] };
     $('#ebu-consigne').innerHTML = file.length ? `Ébullition de <b>${total} min</b>. Jette chaque houblon quand le curseur passe sur son repère.${aCru.length ? ` ${aCru.length} ajout${aCru.length > 1 ? 's' : ''} à cru attendront la fermentation.` : ''}` : 'Pas de houblon à jeter pendant l\'ébullition : regarde bouillir, puis continue.';
     $('#ebu-bilan').hidden = true; $('#ebu-pied').hidden = false;
     const btn = $('#ebu-jeter'); btn.disabled = true;
     const frise = $('#ebu-frise');
-    const pos = (min) => ((total - min) / total) * 100;
+    const pos = (min) => ((PREPARATION + ((total - min) / total) * DUREE) / (PREPARATION + DUREE)) * 100;
     const rendreFrise = () => {
-      frise.innerHTML = [0, 15, 30, 45, 60, 75, 90].filter((m) => m <= total).map((m) => `<span class="graduation" style="left:${pos(m)}%">${m}</span>`).join('')
+      frise.innerHTML = `<span class="phase-preparation" aria-hidden="true" style="width:${pos(total)}%">5 s</span>` + [0, 15, 30, 45, 60, 75, 90].filter((m) => m <= total).map((m) => `<span class="graduation" style="left:${pos(m)}%">${m}</span>`).join('')
         + file.map((h, k) => `<i class="repere-h ${k < st.k ? 'fait' : ''}" style="left:${pos(h.prevu)}%"><b>${k + 1}</b></i>`).join('')
-        + `<i class="curseur" style="left:${(st.t / DUREE) * 100}%"></i>`;
+        + `<i class="curseur" style="left:${((PREPARATION - st.preparation + st.t) / (PREPARATION + DUREE)) * 100}%"></i>`;
     };
     const etiquette = () => { const h = file[st.k]; btn.innerHTML = h ? `Jeter ${esc(h.nom)}<small>${nf(h.g / 1000, 2)} kg · prévu à ${h.prevu} min</small>` : 'Tout est dans la cuve'; };
     const ctx = $('#ebu-canvas').getContext('2d');
@@ -1729,17 +1729,25 @@
     rendreFrise(); etiquette(); dessin();
     $('#ebu-infos').innerHTML = infoBloc(total + "'", 'restantes') + infoBloc(file.length, 'ajouts prévus') + infoBloc(aCru.length, 'à cru');
     btn.onclick = jeter;
-    const MONTEE = 3;
+    $('#ebu-preparation').textContent = 'La frise avancera 5 secondes avant le début des ajouts.';
+    let compteAffiche = null;
     $('#ebu-go').onclick = () => {
       $('#ebu-go').disabled = true; btn.disabled = true; st.montee = true;
       evtScene('ebu', 'Montée à ébullition…', 'chaud');
-      arretGeste = bouclePendant(DUREE + MONTEE, (dt, t) => {
-        st.chauffe = Math.min(1, t / MONTEE);
-        if (st.montee && t >= MONTEE) { st.montee = false; btn.disabled = !file.length; evtScene('ebu', 'Ça bout : le chrono démarre', 'houblon'); son('bulle'); }
-        st.t = Math.max(0, t - MONTEE); dessin(); rendreFrise();
+      arretGeste = bouclePendant(DUREE + PREPARATION, (dt, t) => {
+        st.preparation = Math.max(0, PREPARATION - t);
+        st.chauffe = Math.min(1, t / PREPARATION);
+        const compte = Math.ceil(st.preparation);
+        if (compte !== compteAffiche) {
+          compteAffiche = compte;
+          $('#ebu-preparation').textContent = compte ? `Prépare ton ajout : départ dans ${compte} s.` : file.length ? 'À toi : les ajouts commencent.' : 'Ça bout : aucun ajout pendant cette ébullition.';
+        }
+        if (st.montee && t >= PREPARATION) { st.montee = false; btn.disabled = !file.length; evtScene('ebu', 'Ça bout : le chrono démarre', 'houblon'); son('bulle'); }
+        st.t = Math.max(0, t - PREPARATION); dessin(); rendreFrise();
         if (st.k === 0 || st.k < file.length) $('#ebu-infos').firstElementChild.innerHTML = `<span class="v">${Math.max(0, Math.round(minutes()))}'</span><span class="l">restantes</span>`;
       }, () => {
         btn.disabled = true;
+        $('#ebu-preparation').textContent = 'Houblonnage terminé.';
         while (st.k < file.length) { const h = file[st.k]; session.gestes.houblonsMin[h.i] = 0; st.ecarts.push(h.prevu); st.k++; }
         const tol = 6 - difficulte();
         const score = st.ecarts.length ? st.ecarts.reduce((s, e) => s + Math.max(0, 1 - e / tol), 0) / st.ecarts.length : 1;

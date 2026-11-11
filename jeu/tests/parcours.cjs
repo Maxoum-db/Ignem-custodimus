@@ -61,7 +61,7 @@ let s=await save();assert.ok(s.recette.malts.length);assert.ok(s.recette.levure)
  await page.locator('#fil-suite').click();
 } else { await page.locator('#fil-passer').click(); }await snap('ebullition');if(process.env.GESTES_REELS==='1') {
  await page.locator('#ebu-go').click();
- await page.waitForTimeout(4000);
+ await page.waitForFunction(()=>!document.querySelector('#ebu-jeter').disabled,{},{timeout:8000});
  const b=page.locator('#ebu-jeter');
  if(!await b.isDisabled()) {
   await b.click();
