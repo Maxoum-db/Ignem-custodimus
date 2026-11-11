@@ -7,7 +7,8 @@ Branche dédiée : `work/integration-lot50-19`, issue de
 `2913e17a98941d13c2cd9aa32d78a323039e0da5`. Les 19 branches distantes
 `work/lot50-*` sont toutes ancêtres de cette tête. Le main audité est
 `43ab1dfa8de628a19b3e1bf72bfe80a7c5932f6d`. Aucun travail sur main local.
-L’état effectif de fusion est porté par la PR d’intégration GitHub ; aucune
+PR d’intégration : [#78](https://github.com/Maxoum-db/Ignem-custodimus/pull/78).
+L’état effectif de fusion est porté par cette PR GitHub ; aucune
 suppression de branche ni fermeture manuelle des PR empilées n’est prévue.
 
 Périmètre : intégrer les travaux récents des PR #59–#77 et leur journal.
@@ -20,8 +21,10 @@ six suites Node réussies, ressources validées, `git diff --check` réussi.
 Les cinq moteurs et le dossier data sont inchangés par rapport à main.
 CI complète antérieure : 43076308757 réussie. Contrôle final du code 2913e17 :
 [run 43080317643](https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/43080317643).
-La fusion attend sa réussite effective. Le seul ajout de cette branche est
-ce compte rendu : aucun changement du code validé par cette CI.
+Réussite effective confirmée : build reproductible, six suites Node, mobile,
+huit rendus, suites de fonctionnalités, recette, parcours standard, gestes
+réels, Ulysse expert et débutant. Les seuls ajouts de cette branche sont
+les mises à jour de ce compte rendu : aucun changement du code validé.
 
 Reste à faire, d’après le code réel (liste de priorités, pas 31 missions inventées) :
 
