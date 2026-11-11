@@ -1,5 +1,56 @@
 # Progression Codex
 
+## Intégration demandée dans main — lot jusqu’à la mission 19
+
+Autorisation explicite : « Push en main, puis dis moi ce qu’il reste a faire ? ».
+Branche dédiée : `work/integration-lot50-19`, issue de
+`2913e17a98941d13c2cd9aa32d78a323039e0da5`. Les 19 branches distantes
+`work/lot50-*` sont toutes ancêtres de cette tête. Le main audité est
+`43ab1dfa8de628a19b3e1bf72bfe80a7c5932f6d`. Aucun travail sur main local.
+L’état effectif de fusion est porté par la PR d’intégration GitHub ; aucune
+suppression de branche ni fermeture manuelle des PR empilées n’est prévue.
+
+Périmètre : intégrer les travaux récents des PR #59–#77 et leur journal.
+Les prototypes historiques hors de cette chaîne restent hors périmètre.
+Cette intégration ne réalise pas de nouvelle mission graphique et ne publie
+pas une nouvelle version du site.
+
+Validation locale : build reconstruit sans différence sur les deux HTML livrés,
+six suites Node réussies, ressources validées, `git diff --check` réussi.
+Les cinq moteurs et le dossier data sont inchangés par rapport à main.
+CI complète antérieure : 43076308757 réussie. Contrôle final du code 2913e17 :
+[run 43080317643](https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/43080317643).
+La fusion attend sa réussite effective. Le seul ajout de cette branche est
+ce compte rendu : aucun changement du code validé par cette CI.
+
+Reste à faire, d’après le code réel (liste de priorités, pas 31 missions inventées) :
+
+1. Publier le nouveau main sur le site existant. La dernière publication
+   consignée est la version 12, depuis l’ancien main 43ab1df ; fusion GitHub
+   et publication du site sont deux opérations distinctes.
+2. Prochaine mission de développement : faire correspondre le texte et le nom
+   accessible des boutons de houblon à `doseHop()` ; `jeu/src/jeu.js` affiche
+   encore +250 g pour toutes les tailles de brasserie alors que le calcul
+   adapte déjà la quantité au volume.
+3. Agrandir les contrôles restants : les bascules de `#dist-reglages` utilisent
+   encore les styles génériques, les curseurs génériques mesurent 28 px de haut,
+   et `.mentor-actions .btn` conserve une hauteur minimale de 36 px. Traiter
+   chaque composant dans sa propre mission, en conservant ses interactions.
+4. Auditer puis harmoniser les panneaux encore anciens de dégustation : fiche
+   du jury, médailles et défauts. Les verres illustrés existent déjà : ne pas
+   les refaire. Les petits animaux du domaine restent dessinés par procédures ;
+   des assets cartoon historiques existent et peuvent être évalués pour une
+   mission artistique ultérieure, sans recréation automatique.
+5. Vérifier sur Android physique et Safari/iPhone : non disponibles ici.
+
+Les fiches, la recherche, les options, les fournisseurs, les ingrédients, les
+quantités, le procédé, les sels, les styles, le plan de Lise, les tutoriels,
+les bulles d’aide, le menu, le matériel et la composition sont déjà traités
+dans ce lot. Les bâtiments ont déjà été traités dans 0607f21. Ne pas recommencer.
+Le compteur historique est de 19 missions de lot réalisées, et non de 50 ; les
+missions restantes doivent être définies par audit, sans découpage artificiel.
+
+
 ## ÉTAPE — mission 19 : composition des malts lisible au pouce
 
 Statut : terminée sur `work/lot50-19-composition`, sans fusion. Une seule mission
