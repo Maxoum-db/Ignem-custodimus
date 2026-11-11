@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 04 : Recherche : cartes et ajout à la cuve adaptés au tactile
+
+Statut : terminée sur `work/lot50-04-resultats`, sans fusion.
+Cartes continues, texte lisible, boutons de 48 px. Ajout réel de malt, absence de débit et persistance exacte de la recette après rechargement vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/04-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les préférences de jeu au tactile et vérifier leur persistance.
+
+
 ## Lot autorisé de 50 — mission 03 : Recherche : commandes accessibles et résultats annoncés
 
 Statut : terminée sur `work/lot50-03-recherche`, sans fusion.
