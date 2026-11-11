@@ -977,6 +977,14 @@ html,body { margin:0; }
 .lecon-mentor img { width:48px; height:48px; flex:none; border-radius:12px; object-fit:contain; image-rendering:auto; background:#d9c398; }
 .lecon-mentor div { min-width:0; }
 .lecon-mentor .module { margin:0 0 4px; }
+
+/* Fiches techniques : accordéons de lecture, mêmes textes et liens. */
+#fiches-liste .fiche { border:1px solid #84613d; border-radius:14px; overflow:hidden; box-shadow:0 3px 9px #0003; }
+#fiches-liste summary { min-height:48px; align-items:center; font-size:17px; line-height:1.4; }
+#fiches-liste summary::after { font-family:system-ui,sans-serif; font-size:24px; flex:none; color:#edbf78; }
+#fiches-liste .contenu { font-size:16px; line-height:1.65; padding:4px 14px 16px; overflow-wrap:anywhere; }
+#fiches-liste .fiche[open] { border-color:#d6a162; }
+#fiches-liste summary:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }
 </style>
 
 <div id="app">

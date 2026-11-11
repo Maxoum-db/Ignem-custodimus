@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 02 : Fiches : accordéons lisibles et retour aux leçons
+
+Statut : terminée sur `work/lot50-02-fiches`, sans fusion.
+Accordéons cohérents avec les cartes de leçons, cibles 48 px et théorie lisible. Ouverture/fermeture conserve exactement le texte ; lien depuis une leçon et retour réel à la veillée sans mutation vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/02-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Rendre les commandes de recherche accessibles au pouce.
+
+
 ## Lot autorisé de 50 — mission 01 : publier le main validé
 
 2026-11-11 — reprise après interruption. La branche `work/lot50-01-publication`
