@@ -351,10 +351,11 @@
     ],
     recherche: [['Chercher partout', 'Tape un nom, un arôme, un style (« agrumes », « IPA », « 1150 »), ou touche une suggestion. Filtre par famille, trie, et ajoute directement à la cuve.']],
   };
-  let tutoEnCours = null;
+  let tutoEnCours = null, retourTuto = null;
   function tutoEcran(nom) {
     if (!S.vus) S.vus = {};
     if (!TUTOS_ECRAN[nom] || S.vus[nom]) return;
+    retourTuto = document.activeElement;
     tutoEnCours = { nom, i: 0 }; afficherTutoEcran();
   }
   function afficherTutoEcran() {
@@ -365,7 +366,19 @@
     $('#tuto-suivant').textContent = i < pages.length - 1 ? 'Suivant' : 'C\'est parti';
     $('#tuto-voile').hidden = false; $('#tuto-suivant').focus();
   }
-  function fermerTutoEcran() { if (tutoEnCours) { S.vus[tutoEnCours.nom] = true; sauver(); } tutoEnCours = null; $('#tuto-voile').hidden = true; }
+  function fermerTutoEcran() {
+    if (tutoEnCours) { S.vus[tutoEnCours.nom] = true; sauver(); }
+    tutoEnCours = null; $('#tuto-voile').hidden = true;
+    const retour = retourTuto?.isConnected && retourTuto.getClientRects().length && retourTuto.matches('button,a,input,select,textarea,[tabindex]') ? retourTuto : $('#btn-menu');
+    retour.focus({ preventScroll: true });
+  }
+  $('#tuto-voile').addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); fermerTutoEcran(); return; }
+    if (e.key !== 'Tab') return;
+    const premier = $('#tuto-passer'), dernier = $('#tuto-suivant');
+    if (e.shiftKey && document.activeElement === premier) { e.preventDefault(); dernier.focus(); }
+    else if (!e.shiftKey && document.activeElement === dernier) { e.preventDefault(); premier.focus(); }
+  });
   $('#tuto-suivant').onclick = () => { son('clic'); if (tutoEnCours.i < TUTOS_ECRAN[tutoEnCours.nom].length - 1) { tutoEnCours.i++; afficherTutoEcran(); } else fermerTutoEcran(); };
   $('#tuto-passer').onclick = () => { son('clic'); fermerTutoEcran(); };
 

@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 14 : Tutoriels : lecture mobile et navigation clavier
+
+Statut : terminée sur `work/lot50-14-tutoriels`, sans fusion.
+Cartes de premier passage à contenu défilant, actions de 48 px et texte lisible. Tutoriel réel du pigeonnier : page suivante, hauteur 568 px, boucle Tab, fermeture Échap et conservation du marqueur vu après rechargement vérifiés. Les premiers essais de test visaient à tort un tutoriel brasserie inexistant puis une recette non encore sérialisée ; scénario corrigé sur les données réelles.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/14-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les bulles d’information au tactile et aux petits écrans.
+
+
 ## Lot autorisé de 50 — mission 13 : Conformité : repères lisibles et plages chiffrées
 
 Statut : terminée sur `work/lot50-13-reperes`, sans fusion.

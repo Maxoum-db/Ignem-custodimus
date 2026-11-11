@@ -1108,3 +1108,12 @@ html,body { margin:0; }
 #style-detail .repere .moi { width:4px; border:1px solid #fff0cb; border-radius:3px; }
 #style-detail .repere-plage { grid-column:1/-1; font-size:14px; color:#d7c4a3; }
 #style-detail p { font-size:15px; line-height:1.6; }
+
+/* Premier passage : texte défilant et actions visibles, même en écran court. */
+#tuto-voile .tuto-carte { max-height:85vh; max-height:85dvh; grid-template-rows:auto auto minmax(0,1fr) auto; border:1px solid #a67a48; border-radius:18px; gap:14px; box-shadow:0 10px 35px #0008; }
+#tuto-voile h2 { font-size:22px; line-height:1.35; }
+#tuto-corps { overflow:auto; min-height:0; overscroll-behavior:contain; }
+#tuto-corps p { font-size:17px; line-height:1.6; }
+#tuto-voile .tuto-etape { font-size:14px !important; color:#e5c896; }
+#tuto-voile .tuto-actions { flex-wrap:wrap; gap:12px; }
+#tuto-voile .tuto-actions .btn { min-height:48px; flex:1 1 100px; font-size:16px; }
