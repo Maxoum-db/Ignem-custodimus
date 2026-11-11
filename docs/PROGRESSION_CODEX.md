@@ -1,5 +1,45 @@
 # Progression Codex
 
+## ÉTAPE — mission 19 : composition des malts lisible au pouce
+
+Statut : terminée sur `work/lot50-19-composition`, sans fusion. Une seule mission
+pour cette exécution ; le lot historique de 50 reste incomplet.
+
+Audit réel : dépôt propre, `origin/main` à `43ab1dfa8de628a19b3e1bf72bfe80a7c5932f6d`,
+PR #76 ouverte, tête distante `b51c7349caa621addb4d508ff638d4d2d1ac0071`.
+La composition repliable existe déjà (32851ee) ; seuls son confort tactile et sa
+lecture restaient à améliorer : noms tronqués et commande sans hauteur minimale.
+
+Critères vérifiés : cible au moins 48 px ; noms longs complets à 320 et 390 px ;
+proportions réelles 75/25 puis 50/50 ; ouverture au toucher, fermeture Entrée et
+réouverture Espace ; focus conservé ; aucune mutation de sauvegarde par le
+repli/dépli ; recette conservée après rechargement.
+
+Fichiers modifiés : `jeu/src/jeu.js` (liaison ARIA, légende, focus),
+`jeu/src/style.css` (cible, retours à la ligne, repères arrondis),
+`jeu/tests/lot50/19-composition.test.cjs`, `dist/index.html`, `dist/artefact.html`,
+les deux captures `docs/captures/lot50/19-composition-{320,390}.png` et ce journal.
+Aucun moteur, donnée scientifique ni format de sauvegarde modifié.
+
+Validation locale : `npm run build:jeu`, `npm run test:jeu` (six suites, dont
+validation des ressources), test Chromium `19-composition.test.cjs` aux deux
+largeurs en DPR 2, et `recette-mobile.cjs` existant réussis. Ce dernier contrôle
+le dessin réactif, le glisser-déposer après défilement, les sept onglets et la
+remise à zéro. Zéro erreur JS et aucun débordement horizontal dans le nouveau
+scénario. `node --check` du jeu et du nouveau test, `git diff --check` réussis.
+Captures réelles 320/390 inspectées. Captures supplémentaires du contrôle recette
+conservées hors dépôt dans `/tmp/ignem-qa-lot50-19-recette`.
+Pas d’Android physique ni de Safari disponibles ; validation GitHub à suivre dans
+la PR. Le site publié reste la version 12 ; cette mission n’est pas déployée.
+
+Reprise du test ciblé : `npm run build:jeu && npm run test:jeu`, puis
+`CHROMIUM_PATH=/usr/bin/chromium node jeu/tests/lot50/19-composition.test.cjs`.
+Le serveur de test requiert ici l’exécution hors bac à sable.
+
+Prochaine mission unique, non commencée : corriger les libellés des doses de
+houblon selon le volume de brasserie (le calcul existant est conservé).
+
+
 ## Lot de 50 — point de reprise après la mission 18
 
 Dix-huit missions sauvegardées, PR #59 à #76 empilées et ouvertes. Le lot demandé

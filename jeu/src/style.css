@@ -568,11 +568,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .charge-v { font-family: var(--f-chiffre); font-size: 34px; line-height: .9; color: var(--calcaire); }
 .charge-v small { font-size: 20px; color: var(--cendre); }
 .charge-l { font-size: 12px; color: var(--cendre); }
-.grist { display: flex; height: 12px; box-shadow: 0 0 0 2px var(--nuit); margin-top: 2px; }
+.grist { display: flex; height: 12px; border-radius:8px; overflow:hidden; background:var(--nuit); margin-top:2px; }
 .grist i { display: block; height: 100%; min-width: 2px; }
-.grist-leg { display: flex; flex-direction: column; font-size: 12px; line-height: 1.3; color: var(--cendre); }
-.grist-leg span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.grist-leg b { color: var(--calcaire); font-family: var(--f-chiffre); font-size: 16px; font-weight: 400; }
+.grist-leg { display:flex; flex-direction:column; gap:10px; padding:10px 0; font-size:15px; line-height:1.5; color:var(--cendre); }
+.grist-leg > span { min-width:0; }
+.grist-nom { min-width:0; overflow-wrap:anywhere; }
+.grist-leg b { color:var(--calcaire); font-family:var(--f-chiffre); font-size:18px; font-weight:600; white-space:nowrap; flex:none; }
 .ligne-recette .nom .part { display: inline-block; min-width: 3.2em; margin-right: 6px; padding: 0 4px; font-family: var(--f-chiffre); font-size: 20px; font-weight: 400; text-align: center; color: var(--nuit); background: var(--teinte, var(--braise)); box-shadow: inset 0 0 0 1px rgba(0,0,0,.3); }
 .ligne-recette .nom small { font-size: 13px; }
 .ligne-recette .qte input { font-size: 26px; }
@@ -587,10 +588,10 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .bandeau-mesures .mesure .v { font-size: clamp(17px, 4.9vw, 24px); overflow: visible; letter-spacing: -.02em; }
 .bandeau-mesures .mesure .l { font-size: 10px; line-height: 1.1; }
 .bandeau-mesures .mesure .pastille { width: 7px; height: 7px; margin-left: 2px; }
-.compo-bouton { display: grid; gap: 3px; width: 100%; padding: 0; border: 0; background: none; text-align: left; color: var(--cendre); font-size: 12px; cursor: pointer; }
+.compo-bouton { display:grid; gap:8px; width:100%; min-height:48px; margin-top:8px; padding:10px; border:1px solid #987149; border-radius:12px; background:#473522; text-align:left; color:var(--calcaire); font-size:16px; cursor:pointer; }
 .compo-lib { color: var(--cendre); }
-.charge .grist-leg span { display: flex; align-items: center; gap: 4px; }
-.charge .grist-leg i { display: inline-block; width: 8px; height: 8px; flex: none; box-shadow: 0 0 0 1px var(--nuit); }
+.charge .grist-leg > span { display:flex; align-items:baseline; gap:8px; }
+.charge .grist-leg i { display:inline-block; width:10px; height:10px; border-radius:3px; flex:none; box-shadow:0 0 0 1px var(--nuit); }
 
 /* Lisibilité des fiches d'ingrédients (V0.4.4) */
 .carte-ing .det, .article .det { font-size: 14px; line-height: 1.4; }
