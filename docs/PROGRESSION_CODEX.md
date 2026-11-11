@@ -1,5 +1,18 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 12 : Plan de Lise : portrait net et étapes tactiles
+
+Statut : terminée sur `work/lot50-12-plan-lise`, sans fusion.
+Capture ajustée au bandeau fixe des mesures pour garder le portrait dans le viewport, puis scénario 320/390 rejoué.
+Portrait illustré en rendu lisse, étapes lisibles, liens de fiche de 44 px et actions de 48 px. Application effective du plan à une cuve vide, levure et malts obtenus, cible conservée, aller-retour fiche et abandon de cible sans vider la recette vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/12-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Clarifier les repères de conformité au style et leurs plages chiffrées.
+
+
 ## Lot autorisé de 50 — mission 11 : Style visé : sélecteur mobile accessible
 
 Statut : terminée sur `work/lot50-11-styles`, sans fusion.

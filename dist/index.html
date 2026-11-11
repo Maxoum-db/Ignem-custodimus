@@ -1088,6 +1088,21 @@ html,body { margin:0; }
 #style-liste .choisi { border-color:var(--houblon); background:#2b301f; }
 #style-liste .choisi::before { content:'Style visé'; color:#c4dc8c; font-size:13px; font-weight:700; }
 #style-liste button:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }
+
+/* Plan de Lise : portrait illustré net, étapes et liens utilisables au pouce. */
+#plan-lise { padding:16px; gap:14px; border:1px solid #8c9557; border-radius:16px; box-shadow:0 4px 12px #0003; }
+#plan-lise .plan-tete { align-items:flex-start; gap:12px; }
+#plan-lise .plan-tete img { image-rendering:auto; width:48px; height:48px; border-radius:12px; object-fit:contain; background:#d9c398; flex:none; }
+#plan-lise .plan-tete div { min-width:0; }
+#plan-lise .plan-tete b { font-size:18px; line-height:1.4; }
+#plan-lise .plan-tete small { font-size:14px; line-height:1.5; }
+#plan-lise .plan-etapes { gap:12px; padding-left:24px; font-size:16px; line-height:1.6; }
+#plan-lise .plan-etapes li { padding:10px; border:1px solid #6f593b; border-radius:12px; background:#241c14; }
+#plan-lise .plan-etapes li::marker { color:var(--braise); font-weight:700; }
+#plan-lise .plan-etapes li.manque { color:#ffc3a0; border-style:dashed; }
+#plan-lise .lien-fiche { min-height:44px; padding:8px; font-size:15px; }
+#plan-lise .actions-fut .btn { min-height:48px; flex:1 1 180px; font-size:16px; }
+#plan-lise .det { font-size:15px; line-height:1.55; }
 </style>
 
 <div id="app">
