@@ -1068,3 +1068,14 @@ html,body { margin:0; }
 #onglet-contenu .dose input[type="range"] { min-height:44px; }
 #onglet-contenu .dose input:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
 #ions-eau { padding:14px; border:1px solid #7c8160; border-radius:12px; font-size:15px; line-height:1.65; background:#282d20; color:#e3d9bd; }
+
+/* Choix du style : seule la liste défile, l’annulation reste visible. */
+#style-voile .style-carte { width:min(480px,100%); max-height:85vh; max-height:85dvh; grid-template-rows:auto minmax(0,1fr) auto; border:1px solid #a67a48; border-radius:18px; box-shadow:0 10px 35px #0008; }
+#style-voile h2 { font-size:21px; line-height:1.35; }
+#style-liste { overflow:auto; overscroll-behavior:contain; padding:4px; gap:10px; }
+#style-liste .groupe-titre { font-size:14px; line-height:1.5; margin-top:12px; }
+#style-liste .choix-style { min-height:72px; padding:14px; gap:6px; border:1px solid #82613e; border-radius:12px; box-shadow:none; font-size:17px; }
+#style-liste .choix-style small { font-size:14px; line-height:1.5; }
+#style-liste .choisi { border-color:var(--houblon); background:#2b301f; }
+#style-liste .choisi::before { content:'Style visé'; color:#c4dc8c; font-size:13px; font-weight:700; }
+#style-liste button:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }

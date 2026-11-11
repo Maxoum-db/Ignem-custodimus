@@ -1077,6 +1077,17 @@ html,body { margin:0; }
 #onglet-contenu .dose input[type="range"] { min-height:44px; }
 #onglet-contenu .dose input:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
 #ions-eau { padding:14px; border:1px solid #7c8160; border-radius:12px; font-size:15px; line-height:1.65; background:#282d20; color:#e3d9bd; }
+
+/* Choix du style : seule la liste défile, l’annulation reste visible. */
+#style-voile .style-carte { width:min(480px,100%); max-height:85vh; max-height:85dvh; grid-template-rows:auto minmax(0,1fr) auto; border:1px solid #a67a48; border-radius:18px; box-shadow:0 10px 35px #0008; }
+#style-voile h2 { font-size:21px; line-height:1.35; }
+#style-liste { overflow:auto; overscroll-behavior:contain; padding:4px; gap:10px; }
+#style-liste .groupe-titre { font-size:14px; line-height:1.5; margin-top:12px; }
+#style-liste .choix-style { min-height:72px; padding:14px; gap:6px; border:1px solid #82613e; border-radius:12px; box-shadow:none; font-size:17px; }
+#style-liste .choix-style small { font-size:14px; line-height:1.5; }
+#style-liste .choisi { border-color:var(--houblon); background:#2b301f; }
+#style-liste .choisi::before { content:'Style visé'; color:#c4dc8c; font-size:13px; font-weight:700; }
+#style-liste button:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }
 </style>
 
 <div id="app">
@@ -4410,17 +4421,32 @@ html,body { margin:0; }
     dernierPlan = plan;
   }
   let dernierPlan = null, minuteurPlan = null;
+  let retourChoixStyle = null;
+  function fermerChoixStyle() {
+    $('#style-voile').hidden = true;
+    const retour = retourChoixStyle?.isConnected ? retourChoixStyle : $('#btn-viser');
+    retour?.focus({ preventScroll: true });
+  }
   function ouvrirChoixStyle() {
+    retourChoixStyle = document.activeElement;
     const groupes = {};
     D.styles.forEach((s) => { (groupes[s.sujet] = groupes[s.sujet] || []).push(s); });
     const LIB = { pilsener: 'Pils et lagers blondes', bock: 'Bocks', marzen: 'Märzen', vienna: 'Vienna', common: 'California common', wheat: 'Blanches et blés', pale_ale: 'Pale ales', ipa: 'IPA', amber: 'Ambrées', brown: 'Brunes', bitter: 'Bitters', porter: 'Porters', stout: 'Stouts', strong: 'Bières fortes', farmhouse: 'Saisons', specialty: 'Spéciales' };
-    $('#style-liste').innerHTML = Object.entries(groupes).map(([k, l]) => `<p class="groupe-titre">${esc(LIB[k] || k)}</p>${l.map((s) => `<button class="choix-style ${R.cible === s.id ? 'choisi' : ''}" data-viser="${s.id}"><b>${esc(s.nom)}</b><small>${sg(s.og[0])}–${sg(s.og[1])} · ${Math.round(s.ibu[0])}–${Math.round(s.ibu[1])} IBU · ${Math.round(s.ebc[0])}–${Math.round(s.ebc[1])} EBC</small><small>${esc((s.desc || '').slice(0, 110))}</small></button>`).join('')}`).join('');
+    $('#style-liste').innerHTML = Object.entries(groupes).map(([k, l]) => `<p class="groupe-titre">${esc(LIB[k] || k)}</p>${l.map((s) => `<button class="choix-style ${R.cible === s.id ? 'choisi' : ''}" data-viser="${s.id}" aria-pressed="${R.cible === s.id}"><b>${esc(s.nom)}</b><small>${sg(s.og[0])}–${sg(s.og[1])} · ${Math.round(s.ibu[0])}–${Math.round(s.ibu[1])} IBU · ${Math.round(s.ebc[0])}–${Math.round(s.ebc[1])} EBC</small><small>${esc((s.desc || '').slice(0, 110))}</small></button>`).join('')}`).join('');
     $('#style-voile').hidden = false;
+    ($('#style-liste .choisi') || $('#style-liste button')).focus();
   }
   $('#style-voile').addEventListener('click', (e) => {
     const b = e.target.closest('[data-viser]');
-    if (b) { R.cible = b.dataset.viser; $('#style-voile').hidden = true; son('ok'); maj(); setTimeout(() => $('#plan-lise').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'nearest' }), 50); return; }
-    if (e.target.id === 'style-fermer' || e.target === $('#style-voile')) $('#style-voile').hidden = true;
+    if (b) { R.cible = b.dataset.viser; son('ok'); maj(); fermerChoixStyle(); setTimeout(() => $('#plan-lise').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'nearest' }), 50); return; }
+    if (e.target.id === 'style-fermer' || e.target === $('#style-voile')) fermerChoixStyle();
+  });
+  $('#style-voile').addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); fermerChoixStyle(); return; }
+    if (e.key !== 'Tab') return;
+    const boutons = $$('#style-voile button'), premier = boutons[0], dernier = boutons[boutons.length - 1];
+    if (e.shiftKey && document.activeElement === premier) { e.preventDefault(); dernier.focus(); }
+    else if (!e.shiftKey && document.activeElement === dernier) { e.preventDefault(); premier.focus(); }
   });
   document.addEventListener('click', (e) => {
     if (e.target.closest('#btn-viser') || e.target.closest('#plan-changer')) { son('clic'); ouvrirChoixStyle(); return; }
