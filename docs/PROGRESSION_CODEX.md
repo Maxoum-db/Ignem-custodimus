@@ -1,5 +1,48 @@
 # Progression Codex
 
+## Audit demandé du reste à faire — main 41ab2b9
+
+Mission unique : vérifier l’intégration et auditer le reste, sans correction du
+jeu. Autorisation explicite : « Push sur main et lance un audit de ce que reste ».
+Branche dédiée : `work/audit-restant-main`, créée depuis main distant
+`41ab2b952c685be73fbae664160d89eccfd93440`. Dépôt initial propre. PR #79
+confirmée fusionnée ; les 65 branches distantes work présentes au contrôle sont
+déjà ancêtres de main. Aucun push de code produit supplémentaire n’était requis.
+
+Livraison : [audit détaillé](AUDIT_RESTANT.md),
+[mesures](audit/mesures-runtime.json), [sonde reproductible](audit/verifier-restant.cjs)
+et six captures réelles dans `docs/captures/audit-restant/`.
+
+Défauts reproduits à 320 et 390 px :
+- Ajout de houblon prévu à 0 min oublié : 100 % sans toucher, récompense et
+  repère/bouton incohérents. Comportement préexistant à l’approche de cinq secondes.
+- Compteur d’ébullition figé après le dernier ajout : encore 60 min à la fin
+  d’une recette dont le seul ajout était au début, curseur pourtant à 100 %.
+- Bouton et nom accessible +250 g, ajout réel 30 g pour 100 L et 130 g pour 500 L.
+- Bascules Ulysse 35,1875 px, curseurs 28 px ; action du mentor 36 px.
+
+Sites consulté en lecture seule : version 12 et déploiement réussi confirmés ;
+le HTML de ses sources correspond à l’ancien main 43ab1df et diffère du main
+actuel. La publication reste donc à faire. Aucun accès ni déploiement modifié.
+Les 56 PR encore ouvertes ne représentent pas 56 nouveaux chantiers ; les
+branches récentes sont déjà intégrées, les 13 prototypes historiques conservés.
+
+Vérifications : build reproductible (aucune différence dans dist), six suites
+Node réussies, audit navigateur puis rejeu de la sonde livrée réussis aux deux
+largeurs, aucun pageerror/console.error ni débordement horizontal ; syntaxe de
+la sonde et `git diff --check` réussis. Le bon déroulement de la sonde ne vaut
+pas validation des anomalies observées. Captures inspectées. Android physique
+et Safari/iPhone non disponibles. CI du code jeu e2b3616 : run 43083739020
+réussi, sources identiques au main audité. Aucune modification de jeu/src,
+jeu/tests, dist, .github, data ou .openai dans cette mission.
+
+Le rapport et ses preuves sont sauvegardés sur cette branche et livrés par sa
+PR d’audit vers main ; l’état GitHub de cette PR confirme la fusion effective.
+Prochaine mission unique proposée : traiter H01, la notation et l’état d’un
+ajout oublié à 0 minute, puis prévoir la publication pour une revue commune.
+Aucune correction de ce backlog n’est commencée ici.
+
+
 ## Mission demandée — cinq secondes d’approche avant le premier houblon
 
 Branche : `work/houblon-preparation-5s`, créée depuis le main distant
