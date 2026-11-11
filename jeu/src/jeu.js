@@ -786,7 +786,7 @@
     }).join('');
     $('#bat-equip').innerHTML = Object.entries(EQUIPEMENTS).map(([k, e]) => {
       const a = equipe(k), dispoBat = niv(e.bat) >= 1;
-      return `<div class="article ${a ? 'possede' : ''} ${!dispoBat ? 'hors' : ''}"><span class="nom">${esc(e.nom)}</span>${a ? '<span class="etq ok">Installé</span>' : !dispoBat ? `<span class="etq ko">${esc(BATIMENTS[e.bat].nom)} requis</span>` : `<button class="btn" data-equiper="${k}" ${S.ecus < e.prix ? 'disabled' : ''}>${e.prix} écus</button>`}<span class="det">${esc(e.desc)}</span></div>`;
+      return `<div class="article ${a ? 'possede' : ''} ${!dispoBat ? 'hors' : ''}"><span class="nom">${esc(e.nom)}</span>${a ? '<span class="etq ok">Installé</span>' : !dispoBat ? `<span class="etq ko">${esc(BATIMENTS[e.bat].nom)} requis</span>` : `<button class="btn" data-equiper="${k}" aria-label="Installer ${esc(e.nom)} pour ${e.prix} écus" ${S.ecus < e.prix ? 'disabled' : ''}>${e.prix} écus</button>`}<span class="det">${esc(e.desc)}</span></div>`;
     }).join('');
   }
   $('#ecran-batiments').addEventListener('click', (e) => {

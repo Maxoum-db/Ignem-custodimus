@@ -1129,6 +1129,16 @@ html,body { margin:0; }
 #menu-entete { max-width:calc(100vw - 32px); max-height:calc(100vh - 90px); max-height:calc(100dvh - 90px); overflow-y:auto; overscroll-behavior:contain; border:1px solid #a67a48; border-radius:14px; padding:10px; gap:8px; box-shadow:0 6px 20px #0007; }
 #menu-entete button { min-height:48px; line-height:1.4; border-radius:10px; }
 #menu-entete button:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }
+
+/* Matériel : cartes d’achat et état installé adaptés au téléphone. */
+#bat-equip { display:grid; gap:12px; }
+#bat-equip .article { grid-template-columns:minmax(0,1fr); padding:16px; gap:10px; border:1px solid #8b6843; border-radius:14px; box-shadow:0 3px 10px #0003; }
+#bat-equip .article.possede { border-color:var(--houblon); }
+#bat-equip .article.hors { opacity:1; border-style:dashed; background:#30271e; }
+#bat-equip .nom { font-size:18px; line-height:1.4; }
+#bat-equip .det { font-size:15px; line-height:1.55; }
+#bat-equip .btn { min-height:48px; padding:10px 14px; font-size:16px; justify-self:start; }
+#bat-equip .etq { justify-self:start; border-radius:7px; padding:4px 8px; font-size:14px; }
 </style>
 
 <div id="app">
@@ -4018,7 +4028,7 @@ html,body { margin:0; }
     }).join('');
     $('#bat-equip').innerHTML = Object.entries(EQUIPEMENTS).map(([k, e]) => {
       const a = equipe(k), dispoBat = niv(e.bat) >= 1;
-      return `<div class="article ${a ? 'possede' : ''} ${!dispoBat ? 'hors' : ''}"><span class="nom">${esc(e.nom)}</span>${a ? '<span class="etq ok">Installé</span>' : !dispoBat ? `<span class="etq ko">${esc(BATIMENTS[e.bat].nom)} requis</span>` : `<button class="btn" data-equiper="${k}" ${S.ecus < e.prix ? 'disabled' : ''}>${e.prix} écus</button>`}<span class="det">${esc(e.desc)}</span></div>`;
+      return `<div class="article ${a ? 'possede' : ''} ${!dispoBat ? 'hors' : ''}"><span class="nom">${esc(e.nom)}</span>${a ? '<span class="etq ok">Installé</span>' : !dispoBat ? `<span class="etq ko">${esc(BATIMENTS[e.bat].nom)} requis</span>` : `<button class="btn" data-equiper="${k}" aria-label="Installer ${esc(e.nom)} pour ${e.prix} écus" ${S.ecus < e.prix ? 'disabled' : ''}>${e.prix} écus</button>`}<span class="det">${esc(e.desc)}</span></div>`;
     }).join('');
   }
   $('#ecran-batiments').addEventListener('click', (e) => {
