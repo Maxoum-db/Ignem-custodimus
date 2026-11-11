@@ -1059,3 +1059,12 @@ html,body { margin:0; }
 #onglet-contenu .reglage .coche span { font-size:16px; line-height:1.5; }
 #onglet-contenu .reglage .coche small { font-size:14px; }
 #onglet-contenu .reglage :is(button,input):focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
+
+/* Eau : dosages et unités lisibles, bilan du moteur inchangé. */
+#onglet-contenu .dose { padding:16px; border:1px solid #8b6843; border-radius:16px; box-shadow:0 3px 10px #0003; gap:12px; grid-template-columns:minmax(0,1fr); }
+#onglet-contenu .dose label { font-size:17px; line-height:1.45; overflow-wrap:anywhere; }
+#onglet-contenu .dose .val { font-size:24px; color:var(--braise); }
+#onglet-contenu .dose p { font-size:15px; line-height:1.55; }
+#onglet-contenu .dose input[type="range"] { min-height:44px; }
+#onglet-contenu .dose input:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
+#ions-eau { padding:14px; border:1px solid #7c8160; border-radius:12px; font-size:15px; line-height:1.65; background:#282d20; color:#e3d9bd; }

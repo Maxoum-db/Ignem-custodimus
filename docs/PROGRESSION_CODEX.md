@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 10 : Eau : dosages lisibles et curseurs tactiles
+
+Statut : terminée sur `work/lot50-10-sels`, sans fusion.
+Cartes de dosage avec unités distinctes, curseurs de 44 px et bilan ionique lisible. Choix réel d’un profil, augmentation d’un sel, actualisation du bilan et conservation après rechargement vérifiés dans une partie de test en bac à sable.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/10-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Rendre le sélecteur de style mobile et sa navigation clavier accessibles.
+
+
 ## Lot autorisé de 50 — mission 09 : Procédé : réglages scientifiques tactiles
 
 Statut : terminée sur `work/lot50-09-procede`, sans fusion.
