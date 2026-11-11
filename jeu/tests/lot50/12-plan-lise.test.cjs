@@ -1,0 +1,7 @@
+require('./support.cjs')('12-plan-lise',async({page,to,save,capture,assert})=>{
+ await to('brasserie');await page.locator('#btn-viser').click();await page.locator('[data-viser]').first().click();const before=await save();
+ const plan=page.locator('#plan-lise');await plan.waitFor({state:'visible'});assert.equal(await plan.locator('img').evaluate(img=>img.complete&&img.naturalWidth>0),true);assert.equal(await plan.locator('img').evaluate(img=>getComputedStyle(img).imageRendering),'auto');
+ const apply=page.locator('#plan-appliquer');assert.ok((await apply.boundingBox()).height>=48);await capture('#plan-lise');await apply.click();const after=await save();assert.ok(after.recette.malts.length>0);assert.ok(after.recette.levure);assert.equal(after.recette.cible,before.recette.cible);assert.equal(after.ecus,before.ecus);
+ const link=page.locator('#plan-lise [data-fiche]').first();if(await link.count()){assert.ok((await link.boundingBox()).height>=44);await link.click();await page.locator('#ecran-fiches').waitFor({state:'visible'});await page.locator('#fiches-liste [data-aller="brasserie"]').click();await page.locator('#ecran-brasserie').waitFor({state:'visible'})}
+ await page.locator('#plan-stop').click();const stopped=await save();assert.equal(stopped.recette.cible,undefined);assert.deepEqual(stopped.recette.malts,after.recette.malts);assert.equal(await plan.isVisible(),false);
+}).catch(e=>{console.error(e);process.exitCode=1});

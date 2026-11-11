@@ -1,0 +1,6 @@
+require('./support.cjs')('10-sels',async({page,to,save,reset,capture,assert})=>{
+ await reset({bac:true});await to('brasserie');await page.locator('#tab-eau').click();
+ const profile=page.locator('[data-ajouter="eau"][aria-pressed="false"]').first(),id=await profile.getAttribute('data-id');await profile.click();assert.equal((await save()).recette.eau,id);
+ const before=await save(),ions=await page.locator('#ions-eau').textContent(),slider=page.locator('[data-sel]').first(),salt=await slider.getAttribute('data-sel');assert.ok((await slider.boundingBox()).height>=44);await slider.focus();for(let i=0;i<5;i++)await slider.press('ArrowRight');const value=Number(await slider.inputValue());assert.equal((await save()).recette.sels[salt],value);assert.ok(value>0);assert.notEqual(await page.locator('#ions-eau').textContent(),ions);
+ await capture('.dose');const after=await save();assert.equal(after.ecus,before.ecus);await page.reload({waitUntil:'domcontentloaded'});await to('brasserie');await page.locator('#tab-eau').click();assert.equal(await page.locator(`[data-sel="${salt}"]`).inputValue(),String(value));assert.equal((await save()).recette.eau,id);
+}).catch(e=>{console.error(e);process.exitCode=1});

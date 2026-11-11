@@ -1,0 +1,6 @@
+require('./support.cjs')('13-reperes',async({page,to,save,capture,assert})=>{
+ await to('brasserie');await page.locator('#btn-viser').click();await page.locator('[data-viser]').first().click();await page.locator('#plan-appliquer').click();const before=await save();
+ await page.locator('#style-ligne').click();assert.equal(await page.locator('#style-ligne').getAttribute('aria-expanded'),'true');assert.equal(await page.locator('#style-ligne').getAttribute('aria-controls'),'style-detail');assert.equal(await page.locator('#style-detail .repere-plage').count(),4);assert.ok((await page.locator('#style-detail .repere-plage').allTextContents()).every(t=>t.includes('Plage du style')));assert.deepEqual((await save()).recette,before.recette);
+ const values=await page.locator('#style-detail .val').allTextContents();await capture('#style-detail');await page.locator('#style-ligne').click();assert.equal(await page.locator('#style-detail').isVisible(),false);await page.locator('#style-ligne').click();assert.deepEqual(await page.locator('#style-detail .val').allTextContents(),values);
+ await page.locator('#tab-cuve').click();await page.locator('[data-malt-plus="0"]').click();assert.notDeepEqual(await page.locator('#style-detail .val').allTextContents(),values);assert.equal((await save()).ecus,before.ecus);
+}).catch(e=>{console.error(e);process.exitCode=1});

@@ -568,11 +568,12 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .charge-v { font-family: var(--f-chiffre); font-size: 34px; line-height: .9; color: var(--calcaire); }
 .charge-v small { font-size: 20px; color: var(--cendre); }
 .charge-l { font-size: 12px; color: var(--cendre); }
-.grist { display: flex; height: 12px; box-shadow: 0 0 0 2px var(--nuit); margin-top: 2px; }
+.grist { display: flex; height: 12px; border-radius:8px; overflow:hidden; background:var(--nuit); margin-top:2px; }
 .grist i { display: block; height: 100%; min-width: 2px; }
-.grist-leg { display: flex; flex-direction: column; font-size: 12px; line-height: 1.3; color: var(--cendre); }
-.grist-leg span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.grist-leg b { color: var(--calcaire); font-family: var(--f-chiffre); font-size: 16px; font-weight: 400; }
+.grist-leg { display:flex; flex-direction:column; gap:10px; padding:10px 0; font-size:15px; line-height:1.5; color:var(--cendre); }
+.grist-leg > span { min-width:0; }
+.grist-nom { min-width:0; overflow-wrap:anywhere; }
+.grist-leg b { color:var(--calcaire); font-family:var(--f-chiffre); font-size:18px; font-weight:600; white-space:nowrap; flex:none; }
 .ligne-recette .nom .part { display: inline-block; min-width: 3.2em; margin-right: 6px; padding: 0 4px; font-family: var(--f-chiffre); font-size: 20px; font-weight: 400; text-align: center; color: var(--nuit); background: var(--teinte, var(--braise)); box-shadow: inset 0 0 0 1px rgba(0,0,0,.3); }
 .ligne-recette .nom small { font-size: 13px; }
 .ligne-recette .qte input { font-size: 26px; }
@@ -587,10 +588,10 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .bandeau-mesures .mesure .v { font-size: clamp(17px, 4.9vw, 24px); overflow: visible; letter-spacing: -.02em; }
 .bandeau-mesures .mesure .l { font-size: 10px; line-height: 1.1; }
 .bandeau-mesures .mesure .pastille { width: 7px; height: 7px; margin-left: 2px; }
-.compo-bouton { display: grid; gap: 3px; width: 100%; padding: 0; border: 0; background: none; text-align: left; color: var(--cendre); font-size: 12px; cursor: pointer; }
+.compo-bouton { display:grid; gap:8px; width:100%; min-height:48px; margin-top:8px; padding:10px; border:1px solid #987149; border-radius:12px; background:#473522; text-align:left; color:var(--calcaire); font-size:16px; cursor:pointer; }
 .compo-lib { color: var(--cendre); }
-.charge .grist-leg span { display: flex; align-items: center; gap: 4px; }
-.charge .grist-leg i { display: inline-block; width: 8px; height: 8px; flex: none; box-shadow: 0 0 0 1px var(--nuit); }
+.charge .grist-leg > span { display:flex; align-items:baseline; gap:8px; }
+.charge .grist-leg i { display:inline-block; width:10px; height:10px; border-radius:3px; flex:none; box-shadow:0 0 0 1px var(--nuit); }
 
 /* Lisibilité des fiches d'ingrédients (V0.4.4) */
 .carte-ing .det, .article .det { font-size: 14px; line-height: 1.4; }
@@ -968,3 +969,172 @@ html,body { margin:0; }
 .lecon-mentor img { width:48px; height:48px; flex:none; border-radius:12px; object-fit:contain; image-rendering:auto; background:#d9c398; }
 .lecon-mentor div { min-width:0; }
 .lecon-mentor .module { margin:0 0 4px; }
+
+/* Fiches techniques : accordéons de lecture, mêmes textes et liens. */
+#fiches-liste .fiche { border:1px solid #84613d; border-radius:14px; overflow:hidden; box-shadow:0 3px 9px #0003; }
+#fiches-liste summary { min-height:48px; align-items:center; font-size:17px; line-height:1.4; }
+#fiches-liste summary::after { font-family:system-ui,sans-serif; font-size:24px; flex:none; color:#edbf78; }
+#fiches-liste .contenu { font-size:16px; line-height:1.65; padding:4px 14px 16px; overflow-wrap:anywhere; }
+#fiches-liste .fiche[open] { border-color:#d6a162; }
+#fiches-liste summary:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }
+
+/* Recherche : saisie nommée et commandes utilisables au pouce. */
+#rech-champ { min-height:48px; font-size:18px; border:1px solid #987149; border-radius:14px; padding:12px; }
+#rech-filtres .filtre[aria-pressed="true"] { background:#eed7a8; color:#302116; box-shadow:inset 0 0 0 2px #bc8954; font-weight:750; }
+#rech-tri { min-height:44px; font-size:16px; padding:8px; border:1px solid #8b6945; }
+#rech-compte { font-size:15px; line-height:1.5; }
+
+/* Résultats : une carte continue et des actions tactiles dans son périmètre. */
+#rech-resultats .resultat { padding:14px; gap:10px; border:1px solid #8b6843; border-radius:16px; background:var(--four); box-shadow:0 3px 10px #0003; }
+#rech-resultats .cat-etq { border-radius:7px; padding:4px 8px; font-size:13px; color:#f0d7ae; }
+#rech-resultats .article { padding:0; box-shadow:none; background:transparent; grid-template-columns:minmax(0,1fr); gap:8px; }
+#rech-resultats .article .nom { font-size:18px; line-height:1.4; overflow-wrap:anywhere; }
+#rech-resultats .article .det { font-size:15px; line-height:1.5; }
+#rech-resultats .article > .btn, #rech-resultats .article > .etq { justify-self:start; }
+#rech-resultats .btn { min-height:48px; padding:10px 14px; font-size:16px; white-space:normal; }
+#rech-resultats .actions-fut .btn { flex:1 1 180px; }
+#rech-resultats .btn:focus-visible { outline:3px solid var(--calcaire); outline-offset:3px; }
+
+/* Options : cartes lisibles et préférences tactiles, sans changer leurs effets. */
+#reglages-contenu .reglages-groupe { gap:14px; }
+#reglages-contenu .reglage { padding:16px; gap:12px; border:1px solid #8b6843; border-radius:16px; box-shadow:0 3px 10px #0003; }
+#reglages-contenu .lib { font-size:18px; line-height:1.4; }
+#reglages-contenu .reglage p { font-size:15px; line-height:1.55; }
+#reglages-contenu .bascule { gap:10px; }
+#reglages-contenu .bascule button { min-height:48px; flex:1 1 90px; padding:10px 14px; border:1px solid #987149; border-radius:12px; box-shadow:none; font-size:16px; }
+#reglages-contenu .bascule button[aria-pressed="true"] { background:#eed7a8; color:#302116; box-shadow:inset 0 0 0 2px #bc8954; }
+#reglages-contenu button:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
+#reglages-contenu .danger { border-color:#bf7864; }
+#reglages-contenu .danger .lib { color:#ffb8a2; }
+
+/* Fournisseurs : garder le catalogue existant, rendre ses achats lisibles. */
+#cat-onglets { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+#cat-onglets .onglet { min-height:60px; padding:10px; border:1px solid #8b6843; border-radius:12px; font-size:16px; }
+#cat-contenu { gap:12px; }
+#cat-contenu .filtre { min-height:44px; padding:10px; border-radius:10px; font-size:15px; }
+#cat-contenu .filtre[aria-pressed="true"] { background:#eed7a8; color:#302116; }
+#cat-recherche { min-height:48px; border:1px solid #987149; border-radius:12px; padding:12px; font-size:18px; }
+#cat-contenu .article { padding:14px; border:1px solid #8b6843; border-radius:14px; box-shadow:none; grid-template-columns:minmax(0,1fr); gap:10px; }
+#cat-contenu .article.possede { border-color:var(--houblon); }
+#cat-contenu .article.hors { opacity:1; background:#30271e; border-style:dashed; }
+#cat-contenu .article .nom { font-size:18px; line-height:1.4; }
+#cat-contenu .article .det { font-size:15px; line-height:1.5; }
+#cat-contenu .article > .btn, #cat-contenu .article > .etq { justify-self:start; }
+#cat-contenu .article .btn { min-height:48px; padding:10px 14px; font-size:16px; white-space:normal; }
+#cat-contenu button:focus-visible, #cat-onglets button:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
+@media(min-width:560px) { #cat-onglets { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+
+/* Ingrédients : libérer la largeur du nom et agrandir les deux gestes d’ajout. */
+#onglet-contenu .carte-ing { grid-template-columns:48px minmax(0,1fr); padding:14px; gap:10px; align-items:start; }
+#onglet-contenu .carte-ing > .btn { grid-column:2; justify-self:start; min-height:48px; padding:10px 14px; white-space:normal; }
+#onglet-contenu .carte-ing .nom { font-size:18px; line-height:1.4; overflow-wrap:anywhere; }
+#onglet-contenu .carte-ing .det { font-size:15px; line-height:1.5; }
+#onglet-contenu .carte-ing.choisie { border-color:var(--houblon); box-shadow:inset 0 0 0 1px var(--houblon); background:#2b301d; }
+#onglet-contenu .poignee { width:48px; height:48px; border-radius:12px; background:#473522; }
+#onglet-contenu .poignee .teinte { left:18px; top:25px; }
+#onglet-contenu #recherche { min-height:48px; padding:12px; border:1px solid #987149; border-radius:12px; font-size:18px; }
+#onglet-contenu .filtre { min-height:44px; padding:10px; border-radius:10px; font-size:15px; }
+#onglet-contenu .btn:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
+
+/* Cuve : la quantité garde toute sa ligne sur un écran de 320 px. */
+#onglet-contenu .ligne-recette { grid-template-columns:minmax(0,1fr); padding:14px; gap:12px; border:1px solid #8b6843; border-radius:14px; box-shadow:none; }
+#onglet-contenu .ligne-recette .nom { font-size:18px; line-height:1.4; overflow-wrap:anywhere; }
+#onglet-contenu .ligne-recette .nom small { font-size:14px; line-height:1.5; margin-top:4px; }
+#onglet-contenu .qte { display:grid; grid-template-columns:48px minmax(0,1fr) auto 48px 48px; gap:6px; }
+#onglet-contenu .qte .btn-carre { min-width:48px; min-height:48px; border-radius:12px; font-family:system-ui,sans-serif; font-size:22px; }
+#onglet-contenu .qte input { width:100%; min-width:0; min-height:48px; border:1px solid #987149; border-radius:10px; box-shadow:none; font-size:22px; padding:6px; }
+#onglet-contenu .temps { gap:8px; }
+#onglet-contenu .temps button { min-height:44px; min-width:58px; padding:10px; border:1px solid #8b6843; border-radius:10px; box-shadow:none; font-size:15px; }
+#onglet-contenu .temps button[aria-pressed="true"] { background:#eed7a8; color:#302116; box-shadow:inset 0 0 0 2px #bc8954; }
+#onglet-contenu .temps button:focus-visible, #onglet-contenu .qte input:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
+
+/* Procédé : mêmes réglages scientifiques, commandes aérées au pouce. */
+#onglet-contenu .reglage { padding:16px; gap:12px; border:1px solid #8b6843; border-radius:16px; box-shadow:0 3px 10px #0003; }
+#onglet-contenu .reglage .lib, #onglet-contenu .reglage > label { font-size:17px; line-height:1.45; flex-wrap:wrap; }
+#onglet-contenu .reglage p { font-size:15px; line-height:1.55; }
+#onglet-contenu .reglage .bascule { gap:10px; }
+#onglet-contenu .reglage .bascule button { min-height:48px; flex:1 1 110px; border:1px solid #987149; border-radius:12px; padding:10px; font-size:16px; box-shadow:none; }
+#onglet-contenu .reglage .bascule button[aria-pressed="true"] { background:#eed7a8; color:#302116; box-shadow:inset 0 0 0 2px #bc8954; }
+#onglet-contenu .reglage input[type="range"] { min-height:44px; }
+#onglet-contenu .reglage .coche { min-height:48px; border-radius:12px; padding:12px; align-items:center; cursor:pointer; }
+#onglet-contenu .reglage .coche span { font-size:16px; line-height:1.5; }
+#onglet-contenu .reglage .coche small { font-size:14px; }
+#onglet-contenu .reglage :is(button,input):focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
+
+/* Eau : dosages et unités lisibles, bilan du moteur inchangé. */
+#onglet-contenu .dose { padding:16px; border:1px solid #8b6843; border-radius:16px; box-shadow:0 3px 10px #0003; gap:12px; grid-template-columns:minmax(0,1fr); }
+#onglet-contenu .dose label { font-size:17px; line-height:1.45; overflow-wrap:anywhere; }
+#onglet-contenu .dose .val { font-size:24px; color:var(--braise); }
+#onglet-contenu .dose p { font-size:15px; line-height:1.55; }
+#onglet-contenu .dose input[type="range"] { min-height:44px; }
+#onglet-contenu .dose input:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
+#ions-eau { padding:14px; border:1px solid #7c8160; border-radius:12px; font-size:15px; line-height:1.65; background:#282d20; color:#e3d9bd; }
+
+/* Choix du style : seule la liste défile, l’annulation reste visible. */
+#style-voile .style-carte { width:min(480px,100%); max-height:85vh; max-height:85dvh; grid-template-rows:auto minmax(0,1fr) auto; border:1px solid #a67a48; border-radius:18px; box-shadow:0 10px 35px #0008; }
+#style-voile h2 { font-size:21px; line-height:1.35; }
+#style-liste { grid-auto-rows:max-content; align-content:start; overflow:auto; overscroll-behavior:contain; padding:4px; gap:10px; }
+#style-liste .groupe-titre { font-size:14px; line-height:1.5; margin-top:12px; }
+#style-liste .choix-style { min-height:72px; padding:14px; gap:6px; border:1px solid #82613e; border-radius:12px; box-shadow:none; font-size:17px; }
+#style-liste .choix-style small { font-size:14px; line-height:1.5; }
+#style-liste .choisi { border-color:var(--houblon); background:#2b301f; }
+#style-liste .choisi::before { content:'Style visé'; color:#c4dc8c; font-size:13px; font-weight:700; }
+#style-liste button:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }
+
+/* Plan de Lise : portrait illustré net, étapes et liens utilisables au pouce. */
+#plan-lise { padding:16px; gap:14px; border:1px solid #8c9557; border-radius:16px; box-shadow:0 4px 12px #0003; }
+#plan-lise .plan-tete { align-items:flex-start; gap:12px; }
+#plan-lise .plan-tete img { image-rendering:auto; width:48px; height:48px; border-radius:12px; object-fit:contain; background:#d9c398; flex:none; }
+#plan-lise .plan-tete div { min-width:0; }
+#plan-lise .plan-tete b { font-size:18px; line-height:1.4; }
+#plan-lise .plan-tete small { font-size:14px; line-height:1.5; }
+#plan-lise .plan-etapes { gap:12px; padding-left:24px; font-size:16px; line-height:1.6; }
+#plan-lise .plan-etapes li { padding:10px; border:1px solid #6f593b; border-radius:12px; background:#241c14; }
+#plan-lise .plan-etapes li::marker { color:var(--braise); font-weight:700; }
+#plan-lise .plan-etapes li.manque { color:#ffc3a0; border-style:dashed; }
+#plan-lise .lien-fiche { min-height:44px; padding:8px; font-size:15px; }
+#plan-lise .actions-fut .btn { min-height:48px; flex:1 1 180px; font-size:16px; }
+#plan-lise .det { font-size:15px; line-height:1.55; }
+
+/* Conformité : valeur et plage chiffrées, repère arrondi et lisible. */
+#style-ligne { min-height:72px; padding:14px; gap:8px; border:1px solid #8b6843; border-radius:14px; box-shadow:none; }
+#style-ligne .nom { font-size:17px; line-height:1.4; }
+#style-ligne .indice { font-size:14px; line-height:1.4; }
+#style-ligne .jauge { height:10px; border-radius:8px; overflow:hidden; box-shadow:none; }
+#style-detail { padding:16px; gap:18px; border:1px solid #8b6843; border-radius:14px; box-shadow:none; }
+#style-detail .repere { grid-template-columns:minmax(0,1fr) auto; font-size:16px; gap:8px; }
+#style-detail .repere .val { grid-column:2; grid-row:1; font-size:23px; }
+#style-detail .repere .barre { grid-column:1/-1; grid-row:2; height:14px; border:1px solid #6e5c40; border-radius:8px; box-shadow:none; }
+#style-detail .repere .plage { background:#8fa958; border-radius:6px; }
+#style-detail .repere .moi { width:4px; border:1px solid #fff0cb; border-radius:3px; }
+#style-detail .repere-plage { grid-column:1/-1; font-size:14px; color:#d7c4a3; }
+#style-detail p { font-size:15px; line-height:1.6; }
+
+/* Premier passage : texte défilant et actions visibles, même en écran court. */
+#tuto-voile .tuto-carte { max-height:85vh; max-height:85dvh; grid-template-rows:auto auto minmax(0,1fr) auto; border:1px solid #a67a48; border-radius:18px; gap:14px; box-shadow:0 10px 35px #0008; }
+#tuto-voile h2 { font-size:22px; line-height:1.35; }
+#tuto-corps { overflow:auto; min-height:0; overscroll-behavior:contain; }
+#tuto-corps p { font-size:17px; line-height:1.6; }
+#tuto-voile .tuto-etape { font-size:14px !important; color:#e5c896; }
+#tuto-voile .tuto-actions { flex-wrap:wrap; gap:12px; }
+#tuto-voile .tuto-actions .btn { min-height:48px; flex:1 1 100px; font-size:16px; }
+
+/* Informations : cible tactile, texte complet et bulle contenue dans le viewport. */
+.info-i { width:44px; height:44px; font-size:19px; border:1px solid #b18a58; box-shadow:none; background:#59412a; color:#f5dfb8; }
+.info-i[aria-expanded="true"] { background:#eed7a8; color:#302116; }
+.bulle { border:1px solid #a67a48; border-radius:14px; padding:14px; font-size:16px; line-height:1.6; box-shadow:0 6px 20px #0006; max-height:calc(100vh - 32px); max-height:calc(100dvh - 32px); overflow:auto; overscroll-behavior:contain; }
+
+/* Navigation : le menu reste parcourable sur les téléphones en paysage. */
+#menu-entete { max-width:calc(100vw - 32px); max-height:calc(100vh - 90px); max-height:calc(100dvh - 90px); overflow-y:auto; overscroll-behavior:contain; border:1px solid #a67a48; border-radius:14px; padding:10px; gap:8px; box-shadow:0 6px 20px #0007; }
+#menu-entete button { min-height:48px; line-height:1.4; border-radius:10px; }
+#menu-entete button:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }
+
+/* Matériel : cartes d’achat et état installé adaptés au téléphone. */
+#bat-equip { display:grid; gap:12px; }
+#bat-equip .article { grid-template-columns:minmax(0,1fr); padding:16px; gap:10px; border:1px solid #8b6843; border-radius:14px; box-shadow:0 3px 10px #0003; }
+#bat-equip .article.possede { border-color:var(--houblon); }
+#bat-equip .article.hors { opacity:1; border-style:dashed; background:#30271e; }
+#bat-equip .nom { font-size:18px; line-height:1.4; }
+#bat-equip .det { font-size:15px; line-height:1.55; }
+#bat-equip .btn { min-height:48px; padding:10px 14px; font-size:16px; justify-self:start; }
+#bat-equip .etq { justify-self:start; border-radius:7px; padding:4px 8px; font-size:14px; }

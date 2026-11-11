@@ -1,5 +1,368 @@
 # Progression Codex
 
+## Intégration demandée dans main — lot jusqu’à la mission 19
+
+Autorisation explicite : « Push en main, puis dis moi ce qu’il reste a faire ? ».
+Branche dédiée : `work/integration-lot50-19`, issue de
+`2913e17a98941d13c2cd9aa32d78a323039e0da5`. Les 19 branches distantes
+`work/lot50-*` sont toutes ancêtres de cette tête. Le main audité est
+`43ab1dfa8de628a19b3e1bf72bfe80a7c5932f6d`. Aucun travail sur main local.
+PR d’intégration : [#78](https://github.com/Maxoum-db/Ignem-custodimus/pull/78).
+L’état effectif de fusion est porté par cette PR GitHub ; aucune
+suppression de branche ni fermeture manuelle des PR empilées n’est prévue.
+
+Périmètre : intégrer les travaux récents des PR #59–#77 et leur journal.
+Les prototypes historiques hors de cette chaîne restent hors périmètre.
+Cette intégration ne réalise pas de nouvelle mission graphique et ne publie
+pas une nouvelle version du site.
+
+Validation locale : build reconstruit sans différence sur les deux HTML livrés,
+six suites Node réussies, ressources validées, `git diff --check` réussi.
+Les cinq moteurs et le dossier data sont inchangés par rapport à main.
+CI complète antérieure : 43076308757 réussie. Contrôle final du code 2913e17 :
+[run 43080317643](https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/43080317643).
+Réussite effective confirmée : build reproductible, six suites Node, mobile,
+huit rendus, suites de fonctionnalités, recette, parcours standard, gestes
+réels, Ulysse expert et débutant. Les seuls ajouts de cette branche sont
+les mises à jour de ce compte rendu : aucun changement du code validé.
+
+Reste à faire, d’après le code réel (liste de priorités, pas 31 missions inventées) :
+
+1. Publier le nouveau main sur le site existant. La dernière publication
+   consignée est la version 12, depuis l’ancien main 43ab1df ; fusion GitHub
+   et publication du site sont deux opérations distinctes.
+2. Prochaine mission de développement : faire correspondre le texte et le nom
+   accessible des boutons de houblon à `doseHop()` ; `jeu/src/jeu.js` affiche
+   encore +250 g pour toutes les tailles de brasserie alors que le calcul
+   adapte déjà la quantité au volume.
+3. Agrandir les contrôles restants : les bascules de `#dist-reglages` utilisent
+   encore les styles génériques, les curseurs génériques mesurent 28 px de haut,
+   et `.mentor-actions .btn` conserve une hauteur minimale de 36 px. Traiter
+   chaque composant dans sa propre mission, en conservant ses interactions.
+4. Auditer puis harmoniser les panneaux encore anciens de dégustation : fiche
+   du jury, médailles et défauts. Les verres illustrés existent déjà : ne pas
+   les refaire. Les petits animaux du domaine restent dessinés par procédures ;
+   des assets cartoon historiques existent et peuvent être évalués pour une
+   mission artistique ultérieure, sans recréation automatique.
+5. Vérifier sur Android physique et Safari/iPhone : non disponibles ici.
+
+Les fiches, la recherche, les options, les fournisseurs, les ingrédients, les
+quantités, le procédé, les sels, les styles, le plan de Lise, les tutoriels,
+les bulles d’aide, le menu, le matériel et la composition sont déjà traités
+dans ce lot. Les bâtiments ont déjà été traités dans 0607f21. Ne pas recommencer.
+Le compteur historique est de 19 missions de lot réalisées, et non de 50 ; les
+missions restantes doivent être définies par audit, sans découpage artificiel.
+
+
+## ÉTAPE — mission 19 : composition des malts lisible au pouce
+
+Statut : terminée sur `work/lot50-19-composition`, sans fusion. Une seule mission
+pour cette exécution ; le lot historique de 50 reste incomplet.
+
+Audit réel : dépôt propre, `origin/main` à `43ab1dfa8de628a19b3e1bf72bfe80a7c5932f6d`,
+PR #76 ouverte, tête distante `b51c7349caa621addb4d508ff638d4d2d1ac0071`.
+La composition repliable existe déjà (32851ee) ; seuls son confort tactile et sa
+lecture restaient à améliorer : noms tronqués et commande sans hauteur minimale.
+
+Critères vérifiés : cible au moins 48 px ; noms longs complets à 320 et 390 px ;
+proportions réelles 75/25 puis 50/50 ; ouverture au toucher, fermeture Entrée et
+réouverture Espace ; focus conservé ; aucune mutation de sauvegarde par le
+repli/dépli ; recette conservée après rechargement.
+
+Fichiers modifiés : `jeu/src/jeu.js` (liaison ARIA, légende, focus),
+`jeu/src/style.css` (cible, retours à la ligne, repères arrondis),
+`jeu/tests/lot50/19-composition.test.cjs`, `dist/index.html`, `dist/artefact.html`,
+les deux captures `docs/captures/lot50/19-composition-{320,390}.png` et ce journal.
+Aucun moteur, donnée scientifique ni format de sauvegarde modifié.
+
+Validation locale : `npm run build:jeu`, `npm run test:jeu` (six suites, dont
+validation des ressources), test Chromium `19-composition.test.cjs` aux deux
+largeurs en DPR 2, et `recette-mobile.cjs` existant réussis. Ce dernier contrôle
+le dessin réactif, le glisser-déposer après défilement, les sept onglets et la
+remise à zéro. Zéro erreur JS et aucun débordement horizontal dans le nouveau
+scénario. `node --check` du jeu et du nouveau test, `git diff --check` réussis.
+Captures réelles 320/390 inspectées. Captures supplémentaires du contrôle recette
+conservées hors dépôt dans `/tmp/ignem-qa-lot50-19-recette`.
+Pas d’Android physique ni de Safari disponibles ; validation GitHub à suivre dans
+la PR. Le site publié reste la version 12 ; cette mission n’est pas déployée.
+
+Reprise du test ciblé : `npm run build:jeu && npm run test:jeu`, puis
+`CHROMIUM_PATH=/usr/bin/chromium node jeu/tests/lot50/19-composition.test.cjs`.
+Le serveur de test requiert ici l’exécution hors bac à sable.
+
+Prochaine mission unique, non commencée : corriger les libellés des doses de
+houblon selon le volume de brasserie (le calcul existant est conservé).
+
+
+## Lot de 50 — point de reprise après la mission 18
+
+Dix-huit missions sauvegardées, PR #59 à #76 empilées et ouvertes. Le lot demandé
+de 50 n’est pas terminé. Aucun travail nouveau fusionné dans main pendant ce lot.
+
+Validation commune confirmée : [run 43076308757](https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/43076308757),
+conclusion **success**, code du commit `71f45ec7f924fe172d819d9293a04274cc869cfb`.
+Build reproductible, six suites Node, mobile, huit rendus, plan du chai,
+suites finitions/pigeonnier/veillée/lot50, entrée Ulysse, portrait de Firmin,
+domaine, carnet, recette mobile, parcours standard, gestes réels, Ulysse expert
+et Ulysse débutant : tous réussis. L’échec initial du run 43074048328 est
+corrigé par la mission 18 (questions homonymes, tests seulement).
+
+Contrôles locaux supplémentaires au même code : mobile et huit rendus réussis ;
+aucun changement des moteurs `moteur.js`, `distillerie.js`, `chai.js`, `ecole.js`,
+`vente.js` ni du dossier data par rapport à main. Les captures de contrôle
+générées hors livraison sont conservées dans `/tmp/ignem-qa-lot50-18-mobile` et
+`/tmp/ignem-qa-lot50-18` ; les preuves livrées sont dans `docs/captures/lot50`.
+Aucun Android physique ni Safari disponible. Le document de ce point de reprise
+est ajouté après la validation : aucune modification du code testé.
+
+`origin/main` vérifié à `43ab1dfa8de628a19b3e1bf72bfe80a7c5932f6d` ; le site
+publié reste la version 12 issue de ce main :
+https://promethee-ignem-custodimus.maximilien92.chatgpt.site
+Les missions 02 à 18 sont sur les branches et PR, pas encore sur le site.
+
+Prochaine mission unique, non commencée : composition des malts lisible au
+pouce, noms complets et proportions réelles conservées. Audit préalable :
+le contrôle actuel mesure une petite cible et tronque les noms par ellipsis.
+Ne pas refaire les bâtiments (déjà intégrés par 0607f21).
+
+Reprise : `git fetch origin`, vérifier main et les PR #59–#76, vérifier que le
+répertoire est propre, partir de `work/lot50-18-validation-quiz` sur une nouvelle
+branche dédiée. Ne pas fusionner sans nouvelle autorisation explicite.
+
+
+## Lot autorisé de 50 — mission 18 : Validation : distinguer les questions homonymes par module
+
+Statut : terminée sur `work/lot50-18-validation-quiz`, sans fusion.
+CI 43074048328 en échec dans le test Veillée 09 : deux cartes Dimensionnement appartiennent aux modules Énergie et Brasserie, avec des réponses distinctes. Le helper de test cherchait seulement le titre. Correction limitée aux tests : résolution par titre et module, cas forcés des deux cartes, vérification des récompenses. Tests Veillée 08 et 09 rejoués avec succès aux deux largeurs ; nouvelle CI complète à confirmer. Aucun code du jeu ni donnée scientifique modifié.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/18-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Confirmer la nouvelle CI complète, puis améliorer la lecture de la composition des malts.
+
+
+## Lot autorisé de 50 — mission 17 : Matériel : achats tactiles et installation vérifiée
+
+Statut : terminée sur `work/lot50-17-materiel`, sans fusion.
+Audit : les bâtiments et leurs travaux sont déjà traités dans 0607f21 ; aucune reprise de ce travail. Cartes du matériel, achats nommés de 48 px et état installé lisible. Installation réelle de la vanne : 60 écus débités, matériel conservé après rechargement, bâtiments et travaux inchangés. Le test tient compte du tableau travaux initialisé lors de la première sauvegarde.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/17-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Diagnostiquer l’échec de validation GitHub de la mission 10 avant de poursuivre la refonte.
+
+
+## Lot autorisé de 50 — mission 16 : Menu : navigation mobile sur écran court
+
+Statut : terminée sur `work/lot50-16-menu`, sans fusion.
+Menu défilant à hauteur contenue, actions de 48 px, ouverture clavier sur la page courante et fermeture Échap avec retour du focus. Hauteur 320 px : dernier lien Options accessible, navigation effective et progression conservée vérifiées.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/16-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Moderniser les cartes de bâtiments et vérifier un lancement de travaux.
+
+
+## Lot autorisé de 50 — mission 15 : Informations : bulles tactiles et accessibles
+
+Statut : terminée sur `work/lot50-15-informations`, sans fusion.
+Boutons de 44 px, état ouvert annoncé, association du texte, fermeture Échap et bulle défilante contenue dans l’écran. Texte intégral réel du pigeonnier, dimensions 320/390 par 568 px, fermeture extérieure et absence de mutation vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/15-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Rendre le menu utilisable sur écran court et restaurer son focus à la fermeture.
+
+
+## Lot autorisé de 50 — mission 14 : Tutoriels : lecture mobile et navigation clavier
+
+Statut : terminée sur `work/lot50-14-tutoriels`, sans fusion.
+Cartes de premier passage à contenu défilant, actions de 48 px et texte lisible. Tutoriel réel du pigeonnier : page suivante, hauteur 568 px, boucle Tab, fermeture Échap et conservation du marqueur vu après rechargement vérifiés. Les premiers essais de test visaient à tort un tutoriel brasserie inexistant puis une recette non encore sérialisée ; scénario corrigé sur les données réelles.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/14-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les bulles d’information au tactile et aux petits écrans.
+
+
+## Lot autorisé de 50 — mission 13 : Conformité : repères lisibles et plages chiffrées
+
+Statut : terminée sur `work/lot50-13-reperes`, sans fusion.
+Valeurs et plages du style lisibles sans interpréter les couleurs, jauges arrondies et accordéon relié à son contenu. Ouverture/fermeture sans mutation et recalcul effectif après ajout de malt vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/13-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Rendre les tutoriels lisibles sur petit écran et contrôler leur fermeture au clavier.
+
+
+## Lot autorisé de 50 — mission 12 : Plan de Lise : portrait net et étapes tactiles
+
+Statut : terminée sur `work/lot50-12-plan-lise`, sans fusion.
+Capture ajustée au bandeau fixe des mesures pour garder le portrait dans le viewport, puis scénario 320/390 rejoué.
+Portrait illustré en rendu lisse, étapes lisibles, liens de fiche de 44 px et actions de 48 px. Application effective du plan à une cuve vide, levure et malts obtenus, cible conservée, aller-retour fiche et abandon de cible sans vider la recette vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/12-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Clarifier les repères de conformité au style et leurs plages chiffrées.
+
+
+## Lot autorisé de 50 — mission 11 : Style visé : sélecteur mobile accessible
+
+Statut : terminée sur `work/lot50-11-styles`, sans fusion.
+Contrôle visuel initial : descriptions débordantes dans la grille ; corrigé par des lignes de hauteur intrinsèque. Contrôle supplémentaire : aucun texte ne dépasse sa carte à 320/390 px.
+Liste interne défilante, annulation toujours visible, choix lisibles et état sélectionné explicite. Focus initial, boucle Tab, Échap, retour du focus, choix du dernier style et sauvegarde de la cible vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/11-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Moderniser le plan de Lise et vérifier son application réelle à la recette.
+
+
+## Lot autorisé de 50 — mission 10 : Eau : dosages lisibles et curseurs tactiles
+
+Statut : terminée sur `work/lot50-10-sels`, sans fusion.
+Cartes de dosage avec unités distinctes, curseurs de 44 px et bilan ionique lisible. Choix réel d’un profil, augmentation d’un sel, actualisation du bilan et conservation après rechargement vérifiés dans une partie de test en bac à sable.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/10-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Rendre le sélecteur de style mobile et sa navigation clavier accessibles.
+
+
+## Lot autorisé de 50 — mission 09 : Procédé : réglages scientifiques tactiles
+
+Statut : terminée sur `work/lot50-09-procede`, sans fusion.
+Cartes lisibles, bascules de 48 px et curseurs de 44 px. Palier, température, rendement, cuisson, repos diacétyle, ébullition 90 min, bascule wash et retour bière vérifiés avec persistance exacte de la recette. Aucun calcul scientifique modifié.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/09-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les dosages de sels et d’acide et vérifier le bilan ionique réel.
+
+
+## Lot autorisé de 50 — mission 08 : Cuve : quantités et temps d’ajout tactiles
+
+Statut : terminée sur `work/lot50-08-quantites`, sans fusion.
+Noms et quantités sur des lignes distinctes, commandes de 48 px, temps de houblonnage de 44 px et libellés de dose réels. Plus/moins, saisie décimale française, grammes, dry hop J2, suppression ciblée et persistance vérifiés sans débit d’écus.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/08-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les réglages du procédé et vérifier les recettes bière et wash.
+
+
+## Lot autorisé de 50 — mission 07 : Brasserie : ingrédients lisibles et poignées tactiles
+
+Statut : terminée sur `work/lot50-07-ingredients`, sans fusion.
+Cartes sur deux colonnes, poignées et actions de 48 px, recherche et choix nommés. Choix réel de levure, ajout par toucher et dépôt par événements tactiles Chromium vérifiés. Le scénario initial alternant CDP et Playwright après dépôt échouait sur la détection du clic suivant ; le scénario final teste la sélection avant le dépôt, sans prétendre couvrir cette alternance. Le test recette-mobile existant passe aussi : sept onglets, ajout, dépôt après défilement et remise à zéro.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/07-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les quantités de la cuve et les moments d’ajout du houblon au tactile.
+
+
+## Lot autorisé de 50 — mission 06 : Fournisseurs : catalogue tactile et achats nommés
+
+Statut : terminée sur `work/lot50-06-fournisseurs`, sans fusion.
+Catégories et filtres lisibles, recherche nommée, cartes et boutons de 48 px, verrouillage explicite. Achat réel contrôlé : débit exact, ingrédient possédé, retrait des achats restants, recherche vide et persistance vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/06-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les cartes d’ingrédients de la brasserie et leurs gestes tactiles.
+
+
+## Lot autorisé de 50 — mission 05 : Options : préférences lisibles et tactiles
+
+Statut : terminée sur `work/lot50-05-options`, sans fusion.
+Captures corrigées : viewport réel plutôt que découpe longue débordant du conteneur défilant ; missions 04 et 05 rejouées à 320/390 px.
+Cartes et bascules de 48 px, sélection explicite. Sons, gestes expert, bac à sable, aller-retour débutant/expert, persistance après rechargement et annulation sans effacement vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/05-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Moderniser le catalogue des fournisseurs et contrôler un achat réel.
+
+
+## Lot autorisé de 50 — mission 04 : Recherche : cartes et ajout à la cuve adaptés au tactile
+
+Statut : terminée sur `work/lot50-04-resultats`, sans fusion.
+Cartes continues, texte lisible, boutons de 48 px. Ajout réel de malt, absence de débit et persistance exacte de la recette après rechargement vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/04-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les préférences de jeu au tactile et vérifier leur persistance.
+
+
+## Lot autorisé de 50 — mission 03 : Recherche : commandes accessibles et résultats annoncés
+
+Statut : terminée sur `work/lot50-03-recherche`, sans fusion.
+Champ nommé, saisie et tri tactiles, filtre actif explicite et compteur annoncé. Recherche de pilsner, tri, catégorie réelle et état sans résultat vérifiés ; aucun état école modifié.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/03-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Rendre les cartes de résultats et leurs actions utilisables au pouce.
+
+
+## Lot autorisé de 50 — mission 02 : Fiches : accordéons lisibles et retour aux leçons
+
+Statut : terminée sur `work/lot50-02-fiches`, sans fusion.
+Accordéons cohérents avec les cartes de leçons, cibles 48 px et théorie lisible. Ouverture/fermeture conserve exactement le texte ; lien depuis une leçon et retour réel à la veillée sans mutation vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/02-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Rendre les commandes de recherche accessibles au pouce.
+
+
+## Lot autorisé de 50 — mission 01 : publier le main validé
+
+2026-11-11 — reprise après interruption. La branche `work/lot50-01-publication`
+était propre et sans commit supplémentaire ; aucune version 12 ni archive locale
+n’existait. État GitHub vérifié par fetch : main `43ab1dfa8de628a19b3e1bf72bfe80a7c5932f6d`.
+Aucun ancien travail graphique recommencé et aucune PR intermédiaire clôturée.
+
+Publication terminée via le skill Sites : version **12**, source Sites
+`9dc6b243987ae16e53cbc3062af9561aa7549925`, déploiement
+`appgdep_6af4a86d84a881919fd170c092d54288`, état confirmé `succeeded`.
+Adresse et droits `custom` conservés :
+https://promethee-ignem-custodimus.maximilien92.chatgpt.site
+
+Build et six suites Node réussis après reprise. Jeu publié et dist/index.html
+identiques par SHA-256 :
+`6cd7ed5b361c6dd9f1048ff0323ae2b4d440a3720b2a5a9d308ae046cb06665a`.
+Archive de sortie avec manifeste existant et dist ; aucun code du jeu ni format
+ignem.v1 changé. Les captures réelles et CI complète du code sont déjà conservées
+dans main ; cette mission modifie uniquement la publication et le présent journal.
+Identifiant temporaire renouvelé après reprise, transmis uniquement sur stdin au
+script de synchronisation Git, puis sauvegarde et déploiement natifs Sites.
+
+Prochaine mission : harmoniser les accordéons des fiches techniques, sans changer
+les explications scientifiques ni leurs liens depuis les leçons.
+
+
 ## Intégration générale demandée — 2026-11-10
 
 Demande : « Push en main tout tes travaux, dis moi si tout est à jours sur github

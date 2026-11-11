@@ -235,7 +235,21 @@
     rb.disabled = nom === 'domaine' && !pile.length; delete rb.dataset.confirme; $('.retour-txt', rb).textContent = '';
   }
   // Menu de l'en-tête : un seul bouton, la liste se déroule
-  function basculerMenu(ouvrir) { const m = $('#menu-entete'), o = ouvrir != null ? ouvrir : m.hidden; m.hidden = !o; $('#btn-menu').setAttribute('aria-expanded', o); }
+  function basculerMenu(ouvrir, retourFocus = false) {
+    const m = $('#menu-entete'), o = ouvrir != null ? ouvrir : m.hidden;
+    m.hidden = !o; $('#btn-menu').setAttribute('aria-expanded', o);
+    if (o) (m.querySelector('[aria-current="page"]') || m.querySelector('button')).focus();
+    else if (retourFocus) $('#btn-menu').focus();
+  }
+  $('#btn-menu').addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); basculerMenu(true); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !$('#menu-entete').hidden) { e.preventDefault(); basculerMenu(false, true); }
+  });
+  $('#menu-entete').addEventListener('focusout', (e) => {
+    if (e.relatedTarget && !$('#menu-entete').contains(e.relatedTarget) && e.relatedTarget !== $('#btn-menu')) basculerMenu(false);
+  });
   document.addEventListener('click', (e) => {
     if (e.target.closest('#btn-menu')) { son('clic'); basculerMenu(); return; }
     if (!e.target.closest('#menu-entete')) basculerMenu(false);
@@ -265,12 +279,14 @@
   // =====================================================================
   // Bulles d'information « i »
   // =====================================================================
-  const iBtn = (txt) => `<button class="info-i" type="button" data-info="${esc(txt)}" aria-label="Plus d'informations">i</button>`;
+  const iBtn = (txt) => `<button class="info-i" type="button" data-info="${esc(txt)}" aria-label="Plus d'informations" aria-controls="bulle" aria-expanded="false">i</button>`;
   let bulleDe = null;
   function montrerBulle(btn) {
     const b = $('#bulle');
     if (bulleDe === btn && !b.hidden) { cacherBulle(); return; }
+    cacherBulle();
     b.textContent = btn.dataset.info; b.hidden = false; bulleDe = btn;
+    btn.setAttribute('aria-expanded', 'true'); btn.setAttribute('aria-describedby', 'bulle');
     const r = btn.getBoundingClientRect(), W = Math.min(320, innerWidth - 24);
     b.style.width = W + 'px';
     b.style.left = borne(r.left + r.width / 2 - W / 2, 12, innerWidth - W - 12) + 'px';
@@ -279,7 +295,13 @@
     b.style.setProperty('--fleche', borne(r.left + r.width / 2 - parseFloat(b.style.left), 14, W - 14) + 'px');
     b.classList.toggle('dessus', r.bottom + 8 + h >= innerHeight - 8);
   }
-  function cacherBulle() { $('#bulle').hidden = true; bulleDe = null; }
+  function cacherBulle() {
+    $('#bulle').hidden = true;
+    if (bulleDe) { bulleDe.setAttribute('aria-expanded', 'false'); bulleDe.removeAttribute('aria-describedby'); }
+    bulleDe = null;
+  }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && bulleDe) { e.preventDefault(); cacherBulle(); } });
+  window.addEventListener('resize', cacherBulle);
   document.addEventListener('click', (e) => { const i = e.target.closest('[data-info]'); if (i) { e.stopPropagation(); montrerBulle(i); return; } if (!e.target.closest('#bulle')) cacherBulle(); }, true);
   document.getElementById('scene').addEventListener('scroll', cacherBulle, { passive: true });
   // Les paragraphes d'introduction des écrans passent dans une bulle « i » à côté du titre
@@ -351,10 +373,11 @@
     ],
     recherche: [['Chercher partout', 'Tape un nom, un arôme, un style (« agrumes », « IPA », « 1150 »), ou touche une suggestion. Filtre par famille, trie, et ajoute directement à la cuve.']],
   };
-  let tutoEnCours = null;
+  let tutoEnCours = null, retourTuto = null;
   function tutoEcran(nom) {
     if (!S.vus) S.vus = {};
     if (!TUTOS_ECRAN[nom] || S.vus[nom]) return;
+    retourTuto = document.activeElement;
     tutoEnCours = { nom, i: 0 }; afficherTutoEcran();
   }
   function afficherTutoEcran() {
@@ -365,7 +388,19 @@
     $('#tuto-suivant').textContent = i < pages.length - 1 ? 'Suivant' : 'C\'est parti';
     $('#tuto-voile').hidden = false; $('#tuto-suivant').focus();
   }
-  function fermerTutoEcran() { if (tutoEnCours) { S.vus[tutoEnCours.nom] = true; sauver(); } tutoEnCours = null; $('#tuto-voile').hidden = true; }
+  function fermerTutoEcran() {
+    if (tutoEnCours) { S.vus[tutoEnCours.nom] = true; sauver(); }
+    tutoEnCours = null; $('#tuto-voile').hidden = true;
+    const retour = retourTuto?.isConnected && retourTuto.getClientRects().length && retourTuto.matches('button,a,input,select,textarea,[tabindex]') ? retourTuto : $('#btn-menu');
+    retour.focus({ preventScroll: true });
+  }
+  $('#tuto-voile').addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); fermerTutoEcran(); return; }
+    if (e.key !== 'Tab') return;
+    const premier = $('#tuto-passer'), dernier = $('#tuto-suivant');
+    if (e.shiftKey && document.activeElement === premier) { e.preventDefault(); dernier.focus(); }
+    else if (!e.shiftKey && document.activeElement === dernier) { e.preventDefault(); premier.focus(); }
+  });
   $('#tuto-suivant').onclick = () => { son('clic'); if (tutoEnCours.i < TUTOS_ECRAN[tutoEnCours.nom].length - 1) { tutoEnCours.i++; afficherTutoEcran(); } else fermerTutoEcran(); };
   $('#tuto-passer').onclick = () => { son('clic'); fermerTutoEcran(); };
 
@@ -751,7 +786,7 @@
     }).join('');
     $('#bat-equip').innerHTML = Object.entries(EQUIPEMENTS).map(([k, e]) => {
       const a = equipe(k), dispoBat = niv(e.bat) >= 1;
-      return `<div class="article ${a ? 'possede' : ''} ${!dispoBat ? 'hors' : ''}"><span class="nom">${esc(e.nom)}</span>${a ? '<span class="etq ok">Installé</span>' : !dispoBat ? `<span class="etq ko">${esc(BATIMENTS[e.bat].nom)} requis</span>` : `<button class="btn" data-equiper="${k}" ${S.ecus < e.prix ? 'disabled' : ''}>${e.prix} écus</button>`}<span class="det">${esc(e.desc)}</span></div>`;
+      return `<div class="article ${a ? 'possede' : ''} ${!dispoBat ? 'hors' : ''}"><span class="nom">${esc(e.nom)}</span>${a ? '<span class="etq ok">Installé</span>' : !dispoBat ? `<span class="etq ko">${esc(BATIMENTS[e.bat].nom)} requis</span>` : `<button class="btn" data-equiper="${k}" aria-label="Installer ${esc(e.nom)} pour ${e.prix} écus" ${S.ecus < e.prix ? 'disabled' : ''}>${e.prix} écus</button>`}<span class="det">${esc(e.desc)}</span></div>`;
     }).join('');
   }
   $('#ecran-batiments').addEventListener('click', (e) => {
@@ -852,7 +887,7 @@
     return `<p class="verrou">${bloques.length} ${quoi} à débloquer, dont ${dispoAchat} déjà en vente au pigeonnier. Tu as ${S.ecus} écus. <button class="btn btn-mini" data-catalogue="${cat}">Ouvrir le catalogue</button></p>`;
   }
   const filtreTexte = (n) => !recherche || n.toLowerCase().includes(recherche.toLowerCase());
-  const champRecherche = (ph) => `<input class="recherche" id="recherche" type="search" placeholder="${ph}" value="${esc(recherche)}" autocomplete="off">`;
+  const champRecherche = (ph) => `<input class="recherche" id="recherche" type="search" aria-label="${ph}" placeholder="${ph}" value="${esc(recherche)}" autocomplete="off">`;
 
   function rendreOnglet() {
     const z = $('#onglet-contenu');
@@ -887,7 +922,7 @@
               <div class="det"><b>${y.att[0]}–${y.att[1]} %</b> d'atténuation · <b>${y.t[0]}–${y.t[1]} °C</b> · tolère ${y.tol} %</div>
               <div class="det">${esc(y.desc || '')}</div>
               <div class="etiquettes"><span class="etq">${{ ale: 'Ale', lager: 'Lager', specialty: 'Spéciale', distilling: 'Distillerie' }[y.fam]}</span>${y.phenol ? '<span class="etq phen">Phénols</span>' : ''}${y.ester === 2 ? '<span class="etq est">Esters marqués</span>' : y.ester === 0 ? '<span class="etq">Neutre</span>' : ''}${y.sauvage ? '<span class="etq sauv">Sauvage</span>' : ''}</div></div>
-            <button class="btn btn-mini" data-ajouter="levure" data-id="${esc(y.id)}" aria-pressed="${R.levure === y.id}">${R.levure === y.id ? 'Choisie' : 'Choisir'}</button></div>`).join('')}</div>
+            <button class="btn btn-mini" data-ajouter="levure" data-id="${esc(y.id)}" aria-label="Choisir ${esc(y.nom)}" aria-pressed="${R.levure === y.id}">${R.levure === y.id ? 'Choisie' : 'Choisir'}</button></div>`).join('')}</div>
         ${verrouLigne(visibles, 'levures', 'levures')}`;
     } else if (onglet === 'eau') {
       z.innerHTML = D.eaux.map((e) => {
@@ -897,7 +932,7 @@
             <div class="det">Ca ${e.ca} · Mg ${e.mg} · SO₄ ${e.so4} · Cl ${e.cl} · HCO₃ ${e.hco3} mg/L</div>
             <div class="det">Alcalinité résiduelle <b>${Math.round(ra)} ppm CaCO₃</b> · SO₄/Cl ${e.cl ? nf(e.so4 / e.cl) : '—'}</div>
             <div class="det">${esc(e.note)}</div></div>
-          <button class="btn btn-mini" data-ajouter="eau" data-id="${e.id}" aria-pressed="${R.eau === e.id}">${R.eau === e.id ? 'Choisie' : 'Choisir'}</button></div>`;
+          <button class="btn btn-mini" data-ajouter="eau" data-id="${e.id}" aria-label="Choisir ${esc(e.nom)}" aria-pressed="${R.eau === e.id}">${R.eau === e.id ? 'Choisie' : 'Choisir'}</button></div>`;
       }).join('') + rendreSels() + `<p class="page-intro">Le calcaire du causse remonte le pH : parfait pour les bières foncées, à corriger au malt acide, aux sels ou à l'acide lactique pour les pâles. <button class="btn btn-mini btn-sobre" data-fiche="eau">Fiche eau</button></p>`;
     } else if (onglet === 'aromates') {
       const TYPES = { fruit: 'Fruits', epice: 'Épices et zestes', botanique: 'Botaniques', bois: 'Bois' };
@@ -959,12 +994,12 @@
     if (!kg) { z.innerHTML = '<span class="charge-v">0 <small>kg</small></span><span class="charge-l">de grain dans la cuve</span>'; return; }
     const tri = R.malts.map((l) => ({ m: IDX.malt.get(l.id), kg: l.kg })).sort((a, b) => b.kg - a.kg);
     z.innerHTML = `<span class="charge-v">${nf(kg, 0)} <small>kg</small></span><span class="charge-l">de grain · ${nf((kg / R.volume) * 100, 1)} kg/hL</span>
-      <button class="compo-bouton" id="compo-bouton" aria-expanded="${compoOuverte}">
+      <button class="compo-bouton" id="compo-bouton" aria-expanded="${compoOuverte}" aria-controls="charge-composition">
         <span class="grist">${tri.map((x) => `<i style="width:${(x.kg / kg) * 100}%;background:${couleur(Math.max(4, x.m.ebc))}"></i>`).join('')}</span>
         <span class="compo-lib">${compoOuverte ? '▾' : '▸'} Composition · ${tri.length} malt${tri.length > 1 ? 's' : ''}</span></button>
-      ${compoOuverte ? `<span class="grist-leg">${tri.map((x) => `<span><i style="background:${couleur(Math.max(4, x.m.ebc))}"></i><b>${Math.round((x.kg / kg) * 100)} %</b> ${esc(x.m.nom)}</span>`).join('')}</span>` : ''}`;
+      <span class="grist-leg" id="charge-composition" ${compoOuverte ? '' : 'hidden'}>${tri.map((x) => `<span><i aria-hidden="true" style="background:${couleur(Math.max(4, x.m.ebc))}"></i><b>${Math.round((x.kg / kg) * 100)} %</b><span class="grist-nom">${esc(x.m.nom)}</span></span>`).join('')}</span>`;
   }
-  document.addEventListener('click', (e) => { if (e.target.closest('#compo-bouton')) { compoOuverte = !compoOuverte; son('clic'); rendreCharge(); } });
+  document.addEventListener('click', (e) => { if (e.target.closest('#compo-bouton')) { compoOuverte = !compoOuverte; son('clic'); rendreCharge(); $('#compo-bouton').focus({ preventScroll: true }); } });
   const libMin = (m) => (m === -2 ? 'DH J2' : m === -1 ? 'DH J5' : m + ' min');
   function rendreCuveListe(z) {
     const r = dernierCalc;
@@ -972,13 +1007,13 @@
     const kgTot = R.malts.reduce((s, x) => s + x.kg, 0) || 1;
     let h = '<p class="groupe-titre">MALTS ET SUCRES</p>';
     h += R.malts.map((l, i) => { const m = IDX.malt.get(l.id); return `<div class="ligne-recette"><div class="nom"><span class="part" style="--teinte:${couleur(Math.max(4, m.ebc))};color:${m.ebc > 45 ? 'var(--calcaire)' : 'var(--nuit)'}">${Math.round((l.kg / kgTot) * 100)} %</span>${esc(m.nom)}<small>${nf(m.ebc, 0)} EBC · ${FAMILLES[m.fam]}</small></div>
-      <div class="qte"><button class="btn btn-carre" data-malt-moins="${i}" aria-label="Retirer 5 kg">−</button><input id="kg-${i}" inputmode="decimal" data-malt-kg="${i}" value="${l.kg}" aria-label="Kilogrammes de ${esc(m.nom)}"><span class="u">kg</span><button class="btn btn-carre" data-malt-plus="${i}" aria-label="Ajouter 5 kg">+</button><button class="btn btn-carre btn-sobre" data-malt-suppr="${i}" aria-label="Enlever ${esc(m.nom)}">×</button></div></div>`; }).join('') || '<p class="vide">Aucun malt.</p>';
+      <div class="qte"><button class="btn btn-carre" data-malt-moins="${i}" aria-label="Retirer ${nf(pasMalt())} kg de ${esc(m.nom)}">−</button><input id="kg-${i}" inputmode="decimal" data-malt-kg="${i}" value="${l.kg}" aria-label="Kilogrammes de ${esc(m.nom)}"><span class="u">kg</span><button class="btn btn-carre" data-malt-plus="${i}" aria-label="Ajouter ${nf(pasMalt())} kg de ${esc(m.nom)}">+</button><button class="btn btn-carre btn-sobre" data-malt-suppr="${i}" aria-label="Enlever ${esc(m.nom)}">×</button></div></div>`; }).join('') || '<p class="vide">Aucun malt.</p>';
     const dh = r && r.dh;
     h += `<p class="groupe-titre">HOUBLONS${dh && dh.total > 0 ? ` <span class="dh-bilan ${dh.total > 18 ? 'alerte' : ''}">à cru ${nf(dh.total, 1)} g/L${dh.ddh ? ' · DDH' : ''}</span> ${iBtn("DH J2 : en pleine fermentation, la levure biotransforme les terpènes (géraniol → citronellol) et libère des thiols : fruité tropical. DH J5 : arôme frais intact. Le total à cru relance un peu la fermentation (hop creep) ; au-delà de 18 g/L, la bière devient végétale. Fiche Dry hop.")}` : ''}</p>`;
     h += R.houblons.map((l, i) => {
       const hb = IDX.houblon.get(l.id), ibu = r && r.detailHoublons[i] ? r.detailHoublons[i].ibu : 0;
       return `<div class="ligne-recette"><div class="nom">${esc(hb.nom)}<small>α ${nf(hb.alpha)} % · ${l.min === -2 ? `dry hop jour 2 · ${nf(l.g / R.volume, 1)} g/L · biotransformation` : l.min === -1 ? `dry hop jour 5 · ${nf(l.g / R.volume, 1)} g/L` : `${nf(ibu, 0)} IBU`}</small></div>
-      <div class="qte"><button class="btn btn-carre" data-hop-moins="${i}" aria-label="Retirer 100 g">−</button><input id="g-${i}" inputmode="numeric" data-hop-g="${i}" value="${l.g}" aria-label="Grammes de ${esc(hb.nom)}"><span class="u">g</span><button class="btn btn-carre" data-hop-plus="${i}" aria-label="Ajouter 100 g">+</button><button class="btn btn-carre btn-sobre" data-hop-suppr="${i}" aria-label="Enlever ${esc(hb.nom)}">×</button></div>
+      <div class="qte"><button class="btn btn-carre" data-hop-moins="${i}" aria-label="Retirer ${pasHop()} g de ${esc(hb.nom)}">−</button><input id="g-${i}" inputmode="numeric" data-hop-g="${i}" value="${l.g}" aria-label="Grammes de ${esc(hb.nom)}"><span class="u">g</span><button class="btn btn-carre" data-hop-plus="${i}" aria-label="Ajouter ${pasHop()} g de ${esc(hb.nom)}">+</button><button class="btn btn-carre btn-sobre" data-hop-suppr="${i}" aria-label="Enlever ${esc(hb.nom)}">×</button></div>
       <div class="temps">${[60, 30, 15, 10, 5, 0, -2, -1].map((m) => `<button data-hop-min="${i}:${m}" aria-pressed="${l.min === m}" class="${m < 0 ? 'dh' : ''}">${m < 0 ? libMin(m) : m + ' min'}</button>`).join('')}</div></div>`;
     }).join('') || '<p class="vide">Aucun houblon.</p>';
     if (R.aromates.length) {
@@ -1230,17 +1265,32 @@
     dernierPlan = plan;
   }
   let dernierPlan = null, minuteurPlan = null;
+  let retourChoixStyle = null;
+  function fermerChoixStyle() {
+    $('#style-voile').hidden = true;
+    const retour = retourChoixStyle?.isConnected ? retourChoixStyle : $('#btn-viser');
+    retour?.focus({ preventScroll: true });
+  }
   function ouvrirChoixStyle() {
+    retourChoixStyle = document.activeElement;
     const groupes = {};
     D.styles.forEach((s) => { (groupes[s.sujet] = groupes[s.sujet] || []).push(s); });
     const LIB = { pilsener: 'Pils et lagers blondes', bock: 'Bocks', marzen: 'Märzen', vienna: 'Vienna', common: 'California common', wheat: 'Blanches et blés', pale_ale: 'Pale ales', ipa: 'IPA', amber: 'Ambrées', brown: 'Brunes', bitter: 'Bitters', porter: 'Porters', stout: 'Stouts', strong: 'Bières fortes', farmhouse: 'Saisons', specialty: 'Spéciales' };
-    $('#style-liste').innerHTML = Object.entries(groupes).map(([k, l]) => `<p class="groupe-titre">${esc(LIB[k] || k)}</p>${l.map((s) => `<button class="choix-style ${R.cible === s.id ? 'choisi' : ''}" data-viser="${s.id}"><b>${esc(s.nom)}</b><small>${sg(s.og[0])}–${sg(s.og[1])} · ${Math.round(s.ibu[0])}–${Math.round(s.ibu[1])} IBU · ${Math.round(s.ebc[0])}–${Math.round(s.ebc[1])} EBC</small><small>${esc((s.desc || '').slice(0, 110))}</small></button>`).join('')}`).join('');
+    $('#style-liste').innerHTML = Object.entries(groupes).map(([k, l]) => `<p class="groupe-titre">${esc(LIB[k] || k)}</p>${l.map((s) => `<button class="choix-style ${R.cible === s.id ? 'choisi' : ''}" data-viser="${s.id}" aria-pressed="${R.cible === s.id}"><b>${esc(s.nom)}</b><small>${sg(s.og[0])}–${sg(s.og[1])} · ${Math.round(s.ibu[0])}–${Math.round(s.ibu[1])} IBU · ${Math.round(s.ebc[0])}–${Math.round(s.ebc[1])} EBC</small><small>${esc((s.desc || '').slice(0, 110))}</small></button>`).join('')}`).join('');
     $('#style-voile').hidden = false;
+    ($('#style-liste .choisi') || $('#style-liste button')).focus();
   }
   $('#style-voile').addEventListener('click', (e) => {
     const b = e.target.closest('[data-viser]');
-    if (b) { R.cible = b.dataset.viser; $('#style-voile').hidden = true; son('ok'); maj(); setTimeout(() => $('#plan-lise').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'nearest' }), 50); return; }
-    if (e.target.id === 'style-fermer' || e.target === $('#style-voile')) $('#style-voile').hidden = true;
+    if (b) { R.cible = b.dataset.viser; son('ok'); maj(); fermerChoixStyle(); setTimeout(() => $('#plan-lise').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'nearest' }), 50); return; }
+    if (e.target.id === 'style-fermer' || e.target === $('#style-voile')) fermerChoixStyle();
+  });
+  $('#style-voile').addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); fermerChoixStyle(); return; }
+    if (e.key !== 'Tab') return;
+    const boutons = $$('#style-voile button'), premier = boutons[0], dernier = boutons[boutons.length - 1];
+    if (e.shiftKey && document.activeElement === premier) { e.preventDefault(); dernier.focus(); }
+    else if (!e.shiftKey && document.activeElement === dernier) { e.preventDefault(); premier.focus(); }
   });
   document.addEventListener('click', (e) => {
     if (e.target.closest('#btn-viser') || e.target.closest('#plan-changer')) { son('clic'); ouvrirChoixStyle(); return; }
@@ -1259,7 +1309,8 @@
     const s = vise || r.style.style;
     const ligne = (lib, val, plage, txt, min, max) => {
       const pos = (v) => borne(((v - min) / (max - min)) * 100, 0, 100);
-      return `<div class="repere"><span>${lib}</span><span class="barre"><i class="plage" style="left:${pos(plage[0])}%;width:${pos(plage[1]) - pos(plage[0])}%"></i><i class="moi" style="left:${pos(val)}%"></i></span><span class="val">${txt}</span></div>`;
+      const fmt = lib === 'Densité' || lib === 'Finale' ? sg : (v) => nf(v, 0);
+      return `<div class="repere"><span>${lib}</span><span class="barre" aria-hidden="true"><i class="plage" style="left:${pos(plage[0])}%;width:${pos(plage[1]) - pos(plage[0])}%"></i><i class="moi" style="left:${pos(val)}%"></i></span><span class="val">${txt}</span><small class="repere-plage">Plage du style : ${fmt(plage[0])}–${fmt(plage[1])}</small></div>`;
     };
     const span = (p, f) => [p[0] - (p[1] - p[0]) * f, p[1] + (p[1] - p[0]) * f];
     const [o1, o2] = span(s.og, 1.2), [f1, f2] = span(s.fg, 1.2), [i1, i2] = span(s.ibu, 1), [e1, e2] = span(s.ebc, 1);
@@ -3178,7 +3229,7 @@
     const total = liste.length;
     liste = liste.slice(0, 60);
     $('#cat-contenu').innerHTML = `<div class="filtres">${filtres.map(([k, v]) => `<button class="filtre" data-catfiltre="${k}" aria-pressed="${catFiltre === k}">${v}</button>`).join('')}</div>
-      <input class="recherche" id="cat-recherche" type="search" placeholder="Chercher" value="${esc(catRecherche)}" autocomplete="off">
+      <input class="recherche" id="cat-recherche" type="search" aria-label="Chercher dans les fournisseurs" placeholder="Chercher" value="${esc(catRecherche)}" autocomplete="off">
       ${liste.map((x) => carteArticle(x, catOnglet)).join('') || `<p class="vide">${catFiltre === 'achat' ? 'Tout est déjà à toi dans cette catégorie.' : 'Rien ici pour l\'instant.'}</p>`}
       ${total > 60 ? `<p class="page-intro">${total - 60} autres : affine la recherche.</p>` : ''}`;
     rendreDecouvertes();
@@ -3186,7 +3237,7 @@
   function carteArticle(x, cat) {
     if (cat === 'futs') {
       const prix = prixFut(x.type, x.taille), ok = achetable(x), n = nbFuts(x);
-      const action = ok ? `<button class="btn" data-acheter="futs:${esc(x.id)}" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>` : `<span class="etq ko">${PALIERS[Math.max(0, x.palier - 1)].pts} pts requis</span>`;
+      const action = ok ? `<button class="btn" data-acheter="futs:${esc(x.id)}" aria-label="Acheter ${esc(x.nom)} pour ${prix} écus" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>` : `<span class="etq ko">${PALIERS[Math.max(0, x.palier - 1)].pts} pts requis</span>`;
       return `<div class="article ${n ? 'possede' : ''} ${!ok ? 'hors' : ''}"><span class="nom"><span class="fut-mini fut-${x.type}"></span>${esc(x.nom)} <span class="rarete">${etoilesRarete(x.palier)}</span></span>${action}
         <span class="det">${CATEGORIES.futs.det(x)}${n ? ` · <b>${n} au chai</b>` : ''}</span></div>`;
     }
@@ -3196,7 +3247,7 @@
     let action;
     if (possede) action = recette ? `<button class="btn btn-feu" data-brasser="${esc(x.id)}">Brasser</button>` : '<span class="etq ok">Possédé</span>';
     else if (!ok) action = `<span class="etq ko">${PALIERS[Math.max(0, (x.palier || 1) - 1)].pts} pts requis</span>`;
-    else action = `<button class="btn" data-acheter="${cat}:${esc(x.id)}" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>`;
+    else action = `<button class="btn" data-acheter="${cat}:${esc(x.id)}" aria-label="Acheter ${esc(x.nom)} pour ${prix} écus" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>`;
     let extra = '';
     if (recette) {
       const manque = manquantsRecette(x);

@@ -8,7 +8,7 @@
     <button class="marque" data-aller="domaine" aria-label="Retour au domaine"><img id="marque-feu" class="sprite" alt="" width="16" height="20"></button>
     <div class="entete-niveau" id="entete-niveau"></div>
     <button data-aller="recherche" class="btn-entete btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/></svg></button>
-    <button class="btn-entete" id="btn-menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <button class="btn-entete" id="btn-menu" aria-controls="menu-entete" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     <nav class="entete-nav" id="menu-entete" aria-label="Menu" hidden>
       <button data-aller="domaine">Domaine</button>
       <button data-aller="carnet">Carnet de brassage</button>
@@ -41,7 +41,7 @@
         <div class="charge" id="charge"></div>
       </div>
       <div class="bandeau-mesures"><div class="mesures" id="mesures"></div></div>
-      <button class="style-ligne" id="style-ligne" aria-expanded="false"></button>
+      <button class="style-ligne" id="style-ligne" aria-expanded="false" aria-controls="style-detail"></button>
       <div class="style-detail" id="style-detail" hidden></div>
       <button class="btn btn-mini btn-sobre" id="btn-viser">◎ Viser un style : Lise t'aide</button>
       <div class="plan-lise" id="plan-lise" hidden></div>
@@ -251,10 +251,10 @@
     <!-- Recherche d'ingrédients -->
     <section id="ecran-recherche" class="ecran" hidden>
       <h1 class="page-titre">Recherche <span class="en">ingrédients, fûts, recettes, fiches</span></h1>
-      <input class="recherche recherche-grande" id="rech-champ" type="search" placeholder="citra, agrumes, 1150 EBC, lager…" autocomplete="off" enterkeyhint="search">
+      <input class="recherche recherche-grande" id="rech-champ" type="search" aria-label="Rechercher un ingrédient, une recette ou une fiche" placeholder="citra, agrumes, 1150 EBC, lager…" autocomplete="off" enterkeyhint="search">
       <div class="suggestions" id="rech-suggestions"></div>
       <div id="rech-filtres"></div>
-      <p class="page-intro" id="rech-compte"></p>
+      <p class="page-intro" id="rech-compte" role="status" aria-live="polite"></p>
       <div id="rech-resultats"></div>
     </section>
 
