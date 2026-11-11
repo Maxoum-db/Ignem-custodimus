@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 17 : Matériel : achats tactiles et installation vérifiée
+
+Statut : terminée sur `work/lot50-17-materiel`, sans fusion.
+Audit : les bâtiments et leurs travaux sont déjà traités dans 0607f21 ; aucune reprise de ce travail. Cartes du matériel, achats nommés de 48 px et état installé lisible. Installation réelle de la vanne : 60 écus débités, matériel conservé après rechargement, bâtiments et travaux inchangés. Le test tient compte du tableau travaux initialisé lors de la première sauvegarde.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/17-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Diagnostiquer l’échec de validation GitHub de la mission 10 avant de poursuivre la refonte.
+
+
 ## Lot autorisé de 50 — mission 16 : Menu : navigation mobile sur écran court
 
 Statut : terminée sur `work/lot50-16-menu`, sans fusion.
