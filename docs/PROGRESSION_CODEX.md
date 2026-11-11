@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 08 : Cuve : quantités et temps d’ajout tactiles
+
+Statut : terminée sur `work/lot50-08-quantites`, sans fusion.
+Noms et quantités sur des lignes distinctes, commandes de 48 px, temps de houblonnage de 44 px et libellés de dose réels. Plus/moins, saisie décimale française, grammes, dry hop J2, suppression ciblée et persistance vérifiés sans débit d’écus.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/08-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les réglages du procédé et vérifier les recettes bière et wash.
+
+
 ## Lot autorisé de 50 — mission 07 : Brasserie : ingrédients lisibles et poignées tactiles
 
 Statut : terminée sur `work/lot50-07-ingredients`, sans fusion.
