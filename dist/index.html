@@ -1126,6 +1126,11 @@ html,body { margin:0; }
 #tuto-voile .tuto-etape { font-size:14px !important; color:#e5c896; }
 #tuto-voile .tuto-actions { flex-wrap:wrap; gap:12px; }
 #tuto-voile .tuto-actions .btn { min-height:48px; flex:1 1 100px; font-size:16px; }
+
+/* Informations : cible tactile, texte complet et bulle contenue dans le viewport. */
+.info-i { width:44px; height:44px; font-size:19px; border:1px solid #b18a58; box-shadow:none; background:#59412a; color:#f5dfb8; }
+.info-i[aria-expanded="true"] { background:#eed7a8; color:#302116; }
+.bulle { border:1px solid #a67a48; border-radius:14px; padding:14px; font-size:16px; line-height:1.6; box-shadow:0 6px 20px #0006; max-height:calc(100vh - 32px); max-height:calc(100dvh - 32px); overflow:auto; overscroll-behavior:contain; }
 </style>
 
 <div id="app">
@@ -3494,12 +3499,14 @@ html,body { margin:0; }
   // =====================================================================
   // Bulles d'information « i »
   // =====================================================================
-  const iBtn = (txt) => `<button class="info-i" type="button" data-info="${esc(txt)}" aria-label="Plus d'informations">i</button>`;
+  const iBtn = (txt) => `<button class="info-i" type="button" data-info="${esc(txt)}" aria-label="Plus d'informations" aria-controls="bulle" aria-expanded="false">i</button>`;
   let bulleDe = null;
   function montrerBulle(btn) {
     const b = $('#bulle');
     if (bulleDe === btn && !b.hidden) { cacherBulle(); return; }
+    cacherBulle();
     b.textContent = btn.dataset.info; b.hidden = false; bulleDe = btn;
+    btn.setAttribute('aria-expanded', 'true'); btn.setAttribute('aria-describedby', 'bulle');
     const r = btn.getBoundingClientRect(), W = Math.min(320, innerWidth - 24);
     b.style.width = W + 'px';
     b.style.left = borne(r.left + r.width / 2 - W / 2, 12, innerWidth - W - 12) + 'px';
@@ -3508,7 +3515,13 @@ html,body { margin:0; }
     b.style.setProperty('--fleche', borne(r.left + r.width / 2 - parseFloat(b.style.left), 14, W - 14) + 'px');
     b.classList.toggle('dessus', r.bottom + 8 + h >= innerHeight - 8);
   }
-  function cacherBulle() { $('#bulle').hidden = true; bulleDe = null; }
+  function cacherBulle() {
+    $('#bulle').hidden = true;
+    if (bulleDe) { bulleDe.setAttribute('aria-expanded', 'false'); bulleDe.removeAttribute('aria-describedby'); }
+    bulleDe = null;
+  }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && bulleDe) { e.preventDefault(); cacherBulle(); } });
+  window.addEventListener('resize', cacherBulle);
   document.addEventListener('click', (e) => { const i = e.target.closest('[data-info]'); if (i) { e.stopPropagation(); montrerBulle(i); return; } if (!e.target.closest('#bulle')) cacherBulle(); }, true);
   document.getElementById('scene').addEventListener('scroll', cacherBulle, { passive: true });
   // Les paragraphes d'introduction des écrans passent dans une bulle « i » à côté du titre

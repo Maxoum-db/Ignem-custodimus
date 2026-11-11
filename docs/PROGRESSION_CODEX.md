@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 15 : Informations : bulles tactiles et accessibles
+
+Statut : terminée sur `work/lot50-15-informations`, sans fusion.
+Boutons de 44 px, état ouvert annoncé, association du texte, fermeture Échap et bulle défilante contenue dans l’écran. Texte intégral réel du pigeonnier, dimensions 320/390 par 568 px, fermeture extérieure et absence de mutation vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/15-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Rendre le menu utilisable sur écran court et restaurer son focus à la fermeture.
+
+
 ## Lot autorisé de 50 — mission 14 : Tutoriels : lecture mobile et navigation clavier
 
 Statut : terminée sur `work/lot50-14-tutoriels`, sans fusion.

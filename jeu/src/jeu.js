@@ -265,12 +265,14 @@
   // =====================================================================
   // Bulles d'information « i »
   // =====================================================================
-  const iBtn = (txt) => `<button class="info-i" type="button" data-info="${esc(txt)}" aria-label="Plus d'informations">i</button>`;
+  const iBtn = (txt) => `<button class="info-i" type="button" data-info="${esc(txt)}" aria-label="Plus d'informations" aria-controls="bulle" aria-expanded="false">i</button>`;
   let bulleDe = null;
   function montrerBulle(btn) {
     const b = $('#bulle');
     if (bulleDe === btn && !b.hidden) { cacherBulle(); return; }
+    cacherBulle();
     b.textContent = btn.dataset.info; b.hidden = false; bulleDe = btn;
+    btn.setAttribute('aria-expanded', 'true'); btn.setAttribute('aria-describedby', 'bulle');
     const r = btn.getBoundingClientRect(), W = Math.min(320, innerWidth - 24);
     b.style.width = W + 'px';
     b.style.left = borne(r.left + r.width / 2 - W / 2, 12, innerWidth - W - 12) + 'px';
@@ -279,7 +281,13 @@
     b.style.setProperty('--fleche', borne(r.left + r.width / 2 - parseFloat(b.style.left), 14, W - 14) + 'px');
     b.classList.toggle('dessus', r.bottom + 8 + h >= innerHeight - 8);
   }
-  function cacherBulle() { $('#bulle').hidden = true; bulleDe = null; }
+  function cacherBulle() {
+    $('#bulle').hidden = true;
+    if (bulleDe) { bulleDe.setAttribute('aria-expanded', 'false'); bulleDe.removeAttribute('aria-describedby'); }
+    bulleDe = null;
+  }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && bulleDe) { e.preventDefault(); cacherBulle(); } });
+  window.addEventListener('resize', cacherBulle);
   document.addEventListener('click', (e) => { const i = e.target.closest('[data-info]'); if (i) { e.stopPropagation(); montrerBulle(i); return; } if (!e.target.closest('#bulle')) cacherBulle(); }, true);
   document.getElementById('scene').addEventListener('scroll', cacherBulle, { passive: true });
   // Les paragraphes d'introduction des écrans passent dans une bulle « i » à côté du titre
