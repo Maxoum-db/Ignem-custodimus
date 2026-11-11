@@ -235,7 +235,21 @@
     rb.disabled = nom === 'domaine' && !pile.length; delete rb.dataset.confirme; $('.retour-txt', rb).textContent = '';
   }
   // Menu de l'en-tête : un seul bouton, la liste se déroule
-  function basculerMenu(ouvrir) { const m = $('#menu-entete'), o = ouvrir != null ? ouvrir : m.hidden; m.hidden = !o; $('#btn-menu').setAttribute('aria-expanded', o); }
+  function basculerMenu(ouvrir, retourFocus = false) {
+    const m = $('#menu-entete'), o = ouvrir != null ? ouvrir : m.hidden;
+    m.hidden = !o; $('#btn-menu').setAttribute('aria-expanded', o);
+    if (o) (m.querySelector('[aria-current="page"]') || m.querySelector('button')).focus();
+    else if (retourFocus) $('#btn-menu').focus();
+  }
+  $('#btn-menu').addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); basculerMenu(true); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !$('#menu-entete').hidden) { e.preventDefault(); basculerMenu(false, true); }
+  });
+  $('#menu-entete').addEventListener('focusout', (e) => {
+    if (e.relatedTarget && !$('#menu-entete').contains(e.relatedTarget) && e.relatedTarget !== $('#btn-menu')) basculerMenu(false);
+  });
   document.addEventListener('click', (e) => {
     if (e.target.closest('#btn-menu')) { son('clic'); basculerMenu(); return; }
     if (!e.target.closest('#menu-entete')) basculerMenu(false);

@@ -1124,6 +1124,11 @@ html,body { margin:0; }
 .info-i { width:44px; height:44px; font-size:19px; border:1px solid #b18a58; box-shadow:none; background:#59412a; color:#f5dfb8; }
 .info-i[aria-expanded="true"] { background:#eed7a8; color:#302116; }
 .bulle { border:1px solid #a67a48; border-radius:14px; padding:14px; font-size:16px; line-height:1.6; box-shadow:0 6px 20px #0006; max-height:calc(100vh - 32px); max-height:calc(100dvh - 32px); overflow:auto; overscroll-behavior:contain; }
+
+/* Navigation : le menu reste parcourable sur les téléphones en paysage. */
+#menu-entete { max-width:calc(100vw - 32px); max-height:calc(100vh - 90px); max-height:calc(100dvh - 90px); overflow-y:auto; overscroll-behavior:contain; border:1px solid #a67a48; border-radius:14px; padding:10px; gap:8px; box-shadow:0 6px 20px #0007; }
+#menu-entete button { min-height:48px; line-height:1.4; border-radius:10px; }
+#menu-entete button:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }
 </style>
 
 <div id="app">
@@ -1132,7 +1137,7 @@ html,body { margin:0; }
     <button class="marque" data-aller="domaine" aria-label="Retour au domaine"><img id="marque-feu" class="sprite" alt="" width="16" height="20"></button>
     <div class="entete-niveau" id="entete-niveau"></div>
     <button data-aller="recherche" class="btn-entete btn-loupe" aria-label="Chercher un ingrédient"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/></svg></button>
-    <button class="btn-entete" id="btn-menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <button class="btn-entete" id="btn-menu" aria-controls="menu-entete" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     <nav class="entete-nav" id="menu-entete" aria-label="Menu" hidden>
       <button data-aller="domaine">Domaine</button>
       <button data-aller="carnet">Carnet de brassage</button>
@@ -3462,7 +3467,21 @@ html,body { margin:0; }
     rb.disabled = nom === 'domaine' && !pile.length; delete rb.dataset.confirme; $('.retour-txt', rb).textContent = '';
   }
   // Menu de l'en-tête : un seul bouton, la liste se déroule
-  function basculerMenu(ouvrir) { const m = $('#menu-entete'), o = ouvrir != null ? ouvrir : m.hidden; m.hidden = !o; $('#btn-menu').setAttribute('aria-expanded', o); }
+  function basculerMenu(ouvrir, retourFocus = false) {
+    const m = $('#menu-entete'), o = ouvrir != null ? ouvrir : m.hidden;
+    m.hidden = !o; $('#btn-menu').setAttribute('aria-expanded', o);
+    if (o) (m.querySelector('[aria-current="page"]') || m.querySelector('button')).focus();
+    else if (retourFocus) $('#btn-menu').focus();
+  }
+  $('#btn-menu').addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); basculerMenu(true); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !$('#menu-entete').hidden) { e.preventDefault(); basculerMenu(false, true); }
+  });
+  $('#menu-entete').addEventListener('focusout', (e) => {
+    if (e.relatedTarget && !$('#menu-entete').contains(e.relatedTarget) && e.relatedTarget !== $('#btn-menu')) basculerMenu(false);
+  });
   document.addEventListener('click', (e) => {
     if (e.target.closest('#btn-menu')) { son('clic'); basculerMenu(); return; }
     if (!e.target.closest('#menu-entete')) basculerMenu(false);
