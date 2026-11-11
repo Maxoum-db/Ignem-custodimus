@@ -1230,17 +1230,32 @@
     dernierPlan = plan;
   }
   let dernierPlan = null, minuteurPlan = null;
+  let retourChoixStyle = null;
+  function fermerChoixStyle() {
+    $('#style-voile').hidden = true;
+    const retour = retourChoixStyle?.isConnected ? retourChoixStyle : $('#btn-viser');
+    retour?.focus({ preventScroll: true });
+  }
   function ouvrirChoixStyle() {
+    retourChoixStyle = document.activeElement;
     const groupes = {};
     D.styles.forEach((s) => { (groupes[s.sujet] = groupes[s.sujet] || []).push(s); });
     const LIB = { pilsener: 'Pils et lagers blondes', bock: 'Bocks', marzen: 'Märzen', vienna: 'Vienna', common: 'California common', wheat: 'Blanches et blés', pale_ale: 'Pale ales', ipa: 'IPA', amber: 'Ambrées', brown: 'Brunes', bitter: 'Bitters', porter: 'Porters', stout: 'Stouts', strong: 'Bières fortes', farmhouse: 'Saisons', specialty: 'Spéciales' };
-    $('#style-liste').innerHTML = Object.entries(groupes).map(([k, l]) => `<p class="groupe-titre">${esc(LIB[k] || k)}</p>${l.map((s) => `<button class="choix-style ${R.cible === s.id ? 'choisi' : ''}" data-viser="${s.id}"><b>${esc(s.nom)}</b><small>${sg(s.og[0])}–${sg(s.og[1])} · ${Math.round(s.ibu[0])}–${Math.round(s.ibu[1])} IBU · ${Math.round(s.ebc[0])}–${Math.round(s.ebc[1])} EBC</small><small>${esc((s.desc || '').slice(0, 110))}</small></button>`).join('')}`).join('');
+    $('#style-liste').innerHTML = Object.entries(groupes).map(([k, l]) => `<p class="groupe-titre">${esc(LIB[k] || k)}</p>${l.map((s) => `<button class="choix-style ${R.cible === s.id ? 'choisi' : ''}" data-viser="${s.id}" aria-pressed="${R.cible === s.id}"><b>${esc(s.nom)}</b><small>${sg(s.og[0])}–${sg(s.og[1])} · ${Math.round(s.ibu[0])}–${Math.round(s.ibu[1])} IBU · ${Math.round(s.ebc[0])}–${Math.round(s.ebc[1])} EBC</small><small>${esc((s.desc || '').slice(0, 110))}</small></button>`).join('')}`).join('');
     $('#style-voile').hidden = false;
+    ($('#style-liste .choisi') || $('#style-liste button')).focus();
   }
   $('#style-voile').addEventListener('click', (e) => {
     const b = e.target.closest('[data-viser]');
-    if (b) { R.cible = b.dataset.viser; $('#style-voile').hidden = true; son('ok'); maj(); setTimeout(() => $('#plan-lise').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'nearest' }), 50); return; }
-    if (e.target.id === 'style-fermer' || e.target === $('#style-voile')) $('#style-voile').hidden = true;
+    if (b) { R.cible = b.dataset.viser; son('ok'); maj(); fermerChoixStyle(); setTimeout(() => $('#plan-lise').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'nearest' }), 50); return; }
+    if (e.target.id === 'style-fermer' || e.target === $('#style-voile')) fermerChoixStyle();
+  });
+  $('#style-voile').addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); fermerChoixStyle(); return; }
+    if (e.key !== 'Tab') return;
+    const boutons = $$('#style-voile button'), premier = boutons[0], dernier = boutons[boutons.length - 1];
+    if (e.shiftKey && document.activeElement === premier) { e.preventDefault(); dernier.focus(); }
+    else if (!e.shiftKey && document.activeElement === dernier) { e.preventDefault(); premier.focus(); }
   });
   document.addEventListener('click', (e) => {
     if (e.target.closest('#btn-viser') || e.target.closest('#plan-changer')) { son('clic'); ouvrirChoixStyle(); return; }

@@ -1,5 +1,18 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 11 : Style visé : sélecteur mobile accessible
+
+Statut : terminée sur `work/lot50-11-styles`, sans fusion.
+Contrôle visuel initial : descriptions débordantes dans la grille ; corrigé par des lignes de hauteur intrinsèque. Contrôle supplémentaire : aucun texte ne dépasse sa carte à 320/390 px.
+Liste interne défilante, annulation toujours visible, choix lisibles et état sélectionné explicite. Focus initial, boucle Tab, Échap, retour du focus, choix du dernier style et sauvegarde de la cible vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/11-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Moderniser le plan de Lise et vérifier son application réelle à la recette.
+
+
 ## Lot autorisé de 50 — mission 10 : Eau : dosages lisibles et curseurs tactiles
 
 Statut : terminée sur `work/lot50-10-sels`, sans fusion.
