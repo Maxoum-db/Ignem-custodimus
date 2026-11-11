@@ -1103,6 +1103,20 @@ html,body { margin:0; }
 #plan-lise .lien-fiche { min-height:44px; padding:8px; font-size:15px; }
 #plan-lise .actions-fut .btn { min-height:48px; flex:1 1 180px; font-size:16px; }
 #plan-lise .det { font-size:15px; line-height:1.55; }
+
+/* Conformité : valeur et plage chiffrées, repère arrondi et lisible. */
+#style-ligne { min-height:72px; padding:14px; gap:8px; border:1px solid #8b6843; border-radius:14px; box-shadow:none; }
+#style-ligne .nom { font-size:17px; line-height:1.4; }
+#style-ligne .indice { font-size:14px; line-height:1.4; }
+#style-ligne .jauge { height:10px; border-radius:8px; overflow:hidden; box-shadow:none; }
+#style-detail { padding:16px; gap:18px; border:1px solid #8b6843; border-radius:14px; box-shadow:none; }
+#style-detail .repere { grid-template-columns:minmax(0,1fr) auto; font-size:16px; gap:8px; }
+#style-detail .repere .val { grid-column:2; grid-row:1; font-size:23px; }
+#style-detail .repere .barre { grid-column:1/-1; grid-row:2; height:14px; border:1px solid #6e5c40; border-radius:8px; box-shadow:none; }
+#style-detail .repere .plage { background:#8fa958; border-radius:6px; }
+#style-detail .repere .moi { width:4px; border:1px solid #fff0cb; border-radius:3px; }
+#style-detail .repere-plage { grid-column:1/-1; font-size:14px; color:#d7c4a3; }
+#style-detail p { font-size:15px; line-height:1.6; }
 </style>
 
 <div id="app">
@@ -1144,7 +1158,7 @@ html,body { margin:0; }
         <div class="charge" id="charge"></div>
       </div>
       <div class="bandeau-mesures"><div class="mesures" id="mesures"></div></div>
-      <button class="style-ligne" id="style-ligne" aria-expanded="false"></button>
+      <button class="style-ligne" id="style-ligne" aria-expanded="false" aria-controls="style-detail"></button>
       <div class="style-detail" id="style-detail" hidden></div>
       <button class="btn btn-mini btn-sobre" id="btn-viser">◎ Viser un style : Lise t'aide</button>
       <div class="plan-lise" id="plan-lise" hidden></div>
@@ -4480,7 +4494,8 @@ html,body { margin:0; }
     const s = vise || r.style.style;
     const ligne = (lib, val, plage, txt, min, max) => {
       const pos = (v) => borne(((v - min) / (max - min)) * 100, 0, 100);
-      return `<div class="repere"><span>${lib}</span><span class="barre"><i class="plage" style="left:${pos(plage[0])}%;width:${pos(plage[1]) - pos(plage[0])}%"></i><i class="moi" style="left:${pos(val)}%"></i></span><span class="val">${txt}</span></div>`;
+      const fmt = lib === 'Densité' || lib === 'Finale' ? sg : (v) => nf(v, 0);
+      return `<div class="repere"><span>${lib}</span><span class="barre" aria-hidden="true"><i class="plage" style="left:${pos(plage[0])}%;width:${pos(plage[1]) - pos(plage[0])}%"></i><i class="moi" style="left:${pos(val)}%"></i></span><span class="val">${txt}</span><small class="repere-plage">Plage du style : ${fmt(plage[0])}–${fmt(plage[1])}</small></div>`;
     };
     const span = (p, f) => [p[0] - (p[1] - p[0]) * f, p[1] + (p[1] - p[0]) * f];
     const [o1, o2] = span(s.og, 1.2), [f1, f2] = span(s.fg, 1.2), [i1, i2] = span(s.ibu, 1), [e1, e2] = span(s.ebc, 1);

@@ -1274,7 +1274,8 @@
     const s = vise || r.style.style;
     const ligne = (lib, val, plage, txt, min, max) => {
       const pos = (v) => borne(((v - min) / (max - min)) * 100, 0, 100);
-      return `<div class="repere"><span>${lib}</span><span class="barre"><i class="plage" style="left:${pos(plage[0])}%;width:${pos(plage[1]) - pos(plage[0])}%"></i><i class="moi" style="left:${pos(val)}%"></i></span><span class="val">${txt}</span></div>`;
+      const fmt = lib === 'Densité' || lib === 'Finale' ? sg : (v) => nf(v, 0);
+      return `<div class="repere"><span>${lib}</span><span class="barre" aria-hidden="true"><i class="plage" style="left:${pos(plage[0])}%;width:${pos(plage[1]) - pos(plage[0])}%"></i><i class="moi" style="left:${pos(val)}%"></i></span><span class="val">${txt}</span><small class="repere-plage">Plage du style : ${fmt(plage[0])}–${fmt(plage[1])}</small></div>`;
     };
     const span = (p, f) => [p[0] - (p[1] - p[0]) * f, p[1] + (p[1] - p[0]) * f];
     const [o1, o2] = span(s.og, 1.2), [f1, f2] = span(s.fg, 1.2), [i1, i2] = span(s.ibu, 1), [e1, e2] = span(s.ebc, 1);

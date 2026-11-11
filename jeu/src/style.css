@@ -1094,3 +1094,17 @@ html,body { margin:0; }
 #plan-lise .lien-fiche { min-height:44px; padding:8px; font-size:15px; }
 #plan-lise .actions-fut .btn { min-height:48px; flex:1 1 180px; font-size:16px; }
 #plan-lise .det { font-size:15px; line-height:1.55; }
+
+/* Conformité : valeur et plage chiffrées, repère arrondi et lisible. */
+#style-ligne { min-height:72px; padding:14px; gap:8px; border:1px solid #8b6843; border-radius:14px; box-shadow:none; }
+#style-ligne .nom { font-size:17px; line-height:1.4; }
+#style-ligne .indice { font-size:14px; line-height:1.4; }
+#style-ligne .jauge { height:10px; border-radius:8px; overflow:hidden; box-shadow:none; }
+#style-detail { padding:16px; gap:18px; border:1px solid #8b6843; border-radius:14px; box-shadow:none; }
+#style-detail .repere { grid-template-columns:minmax(0,1fr) auto; font-size:16px; gap:8px; }
+#style-detail .repere .val { grid-column:2; grid-row:1; font-size:23px; }
+#style-detail .repere .barre { grid-column:1/-1; grid-row:2; height:14px; border:1px solid #6e5c40; border-radius:8px; box-shadow:none; }
+#style-detail .repere .plage { background:#8fa958; border-radius:6px; }
+#style-detail .repere .moi { width:4px; border:1px solid #fff0cb; border-radius:3px; }
+#style-detail .repere-plage { grid-column:1/-1; font-size:14px; color:#d7c4a3; }
+#style-detail p { font-size:15px; line-height:1.6; }
