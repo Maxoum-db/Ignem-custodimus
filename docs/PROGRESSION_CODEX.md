@@ -49,8 +49,15 @@ Parcours naturel : `GESTES_REELS=1 node jeu/tests/parcours.cjs` ; ajouter
 `MODE_JEU=debutant` pour l’autre mode. Ici Chromium système et serveur local
 requièrent l’exécution hors bac à sable.
 
-La CI complète et l’état effectif de fusion sont à vérifier dans la PR de cette
-branche. Les moteurs `moteur.js`, `distillerie.js`, `chai.js`, `ecole.js`,
+CI complète confirmée réussie sur le code `e2b3616104500b52c9934f08d77c06733f274845` :
+[run 43083739020](https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/43083739020).
+Build reproductible, six suites Node, mobile, huit rendus, toutes les suites de
+fonctionnalités (dont les huit nouveaux scénarios), parcours standard et gestes
+réels, Ulysse expert et débutant : tous réussis. Le commit suivant ne complète
+que ce journal, sans modification du code validé.
+PR de livraison autorisée : [#79](https://github.com/Maxoum-db/Ignem-custodimus/pull/79) ;
+son état GitHub porte la confirmation effective de fusion dans main.
+Les moteurs `moteur.js`, `distillerie.js`, `chai.js`, `ecole.js`,
 `vente.js` et les données scientifiques restent identiques à main.
 Le site reste sur sa dernière publication consignée (version 12) tant qu’une
 nouvelle publication distincte n’est pas effectuée.
