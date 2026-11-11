@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 09 : Procédé : réglages scientifiques tactiles
+
+Statut : terminée sur `work/lot50-09-procede`, sans fusion.
+Cartes lisibles, bascules de 48 px et curseurs de 44 px. Palier, température, rendement, cuisson, repos diacétyle, ébullition 90 min, bascule wash et retour bière vérifiés avec persistance exacte de la recette. Aucun calcul scientifique modifié.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/09-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les dosages de sels et d’acide et vérifier le bilan ionique réel.
+
+
 ## Lot autorisé de 50 — mission 08 : Cuve : quantités et temps d’ajout tactiles
 
 Statut : terminée sur `work/lot50-08-quantites`, sans fusion.

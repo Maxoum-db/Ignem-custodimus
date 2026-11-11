@@ -1048,6 +1048,19 @@ html,body { margin:0; }
 #onglet-contenu .temps button { min-height:44px; min-width:58px; padding:10px; border:1px solid #8b6843; border-radius:10px; box-shadow:none; font-size:15px; }
 #onglet-contenu .temps button[aria-pressed="true"] { background:#eed7a8; color:#302116; box-shadow:inset 0 0 0 2px #bc8954; }
 #onglet-contenu .temps button:focus-visible, #onglet-contenu .qte input:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
+
+/* Procédé : mêmes réglages scientifiques, commandes aérées au pouce. */
+#onglet-contenu .reglage { padding:16px; gap:12px; border:1px solid #8b6843; border-radius:16px; box-shadow:0 3px 10px #0003; }
+#onglet-contenu .reglage .lib, #onglet-contenu .reglage > label { font-size:17px; line-height:1.45; flex-wrap:wrap; }
+#onglet-contenu .reglage p { font-size:15px; line-height:1.55; }
+#onglet-contenu .reglage .bascule { gap:10px; }
+#onglet-contenu .reglage .bascule button { min-height:48px; flex:1 1 110px; border:1px solid #987149; border-radius:12px; padding:10px; font-size:16px; box-shadow:none; }
+#onglet-contenu .reglage .bascule button[aria-pressed="true"] { background:#eed7a8; color:#302116; box-shadow:inset 0 0 0 2px #bc8954; }
+#onglet-contenu .reglage input[type="range"] { min-height:44px; }
+#onglet-contenu .reglage .coche { min-height:48px; border-radius:12px; padding:12px; align-items:center; cursor:pointer; }
+#onglet-contenu .reglage .coche span { font-size:16px; line-height:1.5; }
+#onglet-contenu .reglage .coche small { font-size:14px; }
+#onglet-contenu .reglage :is(button,input):focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
 </style>
 
 <div id="app">
