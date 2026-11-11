@@ -985,6 +985,12 @@ html,body { margin:0; }
 #fiches-liste .contenu { font-size:16px; line-height:1.65; padding:4px 14px 16px; overflow-wrap:anywhere; }
 #fiches-liste .fiche[open] { border-color:#d6a162; }
 #fiches-liste summary:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }
+
+/* Recherche : saisie nommée et commandes utilisables au pouce. */
+#rech-champ { min-height:48px; font-size:18px; border:1px solid #987149; border-radius:14px; padding:12px; }
+#rech-filtres .filtre[aria-pressed="true"] { background:#eed7a8; color:#302116; box-shadow:inset 0 0 0 2px #bc8954; font-weight:750; }
+#rech-tri { min-height:44px; font-size:16px; padding:8px; border:1px solid #8b6945; }
+#rech-compte { font-size:15px; line-height:1.5; }
 </style>
 
 <div id="app">
@@ -1236,10 +1242,10 @@ html,body { margin:0; }
     <!-- Recherche d'ingrédients -->
     <section id="ecran-recherche" class="ecran" hidden>
       <h1 class="page-titre">Recherche <span class="en">ingrédients, fûts, recettes, fiches</span></h1>
-      <input class="recherche recherche-grande" id="rech-champ" type="search" placeholder="citra, agrumes, 1150 EBC, lager…" autocomplete="off" enterkeyhint="search">
+      <input class="recherche recherche-grande" id="rech-champ" type="search" aria-label="Rechercher un ingrédient, une recette ou une fiche" placeholder="citra, agrumes, 1150 EBC, lager…" autocomplete="off" enterkeyhint="search">
       <div class="suggestions" id="rech-suggestions"></div>
       <div id="rech-filtres"></div>
-      <p class="page-intro" id="rech-compte"></p>
+      <p class="page-intro" id="rech-compte" role="status" aria-live="polite"></p>
       <div id="rech-resultats"></div>
     </section>
 

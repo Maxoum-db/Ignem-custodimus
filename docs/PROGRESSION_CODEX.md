@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 03 : Recherche : commandes accessibles et résultats annoncés
+
+Statut : terminée sur `work/lot50-03-recherche`, sans fusion.
+Champ nommé, saisie et tri tactiles, filtre actif explicite et compteur annoncé. Recherche de pilsner, tri, catégorie réelle et état sans résultat vérifiés ; aucun état école modifié.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/03-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Rendre les cartes de résultats et leurs actions utilisables au pouce.
+
+
 ## Lot autorisé de 50 — mission 02 : Fiches : accordéons lisibles et retour aux leçons
 
 Statut : terminée sur `work/lot50-02-fiches`, sans fusion.
