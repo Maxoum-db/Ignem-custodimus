@@ -1,0 +1,7 @@
+require('./support.cjs')('09-procede',async({page,to,save,capture,assert})=>{
+ await to('brasserie');await page.locator('#tab-procede').click();const before=await save();
+ for(const [id,key] of [['r-palier','palier'],['r-ferm',null],['r-rend','rendement']]){const slider=page.locator('#'+id);assert.ok((await slider.boundingBox()).height>=44);const v=Number(await slider.inputValue());await slider.focus();await slider.press('ArrowRight');assert.ok(Number(await slider.inputValue())>v);const r=(await save()).recette;assert.equal(key?r[key]:r.fermentation.temp,Number(await slider.inputValue())/(id==='r-rend'?100:1))}
+ await page.locator('[data-ebu="90"]').click();await page.locator('[data-cuisson="1"]').click();await page.locator('[data-repos="1"]').click();let s=await save();assert.equal(s.recette.ebullition,90);assert.equal(s.recette.cuisson,true);assert.equal(s.recette.fermentation.reposDiacetyle,true);
+ const wash=page.locator('[data-dest="wash"]');assert.ok((await wash.boundingBox()).height>=48);await wash.click();assert.equal((await save()).recette.destination,'wash');assert.equal(await page.locator('[data-ebu]').count(),0);await page.locator('[data-dest="biere"]').click();assert.equal(await page.locator('[data-ebu="90"]').getAttribute('aria-pressed'),'true');
+ await capture('#onglet-contenu');s=await save();assert.equal(s.ecus,before.ecus);await page.reload({waitUntil:'domcontentloaded'});assert.deepEqual((await save()).recette,s.recette);
+}).catch(e=>{console.error(e);process.exitCode=1});
