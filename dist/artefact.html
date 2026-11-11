@@ -1007,6 +1007,23 @@ html,body { margin:0; }
 #reglages-contenu button:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
 #reglages-contenu .danger { border-color:#bf7864; }
 #reglages-contenu .danger .lib { color:#ffb8a2; }
+
+/* Fournisseurs : garder le catalogue existant, rendre ses achats lisibles. */
+#cat-onglets { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+#cat-onglets .onglet { min-height:60px; padding:10px; border:1px solid #8b6843; border-radius:12px; font-size:16px; }
+#cat-contenu { gap:12px; }
+#cat-contenu .filtre { min-height:44px; padding:10px; border-radius:10px; font-size:15px; }
+#cat-contenu .filtre[aria-pressed="true"] { background:#eed7a8; color:#302116; }
+#cat-recherche { min-height:48px; border:1px solid #987149; border-radius:12px; padding:12px; font-size:18px; }
+#cat-contenu .article { padding:14px; border:1px solid #8b6843; border-radius:14px; box-shadow:none; grid-template-columns:minmax(0,1fr); gap:10px; }
+#cat-contenu .article.possede { border-color:var(--houblon); }
+#cat-contenu .article.hors { opacity:1; background:#30271e; border-style:dashed; }
+#cat-contenu .article .nom { font-size:18px; line-height:1.4; }
+#cat-contenu .article .det { font-size:15px; line-height:1.5; }
+#cat-contenu .article > .btn, #cat-contenu .article > .etq { justify-self:start; }
+#cat-contenu .article .btn { min-height:48px; padding:10px 14px; font-size:16px; white-space:normal; }
+#cat-contenu button:focus-visible, #cat-onglets button:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
+@media(min-width:560px) { #cat-onglets { grid-template-columns:repeat(4,minmax(0,1fr)); } }
 </style>
 
 <div id="app">
@@ -6288,7 +6305,7 @@ html,body { margin:0; }
     const total = liste.length;
     liste = liste.slice(0, 60);
     $('#cat-contenu').innerHTML = `<div class="filtres">${filtres.map(([k, v]) => `<button class="filtre" data-catfiltre="${k}" aria-pressed="${catFiltre === k}">${v}</button>`).join('')}</div>
-      <input class="recherche" id="cat-recherche" type="search" placeholder="Chercher" value="${esc(catRecherche)}" autocomplete="off">
+      <input class="recherche" id="cat-recherche" type="search" aria-label="Chercher dans les fournisseurs" placeholder="Chercher" value="${esc(catRecherche)}" autocomplete="off">
       ${liste.map((x) => carteArticle(x, catOnglet)).join('') || `<p class="vide">${catFiltre === 'achat' ? 'Tout est déjà à toi dans cette catégorie.' : 'Rien ici pour l\'instant.'}</p>`}
       ${total > 60 ? `<p class="page-intro">${total - 60} autres : affine la recherche.</p>` : ''}`;
     rendreDecouvertes();
@@ -6296,7 +6313,7 @@ html,body { margin:0; }
   function carteArticle(x, cat) {
     if (cat === 'futs') {
       const prix = prixFut(x.type, x.taille), ok = achetable(x), n = nbFuts(x);
-      const action = ok ? `<button class="btn" data-acheter="futs:${esc(x.id)}" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>` : `<span class="etq ko">${PALIERS[Math.max(0, x.palier - 1)].pts} pts requis</span>`;
+      const action = ok ? `<button class="btn" data-acheter="futs:${esc(x.id)}" aria-label="Acheter ${esc(x.nom)} pour ${prix} écus" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>` : `<span class="etq ko">${PALIERS[Math.max(0, x.palier - 1)].pts} pts requis</span>`;
       return `<div class="article ${n ? 'possede' : ''} ${!ok ? 'hors' : ''}"><span class="nom"><span class="fut-mini fut-${x.type}"></span>${esc(x.nom)} <span class="rarete">${etoilesRarete(x.palier)}</span></span>${action}
         <span class="det">${CATEGORIES.futs.det(x)}${n ? ` · <b>${n} au chai</b>` : ''}</span></div>`;
     }
@@ -6306,7 +6323,7 @@ html,body { margin:0; }
     let action;
     if (possede) action = recette ? `<button class="btn btn-feu" data-brasser="${esc(x.id)}">Brasser</button>` : '<span class="etq ok">Possédé</span>';
     else if (!ok) action = `<span class="etq ko">${PALIERS[Math.max(0, (x.palier || 1) - 1)].pts} pts requis</span>`;
-    else action = `<button class="btn" data-acheter="${cat}:${esc(x.id)}" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>`;
+    else action = `<button class="btn" data-acheter="${cat}:${esc(x.id)}" aria-label="Acheter ${esc(x.nom)} pour ${prix} écus" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>`;
     let extra = '';
     if (recette) {
       const manque = manquantsRecette(x);
