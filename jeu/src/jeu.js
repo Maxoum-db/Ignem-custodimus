@@ -852,7 +852,7 @@
     return `<p class="verrou">${bloques.length} ${quoi} à débloquer, dont ${dispoAchat} déjà en vente au pigeonnier. Tu as ${S.ecus} écus. <button class="btn btn-mini" data-catalogue="${cat}">Ouvrir le catalogue</button></p>`;
   }
   const filtreTexte = (n) => !recherche || n.toLowerCase().includes(recherche.toLowerCase());
-  const champRecherche = (ph) => `<input class="recherche" id="recherche" type="search" placeholder="${ph}" value="${esc(recherche)}" autocomplete="off">`;
+  const champRecherche = (ph) => `<input class="recherche" id="recherche" type="search" aria-label="${ph}" placeholder="${ph}" value="${esc(recherche)}" autocomplete="off">`;
 
   function rendreOnglet() {
     const z = $('#onglet-contenu');
@@ -887,7 +887,7 @@
               <div class="det"><b>${y.att[0]}–${y.att[1]} %</b> d'atténuation · <b>${y.t[0]}–${y.t[1]} °C</b> · tolère ${y.tol} %</div>
               <div class="det">${esc(y.desc || '')}</div>
               <div class="etiquettes"><span class="etq">${{ ale: 'Ale', lager: 'Lager', specialty: 'Spéciale', distilling: 'Distillerie' }[y.fam]}</span>${y.phenol ? '<span class="etq phen">Phénols</span>' : ''}${y.ester === 2 ? '<span class="etq est">Esters marqués</span>' : y.ester === 0 ? '<span class="etq">Neutre</span>' : ''}${y.sauvage ? '<span class="etq sauv">Sauvage</span>' : ''}</div></div>
-            <button class="btn btn-mini" data-ajouter="levure" data-id="${esc(y.id)}" aria-pressed="${R.levure === y.id}">${R.levure === y.id ? 'Choisie' : 'Choisir'}</button></div>`).join('')}</div>
+            <button class="btn btn-mini" data-ajouter="levure" data-id="${esc(y.id)}" aria-label="Choisir ${esc(y.nom)}" aria-pressed="${R.levure === y.id}">${R.levure === y.id ? 'Choisie' : 'Choisir'}</button></div>`).join('')}</div>
         ${verrouLigne(visibles, 'levures', 'levures')}`;
     } else if (onglet === 'eau') {
       z.innerHTML = D.eaux.map((e) => {
@@ -897,7 +897,7 @@
             <div class="det">Ca ${e.ca} · Mg ${e.mg} · SO₄ ${e.so4} · Cl ${e.cl} · HCO₃ ${e.hco3} mg/L</div>
             <div class="det">Alcalinité résiduelle <b>${Math.round(ra)} ppm CaCO₃</b> · SO₄/Cl ${e.cl ? nf(e.so4 / e.cl) : '—'}</div>
             <div class="det">${esc(e.note)}</div></div>
-          <button class="btn btn-mini" data-ajouter="eau" data-id="${e.id}" aria-pressed="${R.eau === e.id}">${R.eau === e.id ? 'Choisie' : 'Choisir'}</button></div>`;
+          <button class="btn btn-mini" data-ajouter="eau" data-id="${e.id}" aria-label="Choisir ${esc(e.nom)}" aria-pressed="${R.eau === e.id}">${R.eau === e.id ? 'Choisie' : 'Choisir'}</button></div>`;
       }).join('') + rendreSels() + `<p class="page-intro">Le calcaire du causse remonte le pH : parfait pour les bières foncées, à corriger au malt acide, aux sels ou à l'acide lactique pour les pâles. <button class="btn btn-mini btn-sobre" data-fiche="eau">Fiche eau</button></p>`;
     } else if (onglet === 'aromates') {
       const TYPES = { fruit: 'Fruits', epice: 'Épices et zestes', botanique: 'Botaniques', bois: 'Bois' };
