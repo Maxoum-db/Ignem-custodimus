@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 07 : Brasserie : ingrédients lisibles et poignées tactiles
+
+Statut : terminée sur `work/lot50-07-ingredients`, sans fusion.
+Cartes sur deux colonnes, poignées et actions de 48 px, recherche et choix nommés. Choix réel de levure, ajout par toucher et dépôt par événements tactiles Chromium vérifiés. Le scénario initial alternant CDP et Playwright après dépôt échouait sur la détection du clic suivant ; le scénario final teste la sélection avant le dépôt, sans prétendre couvrir cette alternance. Le test recette-mobile existant passe aussi : sept onglets, ajout, dépôt après défilement et remise à zéro.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/07-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les quantités de la cuve et les moments d’ajout du houblon au tactile.
+
+
 ## Lot autorisé de 50 — mission 06 : Fournisseurs : catalogue tactile et achats nommés
 
 Statut : terminée sur `work/lot50-06-fournisseurs`, sans fusion.
