@@ -3,6 +3,7 @@
 ## Lot autorisé de 50 — mission 05 : Options : préférences lisibles et tactiles
 
 Statut : terminée sur `work/lot50-05-options`, sans fusion.
+Captures corrigées : viewport réel plutôt que découpe longue débordant du conteneur défilant ; missions 04 et 05 rejouées à 320/390 px.
 Cartes et bascules de 48 px, sélection explicite. Sons, gestes expert, bac à sable, aller-retour débutant/expert, persistance après rechargement et annulation sans effacement vérifiés.
 
 Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
