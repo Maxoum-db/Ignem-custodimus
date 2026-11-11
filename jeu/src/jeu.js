@@ -994,12 +994,12 @@
     if (!kg) { z.innerHTML = '<span class="charge-v">0 <small>kg</small></span><span class="charge-l">de grain dans la cuve</span>'; return; }
     const tri = R.malts.map((l) => ({ m: IDX.malt.get(l.id), kg: l.kg })).sort((a, b) => b.kg - a.kg);
     z.innerHTML = `<span class="charge-v">${nf(kg, 0)} <small>kg</small></span><span class="charge-l">de grain · ${nf((kg / R.volume) * 100, 1)} kg/hL</span>
-      <button class="compo-bouton" id="compo-bouton" aria-expanded="${compoOuverte}">
+      <button class="compo-bouton" id="compo-bouton" aria-expanded="${compoOuverte}" aria-controls="charge-composition">
         <span class="grist">${tri.map((x) => `<i style="width:${(x.kg / kg) * 100}%;background:${couleur(Math.max(4, x.m.ebc))}"></i>`).join('')}</span>
         <span class="compo-lib">${compoOuverte ? '▾' : '▸'} Composition · ${tri.length} malt${tri.length > 1 ? 's' : ''}</span></button>
-      ${compoOuverte ? `<span class="grist-leg">${tri.map((x) => `<span><i style="background:${couleur(Math.max(4, x.m.ebc))}"></i><b>${Math.round((x.kg / kg) * 100)} %</b> ${esc(x.m.nom)}</span>`).join('')}</span>` : ''}`;
+      <span class="grist-leg" id="charge-composition" ${compoOuverte ? '' : 'hidden'}>${tri.map((x) => `<span><i aria-hidden="true" style="background:${couleur(Math.max(4, x.m.ebc))}"></i><b>${Math.round((x.kg / kg) * 100)} %</b><span class="grist-nom">${esc(x.m.nom)}</span></span>`).join('')}</span>`;
   }
-  document.addEventListener('click', (e) => { if (e.target.closest('#compo-bouton')) { compoOuverte = !compoOuverte; son('clic'); rendreCharge(); } });
+  document.addEventListener('click', (e) => { if (e.target.closest('#compo-bouton')) { compoOuverte = !compoOuverte; son('clic'); rendreCharge(); $('#compo-bouton').focus({ preventScroll: true }); } });
   const libMin = (m) => (m === -2 ? 'DH J2' : m === -1 ? 'DH J5' : m + ' min');
   function rendreCuveListe(z) {
     const r = dernierCalc;
