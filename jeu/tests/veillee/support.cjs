@@ -9,6 +9,11 @@ module.exports=(name,check)=>run('v'+name,async ctx=>{
  ctx.start=async()=>{await page.locator('[data-lecon="empatage"]').click();await page.locator('[data-commencer="empatage"]').click()};
  ctx.answers=async()=>{for(let i=0;i<3;i++){const answer=await page.evaluate(i=>Ecole.LECONS[0].quiz[i][1],i);await page.locator('[data-replecon]').getByText(answer,{exact:true}).click();await page.locator('[data-quizsuite]').click()}};
  ctx.daily=async()=>{await page.locator('[data-ongletveillee="questions"]').click()};
- ctx.dailyAnswer=async()=>{const text=await page.locator('#veillee-question .enonce').textContent();const answer=await page.evaluate(q=>DONNEES_JEU.quiz.cartes.find(c=>c.q===q).r,text);await page.locator('#veillee-question [data-rep]').getByText(answer,{exact:true}).click()};
+ ctx.dailySolution=async()=>{
+  const current=await page.locator('#veillee-question').evaluate(el=>({q:el.querySelector('.enonce').textContent,module:el.querySelector('.module').textContent}));
+  const matches=await page.evaluate(({q,module})=>DONNEES_JEU.quiz.cartes.filter(c=>c.q===q&&DONNEES_JEU.quiz.modules[c.d]===module).map(c=>c.r),current);
+  ctx.assert.equal(matches.length,1,'Une réponse unique pour la question et son module');return matches[0];
+ };
+ ctx.dailyAnswer=async()=>{const answer=await ctx.dailySolution();await page.locator('#veillee-question [data-rep]').getByText(answer,{exact:true}).click()};
  await check(ctx);
 });

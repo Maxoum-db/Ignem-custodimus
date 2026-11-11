@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 18 : Validation : distinguer les questions homonymes par module
+
+Statut : terminée sur `work/lot50-18-validation-quiz`, sans fusion.
+CI 43074048328 en échec dans le test Veillée 09 : deux cartes Dimensionnement appartiennent aux modules Énergie et Brasserie, avec des réponses distinctes. Le helper de test cherchait seulement le titre. Correction limitée aux tests : résolution par titre et module, cas forcés des deux cartes, vérification des récompenses. Tests Veillée 08 et 09 rejoués avec succès aux deux largeurs ; nouvelle CI complète à confirmer. Aucun code du jeu ni donnée scientifique modifié.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/18-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Confirmer la nouvelle CI complète, puis améliorer la lecture de la composition des malts.
+
+
 ## Lot autorisé de 50 — mission 17 : Matériel : achats tactiles et installation vérifiée
 
 Statut : terminée sur `work/lot50-17-materiel`, sans fusion.
