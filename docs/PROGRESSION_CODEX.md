@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 13 : Conformité : repères lisibles et plages chiffrées
+
+Statut : terminée sur `work/lot50-13-reperes`, sans fusion.
+Valeurs et plages du style lisibles sans interpréter les couleurs, jauges arrondies et accordéon relié à son contenu. Ouverture/fermeture sans mutation et recalcul effectif après ajout de malt vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/13-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Rendre les tutoriels lisibles sur petit écran et contrôler leur fermeture au clavier.
+
+
 ## Lot autorisé de 50 — mission 12 : Plan de Lise : portrait net et étapes tactiles
 
 Statut : terminée sur `work/lot50-12-plan-lise`, sans fusion.
