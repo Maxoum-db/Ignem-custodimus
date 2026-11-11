@@ -1122,3 +1122,8 @@ html,body { margin:0; }
 .info-i { width:44px; height:44px; font-size:19px; border:1px solid #b18a58; box-shadow:none; background:#59412a; color:#f5dfb8; }
 .info-i[aria-expanded="true"] { background:#eed7a8; color:#302116; }
 .bulle { border:1px solid #a67a48; border-radius:14px; padding:14px; font-size:16px; line-height:1.6; box-shadow:0 6px 20px #0006; max-height:calc(100vh - 32px); max-height:calc(100dvh - 32px); overflow:auto; overscroll-behavior:contain; }
+
+/* Navigation : le menu reste parcourable sur les téléphones en paysage. */
+#menu-entete { max-width:calc(100vw - 32px); max-height:calc(100vh - 90px); max-height:calc(100dvh - 90px); overflow-y:auto; overscroll-behavior:contain; border:1px solid #a67a48; border-radius:14px; padding:10px; gap:8px; box-shadow:0 6px 20px #0007; }
+#menu-entete button { min-height:48px; line-height:1.4; border-radius:10px; }
+#menu-entete button:focus-visible { outline:3px solid var(--braise); outline-offset:-3px; }

@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 16 : Menu : navigation mobile sur écran court
+
+Statut : terminée sur `work/lot50-16-menu`, sans fusion.
+Menu défilant à hauteur contenue, actions de 48 px, ouverture clavier sur la page courante et fermeture Échap avec retour du focus. Hauteur 320 px : dernier lien Options accessible, navigation effective et progression conservée vérifiées.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/16-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Moderniser les cartes de bâtiments et vérifier un lancement de travaux.
+
+
 ## Lot autorisé de 50 — mission 15 : Informations : bulles tactiles et accessibles
 
 Statut : terminée sur `work/lot50-15-informations`, sans fusion.
