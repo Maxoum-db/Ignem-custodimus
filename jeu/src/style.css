@@ -1117,3 +1117,8 @@ html,body { margin:0; }
 #tuto-voile .tuto-etape { font-size:14px !important; color:#e5c896; }
 #tuto-voile .tuto-actions { flex-wrap:wrap; gap:12px; }
 #tuto-voile .tuto-actions .btn { min-height:48px; flex:1 1 100px; font-size:16px; }
+
+/* Informations : cible tactile, texte complet et bulle contenue dans le viewport. */
+.info-i { width:44px; height:44px; font-size:19px; border:1px solid #b18a58; box-shadow:none; background:#59412a; color:#f5dfb8; }
+.info-i[aria-expanded="true"] { background:#eed7a8; color:#302116; }
+.bulle { border:1px solid #a67a48; border-radius:14px; padding:14px; font-size:16px; line-height:1.6; box-shadow:0 6px 20px #0006; max-height:calc(100vh - 32px); max-height:calc(100dvh - 32px); overflow:auto; overscroll-behavior:contain; }
