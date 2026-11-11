@@ -3178,7 +3178,7 @@
     const total = liste.length;
     liste = liste.slice(0, 60);
     $('#cat-contenu').innerHTML = `<div class="filtres">${filtres.map(([k, v]) => `<button class="filtre" data-catfiltre="${k}" aria-pressed="${catFiltre === k}">${v}</button>`).join('')}</div>
-      <input class="recherche" id="cat-recherche" type="search" placeholder="Chercher" value="${esc(catRecherche)}" autocomplete="off">
+      <input class="recherche" id="cat-recherche" type="search" aria-label="Chercher dans les fournisseurs" placeholder="Chercher" value="${esc(catRecherche)}" autocomplete="off">
       ${liste.map((x) => carteArticle(x, catOnglet)).join('') || `<p class="vide">${catFiltre === 'achat' ? 'Tout est déjà à toi dans cette catégorie.' : 'Rien ici pour l\'instant.'}</p>`}
       ${total > 60 ? `<p class="page-intro">${total - 60} autres : affine la recherche.</p>` : ''}`;
     rendreDecouvertes();
@@ -3186,7 +3186,7 @@
   function carteArticle(x, cat) {
     if (cat === 'futs') {
       const prix = prixFut(x.type, x.taille), ok = achetable(x), n = nbFuts(x);
-      const action = ok ? `<button class="btn" data-acheter="futs:${esc(x.id)}" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>` : `<span class="etq ko">${PALIERS[Math.max(0, x.palier - 1)].pts} pts requis</span>`;
+      const action = ok ? `<button class="btn" data-acheter="futs:${esc(x.id)}" aria-label="Acheter ${esc(x.nom)} pour ${prix} écus" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>` : `<span class="etq ko">${PALIERS[Math.max(0, x.palier - 1)].pts} pts requis</span>`;
       return `<div class="article ${n ? 'possede' : ''} ${!ok ? 'hors' : ''}"><span class="nom"><span class="fut-mini fut-${x.type}"></span>${esc(x.nom)} <span class="rarete">${etoilesRarete(x.palier)}</span></span>${action}
         <span class="det">${CATEGORIES.futs.det(x)}${n ? ` · <b>${n} au chai</b>` : ''}</span></div>`;
     }
@@ -3196,7 +3196,7 @@
     let action;
     if (possede) action = recette ? `<button class="btn btn-feu" data-brasser="${esc(x.id)}">Brasser</button>` : '<span class="etq ok">Possédé</span>';
     else if (!ok) action = `<span class="etq ko">${PALIERS[Math.max(0, (x.palier || 1) - 1)].pts} pts requis</span>`;
-    else action = `<button class="btn" data-acheter="${cat}:${esc(x.id)}" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>`;
+    else action = `<button class="btn" data-acheter="${cat}:${esc(x.id)}" aria-label="Acheter ${esc(x.nom)} pour ${prix} écus" ${S.ecus < prix ? 'disabled' : ''}>${prix} écus</button>`;
     let extra = '';
     if (recette) {
       const manque = manquantsRecette(x);

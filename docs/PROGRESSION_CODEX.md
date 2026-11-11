@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Lot autorisé de 50 — mission 06 : Fournisseurs : catalogue tactile et achats nommés
+
+Statut : terminée sur `work/lot50-06-fournisseurs`, sans fusion.
+Catégories et filtres lisibles, recherche nommée, cartes et boutons de 48 px, verrouillage explicite. Achat réel contrôlé : débit exact, ingrédient possédé, retrait des achats restants, recherche vide et persistance vérifiés.
+
+Validation : build, six suites Node, contrôle Chromium 320/390 px DPR 2 réussis ;
+zéro erreur JS ni débordement, interactions réelles et captures dans
+`docs/captures/lot50/06-*`. Capture 390 inspectée. Pas d’Android physique/Safari.
+`git diff --check` vérifié. Aucun moteur ni format de sauvegarde modifié.
+Prochaine mission : Adapter les cartes d’ingrédients de la brasserie et leurs gestes tactiles.
+
+
 ## Lot autorisé de 50 — mission 05 : Options : préférences lisibles et tactiles
 
 Statut : terminée sur `work/lot50-05-options`, sans fusion.
