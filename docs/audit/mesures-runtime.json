@@ -1,0 +1,137 @@
+{
+  "audited_ref": "41ab2b952c685be73fbae664160d89eccfd93440",
+  "cases": [
+    {
+      "width": 320,
+      "doses": [
+        {
+          "volume": 100,
+          "label": "+250 g",
+          "aria": "Ajouter 250 g de Cascade",
+          "addedGrams": 30
+        },
+        {
+          "volume": 500,
+          "label": "+250 g",
+          "aria": "Ajouter 250 g de Cascade",
+          "addedGrams": 130
+        }
+      ],
+      "distButtons": [
+        {
+          "label": "Oui",
+          "height": 35.1875
+        },
+        {
+          "label": "Non",
+          "height": 35.1875
+        },
+        {
+          "label": "Douce",
+          "height": 35.1875
+        },
+        {
+          "label": "Moyenne",
+          "height": 35.1875
+        },
+        {
+          "label": "Vive",
+          "height": 35.1875
+        }
+      ],
+      "distRanges": [
+        {
+          "id": "rd-tetes",
+          "height": 28
+        },
+        {
+          "id": "rd-queues",
+          "height": 28
+        }
+      ],
+      "mentorButtons": [
+        {
+          "label": "Passer le tutoriel",
+          "height": 36
+        }
+      ],
+      "zeroHop": {
+        "score": "100 %",
+        "doneMarkers": 0,
+        "button": "Jeter Saaz0,25 kg · prévu à 0 min",
+        "disabled": true
+      },
+      "timerAfterLastHop": {
+        "remaining": "60'",
+        "cursorPercent": 100,
+        "score": "100 %"
+      }
+    },
+    {
+      "width": 390,
+      "doses": [
+        {
+          "volume": 100,
+          "label": "+250 g",
+          "aria": "Ajouter 250 g de Cascade",
+          "addedGrams": 30
+        },
+        {
+          "volume": 500,
+          "label": "+250 g",
+          "aria": "Ajouter 250 g de Cascade",
+          "addedGrams": 130
+        }
+      ],
+      "distButtons": [
+        {
+          "label": "Oui",
+          "height": 35.1875
+        },
+        {
+          "label": "Non",
+          "height": 35.1875
+        },
+        {
+          "label": "Douce",
+          "height": 35.1875
+        },
+        {
+          "label": "Moyenne",
+          "height": 35.1875
+        },
+        {
+          "label": "Vive",
+          "height": 35.1875
+        }
+      ],
+      "distRanges": [
+        {
+          "id": "rd-tetes",
+          "height": 28
+        },
+        {
+          "id": "rd-queues",
+          "height": 28
+        }
+      ],
+      "mentorButtons": [
+        {
+          "label": "Passer le tutoriel",
+          "height": 36
+        }
+      ],
+      "zeroHop": {
+        "score": "100 %",
+        "doneMarkers": 0,
+        "button": "Jeter Saaz0,25 kg · prévu à 0 min",
+        "disabled": true
+      },
+      "timerAfterLastHop": {
+        "remaining": "60'",
+        "cursorPercent": 100,
+        "score": "100 %"
+      }
+    }
+  ]
+}
