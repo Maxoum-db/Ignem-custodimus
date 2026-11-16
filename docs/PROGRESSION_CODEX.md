@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 13 : Clarifier les jauges des gestes
+
+Branche : `work/serie20-13-jauges-gestes`. Jauges communes : libellé et valeur au-dessus de barres 16 px, rôle meter et valeur avec unité. Empâtage contrôlé en DOM : trois jauges, valeurs bornées cohérentes avec le remplissage et pression en bar. Calculs communs inchangés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/13.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/13-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 12 : Rendre les registres d’air tactiles et explicites
 
 Branche : `work/serie20-12-registres-foyer`. Les deux foyers affichent le pourcentage d’ouverture, avec curseur 48 px et unité accessible. Contrôle de leur activation et de 50 à 51 % par clavier dans les deux chauffes ; modèle thermique conservé.

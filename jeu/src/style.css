@@ -1219,3 +1219,10 @@ html,body { margin:0; }
 #ecran-brouillis .registre, #ecran-repasse .registre { background:var(--four); border:1px solid var(--cuivre); border-radius:16px; padding:16px; gap:12px; font-size:17px; }
 #bro-registre, #rep-registre { min-height:48px; }
 .registre output { float:right; color:var(--braise); font-size:22px; font-weight:700; }
+
+/* Jauges des gestes : libellé et valeur au-dessus d’une barre ample. */
+.jauge-feu { grid-template-columns:minmax(0,1fr) auto; gap:8px 12px; padding:10px 0; font-size:16px; }
+.jauge-feu > span:first-child { grid-column:1; grid-row:1; }
+.jauge-feu .val { grid-column:2; grid-row:1; font-size:21px; }
+.jauge-feu .barre { grid-column:1/-1; grid-row:2; height:16px; border-radius:6px; }
+.jauge-feu .niv, .jauge-feu .zone { border-radius:6px; }
