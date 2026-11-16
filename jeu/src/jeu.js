@@ -873,11 +873,24 @@
   }
 
   function rendreOnglets() {
+    $('#onglet-contenu').setAttribute('aria-labelledby', 'tab-' + onglet);
     const nb = R.malts.length + R.houblons.length + R.aromates.length + (R.levure ? 1 : 0);
     const defs = [['cuve', `Cuve<span class="badge">${nb}</span>`], ['malts', 'Céréales'], ['houblons', 'Houblons'], ['levure', 'Levure'], ['eau', 'Eau'], ['aromates', 'Aromates'], ['procede', 'Procédé']];
-    $('#onglets').innerHTML = defs.map(([id, lib]) => `<button class="onglet" role="tab" id="tab-${id}" aria-selected="${onglet === id}" data-onglet="${id}">${lib}</button>`).join('');
+    $('#onglets').innerHTML = defs.map(([id, lib]) => `<button class="onglet" role="tab" id="tab-${id}" aria-controls="onglet-contenu" tabindex="${onglet === id ? 0 : -1}" aria-selected="${onglet === id}" data-onglet="${id}">${lib}</button>`).join('');
   }
-  $('#onglets').addEventListener('click', (e) => { const b = e.target.closest('[data-onglet]'); if (!b) return; onglet = b.dataset.onglet; recherche = ''; son('clic'); rendreOnglets(); rendreOnglet(); });
+  function choisirOnglet(id) {
+    onglet = id; recherche = ''; son('clic'); rendreOnglets(); rendreOnglet();
+    $('#onglet-contenu').setAttribute('aria-labelledby', 'tab-' + id);
+    $('#tab-' + id).focus();
+  }
+  $('#onglets').addEventListener('click', (e) => { const b = e.target.closest('[data-onglet]'); if (b) choisirOnglet(b.dataset.onglet); });
+  $('#onglets').addEventListener('keydown', (e) => {
+    const b = e.target.closest('[data-onglet]');
+    if (!b || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+    e.preventDefault(); const tabs = $$('[data-onglet]', $('#onglets')), i = tabs.indexOf(b);
+    const next = e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : (i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+    choisirOnglet(tabs[next].dataset.onglet);
+  });
 
   function poignee(img, teinte, type, id) {
     return `<span class="poignee" data-glisser="${type}" data-id="${esc(id)}" aria-hidden="true"><img class="sprite" src="${img}" alt="">${teinte ? `<i class="teinte" style="background:${teinte}"></i>` : ''}</span>`;

@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 14 : Compléter la navigation clavier des onglets recette
+
+Branche : `work/serie20-14-onglets-clavier`. Onglets avec une seule entrée Tab, panneau associé et navigation flèches/Début/Fin avec bouclage. Toucher préservé ; recette et monnaie comparées avant/après. Aucun changement de préparation.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/14.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/14-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 13 : Clarifier les jauges des gestes
 
 Branche : `work/serie20-13-jauges-gestes`. Jauges communes : libellé et valeur au-dessus de barres 16 px, rôle meter et valeur avec unité. Empâtage contrôlé en DOM : trois jauges, valeurs bornées cohérentes avec le remplissage et pression en bar. Calculs communs inchangés.
