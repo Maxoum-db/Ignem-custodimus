@@ -1,5 +1,24 @@
 # Progression Codex
 
+## Nouvelle tentative de publication — contrôle toujours bloquant
+
+Mission unique : reprendre la mise en ligne demandée, sans nouvelle refonte.
+Statut : bloquée. Main ce36e0e et HTML autonome vérifiés inchangés ; site
+observé en v12, audience custom inchangée. Dépôt initial propre.
+
+Après la demande « Esssai pour faire évoluer le site en ligne », nouvelle
+credential Sites et nouveau réexamen de la saisie getpass masquée. Refus
+automatique répété pour exposition du jeton dans le transcript, malgré
+l’autorisation de publier. Action non exécutée, processus arrêté, valeur
+retirée de mémoire ; aucun contournement, aucun push Sites ni déploiement.
+
+Suivi : docs/PUBLICATION_SERIE20.md et ce journal, sur la branche existante
+work/publication-serie20 et sa PR #102. Archive de publication et ZIP autonome
+conservés. La prochaine mission unique est de publier via une authentification
+gérée sans passage du jeton au terminal ; une nouvelle autorisation générale
+ne suffit pas à lever ce refus. Aucun travail fonctionnel commencé.
+
+
 ## Fusion autorisée et livraison — série de vingt
 
 Statut : partielle. PR #101 fusionnée dans main `ce36e0e` après réussite de sa

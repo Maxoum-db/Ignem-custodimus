@@ -60,3 +60,21 @@ l’historique Sites, branche work/publication-serie20, arbre exact du merge Git
 
 Prochaine mission unique : publier cette archive après déblocage de
 l’authentification. Aucune nouvelle mission de refonte commencée.
+
+## Nouvelle tentative autorisée — 16 novembre 2026
+
+Demande : « Esssai pour faire évoluer le site en ligne ». Site relu avant
+la tentative : version 12, audience custom et URL inchangées. Main GitHub
+confirmé à ce36e0e ; le HTML autonome conserve son empreinte vérifiée.
+
+Un identifiant temporaire neuf a été demandé. Le contrôle automatique a de
+nouveau refusé son envoi masqué par getpass au processus Git : il considère
+que le jeton est exposé dans le transcript, malgré l’autorisation de publier.
+Aucun jeton transmis, aucune valeur dans les fichiers ou sorties ; processus
+arrêté et valeur retirée de la mémoire de travail. Aucun push Sites, version
+sauvegardée ou déploiement effectué. Aucun contournement tenté.
+
+Une nouvelle autorisation de publier ne résout donc pas ce blocage technique.
+La reprise nécessite une authentification gérée par l’intégration, acceptée
+par le contrôle, sans transmission du jeton au terminal. Ne pas réessayer
+encore la même entrée secrète. Les livrables préparés restent disponibles.
