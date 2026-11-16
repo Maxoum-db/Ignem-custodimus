@@ -660,8 +660,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 
 /* ---------- Gestes V0.7 ---------- */
 #fer-houblon { margin-top: 8px; width: 100%; }
-#fer-houblon.pret:not(:disabled) { animation: pret 0.6s steps(2) infinite; }
-@keyframes pret { 50% { box-shadow: 0 0 0 3px var(--or); } }
+#fer-houblon.pret:not(:disabled) { outline:3px solid var(--or); outline-offset:3px; background:var(--houblon); color:var(--nuit); }
 .dose-sucre p { grid-column: 1 / -1; margin: 0; font-size: 14px; }
 
 /* ---------- Style visé et plan de Lise (V0.7.1) ---------- */

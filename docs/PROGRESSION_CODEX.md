@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 17 : Stabiliser le signal du dry hop prêt
+
+Branche : `work/serie20-17-signal-dry-hop`. Remplacement du clignotement en marches par un contour et une couleur stables, avec le texte maintenant existant. Classe prête retirée après le dernier ajout. Fenêtre réelle DH1, absence d’animation, ajout manuel consommé et suite bouteille vérifiés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/17.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/17-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 16 : Illustrer les animaux de la basse-cour
 
 Branche : `work/serie20-16-animaux-illustres`. Réutilisation inchangée de deux WebP historiques, provenance et empreintes documentées. Poules et chat procéduraux remplacés dans le canvas existant ; appels drawImage des nouveaux assets réellement vérifiés. Six accès, bâtiments et chai conservés.

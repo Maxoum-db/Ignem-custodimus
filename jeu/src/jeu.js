@@ -1810,7 +1810,7 @@
     const bH = $('#fer-houblon'); bH.hidden = !dhAFaire.length; bH.disabled = true;
     function majBoutonDH() {
       const p = dhAFaire[0];
-      if (!p) { bH.disabled = true; $('#fer-houblon-sous').textContent = 'tous les houblons sont dans la cuve'; return; }
+      if (!p) { bH.disabled = true; bH.classList.remove('pret'); $('#fer-houblon-sous').textContent = 'tous les houblons sont dans la cuve'; return; }
       const j = st.j || 0, dans = j >= p.debut && j <= p.fin;
       bH.disabled = !st.go;
       bH.classList.toggle('pret', dans);
