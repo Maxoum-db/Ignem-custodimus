@@ -3603,7 +3603,7 @@
       $$('.bouteille canvas', et).forEach(dessinerBouteille);
       rendreDetailCarnet();
     }
-    $('#succes').innerHTML = SUCCES.map((s) => `<div class="succes-item ${S.succes[s.id] ? 'obtenu' : ''}"><b>${esc(s.nom)}</b>${esc(s.desc)}</div>`).join('');
+    $('#succes').innerHTML = SUCCES.map((s) => `<div class="succes-item ${S.succes[s.id] ? 'obtenu' : ''}"><b>${esc(s.nom)}</b><span class="succes-etat">${S.succes[s.id] ? 'Obtenu' : 'À accomplir'}</span><p>${esc(s.desc)}</p></div>`).join('');
   }
   function dessinerBouteille(cv) {
     // Coordonnées logiques indépendantes de la densité de l'écran.
