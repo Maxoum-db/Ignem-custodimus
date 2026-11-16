@@ -1170,3 +1170,9 @@ html,body { margin:0; }
 .defaut h3 > span:first-child { min-width:0; overflow-wrap:anywhere; }
 .defaut p { font-size:16px; line-height:1.5; }
 .gravite { font-family:var(--f-texte); font-size:14px; letter-spacing:normal; white-space:nowrap; padding:4px 8px; border:1px solid currentColor; border-radius:8px; }
+
+/* Carnet : progression réelle vers le prochain palier. */
+#carnet-progression .progression { border:1px solid var(--cuivre); border-radius:18px; padding:18px; gap:12px; }
+#carnet-progression .niv { font-family:var(--f-texte); font-size:21px; font-weight:800; }
+#carnet-progression .jauge { height:16px; border-radius:8px; overflow:hidden; }
+#carnet-progression p { line-height:1.5; }

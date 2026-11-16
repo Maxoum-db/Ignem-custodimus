@@ -1179,6 +1179,12 @@ html,body { margin:0; }
 .defaut h3 > span:first-child { min-width:0; overflow-wrap:anywhere; }
 .defaut p { font-size:16px; line-height:1.5; }
 .gravite { font-family:var(--f-texte); font-size:14px; letter-spacing:normal; white-space:nowrap; padding:4px 8px; border:1px solid currentColor; border-radius:8px; }
+
+/* Carnet : progression réelle vers le prochain palier. */
+#carnet-progression .progression { border:1px solid var(--cuivre); border-radius:18px; padding:18px; gap:12px; }
+#carnet-progression .niv { font-family:var(--f-texte); font-size:21px; font-weight:800; }
+#carnet-progression .jauge { height:16px; border-radius:8px; overflow:hidden; }
+#carnet-progression p { line-height:1.5; }
 </style>
 
 <div id="app">
@@ -6877,7 +6883,7 @@ html,body { margin:0; }
     const pc = suivant ? Math.round(((S.points - debut) / (fin - debut)) * 100) : 100;
     $('#carnet-progression').innerHTML = `<div class="progression"><p class="niv">${niveau().toUpperCase()}</p>
       <p>${S.points} points · ${S.brassins} brassin${S.brassins > 1 ? 's' : ''} · palier ${p} sur 5</p>
-      <div class="jauge" style="height:10px"><i style="width:${pc}%;background:var(--braise)"></i></div>
+      <div class="jauge" role="progressbar" aria-label="Progression du palier" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pc}" aria-valuetext="${S.points} points ; ${suivant ? `prochain palier à ${fin} points` : 'dernier palier atteint'}"><i style="width:${pc}%;background:var(--braise)"></i></div>
       <p class="page-intro">${suivant ? `Prochain palier à ${suivant.pts} points : ${suivant.txt}.` : 'Tout le catalogue est débloqué.'}</p></div>`;
     const et = $('#etagere');
     if (!S.carnet.length) { et.innerHTML = '<p class="vide" style="grid-column:1/-1">L\'étagère est vide. Brasse ta première bière à la brasserie.</p>'; $('#carnet-detail').innerHTML = ''; }

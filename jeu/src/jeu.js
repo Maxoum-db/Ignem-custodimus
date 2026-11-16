@@ -3594,7 +3594,7 @@
     const pc = suivant ? Math.round(((S.points - debut) / (fin - debut)) * 100) : 100;
     $('#carnet-progression').innerHTML = `<div class="progression"><p class="niv">${niveau().toUpperCase()}</p>
       <p>${S.points} points · ${S.brassins} brassin${S.brassins > 1 ? 's' : ''} · palier ${p} sur 5</p>
-      <div class="jauge" style="height:10px"><i style="width:${pc}%;background:var(--braise)"></i></div>
+      <div class="jauge" role="progressbar" aria-label="Progression du palier" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pc}" aria-valuetext="${S.points} points ; ${suivant ? `prochain palier à ${fin} points` : 'dernier palier atteint'}"><i style="width:${pc}%;background:var(--braise)"></i></div>
       <p class="page-intro">${suivant ? `Prochain palier à ${suivant.pts} points : ${suivant.txt}.` : 'Tout le catalogue est débloqué.'}</p></div>`;
     const et = $('#etagere');
     if (!S.carnet.length) { et.innerHTML = '<p class="vide" style="grid-column:1/-1">L\'étagère est vide. Brasse ta première bière à la brasserie.</p>'; $('#carnet-detail').innerHTML = ''; }
