@@ -2463,7 +2463,7 @@
     const NOMS = ['Têtes', 'Cœur', 'Queues'];
     $('#aveugle-verres').innerHTML = ordre.map((iFr, k) => {
       const odeurs = DI.descripteurs(r.fractions[iFr]);
-      return `<div class="verre-a" id="verre-a-${k}">${verreDegustation('fraction-' + k, 'spiritueux', '#c5dcdf')}<span class="lettre">${'ABC'[k]}</span>
+      return `<div class="verre-a" id="verre-a-${k}" role="group" aria-label="Verre ${'ABC'[k]}">${verreDegustation('fraction-' + k, 'spiritueux', '#c5dcdf')}<span class="lettre">${'ABC'[k]}</span>
         <span class="odeurs">${odeurs.map((o) => `${esc(o.odeur)} <small>(${o.force})</small>`).join('<br>') || 'presque rien'}</span>
         <div class="choix">${NOMS.map((n, j) => `<button data-av="${k}:${j}" aria-pressed="false">${n}</button>`).join('')}</div><span class="reponse"></span></div>`;
     }).join('');
