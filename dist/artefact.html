@@ -1216,6 +1216,11 @@ html,body { margin:0; }
 .dose-sucre .val { font-size:26px; }
 .dose-sucre input[type="range"] { min-height:48px; width:100%; }
 .dose-sucre p { font-size:16px; line-height:1.5; }
+
+/* Foyers Ulysse : ouverture du registre visible et commande ample. */
+#ecran-brouillis .registre, #ecran-repasse .registre { background:var(--four); border:1px solid var(--cuivre); border-radius:16px; padding:16px; gap:12px; font-size:17px; }
+#bro-registre, #rep-registre { min-height:48px; }
+.registre output { float:right; color:var(--braise); font-size:22px; font-weight:700; }
 </style>
 
 <div id="app">
@@ -1387,7 +1392,7 @@ html,body { margin:0; }
       <div class="jauges-feu" id="bro-jauges"></div>
       <div class="geste-controles">
         <button id="bro-buche" class="btn btn-feu btn-geste" disabled>Ajouter une bûche<small>elle met une seconde à prendre</small></button>
-        <label class="registre" for="bro-registre"><span>Registre d'air</span><input type="range" id="bro-registre" min="0" max="100" step="1" value="50" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
+        <label class="registre" for="bro-registre"><span>Registre d'air <output id="bro-registre-val" for="bro-registre">50 %</output></span><input type="range" id="bro-registre" min="0" max="100" step="1" value="50" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
       </div>
       <div class="geste-bilan" id="bro-bilan" hidden></div>
       <div class="geste-pied" id="bro-pied">
@@ -1409,7 +1414,7 @@ html,body { margin:0; }
         <button id="rep-buche" class="btn btn-sobre" disabled>Bûche</button>
         <button id="rep-couper" class="btn btn-feu btn-geste" disabled>Couper</button>
       </div>
-      <label class="registre" for="rep-registre"><span>Registre d'air</span><input type="range" id="rep-registre" min="0" max="100" step="1" value="50" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
+      <label class="registre" for="rep-registre"><span>Registre d'air <output id="rep-registre-val" for="rep-registre">50 %</output></span><input type="range" id="rep-registre" min="0" max="100" step="1" value="50" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
       <div class="geste-bilan" id="rep-bilan" hidden></div>
       <div class="geste-pied" id="rep-pied">
         <button id="rep-passer" class="btn btn-sobre">Coupes automatiques</button>
@@ -5533,7 +5538,7 @@ html,body { margin:0; }
   const ajouterBuche = (f) => { if (f.buches.length >= 4) { toast('Le foyer est plein.'); return; } f.buches.push({ age: 0, m: 1 }); son('sac'); };
   // Prévision : où ira la chaudière si on ne touche à rien pendant 2 s
   function prevoirFeu(f) { const g = { ...f, buches: f.buches.map((b) => ({ ...b })) }; for (let i = 0; i < 40; i++) brulerFeu(g, 0.05); return g.P; }
-  const lierRegistre = (id, f) => { const el = $(id); el.value = Math.round(f.air * 100); el.oninput = () => { f.air = el.value / 100; }; return el; };
+  const lierRegistre = (id, f) => { const el = $(id), val = $(id + '-val'); el.value = Math.round(f.air * 100); const afficher = () => { el.setAttribute('aria-valuetext', el.value + ' % d’ouverture'); if (val) val.value = el.value + ' %'; }; el.oninput = () => { f.air = el.value / 100; afficher(); }; afficher(); return el; };
   function jaugesFeu(id, items) {
     $(id).innerHTML = items.map((j) => `<div class="jauge-feu"><span>${j.lib}</span><span class="barre">${j.zone ? `<i class="zone" style="left:${j.zone[0] * 100}%;width:${(j.zone[1] - j.zone[0]) * 100}%"></i>` : ''}<i class="niv" style="width:${borne(j.v, 0, 1) * 100}%;background:${j.coul}"></i>${j.prev != null ? `<i class="prev" style="left:${borne(j.prev, 0, 1) * 100}%"></i>` : ''}</span><span class="val">${j.txt != null ? j.txt : Math.round(j.v * 100) + ' %'}</span></div>`).join('');
   }

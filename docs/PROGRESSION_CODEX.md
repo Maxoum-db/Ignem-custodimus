@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 12 : Rendre les registres d’air tactiles et explicites
+
+Branche : `work/serie20-12-registres-foyer`. Les deux foyers affichent le pourcentage d’ouverture, avec curseur 48 px et unité accessible. Contrôle de leur activation et de 50 à 51 % par clavier dans les deux chauffes ; modèle thermique conservé.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/12.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/12-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 11 : Agrandir le dosage du sucre en bouteille
 
 Branche : `work/serie20-11-sucre-bouteilles`. Carte de dosage et curseur de 48 px, valeur avec unité accessible et verdict associé. Test : 6,5 g/L sélectionnés puis CO₂ du brassin sauvegardé identique au calcul résiduel plus sucre. Embouteillage et accès au jury conservés.
