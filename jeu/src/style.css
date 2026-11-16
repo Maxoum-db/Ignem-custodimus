@@ -1155,3 +1155,11 @@ html,body { margin:0; }
 .mentor { max-height:45vh; max-height:45dvh; overflow-y:auto; overscroll-behavior:contain; border-radius:20px 20px 0 0; }
 .mentor-actions .btn { min-height:48px; padding:10px 14px; font-size:16px; }
 #menu-entete { max-height:calc(100vh - 90px - var(--pied-mentor, 0px)); max-height:calc(100dvh - 90px - var(--pied-mentor, 0px)); }
+
+/* Fiche du jury : papier illustré et lignes de notes explicites. */
+.fiche-jury { border-radius:18px; border:1px solid var(--cuivre); padding:16px; }
+.fiche-jury h3 { font-family:var(--f-texte); font-size:17px; line-height:1.4; }
+.fiche-jury th { text-align:left; font-size:16px; font-weight:600; padding:10px 8px 10px 0; border-bottom:1px solid #3b2a1e40; }
+.fiche-jury td { padding:10px 0; border-bottom:1px solid #3b2a1e40; white-space:nowrap; }
+.fiche-jury tr.total th { border-bottom:0; }
+@media (prefers-reduced-motion:reduce) { .fiche-jury .lent { animation:none; opacity:1; } }

@@ -1,0 +1,1 @@
+module.exports=async(ctx,patch={})=>{await ctx.reset({recette:require('./recette.cjs'),mode:'expert',gestesExpert:false,...patch});await ctx.to('brasserie');await ctx.page.locator('#btn-lancer').click();await ctx.page.locator('#ecran-degustation').waitFor({state:'visible'});};

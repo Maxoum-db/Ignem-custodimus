@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 05 : Clarifier les fiches du jury
+
+Branche : `work/serie20-05-fiche-jury`. Capture inspectée : les délais des lignes sont supprimés en mouvement réduit et leur opacité est testée. Présentation papier arrondie, lignes aérées et en-têtes de lignes pour les quatre jurys (bière, wash, eau-de-vie, vieilli). Test navigateur sur bière calculée : six en-têtes et total identique au carnet. Autres jurys couverts par les suites moteur, pas par ce nouveau scénario DOM.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/05.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/05-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 04 : Rendre le mentor utilisable sur écran court
 
 Branche : `work/serie20-04-mentor-mobile`. U02 : actions de 48 px, panneau limité à 45 % de hauteur et défilant. ResizeObserver maintient la réserve de place ; le menu tient compte du mentor pour éviter le chevauchement reproduit au premier test. Tutoriel quittable à 430 px de haut.

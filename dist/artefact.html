@@ -1157,6 +1157,14 @@ html,body { margin:0; }
 .mentor { max-height:45vh; max-height:45dvh; overflow-y:auto; overscroll-behavior:contain; border-radius:20px 20px 0 0; }
 .mentor-actions .btn { min-height:48px; padding:10px 14px; font-size:16px; }
 #menu-entete { max-height:calc(100vh - 90px - var(--pied-mentor, 0px)); max-height:calc(100dvh - 90px - var(--pied-mentor, 0px)); }
+
+/* Fiche du jury : papier illustré et lignes de notes explicites. */
+.fiche-jury { border-radius:18px; border:1px solid var(--cuivre); padding:16px; }
+.fiche-jury h3 { font-family:var(--f-texte); font-size:17px; line-height:1.4; }
+.fiche-jury th { text-align:left; font-size:16px; font-weight:600; padding:10px 8px 10px 0; border-bottom:1px solid #3b2a1e40; }
+.fiche-jury td { padding:10px 0; border-bottom:1px solid #3b2a1e40; white-space:nowrap; }
+.fiche-jury tr.total th { border-bottom:0; }
+@media (prefers-reduced-motion:reduce) { .fiche-jury .lent { animation:none; opacity:1; } }
 </style>
 
 <div id="app">
@@ -5322,8 +5330,8 @@ html,body { margin:0; }
     // Fiche de jury
     const L = note.lignes;
     const rang = [['aspect', 'Aspect', 3], ['arome', 'Arôme', 12], ['bouche', 'Bouche', 5], ['saveur', 'Saveur', 20], ['impression', 'Impression générale', 10]];
-    $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION</h3><table>${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><td>${lib}</td><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
-      <tr class="total lent" style="animation-delay:${0.4 + 5 * 0.35}s"><td>Total</td><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
+    $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION</h3><table aria-label="Notes du jury">${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><th scope="row">${lib}</th><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
+      <tr class="total lent" style="animation-delay:${0.4 + 5 * 0.35}s"><th scope="row">Total</th><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
 
     // Défauts
     $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite" aria-label="Gravité ${d.gravite} sur 3">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>
@@ -5679,7 +5687,7 @@ html,body { margin:0; }
       if (r.phase === 0) DI.couper(r);
       sessionD.scoresFeu.push(borne(st.dans / Math.max(1, st.duree), 0, 1));
       const bl = DI.bilan(r);
-      const ligne = (lib, f) => `<tr><td>${lib}</td><td>${nf(f.V, 1)} L</td><td>${nf(f.degre, 0)} %</td><td>${nf(f.lap, 1)}</td></tr>`;
+      const ligne = (lib, f) => `<tr><th scope="row">${lib}</th><td>${nf(f.V, 1)} L</td><td>${nf(f.degre, 0)} %</td><td>${nf(f.lap, 1)}</td></tr>`;
       const lapBiere = sessionD.biere.abv * (sessionD.vol || 1000) / 100;
       son('ok');
       bilanGeste('rep', [
@@ -5825,8 +5833,8 @@ html,body { margin:0; }
       $('#radar').innerHTML = radarSVG(axes, note.profil);
       const L = note.lignes;
       const rang = [['aspect', 'Aspect et limpidité', 5], ['nez', 'Nez', 15], ['bouche', 'Bouche', 15], ['finale', 'Finale', 10], ['harmonie', 'Harmonie', 5]];
-      $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · EAU-DE-VIE</h3><table>${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><td>${lib}</td><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
-        <tr class="total lent" style="animation-delay:${0.4 + 5 * 0.35}s"><td>Total</td><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
+      $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · EAU-DE-VIE</h3><table aria-label="Notes eau-de-vie">${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><th scope="row">${lib}</th><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
+        <tr class="total lent" style="animation-delay:${0.4 + 5 * 0.35}s"><th scope="row">Total</th><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
     }
     $('#degust-defauts').innerHTML = note && note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [];
@@ -6149,8 +6157,8 @@ html,body { margin:0; }
       <span class="style">${bt.n} bouteilles de ${nf(CH.P.bouteilleL * 100, 0)} cl à ${nf(bt.degre, 1)} %${bt.brutDeFut ? ' (brut de fût)' : ''} · ${etat.assemblage ? `assemblage de ${etat.assemblage} lots` : e.futs.map((x) => `${CH.TYPES[x.type].nom} ${nf(x.ans, x.ans % 1 ? 1 : 0)} an${x.ans >= 2 ? 's' : ''}`).join(', puis ')}</span>`;
     $('#radar').innerHTML = radarSVG(CH.AXES.map((k) => [k, CH.LIB_AXES[k]]), CH.profil(etat));
     const rang = Object.entries(CH.LIB_LIGNES);
-    $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · SPIRITUEUX VIEILLI</h3><table>${rang.map(([k, [lib, max]], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><td>${lib}</td><td>${nf(note.lignes[k], note.lignes[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
-      <tr class="total lent" style="animation-delay:${0.4 + rang.length * 0.35}s"><td>Total</td><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
+    $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · SPIRITUEUX VIEILLI</h3><table aria-label="Notes spiritueux vieilli">${rang.map(([k, [lib, max]], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><th scope="row">${lib}</th><td>${nf(note.lignes[k], note.lignes[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
+      <tr class="total lent" style="animation-delay:${0.4 + rang.length * 0.35}s"><th scope="row">Total</th><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
     $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)}</span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p></div>`).join('') : '';
     const pip = CH.pipette(etat);
     const g = [];
@@ -6829,8 +6837,8 @@ html,body { margin:0; }
     $('#radar').innerHTML = radarSVG(axes, res.profil);
     const L = fiche.lignes;
     const rang = [['alcool', 'Alcool à distiller', 8], ['attenuation', 'Atténuation', 4], ['proprete', 'Propreté', 5], ['potentiel', 'Potentiel aromatique', 3]];
-    $('#fiche-jury').innerHTML = `<h3>FICHE DU BOUILLEUR · WASH</h3><table>${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.3 + i * 0.3}s"><td>${lib}</td><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
-      <tr class="total lent" style="animation-delay:1.5s"><td>Total</td><td>${nf(fiche.total, fiche.total % 1 ? 1 : 0)} / 20</td></tr></table>`;
+    $('#fiche-jury').innerHTML = `<h3>FICHE DU BOUILLEUR · WASH</h3><table aria-label="Notes du wash">${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.3 + i * 0.3}s"><th scope="row">${lib}</th><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
+      <tr class="total lent" style="animation-delay:1.5s"><th scope="row">Total</th><td>${nf(fiche.total, fiche.total % 1 ? 1 : 0)} / 20</td></tr></table>`;
     $('#degust-defauts').innerHTML = fiche.defauts.length ? `<h2 class="sous-titre">Points faibles</h2>` + fiche.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [S.bac ? 'Bac à sable : ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b>.`];
     (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
