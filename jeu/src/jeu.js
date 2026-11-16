@@ -1411,7 +1411,10 @@
   const infoBloc = (v, l) => `<div class="mesure"><span class="v">${v}</span><span class="l">${l}</span></div>`;
   function bilanGeste(id, lignes, suite) {
     const b = $(`#${id}-bilan`); b.hidden = false;
-    b.innerHTML = lignes.filter(Boolean).map((l) => `<p>${l}</p>`).join('') + `<button class="btn btn-feu" id="${id}-suite">${suite}</button>`;
+    const nom = { emp: 'Empâtage', fil: 'Filtration', ebu: 'Houblonnage', fer: 'Fermentation', bou: 'Embouteillage', bro: 'Brouillis', rep: 'Bonne chauffe' }[id] || 'Geste';
+    b.setAttribute('role', 'region'); b.setAttribute('aria-label', 'Bilan : ' + nom); b.tabIndex = -1;
+    b.innerHTML = `<h2>Bilan · ${nom}</h2>` + lignes.filter(Boolean).map((l) => `<p>${l}</p>`).join('') + `<button class="btn btn-feu" id="${id}-suite">${suite}</button>`;
+    b.focus({ preventScroll: true });
     const pied = $(`#${id}-pied`); if (pied) pied.hidden = true;
     b.scrollIntoView({ block: 'nearest', behavior: reduit ? 'auto' : 'smooth' });
   }
