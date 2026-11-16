@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 16 : Illustrer les animaux de la basse-cour
+
+Branche : `work/serie20-16-animaux-illustres`. Réutilisation inchangée de deux WebP historiques, provenance et empreintes documentées. Poules et chat procéduraux remplacés dans le canvas existant ; appels drawImage des nouveaux assets réellement vérifiés. Six accès, bâtiments et chai conservés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/16.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/16-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 15 : Expliquer les recherches d’ingrédients sans résultat
 
 Branche : `work/serie20-15-recherche-vide`. Message échappé et action Effacer de 48 px dans les quatre recherches. La fixture possède des aromates ; le message ancien Aucun aromate est remplacé quand la recherche seule échoue. Effacement, focus retrouvé, nombre de cartes et recette conservés vérifiés.
