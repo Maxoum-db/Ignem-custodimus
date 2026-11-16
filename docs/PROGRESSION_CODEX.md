@@ -1,5 +1,30 @@
 # Progression Codex
 
+## Fusion autorisée et livraison — série de vingt
+
+Statut : partielle. PR #101 fusionnée dans main `ce36e0e` après réussite de sa
+CI complète 43955201528. La tête fusionnée est exactement `5260945` ; jeu/dist
+et manifeste sont identiques au code testé. Aucune nouvelle modification du jeu.
+
+Publication Sites bloquée par le contrôle automatique : refus de transmission
+masquée du jeton au terminal (risque d’exposition dans le transcript). Action
+non exécutée, aucun contournement ; accès Git intégré sans jeton indisponible.
+Le site reste observé en version 12, audience custom inchangée ; aucun nouveau
+déploiement annoncé. Le helper Sites n’est pas installé dans l’environnement.
+
+Livrables préparés à partir du main fusionné : HTML et ZIP autonomes dans
+`/workspace/site-publication/promethee-a-jour.{html,zip}` ; archive de déploiement
+`/workspace/site-publication/serie20-deployment.tar`. Copie source Sites préparée
+localement au commit `17fb5d6468529ba377be301dd0859c14a4d96343`, non poussé.
+CRC ZIP, identité HTML avec main et empreintes vérifiés. Pas de nouveau test
+navigateur file:// ni de vérification d’une nouvelle version hébergée non publiée.
+
+Suivi sur `work/publication-serie20` : ce journal et `docs/PUBLICATION_SERIE20.md`,
+avec les commandes et références exactes de reprise. Aucun jeton dans les fichiers.
+Prochaine mission unique : terminer la publication après déblocage de
+l’authentification Sites. Pas de fusion de la PR de suivi sans nouvelle demande.
+
+
 ## Série de 20 — 20 : validation intégrée et revue vers main
 
 Statut : terminée sur `work/serie20-20-validation`. Les dix-neuf premières
