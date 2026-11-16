@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 19 : Protéger les sorties de navigation pendant un geste
+
+Branche : `work/serie20-19-navigation-geste`. Les destinations data-aller demandent un second toucher sur la même destination sous cinq secondes pendant un geste, comme la protection du Retour existante. Menu conservé au premier toucher. Les trois sorties menu, recherche et domaine sont testées pendant un empâtage actif : recette, monnaie et nombre de brassins conservés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/19.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/19-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 18 : Nommer et clarifier les bilans des gestes
 
 Branche : `work/serie20-18-bilans-gestes`. Le composant existant reçoit un titre, une région nommée, le focus en fin de geste et une action de 48 px. Bilan réel du houblonnage sans ajout : score 100 %, titre, focus et passage en fermentation vérifiés. Aucun changement des scores ni récompenses.
