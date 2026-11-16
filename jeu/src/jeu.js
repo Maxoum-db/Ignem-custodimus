@@ -991,6 +991,8 @@
     } else if (onglet === 'cuve') {
       rendreCuveListe(z);
     }
+    const listeRecherche = $('.liste', z);
+    if (recherche && listeRecherche && !listeRecherche.querySelector('.carte-ing')) listeRecherche.innerHTML = `<div class="ingredient-vide"><p role="status">Aucun ingrédient disponible ne correspond à « ${esc(recherche)} ».</p><button class="btn" data-effacer-recherche>Effacer la recherche</button></div>`;
     if (onglet === 'eau') majIons();
   }
   function majTextePalier() {
@@ -1047,6 +1049,7 @@
   // Délégation des contrôles de l'onglet
   $('#onglet-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-effacer-recherche')) { recherche = ''; rendreOnglet(); $('#recherche').focus(); return; }
     const d = b.dataset;
     if (d.filtre) { filtreMalt = d.filtre; rendreOnglet(); return; }
     if (d.ajouter === 'malt') return ajouterMalt(d.id);

@@ -1226,3 +1226,8 @@ html,body { margin:0; }
 .jauge-feu .val { grid-column:2; grid-row:1; font-size:21px; }
 .jauge-feu .barre { grid-column:1/-1; grid-row:2; height:16px; border-radius:6px; }
 .jauge-feu .niv, .jauge-feu .zone { border-radius:6px; }
+
+/* Recherche de recette : sortie explicite quand aucun ingrédient ne correspond. */
+.ingredient-vide { padding:18px; border:1px dashed var(--cuivre); border-radius:16px; background:var(--four); display:grid; gap:12px; }
+.ingredient-vide p { margin:0; line-height:1.5; font-size:17px; overflow-wrap:anywhere; }
+.ingredient-vide .btn { min-height:48px; }
