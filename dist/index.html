@@ -1239,6 +1239,14 @@ html,body { margin:0; }
 .ingredient-vide { padding:18px; border:1px dashed var(--cuivre); border-radius:16px; background:var(--four); display:grid; gap:12px; }
 .ingredient-vide p { margin:0; line-height:1.5; font-size:17px; overflow-wrap:anywhere; }
 .ingredient-vide .btn { min-height:48px; }
+
+/* Bilan des gestes : un résultat nommé et une suite clairement accessible. */
+.geste-bilan { padding:18px; border:1px solid var(--houblon); border-radius:18px; gap:12px; }
+.geste-bilan h2 { margin:0; font-size:21px; color:var(--houblon); }
+.geste-bilan p { font-size:17px; line-height:1.5; }
+.geste-bilan .gros { font-size:36px; }
+.geste-bilan > .btn { min-height:48px; margin-top:6px; }
+.geste-bilan:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
 </style>
 
 <div id="app">
@@ -4753,7 +4761,10 @@ html,body { margin:0; }
   const infoBloc = (v, l) => `<div class="mesure"><span class="v">${v}</span><span class="l">${l}</span></div>`;
   function bilanGeste(id, lignes, suite) {
     const b = $(`#${id}-bilan`); b.hidden = false;
-    b.innerHTML = lignes.filter(Boolean).map((l) => `<p>${l}</p>`).join('') + `<button class="btn btn-feu" id="${id}-suite">${suite}</button>`;
+    const nom = { emp: 'Empâtage', fil: 'Filtration', ebu: 'Houblonnage', fer: 'Fermentation', bou: 'Embouteillage', bro: 'Brouillis', rep: 'Bonne chauffe' }[id] || 'Geste';
+    b.setAttribute('role', 'region'); b.setAttribute('aria-label', 'Bilan : ' + nom); b.tabIndex = -1;
+    b.innerHTML = `<h2>Bilan · ${nom}</h2>` + lignes.filter(Boolean).map((l) => `<p>${l}</p>`).join('') + `<button class="btn btn-feu" id="${id}-suite">${suite}</button>`;
+    b.focus({ preventScroll: true });
     const pied = $(`#${id}-pied`); if (pied) pied.hidden = true;
     b.scrollIntoView({ block: 'nearest', behavior: reduit ? 'auto' : 'smooth' });
   }
