@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 15 : Expliquer les recherches d’ingrédients sans résultat
+
+Branche : `work/serie20-15-recherche-vide`. Message échappé et action Effacer de 48 px dans les quatre recherches. La fixture possède des aromates ; le message ancien Aucun aromate est remplacé quand la recherche seule échoue. Effacement, focus retrouvé, nombre de cartes et recette conservés vérifiés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/15.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/15-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 14 : Compléter la navigation clavier des onglets recette
 
 Branche : `work/serie20-14-onglets-clavier`. Onglets avec une seule entrée Tab, panneau associé et navigation flèches/Début/Fin avec bouclage. Toucher préservé ; recette et monnaie comparées avant/après. Aucun changement de préparation.

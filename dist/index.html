@@ -1235,6 +1235,11 @@ html,body { margin:0; }
 .jauge-feu .val { grid-column:2; grid-row:1; font-size:21px; }
 .jauge-feu .barre { grid-column:1/-1; grid-row:2; height:16px; border-radius:6px; }
 .jauge-feu .niv, .jauge-feu .zone { border-radius:6px; }
+
+/* Recherche de recette : sortie explicite quand aucun ingrédient ne correspond. */
+.ingredient-vide { padding:18px; border:1px dashed var(--cuivre); border-radius:16px; background:var(--four); display:grid; gap:12px; }
+.ingredient-vide p { margin:0; line-height:1.5; font-size:17px; overflow-wrap:anywhere; }
+.ingredient-vide .btn { min-height:48px; }
 </style>
 
 <div id="app">
@@ -4330,6 +4335,8 @@ html,body { margin:0; }
     } else if (onglet === 'cuve') {
       rendreCuveListe(z);
     }
+    const listeRecherche = $('.liste', z);
+    if (recherche && listeRecherche && !listeRecherche.querySelector('.carte-ing')) listeRecherche.innerHTML = `<div class="ingredient-vide"><p role="status">Aucun ingrédient disponible ne correspond à « ${esc(recherche)} ».</p><button class="btn" data-effacer-recherche>Effacer la recherche</button></div>`;
     if (onglet === 'eau') majIons();
   }
   function majTextePalier() {
@@ -4386,6 +4393,7 @@ html,body { margin:0; }
   // Délégation des contrôles de l'onglet
   $('#onglet-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-effacer-recherche')) { recherche = ''; rendreOnglet(); $('#recherche').focus(); return; }
     const d = b.dataset;
     if (d.filtre) { filtreMalt = d.filtre; rendreOnglet(); return; }
     if (d.ajouter === 'malt') return ajouterMalt(d.id);
