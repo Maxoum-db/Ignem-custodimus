@@ -3380,7 +3380,7 @@
   }
   const sansAccents = (t) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   function rendreDecouvertes() {
-    $('#cat-decouvertes').innerHTML = DECOUVERTES.map((d) => `<div class="succes-item ${S.decouvertes[d.id] ? 'obtenu' : ''}"><b>${esc(d.titre)}</b>${esc(d.desc)} → ${esc(d.cadeaux().filter(Boolean).map((x) => x.nom).join(', '))}</div>`).join('');
+    $('#cat-decouvertes').innerHTML = DECOUVERTES.map((d) => `<div class="succes-item ${S.decouvertes[d.id] ? 'obtenu' : ''}"><b>${esc(d.titre)}</b><span class="decouverte-etat">${S.decouvertes[d.id] ? 'Cadeau reçu' : 'À découvrir'}</span><p>${esc(d.desc)}</p><p class="decouverte-cadeau"><strong>Cadeau :</strong> ${esc(d.cadeaux().filter(Boolean).map((x) => x.nom).join(', '))}</p></div>`).join('');
   }
 
   // =====================================================================
