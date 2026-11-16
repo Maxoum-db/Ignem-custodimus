@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 07 : Exposer la progression réelle du carnet
+
+Branche : `work/serie20-07-progression-carnet`. Carte de progression et barre nommée avec pourcentage et points actuels. Vérification de 0, 30, 100 et 500 points : début, entre deux paliers, dernier palier. Règles de déblocage conservées.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/07.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/07-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 06 : Rendre la gravité des défauts lisible
 
 Branche : `work/serie20-06-defauts-jury`. Les quatre rendus de défauts affichent Gravité N/3, avec descriptions et conseils en cartes aérées. Scénario DOM bière : défauts identiques au carnet, gravités et conseils présents. Aucun changement de notation.
