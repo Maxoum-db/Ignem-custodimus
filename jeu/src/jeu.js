@@ -2215,7 +2215,7 @@
   function prevoirFeu(f) { const g = { ...f, buches: f.buches.map((b) => ({ ...b })) }; for (let i = 0; i < 40; i++) brulerFeu(g, 0.05); return g.P; }
   const lierRegistre = (id, f) => { const el = $(id), val = $(id + '-val'); el.value = Math.round(f.air * 100); const afficher = () => { el.setAttribute('aria-valuetext', el.value + ' % d’ouverture'); if (val) val.value = el.value + ' %'; }; el.oninput = () => { f.air = el.value / 100; afficher(); }; afficher(); return el; };
   function jaugesFeu(id, items) {
-    $(id).innerHTML = items.map((j) => `<div class="jauge-feu"><span>${j.lib}</span><span class="barre">${j.zone ? `<i class="zone" style="left:${j.zone[0] * 100}%;width:${(j.zone[1] - j.zone[0]) * 100}%"></i>` : ''}<i class="niv" style="width:${borne(j.v, 0, 1) * 100}%;background:${j.coul}"></i>${j.prev != null ? `<i class="prev" style="left:${borne(j.prev, 0, 1) * 100}%"></i>` : ''}</span><span class="val">${j.txt != null ? j.txt : Math.round(j.v * 100) + ' %'}</span></div>`).join('');
+    $(id).innerHTML = items.map((j) => `<div class="jauge-feu"><span>${j.lib}</span><span class="barre" role="meter" aria-label="${esc(j.lib)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(borne(j.v, 0, 1) * 100)}" aria-valuetext="${esc(j.txt != null ? j.txt : Math.round(j.v * 100) + ' %')}">${j.zone ? `<i class="zone" style="left:${j.zone[0] * 100}%;width:${(j.zone[1] - j.zone[0]) * 100}%"></i>` : ''}<i class="niv" style="width:${borne(j.v, 0, 1) * 100}%;background:${j.coul}"></i>${j.prev != null ? `<i class="prev" style="left:${borne(j.prev, 0, 1) * 100}%"></i>` : ''}</span><span class="val">${j.txt != null ? j.txt : Math.round(j.v * 100) + ' %'}</span></div>`).join('');
   }
 
   $('#btn-distiller').addEventListener('click', () => {
