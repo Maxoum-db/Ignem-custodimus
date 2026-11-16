@@ -1,0 +1,105 @@
+{
+  "controle": "Avant commit de l’étape 20 ; ses modifications sont uniquement de validation et documentation.",
+  "branches": [
+    {
+      "branche": "main",
+      "sha_distant": "b17989ef33fcc5fc86e2fc8cd5fa71db61b0fef1",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-01-dose-houblon",
+      "sha_distant": "fb9046ff855df14f434c5ba7d4ac00bd1b6b65a0",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-02-compteur-ebullition",
+      "sha_distant": "ce482774720d7bc5bb7dd0fbdc8ad8fe5c12dd19",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-03-reglages-ulysse",
+      "sha_distant": "0ca2fa68f9838ff2a01e0eb5136458c42fba837b",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-04-mentor-mobile",
+      "sha_distant": "591c2325ec3894c10a3719ea492eac390eb33f8d",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-05-fiche-jury",
+      "sha_distant": "35b0698986b231e464be33edc4ac1612f0283d29",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-06-defauts-jury",
+      "sha_distant": "bf485e93ec7b93950e7f3025ecb092784f4b03e3",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-07-progression-carnet",
+      "sha_distant": "ed7944a40fd6f19777c68233f7cb44a2fbed01cc",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-08-succes-carnet",
+      "sha_distant": "0de16052afee87befe77428ffee35c522728d8ec",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-09-decouvertes",
+      "sha_distant": "35921da9796937d780662d020eec7a8b8fa8d455",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-10-aveugle-mobile",
+      "sha_distant": "9cb1b02fa5c6ba59af56ed847cd44ccc1b621361",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-11-sucre-bouteilles",
+      "sha_distant": "2a712430fa3166b0a05d5e0fd1f464abb417e3a0",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-12-registres-foyer",
+      "sha_distant": "771bc7cf4055302401eee33aef648ed3e59057fb",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-13-jauges-gestes",
+      "sha_distant": "09eb2ae49282b77e1ea195f39073b44cd1aae579",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-14-onglets-clavier",
+      "sha_distant": "d018a8f7548f00a95eee7826725f6c72dc9b8146",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-15-recherche-vide",
+      "sha_distant": "e97b77be0cbf83510129ea20fe2edc70e39b5c5f",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-16-animaux-illustres",
+      "sha_distant": "0a4c0af888daf7d27b74da075fcc51f5fcd87b1a",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-17-signal-dry-hop",
+      "sha_distant": "986e9c8cb0aa59d929220c2632ecbbae562849a9",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-18-bilans-gestes",
+      "sha_distant": "3abfbec8a98c07896fb7085a76865526abb315d1",
+      "identique_local": true
+    },
+    {
+      "branche": "work/serie20-19-navigation-geste",
+      "sha_distant": "c7a138f23f4a466e4fb9454192351033b8204ae8",
+      "identique_local": true
+    }
+  ]
+}

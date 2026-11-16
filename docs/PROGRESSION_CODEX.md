@@ -1,5 +1,333 @@
 # Progression Codex
 
+## Série de 20 — 20 : validation intégrée et revue vers main
+
+Statut : terminée sur `work/serie20-20-validation`. Les dix-neuf premières
+missions de cette série ont chacune leur branche, commit, tests et PR (#82–#100).
+Cette dernière branche propose une PR d’ensemble vers main, y compris la
+correction H01 préalable (#81), sans fusion ni publication. Base main vérifiée :
+`b17989ef33fcc5fc86e2fc8cd5fa71db61b0fef1` ; les 19 branches poussées ont été
+comparées à GitHub et correspondent à leurs commits locaux.
+
+Fichiers : test `jeu/tests/serie20/20.test.cjs`, dossier `docs/SERIE_20_REVUE.md`,
+suivi de `docs/AUDIT_RESTANT.md`, résultats et empreintes dans `docs/validation/`,
+ce journal et captures de cette série remises à jour. Aucun changement du code
+produit ni des HTML dans cette étape : ils restent ceux de `c7a138f`.
+Les cinq moteurs, données et format de sauvegarde sont inchangés par la série.
+Les 78 captures historiques réécrites par les tests ont été remises à leur état
+antérieur ; leurs compléments QA sont conservés dans `/tmp/serie20-qa-complements`.
+
+Critères et validation :
+- 93 commandes vérifiées : build reproductible, six suites Node dont ressources,
+  syntaxe de neuf JS, tous les tests navigateur du workflow et les quatre
+  parcours (automatique, gestes de bière, Ulysse expert et débutant).
+- Les vingt tests ajoutés passent à 320 et 390 px DPR 2 avec toucher actif,
+  sans erreur JS ni débordement horizontal. Le dernier vérifie l’expiration
+  d’une confirmation d’abandon, dix écrans et la conservation recette/écus.
+- CI complète du code produit `c7a138f` : run 43948905760 réussi ; elle couvre
+  les tests 01 à 19 et tous les parcours. La CI de la dernière PR, qui ajoute
+  le test 20 et la documentation, devra être distinguée de ce résultat.
+- Un délai d’action de 7 s a échoué sur #btn-menu pendant l’entrée de fixture
+  en 390 px, avant le scénario 02. Le rejeu ciblé a réussi aux deux largeurs
+  sans modification ; cause exacte non établie, premier passage et trace gardés.
+- Le dernier parcours a été interrompu par le redémarrage de l’environnement.
+  Les 92 résultats précédents ont été récupérés ; seule cette commande a été
+  relancée puis réussie. Aucun résultat d’interruption présenté comme succès.
+- Quarante captures réelles sont sauvegardées dans `docs/captures/serie20/`.
+  Les captures de chaque mission ont été inspectées ; les deux largeurs finales
+  ont été vues. Ce sont des rendus du jeu construit, pas des maquettes.
+- Android physique et Safari/iOS indisponibles. La publication du site n’a pas
+  été effectuée : pousser les branches GitHub ne met pas le site public à jour.
+
+Reprise : résultats complets, commandes, branches, commits, PR et limites dans
+`docs/SERIE_20_REVUE.md`. Les constats H02/H03/U01/U02 sont marqués comme traités
+sur branches dans l’audit pour éviter de les recommencer.
+Prochaine mission unique proposée : fusionner la PR finale vers main après
+une autorisation explicite. Aucune vingt-et-unième mission commencée.
+
+
+## Série de 20 — 19 : Protéger les sorties de navigation pendant un geste
+
+Branche : `work/serie20-19-navigation-geste`. Les destinations data-aller demandent un second toucher sur la même destination sous cinq secondes pendant un geste, comme la protection du Retour existante. Menu conservé au premier toucher. Les trois sorties menu, recherche et domaine sont testées pendant un empâtage actif : recette, monnaie et nombre de brassins conservés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/19.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/19-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 18 : Nommer et clarifier les bilans des gestes
+
+Branche : `work/serie20-18-bilans-gestes`. Le composant existant reçoit un titre, une région nommée, le focus en fin de geste et une action de 48 px. Bilan réel du houblonnage sans ajout : score 100 %, titre, focus et passage en fermentation vérifiés. Aucun changement des scores ni récompenses.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/18.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/18-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 17 : Stabiliser le signal du dry hop prêt
+
+Branche : `work/serie20-17-signal-dry-hop`. Remplacement du clignotement en marches par un contour et une couleur stables, avec le texte maintenant existant. Classe prête retirée après le dernier ajout. Fenêtre réelle DH1, absence d’animation, ajout manuel consommé et suite bouteille vérifiés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/17.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/17-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 16 : Illustrer les animaux de la basse-cour
+
+Branche : `work/serie20-16-animaux-illustres`. Réutilisation inchangée de deux WebP historiques, provenance et empreintes documentées. Poules et chat procéduraux remplacés dans le canvas existant ; appels drawImage des nouveaux assets réellement vérifiés. Six accès, bâtiments et chai conservés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/16.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/16-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 15 : Expliquer les recherches d’ingrédients sans résultat
+
+Branche : `work/serie20-15-recherche-vide`. Message échappé et action Effacer de 48 px dans les quatre recherches. La fixture possède des aromates ; le message ancien Aucun aromate est remplacé quand la recherche seule échoue. Effacement, focus retrouvé, nombre de cartes et recette conservés vérifiés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/15.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/15-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 14 : Compléter la navigation clavier des onglets recette
+
+Branche : `work/serie20-14-onglets-clavier`. Onglets avec une seule entrée Tab, panneau associé et navigation flèches/Début/Fin avec bouclage. Toucher préservé ; recette et monnaie comparées avant/après. Aucun changement de préparation.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/14.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/14-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 13 : Clarifier les jauges des gestes
+
+Branche : `work/serie20-13-jauges-gestes`. Jauges communes : libellé et valeur au-dessus de barres 16 px, rôle meter et valeur avec unité. Empâtage contrôlé en DOM : trois jauges, valeurs bornées cohérentes avec le remplissage et pression en bar. Calculs communs inchangés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/13.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/13-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 12 : Rendre les registres d’air tactiles et explicites
+
+Branche : `work/serie20-12-registres-foyer`. Les deux foyers affichent le pourcentage d’ouverture, avec curseur 48 px et unité accessible. Contrôle de leur activation et de 50 à 51 % par clavier dans les deux chauffes ; modèle thermique conservé.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/12.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/12-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 11 : Agrandir le dosage du sucre en bouteille
+
+Branche : `work/serie20-11-sucre-bouteilles`. Carte de dosage et curseur de 48 px, valeur avec unité accessible et verdict associé. Test : 6,5 g/L sélectionnés puis CO₂ du brassin sauvegardé identique au calcul résiduel plus sucre. Embouteillage et accès au jury conservés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/11.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/11-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 10 : Adapter la dégustation aveugle au téléphone
+
+Branche : `work/serie20-10-aveugle-mobile`. Cartes de fractions empilées sous 560 px, groupes nommés et choix de 48 px. Verres illustrés existants conservés. Distillation moteur, trois sélections, correction puis passage au jury vérifiés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/10.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/10-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 09 : Clarifier les cadeaux des découvertes
+
+Branche : `work/serie20-09-decouvertes`. Cartes Fournisseurs : condition, cadeau et état reçu ou à découvrir séparés. Le test ouvre bien Fournisseurs (premier essai resté sur Clients), puis contrôle les états sans attribution ni dépense après rechargement.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/09.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/09-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 08 : Distinguer les succès obtenus des objectifs
+
+Branche : `work/serie20-08-succes-carnet`. Cartes du carnet à pleine lisibilité avec état écrit Obtenu ou À accomplir. Succès existants et absence de nouvelle attribution vérifiés après rechargement.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/08.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/08-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 07 : Exposer la progression réelle du carnet
+
+Branche : `work/serie20-07-progression-carnet`. Carte de progression et barre nommée avec pourcentage et points actuels. Vérification de 0, 30, 100 et 500 points : début, entre deux paliers, dernier palier. Règles de déblocage conservées.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/07.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/07-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 06 : Rendre la gravité des défauts lisible
+
+Branche : `work/serie20-06-defauts-jury`. Les quatre rendus de défauts affichent Gravité N/3, avec descriptions et conseils en cartes aérées. Scénario DOM bière : défauts identiques au carnet, gravités et conseils présents. Aucun changement de notation.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/06.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/06-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 05 : Clarifier les fiches du jury
+
+Branche : `work/serie20-05-fiche-jury`. Capture inspectée : les délais des lignes sont supprimés en mouvement réduit et leur opacité est testée. Présentation papier arrondie, lignes aérées et en-têtes de lignes pour les quatre jurys (bière, wash, eau-de-vie, vieilli). Test navigateur sur bière calculée : six en-têtes et total identique au carnet. Autres jurys couverts par les suites moteur, pas par ce nouveau scénario DOM.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/05.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/05-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 04 : Rendre le mentor utilisable sur écran court
+
+Branche : `work/serie20-04-mentor-mobile`. U02 : actions de 48 px, panneau limité à 45 % de hauteur et défilant. ResizeObserver maintient la réserve de place ; le menu tient compte du mentor pour éviter le chevauchement reproduit au premier test. Tutoriel quittable à 430 px de haut.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/04.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/04-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 03 : Agrandir les réglages tactiles Ulysse
+
+Branche : `work/serie20-03-reglages-ulysse`. U01 : bascules de 48 px et curseurs de 44 px dans des cartes lisibles. Recyclage, chauffe, coupes et persistance après rechargement vérifiés ; monnaie conservée.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/03.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/03-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 02 : Maintenir le décompte après le dernier houblon
+
+Branche : `work/serie20-02-compteur-ebullition`. H03 : le compteur est rafraîchi à chaque image de la chauffe, même lorsque tous les ajouts sont faits. Test : ajout initial, compteur intermédiaire et zéro final ; informations du dernier ajout conservées.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/02.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/02-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## Série de 20 — 01 : Afficher la dose réelle de houblon
+
+Branche : `work/serie20-01-dose-houblon`. H02 : texte et nom accessible utilisent la même dose que l’ajout. Les trois niveaux de brasserie sont contrôlés (30, 130, 250 g). Une première fixture a été corrigée pour respecter le lien entre niveau et volume.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/01.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/01-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
+## ÉTAPE — H01 : oubli du houblon à 0 minute
+
+Statut : terminée sur `work/houblon-oubli-zero`, sans fusion ni publication.
+Une seule mission dans cette exécution. Base distante vérifiée : main
+`b17989ef33fcc5fc86e2fc8cd5fa71db61b0fef1`, PR #80 fusionnée ; dépôt initial
+propre. Les PR pertinentes consultées ne contiennent pas déjà cette correction.
+
+Règle : un ajout non lancé à la fin du geste contribue pour zéro à la précision,
+même s’il était prévu à 0 minute. Un ajout réellement lancé garde la notation
+existante. La pénalité d’un oubli atteint au moins la tolérance du geste : il
+ne compte donc plus comme un ajout réussi à une minute près ni parmi les trois
+ajouts réussis. Les récompenses réellement gagnées sont conservées.
+
+Le bilan nomme les ajouts oubliés, le bouton final indique leur nombre et reste
+désactivé ; les repères oubliés ont un état distinct et un nom accessible.
+La liste interne de travail est annotée, pas la recette sauvegardée. Le repli
+scientifique existant à 0 minute pour les ajouts non lancés est conservé :
+aucune modification des cinq moteurs, des données ni du format de sauvegarde.
+Pas de modification rétroactive des parties ou récompenses anciennes.
+La préparation de cinq secondes et la durée d’ébullition restent inchangées.
+H02 (doses), H03 (compteur) et les autres sujets ne sont pas traités ici.
+
+Fichiers : `jeu/src/jeu.js`, `jeu/src/style.css`, les deux HTML de `dist`,
+`jeu/tests/lot50/houblon-oubli.test.cjs`, workflow (archivage des captures),
+ce journal, le suivi H01 de `docs/AUDIT_RESTANT.md` et six captures réelles dans
+`docs/captures/houblon-oubli/`.
+
+Validation locale réussie :
+- Build et six suites Node, dont ressources ; syntaxe JS et git diff --check.
+- 16 scénarios nouveaux : 320/390 px DPR 2, expert/débutant ; oubli seul
+  (0 %, aucun gain), ajout manuel à 0 (100 %, récompense existante), un ajout
+  réussi puis un oubli (50 %), dry hop seul (pas de fausse omission).
+- Les objectifs de précision, états des repères, bouton final, recette et dry
+  hop conservés, passage à la fermentation sont vérifiés. Les gains sont
+  contrôlés dans l’en-tête du jeu ; ils ne sont pas supposés déjà sérialisés
+  avant la fin du brassin. Deux assertions initiales du test ont été corrigées
+  pour respecter cette sauvegarde différée et la classe existante des objectifs.
+- Huit scénarios existants `houblon-preparation.test.cjs` réussis : préparation
+  cinq secondes, ajouts aux repères à 100 % et retards pénalisés.
+- `GESTES_REELS=1` parcours complet réussi, captures dans
+  `/tmp/ignem-oubli-parcours`. Captures nouvelles inspectées ; zéro erreur JS
+  et aucun débordement horizontal dans les scénarios mobiles.
+- Horloge navigateur pilotée dans les scénarios de frontière, véritables
+  interactions DOM ; aucun moteur simulé ni appel aux fonctions privées.
+
+Android physique et Safari non disponibles. La CI de cette PR reste à suivre.
+Commandes ciblées : `npm run build:jeu && npm run test:jeu`, puis
+`CHROMIUM_PATH=/usr/bin/chromium node jeu/tests/lot50/houblon-oubli.test.cjs`.
+Le serveur local utilise ici Chromium système hors bac à sable.
+
+Prochaine mission unique, non commencée : H02, afficher dans les boutons de
+houblon la dose réellement ajoutée selon le volume de brasserie.
+
+
 ## Audit demandé du reste à faire — main 41ab2b9
 
 Mission unique : vérifier l’intégration et auditer le reste, sans correction du

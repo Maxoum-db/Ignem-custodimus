@@ -3,6 +3,43 @@
 Référence auditée : `41ab2b952c685be73fbae664160d89eccfd93440` sur GitHub main.
 Audit ciblé du jeu mobile et de sa livraison, sans correction du jeu ni déploiement.
 
+## Suivi après la série de vingt — 16 novembre 2026
+
+Les constats et propositions plus anciens ci-dessous sont historiques.
+Les corrections suivantes sont réalisées et testées dans la pile de branches,
+**sans fusion dans main ni publication** :
+
+- H01 : PR #81, oubli à zéro minute ; CI 43942026294 réussie.
+- H02 : [PR #82](https://github.com/Maxoum-db/Ignem-custodimus/pull/82),
+  dose affichée égale à l’ajout aux trois niveaux de brasserie.
+- H03 : [PR #83](https://github.com/Maxoum-db/Ignem-custodimus/pull/83),
+  décompte jusqu’à zéro après le dernier ajout.
+- U01 : [PR #84](https://github.com/Maxoum-db/Ignem-custodimus/pull/84),
+  commandes des réglages Ulysse de 48/44 px.
+- U02 : [PR #85](https://github.com/Maxoum-db/Ignem-custodimus/pull/85),
+  mentor défilant, actions de 48 px et menu accessible sur écran court.
+
+Ne pas recommencer ces corrections : consulter leurs branches et le
+[dossier de revue des vingt étapes](SERIE_20_REVUE.md). La publication reste
+à faire après intégration autorisée. La prochaine mission proposée est la
+revue et l’intégration de la pile, pas une nouvelle correction H02.
+
+## Suivi H01 — 16 novembre 2026
+
+Correction réalisée sur la branche `work/houblon-oubli-zero`, proposée en PR,
+**pas encore fusionnée dans main** au moment de cette livraison. Un ajout
+oublié contribue désormais pour zéro à la précision ; un ajout réellement
+lancé à 0 minute peut conserver 100 %. Le bilan, le bouton désactivé et les
+repères distinguent les oublis des ajouts faits. Les récompenses de précision
+ne sont plus attribuées à un oubli. Aucun moteur ni format de sauvegarde changé.
+
+Validation : 16 scénarios dédiés en 320/390 px, expert/débutant, avec oubli,
+ajout manuel, cas mixte et dry hop seul ; huit scénarios existants de préparation
+cinq secondes, six suites Node et un parcours avec gestes réels réussis.
+Les preuves historiques et le tableau ci-dessous concernent toujours la
+référence auditée 41ab2b9 et sont conservés pour comparaison. Les autres lignes
+restent à traiter. Prochaine correction proposée : H02, libellés des doses.
+
 ## État réellement vérifié
 
 - Dépôt initial propre ; PR #78 et #79 fusionnées. Les 19 missions du lot et

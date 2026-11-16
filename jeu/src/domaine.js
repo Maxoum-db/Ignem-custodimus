@@ -1,10 +1,10 @@
 /* Carte illustrée : les images sont des couches ; niveaux et travaux viennent du jeu. */
 (() => {
   'use strict';
-  const names=['terrain','ferme','chai','pigeonnier','ulysse','cheval','ruche','printemps','automne','hiver'];
+  const names=['terrain','ferme','chai','pigeonnier','ulysse','cheval','ruche','printemps','automne','hiver','animal-poule-brune','animal-chat-noir'];
   const images={}; let ready=false;
   const loaded=Promise.all(names.map(async name=>{
-    const src=window.IMAGES_JEU?.['domaine-'+name]; if(!src)throw new Error('Asset absent : '+name);
+    const src=window.IMAGES_JEU?.[name.startsWith('animal-')?name:'domaine-'+name]; if(!src)throw new Error('Asset absent : '+name);
     const im=new Image();im.src=src;await im.decode();images[name]=im;
   })).then(()=>{ready=true;return true;}).catch(()=>false);
   const ink='#3b2a1e';
@@ -47,9 +47,8 @@
     sprite('cheval',112,208+Math.sin(t*1.2)*.25,49,29);
     // Petit potager et animaux de basse-cour au premier plan.
     for(let j=0;j<3;j++){line([[22,215+j*3],[47,219+j*3]],'#89633d',1.4);for(let i=0;i<5;i++){ellipse(24+i*5,214+j*3+i*.16,1.4,.7,'#53863f');line([[24+i*5,215+j*3+i*.16],[24+i*5,213+j*3+i*.16]],'#305e30',.5);}}
-    const hen=(x,y,color)=>{ellipse(x,y,2,1.4,color);ellipse(x+1.8,y-1.2,.9,.9,color);line([[x+2.4,y-1.2],[x+3.4,y-1]],'#cb8f35');line([[x-1,y+1],[x-1,y+2.2]],ink,.35);line([[x+1,y+1],[x+1,y+2.2]],ink,.35);ellipse(x+1.8,y-2,.5,.4,'#c45037');};
-    hen(88,180,'#fff4d3');hen(94,184,'#ad683c');hen(83,185,'#f3e4bf');
-    ellipse(78,128,2.8,1.2,'#332a26');ellipse(80,126.8,1.2,1.2,'#332a26');line([[79.3,126],[79.4,125.1],[80,125.8],[80.8,125],[81,126]],'#332a26',.6);line([[75,128],[73.5,126],[74,125]],'#332a26',.8);
+    for(const [x,y] of [[84,173],[94,178],[79,182]])sprite('animal-poule-brune',x,y,10,10);
+    sprite('animal-chat-noir',72,119,13,13);
     // Nuit : éclairage distinct de l'état des foyers, jamais de chauffe fictive.
     if(s.nuit){c.fillStyle='#10213b88';c.fillRect(0,0,192,256);for(const[x,y]of[[93,111],[76,200],[164,231]]){const glow=c.createRadialGradient(x,y,0,x,y,6);glow.addColorStop(0,'#ffd67888');glow.addColorStop(1,'#ffd67800');c.fillStyle=glow;c.fillRect(x-6,y-6,12,12);box(x-.7,y-1,1.4,2,'#f9d889');}}
     if(s.saison==='automne'&&!s.nuit)for(let i=0;i<7;i++){const u=(t*.06+i/7)%1;ellipse(13+i*27+Math.sin(t+i)*2,38+u*202,.9,.4,['#af5732','#e2ad46','#bc7532'][i%3]);}

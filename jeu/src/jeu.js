@@ -217,7 +217,9 @@
   // Pile de navigation pour le bouton Retour (on ne revient jamais au milieu d'un geste)
   const SANS_RETOUR = ['empatage', 'filtration', 'ebullition', 'fermentation', 'bouteille', 'brouillis', 'repasse', 'aveugle'];
   const pile = [];
+  let sortieDemandee = null;
   function aller(nom, retour) {
+    sortieDemandee = null;
     if ((nom === 'distillerie' && niv('distillerie') === 0) || (nom === 'chai' && niv('chai') === 0)) { toast(`${nom === 'chai' ? 'Le chai' : 'L\'alambic'} n'est pas encore construit.`); nom = 'batiments'; }
     if (!retour && nom !== ecran && !SANS_RETOUR.includes(ecran)) { pile.push(ecran); if (pile.length > 20) pile.shift(); }
     if (quitteurs[ecran]) quitteurs[ecran]();
@@ -256,6 +258,14 @@
   }, true);
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-aller]');
+    if (b && SANS_RETOUR.includes(ecran)) {
+      const cible = b.dataset.aller, maintenant = performance.now();
+      if (!sortieDemandee || sortieDemandee.ecran !== ecran || sortieDemandee.cible !== cible || maintenant > sortieDemandee.jusqua) {
+        sortieDemandee = { ecran, cible, jusqua: maintenant + 5000 };
+        toast('Quitter abandonne le geste. Touche de nouveau la même destination pour confirmer.');
+        return;
+      }
+    }
     if (b && b.closest('#menu-entete')) basculerMenu(false);
     if (b) { son('clic'); if (b.dataset.catonglet) { catOnglet = b.dataset.catonglet; catFiltre = 'tous'; pigOnglet = 'achats'; } aller(b.dataset.aller); }
     const rt = e.target.closest('[data-retour]');
@@ -465,6 +475,8 @@
     m.hidden = false;
     requestAnimationFrame(() => document.documentElement.style.setProperty('--pied-mentor', m.offsetHeight + 'px'));
   }
+
+  new ResizeObserver(() => { const m = $('#mentor'); document.documentElement.style.setProperty('--pied-mentor', m.hidden ? '0px' : m.offsetHeight + 'px'); }).observe($('#mentor'));
 
   // =====================================================================
   // Domaine : carte illustrée, ancien rendu conservé en repli
@@ -871,11 +883,24 @@
   }
 
   function rendreOnglets() {
+    $('#onglet-contenu').setAttribute('aria-labelledby', 'tab-' + onglet);
     const nb = R.malts.length + R.houblons.length + R.aromates.length + (R.levure ? 1 : 0);
     const defs = [['cuve', `Cuve<span class="badge">${nb}</span>`], ['malts', 'Céréales'], ['houblons', 'Houblons'], ['levure', 'Levure'], ['eau', 'Eau'], ['aromates', 'Aromates'], ['procede', 'Procédé']];
-    $('#onglets').innerHTML = defs.map(([id, lib]) => `<button class="onglet" role="tab" id="tab-${id}" aria-selected="${onglet === id}" data-onglet="${id}">${lib}</button>`).join('');
+    $('#onglets').innerHTML = defs.map(([id, lib]) => `<button class="onglet" role="tab" id="tab-${id}" aria-controls="onglet-contenu" tabindex="${onglet === id ? 0 : -1}" aria-selected="${onglet === id}" data-onglet="${id}">${lib}</button>`).join('');
   }
-  $('#onglets').addEventListener('click', (e) => { const b = e.target.closest('[data-onglet]'); if (!b) return; onglet = b.dataset.onglet; recherche = ''; son('clic'); rendreOnglets(); rendreOnglet(); });
+  function choisirOnglet(id) {
+    onglet = id; recherche = ''; son('clic'); rendreOnglets(); rendreOnglet();
+    $('#onglet-contenu').setAttribute('aria-labelledby', 'tab-' + id);
+    $('#tab-' + id).focus();
+  }
+  $('#onglets').addEventListener('click', (e) => { const b = e.target.closest('[data-onglet]'); if (b) choisirOnglet(b.dataset.onglet); });
+  $('#onglets').addEventListener('keydown', (e) => {
+    const b = e.target.closest('[data-onglet]');
+    if (!b || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+    e.preventDefault(); const tabs = $$('[data-onglet]', $('#onglets')), i = tabs.indexOf(b);
+    const next = e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : (i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+    choisirOnglet(tabs[next].dataset.onglet);
+  });
 
   function poignee(img, teinte, type, id) {
     return `<span class="poignee" data-glisser="${type}" data-id="${esc(id)}" aria-hidden="true"><img class="sprite" src="${img}" alt="">${teinte ? `<i class="teinte" style="background:${teinte}"></i>` : ''}</span>`;
@@ -910,7 +935,7 @@
               <div class="det"><b>α ${nf(h.amin)}–${nf(h.amax)} %</b> · huiles ${nf(h.huile)} mL/100 g</div>
               <div class="det">${esc(h.aromes || '')}</div>
               <div class="etiquettes"><span class="etq">${{ bittering: 'Amérisant', aroma: 'Aromatique', dual: 'Double usage' }[h.usage]}</span></div></div>
-            <button class="btn btn-mini" data-ajouter="houblon" data-id="${esc(h.id)}" aria-label="Ajouter 250 g de ${esc(h.nom)}">+250 g</button></div>`).join('')}</div>
+            <button class="btn btn-mini" data-ajouter="houblon" data-id="${esc(h.id)}" aria-label="Ajouter ${doseHop()} g de ${esc(h.nom)}">+${doseHop()} g</button></div>`).join('')}</div>
         ${verrouLigne(D.houblons, 'houblons', 'houblons')}`;
     } else if (onglet === 'levure') {
       const wash = R.destination === 'wash';
@@ -976,6 +1001,8 @@
     } else if (onglet === 'cuve') {
       rendreCuveListe(z);
     }
+    const listeRecherche = $('.liste', z);
+    if (recherche && listeRecherche && !listeRecherche.querySelector('.carte-ing')) listeRecherche.innerHTML = `<div class="ingredient-vide"><p role="status">Aucun ingrédient disponible ne correspond à « ${esc(recherche)} ».</p><button class="btn" data-effacer-recherche>Effacer la recherche</button></div>`;
     if (onglet === 'eau') majIons();
   }
   function majTextePalier() {
@@ -1032,6 +1059,7 @@
   // Délégation des contrôles de l'onglet
   $('#onglet-contenu').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-effacer-recherche')) { recherche = ''; rendreOnglet(); $('#recherche').focus(); return; }
     const d = b.dataset;
     if (d.filtre) { filtreMalt = d.filtre; rendreOnglet(); return; }
     if (d.ajouter === 'malt') return ajouterMalt(d.id);
@@ -1393,7 +1421,10 @@
   const infoBloc = (v, l) => `<div class="mesure"><span class="v">${v}</span><span class="l">${l}</span></div>`;
   function bilanGeste(id, lignes, suite) {
     const b = $(`#${id}-bilan`); b.hidden = false;
-    b.innerHTML = lignes.filter(Boolean).map((l) => `<p>${l}</p>`).join('') + `<button class="btn btn-feu" id="${id}-suite">${suite}</button>`;
+    const nom = { emp: 'Empâtage', fil: 'Filtration', ebu: 'Houblonnage', fer: 'Fermentation', bou: 'Embouteillage', bro: 'Brouillis', rep: 'Bonne chauffe' }[id] || 'Geste';
+    b.setAttribute('role', 'region'); b.setAttribute('aria-label', 'Bilan : ' + nom); b.tabIndex = -1;
+    b.innerHTML = `<h2>Bilan · ${nom}</h2>` + lignes.filter(Boolean).map((l) => `<p>${l}</p>`).join('') + `<button class="btn btn-feu" id="${id}-suite">${suite}</button>`;
+    b.focus({ preventScroll: true });
     const pied = $(`#${id}-pied`); if (pied) pied.hidden = true;
     b.scrollIntoView({ block: 'nearest', behavior: reduit ? 'auto' : 'smooth' });
   }
@@ -1655,7 +1686,7 @@
     };
     const maj = () => {
       const g = +champ.value, co2 = resid + g / Moteur.G_SUCRE_PAR_VOLUME, d = co2 - cible;
-      $('#bou-sucre-val').textContent = `${nf(g, 1)} g/L`;
+      $('#bou-sucre-val').textContent = `${nf(g, 1)} g/L`; champ.setAttribute('aria-valuetext', `${nf(g, 1)} grammes par litre`);
       $('#bou-infos').innerHTML = infoBloc(nf(co2, 1), 'vol. de CO₂') + infoBloc(nf(cible, 1), 'cible du style') + infoBloc(nf(resid, 2), 'déjà dissous');
       $('#bou-verdict').innerHTML = co2 > (equipe('bouteilles') ? 4.6 : 4) ? '<b style="color:var(--alerte)">Danger : des bouteilles vont éclater.</b>' : d > 0.7 ? '<b style="color:var(--alerte)">Trop gazeuse : elle jaillira à l\'ouverture.</b>' : d < -0.6 ? '<b style="color:var(--alerte)">Trop peu : la bière sera plate.</b>' : Math.abs(d) <= 0.25 ? '<b style="color:var(--houblon)">Juste pour le style.</b>' : 'Acceptable.';
       if (S.aide) $('#bou-verdict').insertAdjacentHTML('beforeend', ` <span class="det">Lise : vers ${nf(ideal, 1)} g/L.</span>`);
@@ -1698,10 +1729,14 @@
     const pos = (min) => ((PREPARATION + ((total - min) / total) * DUREE) / (PREPARATION + DUREE)) * 100;
     const rendreFrise = () => {
       frise.innerHTML = `<span class="phase-preparation" aria-hidden="true" style="width:${pos(total)}%">5 s</span>` + [0, 15, 30, 45, 60, 75, 90].filter((m) => m <= total).map((m) => `<span class="graduation" style="left:${pos(m)}%">${m}</span>`).join('')
-        + file.map((h, k) => `<i class="repere-h ${k < st.k ? 'fait' : ''}" style="left:${pos(h.prevu)}%"><b>${k + 1}</b></i>`).join('')
+        + file.map((h, k) => `<i class="repere-h ${h.oublie ? 'oublie' : k < st.k ? 'fait' : ''}" role="img" aria-label="${esc(h.nom)} : ${h.oublie ? 'ajout oublié' : k < st.k ? 'ajout réalisé' : 'ajout prévu'} à ${h.prevu} min" style="left:${pos(h.prevu)}%"><b>${k + 1}</b></i>`).join('')
         + `<i class="curseur" style="left:${((PREPARATION - st.preparation + st.t) / (PREPARATION + DUREE)) * 100}%"></i>`;
     };
-    const etiquette = () => { const h = file[st.k]; btn.innerHTML = h ? `Jeter ${esc(h.nom)}<small>${nf(h.g / 1000, 2)} kg · prévu à ${h.prevu} min</small>` : 'Tout est dans la cuve'; };
+    const etiquette = () => {
+      const h = file[st.k], oublis = file.filter((x) => x.oublie).length;
+      btn.innerHTML = h ? `Jeter ${esc(h.nom)}<small>${nf(h.g / 1000, 2)} kg · prévu à ${h.prevu} min</small>`
+        : oublis ? `${oublis} ajout${oublis > 1 ? 's' : ''} oublié${oublis > 1 ? 's' : ''}` : 'Tout est dans la cuve';
+    };
     const ctx = $('#ebu-canvas').getContext('2d');
     const teinteMout = couleur(Moteur.calculer(rec).ebc);
     const dessin = () => {
@@ -1744,19 +1779,26 @@
         }
         if (st.montee && t >= PREPARATION) { st.montee = false; btn.disabled = !file.length; evtScene('ebu', 'Ça bout : le chrono démarre', 'houblon'); son('bulle'); }
         st.t = Math.max(0, t - PREPARATION); dessin(); rendreFrise();
-        if (st.k === 0 || st.k < file.length) $('#ebu-infos').firstElementChild.innerHTML = `<span class="v">${Math.max(0, Math.round(minutes()))}'</span><span class="l">restantes</span>`;
+        $('#ebu-infos').firstElementChild.innerHTML = `<span class="v">${Math.max(0, Math.round(minutes()))}'</span><span class="l">restantes</span>`;
       }, () => {
         btn.disabled = true;
         $('#ebu-preparation').textContent = 'Houblonnage terminé.';
-        while (st.k < file.length) { const h = file[st.k]; session.gestes.houblonsMin[h.i] = 0; st.ecarts.push(h.prevu); st.k++; }
         const tol = 6 - difficulte();
+        while (st.k < file.length) {
+          const h = file[st.k]; h.oublie = true;
+          session.gestes.houblonsMin[h.i] = 0;
+          // Un oubli vaut zéro précision, même quand il était prévu à 0 minute.
+          st.ecarts.push(Math.max(h.prevu, tol)); st.k++;
+        }
+        const oublis = file.filter((h) => h.oublie);
+        etiquette(); rendreFrise();
         const score = st.ecarts.length ? st.ecarts.reduce((s, e) => s + Math.max(0, 1 - e / tol), 0) / st.ecarts.length : 1;
         session.scores.houblon = score;
         let effet = S.mode === 'debutant' ? `Effet : ${effetMalus(score)}.` : '';
         if (S.mode === 'expert') { const a = Moteur.calculer(rec), b = Moteur.calculer(rec, { houblonsMin: session.gestes.houblonsMin }); effet = `Amertume prévue ${nf(a.ibu, 0)} IBU, obtenue ${nf(b.ibu, 0)} IBU.`; }
         session.precisionHoublon = st.ecarts.length ? Math.max(...st.ecarts) : 0;
         son(score > 0.6 ? 'ok' : 'rate');
-        bilanGeste('ebu', [`<span class="gros">${Math.round(score * 100)} %</span> de précision`, st.ecarts.length ? `Écart moyen ${nf(st.ecarts.reduce((a, b) => a + b, 0) / st.ecarts.length)} min.` : 'Aucun houblon pendant l\'ébullition.', effet,
+        bilanGeste('ebu', [`<span class="gros">${Math.round(score * 100)} %</span> de précision`, oublis.length ? `Ajout${oublis.length > 1 ? 's' : ''} oublié${oublis.length > 1 ? 's' : ''} : ${oublis.map((h) => `${esc(h.nom)} (${h.prevu} min)`).join(', ')}. Aucune précision pour ces ajouts.` : st.ecarts.length ? `Écart moyen ${nf(st.ecarts.reduce((a, b) => a + b, 0) / st.ecarts.length)} min.` : 'Aucun houblon pendant l\'ébullition.', effet,
           st.ecarts.length ? objectifsGeste('ebu', [['minute', 'Chaque houblon à 1 minute près', st.ecarts.every((e) => e <= 1)], ['sec', 'Au moins trois ajouts réussis', st.ecarts.filter((e) => e <= 2).length >= 3]]) : ''], 'Refroidir et ensemencer');
         $('#ebu-suite').onclick = () => { tuto('fin:ebullition'); aller('fermentation'); preparerFermentation(); };
       });
@@ -1781,7 +1823,7 @@
     const bH = $('#fer-houblon'); bH.hidden = !dhAFaire.length; bH.disabled = true;
     function majBoutonDH() {
       const p = dhAFaire[0];
-      if (!p) { bH.disabled = true; $('#fer-houblon-sous').textContent = 'tous les houblons sont dans la cuve'; return; }
+      if (!p) { bH.disabled = true; bH.classList.remove('pret'); $('#fer-houblon-sous').textContent = 'tous les houblons sont dans la cuve'; return; }
       const j = st.j || 0, dans = j >= p.debut && j <= p.fin;
       bH.disabled = !st.go;
       bH.classList.toggle('pret', dans);
@@ -2048,11 +2090,11 @@
     // Fiche de jury
     const L = note.lignes;
     const rang = [['aspect', 'Aspect', 3], ['arome', 'Arôme', 12], ['bouche', 'Bouche', 5], ['saveur', 'Saveur', 20], ['impression', 'Impression générale', 10]];
-    $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION</h3><table>${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><td>${lib}</td><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
-      <tr class="total lent" style="animation-delay:${0.4 + 5 * 0.35}s"><td>Total</td><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
+    $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION</h3><table aria-label="Notes du jury">${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><th scope="row">${lib}</th><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
+      <tr class="total lent" style="animation-delay:${0.4 + 5 * 0.35}s"><th scope="row">Total</th><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
 
     // Défauts
-    $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite" aria-label="Gravité ${d.gravite} sur 3">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>
+    $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">Gravité ${d.gravite}/3</span></h3>
       ${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
 
     // Gains et bilan de Lise
@@ -2200,9 +2242,9 @@
   const ajouterBuche = (f) => { if (f.buches.length >= 4) { toast('Le foyer est plein.'); return; } f.buches.push({ age: 0, m: 1 }); son('sac'); };
   // Prévision : où ira la chaudière si on ne touche à rien pendant 2 s
   function prevoirFeu(f) { const g = { ...f, buches: f.buches.map((b) => ({ ...b })) }; for (let i = 0; i < 40; i++) brulerFeu(g, 0.05); return g.P; }
-  const lierRegistre = (id, f) => { const el = $(id); el.value = Math.round(f.air * 100); el.oninput = () => { f.air = el.value / 100; }; return el; };
+  const lierRegistre = (id, f) => { const el = $(id), val = $(id + '-val'); el.value = Math.round(f.air * 100); const afficher = () => { el.setAttribute('aria-valuetext', el.value + ' % d’ouverture'); if (val) val.value = el.value + ' %'; }; el.oninput = () => { f.air = el.value / 100; afficher(); }; afficher(); return el; };
   function jaugesFeu(id, items) {
-    $(id).innerHTML = items.map((j) => `<div class="jauge-feu"><span>${j.lib}</span><span class="barre">${j.zone ? `<i class="zone" style="left:${j.zone[0] * 100}%;width:${(j.zone[1] - j.zone[0]) * 100}%"></i>` : ''}<i class="niv" style="width:${borne(j.v, 0, 1) * 100}%;background:${j.coul}"></i>${j.prev != null ? `<i class="prev" style="left:${borne(j.prev, 0, 1) * 100}%"></i>` : ''}</span><span class="val">${j.txt != null ? j.txt : Math.round(j.v * 100) + ' %'}</span></div>`).join('');
+    $(id).innerHTML = items.map((j) => `<div class="jauge-feu"><span>${j.lib}</span><span class="barre" role="meter" aria-label="${esc(j.lib)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(borne(j.v, 0, 1) * 100)}" aria-valuetext="${esc(j.txt != null ? j.txt : Math.round(j.v * 100) + ' %')}">${j.zone ? `<i class="zone" style="left:${j.zone[0] * 100}%;width:${(j.zone[1] - j.zone[0]) * 100}%"></i>` : ''}<i class="niv" style="width:${borne(j.v, 0, 1) * 100}%;background:${j.coul}"></i>${j.prev != null ? `<i class="prev" style="left:${borne(j.prev, 0, 1) * 100}%"></i>` : ''}</span><span class="val">${j.txt != null ? j.txt : Math.round(j.v * 100) + ' %'}</span></div>`).join('');
   }
 
   $('#btn-distiller').addEventListener('click', () => {
@@ -2405,7 +2447,7 @@
       if (r.phase === 0) DI.couper(r);
       sessionD.scoresFeu.push(borne(st.dans / Math.max(1, st.duree), 0, 1));
       const bl = DI.bilan(r);
-      const ligne = (lib, f) => `<tr><td>${lib}</td><td>${nf(f.V, 1)} L</td><td>${nf(f.degre, 0)} %</td><td>${nf(f.lap, 1)}</td></tr>`;
+      const ligne = (lib, f) => `<tr><th scope="row">${lib}</th><td>${nf(f.V, 1)} L</td><td>${nf(f.degre, 0)} %</td><td>${nf(f.lap, 1)}</td></tr>`;
       const lapBiere = sessionD.biere.abv * (sessionD.vol || 1000) / 100;
       son('ok');
       bilanGeste('rep', [
@@ -2450,7 +2492,7 @@
     const NOMS = ['Têtes', 'Cœur', 'Queues'];
     $('#aveugle-verres').innerHTML = ordre.map((iFr, k) => {
       const odeurs = DI.descripteurs(r.fractions[iFr]);
-      return `<div class="verre-a" id="verre-a-${k}">${verreDegustation('fraction-' + k, 'spiritueux', '#c5dcdf')}<span class="lettre">${'ABC'[k]}</span>
+      return `<div class="verre-a" id="verre-a-${k}" role="group" aria-label="Verre ${'ABC'[k]}">${verreDegustation('fraction-' + k, 'spiritueux', '#c5dcdf')}<span class="lettre">${'ABC'[k]}</span>
         <span class="odeurs">${odeurs.map((o) => `${esc(o.odeur)} <small>(${o.force})</small>`).join('<br>') || 'presque rien'}</span>
         <div class="choix">${NOMS.map((n, j) => `<button data-av="${k}:${j}" aria-pressed="false">${n}</button>`).join('')}</div><span class="reponse"></span></div>`;
     }).join('');
@@ -2551,10 +2593,10 @@
       $('#radar').innerHTML = radarSVG(axes, note.profil);
       const L = note.lignes;
       const rang = [['aspect', 'Aspect et limpidité', 5], ['nez', 'Nez', 15], ['bouche', 'Bouche', 15], ['finale', 'Finale', 10], ['harmonie', 'Harmonie', 5]];
-      $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · EAU-DE-VIE</h3><table>${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><td>${lib}</td><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
-        <tr class="total lent" style="animation-delay:${0.4 + 5 * 0.35}s"><td>Total</td><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
+      $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · EAU-DE-VIE</h3><table aria-label="Notes eau-de-vie">${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><th scope="row">${lib}</th><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
+        <tr class="total lent" style="animation-delay:${0.4 + 5 * 0.35}s"><th scope="row">Total</th><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
     }
-    $('#degust-defauts').innerHTML = note && note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
+    $('#degust-defauts').innerHTML = note && note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">Gravité ${d.gravite}/3</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [];
     g.push(S.bac ? 'Bac à sable : cette chauffe ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise, dont ${Math.round(10 * rendement)} pour le rendement${e.aveugle != null ? ` et ${2 * e.aveugle} pour l'aveugle` : ''}, et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} en bourse.`);
     (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
@@ -2875,9 +2917,9 @@
       <span class="style">${bt.n} bouteilles de ${nf(CH.P.bouteilleL * 100, 0)} cl à ${nf(bt.degre, 1)} %${bt.brutDeFut ? ' (brut de fût)' : ''} · ${etat.assemblage ? `assemblage de ${etat.assemblage} lots` : e.futs.map((x) => `${CH.TYPES[x.type].nom} ${nf(x.ans, x.ans % 1 ? 1 : 0)} an${x.ans >= 2 ? 's' : ''}`).join(', puis ')}</span>`;
     $('#radar').innerHTML = radarSVG(CH.AXES.map((k) => [k, CH.LIB_AXES[k]]), CH.profil(etat));
     const rang = Object.entries(CH.LIB_LIGNES);
-    $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · SPIRITUEUX VIEILLI</h3><table>${rang.map(([k, [lib, max]], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><td>${lib}</td><td>${nf(note.lignes[k], note.lignes[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
-      <tr class="total lent" style="animation-delay:${0.4 + rang.length * 0.35}s"><td>Total</td><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
-    $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)}</span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p></div>`).join('') : '';
+    $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · SPIRITUEUX VIEILLI</h3><table aria-label="Notes spiritueux vieilli">${rang.map(([k, [lib, max]], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><th scope="row">${lib}</th><td>${nf(note.lignes[k], note.lignes[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
+      <tr class="total lent" style="animation-delay:${0.4 + rang.length * 0.35}s"><th scope="row">Total</th><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
+    $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)}</span><span class="gravite">Gravité ${d.gravite}/3</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p></div>`).join('') : '';
     const pip = CH.pipette(etat);
     const g = [];
     g.push(`<b>À la pipette :</b> ${esc(pip.notes.map((x) => x.mot).join(', ') || 'alcool blanc')}${pip.bouche.length ? ` · ${esc(pip.bouche.join(', '))}` : ''}.`);
@@ -3367,7 +3409,7 @@
   }
   const sansAccents = (t) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   function rendreDecouvertes() {
-    $('#cat-decouvertes').innerHTML = DECOUVERTES.map((d) => `<div class="succes-item ${S.decouvertes[d.id] ? 'obtenu' : ''}"><b>${esc(d.titre)}</b>${esc(d.desc)} → ${esc(d.cadeaux().filter(Boolean).map((x) => x.nom).join(', '))}</div>`).join('');
+    $('#cat-decouvertes').innerHTML = DECOUVERTES.map((d) => `<div class="succes-item ${S.decouvertes[d.id] ? 'obtenu' : ''}"><b>${esc(d.titre)}</b><span class="decouverte-etat">${S.decouvertes[d.id] ? 'Cadeau reçu' : 'À découvrir'}</span><p>${esc(d.desc)}</p><p class="decouverte-cadeau"><strong>Cadeau :</strong> ${esc(d.cadeaux().filter(Boolean).map((x) => x.nom).join(', '))}</p></div>`).join('');
   }
 
   // =====================================================================
@@ -3555,9 +3597,9 @@
     $('#radar').innerHTML = radarSVG(axes, res.profil);
     const L = fiche.lignes;
     const rang = [['alcool', 'Alcool à distiller', 8], ['attenuation', 'Atténuation', 4], ['proprete', 'Propreté', 5], ['potentiel', 'Potentiel aromatique', 3]];
-    $('#fiche-jury').innerHTML = `<h3>FICHE DU BOUILLEUR · WASH</h3><table>${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.3 + i * 0.3}s"><td>${lib}</td><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
-      <tr class="total lent" style="animation-delay:1.5s"><td>Total</td><td>${nf(fiche.total, fiche.total % 1 ? 1 : 0)} / 20</td></tr></table>`;
-    $('#degust-defauts').innerHTML = fiche.defauts.length ? `<h2 class="sous-titre">Points faibles</h2>` + fiche.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
+    $('#fiche-jury').innerHTML = `<h3>FICHE DU BOUILLEUR · WASH</h3><table aria-label="Notes du wash">${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.3 + i * 0.3}s"><th scope="row">${lib}</th><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
+      <tr class="total lent" style="animation-delay:1.5s"><th scope="row">Total</th><td>${nf(fiche.total, fiche.total % 1 ? 1 : 0)} / 20</td></tr></table>`;
+    $('#degust-defauts').innerHTML = fiche.defauts.length ? `<h2 class="sous-titre">Points faibles</h2>` + fiche.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">Gravité ${d.gravite}/3</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [S.bac ? 'Bac à sable : ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b>.`];
     (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
     g.push(`Ce wash donnera une ${nomEauDeVie(e).toLowerCase()} : il t'attend à l'alambic.`);
@@ -3581,7 +3623,7 @@
     const pc = suivant ? Math.round(((S.points - debut) / (fin - debut)) * 100) : 100;
     $('#carnet-progression').innerHTML = `<div class="progression"><p class="niv">${niveau().toUpperCase()}</p>
       <p>${S.points} points · ${S.brassins} brassin${S.brassins > 1 ? 's' : ''} · palier ${p} sur 5</p>
-      <div class="jauge" style="height:10px"><i style="width:${pc}%;background:var(--braise)"></i></div>
+      <div class="jauge" role="progressbar" aria-label="Progression du palier" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pc}" aria-valuetext="${S.points} points ; ${suivant ? `prochain palier à ${fin} points` : 'dernier palier atteint'}"><i style="width:${pc}%;background:var(--braise)"></i></div>
       <p class="page-intro">${suivant ? `Prochain palier à ${suivant.pts} points : ${suivant.txt}.` : 'Tout le catalogue est débloqué.'}</p></div>`;
     const et = $('#etagere');
     if (!S.carnet.length) { et.innerHTML = '<p class="vide" style="grid-column:1/-1">L\'étagère est vide. Brasse ta première bière à la brasserie.</p>'; $('#carnet-detail').innerHTML = ''; }
@@ -3590,7 +3632,7 @@
       $$('.bouteille canvas', et).forEach(dessinerBouteille);
       rendreDetailCarnet();
     }
-    $('#succes').innerHTML = SUCCES.map((s) => `<div class="succes-item ${S.succes[s.id] ? 'obtenu' : ''}"><b>${esc(s.nom)}</b>${esc(s.desc)}</div>`).join('');
+    $('#succes').innerHTML = SUCCES.map((s) => `<div class="succes-item ${S.succes[s.id] ? 'obtenu' : ''}"><b>${esc(s.nom)}</b><span class="succes-etat">${S.succes[s.id] ? 'Obtenu' : 'À accomplir'}</span><p>${esc(s.desc)}</p></div>`).join('');
   }
   function dessinerBouteille(cv) {
     // Coordonnées logiques indépendantes de la densité de l'écran.

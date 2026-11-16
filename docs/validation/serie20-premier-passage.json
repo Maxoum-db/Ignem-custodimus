@@ -1,0 +1,546 @@
+{
+  "base_main": "b17989ef33fcc5fc86e2fc8cd5fa71db61b0fef1",
+  "code_jeu": "c7a138f23f4a466e4fb9454192351033b8204ae8",
+  "resultats": [
+    {
+      "commande": [
+        "npm",
+        "run",
+        "build:jeu"
+      ],
+      "code": 0,
+      "secondes": 7.84
+    },
+    {
+      "commande": [
+        "npm",
+        "run",
+        "test:jeu"
+      ],
+      "code": 0,
+      "secondes": 8.62
+    },
+    {
+      "commande": [
+        "node",
+        "--check",
+        "jeu/src/ateliers.js"
+      ],
+      "code": 0,
+      "secondes": 0.64
+    },
+    {
+      "commande": [
+        "node",
+        "--check",
+        "jeu/src/chai.js"
+      ],
+      "code": 0,
+      "secondes": 0.54
+    },
+    {
+      "commande": [
+        "node",
+        "--check",
+        "jeu/src/distillerie.js"
+      ],
+      "code": 0,
+      "secondes": 0.68
+    },
+    {
+      "commande": [
+        "node",
+        "--check",
+        "jeu/src/domaine.js"
+      ],
+      "code": 0,
+      "secondes": 0.51
+    },
+    {
+      "commande": [
+        "node",
+        "--check",
+        "jeu/src/ecole.js"
+      ],
+      "code": 0,
+      "secondes": 0.55
+    },
+    {
+      "commande": [
+        "node",
+        "--check",
+        "jeu/src/illustrations.js"
+      ],
+      "code": 0,
+      "secondes": 0.62
+    },
+    {
+      "commande": [
+        "node",
+        "--check",
+        "jeu/src/jeu.js"
+      ],
+      "code": 0,
+      "secondes": 0.61
+    },
+    {
+      "commande": [
+        "node",
+        "--check",
+        "jeu/src/moteur.js"
+      ],
+      "code": 0,
+      "secondes": 0.66
+    },
+    {
+      "commande": [
+        "node",
+        "--check",
+        "jeu/src/vente.js"
+      ],
+      "code": 0,
+      "secondes": 0.72
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/mobile.cjs"
+      ],
+      "code": 0,
+      "secondes": 6.13
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/rendu.cjs"
+      ],
+      "code": 0,
+      "secondes": 3.25
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/chai-plan.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.5
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/finitions/01-cour.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.19
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/finitions/02-catalogue.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 10.14
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/finitions/03-etats.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.15
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/finitions/04-reperes.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 9.59
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/finitions/05-prevision.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.31
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/finitions/06-verre.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 9.25
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/finitions/07-cuves.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 12.84
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/finitions/08-profil.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 8.17
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/finitions/09-notifications.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 16.73
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/finitions/10-batiments.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 9.37
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/pigeonnier/01-portraits.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 13.21
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/pigeonnier/02-demandes.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 13.12
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/pigeonnier/03-bouteilles.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 13.18
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/pigeonnier/04-propositions.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.76
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/pigeonnier/05-reputation.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.26
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/pigeonnier/06-satisfaction.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 9.58
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/pigeonnier/07-commandes.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 13.74
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/pigeonnier/08-stocks.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 19.08
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/pigeonnier/09-negociant.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 16.12
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/pigeonnier/10-etats-vides.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 15.95
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/veillee/01-lecons.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.66
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/veillee/02-statuts.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 9.73
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/veillee/03-lecture.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.63
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/veillee/04-etapes.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 12.02
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/veillee/05-progression.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 13.42
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/veillee/06-reponses.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 7.72
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/veillee/07-correction.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.41
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/veillee/08-quotidien.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 19.2
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/veillee/09-questions.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 13.97
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/veillee/10-mentors.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 21.9
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/02-fiches.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.65
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/03-recherche.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 11.64
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/04-resultats.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 17.0
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/05-options.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 22.55
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/06-fournisseurs.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 23.08
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/07-ingredients.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 27.21
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/08-quantites.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 28.21
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/09-procede.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 23.22
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/10-sels.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 16.3
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/11-styles.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 17.36
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/12-plan-lise.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 13.73
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/13-reperes.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 16.4
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/14-tutoriels.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 22.12
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/15-informations.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 12.45
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/16-menu.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 10.28
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/17-materiel.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 14.02
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/18-validation-quiz.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 14.11
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/19-composition.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 17.16
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/houblon-oubli.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 126.03
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/lot50/houblon-preparation.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 291.57
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/serie20/01.test.cjs"
+      ],
+      "code": 0,
+      "secondes": 20.25
+    },
+    {
+      "commande": [
+        "node",
+        "jeu/tests/serie20/02.test.cjs"
+      ],
+      "code": 1,
+      "secondes": 65.26
+    }
+  ],
+  "total_commandes": 93
+}

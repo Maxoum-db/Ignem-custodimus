@@ -47,8 +47,8 @@
       <div class="plan-lise" id="plan-lise" hidden></div>
       <button class="defi-ligne" id="defi-ligne" data-aller="veillee" hidden></button>
       <p class="conseil" id="conseil" hidden></p>
-      <div class="onglets" role="tablist" id="onglets"></div>
-      <div class="onglet-contenu" id="onglet-contenu"></div>
+      <div class="onglets" role="tablist" aria-label="Préparation de la recette" id="onglets"></div>
+      <div class="onglet-contenu" id="onglet-contenu" role="tabpanel" tabindex="0"></div>
       <div class="barre-brassin">
         <button id="btn-vider" class="btn btn-sobre">Vider la cuve</button>
         <button id="btn-lancer" class="btn btn-feu">Lancer le brassin</button>
@@ -136,7 +136,7 @@
       <div class="geste-scene"><canvas id="bou-canvas" width="192" height="112"></canvas><span class="geste-evt" id="bou-evt" hidden></span></div>
       <div class="geste-infos" id="bou-infos"></div>
       <div class="dose dose-sucre"><label for="bou-sucre">Sucre de refermentation</label><span class="val" id="bou-sucre-val"></span>
-        <input type="range" id="bou-sucre" min="0" max="14" step="0.5" value="6"><p id="bou-verdict"></p></div>
+        <input type="range" id="bou-sucre" aria-describedby="bou-sucre-val bou-verdict" min="0" max="14" step="0.5" value="6"><p id="bou-verdict"></p></div>
       <div class="geste-controles">
         <button id="bou-go" class="btn btn-feu btn-geste">Embouteiller<small>capsuler et laisser refermenter 2 semaines</small></button>
       </div>
@@ -171,7 +171,7 @@
       <div class="jauges-feu" id="bro-jauges"></div>
       <div class="geste-controles">
         <button id="bro-buche" class="btn btn-feu btn-geste" disabled>Ajouter une bûche<small>elle met une seconde à prendre</small></button>
-        <label class="registre" for="bro-registre"><span>Registre d'air</span><input type="range" id="bro-registre" min="0" max="100" step="1" value="50" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
+        <label class="registre" for="bro-registre"><span>Registre d'air <output id="bro-registre-val" for="bro-registre">50 %</output></span><input type="range" id="bro-registre" min="0" max="100" step="1" value="50" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
       </div>
       <div class="geste-bilan" id="bro-bilan" hidden></div>
       <div class="geste-pied" id="bro-pied">
@@ -193,7 +193,7 @@
         <button id="rep-buche" class="btn btn-sobre" disabled>Bûche</button>
         <button id="rep-couper" class="btn btn-feu btn-geste" disabled>Couper</button>
       </div>
-      <label class="registre" for="rep-registre"><span>Registre d'air</span><input type="range" id="rep-registre" min="0" max="100" step="1" value="50" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
+      <label class="registre" for="rep-registre"><span>Registre d'air <output id="rep-registre-val" for="rep-registre">50 %</output></span><input type="range" id="rep-registre" min="0" max="100" step="1" value="50" disabled><span class="vanne-echelle"><span>Fermé</span><span>Grand ouvert</span></span></label>
       <div class="geste-bilan" id="rep-bilan" hidden></div>
       <div class="geste-pied" id="rep-pied">
         <button id="rep-passer" class="btn btn-sobre">Coupes automatiques</button>

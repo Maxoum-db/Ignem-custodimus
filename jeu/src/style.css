@@ -247,6 +247,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 .frise { position: relative; height: 44px; background: var(--four); box-shadow: var(--cadre); margin-top: -6px; }
 .frise .repere-h { position: absolute; top: 4px; bottom: 16px; width: 3px; margin-left: -1px; background: var(--houblon); }
 .frise .repere-h.fait { background: var(--pierre-clair); }
+.frise .repere-h.oublie { background:var(--alerte); outline:1px dashed var(--calcaire); }
 .frise .repere-h b { position: absolute; top: 0; left: 5px; font-family: var(--f-chiffre); font-size: 16px; font-weight: 400; white-space: nowrap; color: var(--calcaire); }
 .frise .curseur { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1px; background: var(--braise); }
 .frise .graduation { position: absolute; bottom: 1px; font-family: var(--f-chiffre); font-size: 14px; color: var(--cendre); transform: translateX(-50%); }
@@ -659,8 +660,7 @@ input[type="range"] { width: 100%; accent-color: var(--cuivre); height: 28px; }
 
 /* ---------- Gestes V0.7 ---------- */
 #fer-houblon { margin-top: 8px; width: 100%; }
-#fer-houblon.pret:not(:disabled) { animation: pret 0.6s steps(2) infinite; }
-@keyframes pret { 50% { box-shadow: 0 0 0 3px var(--or); } }
+#fer-houblon.pret:not(:disabled) { outline:3px solid var(--or); outline-offset:3px; background:var(--houblon); color:var(--nuit); }
 .dose-sucre p { grid-column: 1 / -1; margin: 0; font-size: 14px; }
 
 /* ---------- Style visé et plan de Lise (V0.7.1) ---------- */
@@ -1142,3 +1142,99 @@ html,body { margin:0; }
 #bat-equip .det { font-size:15px; line-height:1.55; }
 #bat-equip .btn { min-height:48px; padding:10px 14px; font-size:16px; justify-self:start; }
 #bat-equip .etq { justify-self:start; border-radius:7px; padding:4px 8px; font-size:14px; }
+
+/* Réglages Ulysse : commandes lisibles et accessibles au pouce. */
+#dist-reglages .reglage { padding:16px; border:1px solid var(--cuivre); border-radius:16px; background:var(--four); gap:10px; }
+#dist-reglages .bascule { display:flex; flex-wrap:wrap; gap:8px; }
+#dist-reglages .bascule button { min-height:48px; min-width:48px; padding:10px 16px; border-radius:12px; font-size:16px; }
+#dist-reglages input[type="range"] { min-height:44px; width:100%; }
+#dist-reglages .reglage p { font-size:15px; line-height:1.5; }
+
+/* Mentor : panneau défilant sur les écrans peu hauts. */
+.mentor { max-height:45vh; max-height:45dvh; overflow-y:auto; overscroll-behavior:contain; border-radius:20px 20px 0 0; }
+.mentor-actions .btn { min-height:48px; padding:10px 14px; font-size:16px; }
+#menu-entete { max-height:calc(100vh - 90px - var(--pied-mentor, 0px)); max-height:calc(100dvh - 90px - var(--pied-mentor, 0px)); }
+
+/* Fiche du jury : papier illustré et lignes de notes explicites. */
+.fiche-jury { border-radius:18px; border:1px solid var(--cuivre); padding:16px; }
+.fiche-jury h3 { font-family:var(--f-texte); font-size:17px; line-height:1.4; }
+.fiche-jury th { text-align:left; font-size:16px; font-weight:600; padding:10px 8px 10px 0; border-bottom:1px solid #3b2a1e40; }
+.fiche-jury td { padding:10px 0; border-bottom:1px solid #3b2a1e40; white-space:nowrap; }
+.fiche-jury tr.total th { border-bottom:0; }
+@media (prefers-reduced-motion:reduce) { .fiche-jury .lent { animation:none; opacity:1; } }
+
+/* Défauts : gravité lisible sans dépendre de symboles minuscules. */
+.defaut { padding:16px; border-radius:16px; border:1px solid var(--pierre); gap:10px; }
+.defaut h3 { flex-wrap:wrap; font-size:18px; line-height:1.4; }
+.defaut h3 > span:first-child { min-width:0; overflow-wrap:anywhere; }
+.defaut p { font-size:16px; line-height:1.5; }
+.gravite { font-family:var(--f-texte); font-size:14px; letter-spacing:normal; white-space:nowrap; padding:4px 8px; border:1px solid currentColor; border-radius:8px; }
+
+/* Carnet : progression réelle vers le prochain palier. */
+#carnet-progression .progression { border:1px solid var(--cuivre); border-radius:18px; padding:18px; gap:12px; }
+#carnet-progression .niv { font-family:var(--f-texte); font-size:21px; font-weight:800; }
+#carnet-progression .jauge { height:16px; border-radius:8px; overflow:hidden; }
+#carnet-progression p { line-height:1.5; }
+
+/* Succès du carnet : objectifs lisibles, statut écrit. */
+#succes { grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:12px; }
+#succes .succes-item { padding:16px; border-radius:16px; border:1px solid var(--pierre); box-shadow:none; opacity:1; font-size:16px; line-height:1.5; display:flex; flex-direction:column; gap:8px; }
+#succes .succes-item b { font-size:18px; }
+#succes .succes-item p { margin:0; }
+#succes .succes-item.obtenu { border-color:var(--braise); }
+#succes .succes-etat { font-weight:700; color:var(--cendre); }
+#succes .obtenu .succes-etat { color:var(--braise); }
+
+/* Découvertes du pigeonnier : conditions et cadeaux distincts. */
+#cat-decouvertes { grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:12px; }
+#cat-decouvertes .succes-item { opacity:1; border:1px solid var(--pierre); border-radius:16px; padding:16px; box-shadow:none; display:grid; gap:10px; font-size:16px; line-height:1.5; }
+#cat-decouvertes .succes-item b { font-size:19px; }
+#cat-decouvertes p { margin:0; }
+#cat-decouvertes .decouverte-etat { font-weight:700; }
+#cat-decouvertes .obtenu { border-color:var(--braise); }
+#cat-decouvertes .obtenu .decouverte-etat { color:var(--braise); }
+#cat-decouvertes .decouverte-cadeau { padding-top:10px; border-top:1px solid var(--pierre); color:var(--calcaire); }
+
+/* Dégustation aveugle : une fraction par carte sur téléphone. */
+@media (max-width:559px) {
+ .verres-aveugle { grid-template-columns:minmax(0,1fr); gap:16px; }
+ .verre-a { border-radius:18px; border:1px solid var(--cuivre); padding:16px; display:grid; grid-template-columns:64px minmax(0,1fr); grid-template-areas:"verre titre" "verre odeurs" "choix choix" "reponse reponse"; text-align:left; gap:12px; }
+ .verre-a .verre-degustation { grid-area:verre; width:60px; }
+ .verre-a .lettre { grid-area:titre; font-family:var(--f-texte); font-size:22px; font-weight:800; }
+ .verre-a .odeurs { grid-area:odeurs; font-size:16px; line-height:1.5; min-height:0; }
+ .verre-a .choix { grid-area:choix; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+ .verre-a .choix button { min-height:48px; font-size:16px; border-radius:10px; }
+ .verre-a .reponse { grid-area:reponse; font-size:16px; }
+}
+
+/* Refermentation : réglage du sucre au pouce. */
+.dose-sucre { padding:16px; gap:12px; border:1px solid var(--cuivre); border-radius:18px; grid-template-columns:minmax(0,1fr); }
+.dose-sucre label { font-size:18px; }
+.dose-sucre .val { font-size:26px; }
+.dose-sucre input[type="range"] { min-height:48px; width:100%; }
+.dose-sucre p { font-size:16px; line-height:1.5; }
+
+/* Foyers Ulysse : ouverture du registre visible et commande ample. */
+#ecran-brouillis .registre, #ecran-repasse .registre { background:var(--four); border:1px solid var(--cuivre); border-radius:16px; padding:16px; gap:12px; font-size:17px; }
+#bro-registre, #rep-registre { min-height:48px; }
+.registre output { float:right; color:var(--braise); font-size:22px; font-weight:700; }
+
+/* Jauges des gestes : libellé et valeur au-dessus d’une barre ample. */
+.jauge-feu { grid-template-columns:minmax(0,1fr) auto; gap:8px 12px; padding:10px 0; font-size:16px; }
+.jauge-feu > span:first-child { grid-column:1; grid-row:1; }
+.jauge-feu .val { grid-column:2; grid-row:1; font-size:21px; }
+.jauge-feu .barre { grid-column:1/-1; grid-row:2; height:16px; border-radius:6px; }
+.jauge-feu .niv, .jauge-feu .zone { border-radius:6px; }
+
+/* Recherche de recette : sortie explicite quand aucun ingrédient ne correspond. */
+.ingredient-vide { padding:18px; border:1px dashed var(--cuivre); border-radius:16px; background:var(--four); display:grid; gap:12px; }
+.ingredient-vide p { margin:0; line-height:1.5; font-size:17px; overflow-wrap:anywhere; }
+.ingredient-vide .btn { min-height:48px; }
+
+/* Bilan des gestes : un résultat nommé et une suite clairement accessible. */
+.geste-bilan { padding:18px; border:1px solid var(--houblon); border-radius:18px; gap:12px; }
+.geste-bilan h2 { margin:0; font-size:21px; color:var(--houblon); }
+.geste-bilan p { font-size:17px; line-height:1.5; }
+.geste-bilan .gros { font-size:36px; }
+.geste-bilan > .btn { min-height:48px; margin-top:6px; }
+.geste-bilan:focus-visible { outline:3px solid var(--braise); outline-offset:3px; }
