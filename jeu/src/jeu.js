@@ -1657,7 +1657,7 @@
     };
     const maj = () => {
       const g = +champ.value, co2 = resid + g / Moteur.G_SUCRE_PAR_VOLUME, d = co2 - cible;
-      $('#bou-sucre-val').textContent = `${nf(g, 1)} g/L`;
+      $('#bou-sucre-val').textContent = `${nf(g, 1)} g/L`; champ.setAttribute('aria-valuetext', `${nf(g, 1)} grammes par litre`);
       $('#bou-infos').innerHTML = infoBloc(nf(co2, 1), 'vol. de CO₂') + infoBloc(nf(cible, 1), 'cible du style') + infoBloc(nf(resid, 2), 'déjà dissous');
       $('#bou-verdict').innerHTML = co2 > (equipe('bouteilles') ? 4.6 : 4) ? '<b style="color:var(--alerte)">Danger : des bouteilles vont éclater.</b>' : d > 0.7 ? '<b style="color:var(--alerte)">Trop gazeuse : elle jaillira à l\'ouverture.</b>' : d < -0.6 ? '<b style="color:var(--alerte)">Trop peu : la bière sera plate.</b>' : Math.abs(d) <= 0.25 ? '<b style="color:var(--houblon)">Juste pour le style.</b>' : 'Acceptable.';
       if (S.aide) $('#bou-verdict').insertAdjacentHTML('beforeend', ` <span class="det">Lise : vers ${nf(ideal, 1)} g/L.</span>`);

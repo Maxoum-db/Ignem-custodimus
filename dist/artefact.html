@@ -1209,6 +1209,13 @@ html,body { margin:0; }
  .verre-a .choix button { min-height:48px; font-size:16px; border-radius:10px; }
  .verre-a .reponse { grid-area:reponse; font-size:16px; }
 }
+
+/* Refermentation : réglage du sucre au pouce. */
+.dose-sucre { padding:16px; gap:12px; border:1px solid var(--cuivre); border-radius:18px; grid-template-columns:minmax(0,1fr); }
+.dose-sucre label { font-size:18px; }
+.dose-sucre .val { font-size:26px; }
+.dose-sucre input[type="range"] { min-height:48px; width:100%; }
+.dose-sucre p { font-size:16px; line-height:1.5; }
 </style>
 
 <div id="app">
@@ -1345,7 +1352,7 @@ html,body { margin:0; }
       <div class="geste-scene"><canvas id="bou-canvas" width="192" height="112"></canvas><span class="geste-evt" id="bou-evt" hidden></span></div>
       <div class="geste-infos" id="bou-infos"></div>
       <div class="dose dose-sucre"><label for="bou-sucre">Sucre de refermentation</label><span class="val" id="bou-sucre-val"></span>
-        <input type="range" id="bou-sucre" min="0" max="14" step="0.5" value="6"><p id="bou-verdict"></p></div>
+        <input type="range" id="bou-sucre" aria-describedby="bou-sucre-val bou-verdict" min="0" max="14" step="0.5" value="6"><p id="bou-verdict"></p></div>
       <div class="geste-controles">
         <button id="bou-go" class="btn btn-feu btn-geste">Embouteiller<small>capsuler et laisser refermenter 2 semaines</small></button>
       </div>
@@ -4970,7 +4977,7 @@ html,body { margin:0; }
     };
     const maj = () => {
       const g = +champ.value, co2 = resid + g / Moteur.G_SUCRE_PAR_VOLUME, d = co2 - cible;
-      $('#bou-sucre-val').textContent = `${nf(g, 1)} g/L`;
+      $('#bou-sucre-val').textContent = `${nf(g, 1)} g/L`; champ.setAttribute('aria-valuetext', `${nf(g, 1)} grammes par litre`);
       $('#bou-infos').innerHTML = infoBloc(nf(co2, 1), 'vol. de CO₂') + infoBloc(nf(cible, 1), 'cible du style') + infoBloc(nf(resid, 2), 'déjà dissous');
       $('#bou-verdict').innerHTML = co2 > (equipe('bouteilles') ? 4.6 : 4) ? '<b style="color:var(--alerte)">Danger : des bouteilles vont éclater.</b>' : d > 0.7 ? '<b style="color:var(--alerte)">Trop gazeuse : elle jaillira à l\'ouverture.</b>' : d < -0.6 ? '<b style="color:var(--alerte)">Trop peu : la bière sera plate.</b>' : Math.abs(d) <= 0.25 ? '<b style="color:var(--houblon)">Juste pour le style.</b>' : 'Acceptable.';
       if (S.aide) $('#bou-verdict').insertAdjacentHTML('beforeend', ` <span class="det">Lise : vers ${nf(ideal, 1)} g/L.</span>`);
