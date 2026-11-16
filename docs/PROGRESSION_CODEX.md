@@ -1,5 +1,51 @@
 # Progression Codex
 
+## Série de 20 — 20 : validation intégrée et revue vers main
+
+Statut : terminée sur `work/serie20-20-validation`. Les dix-neuf premières
+missions de cette série ont chacune leur branche, commit, tests et PR (#82–#100).
+Cette dernière branche propose une PR d’ensemble vers main, y compris la
+correction H01 préalable (#81), sans fusion ni publication. Base main vérifiée :
+`b17989ef33fcc5fc86e2fc8cd5fa71db61b0fef1` ; les 19 branches poussées ont été
+comparées à GitHub et correspondent à leurs commits locaux.
+
+Fichiers : test `jeu/tests/serie20/20.test.cjs`, dossier `docs/SERIE_20_REVUE.md`,
+suivi de `docs/AUDIT_RESTANT.md`, résultats et empreintes dans `docs/validation/`,
+ce journal et captures de cette série remises à jour. Aucun changement du code
+produit ni des HTML dans cette étape : ils restent ceux de `c7a138f`.
+Les cinq moteurs, données et format de sauvegarde sont inchangés par la série.
+Les 78 captures historiques réécrites par les tests ont été remises à leur état
+antérieur ; leurs compléments QA sont conservés dans `/tmp/serie20-qa-complements`.
+
+Critères et validation :
+- 93 commandes vérifiées : build reproductible, six suites Node dont ressources,
+  syntaxe de neuf JS, tous les tests navigateur du workflow et les quatre
+  parcours (automatique, gestes de bière, Ulysse expert et débutant).
+- Les vingt tests ajoutés passent à 320 et 390 px DPR 2 avec toucher actif,
+  sans erreur JS ni débordement horizontal. Le dernier vérifie l’expiration
+  d’une confirmation d’abandon, dix écrans et la conservation recette/écus.
+- CI complète du code produit `c7a138f` : run 43948905760 réussi ; elle couvre
+  les tests 01 à 19 et tous les parcours. La CI de la dernière PR, qui ajoute
+  le test 20 et la documentation, devra être distinguée de ce résultat.
+- Un délai d’action de 7 s a échoué sur #btn-menu pendant l’entrée de fixture
+  en 390 px, avant le scénario 02. Le rejeu ciblé a réussi aux deux largeurs
+  sans modification ; cause exacte non établie, premier passage et trace gardés.
+- Le dernier parcours a été interrompu par le redémarrage de l’environnement.
+  Les 92 résultats précédents ont été récupérés ; seule cette commande a été
+  relancée puis réussie. Aucun résultat d’interruption présenté comme succès.
+- Quarante captures réelles sont sauvegardées dans `docs/captures/serie20/`.
+  Les captures de chaque mission ont été inspectées ; les deux largeurs finales
+  ont été vues. Ce sont des rendus du jeu construit, pas des maquettes.
+- Android physique et Safari/iOS indisponibles. La publication du site n’a pas
+  été effectuée : pousser les branches GitHub ne met pas le site public à jour.
+
+Reprise : résultats complets, commandes, branches, commits, PR et limites dans
+`docs/SERIE_20_REVUE.md`. Les constats H02/H03/U01/U02 sont marqués comme traités
+sur branches dans l’audit pour éviter de les recommencer.
+Prochaine mission unique proposée : fusionner la PR finale vers main après
+une autorisation explicite. Aucune vingt-et-unième mission commencée.
+
+
 ## Série de 20 — 19 : Protéger les sorties de navigation pendant un geste
 
 Branche : `work/serie20-19-navigation-geste`. Les destinations data-aller demandent un second toucher sur la même destination sous cinq secondes pendant un geste, comme la protection du Retour existante. Menu conservé au premier toucher. Les trois sorties menu, recherche et domaine sont testées pendant un empâtage actif : recette, monnaie et nombre de brassins conservés.

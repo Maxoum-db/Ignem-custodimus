@@ -1,0 +1,30 @@
+Premier passage local : entrée de fixture en 390 px, avant le scénario 02.
+Rejeu ciblé réussi aux deux largeurs sans changement de code ni de test.
+La cause exacte de ce délai isolé n’est pas établie.
+
+locator.click: Timeout 7000ms exceeded.
+Call log:
+  - waiting for locator('#btn-menu')
+    - locator resolved to <button id="btn-menu" aria-label="Menu" class="btn-entete" aria-expanded="false" aria-controls="menu-entete">…</button>
+  - attempting click action
+    - waiting for element to be visible, enabled and stable
+    - element is visible, enabled and stable
+    - scrolling into view if needed
+    - done scrolling
+    - performing click action
+
+    at enter (/workspace/ignem-custodimus/jeu/tests/veillee/support.cjs:6:76)
+    at async /workspace/ignem-custodimus/jeu/tests/veillee/support.cjs:7:2
+    at async run (/workspace/ignem-custodimus/jeu/tests/finitions/support.cjs:24:4) {
+  log: [
+    "  - waiting for locator('#btn-menu')",
+    '    - locator resolved to <button id="btn-menu" aria-label="Menu" class="btn-entete" aria-expanded="false" aria-controls="menu-entete">…</button>',
+    '  - attempting click action',
+    '    - waiting for element to be visible, enabled and stable',
+    '    - element is visible, enabled and stable',
+    '    - scrolling into view if needed',
+    '    - done scrolling',
+    '    - performing click action'
+  ],
+  name: 'TimeoutError'
+}
