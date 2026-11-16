@@ -1197,6 +1197,18 @@ html,body { margin:0; }
 #cat-decouvertes .obtenu { border-color:var(--braise); }
 #cat-decouvertes .obtenu .decouverte-etat { color:var(--braise); }
 #cat-decouvertes .decouverte-cadeau { padding-top:10px; border-top:1px solid var(--pierre); color:var(--calcaire); }
+
+/* Dégustation aveugle : une fraction par carte sur téléphone. */
+@media (max-width:559px) {
+ .verres-aveugle { grid-template-columns:minmax(0,1fr); gap:16px; }
+ .verre-a { border-radius:18px; border:1px solid var(--cuivre); padding:16px; display:grid; grid-template-columns:64px minmax(0,1fr); grid-template-areas:"verre titre" "verre odeurs" "choix choix" "reponse reponse"; text-align:left; gap:12px; }
+ .verre-a .verre-degustation { grid-area:verre; width:60px; }
+ .verre-a .lettre { grid-area:titre; font-family:var(--f-texte); font-size:22px; font-weight:800; }
+ .verre-a .odeurs { grid-area:odeurs; font-size:16px; line-height:1.5; min-height:0; }
+ .verre-a .choix { grid-area:choix; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+ .verre-a .choix button { min-height:48px; font-size:16px; border-radius:10px; }
+ .verre-a .reponse { grid-area:reponse; font-size:16px; }
+}
 </style>
 
 <div id="app">
@@ -5764,7 +5776,7 @@ html,body { margin:0; }
     const NOMS = ['Têtes', 'Cœur', 'Queues'];
     $('#aveugle-verres').innerHTML = ordre.map((iFr, k) => {
       const odeurs = DI.descripteurs(r.fractions[iFr]);
-      return `<div class="verre-a" id="verre-a-${k}">${verreDegustation('fraction-' + k, 'spiritueux', '#c5dcdf')}<span class="lettre">${'ABC'[k]}</span>
+      return `<div class="verre-a" id="verre-a-${k}" role="group" aria-label="Verre ${'ABC'[k]}">${verreDegustation('fraction-' + k, 'spiritueux', '#c5dcdf')}<span class="lettre">${'ABC'[k]}</span>
         <span class="odeurs">${odeurs.map((o) => `${esc(o.odeur)} <small>(${o.force})</small>`).join('<br>') || 'presque rien'}</span>
         <div class="choix">${NOMS.map((n, j) => `<button data-av="${k}:${j}" aria-pressed="false">${n}</button>`).join('')}</div><span class="reponse"></span></div>`;
     }).join('');
