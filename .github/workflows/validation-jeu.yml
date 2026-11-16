@@ -42,6 +42,7 @@ jobs:
             docs/captures/serie/
             docs/captures/lot50/
             docs/captures/houblon-preparation/
+            docs/captures/houblon-oubli/
             docs/captures/chai-plan-*.png
             docs/captures/ulysse-entree-*.png
             docs/captures/firmin-portrait-*.png

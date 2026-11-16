@@ -3,6 +3,22 @@
 Référence auditée : `41ab2b952c685be73fbae664160d89eccfd93440` sur GitHub main.
 Audit ciblé du jeu mobile et de sa livraison, sans correction du jeu ni déploiement.
 
+## Suivi H01 — 16 novembre 2026
+
+Correction réalisée sur la branche `work/houblon-oubli-zero`, proposée en PR,
+**pas encore fusionnée dans main** au moment de cette livraison. Un ajout
+oublié contribue désormais pour zéro à la précision ; un ajout réellement
+lancé à 0 minute peut conserver 100 %. Le bilan, le bouton désactivé et les
+repères distinguent les oublis des ajouts faits. Les récompenses de précision
+ne sont plus attribuées à un oubli. Aucun moteur ni format de sauvegarde changé.
+
+Validation : 16 scénarios dédiés en 320/390 px, expert/débutant, avec oubli,
+ajout manuel, cas mixte et dry hop seul ; huit scénarios existants de préparation
+cinq secondes, six suites Node et un parcours avec gestes réels réussis.
+Les preuves historiques et le tableau ci-dessous concernent toujours la
+référence auditée 41ab2b9 et sont conservés pour comparaison. Les autres lignes
+restent à traiter. Prochaine correction proposée : H02, libellés des doses.
+
 ## État réellement vérifié
 
 - Dépôt initial propre ; PR #78 et #79 fusionnées. Les 19 missions du lot et

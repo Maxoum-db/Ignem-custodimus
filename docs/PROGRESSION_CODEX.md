@@ -1,5 +1,59 @@
 # Progression Codex
 
+## ÉTAPE — H01 : oubli du houblon à 0 minute
+
+Statut : terminée sur `work/houblon-oubli-zero`, sans fusion ni publication.
+Une seule mission dans cette exécution. Base distante vérifiée : main
+`b17989ef33fcc5fc86e2fc8cd5fa71db61b0fef1`, PR #80 fusionnée ; dépôt initial
+propre. Les PR pertinentes consultées ne contiennent pas déjà cette correction.
+
+Règle : un ajout non lancé à la fin du geste contribue pour zéro à la précision,
+même s’il était prévu à 0 minute. Un ajout réellement lancé garde la notation
+existante. La pénalité d’un oubli atteint au moins la tolérance du geste : il
+ne compte donc plus comme un ajout réussi à une minute près ni parmi les trois
+ajouts réussis. Les récompenses réellement gagnées sont conservées.
+
+Le bilan nomme les ajouts oubliés, le bouton final indique leur nombre et reste
+désactivé ; les repères oubliés ont un état distinct et un nom accessible.
+La liste interne de travail est annotée, pas la recette sauvegardée. Le repli
+scientifique existant à 0 minute pour les ajouts non lancés est conservé :
+aucune modification des cinq moteurs, des données ni du format de sauvegarde.
+Pas de modification rétroactive des parties ou récompenses anciennes.
+La préparation de cinq secondes et la durée d’ébullition restent inchangées.
+H02 (doses), H03 (compteur) et les autres sujets ne sont pas traités ici.
+
+Fichiers : `jeu/src/jeu.js`, `jeu/src/style.css`, les deux HTML de `dist`,
+`jeu/tests/lot50/houblon-oubli.test.cjs`, workflow (archivage des captures),
+ce journal, le suivi H01 de `docs/AUDIT_RESTANT.md` et six captures réelles dans
+`docs/captures/houblon-oubli/`.
+
+Validation locale réussie :
+- Build et six suites Node, dont ressources ; syntaxe JS et git diff --check.
+- 16 scénarios nouveaux : 320/390 px DPR 2, expert/débutant ; oubli seul
+  (0 %, aucun gain), ajout manuel à 0 (100 %, récompense existante), un ajout
+  réussi puis un oubli (50 %), dry hop seul (pas de fausse omission).
+- Les objectifs de précision, états des repères, bouton final, recette et dry
+  hop conservés, passage à la fermentation sont vérifiés. Les gains sont
+  contrôlés dans l’en-tête du jeu ; ils ne sont pas supposés déjà sérialisés
+  avant la fin du brassin. Deux assertions initiales du test ont été corrigées
+  pour respecter cette sauvegarde différée et la classe existante des objectifs.
+- Huit scénarios existants `houblon-preparation.test.cjs` réussis : préparation
+  cinq secondes, ajouts aux repères à 100 % et retards pénalisés.
+- `GESTES_REELS=1` parcours complet réussi, captures dans
+  `/tmp/ignem-oubli-parcours`. Captures nouvelles inspectées ; zéro erreur JS
+  et aucun débordement horizontal dans les scénarios mobiles.
+- Horloge navigateur pilotée dans les scénarios de frontière, véritables
+  interactions DOM ; aucun moteur simulé ni appel aux fonctions privées.
+
+Android physique et Safari non disponibles. La CI de cette PR reste à suivre.
+Commandes ciblées : `npm run build:jeu && npm run test:jeu`, puis
+`CHROMIUM_PATH=/usr/bin/chromium node jeu/tests/lot50/houblon-oubli.test.cjs`.
+Le serveur local utilise ici Chromium système hors bac à sable.
+
+Prochaine mission unique, non commencée : H02, afficher dans les boutons de
+houblon la dose réellement ajoutée selon le volume de brasserie.
+
+
 ## Audit demandé du reste à faire — main 41ab2b9
 
 Mission unique : vérifier l’intégration et auditer le reste, sans correction du

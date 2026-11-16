@@ -1698,10 +1698,14 @@
     const pos = (min) => ((PREPARATION + ((total - min) / total) * DUREE) / (PREPARATION + DUREE)) * 100;
     const rendreFrise = () => {
       frise.innerHTML = `<span class="phase-preparation" aria-hidden="true" style="width:${pos(total)}%">5 s</span>` + [0, 15, 30, 45, 60, 75, 90].filter((m) => m <= total).map((m) => `<span class="graduation" style="left:${pos(m)}%">${m}</span>`).join('')
-        + file.map((h, k) => `<i class="repere-h ${k < st.k ? 'fait' : ''}" style="left:${pos(h.prevu)}%"><b>${k + 1}</b></i>`).join('')
+        + file.map((h, k) => `<i class="repere-h ${h.oublie ? 'oublie' : k < st.k ? 'fait' : ''}" role="img" aria-label="${esc(h.nom)} : ${h.oublie ? 'ajout oublié' : k < st.k ? 'ajout réalisé' : 'ajout prévu'} à ${h.prevu} min" style="left:${pos(h.prevu)}%"><b>${k + 1}</b></i>`).join('')
         + `<i class="curseur" style="left:${((PREPARATION - st.preparation + st.t) / (PREPARATION + DUREE)) * 100}%"></i>`;
     };
-    const etiquette = () => { const h = file[st.k]; btn.innerHTML = h ? `Jeter ${esc(h.nom)}<small>${nf(h.g / 1000, 2)} kg · prévu à ${h.prevu} min</small>` : 'Tout est dans la cuve'; };
+    const etiquette = () => {
+      const h = file[st.k], oublis = file.filter((x) => x.oublie).length;
+      btn.innerHTML = h ? `Jeter ${esc(h.nom)}<small>${nf(h.g / 1000, 2)} kg · prévu à ${h.prevu} min</small>`
+        : oublis ? `${oublis} ajout${oublis > 1 ? 's' : ''} oublié${oublis > 1 ? 's' : ''}` : 'Tout est dans la cuve';
+    };
     const ctx = $('#ebu-canvas').getContext('2d');
     const teinteMout = couleur(Moteur.calculer(rec).ebc);
     const dessin = () => {
@@ -1748,15 +1752,22 @@
       }, () => {
         btn.disabled = true;
         $('#ebu-preparation').textContent = 'Houblonnage terminé.';
-        while (st.k < file.length) { const h = file[st.k]; session.gestes.houblonsMin[h.i] = 0; st.ecarts.push(h.prevu); st.k++; }
         const tol = 6 - difficulte();
+        while (st.k < file.length) {
+          const h = file[st.k]; h.oublie = true;
+          session.gestes.houblonsMin[h.i] = 0;
+          // Un oubli vaut zéro précision, même quand il était prévu à 0 minute.
+          st.ecarts.push(Math.max(h.prevu, tol)); st.k++;
+        }
+        const oublis = file.filter((h) => h.oublie);
+        etiquette(); rendreFrise();
         const score = st.ecarts.length ? st.ecarts.reduce((s, e) => s + Math.max(0, 1 - e / tol), 0) / st.ecarts.length : 1;
         session.scores.houblon = score;
         let effet = S.mode === 'debutant' ? `Effet : ${effetMalus(score)}.` : '';
         if (S.mode === 'expert') { const a = Moteur.calculer(rec), b = Moteur.calculer(rec, { houblonsMin: session.gestes.houblonsMin }); effet = `Amertume prévue ${nf(a.ibu, 0)} IBU, obtenue ${nf(b.ibu, 0)} IBU.`; }
         session.precisionHoublon = st.ecarts.length ? Math.max(...st.ecarts) : 0;
         son(score > 0.6 ? 'ok' : 'rate');
-        bilanGeste('ebu', [`<span class="gros">${Math.round(score * 100)} %</span> de précision`, st.ecarts.length ? `Écart moyen ${nf(st.ecarts.reduce((a, b) => a + b, 0) / st.ecarts.length)} min.` : 'Aucun houblon pendant l\'ébullition.', effet,
+        bilanGeste('ebu', [`<span class="gros">${Math.round(score * 100)} %</span> de précision`, oublis.length ? `Ajout${oublis.length > 1 ? 's' : ''} oublié${oublis.length > 1 ? 's' : ''} : ${oublis.map((h) => `${esc(h.nom)} (${h.prevu} min)`).join(', ')}. Aucune précision pour ces ajouts.` : st.ecarts.length ? `Écart moyen ${nf(st.ecarts.reduce((a, b) => a + b, 0) / st.ecarts.length)} min.` : 'Aucun houblon pendant l\'ébullition.', effet,
           st.ecarts.length ? objectifsGeste('ebu', [['minute', 'Chaque houblon à 1 minute près', st.ecarts.every((e) => e <= 1)], ['sec', 'Au moins trois ajouts réussis', st.ecarts.filter((e) => e <= 2).length >= 3]]) : ''], 'Refroidir et ensemencer');
         $('#ebu-suite').onclick = () => { tuto('fin:ebullition'); aller('fermentation'); preparerFermentation(); };
       });
