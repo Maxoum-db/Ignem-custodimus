@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 11 : Agrandir le dosage du sucre en bouteille
+
+Branche : `work/serie20-11-sucre-bouteilles`. Carte de dosage et curseur de 48 px, valeur avec unité accessible et verdict associé. Test : 6,5 g/L sélectionnés puis CO₂ du brassin sauvegardé identique au calcul résiduel plus sucre. Embouteillage et accès au jury conservés.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/11.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/11-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 10 : Adapter la dégustation aveugle au téléphone
 
 Branche : `work/serie20-10-aveugle-mobile`. Cartes de fractions empilées sous 560 px, groupes nommés et choix de 48 px. Verres illustrés existants conservés. Distillation moteur, trois sélections, correction puis passage au jury vérifiés.
