@@ -1163,3 +1163,10 @@ html,body { margin:0; }
 .fiche-jury td { padding:10px 0; border-bottom:1px solid #3b2a1e40; white-space:nowrap; }
 .fiche-jury tr.total th { border-bottom:0; }
 @media (prefers-reduced-motion:reduce) { .fiche-jury .lent { animation:none; opacity:1; } }
+
+/* Défauts : gravité lisible sans dépendre de symboles minuscules. */
+.defaut { padding:16px; border-radius:16px; border:1px solid var(--pierre); gap:10px; }
+.defaut h3 { flex-wrap:wrap; font-size:18px; line-height:1.4; }
+.defaut h3 > span:first-child { min-width:0; overflow-wrap:anywhere; }
+.defaut p { font-size:16px; line-height:1.5; }
+.gravite { font-family:var(--f-texte); font-size:14px; letter-spacing:normal; white-space:nowrap; padding:4px 8px; border:1px solid currentColor; border-radius:8px; }
