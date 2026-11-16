@@ -1214,3 +1214,8 @@ html,body { margin:0; }
 .dose-sucre .val { font-size:26px; }
 .dose-sucre input[type="range"] { min-height:48px; width:100%; }
 .dose-sucre p { font-size:16px; line-height:1.5; }
+
+/* Foyers Ulysse : ouverture du registre visible et commande ample. */
+#ecran-brouillis .registre, #ecran-repasse .registre { background:var(--four); border:1px solid var(--cuivre); border-radius:16px; padding:16px; gap:12px; font-size:17px; }
+#bro-registre, #rep-registre { min-height:48px; }
+.registre output { float:right; color:var(--braise); font-size:22px; font-weight:700; }

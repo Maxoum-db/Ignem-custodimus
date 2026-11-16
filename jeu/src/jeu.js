@@ -2213,7 +2213,7 @@
   const ajouterBuche = (f) => { if (f.buches.length >= 4) { toast('Le foyer est plein.'); return; } f.buches.push({ age: 0, m: 1 }); son('sac'); };
   // Prévision : où ira la chaudière si on ne touche à rien pendant 2 s
   function prevoirFeu(f) { const g = { ...f, buches: f.buches.map((b) => ({ ...b })) }; for (let i = 0; i < 40; i++) brulerFeu(g, 0.05); return g.P; }
-  const lierRegistre = (id, f) => { const el = $(id); el.value = Math.round(f.air * 100); el.oninput = () => { f.air = el.value / 100; }; return el; };
+  const lierRegistre = (id, f) => { const el = $(id), val = $(id + '-val'); el.value = Math.round(f.air * 100); const afficher = () => { el.setAttribute('aria-valuetext', el.value + ' % d’ouverture'); if (val) val.value = el.value + ' %'; }; el.oninput = () => { f.air = el.value / 100; afficher(); }; afficher(); return el; };
   function jaugesFeu(id, items) {
     $(id).innerHTML = items.map((j) => `<div class="jauge-feu"><span>${j.lib}</span><span class="barre">${j.zone ? `<i class="zone" style="left:${j.zone[0] * 100}%;width:${(j.zone[1] - j.zone[0]) * 100}%"></i>` : ''}<i class="niv" style="width:${borne(j.v, 0, 1) * 100}%;background:${j.coul}"></i>${j.prev != null ? `<i class="prev" style="left:${borne(j.prev, 0, 1) * 100}%"></i>` : ''}</span><span class="val">${j.txt != null ? j.txt : Math.round(j.v * 100) + ' %'}</span></div>`).join('');
   }
