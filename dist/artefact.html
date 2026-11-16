@@ -1152,6 +1152,11 @@ html,body { margin:0; }
 #dist-reglages .bascule button { min-height:48px; min-width:48px; padding:10px 16px; border-radius:12px; font-size:16px; }
 #dist-reglages input[type="range"] { min-height:44px; width:100%; }
 #dist-reglages .reglage p { font-size:15px; line-height:1.5; }
+
+/* Mentor : panneau défilant sur les écrans peu hauts. */
+.mentor { max-height:45vh; max-height:45dvh; overflow-y:auto; overscroll-behavior:contain; border-radius:20px 20px 0 0; }
+.mentor-actions .btn { min-height:48px; padding:10px 14px; font-size:16px; }
+#menu-entete { max-height:calc(100vh - 90px - var(--pied-mentor, 0px)); max-height:calc(100dvh - 90px - var(--pied-mentor, 0px)); }
 </style>
 
 <div id="app">
@@ -3721,6 +3726,8 @@ html,body { margin:0; }
     m.hidden = false;
     requestAnimationFrame(() => document.documentElement.style.setProperty('--pied-mentor', m.offsetHeight + 'px'));
   }
+
+  new ResizeObserver(() => { const m = $('#mentor'); document.documentElement.style.setProperty('--pied-mentor', m.hidden ? '0px' : m.offsetHeight + 'px'); }).observe($('#mentor'));
 
   // =====================================================================
   // Domaine : carte illustrée, ancien rendu conservé en repli

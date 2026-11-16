@@ -466,6 +466,8 @@
     requestAnimationFrame(() => document.documentElement.style.setProperty('--pied-mentor', m.offsetHeight + 'px'));
   }
 
+  new ResizeObserver(() => { const m = $('#mentor'); document.documentElement.style.setProperty('--pied-mentor', m.hidden ? '0px' : m.offsetHeight + 'px'); }).observe($('#mentor'));
+
   // =====================================================================
   // Domaine : carte illustrée, ancien rendu conservé en repli
   // =====================================================================
