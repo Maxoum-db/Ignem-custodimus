@@ -1187,6 +1187,16 @@ html,body { margin:0; }
 #succes .succes-item.obtenu { border-color:var(--braise); }
 #succes .succes-etat { font-weight:700; color:var(--cendre); }
 #succes .obtenu .succes-etat { color:var(--braise); }
+
+/* Découvertes du pigeonnier : conditions et cadeaux distincts. */
+#cat-decouvertes { grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:12px; }
+#cat-decouvertes .succes-item { opacity:1; border:1px solid var(--pierre); border-radius:16px; padding:16px; box-shadow:none; display:grid; gap:10px; font-size:16px; line-height:1.5; }
+#cat-decouvertes .succes-item b { font-size:19px; }
+#cat-decouvertes p { margin:0; }
+#cat-decouvertes .decouverte-etat { font-weight:700; }
+#cat-decouvertes .obtenu { border-color:var(--braise); }
+#cat-decouvertes .obtenu .decouverte-etat { color:var(--braise); }
+#cat-decouvertes .decouverte-cadeau { padding-top:10px; border-top:1px solid var(--pierre); color:var(--calcaire); }
 </style>
 
 <div id="app">
@@ -6671,7 +6681,7 @@ html,body { margin:0; }
   }
   const sansAccents = (t) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   function rendreDecouvertes() {
-    $('#cat-decouvertes').innerHTML = DECOUVERTES.map((d) => `<div class="succes-item ${S.decouvertes[d.id] ? 'obtenu' : ''}"><b>${esc(d.titre)}</b>${esc(d.desc)} → ${esc(d.cadeaux().filter(Boolean).map((x) => x.nom).join(', '))}</div>`).join('');
+    $('#cat-decouvertes').innerHTML = DECOUVERTES.map((d) => `<div class="succes-item ${S.decouvertes[d.id] ? 'obtenu' : ''}"><b>${esc(d.titre)}</b><span class="decouverte-etat">${S.decouvertes[d.id] ? 'Cadeau reçu' : 'À découvrir'}</span><p>${esc(d.desc)}</p><p class="decouverte-cadeau"><strong>Cadeau :</strong> ${esc(d.cadeaux().filter(Boolean).map((x) => x.nom).join(', '))}</p></div>`).join('');
   }
 
   // =====================================================================

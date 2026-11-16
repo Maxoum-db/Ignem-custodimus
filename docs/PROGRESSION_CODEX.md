@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 09 : Clarifier les cadeaux des découvertes
+
+Branche : `work/serie20-09-decouvertes`. Cartes Fournisseurs : condition, cadeau et état reçu ou à découvrir séparés. Le test ouvre bien Fournisseurs (premier essai resté sur Clients), puis contrôle les états sans attribution ni dépense après rechargement.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/09.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/09-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 08 : Distinguer les succès obtenus des objectifs
 
 Branche : `work/serie20-08-succes-carnet`. Cartes du carnet à pleine lisibilité avec état écrit Obtenu ou À accomplir. Succès existants et absence de nouvelle attribution vérifiés après rechargement.
