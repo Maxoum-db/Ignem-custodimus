@@ -2,7 +2,7 @@
 
 ## Série de 20 — 05 : Clarifier les fiches du jury
 
-Branche : `work/serie20-05-fiche-jury`. Présentation papier arrondie, lignes aérées et en-têtes de lignes pour les quatre jurys (bière, wash, eau-de-vie, vieilli). Test navigateur sur bière calculée : six en-têtes et total identique au carnet. Autres jurys couverts par les suites moteur, pas par ce nouveau scénario DOM.
+Branche : `work/serie20-05-fiche-jury`. Capture inspectée : les délais des lignes sont supprimés en mouvement réduit et leur opacité est testée. Présentation papier arrondie, lignes aérées et en-têtes de lignes pour les quatre jurys (bière, wash, eau-de-vie, vieilli). Test navigateur sur bière calculée : six en-têtes et total identique au carnet. Autres jurys couverts par les suites moteur, pas par ce nouveau scénario DOM.
 
 Validation : build et six suites Node réussis ; test navigateur dédié
 `jeu/tests/serie20/05.test.cjs` réussi à 320 et 390 px, sans erreur JS
