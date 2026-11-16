@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 06 : Rendre la gravité des défauts lisible
+
+Branche : `work/serie20-06-defauts-jury`. Les quatre rendus de défauts affichent Gravité N/3, avec descriptions et conseils en cartes aérées. Scénario DOM bière : défauts identiques au carnet, gravités et conseils présents. Aucun changement de notation.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/06.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/06-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 05 : Clarifier les fiches du jury
 
 Branche : `work/serie20-05-fiche-jury`. Capture inspectée : les délais des lignes sont supprimés en mouvement réduit et leur opacité est testée. Présentation papier arrondie, lignes aérées et en-têtes de lignes pour les quatre jurys (bière, wash, eau-de-vie, vieilli). Test navigateur sur bière calculée : six en-têtes et total identique au carnet. Autres jurys couverts par les suites moteur, pas par ce nouveau scénario DOM.

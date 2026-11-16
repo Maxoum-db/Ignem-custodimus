@@ -1165,6 +1165,13 @@ html,body { margin:0; }
 .fiche-jury td { padding:10px 0; border-bottom:1px solid #3b2a1e40; white-space:nowrap; }
 .fiche-jury tr.total th { border-bottom:0; }
 @media (prefers-reduced-motion:reduce) { .fiche-jury .lent { animation:none; opacity:1; } }
+
+/* Défauts : gravité lisible sans dépendre de symboles minuscules. */
+.defaut { padding:16px; border-radius:16px; border:1px solid var(--pierre); gap:10px; }
+.defaut h3 { flex-wrap:wrap; font-size:18px; line-height:1.4; }
+.defaut h3 > span:first-child { min-width:0; overflow-wrap:anywhere; }
+.defaut p { font-size:16px; line-height:1.5; }
+.gravite { font-family:var(--f-texte); font-size:14px; letter-spacing:normal; white-space:nowrap; padding:4px 8px; border:1px solid currentColor; border-radius:8px; }
 </style>
 
 <div id="app">
@@ -5334,7 +5341,7 @@ html,body { margin:0; }
       <tr class="total lent" style="animation-delay:${0.4 + 5 * 0.35}s"><th scope="row">Total</th><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
 
     // Défauts
-    $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite" aria-label="Gravité ${d.gravite} sur 3">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>
+    $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">Gravité ${d.gravite}/3</span></h3>
       ${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
 
     // Gains et bilan de Lise
@@ -5836,7 +5843,7 @@ html,body { margin:0; }
       $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · EAU-DE-VIE</h3><table aria-label="Notes eau-de-vie">${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><th scope="row">${lib}</th><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
         <tr class="total lent" style="animation-delay:${0.4 + 5 * 0.35}s"><th scope="row">Total</th><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
     }
-    $('#degust-defauts').innerHTML = note && note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
+    $('#degust-defauts').innerHTML = note && note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">Gravité ${d.gravite}/3</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [];
     g.push(S.bac ? 'Bac à sable : cette chauffe ne rapporte ni points ni écus.' : `<b>+${gain} points</b> de maîtrise, dont ${Math.round(10 * rendement)} pour le rendement${e.aveugle != null ? ` et ${2 * e.aveugle} pour l'aveugle` : ''}, et <b style="color:var(--or)">+${dernier.ecus} écus</b> · ${S.ecus} en bourse.`);
     (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
@@ -6159,7 +6166,7 @@ html,body { margin:0; }
     const rang = Object.entries(CH.LIB_LIGNES);
     $('#fiche-jury').innerHTML = `<h3>FICHE DE DÉGUSTATION · SPIRITUEUX VIEILLI</h3><table aria-label="Notes spiritueux vieilli">${rang.map(([k, [lib, max]], i) => `<tr class="lent" style="animation-delay:${0.4 + i * 0.35}s"><th scope="row">${lib}</th><td>${nf(note.lignes[k], note.lignes[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
       <tr class="total lent" style="animation-delay:${0.4 + rang.length * 0.35}s"><th scope="row">Total</th><td>${nf(note.total, note.total % 1 ? 1 : 0)} / 50</td></tr></table>`;
-    $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)}</span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p></div>`).join('') : '';
+    $('#degust-defauts').innerHTML = note.defauts.length ? `<h2 class="sous-titre">Défauts relevés</h2>` + note.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)}</span><span class="gravite">Gravité ${d.gravite}/3</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p></div>`).join('') : '';
     const pip = CH.pipette(etat);
     const g = [];
     g.push(`<b>À la pipette :</b> ${esc(pip.notes.map((x) => x.mot).join(', ') || 'alcool blanc')}${pip.bouche.length ? ` · ${esc(pip.bouche.join(', '))}` : ''}.`);
@@ -6839,7 +6846,7 @@ html,body { margin:0; }
     const rang = [['alcool', 'Alcool à distiller', 8], ['attenuation', 'Atténuation', 4], ['proprete', 'Propreté', 5], ['potentiel', 'Potentiel aromatique', 3]];
     $('#fiche-jury').innerHTML = `<h3>FICHE DU BOUILLEUR · WASH</h3><table aria-label="Notes du wash">${rang.map(([k, lib, max], i) => `<tr class="lent" style="animation-delay:${0.3 + i * 0.3}s"><th scope="row">${lib}</th><td>${nf(L[k], L[k] % 1 ? 1 : 0)} / ${max}</td></tr>`).join('')}
       <tr class="total lent" style="animation-delay:1.5s"><th scope="row">Total</th><td>${nf(fiche.total, fiche.total % 1 ? 1 : 0)} / 20</td></tr></table>`;
-    $('#degust-defauts').innerHTML = fiche.defauts.length ? `<h2 class="sous-titre">Points faibles</h2>` + fiche.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">${'■'.repeat(d.gravite)}${'□'.repeat(3 - d.gravite)}</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
+    $('#degust-defauts').innerHTML = fiche.defauts.length ? `<h2 class="sous-titre">Points faibles</h2>` + fiche.defauts.map((d) => `<div class="defaut"><h3><span>${esc(d.nom)} <span class="en">${esc(d.en)}</span></span><span class="gravite">Gravité ${d.gravite}/3</span></h3>${d.detail ? `<p>${esc(d.detail)}</p>` : ''}<p>${esc(d.chimie)}</p><p class="conseil-d">${esc(d.conseil)}</p></div>`).join('') : '';
     const g = [S.bac ? 'Bac à sable : ni points ni écus.' : `<b>+${gain} points</b> de maîtrise et <b style="color:var(--or)">+${dernier.ecus} écus</b>.`];
     (dernier.cadeaux || []).forEach((c) => g.push(c[0] === '§' ? c.slice(1) : `Découverte : ${esc(c)}`));
     g.push(`Ce wash donnera une ${nomEauDeVie(e).toLowerCase()} : il t'attend à l'alambic.`);
