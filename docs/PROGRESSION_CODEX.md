@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 03 : Agrandir les réglages tactiles Ulysse
+
+Branche : `work/serie20-03-reglages-ulysse`. U01 : bascules de 48 px et curseurs de 44 px dans des cartes lisibles. Recyclage, chauffe, coupes et persistance après rechargement vérifiés ; monnaie conservée.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/03.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/03-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 02 : Maintenir le décompte après le dernier houblon
 
 Branche : `work/serie20-02-compteur-ebullition`. H03 : le compteur est rafraîchi à chaque image de la chauffe, même lorsque tous les ajouts sont faits. Test : ajout initial, compteur intermédiaire et zéro final ; informations du dernier ajout conservées.
