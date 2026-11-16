@@ -1178,6 +1178,15 @@ html,body { margin:0; }
 #carnet-progression .niv { font-family:var(--f-texte); font-size:21px; font-weight:800; }
 #carnet-progression .jauge { height:16px; border-radius:8px; overflow:hidden; }
 #carnet-progression p { line-height:1.5; }
+
+/* Succès du carnet : objectifs lisibles, statut écrit. */
+#succes { grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:12px; }
+#succes .succes-item { padding:16px; border-radius:16px; border:1px solid var(--pierre); box-shadow:none; opacity:1; font-size:16px; line-height:1.5; display:flex; flex-direction:column; gap:8px; }
+#succes .succes-item b { font-size:18px; }
+#succes .succes-item p { margin:0; }
+#succes .succes-item.obtenu { border-color:var(--braise); }
+#succes .succes-etat { font-weight:700; color:var(--cendre); }
+#succes .obtenu .succes-etat { color:var(--braise); }
 </style>
 
 <div id="app">
@@ -6885,7 +6894,7 @@ html,body { margin:0; }
       $$('.bouteille canvas', et).forEach(dessinerBouteille);
       rendreDetailCarnet();
     }
-    $('#succes').innerHTML = SUCCES.map((s) => `<div class="succes-item ${S.succes[s.id] ? 'obtenu' : ''}"><b>${esc(s.nom)}</b>${esc(s.desc)}</div>`).join('');
+    $('#succes').innerHTML = SUCCES.map((s) => `<div class="succes-item ${S.succes[s.id] ? 'obtenu' : ''}"><b>${esc(s.nom)}</b><span class="succes-etat">${S.succes[s.id] ? 'Obtenu' : 'À accomplir'}</span><p>${esc(s.desc)}</p></div>`).join('');
   }
   function dessinerBouteille(cv) {
     // Coordonnées logiques indépendantes de la densité de l'écran.
