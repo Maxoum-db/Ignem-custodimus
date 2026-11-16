@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 01 : Afficher la dose réelle de houblon
+
+Branche : `work/serie20-01-dose-houblon`. H02 : texte et nom accessible utilisent la même dose que l’ajout. Les trois niveaux de brasserie sont contrôlés (30, 130, 250 g). Une première fixture a été corrigée pour respecter le lien entre niveau et volume.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/01.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/01-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## ÉTAPE — H01 : oubli du houblon à 0 minute
 
 Statut : terminée sur `work/houblon-oubli-zero`, sans fusion ni publication.

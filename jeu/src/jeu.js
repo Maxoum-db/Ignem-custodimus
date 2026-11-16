@@ -910,7 +910,7 @@
               <div class="det"><b>α ${nf(h.amin)}–${nf(h.amax)} %</b> · huiles ${nf(h.huile)} mL/100 g</div>
               <div class="det">${esc(h.aromes || '')}</div>
               <div class="etiquettes"><span class="etq">${{ bittering: 'Amérisant', aroma: 'Aromatique', dual: 'Double usage' }[h.usage]}</span></div></div>
-            <button class="btn btn-mini" data-ajouter="houblon" data-id="${esc(h.id)}" aria-label="Ajouter 250 g de ${esc(h.nom)}">+250 g</button></div>`).join('')}</div>
+            <button class="btn btn-mini" data-ajouter="houblon" data-id="${esc(h.id)}" aria-label="Ajouter ${doseHop()} g de ${esc(h.nom)}">+${doseHop()} g</button></div>`).join('')}</div>
         ${verrouLigne(D.houblons, 'houblons', 'houblons')}`;
     } else if (onglet === 'levure') {
       const wash = R.destination === 'wash';
