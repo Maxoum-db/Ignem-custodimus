@@ -1,5 +1,17 @@
 # Progression Codex
 
+## Série de 20 — 04 : Rendre le mentor utilisable sur écran court
+
+Branche : `work/serie20-04-mentor-mobile`. U02 : actions de 48 px, panneau limité à 45 % de hauteur et défilant. ResizeObserver maintient la réserve de place ; le menu tient compte du mentor pour éviter le chevauchement reproduit au premier test. Tutoriel quittable à 430 px de haut.
+
+Validation : build et six suites Node réussis ; test navigateur dédié
+`jeu/tests/serie20/04.test.cjs` réussi à 320 et 390 px, sans erreur JS
+ni débordement horizontal. Captures réelles : `docs/captures/serie20/04-*.png`.
+Vérification mobile Chromium, pas de téléphone physique ni Safari disponibles.
+Sources, HTML générés, test, captures et journal sauvegardés dans le commit.
+PR empilée sur la branche précédente ; aucune fusion ni publication.
+
+
 ## Série de 20 — 03 : Agrandir les réglages tactiles Ulysse
 
 Branche : `work/serie20-03-reglages-ulysse`. U01 : bascules de 48 px et curseurs de 44 px dans des cartes lisibles. Recyclage, chauffe, coupes et persistance après rechargement vérifiés ; monnaie conservée.
