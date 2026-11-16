@@ -5004,7 +5004,7 @@ html,body { margin:0; }
         }
         if (st.montee && t >= PREPARATION) { st.montee = false; btn.disabled = !file.length; evtScene('ebu', 'Ça bout : le chrono démarre', 'houblon'); son('bulle'); }
         st.t = Math.max(0, t - PREPARATION); dessin(); rendreFrise();
-        if (st.k === 0 || st.k < file.length) $('#ebu-infos').firstElementChild.innerHTML = `<span class="v">${Math.max(0, Math.round(minutes()))}'</span><span class="l">restantes</span>`;
+        $('#ebu-infos').firstElementChild.innerHTML = `<span class="v">${Math.max(0, Math.round(minutes()))}'</span><span class="l">restantes</span>`;
       }, () => {
         btn.disabled = true;
         $('#ebu-preparation').textContent = 'Houblonnage terminé.';
