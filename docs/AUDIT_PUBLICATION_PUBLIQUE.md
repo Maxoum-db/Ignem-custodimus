@@ -1,5 +1,13 @@
 # Audit avant publication publique — 17 novembre 2026
 
+## Suivi final
+
+Après l’audit et l’accord du joueur pour l’option gratuite, le propriétaire
+a effectué les réglages. État API confirmé : dépôt public, Pages activé en
+mode workflow et public. Le run 44112750065 a ensuite réussi (tentative 3).
+Adresse vérifiée : https://maxoum-db.github.io/Ignem-custodimus/
+Les constats de refus de l’intégration ci-dessous décrivent la phase antérieure.
+
 ## Autorisation et périmètre
 
 Le joueur a choisi « Oui option gratuit » en réponse à la proposition de rendre

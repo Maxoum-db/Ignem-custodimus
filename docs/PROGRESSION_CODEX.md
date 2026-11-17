@@ -1,5 +1,36 @@
 # Progression Codex
 
+## GitHub Pages en ligne — mission terminée
+
+Après « Tout est bon », état vérifié par API : private=false, has_pages=true,
+Pages public et build_type=workflow. Le propriétaire a effectué les réglages
+nécessaires à l’option gratuite précédemment autorisée.
+
+Relance native des seuls jobs échoués du run 44112750065. Tentative 3
+terminée avec succès, main `942e31b350a7c78e75a9e4f97881228d7dad4ba6`. Le build déjà réussi est conservé ;
+aucune reconstruction locale ni nouveau changement du jeu nécessaires.
+URL réellement retournée puis vérifiée : https://maxoum-db.github.io/Ignem-custodimus/
+HTTP 200 et HTML byte pour byte identique au dist/index.html de main,
+SHA-256 2bcc7747b7187315c0c02d07601390607d13e782279a18f5f3134f88f54f3849.
+
+Vérification du site public réel avec Chromium mobile 320/390 px DPR 2 :
+domaine affiché, illustrations décodées, entrée tactile dans la brasserie,
+aucune erreur JS/ressource ni débordement. Captures réelles inspectées dans
+docs/captures/github-pages-en-ligne ; résultats dans
+docs/validation/github-pages-publication.json. Téléphone physique et Safari
+non disponibles ; aucune partie personnelle lue ou déplacée.
+
+Suivi : README, docs/HEBERGEMENT_GITHUB.md, audit de publication publique,
+ce journal, résultat JSON et deux captures. Sauvegarde sur la branche
+work/github-pages, sans nouveau travail sur main ni fusion non autorisée.
+Le déploiement de main via GitHub est désormais opérationnel et ne dépend
+plus de l’authentification Sites. L’ancien site reste disponible ; sa partie
+ne se transfère pas automatiquement à la nouvelle adresse.
+
+Prochaine mission unique proposée, non commencée : accompagner le transfert
+de l’ancienne sauvegarde si le joueur souhaite la reprendre. STOP.
+
+
 ## Option gratuite autorisée — audit avant dépôt public
 
 Demande : « Oui option gratuit », après explication que la visibilité publique
