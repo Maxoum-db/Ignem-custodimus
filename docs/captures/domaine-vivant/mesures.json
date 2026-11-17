@@ -1,0 +1,24 @@
+[
+  {
+    "width": 320,
+    "draws_in_one_second": 24,
+    "regions": {
+      "poules": true,
+      "chat": true,
+      "cheval": true,
+      "pigeons": true,
+      "potager": true
+    }
+  },
+  {
+    "width": 390,
+    "draws_in_one_second": 22,
+    "regions": {
+      "poules": true,
+      "chat": true,
+      "cheval": true,
+      "pigeons": true,
+      "potager": true
+    }
+  }
+]

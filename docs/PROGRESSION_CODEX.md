@@ -1,5 +1,63 @@
 # Progression Codex
 
+## Domaine vivant — animations et contrôle des dynamiques (17 novembre 2026)
+
+Demande : laisser l'ancienne partie et rendre le jeu vivant, puis vérifier ses
+mécaniques. Mission unique retenue : animer le domaine existant et contrôler les
+parcours de jeu, sans démarrer la refonte d'un deuxième écran.
+
+### Reprise vérifiée
+
+Dépôt distant récupéré, main `942e31b350a7c78e75a9e4f97881228d7dad4ba6`,
+PR #103 fusionnée, #104 documentaire encore ouverte, Pages public opérationnel.
+Sources, historique et journal relus ; aucune modification locale initiale.
+Branche dédiée `work/domaine-vivant` issue de `dba3de1` : elle contient aussi le
+suivi documentaire déjà réalisé dans #104, sans le refaire. Aucun travail sur main.
+Le transfert de sauvegarde précédemment proposé est abandonné à la demande du joueur.
+
+### Modification et critères
+
+`jeu/src/domaine.js` : poules, chat, cheval, pigeons, potager, papillons,
+lanternes, lucioles, pétales, neige et feuilles animés dans le renderer existant.
+Aucune boucle supplémentaire, aucune écriture dans l'état, aucun moteur modifié.
+Critères : mouvements réels, saisons/nuit cohérentes, mouvement réduit statique,
+arrêt hors domaine, accès tactile conservé et sauvegarde inchangée.
+
+`dist/index.html` et `dist/artefact.html` reconstruits. Deux nouveaux contrôles
+`domaine-vivant.cjs` et `dynamiques-depart.cjs`, branchés dans la CI existante.
+`parcours.cjs` : navigation à 30 s plutôt que 5 s ; délai des actions conservé.
+`docs/DYNAMIQUES_JEU.md` détaille les résultats et limites ; les captures,
+mesures et vidéo réelle sont dans `docs/captures/domaine-vivant/`.
+
+### Validation
+
+Build et six suites `npm run test:jeu` réussis ; syntaxe JS et chemins/images
+validés. Domaine existant et quatre contextes 320/390 px DPR 2 normal/réduit
+réussis : mouvements régionaux, huit variantes, absence de débordement/erreur JS,
+état stable et arrêt de dessin après sortie. Mesure locale 22–24 dessins/s,
+plafond existant 30/s. Capture réelle inspectée et vidéo VP8 de cinq secondes.
+
+Nouvelle partie 100 L réellement brassable : 20 kg / 30 g, stock 100 L, semaine
++1, points/écus gagnés. Construction et récompenses quotidiennes réussies.
+Parcours complet avec étapes passées, vente, achats persistés, Ulysse, chai,
+vieillissement, boutique et wash réussi. Brassage avec gestes réels réussi.
+Ulysse expert et débutant avec chauffe/coupes réelles réussis.
+
+Trois tentatives parallèles ont expiré au chargement initial (5 s) ; délai de
+navigation ajusté. Une autre a expiré sur le clic initial du retour au domaine,
+avant brassage, cause non établie ; sa relance isolée a réussi sans modifier
+l'interaction. Ces échecs sont conservés dans le compte rendu, pas masqués.
+Android physique et Safari iOS indisponibles. L'équilibrage exhaustif de toutes
+les recettes et les longues sessions n'est pas validé par ces parcours.
+
+### Sauvegarde et prochaine mission
+
+Commit et push sur la branche dédiée, PR à main, sans fusion dans cette mission.
+La publication actuellement en ligne reste celle de main jusqu'à fusion autorisée.
+Prochaine mission unique proposée, non commencée : animer l'atelier de brassage
+selon ses étapes réelles. STOP après livraison de cette mission.
+
+
 ## GitHub Pages en ligne — mission terminée
 
 Après « Tout est bon », état vérifié par API : private=false, has_pages=true,
