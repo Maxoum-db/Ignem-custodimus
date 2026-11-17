@@ -217,6 +217,7 @@
     box(c,386,112,46,123,metal(c,386,46,true),12);for(let i=0;i<5;i++)box(c,389,127+i*19,40,6,'#bb814e',2,ink,2);
     pipe(c,'M432 131H508V169');box(c,475,169,129,173,metal(c,475,129,true),18);
     box(c,487,183,105,145,'#93bfbd',10);for(let i=0;i<5;i++)path(c,`M500 ${199+i*25}q74 -13 78 4q1 10 -77 16`,null,'#bc7842',7);
+    if(active&&s.flow)flow(c,'M491 315V192H587V315',s.t,1,'#e5f7f2');
     pipe(c,'M579 322V352H647V371');pipe(c,'M475 303H453V365',true,8);valve(c,453,336,active?1:0,'#438b9f');pipe(c,'M604 194H624V166',true,8);
     const gx=311,gy=220;
     if(s.foam>0)box(c,gx+3,gy+3+52*(1-level),9,Math.min(20,s.foam*20),'#f5e9ce',2,null);

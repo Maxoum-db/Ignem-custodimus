@@ -45,3 +45,5 @@ Safari indisponibles. CI des nouvelles PR à distinguer des résultats locaux.
 Étape 7 validée : Levier et capsules synchronisés avec capsulage — `work/anim-07-capsules` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `capsules*.png` et `capsules.json`.
 
 Étape 8 validée : Bulles mobiles confinées au liquide des bouteilles — `work/anim-08-bulles` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `bulles*.png` et `bulles.json`.
+
+Étape 9 validée : Refroidissement Ulysse pendant collecte réelle — `work/anim-09-condenseur` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `condenseur*.png` et `condenseur.json`.

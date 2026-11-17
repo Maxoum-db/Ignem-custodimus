@@ -155,5 +155,22 @@
       "fill": 1
     },
     "captureMs": 500
+  },
+  "condenseur": {
+    "renderer": "ulysse",
+    "patch": {},
+    "region": [
+      487,
+      186,
+      10,
+      137
+    ],
+    "off": {
+      "flow": false
+    },
+    "inactive": {
+      "active": false
+    },
+    "captureMs": 1800
   }
 }

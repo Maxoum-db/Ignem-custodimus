@@ -6,7 +6,7 @@ try{browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{
 for(const [id,test]of Object.entries(cases)){if(process.env.CAS_ANIMATION&&process.env.CAS_ANIMATION!==id)continue;const metrics=[];
  for(const width of [320,390])for(const reduce of [false,true]){
   page=await browser.newPage({viewport:{width,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:reduce?'reduce':'no-preference'});page.setDefaultTimeout(10000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.addInitScript(r=>localStorage.setItem('ignem.v1',JSON.stringify({mode:'expert',gestesExpert:true,aide:false,son:false,tuto:-1,tutoD:-1,points:150,brassins:2,carnet:[],grimoire:[],ecole:{},succes:{},ecus:500,recette:r,vus:{domaine:true,brasserie:true,empatage:true,filtration:true,ebullition:true,fermentation:true,bouteille:true,distillerie:true,brouillis:true,repasse:true}})),recipe);
+  await page.addInitScript(({r,mode})=>localStorage.setItem('ignem.v1',JSON.stringify({mode,gestesExpert:true,aide:false,son:false,tuto:-1,tutoD:-1,points:150,brassins:2,carnet:[],grimoire:[],ecole:{},succes:{},ecus:500,recette:r,vus:{domaine:true,brasserie:true,empatage:true,filtration:true,ebullition:true,fermentation:true,bouteille:true,distillerie:true,brouillis:true,repasse:true}})),{r:recipe,mode:test.renderer==='ulysse'?'debutant':'expert'});
   await page.goto(`http://127.0.0.1:${server.address().port}`);await page.evaluate(()=>DomaineIllustre.ready);
   const result=await page.evaluate(test=>{
    const c=document.createElement('canvas').getContext('2d');
