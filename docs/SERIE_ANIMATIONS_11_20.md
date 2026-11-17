@@ -51,3 +51,5 @@ Mission 16 validée : Lit de drêches compacté selon tassement réel — `work/
 Mission 17 validée : Aspect du lit réellement à sec — `work/anim-17-lit-sec` ; quatre scénarios et six suites réussis. Preuves : `lit-sec*.png` et `lit-sec.json`.
 
 Mission 18 validée : Bûches réduites selon leur masse réellement brûlée — `work/anim-18-buches` ; quatre scénarios et six suites réussis. Preuves : `buches*.png` et `buches.json`.
+
+Mission 19 validée : Bulles de mousse dans le regard d’Ulysse — `work/anim-19-mousse` ; quatre scénarios et six suites réussis. Preuves : `mousse*.png` et `mousse.json`.

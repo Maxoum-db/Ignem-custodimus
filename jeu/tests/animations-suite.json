@@ -250,5 +250,29 @@
     "stateChange": true,
     "captureMs": 3500,
     "wood": true
+  },
+  "mousse": {
+    "renderer": "ulysse",
+    "patch": {
+      "heat": 0,
+      "flow": false,
+      "foam": 0.7,
+      "level": 0.7
+    },
+    "region": [
+      314,
+      229,
+      9,
+      38
+    ],
+    "off": {
+      "foam": 0
+    },
+    "inactive": {
+      "active": false
+    },
+    "event": "foam",
+    "random": 0,
+    "captureMs": 200
   }
 }
