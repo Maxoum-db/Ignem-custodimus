@@ -1,0 +1,1581 @@
+{
+  "contextes": 80,
+  "observations": [
+    {
+      "serie": "11-20",
+      "animation": "buche-humide",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 1.7737049030133998,
+        "evenement": "humide"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "buche-humide",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 1.7737049030133998,
+        "evenement": "humide"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "buche-humide",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 1.7737049030133998,
+        "evenement": "humide"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "buche-humide",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 1.7737049030133998,
+        "evenement": "humide"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "mousse",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 2.688,
+        "mousse": 0.5704234271880926,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.5796079727738948,
+          0.7378887608829938,
+          0.7378887608829938,
+          0.7378887608829938
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "mousse",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 2.688,
+        "mousse": 0.5704234271880926,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.5796079727738948,
+          0.7378887608829938,
+          0.7378887608829938,
+          0.7378887608829938
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "mousse",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 2.688,
+        "mousse": 0.5704234271880926,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.5796079727738948,
+          0.7378887608829938,
+          0.7378887608829938,
+          0.7378887608829938
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "mousse",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 2.688,
+        "mousse": 0.5704234271880926,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.5796079727738948,
+          0.7378887608829938,
+          0.7378887608829938,
+          0.7378887608829938
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "debordement",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.68,
+        "mousse": 0.5943657449092483,
+        "debordement": true,
+        "ageDebordement": 0.3360000000000003,
+        "masses": [
+          0.41950095030755175,
+          0.5870018455542707,
+          0.5870018455542707,
+          0.5870018455542707
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "debordement",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.68,
+        "mousse": 0.5943657449092483,
+        "debordement": true,
+        "ageDebordement": 0.3360000000000003,
+        "masses": [
+          0.41950095030755175,
+          0.5870018455542707,
+          0.5870018455542707,
+          0.5870018455542707
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "debordement",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.68,
+        "mousse": 0.5943657449092483,
+        "debordement": true,
+        "ageDebordement": 0.3360000000000003,
+        "masses": [
+          0.41950095030755175,
+          0.5870018455542707,
+          0.5870018455542707,
+          0.5870018455542707
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "debordement",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.68,
+        "mousse": 0.5943657449092483,
+        "debordement": true,
+        "ageDebordement": 0.3360000000000003,
+        "masses": [
+          0.41950095030755175,
+          0.5870018455542707,
+          0.5870018455542707,
+          0.5870018455542707
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "buches",
+      "width": 320,
+      "reduced": false,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.584,
+        "mousse": 0.03189175797344501,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.6414362101694495,
+          0.749371116295257
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "buches",
+      "width": 320,
+      "reduced": true,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.584,
+        "mousse": 0.03189175797344501,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.6414362101694495,
+          0.749371116295257
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "buches",
+      "width": 390,
+      "reduced": false,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.584,
+        "mousse": 0.03189175797344501,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.6414362101694495,
+          0.749371116295257
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "buches",
+      "width": 390,
+      "reduced": true,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.584,
+        "mousse": 0.03189175797344501,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.6414362101694495,
+          0.749371116295257
+        ]
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "chute-temps",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.7666666666666488
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "chute-temps",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.7666666666666488
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "chute-temps",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.7833333333333687
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "chute-temps",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.7833333333333687
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "lit-sec",
+      "width": 320,
+      "reduced": false,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.184,
+        "tassement": 0.5078399999999998,
+        "eau": -1,
+        "secondesASec": 0.7360000000000005
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "lit-sec",
+      "width": 320,
+      "reduced": true,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.184,
+        "tassement": 0.5078399999999998,
+        "eau": -1,
+        "secondesASec": 0.7360000000000005
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "lit-sec",
+      "width": 390,
+      "reduced": false,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.184,
+        "tassement": 0.5078399999999998,
+        "eau": -1,
+        "secondesASec": 0.7360000000000005
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "lit-sec",
+      "width": 390,
+      "reduced": true,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.184,
+        "tassement": 0.5078399999999998,
+        "eau": -1,
+        "secondesASec": 0.7360000000000005
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "reprise-bruleur",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 2.5144126491382015,
+        "evenement": "bruleur"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "reprise-bruleur",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 2.5144126491382015,
+        "evenement": "bruleur"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "reprise-bruleur",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 2.5144126491382015,
+        "evenement": "bruleur"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "reprise-bruleur",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 2.5144126491382015,
+        "evenement": "bruleur"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "cones",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.7666666666666488
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "cones",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.7666666666666488
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "cones",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.7833333333333687
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "cones",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.7833333333333687
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "courant-air",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 2.3,
+        "evenement": "air"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "courant-air",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 2.3,
+        "evenement": "air"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "courant-air",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 2.3,
+        "evenement": "air"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "courant-air",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 4.592,
+        "pression": 2.3,
+        "evenement": "air"
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "tassement",
+      "width": 320,
+      "reduced": false,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.28,
+        "tassement": 0.6279000000000002,
+        "eau": 1.2253327200000002,
+        "secondesASec": 0
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "tassement",
+      "width": 320,
+      "reduced": true,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.28,
+        "tassement": 0.6279000000000002,
+        "eau": 1.2253327200000002,
+        "secondesASec": 0
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "tassement",
+      "width": 390,
+      "reduced": false,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.28,
+        "tassement": 0.6279000000000002,
+        "eau": 1.2253327200000002,
+        "secondesASec": 0
+      }
+    },
+    {
+      "serie": "11-20",
+      "animation": "tassement",
+      "width": 390,
+      "reduced": true,
+      "stateChange": true,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.28,
+        "tassement": 0.6279000000000002,
+        "eau": 1.2253327200000002,
+        "secondesASec": 0
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "enveloppe",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 2.288
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "enveloppe",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 2.288
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "enveloppe",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 2.288
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "enveloppe",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 2.288
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "remplissage",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.6
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "remplissage",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.6
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "remplissage",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.6
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "remplissage",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.6
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "glycol",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.592
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "glycol",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.592
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "glycol",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.592
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "glycol",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.592
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "barboteur",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.28
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "barboteur",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.28
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "barboteur",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.28
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "barboteur",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.28
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "capsules",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.096
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "capsules",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.096
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "capsules",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.096
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "capsules",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.096
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "fractions",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [
+        {
+          "phase": 0,
+          "jar": 0,
+          "moved": true
+        },
+        {
+          "phase": 0,
+          "jar": 1,
+          "moved": false
+        },
+        {
+          "phase": 0,
+          "jar": 2,
+          "moved": false
+        },
+        {
+          "phase": 1,
+          "jar": 0,
+          "moved": false
+        },
+        {
+          "phase": 1,
+          "jar": 1,
+          "moved": true
+        },
+        {
+          "phase": 1,
+          "jar": 2,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 0,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 1,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 2,
+          "moved": true
+        }
+      ],
+      "observationFin": {
+        "t": 3.28,
+        "masses": [
+          0.6723550328633906,
+          0.7789126269971197
+        ]
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "fractions",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [
+        {
+          "phase": 0,
+          "jar": 0,
+          "moved": false
+        },
+        {
+          "phase": 0,
+          "jar": 1,
+          "moved": false
+        },
+        {
+          "phase": 0,
+          "jar": 2,
+          "moved": false
+        },
+        {
+          "phase": 1,
+          "jar": 0,
+          "moved": false
+        },
+        {
+          "phase": 1,
+          "jar": 1,
+          "moved": false
+        },
+        {
+          "phase": 1,
+          "jar": 2,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 0,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 1,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 2,
+          "moved": false
+        }
+      ],
+      "observationFin": {
+        "t": 3.28,
+        "masses": [
+          0.6723550328633906,
+          0.7789126269971197
+        ]
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "fractions",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [
+        {
+          "phase": 0,
+          "jar": 0,
+          "moved": true
+        },
+        {
+          "phase": 0,
+          "jar": 1,
+          "moved": false
+        },
+        {
+          "phase": 0,
+          "jar": 2,
+          "moved": false
+        },
+        {
+          "phase": 1,
+          "jar": 0,
+          "moved": false
+        },
+        {
+          "phase": 1,
+          "jar": 1,
+          "moved": true
+        },
+        {
+          "phase": 1,
+          "jar": 2,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 0,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 1,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 2,
+          "moved": true
+        }
+      ],
+      "observationFin": {
+        "t": 3.28,
+        "masses": [
+          0.6723550328633906,
+          0.7789126269971197
+        ]
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "fractions",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [
+        {
+          "phase": 0,
+          "jar": 0,
+          "moved": false
+        },
+        {
+          "phase": 0,
+          "jar": 1,
+          "moved": false
+        },
+        {
+          "phase": 0,
+          "jar": 2,
+          "moved": false
+        },
+        {
+          "phase": 1,
+          "jar": 0,
+          "moved": false
+        },
+        {
+          "phase": 1,
+          "jar": 1,
+          "moved": false
+        },
+        {
+          "phase": 1,
+          "jar": 2,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 0,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 1,
+          "moved": false
+        },
+        {
+          "phase": 2,
+          "jar": 2,
+          "moved": false
+        }
+      ],
+      "observationFin": {
+        "t": 3.28,
+        "masses": [
+          0.6723550328633906,
+          0.7789126269971197
+        ]
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "bulles",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.6
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "bulles",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.6
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "bulles",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.6
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "bulles",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.6
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "condenseur",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.888,
+        "mousse": 0,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.8133992207279059,
+          0.9054417483978785
+        ]
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "condenseur",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.888,
+        "mousse": 0,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.8133992207279059,
+          0.9054417483978785
+        ]
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "condenseur",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.888,
+        "mousse": 0,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.8133992207279059,
+          0.9054417483978785
+        ]
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "condenseur",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 1.888,
+        "mousse": 0,
+        "debordement": false,
+        "ageDebordement": null,
+        "masses": [
+          0.8133992207279059,
+          0.9054417483978785
+        ]
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "vapeur",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.592
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "vapeur",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.592
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "vapeur",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.592
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "vapeur",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 0.592
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "dryhop",
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 11.984
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "dryhop",
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 11.984
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "dryhop",
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 11.984
+      }
+    },
+    {
+      "serie": "1-10",
+      "animation": "dryhop",
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 11.984
+      }
+    }
+  ]
+}

@@ -1,5 +1,49 @@
 # Progression Codex
 
+## Série suivante autorisée — mission 20/20 : Coulures pendant le véritable débordement d’Ulysse
+
+Branche `work/anim-20-debordement`, base = mission précédente (11 depuis main b3ea090).
+Build, six suites métier/images, syntaxe JS et diff propre réussis.
+Quatre cas mobiles 320/390 DPR2 normal/réduit : état actif, état arrêté,
+absence de mutation et vraie capture de l'application, tous réussis.
+Commande : `CHROMIUM_PATH=/usr/bin/chromium SCENARIOS_ANIMATIONS=jeu/tests/animations-suite.json CAS_ANIMATION=debordement CAPTURE_DIR=docs/captures/animations-suite node jeu/tests/animations-serie.cjs`.
+Fichiers : ateliers.js, éventuels champs de présentation de jeu.js, HTML
+reconstruits, configuration/test partagé et captures `debordement*`.
+Aucun calcul métier, sauvegarde, nouvelle boucle ou fusion modifiés/ajoutés.
+Téléphone physique et Safari indisponibles. Suite : mission suivante du plan
+docs/SERIE_ANIMATIONS_11_20.md ; arrêt après la mission 20.
+
+## Clôture de la série supplémentaire : missions 11 à 20
+
+Demande « Puis 10 étapes en plus », exception explicite au rythme d'une mission.
+Audit réel de main b3ea090, PR #117/#118 fusionnées, état local initial propre.
+Dix missions successives : chute temporisée et rotation du houblon, courant
+d'air, bûche humide, reprise du brûleur, tassement, lit sec, consommation des
+bûches, mousse et débordement. Chaque mission conserve son commit/branche/PR.
+
+Validation finale réussie : 80 contextes visuels (40 nouveaux et 40 antérieurs),
+filtration complète, trois parcours avec gestes/chauffes/coupes réels en expert
+et débutant, six suites métier/images après chaque changement, syntaxe et
+diff propre. Cinq secondes et 100 % du houblonnage préservés et testés.
+Réactions de pression et consommation de bois observées sur le vrai contrôleur.
+Aucun calcul métier, format de sauvegarde, stock ou scheduler parallèle ajouté.
+
+Captures de l'application réelle dans docs/captures/animations-suite, vidéo
+VP8 du vrai débordement. Le canvas détaché ne sert qu'aux comparaisons isolées ;
+les captures/vidéo proviennent ensuite des vrais écrans et commandes.
+Déclenchements aléatoires déterminisés dans le seul test, pas de moteur simulé.
+Téléphone physique, Safari et équilibrage exhaustif non vérifiés.
+
+Le redémarrage après l'étape 19 n'a pas perdu le travail : commit/push vérifiés,
+puis reprise à sa PR et à l'étape 20. Détails, commandes et résultats :
+docs/SERIE_ANIMATIONS_11_20.md et docs/validation/animations-suite-*.json.
+Les neuf premières CI sont réussies au relevé final. La CI de la dernière PR
+reste à confirmer après sa création ; résultats locaux distingués de GitHub.
+
+Aucune fusion de cette série : les nouveaux effets ne sont pas encore publics.
+Prochaine mission : revue de la pile pour intégration explicitement autorisée.
+Aucune mission 21 commencée ; arrêt après sauvegarde et PR de la mission 20.
+
 ## Série suivante autorisée — mission 19/20 : Bulles de mousse dans le regard d’Ulysse
 
 Branche `work/anim-19-mousse`, base = mission précédente (11 depuis main b3ea090).

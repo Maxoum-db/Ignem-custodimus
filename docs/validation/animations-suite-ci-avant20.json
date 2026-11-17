@@ -1,0 +1,176 @@
+{
+  "contexte": "Relevé avant sauvegarde de l’étape 20 ; les six premières PR étaient vertes, les suivantes encore en cours. Aucune fusion.",
+  "prs": [
+    {
+      "mission": 11,
+      "pr": 119,
+      "commit": "c07f32d28bd8592e498f605b74e614e128f47389",
+      "branche": "work/anim-11-chute-temps",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44159429000,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44159428778,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "mission": 12,
+      "pr": 120,
+      "commit": "194085d02bc34cc4aea423595326b9cb04ba83a9",
+      "branche": "work/anim-12-cones",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44159745326,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44159745302,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "mission": 13,
+      "pr": 121,
+      "commit": "894cd8d2e1650ee884238db459f2a765c77160b2",
+      "branche": "work/anim-13-courant-air",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44160259949,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44160259762,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "mission": 14,
+      "pr": 122,
+      "commit": "6dad998a3ff087c34de138a42d3374d78f63207d",
+      "branche": "work/anim-14-buche-humide",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44160590803,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44160590573,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "mission": 15,
+      "pr": 123,
+      "commit": "bf64aba17afd323a82ee28139924041369f3790c",
+      "branche": "work/anim-15-reprise-bruleur",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44160938988,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44160938992,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "mission": 16,
+      "pr": 124,
+      "commit": "3dbb22df6152abf8e1a4ff96b84956badb685d85",
+      "branche": "work/anim-16-tassement",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44161312825,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44161313120,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "mission": 17,
+      "pr": 125,
+      "commit": "16fd90379db12824c8b04b6ccd3230491d5fd213",
+      "branche": "work/anim-17-lit-sec",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44161707139,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44161707150,
+          "status": "in_progress",
+          "conclusion": null
+        }
+      ]
+    },
+    {
+      "mission": 18,
+      "pr": 126,
+      "commit": "01441ee8e64c7208629bb1d93a78ef04c8b1a319",
+      "branche": "work/anim-18-buches",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44162307496,
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 44162307604,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "mission": 19,
+      "pr": 127,
+      "commit": "556b223c80f3e49f7ff0ef72d421667156dc3cb9",
+      "branche": "work/anim-19-mousse",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44163000322,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44163000268,
+          "status": "in_progress",
+          "conclusion": null
+        }
+      ]
+    }
+  ]
+}

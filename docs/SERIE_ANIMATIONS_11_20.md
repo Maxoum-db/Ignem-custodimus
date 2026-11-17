@@ -53,3 +53,73 @@ Mission 17 validée : Aspect du lit réellement à sec — `work/anim-17-lit-sec
 Mission 18 validée : Bûches réduites selon leur masse réellement brûlée — `work/anim-18-buches` ; quatre scénarios et six suites réussis. Preuves : `buches*.png` et `buches.json`.
 
 Mission 19 validée : Bulles de mousse dans le regard d’Ulysse — `work/anim-19-mousse` ; quatre scénarios et six suites réussis. Preuves : `mousse*.png` et `mousse.json`.
+
+## Clôture et validation finale
+
+Les dix nouveaux scénarios (40 contextes) et les dix anciens scénarios (40
+contextes) sont tous réussis sur le code final : 320/390 px DPR2, normal/réduit,
+états actifs et arrêtés, absence de mutation, vraie navigation, aucune erreur JS
+ni débordement. Les états physiques restent visibles en mouvement réduit.
+
+La filtration complète avec fermeture, colmatage, ratissage et reprise est
+réussie. Trois parcours complets avec gestes de brassage réels, chauffes/coupes
+Ulysse expert puis débutant sont réussis, ainsi que vente, achats persistés,
+chai et vieillissement. Les six suites métier/images ont été exécutées après
+chaque mission et restent réussies. Les contrôles existants de préparation
+(5 s), 100 % aux repères et pénalité de retard passent dans les deux modes.
+
+Le redémarrage de l'environnement après la mission 19 a été traité en vérifiant
+le commit et son push réels, puis en créant sa PR manquante. Aucun travail
+validé n'a été recommencé. Le contrôle final est sauvegardé par scénario et
+peut être repris avec /tmp/valider-animations-suite.py tant que l'environnement
+le conserve ; les commandes permanentes sont ci-dessous.
+
+```sh
+npm run build:jeu
+npm run test:jeu
+SCENARIOS_ANIMATIONS=jeu/tests/animations-suite.json CAPTURE_DIR=docs/captures/animations-suite node jeu/tests/animations-serie.cjs
+node jeu/tests/animations-serie.cjs
+node jeu/tests/filtration-vivante.cjs
+GESTES_REELS=1 node jeu/tests/parcours.cjs
+ULYSSE_REEL=1 node jeu/tests/parcours.cjs
+MODE_JEU=debutant ULYSSE_REEL=1 node jeu/tests/parcours.cjs
+```
+
+Localement, CHROMIUM_PATH=/usr/bin/chromium sélectionne le navigateur système
+dans le nouveau test ; les parcours anciens utilisent le préchargement temporaire
+déjà documenté. Aucun moteur simulé. Les aléas des captures sont déterminisés
+dans les seuls tests, les incidents d'Ulysse proviennent des commandes du foyer.
+
+Résultats : docs/validation/animations-suite-final.json et
+animations-suite-matrice.json. Une vidéo réelle du canvas pendant un
+débordement est conservée dans captures/animations-suite/debordement-reel.webm
+(12 images VP8 décodées, enregistrement demandé de 1,5 s). Ce n'est pas une
+maquette ni une garantie de fréquence d'affichage sur téléphone. Captures du lit
+sec et du débordement inspectées. Téléphone physique, Safari et équilibrage
+exhaustif non vérifiés. Aucun changement aux moteurs, sauvegardes ou règles.
+
+## PR et commits des neuf premières missions
+
+| Mission | PR | Commit |
+| --- | --- | --- |
+| 11 | [#119](https://github.com/Maxoum-db/Ignem-custodimus/pull/119) | `c07f32d` |
+| 12 | [#120](https://github.com/Maxoum-db/Ignem-custodimus/pull/120) | `194085d` |
+| 13 | [#121](https://github.com/Maxoum-db/Ignem-custodimus/pull/121) | `894cd8d` |
+| 14 | [#122](https://github.com/Maxoum-db/Ignem-custodimus/pull/122) | `6dad998` |
+| 15 | [#123](https://github.com/Maxoum-db/Ignem-custodimus/pull/123) | `bf64aba` |
+| 16 | [#124](https://github.com/Maxoum-db/Ignem-custodimus/pull/124) | `3dbb22d` |
+| 17 | [#125](https://github.com/Maxoum-db/Ignem-custodimus/pull/125) | `16fd903` |
+| 18 | [#126](https://github.com/Maxoum-db/Ignem-custodimus/pull/126) | `01441ee` |
+| 19 | [#127](https://github.com/Maxoum-db/Ignem-custodimus/pull/127) | `556b223` |
+
+Le relevé final des neuf premières PR confirme leurs CI réussies. Le relevé
+antérieur (six premières vertes, autres en cours) reste conservé comme
+historique ; il ne remplace pas le contrôle final. La dernière mission est
+sauvegardée par le commit de clôture sur work/anim-20-debordement, puis sa PR
+est ouverte sur work/anim-19-mousse. Dix branches et commits séparés.
+
+Aucune fusion ni publication de cette série : main reste à b3ea090, les effets
+11–20 ne sont pas encore en ligne. Prochaine mission unique proposée : revue
+de la pile pour intégration autorisée. Aucune mission 21 commencée. STOP.
+
+Mission 20 validée : Coulures pendant le véritable débordement d’Ulysse — `work/anim-20-debordement` ; quatre scénarios et six suites réussis. Preuves : `debordement*.png` et `debordement.json`.

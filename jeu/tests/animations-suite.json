@@ -274,5 +274,33 @@
     "event": "foam",
     "random": 0,
     "captureMs": 200
+  },
+  "debordement": {
+    "renderer": "ulysse",
+    "patch": {
+      "heat": 0,
+      "flow": false,
+      "foam": 0,
+      "overflow": true,
+      "overflowAge": 0.2
+    },
+    "next": {
+      "overflowAge": 0.6
+    },
+    "region": [
+      329,
+      160,
+      27,
+      106
+    ],
+    "off": {
+      "overflow": false
+    },
+    "inactive": {
+      "active": false
+    },
+    "event": "overflow",
+    "random": 0,
+    "captureMs": 200
   }
 }

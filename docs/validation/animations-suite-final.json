@@ -1,0 +1,99 @@
+{
+  "source_sha256": "c9bc96791a83f3004838a7d1d90be99625126b0580de1988f68c55269a4d9012",
+  "resultats": {
+    "matrice11-20": {
+      "commande": [
+        "node",
+        "jeu/tests/animations-serie.cjs"
+      ],
+      "variables": {
+        "CHROMIUM_PATH": "/usr/bin/chromium",
+        "SCENARIOS_ANIMATIONS": "jeu/tests/animations-suite.json",
+        "CAPTURE_DIR": "/tmp/animations-suite-matrice"
+      },
+      "statut": "réussi",
+      "code": 0,
+      "reprise": false,
+      "secondes": 289.65,
+      "log": "/tmp/animations-suite-final-matrice11-20.log"
+    },
+    "matrice1-10": {
+      "commande": [
+        "node",
+        "jeu/tests/animations-serie.cjs"
+      ],
+      "variables": {
+        "CHROMIUM_PATH": "/usr/bin/chromium",
+        "CAPTURE_DIR": "/tmp/animations-suite-ancienne-matrice"
+      },
+      "statut": "réussi",
+      "code": 0,
+      "reprise": false,
+      "secondes": 176.25,
+      "log": "/tmp/animations-suite-final-matrice1-10.log"
+    },
+    "filtration": {
+      "commande": [
+        "node",
+        "jeu/tests/filtration-vivante.cjs"
+      ],
+      "variables": {
+        "CHROMIUM_PATH": "/usr/bin/chromium"
+      },
+      "statut": "réussi",
+      "code": 0,
+      "reprise": false,
+      "secondes": 50.97,
+      "log": "/tmp/animations-suite-final-filtration.log"
+    },
+    "brassage-reel": {
+      "commande": [
+        "node",
+        "jeu/tests/parcours.cjs"
+      ],
+      "variables": {
+        "NODE_OPTIONS": "--require=/tmp/ignem-validation/chromium.cjs",
+        "GESTES_REELS": "1",
+        "CAPTURE_DIR": "/tmp/animations-suite-gestes"
+      },
+      "statut": "réussi",
+      "code": 0,
+      "reprise": false,
+      "secondes": 100.95,
+      "log": "/tmp/animations-suite-final-brassage-reel.log"
+    },
+    "ulysse-expert": {
+      "commande": [
+        "node",
+        "jeu/tests/parcours.cjs"
+      ],
+      "variables": {
+        "NODE_OPTIONS": "--require=/tmp/ignem-validation/chromium.cjs",
+        "ULYSSE_REEL": "1",
+        "CAPTURE_DIR": "/tmp/animations-suite-expert"
+      },
+      "statut": "réussi",
+      "code": 0,
+      "reprise": false,
+      "secondes": 54.81,
+      "log": "/tmp/animations-suite-final-ulysse-expert.log"
+    },
+    "ulysse-debutant": {
+      "commande": [
+        "node",
+        "jeu/tests/parcours.cjs"
+      ],
+      "variables": {
+        "NODE_OPTIONS": "--require=/tmp/ignem-validation/chromium.cjs",
+        "MODE_JEU": "debutant",
+        "ULYSSE_REEL": "1",
+        "CAPTURE_DIR": "/tmp/animations-suite-debutant"
+      },
+      "statut": "réussi",
+      "code": 0,
+      "reprise": false,
+      "secondes": 62.34,
+      "log": "/tmp/animations-suite-final-ulysse-debutant.log"
+    }
+  }
+}
