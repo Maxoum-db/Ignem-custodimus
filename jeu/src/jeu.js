@@ -2277,7 +2277,7 @@
     const btn = $('#bro-buche'); btn.disabled = true;
     const ctx = $('#bro-canvas').getContext('2d');
     const dessin = () => {
-      if(window.AteliersJeu?.render(ctx,'ulysse',{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,active:st.t>0&&st.t<DUREE,level:1-st.prog,collected:st.prog,flow:st.prog>0&&st.prog<1,foam:st.mousse,hot:st.chaud>.4||(st.coup!=null&&st.t-st.coup<2),overflow:st.debord!=null&&st.t-st.debord<2.2,color:couleur(sessionD.biere.ebc)})) return;
+      if(window.AteliersJeu?.render(ctx,'ulysse',{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,logMass:st.feu.buches.map(b=>b.m),active:st.t>0&&st.t<DUREE,level:1-st.prog,collected:st.prog,flow:st.prog>0&&st.prog<1,foam:st.mousse,hot:st.chaud>.4||(st.coup!=null&&st.t-st.coup<2),overflow:st.debord!=null&&st.t-st.debord<2.2,color:couleur(sessionD.biere.ebc)})) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       px(24, 90, 70, 22, '#574332');
@@ -2386,7 +2386,7 @@
     const ctx = $('#rep-canvas').getContext('2d');
     const COUL = { tetes: '#e3593d', esters: '#f3b04a', terpenes: '#9cc95e', cereale: '#d9c7a0', queues: '#8f7ad0', furfural: '#b9865a' };
     const dessin = () => {
-      if(window.AteliersJeu?.render(ctx,expertVue?'courbes':'ulysse',expertVue?{curve:r.courbe,cuts:r.coupes}:{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,active:st.t>0,level:r.ch.V/charge.V,flow:!!r.dernier&&!r.fini,degree:r.dernier?.degre,fractions:r.fractions,phase:r.phase,capacity:charge.V})) return;
+      if(window.AteliersJeu?.render(ctx,expertVue?'courbes':'ulysse',expertVue?{curve:r.courbe,cuts:r.coupes}:{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,logMass:st.feu.buches.map(b=>b.m),active:st.t>0,level:r.ch.V/charge.V,flow:!!r.dernier&&!r.fini,degree:r.dernier?.degre,fractions:r.fractions,phase:r.phase,capacity:charge.V})) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       if (expertVue) {

@@ -3265,7 +3265,7 @@ html,body { margin:0; }
     box(c,93,400,550,24,'#6a6658',6);pipe(c,'M644 412H718',true,14);
     for(const x of [177,546]){ellipse(c,x,439,33,33,'#34342e');ellipse(c,x,439,18,18,'#929889');ellipse(c,x,439,6,6,ink,null)}
     box(c,129,330,222,69,'#655b49',12);flame(c,240,383,s.t,heat,145);
-    for(let i=0;i<Math.min(7,s.logs||0);i++){path(c,`M${158+i*22} 388l16 -9`,null,'#68452b',10);ellipse(c,158+i*22,388,5,5,'#ba8b56',ink,1)}
+    for(let i=0;i<Math.min(7,s.logs||0);i++){const m=clamp(s.logMass?.[i]??1);if(m<=.02)continue;path(c,`M${158+i*22} 388l${16*m} ${-9*m}`,null,m<.3?'#3b3026':'#68452b',4+6*m);ellipse(c,158+i*22,388,2+3*m,2+3*m,m<.3?'#50402d':'#ba8b56',ink,1)}
     kettle(c,138,181,208,125,{level,color:s.color||'#d5b679',open:false});
     path(c,'M138 181Q143 133 217 125L219 107H265L267 125Q340 133 346 181Z',metal(c,138,208));
     pipe(c,'M242 108V75Q242 61 258 61H386Q409 61 409 83V117',false,20);
@@ -5663,7 +5663,7 @@ html,body { margin:0; }
     const btn = $('#bro-buche'); btn.disabled = true;
     const ctx = $('#bro-canvas').getContext('2d');
     const dessin = () => {
-      if(window.AteliersJeu?.render(ctx,'ulysse',{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,active:st.t>0&&st.t<DUREE,level:1-st.prog,collected:st.prog,flow:st.prog>0&&st.prog<1,foam:st.mousse,hot:st.chaud>.4||(st.coup!=null&&st.t-st.coup<2),overflow:st.debord!=null&&st.t-st.debord<2.2,color:couleur(sessionD.biere.ebc)})) return;
+      if(window.AteliersJeu?.render(ctx,'ulysse',{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,logMass:st.feu.buches.map(b=>b.m),active:st.t>0&&st.t<DUREE,level:1-st.prog,collected:st.prog,flow:st.prog>0&&st.prog<1,foam:st.mousse,hot:st.chaud>.4||(st.coup!=null&&st.t-st.coup<2),overflow:st.debord!=null&&st.t-st.debord<2.2,color:couleur(sessionD.biere.ebc)})) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       px(24, 90, 70, 22, '#574332');
@@ -5772,7 +5772,7 @@ html,body { margin:0; }
     const ctx = $('#rep-canvas').getContext('2d');
     const COUL = { tetes: '#e3593d', esters: '#f3b04a', terpenes: '#9cc95e', cereale: '#d9c7a0', queues: '#8f7ad0', furfural: '#b9865a' };
     const dessin = () => {
-      if(window.AteliersJeu?.render(ctx,expertVue?'courbes':'ulysse',expertVue?{curve:r.courbe,cuts:r.coupes}:{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,active:st.t>0,level:r.ch.V/charge.V,flow:!!r.dernier&&!r.fini,degree:r.dernier?.degre,fractions:r.fractions,phase:r.phase,capacity:charge.V})) return;
+      if(window.AteliersJeu?.render(ctx,expertVue?'courbes':'ulysse',expertVue?{curve:r.courbe,cuts:r.coupes}:{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,logMass:st.feu.buches.map(b=>b.m),active:st.t>0,level:r.ch.V/charge.V,flow:!!r.dernier&&!r.fini,degree:r.dernier?.degre,fractions:r.fractions,phase:r.phase,capacity:charge.V})) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       if (expertVue) {

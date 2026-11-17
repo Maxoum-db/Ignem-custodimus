@@ -214,5 +214,41 @@
     "filterDebit": 60,
     "bed": "dry",
     "captureMs": 3100
+  },
+  "buches": {
+    "renderer": "ulysse",
+    "patch": {
+      "heat": 0,
+      "flow": false,
+      "logs": 2,
+      "logMass": [
+        1,
+        1
+      ]
+    },
+    "next": {
+      "logMass": [
+        0.3,
+        0.6
+      ]
+    },
+    "region": [
+      149,
+      373,
+      67,
+      23
+    ],
+    "off": {
+      "logs": 0
+    },
+    "inactive": {
+      "logMass": [
+        0,
+        0
+      ]
+    },
+    "stateChange": true,
+    "captureMs": 3500,
+    "wood": true
   }
 }

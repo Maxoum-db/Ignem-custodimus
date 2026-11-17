@@ -214,7 +214,7 @@
     box(c,93,400,550,24,'#6a6658',6);pipe(c,'M644 412H718',true,14);
     for(const x of [177,546]){ellipse(c,x,439,33,33,'#34342e');ellipse(c,x,439,18,18,'#929889');ellipse(c,x,439,6,6,ink,null)}
     box(c,129,330,222,69,'#655b49',12);flame(c,240,383,s.t,heat,145);
-    for(let i=0;i<Math.min(7,s.logs||0);i++){path(c,`M${158+i*22} 388l16 -9`,null,'#68452b',10);ellipse(c,158+i*22,388,5,5,'#ba8b56',ink,1)}
+    for(let i=0;i<Math.min(7,s.logs||0);i++){const m=clamp(s.logMass?.[i]??1);if(m<=.02)continue;path(c,`M${158+i*22} 388l${16*m} ${-9*m}`,null,m<.3?'#3b3026':'#68452b',4+6*m);ellipse(c,158+i*22,388,2+3*m,2+3*m,m<.3?'#50402d':'#ba8b56',ink,1)}
     kettle(c,138,181,208,125,{level,color:s.color||'#d5b679',open:false});
     path(c,'M138 181Q143 133 217 125L219 107H265L267 125Q340 133 346 181Z',metal(c,138,208));
     pipe(c,'M242 108V75Q242 61 258 61H386Q409 61 409 83V117',false,20);
