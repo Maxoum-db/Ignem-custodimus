@@ -3339,6 +3339,12 @@ html,body { margin:0; }
     const line=(pts,col=ink,width=.7)=>{c.beginPath();pts.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.strokeStyle=col;c.lineWidth=width;c.lineCap='round';c.stroke();};
     const box=(x,y,w,h,col,r=.7)=>{c.beginPath();c.roundRect(x,y,w,h,r);c.fillStyle=col;c.fill();c.strokeStyle=ink;c.lineWidth=.55;c.stroke();};
     const sprite=(name,x,y,w,h,pose)=>{const im=images[name],scale=Math.min(w/im.width,h/im.height),iw=im.width*scale,ih=im.height*scale;ellipse(x+w/2,y+h-1,w*.35,h*.065,'#3b2a1e26');c.save();c.translate(x+w/2,y+h);if(pose){c.rotate(pose.angle||0);c.scale(pose.flip?-1:1,pose.souffle||1);}c.drawImage(im,-iw/2,-ih,iw,ih);c.restore();};
+    // Promenades lentes avec pauses aux extrémités ; aucune donnée persistante.
+    const promenade=(temps,duree,pause,phase=0)=>{
+      const cycle=(temps+phase)%(2*(duree+pause)),retour=cycle>=duree+pause;
+      const local=cycle%(duree+pause),u=Math.min(1,local/duree),ease=u*u*(3-2*u);
+      return {u:retour?1-ease:ease,marche:local<duree?Math.sin(Math.PI*u):0,flip:!retour};
+    };
     // Animations décoratives déterministes : aucune écriture dans l'état du jeu.
     const oiseau=(x,y,phase)=>{const aile=1.2+Math.sin(phase)*1.6;ellipse(x,y,1.5,.65,'#aab0a1');c.beginPath();c.moveTo(x-3,y-aile);c.quadraticCurveTo(x-1,y-2,x,y);c.quadraticCurveTo(x+1,y-2,x+3,y-aile);c.strokeStyle=ink;c.lineWidth=.55;c.stroke();};
     const metal=(x,w)=>{const g=c.createLinearGradient(x,0,x+w,0);g.addColorStop(0,'#687e77');g.addColorStop(.32,'#ebeee0');g.addColorStop(.6,'#afc2b1');g.addColorStop(1,'#708a7e');return g;};
@@ -3346,6 +3352,19 @@ html,body { margin:0; }
     const plot=(x,y,w,h)=>{ellipse(x+w/2,y+h-4,w*.44,h*.18,'#af925f77');const p=[[x+3,y+h-10],[x+w-3,y+h-10],[x+w-3,y+h],[x+3,y+h]];line([...p,p[0]],'#f5e8bd',.8);for(const [px,py]of p){line([[px,py-6],[px,py+1]],'#845733',1.4);}for(let k=0;k<3;k++)box(x+w/2-7+k*4,y+h-8-k,6,2,'#d3c1a0');};
     const scaffold=(x,y,w,h)=>{for(let i=0;i<=w;i+=w/4)line([[x+i,y],[x+i,y+h]],'#976435',1.1);for(let j=5;j<h;j+=10)line([[x,y+j],[x+w,y+j]],'#e6ba7b',1.2);line([[x,y+h],[x+w,y]],'#b17b46',.9);};
     c.drawImage(images[s.saison] || images.terrain,0,0,192,256);
+    // Nuages diaphanes dans le seul ciel, au-dessus de la ligne des collines.
+    c.save();c.beginPath();c.moveTo(40,0);c.lineTo(178,0);c.lineTo(170,12);
+    c.lineTo(145,11);c.lineTo(125,13);c.lineTo(104,12);c.lineTo(76,15);c.lineTo(43,13);c.closePath();c.clip();
+    for(let i=0;i<3;i++){
+      const x=((t*(.42+i*.09)+i*67+36)%240)-24,y=3+i*3.1;
+      c.globalAlpha=s.nuit ? .07 : .27;
+      for(const[dx,dy,rx,ry]of[[-8,1,8,1.5],[0,0,10,2.3],[7,1,8,1.6],[-2,-1,5,2]])ellipse(x+dx,y+dy,rx,ry,'#fff8e8');
+    }
+    c.restore();
+    if(!s.nuit)for(let i=0;i<3;i++){
+      const x=((t*3.1+i*11+58)%250)-25,y=10+i*1.9+Math.sin(t*.45+i)*.8;
+      if(x>43&&x<174){c.globalAlpha=Math.min(1,(x-43)/10,(174-x)/10);oiseau(x,y,t*6+i*.8);c.globalAlpha=1;}
+    }
     // Ruches indépendantes ; le rucher reste l'extension annoncée par le jeu.
     for(let i=0;i<4;i++)sprite('ruche',118+(i%2)*22,49+Math.floor(i/2)*13,15,18);
     if(!s.nuit&&s.saison!=='hiver')for(let i=0;i<5;i++){const x=133+Math.sin(t*1.5+i*2)*19,y=54+Math.cos(t*2+i)*7;ellipse(x-.4,y-.7,.7,.4,'#fffbe8b0');ellipse(x,y,.6,.4,'#503421');}
@@ -3367,16 +3386,37 @@ html,body { margin:0; }
     for(const [key,x,y,w,h]of [['brasserie',9,61,84,52],['chai',111,108,68,30],['pigeonnier',14,157,60,42],['distillerie',106,160,76,38]])if(s.travaux.some(v=>v.bat===key))scaffold(x,y,w,h);
     // Pigeons autour du colombier construit, sans livraison ni gain fictifs.
     if(s.bat.pigeonnier&&!s.nuit)for(let i=0;i<3;i++){const a=t*.7+i*2.1;oiseau(43+Math.cos(a)*14,134+Math.sin(a)*5,t*9+i);}
-    // Respiration et balancement d'attente ; le cheval reste près des leçons.
-    sprite('cheval',112,208+Math.sin(t*1.2)*.3,49,29,{angle:Math.sin(t*.6)*.006,souffle:1+Math.sin(t*1.8)*.006});
+    // Le cheval arpente le pré du bas ; pauses et pas sans quitter la scène.
+    const cheval=promenade(s.nuit?t*.35:t,19,5,8);
+    sprite('cheval',98+cheval.u*31,207+Math.sin(cheval.u*Math.PI)*2-Math.abs(Math.sin(t*3.8))*.38*cheval.marche,49,29,{flip:cheval.flip,angle:Math.sin(t*3.8)*.008*cheval.marche,souffle:1+Math.sin(t*1.6)*.006});
     // Petit potager et animaux de basse-cour au premier plan.
     for(let j=0;j<3;j++){line([[22,215+j*3],[47,219+j*3]],'#89633d',1.4);for(let i=0;i<5;i++){const vent=Math.sin(t*1.6+i*.6+j)*.55;ellipse(24+i*5+vent,214+j*3+i*.16,1.4,.7,'#53863f');line([[24+i*5,215+j*3+i*.16],[24+i*5+vent,213+j*3+i*.16]],'#305e30',.5);}}
-    [[84,173],[94,178],[79,182]].forEach(([x,y],i)=>{const a=t*.65+i*2.1,marche=s.nuit?0:Math.sin(a)*2.4,pas=s.nuit?0:Math.abs(Math.sin(t*5+i))*.25;const picore=s.nuit?0:Math.max(0,Math.sin(t*1.8+i))*.08;sprite('animal-poule-brune',x+marche,y-pas,10,10,{flip:!s.nuit&&Math.cos(a)<0,angle:picore,souffle:1+Math.sin(t*2+i)*.012});});
-    const promenade=s.nuit?0:Math.sin(t*.22)*4;
-    sprite('animal-chat-noir',72+promenade,119-Math.abs(Math.sin(t*3))*(s.nuit?0:.18),13,13,{flip:!s.nuit&&Math.cos(t*.22)<0,souffle:1+Math.sin(t*1.7)*.014});
+    [[82,172],[94,178],[78,184]].forEach(([x,y],i)=>{
+      const poule=promenade(s.nuit?0:t,7+i*2,3+i,5+i*8),pas=Math.abs(Math.sin(t*(4.2+i*.3)+i))*.3*poule.marche*(s.nuit?0:1);
+      const picore=poule.marche<.15?Math.max(0,Math.sin(t*1.7+i))*.07:0;
+      sprite('animal-poule-brune',x+(poule.u-.5)*(8+i*2),y+Math.sin(poule.u*Math.PI+i)*1.2-pas,10,10,{flip:poule.flip,angle:s.nuit?0:picore,souffle:1+Math.sin(t*1.8+i)*.009});
+    });
+    const chat=promenade(s.nuit?t*.65:t,13,5,6);
+    sprite('animal-chat-noir',64+chat.u*23,119+Math.sin(chat.u*Math.PI)*2-Math.abs(Math.sin(t*4))*.22*chat.marche,13,13,{flip:chat.flip,angle:Math.sin(t*4)*.006*chat.marche,souffle:1+Math.sin(t*1.7)*.01});
     if(!s.nuit&&['printemps','été'].includes(s.saison))for(let i=0;i<2;i++){const x=34+Math.sin(t*.8+i*3)*12,y=209+Math.cos(t*1.1+i)*5,a=.3+Math.abs(Math.sin(t*9+i))*.9;ellipse(x-a,y,a,1.1,i?'#e6b04d':'#de8b76');ellipse(x+a,y,a,1.1,i?'#e6b04d':'#de8b76');line([[x,y-1],[x,y+1]],ink,.35);}
     // Nuit : éclairage distinct de l'état des foyers, jamais de chauffe fictive.
-    if(s.nuit){c.fillStyle='#10213b88';c.fillRect(0,0,192,256);for(const[x,y]of[[93,111],[76,200],[164,231]]){const glow=c.createRadialGradient(x,y,0,x,y,6);glow.addColorStop(0,`rgba(255,214,120,${.48+Math.sin(t*2+x)*.05})`);glow.addColorStop(1,'#ffd67800');c.fillStyle=glow;c.fillRect(x-6,y-6,12,12);box(x-.7,y-1,1.4,2,'#f9d889');}}
+    if(s.nuit){
+      c.fillStyle='#10213b99';c.fillRect(0,0,192,256);
+      // Étoiles toujours présentes : variation lente d'opacité, jamais de flash.
+      for(let i=0;i<17;i++){
+        const x=48+(i*37%119),y=1.8+(i*7%10),a=.42+Math.sin(t*.65+i*2.3)*.15;
+        c.globalAlpha=a;ellipse(x,y,i%4===0?.32:.2,i%4===0?.32:.2,'#fff4d5');
+        if(i%4===0){line([[x-.65,y],[x+.65,y]],'#fff4d5',.12);line([[x,y-.65],[x,y+.65]],'#fff4d5',.12);}
+      }c.globalAlpha=1;
+      // Fenêtre réelle de la ferme : deux vitres, les croisillons restent visibles.
+      const lueur=.64+Math.sin(t*.8)*.035+Math.sin(t*1.37+2)*.018;
+      const glow=c.createRadialGradient(80,95,0,80,95,9);
+      glow.addColorStop(0,`rgba(255,200,108,${lueur*.28})`);glow.addColorStop(1,'#ffd67800');
+      c.fillStyle=glow;c.fillRect(71,86,18,18);c.fillStyle=`rgba(255,207,120,${lueur})`;
+      for(const x of[78.2,80.4]){c.fillRect(x,91.9,1.6,3);c.fillRect(x,95.7,1.6,2.7);}
+      // Lanternes conservées ; leurs halos respirent très légèrement.
+      for(const[x,y]of[[93,111],[76,200],[164,231]]){const halo=c.createRadialGradient(x,y,0,x,y,6);halo.addColorStop(0,`rgba(255,214,120,${.45+Math.sin(t*.9+x)*.025})`);halo.addColorStop(1,'#ffd67800');c.fillStyle=halo;c.fillRect(x-6,y-6,12,12);box(x-.7,y-1,1.4,2,'#f9d889');}
+    }
     if(s.nuit&&['printemps','été'].includes(s.saison))for(let i=0;i<5;i++){const x=36+i*8+Math.sin(t*.6+i)*3,y=211+Math.cos(t*.8+i)*6;c.globalAlpha=.35+Math.sin(t*1.4+i)*.2;ellipse(x,y,.55,.55,'#f6e99e');c.globalAlpha=1;}
     // Météo et particules bornées ; aucun lien avec le calendrier simulé.
     if(s.saison==='hiver')for(let i=0;i<12;i++){const y=24+((t*4+i*19)%220),x=8+i*15+Math.sin(t*.6+i)*2;ellipse(x,y,.45+(i%3)*.13,.45+(i%3)*.13,'#fff8e9b0');}

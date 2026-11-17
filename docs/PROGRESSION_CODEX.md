@@ -1,5 +1,30 @@
 # Progression Codex
 
+## Menu principal plus vivant et doux — 17 novembre 2026
+
+Mission unique demandée : ambiance naturelle de la carte principale. Audit réel
+initial : main `3c4f0f5`, #128/#129 fusionnées, branche locale propre, aucune
+nouvelle PR de menu. Les petits mouvements déjà présents sont enrichis.
+Branche dédiée `work/menu-vivant-doux`, base main. Autorisation permanente de
+fusion en fin de mission conservée ci-dessous.
+
+`jeu/src/domaine.js` : cheval et chat en promenade avec accélérations douces et
+pauses ; poules aux rythmes décalés ; oiseaux traversant le ciel avec fondu aux
+bords ; nuages translucides lents ; étoiles et vraie fenêtre de la ferme à
+variation nocturne légère. Halos des lanternes adoucis. Animations bornées,
+déterministes, intégrées au renderer et à la boucle existants plafonnés à
+30 dessins/s. Mouvement réduit toujours fixe ; arrêt en quittant le domaine.
+Aucune règle, économie, sauvegarde, cible tactile ou ressource image modifiée.
+HTML `dist/index.html` et `dist/artefact.html` reconstruits.
+
+Le test existant `jeu/tests/domaine-vivant.cjs` couvre désormais huit contextes
+320/390 px DPR2, jour/nuit et normal/réduit. Il contrôle aussi les déplacements
+réels des sprites sur 96 secondes, leurs bornes, le ciel et la fenêtre nocturne.
+Preuves : `docs/captures/menu-vivant/`, captures réelles du jeu et vidéo canvas.
+Validation et limites détaillées : `docs/validation/menu-vivant.json`.
+Prochaine mission unique proposée : recueillir le ressenti sur téléphone réel.
+Aucun autre système ou nouvelle mission commencé. Arrêt après publication.
+
 ## Publication vérifiée des animations 11–20 — 17 novembre 2026
 
 Mission unique : intégrer et publier la série déjà réalisée. PR #128 retargetée
