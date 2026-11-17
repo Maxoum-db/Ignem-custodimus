@@ -1,5 +1,51 @@
 # Progression Codex
 
+## Migration demandée vers GitHub Pages — 17 novembre 2026
+
+Mission unique : héberger le jeu depuis le dépôt GitHub, sans dépendre de Sites.
+Utilisateur : « Je veux que tu bascules tout sur github », puis choix explicite
+« Lien public pour jouer ». Le dépôt reste privé. Base main distante vérifiée :
+ce36e0e, PR #101 fusionnée ; PR #102 ouverte, sa branche 8a47b1f propre.
+Branche dédiée `work/github-pages`, créée depuis ce suivi pour conserver les
+comptes rendus de publication précédents sans les refaire.
+
+Configuration initiale constatée : GitHub API indique private=true et
+has_pages=false. Lecture du réglage Pages refusée à l’intégration : HTTP 403
+Resource not accessible by integration. L’utilisateur doit sélectionner
+Settings → Pages → Source GitHub Actions ; question de statut envoyée pendant
+la préparation. Aucun changement de visibilité, achat, nouveau secret ou
+nouveau push vers Sites. Ancien site conservé pour les parties existantes.
+
+Fichiers : `.github/workflows/pages.yml`, `jeu/tests/github-pages.cjs`,
+`docs/HEBERGEMENT_GITHUB.md`, README, ce journal et deux captures réelles dans
+`docs/captures/github-pages/`. Aucun changement de jeu/src, de dist ni du format
+des sauvegardes. Le workflow teste les PR sans les publier et déploie seulement
+main. Il publie uniquement dist, via les permissions temporaires de GitHub Actions.
+
+Validation locale réussie : build reproductible, six suites Node dont ressources,
+syntaxe du test JS, lecture YAML et contrôles des gardes main/PR/droits, diff --check.
+Test navigateur à 320 et 390 px DPR 2 : HTML réel servi uniquement sous
+/ Ignem-custodimus/ (sans l’espace), six accès, brasserie et onglets au toucher,
+absence d’erreur JS, ressource en échec ou débordement ; transfert d’une fixture
+entre deux origines, points/écus/recette/bâtiments/carnet/succès conservés,
+monnaie et points réellement affichés contrôlés, ancienne sauvegarde intacte.
+Une première assertion supposait l’onglet Cuve au démarrage : corrigée pour
+l’onglet Céréales réel. La fixture a aussi été complétée avec possede pour ne pas
+réexécuter une migration historique d’écus ; sérialisation normale du jeu puis
+contrôles du HUD ajoutés. Aucune modification du jeu pour faire réussir les tests.
+Captures inspectées. Android physique et Safari/iOS non disponibles.
+
+La sauvegarde de l’ancien site n’est pas déplacée automatiquement par un
+changement d’adresse. Guide de transfert manuel fourni ; presse-papiers et
+console du joueur non automatisés, aucune partie réelle accédée. Ne pas effacer
+l’ancien site ni les données du navigateur.
+
+État de publication à confirmer par le résultat réel du job deploy : ne pas
+présenter l’adresse attendue comme déjà en ligne. PR et CI de cette branche à
+suivre. Prochaine mission unique après mise en ligne : vérifier un transfert
+personnel assisté, sans nouvelle refonte.
+
+
 ## Nouvelle tentative de publication — contrôle toujours bloquant
 
 Mission unique : reprendre la mise en ligne demandée, sans nouvelle refonte.
