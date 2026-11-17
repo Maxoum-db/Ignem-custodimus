@@ -3365,7 +3365,9 @@ html,body { margin:0; }
     for(let i=0;i<3;i++){
       const x=((t*(.42+i*.09)+i*67+36)%240)-24,y=3+i*3.1;
       c.globalAlpha=s.nuit ? .07 : .27;
-      for(const[dx,dy,rx,ry]of[[-8,1,8,1.5],[0,0,10,2.3],[7,1,8,1.6],[-2,-1,5,2]])ellipse(x+dx,y+dy,rx,ry,'#fff8e8');
+      const voile=c.createLinearGradient(0,y-3,0,y+3);
+      voile.addColorStop(0,'#fff8e800');voile.addColorStop(.45,'#fff8e8');voile.addColorStop(1,'#fff8e800');
+      c.beginPath();for(const[dx,dy,rx,ry]of[[-8,1,8,1.5],[0,0,10,2.3],[7,1,8,1.6],[-2,-1,5,2]]){c.moveTo(x+dx+rx,y+dy);c.ellipse(x+dx,y+dy,rx,ry,0,0,Math.PI*2);}c.fillStyle=voile;c.fill();
     }
     c.restore();
     if(!s.nuit)for(let i=0;i<3;i++){

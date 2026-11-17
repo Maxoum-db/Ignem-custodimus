@@ -32,7 +32,7 @@
     {
       "width": 320,
       "night": false,
-      "draws_in_one_second": 23,
+      "draws_in_one_second": 22,
       "regions": {
         "poules": true,
         "chat": true,
@@ -63,7 +63,7 @@
     {
       "width": 320,
       "night": true,
-      "draws_in_one_second": 22,
+      "draws_in_one_second": 23,
       "regions": {
         "poules": true,
         "chat": true,
@@ -94,7 +94,7 @@
     {
       "width": 390,
       "night": false,
-      "draws_in_one_second": 23,
+      "draws_in_one_second": 22,
       "regions": {
         "poules": true,
         "chat": true,
@@ -125,7 +125,7 @@
     {
       "width": 390,
       "night": true,
-      "draws_in_one_second": 15,
+      "draws_in_one_second": 22,
       "regions": {
         "poules": true,
         "chat": true,
@@ -154,7 +154,7 @@
       }
     }
   ],
-  "html_sha256": "670c6cb036e688f7e400a315d6286b7011e6ce9c79257807d7fd98c45d61c799",
+  "html_sha256": "a9b6c541e8a6b9cbe07f76247c4c4fa5cdae0ac3c3073e518af5b5b1ac4837e7",
   "preuve": "Captures du vrai jeu exécuté localement, état développé isolé et heure jour/nuit imposée dans le test ; aucune maquette. Vidéo du vrai canvas.",
   "video": {
     "programs": [],
@@ -164,15 +164,16 @@
         "codec_name": "vp8",
         "width": 708,
         "height": 944,
-        "nb_read_frames": "52"
+        "nb_read_frames": "97"
       }
     ],
     "format": {
-      "duration": "4.895299"
+      "duration": "4.950640"
     }
   },
   "limites": [
     "Téléphone physique et Safari non disponibles",
     "Déploiement public non encore confirmé à ce stade ; vérification après fusion"
-  ]
+  ],
+  "revision_visuelle": "Nuages réunis dans un seul voile dégradé pour éliminer les superpositions visibles ; huit contextes mobiles revérifiés après cette retouche."
 }

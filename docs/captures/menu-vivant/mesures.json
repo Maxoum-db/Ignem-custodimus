@@ -2,7 +2,7 @@
   {
     "width": 320,
     "night": false,
-    "draws_in_one_second": 23,
+    "draws_in_one_second": 22,
     "regions": {
       "poules": true,
       "chat": true,
@@ -33,7 +33,7 @@
   {
     "width": 320,
     "night": true,
-    "draws_in_one_second": 22,
+    "draws_in_one_second": 23,
     "regions": {
       "poules": true,
       "chat": true,
@@ -64,7 +64,7 @@
   {
     "width": 390,
     "night": false,
-    "draws_in_one_second": 23,
+    "draws_in_one_second": 22,
     "regions": {
       "poules": true,
       "chat": true,
@@ -95,7 +95,7 @@
   {
     "width": 390,
     "night": true,
-    "draws_in_one_second": 15,
+    "draws_in_one_second": 22,
     "regions": {
       "poules": true,
       "chat": true,
