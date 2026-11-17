@@ -3159,7 +3159,8 @@ html,body { margin:0; }
     if(s.H>.05){c.save();c.globalAlpha=clamp(s.H/4)*.22;path(c,'M178 300Q307 325 438 300V365Q300 423 178 365Z','#d34b2d',null);c.restore()}
     const dx=stir&&!still?Math.sin(t*9)*30:0;
     pipe(c,`M${293+dx} 122L${318+dx} 230`,false,8);path(c,`M${309+dx} 208l-10 23 18 19 15 -25Z`,'#a87444');
-    if(s.evt?.id==='air'&&s.t-s.evt.t0<2.2)for(let i=0;i<3;i++)path(c,`M130 ${155+i*16}q70 -20 145 10`,null,'#b6dfeb',4);
+    const airAge=s.t-(s.evt?.t0??Infinity);
+    if(s.evt?.id==='air'&&airAge>=0&&airAge<2.2)for(let i=0;i<3;i++)flow(c,`M130 ${155+i*16}q70 -20 145 10`,s.t,1,'#b6dfeb');
     thermometer(c,608,137,s.T,s.target,s.target-4,s.target+4,s.prediction);
   }
   function filter(c,s){
