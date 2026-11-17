@@ -1,5 +1,30 @@
 # Progression Codex
 
+## Menu vivant terminé et publié — 17 novembre 2026
+
+PR #130 fusionnée automatiquement après les deux CI réussies 44173137204 et
+44173137181, conformément à l'autorisation conservée au journal. Source
+`b95f206`, fusion main `6c4c37f`. La validation complète inclut les huit nouveaux
+contextes du menu, les contrôles historiques, les deux matrices d'animations
+et les parcours complets de brassage/distillation. Aucun moteur modifié.
+
+Publication HTTP 200 confirmée : HTML public identique au build fusionné
+(SHA256 `a9b6c541e8a6b9cbe07f76247c4c4fa5cdae0ac3c3073e518af5b5b1ac4837e7`).
+Huit contrôles supplémentaires du vrai site public réussis : 320/390 px DPR2,
+jour/nuit et normal/réduit, aucune erreur JS ni dépassement horizontal,
+sauvegarde inchangée et arrêt à la sortie du menu. Captures réelles publiques :
+`docs/captures/menu-vivant/en-ligne-domaine-390.png` et
+`en-ligne-domaine-390-nuit.png`. Résultats complets :
+`docs/validation/menu-vivant-public.json`. Les preuves locales et la vidéo
+restent dans le même dossier ; la validation locale décrit son état avant fusion.
+La reconnexion de l'environnement n'a perdu aucun commit ; reprise depuis
+GitHub et branche locale propre avant poursuite des contrôles de publication.
+
+Sauvegarde finale des preuves sur la même branche `work/menu-vivant-doux`,
+documents uniquement, code identique à la CI réussie de #130.
+Téléphone physique et Safari indisponibles. Prochaine mission proposée :
+recueillir le ressenti sur téléphone réel. Aucune mission suivante commencée.
+
 ## Menu principal plus vivant et doux — 17 novembre 2026
 
 Mission unique demandée : ambiance naturelle de la carte principale. Audit réel
