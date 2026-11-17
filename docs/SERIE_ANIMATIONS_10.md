@@ -35,3 +35,5 @@ Safari indisponibles. CI des nouvelles PR à distinguer des résultats locaux.
 Étape 2 validée : Flux vapeur lié à la commande réelle — `work/anim-02-vapeur` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `vapeur*.png` et `vapeur.json`.
 
 Étape 3 validée : Enveloppe animée selon inertie thermique réelle — `work/anim-03-enveloppe` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `enveloppe*.png` et `enveloppe.json`.
+
+Étape 4 validée : Barboteur et bulles liés à activité réelle — `work/anim-04-barboteur` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `barboteur*.png` et `barboteur.json`.

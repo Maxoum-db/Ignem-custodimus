@@ -148,14 +148,14 @@
     const m=metal(c,110,225,true);path(c,'M110 160Q110 135 222 135Q335 135 335 160V332L239 415H206L110 332Z',m);
     ellipse(c,222,160,112,24,m);path(c,'M112 160Q222 135 333 160',null,'#e8eee0',5);
     pipe(c,'M223 137V103H263V75H283V101',true,9);box(c,262,59,28,29,'#b9d5cd',8,ink,3);
-    for(let i=0;i<3;i++){const y=84-(reduced()?i*5:(s.t*15+i*7)%20);ellipse(c,275,y,2.5,2.5,'#f7f6df',null)}
+    const activity=s.active?s.G*(s.t/18*7/1.8)*Math.exp(1-s.t/18*7/1.8):0;
+    for(let i=0;i<Math.min(3,Math.ceil(activity*3));i++){const y=84-(reduced()?i*5:(s.t*15+i*7)%20);ellipse(c,275,y,2.5,2.5,'#f7f6df',null)}
     const jacket=s.e<-.05?'#72a9c0':s.e>.05?'#d78b69':'#a7bab1';for(const yy of [210,245,280]){path(c,`M108 ${yy}Q220 ${yy+29} 337 ${yy}`,null,ink,10);path(c,`M108 ${yy}Q220 ${yy+29} 337 ${yy}`,null,jacket,6)}
     if(s.active&&Math.abs(s.e)>.05)for(const yy of [210,245,280])flow(c,`M110 ${yy}Q220 ${yy+29} 335 ${yy}`,s.t,Math.abs(s.e),s.e<0?'#daf5f0':'#ffe8c4');
     pipe(c,'M110 242H64V330',true);valve(c,64,299,Math.max(0,-s.u),'#477f9a');pipe(c,'M334 263H366V333');valve(c,366,304,Math.max(0,s.u));
     if(s.active)flow(c,'M106 242H64V277M64 321V329',s.t,Math.max(0,-s.u),'#d4f0f2');
     if(s.active)flow(c,'M338 263H366V282M366 326V333',s.t,Math.max(0,s.u),'#fff1c9');
     box(c,185,182,31,144,'#3d5550',12,ink,3);box(c,190,194,21,126,s.color,7,null);
-    const activity=s.G*(s.t/18*7/1.8)*Math.exp(1-s.t/18*7/1.8);
     for(let i=0;i<Math.round(activity*10);i++){const y=314-(reduced()?i*10:(s.t*24+i*23)%111);ellipse(c,196+(i%3)*5,y,2,2,'#f5e1ac',null)}
     pipe(c,'M223 414V438H260',true,9);valve(c,245,438,0);
     // Éprouvette et robinet d'échantillonnage, sans niveau inventé.

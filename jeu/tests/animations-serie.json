@@ -58,5 +58,22 @@
     "control": "#fer-chauffe",
     "captureMs": 1200,
     "releaseMs": 1000
+  },
+  "barboteur": {
+    "renderer": "fer",
+    "patch": {},
+    "region": [
+      264,
+      59,
+      23,
+      31
+    ],
+    "off": {
+      "G": 0
+    },
+    "inactive": {
+      "active": false
+    },
+    "captureMs": 1200
   }
 }
