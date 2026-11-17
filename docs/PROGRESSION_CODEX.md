@@ -1,5 +1,19 @@
 # Progression Codex
 
+## Série de dix autorisée — étape 6/10 : Jets pendant remplissage réel des bouteilles
+
+Branche `work/anim-06-remplissage` ; base = étape précédente (étape 1 sur la PR #107 non fusionnée).
+Critères validés : effet visible dans le renderer existant, arrêt selon état réel,
+mouvement réduit, état fourni non muté. Quatre scénarios 320/390 px DPR 2
+avec accès au vrai écran, commandes et capture du jeu : réussis.
+Commande : `CHROMIUM_PATH=/usr/bin/chromium CAS_ANIMATION=remplissage node jeu/tests/animations-serie.cjs`.
+Build, six suites métier/images, syntaxe et diff propre réussis.
+Fichiers : ateliers.js, éventuelles données de présentation dans jeu.js,
+HTML reconstruits, test/configuration et captures `docs/captures/animations-serie/remplissage*`.
+Aucune fusion, aucun calcul métier ou format de sauvegarde modifié.
+Téléphone physique et Safari indisponibles. Étape suivante : celle du plan
+`docs/SERIE_ANIMATIONS_10.md`, sans recommencer les effets existants.
+
 ## Série de dix autorisée — étape 5/10 : Dry hop borné et cônes en rotation
 
 Branche `work/anim-05-dryhop` ; base = étape précédente (étape 1 sur la PR #107 non fusionnée).

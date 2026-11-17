@@ -182,7 +182,8 @@
       const x=207+i*48,y=360-i*2;
       if(s.broken?.includes(i)){for(let k=0;k<7;k++)path(c,`M${x+(k*7)%32} ${y-5-(k*11)%20}l9 3 -6 7Z`,'#50663d',ink,1);ellipse(c,x+16,y,20,5,s.color,null);continue}
       const outline=`M${x+11} ${y-113}h12v23q0 8 10 15v73q-15 9 -30 0v-73q10 -7 8 -15Z`;
-      path(c,outline,'#4e6946');c.save();c.clip(new Path2D(outline));const fill=clamp(s.fill);box(c,x+4,y-4-92*fill,28,92*fill,s.color,4,null);path(c,`M${x+8} ${y-72}v59`,null,'#d9e6bd66',3);c.restore();
+      const fill=clamp(s.fill);if(fill>0&&fill<1)pipe(c,`M${x+17} 235V${y-111}`,true,3);
+      path(c,outline,'#4e6946');c.save();c.clip(new Path2D(outline));box(c,x+4,y-4-92*fill,28,92*fill,s.color,4,null);if(fill>0&&fill<1)flow(c,`M${x+17} ${y-105}V${y-4-92*fill}`,s.t||0,1,s.color);path(c,`M${x+8} ${y-72}v59`,null,'#d9e6bd66',3);c.restore();
       box(c,x+8,y-58,20,28,'#f3dfaa',3,ink,1);path(c,`M${x+13} ${y-38}q-6 -8 4 -13q11 7 4 13Z`,'#b06a36',null);
       if(fill>0)for(let k=0;k<Math.min(6,s.co2*1.4);k++)ellipse(c,x+10+(k*3)%14,y-8-(k*13)%Math.max(1,88*fill),1.5,1.5,'#f4ead3',null);
       if(fill>=1)box(c,x+9,y-116,16,6,'#cba36a',2,ink,2);

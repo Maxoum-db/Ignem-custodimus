@@ -1671,8 +1671,8 @@
     $('#bou-consigne').innerHTML = `${esc(s.nom || 'Ta bière')} : vise <b>${nf(cible, 1)} volumes de CO₂</b> ${iBtn(`Après la fermentation à ${nf(T, 1)} °C, il reste ${nf(resid, 2)} volumes de CO₂ dissous (plus la bière était froide, plus elle en garde). Le sucre ajouté refermente en bouteille : environ ${Moteur.G_SUCRE_PAR_VOLUME} g/L de saccharose par volume. Trop peu, la bière est plate ; trop, elle jaillit, et au-delà de 4 volumes les bouteilles peuvent éclater.`)}`;
     const ctx = $('#bou-canvas').getContext('2d');
     let anim = null;
-    const dessin = (rempli, eclats) => {
-      if (window.AteliersJeu?.render(ctx, 'bou', { fill: rempli ?? 1, broken: eclats, co2: +champ.value / Moteur.G_SUCRE_PAR_VOLUME + resid, color: couleur(res.ebc) })) return;
+    const dessin = (rempli, eclats, t = 0) => {
+      if (window.AteliersJeu?.render(ctx, 'bou', { t, fill: rempli ?? 1, broken: eclats, co2: +champ.value / Moteur.G_SUCRE_PAR_VOLUME + resid, color: couleur(res.ebc) })) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 112, '#221912'); px(0, 96, 192, 16, '#3b2d22');
       for (let i = 0; i < 8; i++) {
@@ -1702,7 +1702,7 @@
       rec.co2 = co2; session.perteBouteilles = perte;
       const eclats = perte ? [1, 4, 6, 2].slice(0, Math.max(1, Math.round(perte * 10))) : null;
       const t0 = performance.now();
-      const pas = (ts) => { const p = Math.min(1, (ts - t0) / 1400); dessin(p < 0.6 ? p / 0.6 : 1, p >= 1 ? eclats : null); if (p < 1) anim = requestAnimationFrame(pas); else fin(); };
+      const pas = (ts) => { const p = Math.min(1, (ts - t0) / 1400); dessin(p < 0.6 ? p / 0.6 : 1, p >= 1 ? eclats : null, (ts - t0) / 1000); if (p < 1) anim = requestAnimationFrame(pas); else fin(); };
       anim = requestAnimationFrame(pas);
       const fin = () => {
         if (eclats) { son('rate'); evtScene('bou', `Bang ! ${Math.round(perte * 100)} % des bouteilles ont éclaté`, 'alerte'); } else son('ok');

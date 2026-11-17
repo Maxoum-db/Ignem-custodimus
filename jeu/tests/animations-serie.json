@@ -96,5 +96,22 @@
     },
     "event": "dh",
     "captureMs": 300
+  },
+  "remplissage": {
+    "renderer": "bou",
+    "patch": {},
+    "region": [
+      216,
+      253,
+      17,
+      22
+    ],
+    "off": {
+      "fill": 1
+    },
+    "inactive": {
+      "fill": 0
+    },
+    "captureMs": 500
   }
 }
