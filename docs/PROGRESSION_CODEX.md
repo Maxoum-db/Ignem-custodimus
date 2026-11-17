@@ -1,5 +1,63 @@
 # Progression Codex
 
+## Empâtage vivant — mission du 17 novembre 2026
+
+### Reprise et périmètre
+
+État local initial propre ; fetch du dépôt réel effectué. Main reste à
+`942e31b350a7c78e75a9e4f97881228d7dad4ba6`. La PR #105 (domaine vivant)
+est ouverte et non fusionnée ; #104 reste documentaire. PR ouvertes, branches
+historiques d'animation, commits d'ateliers et code actuel examinés : flammes,
+vapeur, fourquet et jauges existaient déjà, ils ne sont pas refaits.
+
+La mission suivante est découpée : seul l'empâtage reçoit les effets manquants.
+Branche `work/empatage-vivant` issue du commit `cd26fa7`, avec PR empilée sur
+`work/domaine-vivant` pour isoler ce diff. Aucune fusion ni modification de main.
+
+### Réalisation et critères
+
+- `jeu/src/ateliers.js` : grains et courants de maische liés à la chaleur réelle ;
+  remous pendant l'événement fourquet existant ; flux de vapeur visible uniquement
+  lorsque la vanne est ouverte pendant le geste. Le flux cesse à sa fermeture,
+  l'inertie thermique reste celle du contrôleur. Aucune bulle d'ébullition ajoutée.
+- Temps décoratif figé en mouvement réduit, sans figer le procédé ou ses jauges.
+  Aucun nouveau scheduler, contrôle, moteur, asset ou format de sauvegarde.
+- `dist/index.html`, `dist/artefact.html` reconstruits depuis les sources.
+- `jeu/tests/empatage-vivant.cjs` : renderer public testé avec états isolés, puis
+  commandes et bilan réels du jeu, sans moteur simulé. CI existante actualisée.
+- `docs/captures/empatage-vivant/` : quatre captures réelles, vidéo du canvas
+  pendant trois secondes et mesures des états vanne/chaleur/bilan.
+
+### Validation
+
+`npm run build:jeu`, six suites `npm run test:jeu` (dont chemins/ressources),
+syntaxe des JS modifiés et `git diff --check` réussis. Chromium système via
+`CHROMIUM_PATH=/usr/bin/chromium` pour le test mobile.
+
+Quatre scénarios 320/390 px DPR 2, animation normale et mouvement réduit :
+variation réelle des pixels de surface et du flux, stabilité sans chaleur ou
+vanne fermée, remous limité à l'événement fourquet, entrée du renderer non mutée.
+Maintien réel du bouton vapeur puis fermeture : ouverture et chaleur observées,
+vanne revenue sous 2 % avec chaleur résiduelle positive. Bilan réel puis passage
+à la filtration ; aucun dessin d'empâtage après sortie. Bouton d'au moins 44 px,
+absence de débordement horizontal et d'erreur JavaScript vérifiées.
+Capture 320 px inspectée : nouveaux éléments intégrés au vrai atelier existant.
+
+Limites : pas de téléphone physique ni Safari iOS. Le test de physique s'arrête
+au passage en filtration ; les autres ateliers ne sont pas modifiés ni rejoués
+intégralement dans cette mission. Les six suites métier restent réussies.
+Les captures utilisent une partie synthétique de test, pas celle du joueur.
+
+### Sauvegarde et reprise
+
+Commit descriptif, push sur la branche dédiée et PR vers `work/domaine-vivant`.
+La publication publique reste celle de main ; cette mission n'autorise aucune
+fusion. Résultats détaillés : `docs/captures/empatage-vivant/mesures.json`.
+
+Prochaine mission unique proposée, non commencée : animer uniquement le débit
+et le rinçage de la filtration selon leurs états réels. STOP.
+
+
 ## Domaine vivant — animations et contrôle des dynamiques (17 novembre 2026)
 
 Demande : laisser l'ancienne partie et rendre le jeu vivant, puis vérifier ses

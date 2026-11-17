@@ -88,12 +88,22 @@
   }
   function mash(c,s){
     sack(c,66,310);kettle(c,178,192,260,195,{level:clamp(s.volume/s.capacity),color:'#c7a262'});
+    const still=reduced(),t=still?0:s.t;
+    const stir=s.evt?.id==='fourquet'&&s.t>=s.evt.t0&&s.t-s.evt.t0<2.2;
+    // Courants de maische, pas des bulles d'ébullition : chaleur et fourquet réels.
+    if(s.volume>0){
+      const motion=stir?1:clamp(s.H/4)*.25,phase=t*motion*2;
+      for(let i=0;i<18;i++){const a=i*2.4+phase,r=28+(i%4)*18;ellipse(c,308+Math.cos(a)*r,196+Math.sin(a)*r*.09,2.8,1.1,i%3?'#ead09a':'#a8753e',null)}
+      if(stir){c.save();c.strokeStyle='#f5dca0';c.lineWidth=2;c.beginPath();c.ellipse(308,196,78,8,0,phase,phase+Math.PI*1.3);c.stroke();c.restore()}
+    }
     pipe(c,'M439 318H520V342');valve(c,475,318,s.v);
+    // Le flux cesse à la fermeture ; la chaleur stockée reste visible sur la cuve.
+    if(s.t>0&&s.v>.02){c.save();c.setLineDash([7,12]);c.lineDashOffset=t*42;c.globalAlpha=clamp(s.v)*.8;path(c,'M514 337V324H488M457 318H442',null,'#fff0c2',4);c.restore()}
     box(c,510,336,105,88,'#6d6047',12);flame(c,560,409,s.t,.35+s.p/5,78);pipe(c,'M598 336V241',true,10);steam(c,598,245,s.t,.35,25);
     pipe(c,'M525 316V222');gauge(c,525,204,s.p,2.6);text(c,`${s.p.toFixed(1)} bar`,525,170,18,ink,'center');
     steam(c,305,180,s.t,s.H/3.5,170);
     if(s.H>.05){c.save();c.globalAlpha=clamp(s.H/4)*.22;path(c,'M178 300Q307 325 438 300V365Q300 423 178 365Z','#d34b2d',null);c.restore()}
-    const stir=s.evt?.id==='fourquet'&&s.t-s.evt.t0<2.2;const dx=stir&&!reduced()?Math.sin(s.t*9)*30:0;
+    const dx=stir&&!still?Math.sin(t*9)*30:0;
     pipe(c,`M${293+dx} 122L${318+dx} 230`,false,8);path(c,`M${309+dx} 208l-10 23 18 19 15 -25Z`,'#a87444');
     if(s.evt?.id==='air'&&s.t-s.evt.t0<2.2)for(let i=0;i<3;i++)path(c,`M130 ${155+i*16}q70 -20 145 10`,null,'#b6dfeb',4);
     thermometer(c,608,137,s.T,s.target,s.target-4,s.target+4,s.prediction);
