@@ -1,0 +1,44 @@
+{
+  "date_utc": "2026-11-17T19:16:08.699086+00:00",
+  "demande": "Push tout en main",
+  "main_jeu": "790ad6aef4e784baddb4ad002a4e32c5f8d24680",
+  "source_testee": "f8494fe59f23aa6e7d8d2db4aeb86eec0baf243e",
+  "pr_integration": 117,
+  "pr_107": "fusionnée automatiquement car ses commits sont inclus",
+  "pr_108_116": "clôturées comme intégrées via #117, branches conservées",
+  "ci_finale": {
+    "validation": 44152992147,
+    "build_pages_pr": 44152992072,
+    "conclusion": "success"
+  },
+  "url": "https://maxoum-db.github.io/Ignem-custodimus/",
+  "http": 200,
+  "sha256_public_et_main": "13108396dc0249e6f5729c0cf13ff438ac1782439a5a8d745042011e1fb24984",
+  "public_mobile": {
+    "largeurs": [
+      320,
+      390
+    ],
+    "dpr": 2,
+    "mouvements": [
+      "normal",
+      "réduit"
+    ],
+    "scenarios_reussis": 4,
+    "erreurs_js": 0,
+    "debordements": 0,
+    "description": "Jeu réellement publié, partie de test isolée, fabrication puis deux coupes Ulysse ; jet dirigé vers les queues. Les comparaisons isolées vérifient les trois destinations."
+  },
+  "echec_intermediaire": {
+    "pr": 115,
+    "run": 44150229795,
+    "job": 134276190063,
+    "assertion": "__fil.u===0&&!__fil.rince",
+    "cause": "non établie ; fichier du test inchangé sur #116 et #117",
+    "controle": "CI #116 réussie, relance locale quatre cas réussie, CI finale #117 complète réussie"
+  },
+  "limites": [
+    "Téléphone physique non disponible",
+    "Safari iOS non disponible"
+  ]
+}
