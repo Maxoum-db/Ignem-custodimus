@@ -1,0 +1,179 @@
+{
+  "mission": "Menu principal plus vivant et doux",
+  "base_main": "3c4f0f5fd9c8d3624105db60872b709e796256f7",
+  "branche": "work/menu-vivant-doux",
+  "tests": [
+    {
+      "commande": "npm run build:jeu",
+      "resultat": "réussi"
+    },
+    {
+      "commande": "npm run test:jeu",
+      "resultat": "six suites réussies"
+    },
+    {
+      "commande": "node --check jeu/src/domaine.js et jeu/tests/domaine-vivant.cjs",
+      "resultat": "réussi"
+    },
+    {
+      "commande": "CHROMIUM_PATH=/usr/bin/chromium NODE_OPTIONS=--require=/tmp/ignem-validation/chromium.cjs CAPTURE_DIR=docs/captures/menu-vivant node jeu/tests/domaine-vivant.cjs",
+      "resultat": "8 contextes réussis, aucun pageerror ni dépassement horizontal, sauvegarde inchangée, animation réduite stable et arrêt à la sortie"
+    },
+    {
+      "commande": "NODE_OPTIONS=--require=/tmp/ignem-validation/chromium.cjs node jeu/tests/domaine.cjs",
+      "resultat": "six accès, niveaux/travaux, saisons/nuit, cibles 44 px, DPR2, repli image absente et absence de mutation réussis"
+    },
+    {
+      "commande": "git diff --check",
+      "resultat": "réussi"
+    }
+  ],
+  "mesures": [
+    {
+      "width": 320,
+      "night": false,
+      "draws_in_one_second": 22,
+      "regions": {
+        "poules": true,
+        "chat": true,
+        "cheval": true,
+        "pigeons": true,
+        "potager": true,
+        "ciel": true,
+        "fenetre": false
+      },
+      "promenades": {
+        "cheval": {
+          "min": 122.499996709152,
+          "max": 153.49999587636597,
+          "inside": true
+        },
+        "animal-poule-brune": {
+          "min": 76.99999793146698,
+          "max": 103.99999720613721,
+          "inside": true
+        },
+        "animal-chat-noir": {
+          "min": 70.4999981060834,
+          "max": 93.4999974882099,
+          "inside": true
+        }
+      }
+    },
+    {
+      "width": 320,
+      "night": true,
+      "draws_in_one_second": 23,
+      "regions": {
+        "poules": true,
+        "chat": true,
+        "cheval": true,
+        "pigeons": false,
+        "potager": true,
+        "ciel": true,
+        "fenetre": true
+      },
+      "promenades": {
+        "cheval": {
+          "min": 122.499996709152,
+          "max": 153.49999587636597,
+          "inside": true
+        },
+        "animal-poule-brune": {
+          "min": 76.99999793146698,
+          "max": 103.99999720613721,
+          "inside": true
+        },
+        "animal-chat-noir": {
+          "min": 70.4999981060834,
+          "max": 93.4999974882099,
+          "inside": true
+        }
+      }
+    },
+    {
+      "width": 390,
+      "night": false,
+      "draws_in_one_second": 22,
+      "regions": {
+        "poules": true,
+        "chat": true,
+        "cheval": true,
+        "pigeons": true,
+        "potager": true,
+        "ciel": true,
+        "fenetre": false
+      },
+      "promenades": {
+        "cheval": {
+          "min": 122.5,
+          "max": 153.5,
+          "inside": true
+        },
+        "animal-poule-brune": {
+          "min": 77,
+          "max": 104,
+          "inside": true
+        },
+        "animal-chat-noir": {
+          "min": 70.5,
+          "max": 93.5,
+          "inside": true
+        }
+      }
+    },
+    {
+      "width": 390,
+      "night": true,
+      "draws_in_one_second": 22,
+      "regions": {
+        "poules": true,
+        "chat": true,
+        "cheval": true,
+        "pigeons": false,
+        "potager": true,
+        "ciel": true,
+        "fenetre": true
+      },
+      "promenades": {
+        "cheval": {
+          "min": 122.5,
+          "max": 153.5,
+          "inside": true
+        },
+        "animal-poule-brune": {
+          "min": 77,
+          "max": 104,
+          "inside": true
+        },
+        "animal-chat-noir": {
+          "min": 70.5,
+          "max": 93.5,
+          "inside": true
+        }
+      }
+    }
+  ],
+  "html_sha256": "a9b6c541e8a6b9cbe07f76247c4c4fa5cdae0ac3c3073e518af5b5b1ac4837e7",
+  "preuve": "Captures du vrai jeu exécuté localement, état développé isolé et heure jour/nuit imposée dans le test ; aucune maquette. Vidéo du vrai canvas.",
+  "video": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "vp8",
+        "width": 708,
+        "height": 944,
+        "nb_read_frames": "97"
+      }
+    ],
+    "format": {
+      "duration": "4.950640"
+    }
+  },
+  "limites": [
+    "Téléphone physique et Safari non disponibles",
+    "Déploiement public non encore confirmé à ce stade ; vérification après fusion"
+  ],
+  "revision_visuelle": "Nuages réunis dans un seul voile dégradé pour éliminer les superpositions visibles ; huit contextes mobiles revérifiés après cette retouche."
+}
