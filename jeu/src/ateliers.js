@@ -139,7 +139,7 @@
     pipe(c,'M535 371H593V401');valve(c,571,371,s.heat);
     shadow(c,118,414,60);box(c,64,340,104,70,'#91633a',9);ellipse(c,116,339,52,16,'#c09662');
     for(let i=0;i<9;i++)hops(c,78+(i*23)%80,328+(i%3)*9,.6);
-    for(const h of s.chutes||[])hops(c,230+(h.x-60)*3.2,145+h.y*2.1,.65);
+    for(const h of s.chutes||[]){const age=h.age??h.y/96;if(age>=0&&age<34/96)hops(c,230+(h.x-60)*3.2,145+(reduced()?16:h.y)*2.1,.65);}
     pipe(c,'M552 201V145H433',true,8);gauge(c,552,173,clamp(s.heat)*100,120);
   }
   function ferment(c,s){

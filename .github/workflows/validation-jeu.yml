@@ -31,6 +31,7 @@ jobs:
       - run: node jeu/tests/empatage-vivant.cjs
       - run: node jeu/tests/filtration-vivante.cjs
       - run: node jeu/tests/animations-serie.cjs
+      - run: SCENARIOS_ANIMATIONS=jeu/tests/animations-suite.json CAPTURE_DIR=docs/captures/animations-suite node jeu/tests/animations-serie.cjs
       - run: node jeu/tests/carnet.cjs
       - run: node jeu/tests/recette-mobile.cjs
       - run: node jeu/tests/parcours.cjs
@@ -48,6 +49,7 @@ jobs:
             docs/captures/empatage-vivant/
             docs/captures/filtration-vivante/
             docs/captures/animations-serie/
+            docs/captures/animations-suite/
             docs/captures/serie/
             docs/captures/lot50/
             docs/captures/serie20/

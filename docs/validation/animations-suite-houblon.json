@@ -1,0 +1,5 @@
+{
+  "commande": "NODE_OPTIONS=--require=/tmp/ignem-validation/chromium.cjs node jeu/tests/lot50/houblon-preparation.test.cjs",
+  "code": 0,
+  "resultat": "Préparation 5 s, score 100 % aux repères, retard pénalisé, expert/débutant à 320/390 px ; aucune erreur JS/débordement."
+}

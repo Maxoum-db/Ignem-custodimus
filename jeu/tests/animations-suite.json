@@ -1,0 +1,44 @@
+{
+  "chute-temps": {
+    "renderer": "ebu",
+    "patch": {
+      "chutes": [
+        {
+          "x": 85,
+          "y": 8,
+          "age": 0.08
+        }
+      ]
+    },
+    "next": {
+      "chutes": [
+        {
+          "x": 85,
+          "y": 20,
+          "age": 0.2
+        }
+      ]
+    },
+    "region": [
+      282,
+      140,
+      56,
+      70
+    ],
+    "off": {
+      "chutes": []
+    },
+    "inactive": {
+      "chutes": [
+        {
+          "x": 85,
+          "y": 0,
+          "age": -1
+        }
+      ]
+    },
+    "event": "hop",
+    "captureMs": 180,
+    "flight": true
+  }
+}
