@@ -3075,6 +3075,9 @@ html,body { margin:0; }
   function text(c,txt,x,y,size=20,color=ink,align='left') {c.font=`600 ${size}px system-ui, sans-serif`;c.textAlign=align;c.fillStyle=color;c.fillText(txt,x,y)}
   function metal(c,x,w,steel=false) {const g=c.createLinearGradient(x,0,x+w,0);g.addColorStop(0,steel?'#718b91':'#9b4e2a');g.addColorStop(.17,steel?'#d8e4df':'#f9c27b');g.addColorStop(.38,steel?'#f2f6e9':'#eaa258');g.addColorStop(.74,steel?'#a2b6b4':'#c77a3c');g.addColorStop(1,steel?'#59777e':'#8d4728');return g}
   function pipe(c,d,steel=false,width=12) {path(c,d,null,ink,width+5);path(c,d,null,steel?'#a8bfbd':'#d5904b',width);path(c,d,null,steel?'#e3e9d9':'#f3bd72',3)}
+  function flow(c,d,t,amount,color){
+    if(amount<=.02)return;c.save();c.setLineDash([5,10]);c.lineDashOffset=reduced()?0:-t*38;c.globalAlpha=clamp(amount)*.85;path(c,d,null,color,3);c.restore();
+  }
   function valve(c,x,y,open,color='#ad4331') {
     c.save();c.translate(x,y);c.rotate(clamp(open)*Math.PI/2);
     ellipse(c,0,0,15,15,color);path(c,'M-12 0H12M0 -12V12',null,'#efcf94',3);ellipse(c,0,0,4,4,ink,null);c.restore();
@@ -3199,6 +3202,7 @@ html,body { margin:0; }
     for(let i=0;i<3;i++){const y=84-(reduced()?i*5:(s.t*15+i*7)%20);ellipse(c,275,y,2.5,2.5,'#f7f6df',null)}
     const jacket=s.e<-.05?'#72a9c0':s.e>.05?'#d78b69':'#a7bab1';for(const yy of [210,245,280]){path(c,`M108 ${yy}Q220 ${yy+29} 337 ${yy}`,null,ink,10);path(c,`M108 ${yy}Q220 ${yy+29} 337 ${yy}`,null,jacket,6)}
     pipe(c,'M110 242H64V330',true);valve(c,64,299,Math.max(0,-s.u),'#477f9a');pipe(c,'M334 263H366V333');valve(c,366,304,Math.max(0,s.u));
+    if(s.active)flow(c,'M106 242H64V277M64 321V329',s.t,Math.max(0,-s.u),'#d4f0f2');
     box(c,185,182,31,144,'#3d5550',12,ink,3);box(c,190,194,21,126,s.color,7,null);
     const activity=s.G*(s.t/18*7/1.8)*Math.exp(1-s.t/18*7/1.8);
     for(let i=0;i<Math.round(activity*10);i++){const y=314-(reduced()?i*10:(s.t*24+i*23)%111);ellipse(c,196+(i%3)*5,y,2,2,'#f5e1ac',null)}
@@ -5215,7 +5219,7 @@ html,body { margin:0; }
     const phase = (j) => j < 1 ? 'Latence' : j < 3.2 ? 'Tumultueuse' : j < 5 ? 'Atténuation' : 'Maturation';
     const ctx = $('#fer-canvas').getContext('2d');
     const dessin = () => {
-      if (window.AteliersJeu?.render(ctx, 'fer', { ...st, G, target: consigne, rest: repos, color: couleur(r0.ebc), dhDays: rec.dhJours, dhWindows: [[1.5,3.2,-2,1],[4.2,6,-1,2]].filter(x => rec.houblons.some(h => h.min === x[2])).map(x => [x[0],x[1],x[3]]) })) return;
+      if (window.AteliersJeu?.render(ctx, 'fer', { ...st, active: st.t > 0 && st.t < DUREE, G, target: consigne, rest: repos, color: couleur(r0.ebc), dhDays: rec.dhJours, dhWindows: [[1.5,3.2,-2,1],[4.2,6,-1,2]].filter(x => rec.houblons.some(h => h.min === x[2])).map(x => [x[0],x[1],x[3]]) })) return;
       const px = (x, yy, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(yy), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve cylindro-conique

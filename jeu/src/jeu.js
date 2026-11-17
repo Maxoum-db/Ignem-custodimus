@@ -1849,7 +1849,7 @@
     const phase = (j) => j < 1 ? 'Latence' : j < 3.2 ? 'Tumultueuse' : j < 5 ? 'Atténuation' : 'Maturation';
     const ctx = $('#fer-canvas').getContext('2d');
     const dessin = () => {
-      if (window.AteliersJeu?.render(ctx, 'fer', { ...st, G, target: consigne, rest: repos, color: couleur(r0.ebc), dhDays: rec.dhJours, dhWindows: [[1.5,3.2,-2,1],[4.2,6,-1,2]].filter(x => rec.houblons.some(h => h.min === x[2])).map(x => [x[0],x[1],x[3]]) })) return;
+      if (window.AteliersJeu?.render(ctx, 'fer', { ...st, active: st.t > 0 && st.t < DUREE, G, target: consigne, rest: repos, color: couleur(r0.ebc), dhDays: rec.dhJours, dhWindows: [[1.5,3.2,-2,1],[4.2,6,-1,2]].filter(x => rec.houblons.some(h => h.min === x[2])).map(x => [x[0],x[1],x[3]]) })) return;
       const px = (x, yy, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(yy), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve cylindro-conique

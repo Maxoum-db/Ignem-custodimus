@@ -1,0 +1,34 @@
+const {chromium}=require('playwright'),fs=require('node:fs'),http=require('node:http'),assert=require('node:assert/strict');
+const cases=JSON.parse(fs.readFileSync('jeu/tests/animations-serie.json')),out='docs/captures/animations-serie';
+const recipe={volume:1000,rendement:.75,malts:[{id:'malts_base_pilsner_soufflet_bio',kg:200}],houblons:[{id:'hops_aroma_saaz',g:250,min:60},{id:'hops_aroma_saaz',g:100,min:-1}],levure:'yeasts_ale_safale_us_05',eau:'causse',palier:66,ebullition:60,fermentation:{temp:18,reposDiacetyle:false}};
+(async()=>{const server=http.createServer((q,r)=>{r.setHeader('Content-Type','text/html; charset=utf-8');r.end(fs.readFileSync('dist/index.html'))});await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser,page;
+try{browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{})});fs.mkdirSync(out,{recursive:true});
+for(const [id,test]of Object.entries(cases)){if(process.env.CAS_ANIMATION&&process.env.CAS_ANIMATION!==id)continue;const metrics=[];
+ for(const width of [320,390])for(const reduce of [false,true]){
+  page=await browser.newPage({viewport:{width,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:reduce?'reduce':'no-preference'});page.setDefaultTimeout(10000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.addInitScript(r=>localStorage.setItem('ignem.v1',JSON.stringify({mode:'expert',gestesExpert:true,aide:false,son:false,tuto:-1,tutoD:-1,points:150,brassins:2,carnet:[],grimoire:[],ecole:{},succes:{},ecus:500,recette:r,vus:{domaine:true,brasserie:true,empatage:true,filtration:true,ebullition:true,fermentation:true,bouteille:true,distillerie:true,brouillis:true,repasse:true}})),recipe);
+  await page.goto(`http://127.0.0.1:${server.address().port}`);await page.evaluate(()=>DomaineIllustre.ready);
+  const result=await page.evaluate(test=>{
+   const c=document.createElement('canvas').getContext('2d');
+   const bases={fer:{t:2,active:true,u:0,e:0,G:1,T:18,target:18,rest:false,histo:[],dhWindows:[],color:'#bf923f'},bou:{t:2,fill:.4,cap:0,co2:2.5,color:'#bf923f'},ulysse:{t:2,active:true,heat:1,level:.7,flow:true,collected:.2,color:'#bf923f'}};
+   const s={...bases[test.renderer],...test.patch},before=JSON.stringify(s);
+   const hash=state=>{AteliersJeu.render(c,test.renderer,state);const scale=c.canvas.width/768,data=c.getImageData(...test.region.map(v=>Math.round(v*scale))).data;let h=2166136261;for(const n of data)h=Math.imul(h^n,16777619);return h>>>0};
+   const active=hash(s)!==hash({...s,t:2.37,...test.next}),off={...s,...test.off};
+   const stable=hash(off)===hash({...off,t:2.37});const inactive=!test.inactive||hash({...s,...test.inactive})===hash({...s,...test.inactive,t:2.37});
+   return {active,stable,inactive,unchanged:JSON.stringify(s)===before};
+  },test);assert.equal(result.active,!reduce,id+' : mouvement normal/réduit');assert.ok(result.stable,id+' : état arrêté stable');assert.ok(result.inactive,id+' : procédé inactif stable');assert.ok(result.unchanged,id+' : état non muté');
+  await page.locator('#lieux').getByRole('button',{name:'Brasserie',exact:true}).tap();await page.locator('#btn-lancer').tap();for(const stage of ['emp','fil','ebu'])await page.locator('#'+stage+'-passer').tap();
+  if(test.renderer!=='fer')await page.locator('#fer-passer').tap();
+  if(test.renderer==='ulysse'){
+   await page.locator('#bou-go').tap();await page.locator('#bou-suite').tap();await page.locator('.marque').tap();await page.evaluate(()=>DomaineIllustre.ready);await page.locator('#lieux').getByRole('button',{name:'Alambic Ulysse',exact:true}).tap();await page.locator('[data-biere]').first().tap();await page.locator('#btn-distiller').tap();
+  }
+  const time=new Date('2026-11-17T12:00:00Z');await page.clock.install({time});await page.clock.pauseAt(new Date(+time+1000));
+  const go=test.renderer==='fer'?'#fer-go':test.renderer==='bou'?'#bou-go':'#bro-go';await page.locator(go).tap();await page.clock.runFor(100);
+  if(test.control){const b=page.locator(test.control);await b.scrollIntoViewIfNeeded();const r=await b.boundingBox();assert.ok(r.height>=44);await page.mouse.move(r.x+r.width/2,r.y+r.height/2);await page.mouse.down()}
+  if(test.event==='dh'){await page.clock.fastForward(11000);await page.locator('#fer-houblon').tap()}
+  if(test.renderer==='ulysse'){await page.locator('#bro-buche').tap();if(test.event==='fractions'){await page.clock.fastForward(25000);await page.locator('#bro-suite').tap();await page.locator('#rep-go').tap();await page.locator('#rep-buche').tap();await page.clock.runFor(1500);await page.locator('#rep-couper').tap();await page.clock.runFor(1200);await page.locator('#rep-couper').tap()}}
+  await page.clock.runFor(test.captureMs||500);const canvas=page.locator(test.renderer==='fer'?'#fer-canvas':test.renderer==='bou'?'#bou-canvas':test.event==='fractions'?'#rep-canvas':'#bro-canvas');await canvas.scrollIntoViewIfNeeded();await page.screenshot({path:`${out}/${id}-${width}${reduce?'-reduit':''}.png`});if(test.control)await page.mouse.up();
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));assert.deepEqual(errors,[]);metrics.push({width,reduced:reduce,...result});console.log(`PASS ${id} ${width} ${reduce?'réduit':'animé'} — renderer et vrai écran`);await page.close();page=null;
+ }fs.writeFileSync(`${out}/${id}.json`,JSON.stringify(metrics,null,2)+'\n');
+}
+}catch(e){if(page)await page.screenshot({path:`${out}/erreur.png`}).catch(()=>{});throw e}finally{if(browser)await browser.close();await new Promise(r=>server.close(r))}})().catch(e=>{console.error(e);process.exitCode=1});
