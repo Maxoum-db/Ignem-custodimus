@@ -1641,6 +1641,7 @@
     finir = () => {
       if (st.fini) return; st.fini = true;
       arretGeste && arretGeste(); deb.disabled = bR.disabled = bS.disabled = true; st.rince = false;
+      dessin(); // Figer le renderer dans l'état fini, sans jet ni rinçage résiduels.
       const ext = 1 - Math.exp(-st.V / FIL.k), uMoy = st.n ? st.somU / st.n : 0.5, j = jus();
       let facteur = borne(ext / FIL.ideal, 0.6, 1.06) * (1 - 0.12 * Math.max(0, uMoy - 0.75)) * Math.pow(0.98, st.ratisses || 0);
       const tanins = j < 6.5 ? 2 : j < 8 ? 1 : 0;
@@ -1670,8 +1671,8 @@
     $('#bou-consigne').innerHTML = `${esc(s.nom || 'Ta bière')} : vise <b>${nf(cible, 1)} volumes de CO₂</b> ${iBtn(`Après la fermentation à ${nf(T, 1)} °C, il reste ${nf(resid, 2)} volumes de CO₂ dissous (plus la bière était froide, plus elle en garde). Le sucre ajouté refermente en bouteille : environ ${Moteur.G_SUCRE_PAR_VOLUME} g/L de saccharose par volume. Trop peu, la bière est plate ; trop, elle jaillit, et au-delà de 4 volumes les bouteilles peuvent éclater.`)}`;
     const ctx = $('#bou-canvas').getContext('2d');
     let anim = null;
-    const dessin = (rempli, eclats) => {
-      if (window.AteliersJeu?.render(ctx, 'bou', { fill: rempli ?? 1, broken: eclats, co2: +champ.value / Moteur.G_SUCRE_PAR_VOLUME + resid, color: couleur(res.ebc) })) return;
+    const dessin = (rempli, eclats, t = 0, cap = 1) => {
+      if (window.AteliersJeu?.render(ctx, 'bou', { t, cap, fill: rempli ?? 1, broken: eclats, co2: +champ.value / Moteur.G_SUCRE_PAR_VOLUME + resid, color: couleur(res.ebc) })) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 112, '#221912'); px(0, 96, 192, 16, '#3b2d22');
       for (let i = 0; i < 8; i++) {
@@ -1701,7 +1702,7 @@
       rec.co2 = co2; session.perteBouteilles = perte;
       const eclats = perte ? [1, 4, 6, 2].slice(0, Math.max(1, Math.round(perte * 10))) : null;
       const t0 = performance.now();
-      const pas = (ts) => { const p = Math.min(1, (ts - t0) / 1400); dessin(p < 0.6 ? p / 0.6 : 1, p >= 1 ? eclats : null); if (p < 1) anim = requestAnimationFrame(pas); else fin(); };
+      const pas = (ts) => { const p = Math.min(1, (ts - t0) / 1400); dessin(p < 0.6 ? p / 0.6 : 1, p >= 1 ? eclats : null, (ts - t0) / 1000, p < .6 ? 0 : (p - .6) / .4); if (p < 1) anim = requestAnimationFrame(pas); else fin(); };
       anim = requestAnimationFrame(pas);
       const fin = () => {
         if (eclats) { son('rate'); evtScene('bou', `Bang ! ${Math.round(perte * 100)} % des bouteilles ont éclaté`, 'alerte'); } else son('ok');
@@ -1848,7 +1849,7 @@
     const phase = (j) => j < 1 ? 'Latence' : j < 3.2 ? 'Tumultueuse' : j < 5 ? 'Atténuation' : 'Maturation';
     const ctx = $('#fer-canvas').getContext('2d');
     const dessin = () => {
-      if (window.AteliersJeu?.render(ctx, 'fer', { ...st, G, target: consigne, rest: repos, color: couleur(r0.ebc), dhDays: rec.dhJours, dhWindows: [[1.5,3.2,-2,1],[4.2,6,-1,2]].filter(x => rec.houblons.some(h => h.min === x[2])).map(x => [x[0],x[1],x[3]]) })) return;
+      if (window.AteliersJeu?.render(ctx, 'fer', { ...st, active: st.t > 0 && st.t < DUREE, G, target: consigne, rest: repos, color: couleur(r0.ebc), dhDays: rec.dhJours, dhWindows: [[1.5,3.2,-2,1],[4.2,6,-1,2]].filter(x => rec.houblons.some(h => h.min === x[2])).map(x => [x[0],x[1],x[3]]) })) return;
       const px = (x, yy, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(yy), w, h); };
       px(0, 0, 192, 128, '#221912');
       // Cuve cylindro-conique
@@ -2272,7 +2273,7 @@
     const btn = $('#bro-buche'); btn.disabled = true;
     const ctx = $('#bro-canvas').getContext('2d');
     const dessin = () => {
-      if(window.AteliersJeu?.render(ctx,'ulysse',{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,active:st.t>0,level:1-st.prog,collected:st.prog,flow:st.prog>0&&st.prog<1,foam:st.mousse,hot:st.chaud>.4||(st.coup!=null&&st.t-st.coup<2),overflow:st.debord!=null&&st.t-st.debord<2.2,color:couleur(sessionD.biere.ebc)})) return;
+      if(window.AteliersJeu?.render(ctx,'ulysse',{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,active:st.t>0&&st.t<DUREE,level:1-st.prog,collected:st.prog,flow:st.prog>0&&st.prog<1,foam:st.mousse,hot:st.chaud>.4||(st.coup!=null&&st.t-st.coup<2),overflow:st.debord!=null&&st.t-st.debord<2.2,color:couleur(sessionD.biere.ebc)})) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       px(24, 90, 70, 22, '#574332');

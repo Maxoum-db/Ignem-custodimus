@@ -81,7 +81,9 @@ Le JSON conserve l’échec et les réussites suivantes.
 Cet audit valide des parcours fonctionnels et les calculs couverts par les tests,
 pas l'équilibrage économique exhaustif ni toutes les recettes possibles.
 Android physique, Safari iOS, autonomie et longues sessions indisponibles ici.
-La nouvelle version nécessite la fusion de sa PR pour être publiée sur Pages.
+Le domaine et l’empâtage ont été fusionnés et publiés sur Pages au main
+`f1cdf0f` le 17 novembre 2026, à la demande explicite du joueur. La filtration
+animée suivante reste proposée dans sa propre PR ; voir le journal actualisé.
 
 Prochaine mission proposée, non commencée : animer uniquement l'atelier de
 brassage selon ses étapes réelles, avec vérification du mode mouvement réduit.

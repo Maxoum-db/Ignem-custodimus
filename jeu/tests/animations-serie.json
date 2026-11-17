@@ -1,0 +1,208 @@
+{
+  "glycol": {
+    "renderer": "fer",
+    "patch": {
+      "u": -0.7
+    },
+    "region": [
+      50,
+      232,
+      65,
+      110
+    ],
+    "off": {
+      "u": 0
+    },
+    "inactive": {
+      "active": false
+    },
+    "control": "#fer-glycol"
+  },
+  "vapeur": {
+    "renderer": "fer",
+    "patch": {
+      "u": 0.7
+    },
+    "region": [
+      338,
+      253,
+      44,
+      86
+    ],
+    "off": {
+      "u": 0
+    },
+    "inactive": {
+      "active": false
+    },
+    "control": "#fer-chauffe"
+  },
+  "enveloppe": {
+    "renderer": "fer",
+    "patch": {
+      "u": 0,
+      "e": 0.7
+    },
+    "region": [
+      112,
+      207,
+      67,
+      96
+    ],
+    "off": {
+      "e": 0
+    },
+    "inactive": {
+      "active": false
+    },
+    "control": "#fer-chauffe",
+    "captureMs": 1200,
+    "releaseMs": 1000
+  },
+  "barboteur": {
+    "renderer": "fer",
+    "patch": {},
+    "region": [
+      264,
+      59,
+      23,
+      31
+    ],
+    "off": {
+      "G": 0
+    },
+    "inactive": {
+      "active": false
+    },
+    "captureMs": 1200
+  },
+  "dryhop": {
+    "renderer": "fer",
+    "patch": {
+      "G": 0,
+      "chuteDH": 1.8
+    },
+    "region": [
+      170,
+      60,
+      100,
+      155
+    ],
+    "off": {
+      "chuteDH": null
+    },
+    "inactive": {
+      "chuteDH": 4
+    },
+    "event": "dh",
+    "captureMs": 300
+  },
+  "remplissage": {
+    "renderer": "bou",
+    "patch": {},
+    "region": [
+      216,
+      253,
+      17,
+      22
+    ],
+    "off": {
+      "fill": 1
+    },
+    "inactive": {
+      "fill": 0
+    },
+    "captureMs": 500
+  },
+  "capsules": {
+    "renderer": "bou",
+    "patch": {
+      "fill": 1,
+      "cap": 0.2
+    },
+    "next": {
+      "cap": 0.55
+    },
+    "region": [
+      638,
+      145,
+      103,
+      70
+    ],
+    "off": {
+      "cap": 1
+    },
+    "inactive": {
+      "cap": 0
+    },
+    "captureMs": 1000
+  },
+  "bulles": {
+    "renderer": "bou",
+    "patch": {
+      "fill": 0.6
+    },
+    "region": [
+      213,
+      333,
+      24,
+      20
+    ],
+    "off": {
+      "co2": 0
+    },
+    "inactive": {
+      "fill": 1
+    },
+    "captureMs": 500
+  },
+  "condenseur": {
+    "renderer": "ulysse",
+    "patch": {},
+    "region": [
+      487,
+      186,
+      10,
+      137
+    ],
+    "off": {
+      "flow": false
+    },
+    "inactive": {
+      "active": false
+    },
+    "captureMs": 1800
+  },
+  "fractions": {
+    "renderer": "ulysse",
+    "patch": {
+      "fractions": [
+        {
+          "V": 20
+        },
+        {
+          "V": 30
+        },
+        {
+          "V": 10
+        }
+      ],
+      "capacity": 500,
+      "phase": 2
+    },
+    "region": [
+      702,
+      380,
+      25,
+      30
+    ],
+    "off": {
+      "flow": false
+    },
+    "inactive": {
+      "active": false
+    },
+    "event": "fractions",
+    "captureMs": 500
+  }
+}

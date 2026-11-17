@@ -1,0 +1,167 @@
+{
+  "contexte": "État observé avant sauvegarde de l’étape 10 ; aucune fusion ; les validations locales sont consignées séparément.",
+  "prs": [
+    {
+      "step": 1,
+      "pr": 108,
+      "commit": "ff2c1c11e98c90e28aad7c015756af90521024f5",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44148290622,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44148290729,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "pr": 109,
+      "commit": "6e1ba07615b0439c5f610c722ffd9d47a7da61b7",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44148577246,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44148577202,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "pr": 110,
+      "commit": "2824404f5e50a932182609c8ced33d640a2a2308",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44148836220,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44148836279,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "pr": 111,
+      "commit": "c06992a59546c0286030c5acbe9ba42d551c456e",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44149044004,
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 44149042532,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "pr": 112,
+      "commit": "129d3bc96e9f75f65e8c6bc56aa6246fd9fc17eb",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44149455857,
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 44149455824,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "pr": 113,
+      "commit": "a29a95db5e981c93b32daef22ef6f0009f6d43eb",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44149738553,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44149738724,
+          "status": "in_progress",
+          "conclusion": null
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "pr": 114,
+      "commit": "7ed09474a165da0631013d460c11d93d1bd03ddc",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44149966521,
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 44149966508,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "step": 8,
+      "pr": 115,
+      "commit": "61c2ecfacae4d74d9a8187199d00f5e80a2b8b44",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44150229795,
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 44150229830,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "step": 9,
+      "pr": 116,
+      "commit": "ac4c439c9393d801231bb3280d24c1102aec4c14",
+      "merged": false,
+      "runs": [
+        {
+          "id": 44150627620,
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 44150627582,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}
