@@ -1,5 +1,52 @@
 # Progression Codex
 
+## Publication complète autorisée — mission terminée (17 novembre 2026)
+
+Demande explicite : « Push tout en main ». Mission unique : intégrer et vérifier
+la publication de la filtration et des dix animations ; aucune nouvelle refonte.
+Reprise : état local propre, fetch, main f1cdf0f et PR #107–117 inspectés réellement.
+Branche de traçabilité dédiée `work/publication-animations-main` ; aucun travail
+direct dans main.
+
+La PR finale #117 a été redirigée vers main pour intégrer le contenu complet en
+une seule fusion, après réussite de sa CI générale 44152992147 et de son build
+Pages 44152992072. Fusion confirmée : main
+`790ad6aef4e784baddb4ad002a4e32c5f8d24680`.
+Tous les commits de #107–117 sont inclus (ancêtre f8494fe vérifié). Les fichiers
+jeu/dist/data/scripts/configuration sont identiques au contenu final testé.
+#107 a été marquée fusionnée automatiquement ; #108–116 sont clôturées comme
+intégrées via #117, pas présentées comme fusionnées individuellement. Branches
+et historique conservés. GitHub refuse leur redirection à main avec 422 « no new
+commits », ce qui confirme l'absence de contenu restant à intégrer.
+
+Un échec intermédiaire #115 sur l'assertion de fermeture du robinet est conservé
+dans l'audit (run 44150229795, job 134276190063). Cause non établie ; ce fichier
+est identique sur #116, dont la CI est réussie. La revalidation locale des quatre
+cas, puis toute la CI finale #117, sont réussies. Aucun contrôle supprimé ou
+résultat d'échec rebaptisé en réussite.
+
+Validation actuelle : build et six suites métier/images rejoués avec succès,
+quatre cas de filtration rejoués, puis CI finale complète (dont quarante contextes
+d'animation et les parcours avec gestes/coupes réels) réussie. Jeu public HTTP 200,
+HTML identique à main, SHA-256
+`13108396dc0249e6f5729c0cf13ff438ac1782439a5a8d745042011e1fb24984`.
+Contrôle direct sur https://maxoum-db.github.io/Ignem-custodimus/ : 320/390 px
+DPR 2, normal/réduit, fabrication et deux coupes, vraie collecte des queues,
+aucune erreur JS ni débordement. Quatre captures réelles du site dans
+`docs/captures/publication-animations-main/`, partie de test isolée, pas une
+maquette ni une lecture de la partie personnelle. Téléphone physique et Safari
+indisponibles.
+
+Seuls le journal, le suivi de série/dynamiques et les preuves de publication sont
+modifiés dans cette branche, pour une PR documentaire à main. Aucun changement
+du jeu après la CI et les contrôles publics. L'identité des fichiers applicatifs
+est vérifiée avant sa fusion ; pas de nouvel effet, moteur, sauvegarde ou durée.
+Résultats : docs/validation/publication-animations.json ; audit antérieur distinct
+publicaton-animations-audit.json (nom réel : publication-animations-audit.json).
+
+Prochaine mission unique proposée : vérifier le ressenti des animations sur un
+téléphone réel. Aucune autre mission commencée. STOP après livraison.
+
 ## Série de dix autorisée — étape 10/10 : Jet dirigé vers la fraction réellement sélectionnée
 
 Branche `work/anim-10-fractions` ; base = étape précédente (étape 1 sur la PR #107 non fusionnée).

@@ -4,7 +4,8 @@ Exception de série explicitement autorisée par « Etape suivant, enchaine 10 �
 Audit réel : main f1cdf0f, PR #107 ouverte, état local propre. Flammes, vapeur,
 niveaux, bulles, chutes de houblon et premières illustrations existent déjà.
 Ne pas les refaire. Dix petites missions successives, une branche/commit/PR chacune,
-empilées sur #107 ; aucune fusion ou publication supplémentaire autorisée.
+empilées sur #107. La fusion, initialement non autorisée, a ensuite été explicitement
+autorisée par « Push tout en main » et réalisée via #117 au main `790ad6a`.
 
 | Étape | Objectif |
 | --- | --- |
@@ -100,12 +101,13 @@ une affirmation que les dix CI sont terminées.
 | 9 | [#116](https://github.com/Maxoum-db/Ignem-custodimus/pull/116) | `ac4c439` |
 
 L’étape 10 est sauvegardée sur `work/anim-10-fractions` par le commit contenant
-cette clôture, puis sa PR est ouverte sur `work/anim-09-condenseur`. Les dix PR
-restent séparées, aucune fusion dans main ou publication n’a été effectuée.
-Main reste la référence publique déjà publiée ; ces dix animations ne sont pas
-encore en ligne. Téléphone physique, Safari et équilibrage exhaustif non vérifiés.
+cette clôture, puis sa PR est ouverte sur `work/anim-09-condenseur`. Les commits des dix PR
+sont intégrés dans main via #117 (`790ad6a`). Les PR intermédiaires #108–116
+sont clôturées comme regroupées dans cette intégration ; leurs branches et
+commits restent disponibles. Les dix animations et la filtration sont désormais
+en ligne, vérifiées directement sur le site public à 320/390 px normal/réduit.
+Preuves : `docs/validation/publication-animations.json` et captures associées. Téléphone physique, Safari et équilibrage exhaustif non vérifiés.
 
-Prochaine mission unique proposée : revue de la pile pour intégration dans main,
-avec autorisation explicite de fusion. Aucune onzième animation commencée.
+Prochaine mission unique proposée : vérifier les animations sur un téléphone réel. Aucune onzième animation commencée.
 
 Étape 10 validée : Jet dirigé vers la fraction réellement sélectionnée — `work/anim-10-fractions` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `fractions*.png` et `fractions.json`.

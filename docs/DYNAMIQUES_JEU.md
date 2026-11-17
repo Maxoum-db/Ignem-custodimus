@@ -83,7 +83,9 @@ pas l'équilibrage économique exhaustif ni toutes les recettes possibles.
 Android physique, Safari iOS, autonomie et longues sessions indisponibles ici.
 Le domaine et l’empâtage ont été fusionnés et publiés sur Pages au main
 `f1cdf0f` le 17 novembre 2026, à la demande explicite du joueur. La filtration
-animée suivante reste proposée dans sa propre PR ; voir le journal actualisé.
+et les dix animations complémentaires ont ensuite été intégrées via #117 au main
+`790ad6a`, à la demande « Push tout en main », et leur publication réelle vérifiée.
+Voir `docs/validation/publication-animations.json` et le journal actualisé.
 
 Prochaine mission proposée, non commencée : animer uniquement l'atelier de
 brassage selon ses étapes réelles, avec vérification du mode mouvement réduit.
