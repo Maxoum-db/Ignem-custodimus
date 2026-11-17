@@ -3094,11 +3094,11 @@ html,body { margin:0; }
     ellipse(c,x,y,23,23,'#faf1d5');for(let i=0;i<7;i++){const a=(.8+i/6*1.4)*Math.PI;path(c,`M${x+Math.cos(a)*16} ${y+Math.sin(a)*16}L${x+Math.cos(a)*19} ${y+Math.sin(a)*19}`,null,ink,2)}
     const a=(.8+clamp(value/max)*1.4)*Math.PI;path(c,`M${x} ${y}l${Math.cos(a)*17} ${Math.sin(a)*17}`,null,'#a94631',3);ellipse(c,x,y,3,3,ink,null);
   }
-  function steam(c,x,y,t,heat,width=120) {
+  function steam(c,x,y,t,heat,width=120,color='#fff6dc') {
     if(heat<=.02)return;
     for(let i=0;i<5;i++){const p=reduced()?.35:(t*.25+i*.2)%1;c.save();c.globalAlpha=(1-p)*clamp(heat)*.55;
       const dx=x+(i-2)*width/5+Math.sin(p*5+i)*10,dy=y-p*85;
-      path(c,`M${dx} ${dy}q-18 -12 0 -26q16 -12 0 -28`,null,'#fff6dc',9+9*p);c.restore();}
+      path(c,`M${dx} ${dy}q-18 -12 0 -26q16 -12 0 -28`,null,color,9+9*p);c.restore();}
   }
   function flame(c,x,y,t,heat,w=100){
     box(c,x-w/2,y-22,w,36,'#30271e',12);
@@ -3168,6 +3168,8 @@ html,body { margin:0; }
     pipe(c,`M${293+dx} 122L${318+dx} 230`,false,8);path(c,`M${309+dx} 208l-10 23 18 19 15 -25Z`,'#a87444');
     const airAge=s.t-(s.evt?.t0??Infinity);
     if(s.evt?.id==='air'&&airAge>=0&&airAge<2.2)for(let i=0;i<3;i++)flow(c,`M130 ${155+i*16}q70 -20 145 10`,s.t,1,'#b6dfeb');
+    const wetAge=s.t-(s.evt?.t0??Infinity);
+    if(s.evt?.id==='humide'&&wetAge>=0&&wetAge<2.2)steam(c,505,395,s.t,.45,12,'#a9aca4');
     thermometer(c,608,137,s.T,s.target,s.target-4,s.target+4,s.prediction);
   }
   function filter(c,s){

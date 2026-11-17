@@ -109,5 +109,32 @@
     "random": 0,
     "expectedEvent": "air",
     "captureMs": 4500
+  },
+  "buche-humide": {
+    "renderer": "emp",
+    "patch": {
+      "evt": {
+        "id": "humide",
+        "t0": 1
+      }
+    },
+    "region": [
+      478,
+      324,
+      33,
+      65
+    ],
+    "off": {
+      "evt": null
+    },
+    "inactive": {
+      "evt": {
+        "id": "humide",
+        "t0": 5
+      }
+    },
+    "random": 0.55,
+    "expectedEvent": "humide",
+    "captureMs": 4500
   }
 }

@@ -41,3 +41,5 @@ Mission 11 validée : Chute du houblon indépendante de la cadence — `work/ani
 Mission 12 validée : Rotation et dérive des cônes en ébullition — `work/anim-12-cones` ; quatre scénarios et six suites réussis. Preuves : `cones*.png` et `cones.json`.
 
 Mission 13 validée : Courant d’air animé pendant le vrai aléa — `work/anim-13-courant-air` ; quatre scénarios et six suites réussis. Preuves : `courant-air*.png` et `courant-air.json`.
+
+Mission 14 validée : Fumée de bûche humide et vraie chute de pression — `work/anim-14-buche-humide` ; quatre scénarios et six suites réussis. Preuves : `buche-humide*.png` et `buche-humide.json`.
