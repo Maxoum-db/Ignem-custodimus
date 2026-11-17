@@ -1,0 +1,306 @@
+{
+  "chute-temps": {
+    "renderer": "ebu",
+    "patch": {
+      "chutes": [
+        {
+          "x": 85,
+          "y": 8,
+          "age": 0.08
+        }
+      ]
+    },
+    "next": {
+      "chutes": [
+        {
+          "x": 85,
+          "y": 20,
+          "age": 0.2
+        }
+      ]
+    },
+    "region": [
+      282,
+      140,
+      56,
+      70
+    ],
+    "off": {
+      "chutes": []
+    },
+    "inactive": {
+      "chutes": [
+        {
+          "x": 85,
+          "y": 0,
+          "age": -1
+        }
+      ]
+    },
+    "event": "hop",
+    "captureMs": 180,
+    "flight": true
+  },
+  "cones": {
+    "renderer": "ebu",
+    "patch": {
+      "chutes": [
+        {
+          "x": 85,
+          "y": 14,
+          "age": 0.14
+        }
+      ]
+    },
+    "next": {
+      "chutes": [
+        {
+          "x": 85,
+          "y": 14,
+          "age": 0.28
+        }
+      ]
+    },
+    "region": [
+      282,
+      140,
+      56,
+      70
+    ],
+    "off": {
+      "chutes": []
+    },
+    "inactive": {
+      "chutes": [
+        {
+          "x": 85,
+          "y": 0,
+          "age": -1
+        }
+      ]
+    },
+    "event": "hop",
+    "captureMs": 180,
+    "flight": true
+  },
+  "courant-air": {
+    "renderer": "emp",
+    "patch": {
+      "evt": {
+        "id": "air",
+        "t0": 1
+      }
+    },
+    "region": [
+      126,
+      140,
+      148,
+      66
+    ],
+    "off": {
+      "evt": null
+    },
+    "inactive": {
+      "evt": {
+        "id": "air",
+        "t0": 5
+      }
+    },
+    "random": 0,
+    "expectedEvent": "air",
+    "captureMs": 4500
+  },
+  "buche-humide": {
+    "renderer": "emp",
+    "patch": {
+      "evt": {
+        "id": "humide",
+        "t0": 1
+      }
+    },
+    "region": [
+      478,
+      324,
+      33,
+      65
+    ],
+    "off": {
+      "evt": null
+    },
+    "inactive": {
+      "evt": {
+        "id": "humide",
+        "t0": 5
+      }
+    },
+    "random": 0.55,
+    "expectedEvent": "humide",
+    "captureMs": 4500
+  },
+  "reprise-bruleur": {
+    "renderer": "emp",
+    "patch": {
+      "evt": {
+        "id": "bruleur",
+        "t0": 1
+      }
+    },
+    "region": [
+      530,
+      331,
+      56,
+      32
+    ],
+    "off": {
+      "evt": null
+    },
+    "inactive": {
+      "evt": {
+        "id": "bruleur",
+        "t0": 5
+      }
+    },
+    "random": 0.85,
+    "expectedEvent": "bruleur",
+    "captureMs": 4500
+  },
+  "tassement": {
+    "renderer": "fil",
+    "patch": {
+      "tasse": 0.1
+    },
+    "next": {
+      "tasse": 0.9
+    },
+    "region": [
+      165,
+      290,
+      230,
+      78
+    ],
+    "off": {
+      "tasse": 0
+    },
+    "inactive": {
+      "fini": true
+    },
+    "stateChange": true,
+    "filterDebit": 100,
+    "bed": "compact",
+    "captureMs": 1200
+  },
+  "lit-sec": {
+    "renderer": "fil",
+    "patch": {
+      "niveau": 0,
+      "sec": 0.3
+    },
+    "next": {
+      "sec": 1.5
+    },
+    "region": [
+      166,
+      294,
+      225,
+      32
+    ],
+    "off": {
+      "niveau": 3
+    },
+    "inactive": {
+      "sec": 0
+    },
+    "stateChange": true,
+    "filterDebit": 60,
+    "bed": "dry",
+    "captureMs": 3100
+  },
+  "buches": {
+    "renderer": "ulysse",
+    "patch": {
+      "heat": 0,
+      "flow": false,
+      "logs": 2,
+      "logMass": [
+        1,
+        1
+      ]
+    },
+    "next": {
+      "logMass": [
+        0.3,
+        0.6
+      ]
+    },
+    "region": [
+      149,
+      373,
+      67,
+      23
+    ],
+    "off": {
+      "logs": 0
+    },
+    "inactive": {
+      "logMass": [
+        0,
+        0
+      ]
+    },
+    "stateChange": true,
+    "captureMs": 3500,
+    "wood": true
+  },
+  "mousse": {
+    "renderer": "ulysse",
+    "patch": {
+      "heat": 0,
+      "flow": false,
+      "foam": 0.7,
+      "level": 0.7
+    },
+    "region": [
+      314,
+      229,
+      9,
+      38
+    ],
+    "off": {
+      "foam": 0
+    },
+    "inactive": {
+      "active": false
+    },
+    "event": "foam",
+    "random": 0,
+    "captureMs": 200
+  },
+  "debordement": {
+    "renderer": "ulysse",
+    "patch": {
+      "heat": 0,
+      "flow": false,
+      "foam": 0,
+      "overflow": true,
+      "overflowAge": 0.2
+    },
+    "next": {
+      "overflowAge": 0.6
+    },
+    "region": [
+      329,
+      160,
+      27,
+      106
+    ],
+    "off": {
+      "overflow": false
+    },
+    "inactive": {
+      "active": false
+    },
+    "event": "overflow",
+    "random": 0,
+    "captureMs": 200
+  }
+}

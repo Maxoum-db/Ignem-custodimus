@@ -1,0 +1,15 @@
+{
+  "capture": "canvas #bro-canvas du vrai dist/index.html, après incident produit par les commandes du foyer",
+  "partie": "fixture isolée, aucun état moteur modifié",
+  "mouvement": "normal, horloge reprise pendant MediaRecorder",
+  "largeur_viewport": 390,
+  "codec": "VP8",
+  "dimensions": [
+    708,
+    472
+  ],
+  "images_decodees": 12,
+  "duree_demandee_ms": 1500,
+  "html_sha256": "c494cfbbff5ca363c7e60da4e231fe0d1a21df3a82a578874e98b142df324445",
+  "fichier": "docs/captures/animations-suite/debordement-reel.webm"
+}

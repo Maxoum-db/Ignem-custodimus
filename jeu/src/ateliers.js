@@ -36,11 +36,11 @@
     ellipse(c,x,y,23,23,'#faf1d5');for(let i=0;i<7;i++){const a=(.8+i/6*1.4)*Math.PI;path(c,`M${x+Math.cos(a)*16} ${y+Math.sin(a)*16}L${x+Math.cos(a)*19} ${y+Math.sin(a)*19}`,null,ink,2)}
     const a=(.8+clamp(value/max)*1.4)*Math.PI;path(c,`M${x} ${y}l${Math.cos(a)*17} ${Math.sin(a)*17}`,null,'#a94631',3);ellipse(c,x,y,3,3,ink,null);
   }
-  function steam(c,x,y,t,heat,width=120) {
+  function steam(c,x,y,t,heat,width=120,color='#fff6dc') {
     if(heat<=.02)return;
     for(let i=0;i<5;i++){const p=reduced()?.35:(t*.25+i*.2)%1;c.save();c.globalAlpha=(1-p)*clamp(heat)*.55;
       const dx=x+(i-2)*width/5+Math.sin(p*5+i)*10,dy=y-p*85;
-      path(c,`M${dx} ${dy}q-18 -12 0 -26q16 -12 0 -28`,null,'#fff6dc',9+9*p);c.restore();}
+      path(c,`M${dx} ${dy}q-18 -12 0 -26q16 -12 0 -28`,null,color,9+9*p);c.restore();}
   }
   function flame(c,x,y,t,heat,w=100){
     box(c,x-w/2,y-22,w,36,'#30271e',12);
@@ -108,7 +108,11 @@
     if(s.H>.05){c.save();c.globalAlpha=clamp(s.H/4)*.22;path(c,'M178 300Q307 325 438 300V365Q300 423 178 365Z','#d34b2d',null);c.restore()}
     const dx=stir&&!still?Math.sin(t*9)*30:0;
     pipe(c,`M${293+dx} 122L${318+dx} 230`,false,8);path(c,`M${309+dx} 208l-10 23 18 19 15 -25Z`,'#a87444');
-    if(s.evt?.id==='air'&&s.t-s.evt.t0<2.2)for(let i=0;i<3;i++)path(c,`M130 ${155+i*16}q70 -20 145 10`,null,'#b6dfeb',4);
+    const airAge=s.t-(s.evt?.t0??Infinity);
+    if(s.evt?.id==='air'&&airAge>=0&&airAge<2.2)for(let i=0;i<3;i++)flow(c,`M130 ${155+i*16}q70 -20 145 10`,s.t,1,'#b6dfeb');
+    const eventAge=s.t-(s.evt?.t0??Infinity);
+    if(s.evt?.id==='humide'&&eventAge>=0&&eventAge<2.2)steam(c,505,395,s.t,.45,12,'#a9aca4');
+    if(s.evt?.id==='bruleur'&&eventAge>=0&&eventAge<2.2){c.save();for(let i=0;i<6;i++){const p=reduced()?i/6:(s.t*1.8+i/6)%1;c.globalAlpha=1-p*.7;ellipse(c,535+i*9+Math.sin(p*5+i)*3,396-p*65,1.1,2.2,'#e5aa58',null);}c.restore();}
     thermometer(c,608,137,s.T,s.target,s.target-4,s.target+4,s.prediction);
   }
   function filter(c,s){
@@ -116,9 +120,10 @@
     shadow(c,277,440,195);kettle(c,134,172,290,238,{steel:true,level:0,open:false});
     // Coupe : surface des drêches, faux fond perforé et eau au-dessus.
     box(c,157,192,243,191,'#4e3926',12);
-    const grainY=292;box(c,165,grainY,227,74,s.colmate?'#80603d':'#b38c52',4,null);
-    for(let i=0;i<74;i++)ellipse(c,170+(i*41)%217,grainY+6+(i*19)%60,3,1.8,i%3?'#d9b477':'#85613b',null);
-    const water=clamp(s.niveau,0,10)*8,wave=flow||rinse?Math.sin(t*4)*1.8:0;c.save();c.globalAlpha=.68;box(c,165,grainY-water,227,water,'#81bacc',2,null);c.restore();path(c,`M166 ${grainY-water}q55 ${-5+wave} 110 0t114 0`,null,'#d8e9d4',3);
+    const compact=clamp(s.tasse),grainY=292+compact*18,grainH=74-compact*18;box(c,165,grainY,227,grainH,s.colmate?'#80603d':'#b38c52',4,null);
+    for(let i=0;i<74;i++)ellipse(c,170+(i*41)%217,grainY+6+((i*19)%60)/60*(grainH-14),3,1.8,i%3?'#d9b477':'#85613b',null);
+    if(s.niveau<=0&&s.sec>0){c.save();c.globalAlpha=.45+.45*clamp(s.sec/2);for(let i=0;i<6;i++)path(c,`M${176+i*35} ${grainY+6+(i%2)*4}l9 3 -4 4 12 3`,null,'#68432c',1.2);c.restore();}
+    const water=clamp(s.niveau,0,10)*8,wave=flow||rinse?Math.sin(t*4)*1.8:0;c.save();c.globalAlpha=.68;box(c,165,grainY-water,227,water,'#81bacc',2,null);c.restore();if(water>0)path(c,`M166 ${grainY-water}q55 ${-5+wave} 110 0t114 0`,null,'#d8e9d4',3);
     // Impacts à la surface réelle : aucune eau ajoutée par le renderer.
     if(rinse&&water>0){c.save();for(let i=0;i<3;i++){const p=(t*2+i/3)%1;c.globalAlpha=(1-p)*.8;ellipse(c,191+i*84,grainY-water+1,3+p*5,.6+p*.7,null,'#eff8e8',1.4)}c.restore()}
     box(c,161,368,235,10,'#b9c9bd',2);for(let i=0;i<23;i++)ellipse(c,166+i*10,372,2,2,ink,null);
@@ -139,7 +144,7 @@
     pipe(c,'M535 371H593V401');valve(c,571,371,s.heat);
     shadow(c,118,414,60);box(c,64,340,104,70,'#91633a',9);ellipse(c,116,339,52,16,'#c09662');
     for(let i=0;i<9;i++)hops(c,78+(i*23)%80,328+(i%3)*9,.6);
-    for(const h of s.chutes||[])hops(c,230+(h.x-60)*3.2,145+h.y*2.1,.65);
+    for(const h of s.chutes||[]){const age=h.age??h.y/96;if(age>=0&&age<34/96){const drift=reduced()?0:Math.sin(age*11)*4;hops(c,230+(h.x-60)*3.2+drift,145+(reduced()?16:h.y)*2.1,.65,reduced()?0:Math.sin(age*17)*.5);}}
     pipe(c,'M552 201V145H433',true,8);gauge(c,552,173,clamp(s.heat)*100,120);
   }
   function ferment(c,s){
@@ -209,7 +214,7 @@
     box(c,93,400,550,24,'#6a6658',6);pipe(c,'M644 412H718',true,14);
     for(const x of [177,546]){ellipse(c,x,439,33,33,'#34342e');ellipse(c,x,439,18,18,'#929889');ellipse(c,x,439,6,6,ink,null)}
     box(c,129,330,222,69,'#655b49',12);flame(c,240,383,s.t,heat,145);
-    for(let i=0;i<Math.min(7,s.logs||0);i++){path(c,`M${158+i*22} 388l16 -9`,null,'#68452b',10);ellipse(c,158+i*22,388,5,5,'#ba8b56',ink,1)}
+    for(let i=0;i<Math.min(7,s.logs||0);i++){const m=clamp(s.logMass?.[i]??1);if(m<=.02)continue;path(c,`M${158+i*22} 388l${16*m} ${-9*m}`,null,m<.3?'#3b3026':'#68452b',4+6*m);ellipse(c,158+i*22,388,2+3*m,2+3*m,m<.3?'#50402d':'#ba8b56',ink,1)}
     kettle(c,138,181,208,125,{level,color:s.color||'#d5b679',open:false});
     path(c,'M138 181Q143 133 217 125L219 107H265L267 125Q340 133 346 181Z',metal(c,138,208));
     pipe(c,'M242 108V75Q242 61 258 61H386Q409 61 409 83V117',false,20);
@@ -221,8 +226,11 @@
     pipe(c,'M579 322V352H647V371');pipe(c,'M475 303H453V365',true,8);valve(c,453,336,active?1:0,'#438b9f');pipe(c,'M604 194H624V166',true,8);
     const gx=311,gy=220;
     if(s.foam>0)box(c,gx+3,gy+3+52*(1-level),9,Math.min(20,s.foam*20),'#f5e9ce',2,null);
+    if(active&&s.foam>0){const top=gy+3+52*(1-level),height=clamp(s.foam)*20;c.save();c.beginPath();c.rect(gx+3,top,9,height);c.clip();for(let i=0;i<4;i++){const p=reduced()?i/4:(s.t*1.8+i/4)%1;ellipse(c,gx+4.8+(i%2)*3.1,top+height-p*height,1,1,null,'#b9a77b',.7);}c.restore();}
     if(s.hot){path(c,'M145 309q96 28 194 0',null,'#e66c3d',9);steam(c,250,130,s.t,.65,70)}
-    if(s.overflow)path(c,'M249 108q44 -16 75 0',null,'#f8e9c8',10);
+    const spillAge=s.overflowAge??0,overflowing=s.overflow&&spillAge>=0&&spillAge<2.2;
+    if(overflowing)path(c,'M249 108q44 -16 75 0',null,'#f8e9c8',10);
+    if(active&&overflowing){c.save();for(let i=0;i<4;i++){const p=reduced()?i/4:(spillAge*.8+i/4)%1;c.globalAlpha=1-p*.7;ellipse(c,330+i*3+p*7,150+p*110,2.2,5,'#f8e9c8',null);}c.restore();}
     if(active&&s.flow){
       const receiver=s.fractions?628+clamp(s.phase,0,2)*45:647;
       if(s.fractions){path(c,`M647 371Q647 387 ${receiver} 397`,null,'#dce8cf',2);flow(c,`M647 371Q647 387 ${receiver} 397`,s.t,1,'#f9f4df');}

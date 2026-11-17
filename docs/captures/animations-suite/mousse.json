@@ -1,0 +1,86 @@
+[
+  {
+    "width": 320,
+    "reduced": false,
+    "stateChange": false,
+    "active": true,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true,
+    "targets": [],
+    "observationFin": {
+      "t": 2.688,
+      "mousse": 0.5704234271880926,
+      "debordement": false,
+      "masses": [
+        0.5796079727738948,
+        0.7378887608829938,
+        0.7378887608829938,
+        0.7378887608829938
+      ]
+    }
+  },
+  {
+    "width": 320,
+    "reduced": true,
+    "stateChange": false,
+    "active": false,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true,
+    "targets": [],
+    "observationFin": {
+      "t": 2.688,
+      "mousse": 0.5704234271880926,
+      "debordement": false,
+      "masses": [
+        0.5796079727738948,
+        0.7378887608829938,
+        0.7378887608829938,
+        0.7378887608829938
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "reduced": false,
+    "stateChange": false,
+    "active": true,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true,
+    "targets": [],
+    "observationFin": {
+      "t": 2.688,
+      "mousse": 0.5704234271880926,
+      "debordement": false,
+      "masses": [
+        0.5796079727738948,
+        0.7378887608829938,
+        0.7378887608829938,
+        0.7378887608829938
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "reduced": true,
+    "stateChange": false,
+    "active": false,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true,
+    "targets": [],
+    "observationFin": {
+      "t": 2.688,
+      "mousse": 0.5704234271880926,
+      "debordement": false,
+      "masses": [
+        0.5796079727738948,
+        0.7378887608829938,
+        0.7378887608829938,
+        0.7378887608829938
+      ]
+    }
+  }
+]

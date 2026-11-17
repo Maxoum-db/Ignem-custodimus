@@ -1722,7 +1722,7 @@
     const file = rec.houblons.map((h, i) => ({ i, nom: IDX.houblon.get(h.id).nom, g: h.g, prevu: Math.min(h.min, total) }))
       .filter((x) => x.prevu >= 0).sort((a, b) => b.prevu - a.prevu);
     const aCru = rec.houblons.filter((h) => h.min < 0);
-    const st = { t: 0, preparation: PREPARATION, k: 0, ecarts: [], chutes: [] };
+    const st = { t: 0, preparation: PREPARATION, k: 0, ecarts: [], chutes: [], visuel: 0 };
     $('#ebu-consigne').innerHTML = file.length ? `Ébullition de <b>${total} min</b>. Jette chaque houblon quand le curseur passe sur son repère.${aCru.length ? ` ${aCru.length} ajout${aCru.length > 1 ? 's' : ''} à cru attendront la fermentation.` : ''}` : 'Pas de houblon à jeter pendant l\'ébullition : regarde bouillir, puis continue.';
     $('#ebu-bilan').hidden = true; $('#ebu-pied').hidden = false;
     const btn = $('#ebu-jeter'); btn.disabled = true;
@@ -1741,7 +1741,10 @@
     const ctx = $('#ebu-canvas').getContext('2d');
     const teinteMout = couleur(Moteur.calculer(rec).ebc);
     const dessin = () => {
-      if (window.AteliersJeu) { st.chutes = st.chutes.filter(c => c.y < 34); st.chutes.forEach(c => { c.y += 1.6; }); if (window.AteliersJeu.render(ctx, 'ebu', { ...st, heat: st.t > 0 ? 1 : st.montee ? st.chauffe : 0, color: teinteMout, volume: rec.volume, capacity: rec.volume / .8 })) return; }
+      // Les vols décoratifs suivent le temps écoulé, pas le nombre de dessins.
+      st.chutes = st.chutes.filter(h => st.visuel - h.t0 < 34 / 96);
+      const chutes = st.chutes.map(h => ({ ...h, age: st.visuel - h.t0, y: (st.visuel - h.t0) * 96 }));
+      if (window.AteliersJeu?.render(ctx, 'ebu', { ...st, chutes, heat: st.t > 0 ? 1 : st.montee ? st.chauffe : 0, color: teinteMout, volume: rec.volume, capacity: rec.volume / .8 })) return;
       const px = (x, y, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 112, '#221912');
       px(40, 34, 112, 70, '#d27b3e'); px(40, 34, 6, 70, '#f0a060'); px(146, 34, 6, 70, '#8a4a22');
@@ -1749,7 +1752,7 @@
       if (st.t > 0) for (let i = 0; i < 14; i++) { const a = (st.t * 2 + i * 0.37) % 1; px(52 + ((i * 41) % 88), 38 - a * 6, 3, 2, 'rgba(255,240,200,.7)'); }
       else if (st.montee) for (let i = 0; i < Math.round(st.chauffe * 8); i++) { const a = (performance.now() / 600 + i * 0.37) % 1; px(52 + ((i * 53) % 88), 36 - a * 3, 2, 2, 'rgba(255,240,200,.5)'); }
       for (let i = 0; i < 5; i++) { const a = (st.t * 0.6 + i / 5) % 1; px(70 + i * 12 + Math.sin(a * 6) * 3, 26 - a * 26, 5, 3, `rgba(236,223,196,${0.5 - a * 0.5})`); }
-      st.chutes = st.chutes.filter((c) => c.y < 34); st.chutes.forEach((c) => { c.y += 1.6; px(c.x, c.y, 4, 5, '#9cc95e'); px(c.x + 1, c.y + 1, 2, 2, '#5c8a33'); });
+      chutes.forEach(c => { const y = reduit ? 16 : c.y; px(c.x, y, 4, 5, '#9cc95e'); px(c.x + 1, y + 1, 2, 2, '#5c8a33'); });
       px(60, 104, 72, 6, '#e3593d'); for (let i = 0; i < 9; i++) px(62 + i * 8, 100 - (Math.sin(st.t * 12 + i) + 1) * 2, 4, 4, '#f3b04a');
     };
     const minutes = () => total * (1 - st.t / DUREE);
@@ -1758,7 +1761,7 @@
       const reel = Math.max(0, Math.round(minutes() * 2) / 2);
       session.gestes.houblonsMin[h.i] = reel;
       st.ecarts.push(Math.abs(reel - h.prevu));
-      st.k++; st.chutes.push({ x: 60 + Math.random() * 70, y: 0 }); son('bulle'); etiquette(); rendreFrise();
+      st.k++; st.chutes.push({ x: 60 + Math.random() * 70, y: 0, t0: st.visuel }); son('bulle'); etiquette(); rendreFrise();
       $('#ebu-infos').innerHTML = infoBloc(Math.round(minutes()) + "'", 'restantes') + infoBloc(nf(reel, 1) + "'", `${esc(h.nom)} jeté`) + infoBloc((reel - h.prevu >= 0 ? '+' : '') + nf(reel - h.prevu, 1), 'écart (min)');
       if (st.k >= file.length) btn.disabled = true;
     };
@@ -1771,6 +1774,7 @@
       $('#ebu-go').disabled = true; btn.disabled = true; st.montee = true;
       evtScene('ebu', 'Montée à ébullition…', 'chaud');
       arretGeste = bouclePendant(DUREE + PREPARATION, (dt, t) => {
+        st.visuel = t;
         st.preparation = Math.max(0, PREPARATION - t);
         st.chauffe = Math.min(1, t / PREPARATION);
         const compte = Math.ceil(st.preparation);
@@ -2273,7 +2277,7 @@
     const btn = $('#bro-buche'); btn.disabled = true;
     const ctx = $('#bro-canvas').getContext('2d');
     const dessin = () => {
-      if(window.AteliersJeu?.render(ctx,'ulysse',{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,active:st.t>0&&st.t<DUREE,level:1-st.prog,collected:st.prog,flow:st.prog>0&&st.prog<1,foam:st.mousse,hot:st.chaud>.4||(st.coup!=null&&st.t-st.coup<2),overflow:st.debord!=null&&st.t-st.debord<2.2,color:couleur(sessionD.biere.ebc)})) return;
+      if(window.AteliersJeu?.render(ctx,'ulysse',{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,logMass:st.feu.buches.map(b=>b.m),active:st.t>0&&st.t<DUREE,level:1-st.prog,collected:st.prog,flow:st.prog>0&&st.prog<1,foam:st.mousse,hot:st.chaud>.4||(st.coup!=null&&st.t-st.coup<2),overflow:st.debord!=null&&st.t>=st.debord&&st.t-st.debord<2.2,overflowAge:st.debord==null?null:st.t-st.debord,color:couleur(sessionD.biere.ebc)})) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       px(24, 90, 70, 22, '#574332');
@@ -2382,7 +2386,7 @@
     const ctx = $('#rep-canvas').getContext('2d');
     const COUL = { tetes: '#e3593d', esters: '#f3b04a', terpenes: '#9cc95e', cereale: '#d9c7a0', queues: '#8f7ad0', furfural: '#b9865a' };
     const dessin = () => {
-      if(window.AteliersJeu?.render(ctx,expertVue?'courbes':'ulysse',expertVue?{curve:r.courbe,cuts:r.coupes}:{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,active:st.t>0,level:r.ch.V/charge.V,flow:!!r.dernier&&!r.fini,degree:r.dernier?.degre,fractions:r.fractions,phase:r.phase,capacity:charge.V})) return;
+      if(window.AteliersJeu?.render(ctx,expertVue?'courbes':'ulysse',expertVue?{curve:r.courbe,cuts:r.coupes}:{t:st.t,heat:st.feu.flamme,logs:st.feu.buches.length,logMass:st.feu.buches.map(b=>b.m),active:st.t>0,level:r.ch.V/charge.V,flow:!!r.dernier&&!r.fini,degree:r.dernier?.degre,fractions:r.fractions,phase:r.phase,capacity:charge.V})) return;
       const px = (x, y, w, h, k) => { ctx.fillStyle = k; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
       px(0, 0, 192, 120, '#221912');
       if (expertVue) {
