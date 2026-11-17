@@ -1,0 +1,153 @@
+{
+  "date_utc": "2026-11-17T21:08:03.193159+00:00",
+  "source": "b95f206ecb74de05b4e22f59e3e76f3d2210c5f1",
+  "main_integration": "6c4c37f7b7b69d4413244c817f359ca0d5258e2c",
+  "pr": 130,
+  "ci": [
+    {
+      "id": 44173137204,
+      "conclusion": "success"
+    },
+    {
+      "id": 44173137181,
+      "conclusion": "success"
+    }
+  ],
+  "url": "https://maxoum-db.github.io/Ignem-custodimus/",
+  "http": 200,
+  "html_sha256": "a9b6c541e8a6b9cbe07f76247c4c4fa5cdae0ac3c3073e518af5b5b1ac4837e7",
+  "html_identique_au_build": true,
+  "commande": "CHROMIUM_PATH=/usr/bin/chromium CAPTURE_DIR=/tmp/menu-vivant-public node /tmp/menu-vivant-public.cjs",
+  "harnais": "Copie de domaine-vivant.cjs utilisant Playwright installé et page.goto vers la vraie URL publique. Aucun moteur simulé. Sauvegarde de test développée isolée, heure jour/nuit imposée dans le test.",
+  "contextes_reussis": 8,
+  "controle": "320/390 px DPR2, jour/nuit, normal/réduit ; état et sauvegarde inchangés, animation visible ou figée selon préférence, cadence plafonnée, arrêt en quittant le menu, aucune erreur JS ni dépassement horizontal.",
+  "mesures_contextes_animes": [
+    {
+      "width": 320,
+      "night": false,
+      "draws_in_one_second": 22,
+      "regions": {
+        "poules": true,
+        "chat": true,
+        "cheval": true,
+        "pigeons": true,
+        "potager": true,
+        "ciel": true,
+        "fenetre": false
+      },
+      "promenades": {
+        "cheval": {
+          "min": 122.499996709152,
+          "max": 153.49999587636597,
+          "inside": true
+        },
+        "animal-poule-brune": {
+          "min": 76.99999793146698,
+          "max": 103.99999720613721,
+          "inside": true
+        },
+        "animal-chat-noir": {
+          "min": 70.4999981060834,
+          "max": 93.4999974882099,
+          "inside": true
+        }
+      }
+    },
+    {
+      "width": 320,
+      "night": true,
+      "draws_in_one_second": 22,
+      "regions": {
+        "poules": true,
+        "chat": true,
+        "cheval": true,
+        "pigeons": false,
+        "potager": true,
+        "ciel": true,
+        "fenetre": true
+      },
+      "promenades": {
+        "cheval": {
+          "min": 122.499996709152,
+          "max": 153.49999587636597,
+          "inside": true
+        },
+        "animal-poule-brune": {
+          "min": 76.99999793146698,
+          "max": 103.99999720613721,
+          "inside": true
+        },
+        "animal-chat-noir": {
+          "min": 70.4999981060834,
+          "max": 93.4999974882099,
+          "inside": true
+        }
+      }
+    },
+    {
+      "width": 390,
+      "night": false,
+      "draws_in_one_second": 23,
+      "regions": {
+        "poules": true,
+        "chat": true,
+        "cheval": true,
+        "pigeons": true,
+        "potager": true,
+        "ciel": true,
+        "fenetre": false
+      },
+      "promenades": {
+        "cheval": {
+          "min": 122.5,
+          "max": 153.5,
+          "inside": true
+        },
+        "animal-poule-brune": {
+          "min": 77,
+          "max": 104,
+          "inside": true
+        },
+        "animal-chat-noir": {
+          "min": 70.5,
+          "max": 93.5,
+          "inside": true
+        }
+      }
+    },
+    {
+      "width": 390,
+      "night": true,
+      "draws_in_one_second": 23,
+      "regions": {
+        "poules": true,
+        "chat": true,
+        "cheval": true,
+        "pigeons": false,
+        "potager": true,
+        "ciel": true,
+        "fenetre": true
+      },
+      "promenades": {
+        "cheval": {
+          "min": 122.5,
+          "max": 153.5,
+          "inside": true
+        },
+        "animal-poule-brune": {
+          "min": 77,
+          "max": 104,
+          "inside": true
+        },
+        "animal-chat-noir": {
+          "min": 70.5,
+          "max": 93.5,
+          "inside": true
+        }
+      }
+    }
+  ],
+  "limites": [
+    "Téléphone physique et Safari non vérifiés"
+  ]
+}
