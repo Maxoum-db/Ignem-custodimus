@@ -45,3 +45,5 @@ Mission 13 validée : Courant d’air animé pendant le vrai aléa — `work/ani
 Mission 14 validée : Fumée de bûche humide et vraie chute de pression — `work/anim-14-buche-humide` ; quatre scénarios et six suites réussis. Preuves : `buche-humide*.png` et `buche-humide.json`.
 
 Mission 15 validée : Étincelles lors de la vraie reprise du brûleur — `work/anim-15-reprise-bruleur` ; quatre scénarios et six suites réussis. Preuves : `reprise-bruleur*.png` et `reprise-bruleur.json`.
+
+Mission 16 validée : Lit de drêches compacté selon tassement réel — `work/anim-16-tassement` ; quatre scénarios et six suites réussis. Preuves : `tassement*.png` et `tassement.json`.

@@ -163,5 +163,30 @@
     "random": 0.85,
     "expectedEvent": "bruleur",
     "captureMs": 4500
+  },
+  "tassement": {
+    "renderer": "fil",
+    "patch": {
+      "tasse": 0.1
+    },
+    "next": {
+      "tasse": 0.9
+    },
+    "region": [
+      165,
+      290,
+      230,
+      78
+    ],
+    "off": {
+      "tasse": 0
+    },
+    "inactive": {
+      "fini": true
+    },
+    "stateChange": true,
+    "filterDebit": 100,
+    "bed": "compact",
+    "captureMs": 1200
   }
 }

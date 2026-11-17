@@ -3178,8 +3178,8 @@ html,body { margin:0; }
     shadow(c,277,440,195);kettle(c,134,172,290,238,{steel:true,level:0,open:false});
     // Coupe : surface des drêches, faux fond perforé et eau au-dessus.
     box(c,157,192,243,191,'#4e3926',12);
-    const grainY=292;box(c,165,grainY,227,74,s.colmate?'#80603d':'#b38c52',4,null);
-    for(let i=0;i<74;i++)ellipse(c,170+(i*41)%217,grainY+6+(i*19)%60,3,1.8,i%3?'#d9b477':'#85613b',null);
+    const compact=clamp(s.tasse),grainY=292+compact*18,grainH=74-compact*18;box(c,165,grainY,227,grainH,s.colmate?'#80603d':'#b38c52',4,null);
+    for(let i=0;i<74;i++)ellipse(c,170+(i*41)%217,grainY+6+((i*19)%60)/60*(grainH-14),3,1.8,i%3?'#d9b477':'#85613b',null);
     const water=clamp(s.niveau,0,10)*8,wave=flow||rinse?Math.sin(t*4)*1.8:0;c.save();c.globalAlpha=.68;box(c,165,grainY-water,227,water,'#81bacc',2,null);c.restore();path(c,`M166 ${grainY-water}q55 ${-5+wave} 110 0t114 0`,null,'#d8e9d4',3);
     // Impacts à la surface réelle : aucune eau ajoutée par le renderer.
     if(rinse&&water>0){c.save();for(let i=0;i<3;i++){const p=(t*2+i/3)%1;c.globalAlpha=(1-p)*.8;ellipse(c,191+i*84,grainY-water+1,3+p*5,.6+p*.7,null,'#eff8e8',1.4)}c.restore()}
