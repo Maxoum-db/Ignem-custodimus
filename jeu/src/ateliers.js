@@ -177,7 +177,7 @@
     shadow(c,383,446,310);path(c,'M39 344L654 323L718 367L93 391Z','#bd915e');path(c,'M93 391L718 367V395L93 420Z','#8c5e38');pipe(c,'M110 418V480M677 397V461',false,17);
     box(c,62,180,100,155,metal(c,62,100,true),18);ellipse(c,112,181,50,16,metal(c,62,100,true));pipe(c,'M160 284H184V235H592V263',true,8);valve(c,182,282, s.fill<1?1:0);
     // Capsuleuse à levier.
-    box(c,634,212,16,134,'#496b66',5);box(c,607,211,69,16,'#a74e37',5);path(c,'M643 213L690 155',null,ink,10);path(c,'M643 213L690 155',null,'#b95e40',6);box(c,600,340,83,12,'#496b66',6);
+    box(c,634,212,16,134,'#496b66',5);box(c,607,211,69,16,'#a74e37',5);const cap=clamp(s.cap??1),angle=reduced()?0:Math.sin(cap*Math.PI)*.85,lx=643+47*Math.cos(angle)+58*Math.sin(angle),ly=213+47*Math.sin(angle)-58*Math.cos(angle);path(c,`M643 213L${lx} ${ly}`,null,ink,10);path(c,`M643 213L${lx} ${ly}`,null,'#b95e40',6);box(c,600,340,83,12,'#496b66',6);
     for(let i=0;i<8;i++){
       const x=207+i*48,y=360-i*2;
       if(s.broken?.includes(i)){for(let k=0;k<7;k++)path(c,`M${x+(k*7)%32} ${y-5-(k*11)%20}l9 3 -6 7Z`,'#50663d',ink,1);ellipse(c,x+16,y,20,5,s.color,null);continue}
@@ -186,7 +186,7 @@
       path(c,outline,'#4e6946');c.save();c.clip(new Path2D(outline));box(c,x+4,y-4-92*fill,28,92*fill,s.color,4,null);if(fill>0&&fill<1)flow(c,`M${x+17} ${y-105}V${y-4-92*fill}`,s.t||0,1,s.color);path(c,`M${x+8} ${y-72}v59`,null,'#d9e6bd66',3);c.restore();
       box(c,x+8,y-58,20,28,'#f3dfaa',3,ink,1);path(c,`M${x+13} ${y-38}q-6 -8 4 -13q11 7 4 13Z`,'#b06a36',null);
       if(fill>0)for(let k=0;k<Math.min(6,s.co2*1.4);k++)ellipse(c,x+10+(k*3)%14,y-8-(k*13)%Math.max(1,88*fill),1.5,1.5,'#f4ead3',null);
-      if(fill>=1)box(c,x+9,y-116,16,6,'#cba36a',2,ink,2);
+      if(fill>=1&&cap>0&&(!reduced()||cap>=1))box(c,x+9,y-127+11*cap,16,6,'#cba36a',2,ink,2);
     }
     text(c,`${Math.round(clamp(s.fill)*100)} %`,112,373,19,ink,'center');
   }

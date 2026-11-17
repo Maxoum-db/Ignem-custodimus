@@ -41,3 +41,5 @@ Safari indisponibles. CI des nouvelles PR à distinguer des résultats locaux.
 Étape 5 validée : Dry hop borné et cônes en rotation — `work/anim-05-dryhop` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `dryhop*.png` et `dryhop.json`.
 
 Étape 6 validée : Jets pendant remplissage réel des bouteilles — `work/anim-06-remplissage` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `remplissage*.png` et `remplissage.json`.
+
+Étape 7 validée : Levier et capsules synchronisés avec capsulage — `work/anim-07-capsules` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `capsules*.png` et `capsules.json`.

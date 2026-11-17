@@ -113,5 +113,28 @@
       "fill": 0
     },
     "captureMs": 500
+  },
+  "capsules": {
+    "renderer": "bou",
+    "patch": {
+      "fill": 1,
+      "cap": 0.2
+    },
+    "next": {
+      "cap": 0.55
+    },
+    "region": [
+      638,
+      145,
+      103,
+      70
+    ],
+    "off": {
+      "cap": 1
+    },
+    "inactive": {
+      "cap": 0
+    },
+    "captureMs": 1000
   }
 }
