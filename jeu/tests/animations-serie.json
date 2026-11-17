@@ -75,5 +75,26 @@
       "active": false
     },
     "captureMs": 1200
+  },
+  "dryhop": {
+    "renderer": "fer",
+    "patch": {
+      "G": 0,
+      "chuteDH": 1.8
+    },
+    "region": [
+      170,
+      60,
+      100,
+      155
+    ],
+    "off": {
+      "chuteDH": null
+    },
+    "inactive": {
+      "chuteDH": 4
+    },
+    "event": "dh",
+    "captureMs": 300
   }
 }

@@ -3100,7 +3100,7 @@ html,body { margin:0; }
     path(c,`M${x-w*.4} ${y+6}h${w*.8}`,null,'#8f603d',8);
   }
   function sack(c,x,y){path(c,`M${x+10} ${y}q20 8 44 0l-6 20q25 60 4 74q-28 12 -60 0q-15 -17 11 -75Z`,'#e3c687');path(c,`M${x+10} ${y+19}q20 9 39 0`,null,'#84633d',5);path(c,`M${x+10} ${y+75}q15 -10 28 0M${x+24} ${y+80}v-36m0 20l-8 -7m8 -3l8 -7`,null,'#ad7d48',3)}
-  function hops(c,x,y,scale=1){c.save();c.translate(x,y);c.scale(scale,scale);path(c,'M0 18Q-21 4 -12 -10Q0 -24 12 -10Q21 4 0 18Z','#9cc94a');path(c,'M0 -14V12M0 -3L-9 -8M0 6L9 0',null,'#547337',2);c.restore()}
+  function hops(c,x,y,scale=1,angle=0){c.save();c.translate(x,y);c.rotate(angle);c.scale(scale,scale);path(c,'M0 18Q-21 4 -12 -10Q0 -24 12 -10Q21 4 0 18Z','#9cc94a');path(c,'M0 -14V12M0 -3L-9 -8M0 6L9 0',null,'#547337',2);c.restore()}
   function room(c,kind){
     let bg=backgrounds.get(kind);if(bg){c.drawImage(bg,0,0,W,H);return}
     bg=document.createElement('canvas');bg.width=W;bg.height=H;const b=bg.getContext('2d');
@@ -3211,7 +3211,8 @@ html,body { margin:0; }
     pipe(c,'M223 414V438H260',true,9);valve(c,245,438,0);
     // Éprouvette et robinet d'échantillonnage, sans niveau inventé.
     pipe(c,'M310 333H345V353',true,8);box(c,335,369,28,64,'#c6d4c5',6,ink,2);path(c,'M340 425V376',null,'#f3f2df',2);
-    if(s.chuteDH!=null&&s.t-s.chuteDH<1.6)for(let i=0;i<6;i++)hops(c,185+i*13,116+(s.t-s.chuteDH)*52+(i%3)*5,.55);
+    const dhAge=s.t-s.chuteDH;
+    if(s.active&&s.chuteDH!=null&&dhAge>=0&&dhAge<1.6){const age=reduced()?.5:dhAge;for(let i=0;i<6;i++)hops(c,185+i*13,116+age*52+(i%3)*5,.55,reduced()?0:Math.sin(age*8+i)*.35);}
     // Courbe mesurée, bande cible et fenêtres DH : tous les repères restent en code.
     const gx=432,gy=157,gw=267,gh=258,min=Math.floor(Math.min(s.target-4,s.T-1,...s.histo.map(p=>p.T-1))),max=Math.ceil(Math.max(s.target+(s.rest?8:4),s.T+1,...s.histo.map(p=>p.T+1)));
     const Y=t=>gy+gh-(t-min)/(max-min)*gh;
