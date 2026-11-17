@@ -33,3 +33,5 @@ Safari indisponibles. CI des nouvelles PR à distinguer des résultats locaux.
 Étape 1 validée : Flux glycol lié à la commande réelle — `work/anim-01-glycol` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `glycol*.png` et `glycol.json`.
 
 Étape 2 validée : Flux vapeur lié à la commande réelle — `work/anim-02-vapeur` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `vapeur*.png` et `vapeur.json`.
+
+Étape 3 validée : Enveloppe animée selon inertie thermique réelle — `work/anim-03-enveloppe` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `enveloppe*.png` et `enveloppe.json`.

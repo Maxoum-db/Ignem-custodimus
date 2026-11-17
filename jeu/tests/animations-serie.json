@@ -36,5 +36,27 @@
       "active": false
     },
     "control": "#fer-chauffe"
+  },
+  "enveloppe": {
+    "renderer": "fer",
+    "patch": {
+      "u": 0,
+      "e": 0.7
+    },
+    "region": [
+      112,
+      207,
+      67,
+      96
+    ],
+    "off": {
+      "e": 0
+    },
+    "inactive": {
+      "active": false
+    },
+    "control": "#fer-chauffe",
+    "captureMs": 1200,
+    "releaseMs": 1000
   }
 }
