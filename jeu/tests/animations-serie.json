@@ -136,5 +136,24 @@
       "cap": 0
     },
     "captureMs": 1000
+  },
+  "bulles": {
+    "renderer": "bou",
+    "patch": {
+      "fill": 0.6
+    },
+    "region": [
+      213,
+      333,
+      24,
+      20
+    ],
+    "off": {
+      "co2": 0
+    },
+    "inactive": {
+      "fill": 1
+    },
+    "captureMs": 500
   }
 }
