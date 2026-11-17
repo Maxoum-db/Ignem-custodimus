@@ -41,8 +41,8 @@ Seuls le journal, le suivi de série/dynamiques et les preuves de publication so
 modifiés dans cette branche, pour une PR documentaire à main. Aucun changement
 du jeu après la CI et les contrôles publics. L'identité des fichiers applicatifs
 est vérifiée avant sa fusion ; pas de nouvel effet, moteur, sauvegarde ou durée.
-Résultats : docs/validation/publication-animations.json ; audit antérieur distinct
-publicaton-animations-audit.json (nom réel : publication-animations-audit.json).
+Résultats : docs/validation/publication-animations.json ; audit antérieur dans
+docs/validation/publication-animations-audit.json.
 
 Prochaine mission unique proposée : vérifier le ressenti des animations sur un
 téléphone réel. Aucune autre mission commencée. STOP après livraison.
