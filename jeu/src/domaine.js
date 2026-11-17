@@ -18,7 +18,9 @@
     const ellipse=(x,y,rx,ry,col)=>{c.beginPath();c.ellipse(x,y,rx,ry,0,0,Math.PI*2);c.fillStyle=col;c.fill();};
     const line=(pts,col=ink,width=.7)=>{c.beginPath();pts.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.strokeStyle=col;c.lineWidth=width;c.lineCap='round';c.stroke();};
     const box=(x,y,w,h,col,r=.7)=>{c.beginPath();c.roundRect(x,y,w,h,r);c.fillStyle=col;c.fill();c.strokeStyle=ink;c.lineWidth=.55;c.stroke();};
-    const sprite=(name,x,y,w,h)=>{const im=images[name],scale=Math.min(w/im.width,h/im.height),iw=im.width*scale,ih=im.height*scale;ellipse(x+w/2,y+h-1,w*.35,h*.065,'#3b2a1e26');c.drawImage(im,x+(w-iw)/2,y+h-ih,iw,ih);};
+    const sprite=(name,x,y,w,h,pose)=>{const im=images[name],scale=Math.min(w/im.width,h/im.height),iw=im.width*scale,ih=im.height*scale;ellipse(x+w/2,y+h-1,w*.35,h*.065,'#3b2a1e26');c.save();c.translate(x+w/2,y+h);if(pose){c.rotate(pose.angle||0);c.scale(pose.flip?-1:1,pose.souffle||1);}c.drawImage(im,-iw/2,-ih,iw,ih);c.restore();};
+    // Animations décoratives déterministes : aucune écriture dans l'état du jeu.
+    const oiseau=(x,y,phase)=>{const aile=1.2+Math.sin(phase)*1.6;ellipse(x,y,1.5,.65,'#aab0a1');c.beginPath();c.moveTo(x-3,y-aile);c.quadraticCurveTo(x-1,y-2,x,y);c.quadraticCurveTo(x+1,y-2,x+3,y-aile);c.strokeStyle=ink;c.lineWidth=.55;c.stroke();};
     const metal=(x,w)=>{const g=c.createLinearGradient(x,0,x+w,0);g.addColorStop(0,'#687e77');g.addColorStop(.32,'#ebeee0');g.addColorStop(.6,'#afc2b1');g.addColorStop(1,'#708a7e');return g;};
     const barrel=(x,y)=>{const g=c.createLinearGradient(x,0,x+5,0);g.addColorStop(0,'#704226');g.addColorStop(.35,'#ddb070');g.addColorStop(1,'#925e31');box(x,y,5,7,g,1.8);for(let i=1;i<5;i++)line([[x+i,y+1],[x+i,y+6]],'#80512c',.2);line([[x+.4,y+2],[x+4.6,y+2]],'#514438');line([[x+.4,y+5],[x+4.6,y+5]],'#514438');ellipse(x+2.5,y,2,.7,'#d3a568');};
     const plot=(x,y,w,h)=>{ellipse(x+w/2,y+h-4,w*.44,h*.18,'#af925f77');const p=[[x+3,y+h-10],[x+w-3,y+h-10],[x+w-3,y+h],[x+3,y+h]];line([...p,p[0]],'#f5e8bd',.8);for(const [px,py]of p){line([[px,py-6],[px,py+1]],'#845733',1.4);}for(let k=0;k<3;k++)box(x+w/2-7+k*4,y+h-8-k,6,2,'#d3c1a0');};
@@ -43,15 +45,23 @@
       if(s.equip.grille||s.bat.distillerie>=2)for(let i=0;i<4;i++)ellipse(177+(i%2)*3,195-Math.floor(i/2)*2,1.6,1.1,'#ad7849');
     }else plot(108,166,70,29);
     for(const [key,x,y,w,h]of [['brasserie',9,61,84,52],['chai',111,108,68,30],['pigeonnier',14,157,60,42],['distillerie',106,160,76,38]])if(s.travaux.some(v=>v.bat===key))scaffold(x,y,w,h);
-    // Cheval des leçons : léger mouvement d'attente, sans déplacement artificiel.
-    sprite('cheval',112,208+Math.sin(t*1.2)*.25,49,29);
+    // Pigeons autour du colombier construit, sans livraison ni gain fictifs.
+    if(s.bat.pigeonnier&&!s.nuit)for(let i=0;i<3;i++){const a=t*.7+i*2.1;oiseau(43+Math.cos(a)*14,134+Math.sin(a)*5,t*9+i);}
+    // Respiration et balancement d'attente ; le cheval reste près des leçons.
+    sprite('cheval',112,208+Math.sin(t*1.2)*.3,49,29,{angle:Math.sin(t*.6)*.006,souffle:1+Math.sin(t*1.8)*.006});
     // Petit potager et animaux de basse-cour au premier plan.
-    for(let j=0;j<3;j++){line([[22,215+j*3],[47,219+j*3]],'#89633d',1.4);for(let i=0;i<5;i++){ellipse(24+i*5,214+j*3+i*.16,1.4,.7,'#53863f');line([[24+i*5,215+j*3+i*.16],[24+i*5,213+j*3+i*.16]],'#305e30',.5);}}
-    for(const [x,y] of [[84,173],[94,178],[79,182]])sprite('animal-poule-brune',x,y,10,10);
-    sprite('animal-chat-noir',72,119,13,13);
+    for(let j=0;j<3;j++){line([[22,215+j*3],[47,219+j*3]],'#89633d',1.4);for(let i=0;i<5;i++){const vent=Math.sin(t*1.6+i*.6+j)*.55;ellipse(24+i*5+vent,214+j*3+i*.16,1.4,.7,'#53863f');line([[24+i*5,215+j*3+i*.16],[24+i*5+vent,213+j*3+i*.16]],'#305e30',.5);}}
+    [[84,173],[94,178],[79,182]].forEach(([x,y],i)=>{const a=t*.65+i*2.1,marche=s.nuit?0:Math.sin(a)*2.4,pas=s.nuit?0:Math.abs(Math.sin(t*5+i))*.25;const picore=s.nuit?0:Math.max(0,Math.sin(t*1.8+i))*.08;sprite('animal-poule-brune',x+marche,y-pas,10,10,{flip:!s.nuit&&Math.cos(a)<0,angle:picore,souffle:1+Math.sin(t*2+i)*.012});});
+    const promenade=s.nuit?0:Math.sin(t*.22)*4;
+    sprite('animal-chat-noir',72+promenade,119-Math.abs(Math.sin(t*3))*(s.nuit?0:.18),13,13,{flip:!s.nuit&&Math.cos(t*.22)<0,souffle:1+Math.sin(t*1.7)*.014});
+    if(!s.nuit&&['printemps','été'].includes(s.saison))for(let i=0;i<2;i++){const x=34+Math.sin(t*.8+i*3)*12,y=209+Math.cos(t*1.1+i)*5,a=.3+Math.abs(Math.sin(t*9+i))*.9;ellipse(x-a,y,a,1.1,i?'#e6b04d':'#de8b76');ellipse(x+a,y,a,1.1,i?'#e6b04d':'#de8b76');line([[x,y-1],[x,y+1]],ink,.35);}
     // Nuit : éclairage distinct de l'état des foyers, jamais de chauffe fictive.
-    if(s.nuit){c.fillStyle='#10213b88';c.fillRect(0,0,192,256);for(const[x,y]of[[93,111],[76,200],[164,231]]){const glow=c.createRadialGradient(x,y,0,x,y,6);glow.addColorStop(0,'#ffd67888');glow.addColorStop(1,'#ffd67800');c.fillStyle=glow;c.fillRect(x-6,y-6,12,12);box(x-.7,y-1,1.4,2,'#f9d889');}}
-    if(s.saison==='automne'&&!s.nuit)for(let i=0;i<7;i++){const u=(t*.06+i/7)%1;ellipse(13+i*27+Math.sin(t+i)*2,38+u*202,.9,.4,['#af5732','#e2ad46','#bc7532'][i%3]);}
+    if(s.nuit){c.fillStyle='#10213b88';c.fillRect(0,0,192,256);for(const[x,y]of[[93,111],[76,200],[164,231]]){const glow=c.createRadialGradient(x,y,0,x,y,6);glow.addColorStop(0,`rgba(255,214,120,${.48+Math.sin(t*2+x)*.05})`);glow.addColorStop(1,'#ffd67800');c.fillStyle=glow;c.fillRect(x-6,y-6,12,12);box(x-.7,y-1,1.4,2,'#f9d889');}}
+    if(s.nuit&&['printemps','été'].includes(s.saison))for(let i=0;i<5;i++){const x=36+i*8+Math.sin(t*.6+i)*3,y=211+Math.cos(t*.8+i)*6;c.globalAlpha=.35+Math.sin(t*1.4+i)*.2;ellipse(x,y,.55,.55,'#f6e99e');c.globalAlpha=1;}
+    // Météo et particules bornées ; aucun lien avec le calendrier simulé.
+    if(s.saison==='hiver')for(let i=0;i<12;i++){const y=24+((t*4+i*19)%220),x=8+i*15+Math.sin(t*.6+i)*2;ellipse(x,y,.45+(i%3)*.13,.45+(i%3)*.13,'#fff8e9b0');}
+    if(s.saison==='printemps'&&!s.nuit)for(let i=0;i<8;i++){const y=30+((t*3+i*27)%210),x=12+i*23+Math.sin(t*.7+i)*3;ellipse(x,y,.65,.35,'#f5d9d7b0');}
+    if(s.saison==='automne'&&!s.nuit)for(let i=0;i<7;i++){const u=(t*.06+i/7)%1;c.save();c.translate(13+i*27+Math.sin(t+i)*3,38+u*202);c.rotate(t*.8+i);ellipse(0,0,1.1,.45,['#af5732','#e2ad46','#bc7532'][i%3]);c.restore();}
     cv.dataset.saison=s.saison;cv.dataset.nuit=String(s.nuit);return true;
   }
   window.DomaineIllustre=Object.freeze({ready:loaded,render});

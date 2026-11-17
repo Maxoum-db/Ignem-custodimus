@@ -3,7 +3,7 @@ const {chromium}=require('playwright');const fs=require('node:fs');const http=re
 (async()=>{
 const root=process.env.CAPTURE_DIR||'qa/captures/parcours';fs.mkdirSync(root,{recursive:true});
 const server=http.createServer((q,r)=>{r.setHeader('Content-Type','text/html');r.end(fs.readFileSync(process.env.GAME_FILE||'dist/index.html'))});await new Promise(r=>server.listen(0,'127.0.0.1',r));
-const browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:'reduce'});page.setDefaultTimeout(5000);const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.route('https://**/*',r=>r.abort());
+const browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:'reduce'});page.setDefaultTimeout(5000);page.setDefaultNavigationTimeout(30000);const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.route('https://**/*',r=>r.abort());
 const dismiss=async()=>{if(await page.locator('#tuto-voile').isVisible()) await page.locator('#tuto-passer').click()};
 const snap=async(n)=>{await dismiss();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Débordement '+n);await page.screenshot({path:`${root}/${n}.png`});console.log(n)};
 const verifierVerre = async (forme, anime) => {

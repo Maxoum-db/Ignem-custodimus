@@ -26,6 +26,8 @@ jobs:
       - run: node jeu/tests/ulysse-entree.cjs
       - run: node jeu/tests/firmin-portrait.cjs
       - run: node jeu/tests/domaine.cjs
+      - run: node jeu/tests/domaine-vivant.cjs
+      - run: node jeu/tests/dynamiques-depart.cjs
       - run: node jeu/tests/carnet.cjs
       - run: node jeu/tests/recette-mobile.cjs
       - run: node jeu/tests/parcours.cjs
@@ -39,6 +41,7 @@ jobs:
           path: |
             dist/index.html
             qa/captures/
+            docs/captures/domaine-vivant/
             docs/captures/serie/
             docs/captures/lot50/
             docs/captures/serie20/

@@ -1,0 +1,129 @@
+[
+  {
+    "commande": [
+      "node",
+      "jeu/tests/dynamiques-depart.cjs"
+    ],
+    "code": 0,
+    "secondes": 8.59
+  },
+  {
+    "commande": [
+      "node",
+      "jeu/tests/finitions/10-batiments.test.cjs"
+    ],
+    "code": 0,
+    "secondes": 8.19
+  },
+  {
+    "commande": [
+      "node",
+      "jeu/tests/veillee/08-quotidien.test.cjs"
+    ],
+    "code": 0,
+    "secondes": 16.55
+  },
+  {
+    "commande": [
+      "env",
+      "CAPTURE_DIR=/tmp/dynamiques-auto-reprise",
+      "node",
+      "jeu/tests/parcours.cjs"
+    ],
+    "code": 0,
+    "secondes": 18.57
+  },
+  {
+    "commande": [
+      "env",
+      "GESTES_REELS=1",
+      "CAPTURE_DIR=/tmp/dynamiques-gestes-reprise",
+      "node",
+      "jeu/tests/parcours.cjs"
+    ],
+    "code": 1,
+    "secondes": 10.42
+  },
+  {
+    "commande": [
+      "env",
+      "GESTES_REELS=1",
+      "CAPTURE_DIR=/tmp/dynamiques-gestes-final",
+      "node",
+      "jeu/tests/parcours.cjs"
+    ],
+    "code": 0,
+    "resultat": "PASS parcours — relance isolée",
+    "etapes": [
+      "recette-vide",
+      "recette",
+      "empatage",
+      "empatage-actif",
+      "filtration",
+      "filtration-actif",
+      "ebullition",
+      "ebullition-actif",
+      "fermentation",
+      "fermentation-actif",
+      "embouteillage",
+      "degustation",
+      "vente",
+      "ulysse",
+      "brouillis",
+      "repasse",
+      "aveugle",
+      "degustation-edv",
+      "chai-rempli",
+      "chai-vieilli",
+      "degustation-vieilli",
+      "boutique",
+      "PASS parcours"
+    ]
+  },
+  {
+    "commande": [
+      "env",
+      "ULYSSE_REEL=1",
+      "CAPTURE_DIR=/tmp/dynamiques-ulysse-expert-final",
+      "node",
+      "jeu/tests/parcours.cjs"
+    ],
+    "code": 0,
+    "resultat": "PASS parcours — relance isolée",
+    "etapes": [
+      "recette-vide",
+      "recette",
+      "empatage",
+      "filtration",
+      "ebullition",
+      "fermentation",
+      "embouteillage",
+      "degustation",
+      "vente",
+      "ulysse",
+      "brouillis",
+      "brouillis-actif",
+      "repasse",
+      "repasse-active",
+      "aveugle",
+      "degustation-edv",
+      "chai-rempli",
+      "chai-vieilli",
+      "degustation-vieilli",
+      "boutique",
+      "PASS parcours"
+    ]
+  },
+  {
+    "commande": [
+      "env",
+      "MODE_JEU=debutant",
+      "ULYSSE_REEL=1",
+      "CAPTURE_DIR=/tmp/dynamiques-ulysse-debutant",
+      "node",
+      "jeu/tests/parcours.cjs"
+    ],
+    "code": 0,
+    "resultat": "PASS parcours — essai initial terminé avec succès"
+  }
+]
