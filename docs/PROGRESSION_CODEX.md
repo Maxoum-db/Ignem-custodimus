@@ -1,5 +1,31 @@
 # Progression Codex
 
+## Option gratuite autorisée — audit avant dépôt public
+
+Demande : « Oui option gratuit », après explication que la visibilité publique
+concerne les fichiers et l’historique. Mission unique : audit puis passage
+public nécessaire à Pages gratuit, sans nouvelle refonte.
+
+Audit terminé : Gitleaks officiel 8.30.1, checksum vérifié, toutes références
+Git récupérées ; 179 commits accessibles / 157 diffs scannés, 40,54 MB,
+zéro secret détecté. Descriptions des 103 PR/tickets également sans alerte ;
+aucun commentaire de ticket/revue présent. Noms de fichiers historiques et
+champs des 13 JSON de données examinés, sans fichier de clé privée ou champ
+personnel sensible identifié. Limites documentées : pas de garantie absolue,
+pas de revue exhaustive des logs/artefacts Actions historiques.
+
+Tentative autorisée du changement de visibilité par GitHub API : refus HTTP
+403 Resource not accessible by integration. Aucun changement effectué ni
+contournement ; le propriétaire doit faire le réglage dans General/Danger Zone,
+puis activer Pages avec Source GitHub Actions. Aucun achat effectué.
+
+Fichiers : docs/AUDIT_PUBLICATION_PUBLIQUE.md et ce journal, sur la branche
+existante work/github-pages. Aucun changement du code, de dist, des données,
+des sauvegardes, du site Sites ou de l’historique. Les audits ont réussi ; la
+publication reste bloquée par les réglages de compte. Prochaine mission unique :
+relancer le déploiement après passage public et activation Pages confirmés.
+
+
 ## Fusion GitHub Pages autorisée — activation du compte encore nécessaire
 
 Demande utilisateur : « Oui » en réponse à l’autorisation précise de fusionner
