@@ -1,5 +1,31 @@
 # Progression Codex
 
+## Fusion GitHub Pages autorisée — activation du compte encore nécessaire
+
+Demande utilisateur : « Oui » en réponse à l’autorisation précise de fusionner
+la PR #103. La PR a été fusionnée au commit main
+942e31b350a7c78e75a9e4f97881228d7dad4ba6 après vérification des deux CI réussies
+sur 5d08c73 : migration Pages 44097553837 et validation générale 44097553740.
+Aucune nouvelle modification du jeu, des sauvegardes ou de la visibilité privée.
+
+Premier déploiement main : run 44112750065. Build réussi ; deploy échoué sur
+configure-pages avec HTTP 404 Get Pages site failed / Not Found, parce que
+Pages n’est pas activé. API dépôt : has_pages=false, private=true. Aucune URL
+publiée annoncée. La documentation officielle de configure-pages v5 confirme
+que l’activation automatique exige un token autre que GITHUB_TOKEN avec des
+droits d’administration ; aucun secret supplémentaire demandé ou transmis.
+
+Le propriétaire a reçu le lien direct Settings/Pages et les trois clics :
+Build and deployment → Source → GitHub Actions. Question sur l’écran affiché
+en cours ; en cas de message Upgrade, ne pas acheter ni rendre public le dépôt
+sans nouvelle décision. Ancien site et sauvegardes restent disponibles.
+
+Suivi conservé dans cette branche work/github-pages (avancée en fast-forward
+sur main avant le commit de documentation) et dans le descriptif de la PR #103.
+Prochaine mission unique : relancer le job de déploiement existant après
+activation de Pages, puis vérifier le lien réellement publié.
+
+
 ## Migration demandée vers GitHub Pages — 17 novembre 2026
 
 Mission unique : héberger le jeu depuis le dépôt GitHub, sans dépendre de Sites.

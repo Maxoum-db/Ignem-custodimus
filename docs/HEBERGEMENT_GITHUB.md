@@ -114,3 +114,14 @@ pour fusionner cette PR précise dans main, suivant le protocole du projet.
 Pages est également désactivé au dernier contrôle (`has_pages: false`).
 Après autorisation de fusion et activation du réglage, suivre le vrai job
 de déploiement ; l’adresse attendue n’est pas encore un site publié vérifié.
+
+## Fusion confirmée et première tentative
+
+PR #103 fusionnée, main `942e31b`, après l’accord explicite de l’utilisateur
+et deux CI réussies sur `5d08c73`. Le premier run de publication main
+[44112750065](https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/44112750065)
+a construit le jeu avec succès, puis échoué à la lecture de la configuration
+Pages : HTTP 404, Pages non activé. Dépôt toujours privé, has_pages=false.
+Après sélection de Source GitHub Actions par le propriétaire, relancer les
+jobs échoués de ce run ; inutile de refaire le code ou de refusionner la PR.
+Aucun site en ligne n’a encore été confirmé.
