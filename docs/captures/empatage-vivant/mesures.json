@@ -1,0 +1,98 @@
+[
+  {
+    "width": 320,
+    "reduced": false,
+    "variants": {
+      "moving": true,
+      "flow": true,
+      "closedStable": true,
+      "coldStable": true,
+      "stirVisible": true,
+      "stirExpired": true,
+      "unchanged": true
+    },
+    "open": {
+      "v": 0.32994000000000034,
+      "H": 0.11774404657697887,
+      "t": 0.4499000000000001
+    },
+    "closed": {
+      "v": 0,
+      "H": 0.7295510983314104,
+      "t": 0.8999000000000001
+    },
+    "bilan": "Bilan · Empâtage0 % du temps dans la zoneTempérature moyenne 53,8 °C pour une consigne de 66,0 °C.Aucun dépassement : tu as senti l'inertie.Atténuation prévue 79 %, obtenue 84 %.★ Zéro dépassement · première fois +10☆ 90 % du temps dans la zone+13 écusPasser à la filtration"
+  },
+  {
+    "width": 320,
+    "reduced": true,
+    "variants": {
+      "moving": false,
+      "flow": false,
+      "closedStable": true,
+      "coldStable": true,
+      "stirVisible": true,
+      "stirExpired": true,
+      "unchanged": true
+    },
+    "open": {
+      "v": 0.32976000000000005,
+      "H": 0.1196190813360241,
+      "t": 0.3667
+    },
+    "closed": {
+      "v": 0,
+      "H": 0.714527726987075,
+      "t": 0.8168
+    },
+    "bilan": "Bilan · Empâtage0 % du temps dans la zoneTempérature moyenne 53,9 °C pour une consigne de 66,0 °C.Aucun dépassement : tu as senti l'inertie.Atténuation prévue 79 %, obtenue 84 %.★ Zéro dépassement · première fois +10☆ 90 % du temps dans la zone+13 écusPasser à la filtration"
+  },
+  {
+    "width": 390,
+    "reduced": false,
+    "variants": {
+      "moving": true,
+      "flow": true,
+      "closedStable": true,
+      "coldStable": true,
+      "stirVisible": true,
+      "stirExpired": true,
+      "unchanged": true
+    },
+    "open": {
+      "v": 0.32993999999999996,
+      "H": 0.11774446536660554,
+      "t": 0.3833
+    },
+    "closed": {
+      "v": 0.016679999999998585,
+      "H": 0.6835194644205959,
+      "t": 0.8166000000000001
+    },
+    "bilan": "Bilan · Empâtage0 % du temps dans la zoneTempérature moyenne 54,0 °C pour une consigne de 66,0 °C.Aucun dépassement : tu as senti l'inertie.Atténuation prévue 79 %, obtenue 84 %.★ Zéro dépassement · première fois +10☆ 90 % du temps dans la zone+13 écusPasser à la filtration"
+  },
+  {
+    "width": 390,
+    "reduced": true,
+    "variants": {
+      "moving": false,
+      "flow": false,
+      "closedStable": true,
+      "coldStable": true,
+      "stirVisible": true,
+      "stirExpired": true,
+      "unchanged": true
+    },
+    "open": {
+      "v": 0.33012000000000014,
+      "H": 0.11787117619489072,
+      "t": 0.36679999999999996
+    },
+    "closed": {
+      "v": 0.01685999999999932,
+      "H": 0.6853556467157189,
+      "t": 0.8167000000000001
+    },
+    "bilan": "Bilan · Empâtage0 % du temps dans la zoneTempérature moyenne 55,6 °C pour une consigne de 66,0 °C.Aucun dépassement : tu as senti l'inertie.Atténuation prévue 79 %, obtenue 84 %.★ Zéro dépassement · première fois +10☆ 90 % du temps dans la zone+13 écusPasser à la filtration"
+  }
+]
