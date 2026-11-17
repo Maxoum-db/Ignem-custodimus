@@ -110,8 +110,9 @@
     pipe(c,`M${293+dx} 122L${318+dx} 230`,false,8);path(c,`M${309+dx} 208l-10 23 18 19 15 -25Z`,'#a87444');
     const airAge=s.t-(s.evt?.t0??Infinity);
     if(s.evt?.id==='air'&&airAge>=0&&airAge<2.2)for(let i=0;i<3;i++)flow(c,`M130 ${155+i*16}q70 -20 145 10`,s.t,1,'#b6dfeb');
-    const wetAge=s.t-(s.evt?.t0??Infinity);
-    if(s.evt?.id==='humide'&&wetAge>=0&&wetAge<2.2)steam(c,505,395,s.t,.45,12,'#a9aca4');
+    const eventAge=s.t-(s.evt?.t0??Infinity);
+    if(s.evt?.id==='humide'&&eventAge>=0&&eventAge<2.2)steam(c,505,395,s.t,.45,12,'#a9aca4');
+    if(s.evt?.id==='bruleur'&&eventAge>=0&&eventAge<2.2){c.save();for(let i=0;i<6;i++){const p=reduced()?i/6:(s.t*1.8+i/6)%1;c.globalAlpha=1-p*.7;ellipse(c,535+i*9+Math.sin(p*5+i)*3,396-p*65,1.1,2.2,'#e5aa58',null);}c.restore();}
     thermometer(c,608,137,s.T,s.target,s.target-4,s.target+4,s.prediction);
   }
   function filter(c,s){

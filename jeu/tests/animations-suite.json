@@ -136,5 +136,32 @@
     "random": 0.55,
     "expectedEvent": "humide",
     "captureMs": 4500
+  },
+  "reprise-bruleur": {
+    "renderer": "emp",
+    "patch": {
+      "evt": {
+        "id": "bruleur",
+        "t0": 1
+      }
+    },
+    "region": [
+      530,
+      331,
+      56,
+      32
+    ],
+    "off": {
+      "evt": null
+    },
+    "inactive": {
+      "evt": {
+        "id": "bruleur",
+        "t0": 5
+      }
+    },
+    "random": 0.85,
+    "expectedEvent": "bruleur",
+    "captureMs": 4500
   }
 }

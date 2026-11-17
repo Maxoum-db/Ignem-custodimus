@@ -43,3 +43,5 @@ Mission 12 validée : Rotation et dérive des cônes en ébullition — `work/an
 Mission 13 validée : Courant d’air animé pendant le vrai aléa — `work/anim-13-courant-air` ; quatre scénarios et six suites réussis. Preuves : `courant-air*.png` et `courant-air.json`.
 
 Mission 14 validée : Fumée de bûche humide et vraie chute de pression — `work/anim-14-buche-humide` ; quatre scénarios et six suites réussis. Preuves : `buche-humide*.png` et `buche-humide.json`.
+
+Mission 15 validée : Étincelles lors de la vraie reprise du brûleur — `work/anim-15-reprise-bruleur` ; quatre scénarios et six suites réussis. Preuves : `reprise-bruleur*.png` et `reprise-bruleur.json`.
