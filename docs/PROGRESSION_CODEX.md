@@ -1,5 +1,41 @@
 # Progression Codex
 
+## Publication vérifiée des animations 11–20 — 17 novembre 2026
+
+Mission unique : intégrer et publier la série déjà réalisée. PR #128 retargetée
+vers main, puis fusionnée automatiquement après les deux CI réussies
+44167208776 et 44167209037. Source `5b9f060`, fusion `f6e6700`.
+Les dix SHA sont ancêtres de main ; aucun fichier du jeu modifié ici.
+PR #119 marquée fusionnée par GitHub ; #120–127 clôturées comme intermédiaires
+intégrées via #128, sans suppression de branche. Ne pas les recommencer.
+
+Publication HTTP 200 contrôlée sur https://maxoum-db.github.io/Ignem-custodimus/ :
+SHA256 HTML `c494cfbbff5ca363c7e60da4e231fe0d1a21df3a82a578874e98b142df324445`,
+identique au build de main. Quatre tests sur le vrai site public réussis :
+320/390 px DPR2, mouvement normal/réduit, incident réel de débordement produit
+par les commandes du foyer ; aucune erreur JS ni dépassement horizontal.
+Captures réelles : `docs/captures/publication-suite-main/debordement*.png`.
+Résultats : `docs/validation/publication-suite.json`. Audit antérieur à la
+fusion conservé dans `publication-suite-audit.json`, avec statuts historiques.
+
+Validation locale de la série conservée : 80 contextes mobiles, filtration,
+trois parcours complets, préparation houblon et six suites métier/images.
+Le code du jeu et ses tests sont identiques à ceux validés par la CI finale.
+Téléphone physique et Safari non vérifiables ici. Branche de traçabilité
+`work/publication-auto-suite`, documents et preuves uniquement.
+Prochaine mission unique proposée : vérifier le parcours sur téléphone réel.
+Aucune mission graphique supplémentaire commencée. STOP après sauvegarde.
+
+## Autorisation permanente de fusion après validation
+
+Demande utilisateur : « Fusionne tout seul a la fin ».
+Pour les missions et séries demandées, fusionner les travaux vérifiés à leur
+terme sans redemander une confirmation systématique. Cette autorisation couvre
+la pile des animations 11–20 et sa traçabilité. Continuer à travailler sur une
+branche dédiée, vérifier le SHA et les contrôles avant fusion, puis vérifier la
+publication réelle. Elle ne demande aucune nouvelle mission ni modification
+des protections GitHub. Conserver les limites constatées dans le bilan.
+
 ## Série suivante autorisée — mission 20/20 : Coulures pendant le véritable débordement d’Ulysse
 
 Branche `work/anim-20-debordement`, base = mission précédente (11 depuis main b3ea090).
