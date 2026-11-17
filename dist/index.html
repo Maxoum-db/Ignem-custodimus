@@ -3180,7 +3180,8 @@ html,body { margin:0; }
     box(c,157,192,243,191,'#4e3926',12);
     const compact=clamp(s.tasse),grainY=292+compact*18,grainH=74-compact*18;box(c,165,grainY,227,grainH,s.colmate?'#80603d':'#b38c52',4,null);
     for(let i=0;i<74;i++)ellipse(c,170+(i*41)%217,grainY+6+((i*19)%60)/60*(grainH-14),3,1.8,i%3?'#d9b477':'#85613b',null);
-    const water=clamp(s.niveau,0,10)*8,wave=flow||rinse?Math.sin(t*4)*1.8:0;c.save();c.globalAlpha=.68;box(c,165,grainY-water,227,water,'#81bacc',2,null);c.restore();path(c,`M166 ${grainY-water}q55 ${-5+wave} 110 0t114 0`,null,'#d8e9d4',3);
+    if(s.niveau<=0&&s.sec>0){c.save();c.globalAlpha=.45+.45*clamp(s.sec/2);for(let i=0;i<6;i++)path(c,`M${176+i*35} ${grainY+6+(i%2)*4}l9 3 -4 4 12 3`,null,'#68432c',1.2);c.restore();}
+    const water=clamp(s.niveau,0,10)*8,wave=flow||rinse?Math.sin(t*4)*1.8:0;c.save();c.globalAlpha=.68;box(c,165,grainY-water,227,water,'#81bacc',2,null);c.restore();if(water>0)path(c,`M166 ${grainY-water}q55 ${-5+wave} 110 0t114 0`,null,'#d8e9d4',3);
     // Impacts à la surface réelle : aucune eau ajoutée par le renderer.
     if(rinse&&water>0){c.save();for(let i=0;i<3;i++){const p=(t*2+i/3)%1;c.globalAlpha=(1-p)*.8;ellipse(c,191+i*84,grainY-water+1,3+p*5,.6+p*.7,null,'#eff8e8',1.4)}c.restore()}
     box(c,161,368,235,10,'#b9c9bd',2);for(let i=0;i<23;i++)ellipse(c,166+i*10,372,2,2,ink,null);

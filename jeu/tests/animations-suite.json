@@ -188,5 +188,31 @@
     "filterDebit": 100,
     "bed": "compact",
     "captureMs": 1200
+  },
+  "lit-sec": {
+    "renderer": "fil",
+    "patch": {
+      "niveau": 0,
+      "sec": 0.3
+    },
+    "next": {
+      "sec": 1.5
+    },
+    "region": [
+      166,
+      294,
+      225,
+      32
+    ],
+    "off": {
+      "niveau": 3
+    },
+    "inactive": {
+      "sec": 0
+    },
+    "stateChange": true,
+    "filterDebit": 60,
+    "bed": "dry",
+    "captureMs": 3100
   }
 }

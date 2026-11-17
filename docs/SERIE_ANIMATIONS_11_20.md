@@ -47,3 +47,5 @@ Mission 14 validée : Fumée de bûche humide et vraie chute de pression — `wo
 Mission 15 validée : Étincelles lors de la vraie reprise du brûleur — `work/anim-15-reprise-bruleur` ; quatre scénarios et six suites réussis. Preuves : `reprise-bruleur*.png` et `reprise-bruleur.json`.
 
 Mission 16 validée : Lit de drêches compacté selon tassement réel — `work/anim-16-tassement` ; quatre scénarios et six suites réussis. Preuves : `tassement*.png` et `tassement.json`.
+
+Mission 17 validée : Aspect du lit réellement à sec — `work/anim-17-lit-sec` ; quatre scénarios et six suites réussis. Preuves : `lit-sec*.png` et `lit-sec.json`.

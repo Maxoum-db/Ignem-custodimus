@@ -1,0 +1,42 @@
+[
+  {
+    "width": 320,
+    "reduced": false,
+    "stateChange": true,
+    "active": true,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true,
+    "targets": []
+  },
+  {
+    "width": 320,
+    "reduced": true,
+    "stateChange": true,
+    "active": true,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true,
+    "targets": []
+  },
+  {
+    "width": 390,
+    "reduced": false,
+    "stateChange": true,
+    "active": true,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true,
+    "targets": []
+  },
+  {
+    "width": 390,
+    "reduced": true,
+    "stateChange": true,
+    "active": true,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true,
+    "targets": []
+  }
+]
