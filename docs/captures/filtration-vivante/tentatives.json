@@ -1,0 +1,18 @@
+[
+  {
+    "scenario": "premier passage avant correction du râteau initial",
+    "code": 0,
+    "resultat": "quatre scénarios complets réussis"
+  },
+  {
+    "scenario": "passage après correction du râteau, horloge réelle",
+    "code": 1,
+    "resultat": "320 normal/réduit réussis ; 390 normal : geste terminé avant clic ratissage, bouton désactivé au bilan",
+    "preuve": "tentative-delai-expire.png"
+  },
+  {
+    "scenario": "passage final avec horloge Playwright contrôlée et vidéo en temps réel",
+    "code": 0,
+    "resultat": "quatre scénarios 320/390 normal/réduit réussis, moteur inchangé"
+  }
+]

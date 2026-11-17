@@ -1641,6 +1641,7 @@
     finir = () => {
       if (st.fini) return; st.fini = true;
       arretGeste && arretGeste(); deb.disabled = bR.disabled = bS.disabled = true; st.rince = false;
+      dessin(); // Figer le renderer dans l'état fini, sans jet ni rinçage résiduels.
       const ext = 1 - Math.exp(-st.V / FIL.k), uMoy = st.n ? st.somU / st.n : 0.5, j = jus();
       let facteur = borne(ext / FIL.ideal, 0.6, 1.06) * (1 - 0.12 * Math.max(0, uMoy - 0.75)) * Math.pow(0.98, st.ratisses || 0);
       const tanins = j < 6.5 ? 2 : j < 8 ? 1 : 0;

@@ -1,0 +1,70 @@
+[
+  {
+    "width": 320,
+    "reduced": false,
+    "variants": {
+      "flow": true,
+      "rinse": true,
+      "idleStable": true,
+      "clogStable": true,
+      "doneStable": true,
+      "noInitialRake": true,
+      "rakeOnAction": true,
+      "unchanged": true
+    },
+    "volume": 396.18182912000054,
+    "closed": 19.008000000000006,
+    "clogged": 167.08445952
+  },
+  {
+    "width": 320,
+    "reduced": true,
+    "variants": {
+      "flow": false,
+      "rinse": false,
+      "idleStable": true,
+      "clogStable": true,
+      "doneStable": true,
+      "noInitialRake": true,
+      "rakeOnAction": true,
+      "unchanged": true
+    },
+    "volume": 396.18182912000054,
+    "closed": 19.008000000000006,
+    "clogged": 167.08445952
+  },
+  {
+    "width": 390,
+    "reduced": false,
+    "variants": {
+      "flow": true,
+      "rinse": true,
+      "idleStable": true,
+      "clogStable": true,
+      "doneStable": true,
+      "noInitialRake": true,
+      "rakeOnAction": true,
+      "unchanged": true
+    },
+    "volume": 710.2538291199903,
+    "closed": 157.07999999999976,
+    "clogged": 305.15645951999966
+  },
+  {
+    "width": 390,
+    "reduced": true,
+    "variants": {
+      "flow": false,
+      "rinse": false,
+      "idleStable": true,
+      "clogStable": true,
+      "doneStable": true,
+      "noInitialRake": true,
+      "rakeOnAction": true,
+      "unchanged": true
+    },
+    "volume": 396.18182912000054,
+    "closed": 19.008000000000006,
+    "clogged": 167.08445952
+  }
+]

@@ -1,5 +1,83 @@
 # Progression Codex
 
+## Fusion autorisée puis filtration vivante — 17 novembre 2026
+
+### Autorisation et reprise réelle
+
+Demande : « Push en main tout puis passe a lasuite ». État local initial propre,
+fetch effectué, commits et PR récentes vérifiés. Le CLI GitHub a connu un timeout
+TLS ; les API du connecteur ont confirmé les états et permis les fusions.
+Les anciennes PR historiques déjà intégrées ne sont pas refusionnées.
+
+Fusions confirmées, dans l'ordre, après tests réussis :
+
+- #104 : `67d7519ec7374e62388215e0a4a49c48ecd19849`, suivi documentaire Pages.
+- #105 : `1f90e4660263bca181ab90ca61c92c46eedc3d8d`, domaine vivant.
+- #106 : `f1cdf0f215fb3a1e88de370b47ee2b75abed9cf6`, empâtage vivant,
+  redirigée vers main après intégration de sa base. Validation générale
+  44141129955 et build Pages 44141130054 réussis. Attente de la fin effective
+  des parcours complets et des coupes réelles, sans ignorer de contrôle.
+
+Le site public retourne HTTP 200 et le même HTML que dist/index.html de ce
+main final : SHA-256
+`f79c1ef988b612e99d58605ae17e87eb5a45a394fce5ffac8582efffa46e49ca`.
+Chromium réel 320/390 px DPR 2 : domaine, entrée brasserie, aucune erreur JS/HTTP,
+aucun débordement. Preuves dans `docs/captures/fusion-main-2026-11-17/`.
+Les six suites métier et les quatre contrôles d'empâtage ont aussi été rejoués
+localement avant fusion, avec succès ; leurs sorties restent dans /tmp/ignem-fusion-empatage.
+
+### Une seule nouvelle mission
+
+Branche `work/filtration-vivante`, créée depuis origin/main `f1cdf0f`, après les
+trois fusions. La filtration possédait déjà le rinçage en gouttes, les niveaux,
+le jet statique et le râteau : seuls les effets manquants sont ajoutés.
+
+Critères : soutirage animé pendant le débit, impacts à la surface réelle pendant
+le rinçage, aucun flux vanne fermée/colmatage/fin de geste ; mouvement réduit,
+commandes, volumes et rendement préservés ; preuve réelle du jeu.
+
+- `jeu/src/ateliers.js` : reflets mobiles dans le jet, onde de surface et impacts
+  du rinçage. Le râteau ne s'anime plus automatiquement à la première seconde :
+  il nécessite un vrai timestamp de ratissage. Aucun nouveau scheduler ou asset.
+- `jeu/src/jeu.js` : unique appel de dessin après passage à l'état fini pour
+  supprimer le jet/rinçage résiduels sur l'image finale. Calculs inchangés.
+- `dist/index.html`, `dist/artefact.html` reconstruits.
+- `jeu/tests/filtration-vivante.cjs`, workflow existant et captures/vidéo/mesures
+  dans `docs/captures/filtration-vivante/` ; ce journal et preuve de publication.
+
+### Validation de la filtration
+
+Build, six suites Node (dont chemins et images), syntaxe JS et diff propre.
+Quatre scénarios Chromium 320/390 px DPR 2 normal/réduit : pixels réellement
+animés, stabilité à l'arrêt/colmatage/fin, aucun râteau initial, râteau visible
+après action, état fourni au renderer non muté. Sur les vraies commandes :
+rinçage maintenu avec eau et volume croissants, fermeture sans volume produit,
+colmatage sans débit, remise en eau et ratissage avec reprise du soutirage,
+bilan, état fini redessiné puis entrée en ébullition. État du dernier dessin stable
+après sortie, bouton >=44 px, aucune erreur JS ni débordement.
+
+Un essai à 390 px avec vidéo et horloge réelle a atteint le bilan des 20 s avant
+le clic de ratissage ; bouton déjà désactivé. Le test contrôle désormais l'horloge
+Playwright pendant les actions et la reprend pendant la vidéo. Aucun allongement
+du geste ou changement de physique. Les quatre scénarios finaux sont réussis ;
+échec, log et capture conservés dans le dossier de preuves (`tentatives.json`).
+
+Captures du véritable HTML construit et vidéo réelle du canvas pendant trois
+secondes avec rinçage et débit actifs, pas de maquette. Partie de test isolée.
+Téléphone physique et Safari iOS indisponibles. Les autres ateliers n'ont pas
+été modifiés ; leurs parcours complets étaient réussis dans la CI avant fusion.
+
+### Sauvegarde et prochaine mission
+
+Commit, push et PR vers main pour cette seule nouvelle mission. Aucune fusion de
+la nouvelle PR dans cette intervention : l'autorisation portait sur les travaux
+précédents puis sur la mission suivante. La nouvelle filtration n'est pas encore
+sur le site public ; domaine et empâtage y sont bien publiés.
+
+Prochaine mission unique proposée, non commencée : animer les circuits glycol
+et vapeur de fermentation selon leurs commandes réelles. STOP après livraison.
+
+
 ## Empâtage vivant — mission du 17 novembre 2026
 
 ### Reprise et périmètre

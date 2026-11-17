@@ -1,0 +1,17 @@
+{
+  "main": "f1cdf0f215fb3a1e88de370b47ee2b75abed9cf6",
+  "url": "https://maxoum-db.github.io/Ignem-custodimus/",
+  "sha256_html_public_et_main": "f79c1ef988b612e99d58605ae17e87eb5a45a394fce5ffac8582efffa46e49ca",
+  "http": 200,
+  "fusions": {
+    "104": "67d7519ec7374e62388215e0a4a49c48ecd19849",
+    "105": "1f90e4660263bca181ab90ca61c92c46eedc3d8d",
+    "106": "f1cdf0f215fb3a1e88de370b47ee2b75abed9cf6"
+  },
+  "ci_106": {
+    "validation_jeu": 44141129955,
+    "pages_build": 44141130054,
+    "resultat": "success"
+  },
+  "verifications": "HTML public identique au dist de main ; Chromium mobile 320/390 DPR2, entrée brasserie, aucune erreur JS/HTTP ni débordement. Nouvelle partie isolée."
+}

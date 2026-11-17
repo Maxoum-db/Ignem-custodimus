@@ -3160,21 +3160,24 @@ html,body { margin:0; }
     thermometer(c,608,137,s.T,s.target,s.target-4,s.target+4,s.prediction);
   }
   function filter(c,s){
+    const t=reduced()?0:s.t,flow=s.t>0&&!s.fini&&!s.colmate&&s.u>.02,rinse=s.t>0&&!s.fini&&s.rince;
     shadow(c,277,440,195);kettle(c,134,172,290,238,{steel:true,level:0,open:false});
     // Coupe : surface des drêches, faux fond perforé et eau au-dessus.
     box(c,157,192,243,191,'#4e3926',12);
     const grainY=292;box(c,165,grainY,227,74,s.colmate?'#80603d':'#b38c52',4,null);
     for(let i=0;i<74;i++)ellipse(c,170+(i*41)%217,grainY+6+(i*19)%60,3,1.8,i%3?'#d9b477':'#85613b',null);
-    const water=clamp(s.niveau,0,10)*8;c.save();c.globalAlpha=.68;box(c,165,grainY-water,227,water,'#81bacc',2,null);c.restore();path(c,`M166 ${grainY-water}q55 -5 110 0t114 0`,null,'#d8e9d4',3);
+    const water=clamp(s.niveau,0,10)*8,wave=flow||rinse?Math.sin(t*4)*1.8:0;c.save();c.globalAlpha=.68;box(c,165,grainY-water,227,water,'#81bacc',2,null);c.restore();path(c,`M166 ${grainY-water}q55 ${-5+wave} 110 0t114 0`,null,'#d8e9d4',3);
+    // Impacts à la surface réelle : aucune eau ajoutée par le renderer.
+    if(rinse&&water>0){c.save();for(let i=0;i<3;i++){const p=(t*2+i/3)%1;c.globalAlpha=(1-p)*.8;ellipse(c,191+i*84,grainY-water+1,3+p*5,.6+p*.7,null,'#eff8e8',1.4)}c.restore()}
     box(c,161,368,235,10,'#b9c9bd',2);for(let i=0;i<23;i++)ellipse(c,166+i*10,372,2,2,ink,null);
     pipe(c,'M178 160H380M278 160V119',true,10);
-    if(s.rince)for(let i=0;i<14;i++){const y=177+(reduced()?.5:(s.t*1.7+i*.13)%1)*(grainY-water-177);path(c,`M${186+i*14} ${y}v7`,null,'#e5f3eb',3)}
+    if(rinse)for(let i=0;i<14;i++){const y=177+(reduced()?.5:(t*1.7+i*.13)%1)*(grainY-water-177);path(c,`M${186+i*14} ${y}v7`,null,'#e5f3eb',3)}
     pipe(c,'M416 390H468V333H520');valve(c,463,389,s.u);
     kettle(c,525,281,152,129,{level:clamp(s.V/s.capacity),color:s.color});
-    if(s.t>0&&s.u>.02&&!s.colmate)path(c,'M520 333Q535 330 544 292',null,s.color,6);
+    if(flow){path(c,'M520 333Q535 330 544 292',null,s.color,6);c.save();c.setLineDash([5,9]);c.lineDashOffset=-t*48;c.globalAlpha=.75;path(c,'M520 333Q535 330 544 292',null,'#f8e3ad',2.5);c.restore()}
     text(c,`${Math.round(s.V)} L`,600,453,21,ink,'center');
     if(s.colmate)text(c,'Lit colmaté',280,263,23,'#822e21','center');
-    if(s.t-s.ratisse<1&&s.t>0){const dx=reduced()?0:Math.sin(s.t*10)*20;pipe(c,`M${230+dx} 137L${264+dx} 306`,false,7);path(c,`M${238+dx} 308h52`,null,'#805735',8)}
+    if(s.ratisse>0&&s.t>=s.ratisse&&s.t-s.ratisse<1){const dx=reduced()?0:Math.sin(s.t*10)*20;pipe(c,`M${230+dx} 137L${264+dx} 306`,false,7);path(c,`M${238+dx} 308h52`,null,'#805735',8)}
   }
   function boil(c,s){
     kettle(c,210,210,330,209,{level:clamp(s.volume/s.capacity),color:s.color});
@@ -5004,6 +5007,7 @@ html,body { margin:0; }
     finir = () => {
       if (st.fini) return; st.fini = true;
       arretGeste && arretGeste(); deb.disabled = bR.disabled = bS.disabled = true; st.rince = false;
+      dessin(); // Figer le renderer dans l'état fini, sans jet ni rinçage résiduels.
       const ext = 1 - Math.exp(-st.V / FIL.k), uMoy = st.n ? st.somU / st.n : 0.5, j = jus();
       let facteur = borne(ext / FIL.ideal, 0.6, 1.06) * (1 - 0.12 * Math.max(0, uMoy - 0.75)) * Math.pow(0.98, st.ratisses || 0);
       const tanins = j < 6.5 ? 2 : j < 8 ? 1 : 0;
