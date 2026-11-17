@@ -1,5 +1,18 @@
 # Progression Codex
 
+## Série suivante autorisée — mission 12/20 : Rotation et dérive des cônes en ébullition
+
+Branche `work/anim-12-cones`, base = mission précédente (11 depuis main b3ea090).
+Build, six suites métier/images, syntaxe JS et diff propre réussis.
+Quatre cas mobiles 320/390 DPR2 normal/réduit : état actif, état arrêté,
+absence de mutation et vraie capture de l'application, tous réussis.
+Commande : `CHROMIUM_PATH=/usr/bin/chromium SCENARIOS_ANIMATIONS=jeu/tests/animations-suite.json CAS_ANIMATION=cones CAPTURE_DIR=docs/captures/animations-suite node jeu/tests/animations-serie.cjs`.
+Fichiers : ateliers.js, éventuels champs de présentation de jeu.js, HTML
+reconstruits, configuration/test partagé et captures `cones*`.
+Aucun calcul métier, sauvegarde, nouvelle boucle ou fusion modifiés/ajoutés.
+Téléphone physique et Safari indisponibles. Suite : mission suivante du plan
+docs/SERIE_ANIMATIONS_11_20.md ; arrêt après la mission 20.
+
 ## Série suivante autorisée — mission 11/20 : Chute du houblon indépendante de la cadence
 
 Branche `work/anim-11-chute-temps`, base = mission précédente (11 depuis main b3ea090).

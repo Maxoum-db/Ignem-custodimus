@@ -37,3 +37,5 @@ Validation finale prévue : nouvelle matrice, matrice précédente et parcours
 avec gestes/coupes réels. Safari et téléphone physique indisponibles.
 
 Mission 11 validée : Chute du houblon indépendante de la cadence — `work/anim-11-chute-temps` ; quatre scénarios et six suites réussis. Preuves : `chute-temps*.png` et `chute-temps.json`.
+
+Mission 12 validée : Rotation et dérive des cônes en ébullition — `work/anim-12-cones` ; quatre scénarios et six suites réussis. Preuves : `cones*.png` et `cones.json`.
