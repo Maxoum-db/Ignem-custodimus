@@ -1,0 +1,34 @@
+[
+  {
+    "width": 320,
+    "reduced": false,
+    "active": true,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true
+  },
+  {
+    "width": 320,
+    "reduced": true,
+    "active": false,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true
+  },
+  {
+    "width": 390,
+    "reduced": false,
+    "active": true,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true
+  },
+  {
+    "width": 390,
+    "reduced": true,
+    "active": false,
+    "stable": true,
+    "inactive": true,
+    "unchanged": true
+  }
+]
