@@ -1,5 +1,88 @@
 # Progression Codex
 
+## GitHub Pages en ligne — mission terminée
+
+Après « Tout est bon », état vérifié par API : private=false, has_pages=true,
+Pages public et build_type=workflow. Le propriétaire a effectué les réglages
+nécessaires à l’option gratuite précédemment autorisée.
+
+Relance native des seuls jobs échoués du run 44112750065. Tentative 3
+terminée avec succès, main `942e31b350a7c78e75a9e4f97881228d7dad4ba6`. Le build déjà réussi est conservé ;
+aucune reconstruction locale ni nouveau changement du jeu nécessaires.
+URL réellement retournée puis vérifiée : https://maxoum-db.github.io/Ignem-custodimus/
+HTTP 200 et HTML byte pour byte identique au dist/index.html de main,
+SHA-256 2bcc7747b7187315c0c02d07601390607d13e782279a18f5f3134f88f54f3849.
+
+Vérification du site public réel avec Chromium mobile 320/390 px DPR 2 :
+domaine affiché, illustrations décodées, entrée tactile dans la brasserie,
+aucune erreur JS/ressource ni débordement. Captures réelles inspectées dans
+docs/captures/github-pages-en-ligne ; résultats dans
+docs/validation/github-pages-publication.json. Téléphone physique et Safari
+non disponibles ; aucune partie personnelle lue ou déplacée.
+
+Suivi : README, docs/HEBERGEMENT_GITHUB.md, audit de publication publique,
+ce journal, résultat JSON et deux captures. Sauvegarde sur la branche
+work/github-pages, sans nouveau travail sur main ni fusion non autorisée.
+Le déploiement de main via GitHub est désormais opérationnel et ne dépend
+plus de l’authentification Sites. L’ancien site reste disponible ; sa partie
+ne se transfère pas automatiquement à la nouvelle adresse.
+
+Prochaine mission unique proposée, non commencée : accompagner le transfert
+de l’ancienne sauvegarde si le joueur souhaite la reprendre. STOP.
+
+
+## Option gratuite autorisée — audit avant dépôt public
+
+Demande : « Oui option gratuit », après explication que la visibilité publique
+concerne les fichiers et l’historique. Mission unique : audit puis passage
+public nécessaire à Pages gratuit, sans nouvelle refonte.
+
+Audit terminé : Gitleaks officiel 8.30.1, checksum vérifié, toutes références
+Git récupérées ; 179 commits accessibles / 157 diffs scannés, 40,54 MB,
+zéro secret détecté. Descriptions des 103 PR/tickets également sans alerte ;
+aucun commentaire de ticket/revue présent. Noms de fichiers historiques et
+champs des 13 JSON de données examinés, sans fichier de clé privée ou champ
+personnel sensible identifié. Limites documentées : pas de garantie absolue,
+pas de revue exhaustive des logs/artefacts Actions historiques.
+
+Tentative autorisée du changement de visibilité par GitHub API : refus HTTP
+403 Resource not accessible by integration. Aucun changement effectué ni
+contournement ; le propriétaire doit faire le réglage dans General/Danger Zone,
+puis activer Pages avec Source GitHub Actions. Aucun achat effectué.
+
+Fichiers : docs/AUDIT_PUBLICATION_PUBLIQUE.md et ce journal, sur la branche
+existante work/github-pages. Aucun changement du code, de dist, des données,
+des sauvegardes, du site Sites ou de l’historique. Les audits ont réussi ; la
+publication reste bloquée par les réglages de compte. Prochaine mission unique :
+relancer le déploiement après passage public et activation Pages confirmés.
+
+
+## Fusion GitHub Pages autorisée — activation du compte encore nécessaire
+
+Demande utilisateur : « Oui » en réponse à l’autorisation précise de fusionner
+la PR #103. La PR a été fusionnée au commit main
+942e31b350a7c78e75a9e4f97881228d7dad4ba6 après vérification des deux CI réussies
+sur 5d08c73 : migration Pages 44097553837 et validation générale 44097553740.
+Aucune nouvelle modification du jeu, des sauvegardes ou de la visibilité privée.
+
+Premier déploiement main : run 44112750065. Build réussi ; deploy échoué sur
+configure-pages avec HTTP 404 Get Pages site failed / Not Found, parce que
+Pages n’est pas activé. API dépôt : has_pages=false, private=true. Aucune URL
+publiée annoncée. La documentation officielle de configure-pages v5 confirme
+que l’activation automatique exige un token autre que GITHUB_TOKEN avec des
+droits d’administration ; aucun secret supplémentaire demandé ou transmis.
+
+Le propriétaire a reçu le lien direct Settings/Pages et les trois clics :
+Build and deployment → Source → GitHub Actions. Question sur l’écran affiché
+en cours ; en cas de message Upgrade, ne pas acheter ni rendre public le dépôt
+sans nouvelle décision. Ancien site et sauvegardes restent disponibles.
+
+Suivi conservé dans cette branche work/github-pages (avancée en fast-forward
+sur main avant le commit de documentation) et dans le descriptif de la PR #103.
+Prochaine mission unique : relancer le job de déploiement existant après
+activation de Pages, puis vérifier le lien réellement publié.
+
+
 ## Migration demandée vers GitHub Pages — 17 novembre 2026
 
 Mission unique : héberger le jeu depuis le dépôt GitHub, sans dépendre de Sites.

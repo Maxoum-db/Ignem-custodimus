@@ -1,7 +1,23 @@
 # Hébergement du jeu sur GitHub Pages
 
+## État courant confirmé
+
+Le site est en ligne : **https://maxoum-db.github.io/Ignem-custodimus/**
+La publication main `942e31b` a réussi au run 44112750065, tentative 3.
+Le dépôt et Pages sont publics, build_type=workflow. HTTP 200 et HTML
+strictement identique à dist/index.html de main vérifiés ; navigateur réel
+320/390 px : images chargées, domaine et brasserie accessibles au toucher,
+sans erreur JS/ressource ni débordement. Les preuves sont dans
+`docs/captures/github-pages-en-ligne/` et
+`docs/validation/github-pages-publication.json`.
+
+L’ancien site n’a pas été supprimé. Les parties personnelles n’ont pas été
+lues ni transférées ; utiliser le guide ci-dessous pour les reprendre.
+Les sections de préparation et de première tentative conservent l’historique
+des blocages désormais levés par les réglages du propriétaire.
+
 Objectif : publier le jeu depuis ce dépôt, sans dépendre de ChatGPT Sites.
-Le joueur a demandé un lien public ; le dépôt conserve sa visibilité privée.
+Le joueur a choisi l’option gratuite : le jeu et le dépôt sont publics.
 Aucun compte de joueur, backend ou secret supplémentaire n’est ajouté.
 
 ## Activer Pages une seule fois
@@ -114,3 +130,14 @@ pour fusionner cette PR précise dans main, suivant le protocole du projet.
 Pages est également désactivé au dernier contrôle (`has_pages: false`).
 Après autorisation de fusion et activation du réglage, suivre le vrai job
 de déploiement ; l’adresse attendue n’est pas encore un site publié vérifié.
+
+## Fusion confirmée et première tentative
+
+PR #103 fusionnée, main `942e31b`, après l’accord explicite de l’utilisateur
+et deux CI réussies sur `5d08c73`. Le premier run de publication main
+[44112750065](https://github.com/Maxoum-db/Ignem-custodimus/actions/runs/44112750065)
+a construit le jeu avec succès, puis échoué à la lecture de la configuration
+Pages : HTTP 404, Pages non activé. Dépôt toujours privé, has_pages=false.
+Après sélection de Source GitHub Actions par le propriétaire, relancer les
+jobs échoués de ce run ; inutile de refaire le code ou de refusionner la PR.
+Aucun site en ligne n’a encore été confirmé.

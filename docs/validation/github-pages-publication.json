@@ -1,0 +1,28 @@
+{
+  "verified_at_utc": "2026-11-17T16:55:23.586468+00:00",
+  "url": "https://maxoum-db.github.io/Ignem-custodimus/",
+  "repository_public": true,
+  "pages_public": true,
+  "pages_build_type": "workflow",
+  "main_commit": "942e31b350a7c78e75a9e4f97881228d7dad4ba6",
+  "workflow_run": 44112750065,
+  "run_attempt": 3,
+  "status": "completed",
+  "conclusion": "success",
+  "http_status": 200,
+  "html_matches_main": true,
+  "html_sha256": "2bcc7747b7187315c0c02d07601390607d13e782279a18f5f3134f88f54f3849",
+  "mobile_viewports": [
+    320,
+    390
+  ],
+  "browser_errors": [],
+  "checks": [
+    "illustrations decoded",
+    "domain visible",
+    "touch navigation to brewery",
+    "no horizontal overflow"
+  ],
+  "personal_saves_accessed": false,
+  "personal_saves_migrated": false
+}
