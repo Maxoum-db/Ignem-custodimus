@@ -1,0 +1,121 @@
+{
+  "date_utc": "2026-11-17T20:35:02.038526+00:00",
+  "demande": "Fusionne tout seul a la fin",
+  "main_integration": "f6e6700cddc72f675160898bd56a74f9e960aab4",
+  "source": "5b9f060f01666dc27f33cc7f388ff0cba6fc8f44",
+  "pr_integration": 128,
+  "ci": [
+    {
+      "run": 44167208776,
+      "conclusion": "success"
+    },
+    {
+      "run": 44167209037,
+      "conclusion": "success"
+    }
+  ],
+  "url": "https://maxoum-db.github.io/Ignem-custodimus/",
+  "http": 200,
+  "html_sha256": "c494cfbbff5ca363c7e60da4e231fe0d1a21df3a82a578874e98b142df324445",
+  "html_identique_au_build": true,
+  "preuve": "Navigateur Chromium sur le vrai site public. Sauvegarde de test isolée ; commandes du foyer déclenchant un vrai débordement. Horloge contrôlée dans le test.",
+  "commande": "CHROMIUM_PATH=/usr/bin/chromium SCENARIOS_ANIMATIONS=jeu/tests/animations-suite.json CAS_ANIMATION=debordement CAPTURE_DIR=/tmp/publication-suite-main node /tmp/animations-suite-publiques.cjs",
+  "adaptation_harnais": "Copie temporaire du test existant : require Playwright absolu et page.goto vers URL publique. Aucun changement au code du jeu.",
+  "resultat": "4 contextes réussis, 320/390 px DPR2, normal/réduit, aucun débordement horizontal ni erreur JS ; animation active/arrêtée et état non muté vérifiés.",
+  "mesures": [
+    {
+      "width": 320,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.68,
+        "mousse": 0.5943657449092483,
+        "debordement": true,
+        "ageDebordement": 0.3360000000000003,
+        "masses": [
+          0.41950095030755175,
+          0.5870018455542707,
+          0.5870018455542707,
+          0.5870018455542707
+        ]
+      }
+    },
+    {
+      "width": 320,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.68,
+        "mousse": 0.5943657449092483,
+        "debordement": true,
+        "ageDebordement": 0.3360000000000003,
+        "masses": [
+          0.41950095030755175,
+          0.5870018455542707,
+          0.5870018455542707,
+          0.5870018455542707
+        ]
+      }
+    },
+    {
+      "width": 390,
+      "reduced": false,
+      "stateChange": false,
+      "active": true,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.68,
+        "mousse": 0.5943657449092483,
+        "debordement": true,
+        "ageDebordement": 0.3360000000000003,
+        "masses": [
+          0.41950095030755175,
+          0.5870018455542707,
+          0.5870018455542707,
+          0.5870018455542707
+        ]
+      }
+    },
+    {
+      "width": 390,
+      "reduced": true,
+      "stateChange": false,
+      "active": false,
+      "stable": true,
+      "inactive": true,
+      "unchanged": true,
+      "targets": [],
+      "observationFin": {
+        "t": 3.68,
+        "mousse": 0.5943657449092483,
+        "debordement": true,
+        "ageDebordement": 0.3360000000000003,
+        "masses": [
+          0.41950095030755175,
+          0.5870018455542707,
+          0.5870018455542707,
+          0.5870018455542707
+        ]
+      }
+    }
+  ],
+  "pr119": "Fusionnée automatiquement par GitHub, commit inclus dans main.",
+  "pr120_127": "Clôturées comme intermédiaires intégrées via #128 ; branches conservées, merged=false. Dix SHA vérifiés ancêtres de main.",
+  "limites": [
+    "Téléphone physique et Safari indisponibles",
+    "Pas de nouvel audit exhaustif de l’équilibrage"
+  ]
+}

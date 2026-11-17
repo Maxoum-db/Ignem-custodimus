@@ -1,0 +1,209 @@
+{
+  "demande": "Fusionne tout seul a la fin",
+  "autorisation": "Fusion autonome en fin des missions ou séries demandées, après vérification, sans nouvelle confirmation systématique.",
+  "main_avant": "b3ea09070c1b2204b57dd5f36ac6f8bea174267a",
+  "source": "5b9f060f01666dc27f33cc7f388ff0cba6fc8f44",
+  "contexte": "Relevé avant intégration ; dernier contrôle CI encore en cours à ce moment.",
+  "prs": [
+    {
+      "pr": 119,
+      "base": "main",
+      "head": "work/anim-11-chute-temps",
+      "sha": "c07f32d28bd8592e498f605b74e614e128f47389",
+      "merged": false,
+      "state": "open",
+      "runs": [
+        {
+          "id": 44159429000,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44159428778,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "pr": 120,
+      "base": "work/anim-11-chute-temps",
+      "head": "work/anim-12-cones",
+      "sha": "194085d02bc34cc4aea423595326b9cb04ba83a9",
+      "merged": false,
+      "state": "open",
+      "runs": [
+        {
+          "id": 44159745326,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44159745302,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "pr": 121,
+      "base": "work/anim-12-cones",
+      "head": "work/anim-13-courant-air",
+      "sha": "894cd8d2e1650ee884238db459f2a765c77160b2",
+      "merged": false,
+      "state": "open",
+      "runs": [
+        {
+          "id": 44160259762,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44160259949,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "pr": 122,
+      "base": "work/anim-13-courant-air",
+      "head": "work/anim-14-buche-humide",
+      "sha": "6dad998a3ff087c34de138a42d3374d78f63207d",
+      "merged": false,
+      "state": "open",
+      "runs": [
+        {
+          "id": 44160590803,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44160590573,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "pr": 123,
+      "base": "work/anim-14-buche-humide",
+      "head": "work/anim-15-reprise-bruleur",
+      "sha": "bf64aba17afd323a82ee28139924041369f3790c",
+      "merged": false,
+      "state": "open",
+      "runs": [
+        {
+          "id": 44160938988,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44160938992,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "pr": 124,
+      "base": "work/anim-15-reprise-bruleur",
+      "head": "work/anim-16-tassement",
+      "sha": "3dbb22df6152abf8e1a4ff96b84956badb685d85",
+      "merged": false,
+      "state": "open",
+      "runs": [
+        {
+          "id": 44161312825,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44161313120,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "pr": 125,
+      "base": "work/anim-16-tassement",
+      "head": "work/anim-17-lit-sec",
+      "sha": "16fd90379db12824c8b04b6ccd3230491d5fd213",
+      "merged": false,
+      "state": "open",
+      "runs": [
+        {
+          "id": 44161707139,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44161707150,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "pr": 126,
+      "base": "work/anim-17-lit-sec",
+      "head": "work/anim-18-buches",
+      "sha": "01441ee8e64c7208629bb1d93a78ef04c8b1a319",
+      "merged": false,
+      "state": "open",
+      "runs": [
+        {
+          "id": 44162307604,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44162307496,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "pr": 127,
+      "base": "work/anim-18-buches",
+      "head": "work/anim-19-mousse",
+      "sha": "556b223c80f3e49f7ff0ef72d421667156dc3cb9",
+      "merged": false,
+      "state": "open",
+      "runs": [
+        {
+          "id": 44163000322,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 44163000268,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "pr": 128,
+      "base": "work/anim-19-mousse",
+      "head": "work/anim-20-debordement",
+      "sha": "5b9f060f01666dc27f33cc7f388ff0cba6fc8f44",
+      "merged": false,
+      "state": "open",
+      "runs": [
+        {
+          "id": 44167209037,
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 44167208776,
+          "status": "in_progress",
+          "conclusion": null
+        }
+      ]
+    }
+  ]
+}

@@ -118,8 +118,14 @@ historique ; il ne remplace pas le contrôle final. La dernière mission est
 sauvegardée par le commit de clôture sur work/anim-20-debordement, puis sa PR
 est ouverte sur work/anim-19-mousse. Dix branches et commits séparés.
 
-Aucune fusion ni publication de cette série : main reste à b3ea090, les effets
-11–20 ne sont pas encore en ligne. Prochaine mission unique proposée : revue
-de la pile pour intégration autorisée. Aucune mission 21 commencée. STOP.
+Mise à jour du 17 novembre : autorisation « Fusionne tout seul a la fin ».
+PR #128 fusionnée dans main (`f6e6700`) après les deux CI réussies. Les effets
+11–20 sont publiés ; HTML public identique au build validé, quatre contrôles
+mobiles du vrai site réussis. Voir `validation/publication-suite.json` et
+`captures/publication-suite-main/`. PR #119 fusionnée automatiquement ;
+#120–127 clôturées comme intermédiaires intégrées via #128, branches conservées.
+L'autorisation de fusion en fin de mission/série est consignée au journal.
+Prochaine mission unique proposée : vérification sur téléphone réel.
+Aucune mission 21 commencée. STOP.
 
 Mission 20 validée : Coulures pendant le véritable débordement d’Ulysse — `work/anim-20-debordement` ; quatre scénarios et six suites réussis. Preuves : `debordement*.png` et `debordement.json`.
