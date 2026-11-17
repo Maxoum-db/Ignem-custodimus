@@ -25,7 +25,7 @@ main. Il publie uniquement dist, via les permissions temporaires de GitHub Actio
 Validation locale réussie : build reproductible, six suites Node dont ressources,
 syntaxe du test JS, lecture YAML et contrôles des gardes main/PR/droits, diff --check.
 Test navigateur à 320 et 390 px DPR 2 : HTML réel servi uniquement sous
-/ Ignem-custodimus/ (sans l’espace), six accès, brasserie et onglets au toucher,
+`/Ignem-custodimus/`, six accès, brasserie et onglets au toucher,
 absence d’erreur JS, ressource en échec ou débordement ; transfert d’une fixture
 entre deux origines, points/écus/recette/bâtiments/carnet/succès conservés,
 monnaie et points réellement affichés contrôlés, ancienne sauvegarde intacte.
@@ -39,6 +39,19 @@ La sauvegarde de l’ancien site n’est pas déplacée automatiquement par un
 changement d’adresse. Guide de transfert manuel fourni ; presse-papiers et
 console du joueur non automatisés, aucune partie réelle accédée. Ne pas effacer
 l’ancien site ni les données du navigateur.
+
+Suivi de livraison : PR #103 créée ; branche initiale 2f551a3 poussée. Le
+workflow de migration a réussi sur GitHub (run 44096398104) : build et test
+navigateur verts, publication ignorée sur PR comme prévu. La validation générale
+119 est encore en cours au contrôle de cette livraison, sans succès final annoncé.
+GitHub indique toujours has_pages=false et private=true.
+
+Tentative de fusion refusée par le contrôle automatique : il exige une
+attribution explicite à cette PR #103 de l’autorisation de fusion dans main,
+conformément au protocole utilisateur. Aucune fusion exécutée ni contournement.
+La suite nécessite cette autorisation précise ainsi que l’activation Pages par
+le propriétaire (Settings → Pages → Source GitHub Actions). Ne pas présenter
+la migration comme déjà publiée ni le dépôt comme devenu public.
 
 État de publication à confirmer par le résultat réel du job deploy : ne pas
 présenter l’adresse attendue comme déjà en ligne. PR et CI de cette branche à

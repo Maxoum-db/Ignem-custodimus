@@ -104,3 +104,13 @@ pas nécessaire. Le test sert le HTML réel sous `/Ignem-custodimus/`, vérifie
 les ressources et erreurs JavaScript, les six accès et la brasserie, puis la
 recette, les points, les écus et les sauvegardes distinctes après import.
 Les captures réelles sont dans `docs/captures/github-pages/`.
+
+## Livraison de la préparation
+
+La PR #103 contient la configuration et les tests. Son job de build Pages
+(run 44096398104) a réussi ; deploy est ignoré sur une PR. La fusion n’a pas
+été effectuée : le contrôle automatique requiert une autorisation explicite
+pour fusionner cette PR précise dans main, suivant le protocole du projet.
+Pages est également désactivé au dernier contrôle (`has_pages: false`).
+Après autorisation de fusion et activation du réglage, suivre le vrai job
+de déploiement ; l’adresse attendue n’est pas encore un site publié vérifié.
