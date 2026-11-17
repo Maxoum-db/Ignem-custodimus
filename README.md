@@ -2,6 +2,15 @@
 
 Jeu de laboratoire brasserie et distillerie, nourri par le savoir technique du Hub Prométhée.
 
+## Publication depuis GitHub
+
+Le déploiement GitHub Pages est défini dans `.github/workflows/pages.yml`.
+Il construit et teste le jeu puis publie uniquement `dist` depuis `main`, sans
+jeton personnel. Le dépôt reste privé et le lien de jeu est public.
+
+[Activation Pages, publication et transfert des sauvegardes](docs/HEBERGEMENT_GITHUB.md).
+Le changement d’adresse ne récupère pas automatiquement la partie de ChatGPT Sites.
+
 ## Le jeu (V0.8 : brasserie, alambic Ulysse, chai, pigeonnier, école, calendrier, recherche)
 
 | Dossier | Contenu |

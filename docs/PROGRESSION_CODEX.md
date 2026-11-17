@@ -1,5 +1,108 @@
 # Progression Codex
 
+## Migration demandée vers GitHub Pages — 17 novembre 2026
+
+Mission unique : héberger le jeu depuis le dépôt GitHub, sans dépendre de Sites.
+Utilisateur : « Je veux que tu bascules tout sur github », puis choix explicite
+« Lien public pour jouer ». Le dépôt reste privé. Base main distante vérifiée :
+ce36e0e, PR #101 fusionnée ; PR #102 ouverte, sa branche 8a47b1f propre.
+Branche dédiée `work/github-pages`, créée depuis ce suivi pour conserver les
+comptes rendus de publication précédents sans les refaire.
+
+Configuration initiale constatée : GitHub API indique private=true et
+has_pages=false. Lecture du réglage Pages refusée à l’intégration : HTTP 403
+Resource not accessible by integration. L’utilisateur doit sélectionner
+Settings → Pages → Source GitHub Actions ; question de statut envoyée pendant
+la préparation. Aucun changement de visibilité, achat, nouveau secret ou
+nouveau push vers Sites. Ancien site conservé pour les parties existantes.
+
+Fichiers : `.github/workflows/pages.yml`, `jeu/tests/github-pages.cjs`,
+`docs/HEBERGEMENT_GITHUB.md`, README, ce journal et deux captures réelles dans
+`docs/captures/github-pages/`. Aucun changement de jeu/src, de dist ni du format
+des sauvegardes. Le workflow teste les PR sans les publier et déploie seulement
+main. Il publie uniquement dist, via les permissions temporaires de GitHub Actions.
+
+Validation locale réussie : build reproductible, six suites Node dont ressources,
+syntaxe du test JS, lecture YAML et contrôles des gardes main/PR/droits, diff --check.
+Test navigateur à 320 et 390 px DPR 2 : HTML réel servi uniquement sous
+`/Ignem-custodimus/`, six accès, brasserie et onglets au toucher,
+absence d’erreur JS, ressource en échec ou débordement ; transfert d’une fixture
+entre deux origines, points/écus/recette/bâtiments/carnet/succès conservés,
+monnaie et points réellement affichés contrôlés, ancienne sauvegarde intacte.
+Une première assertion supposait l’onglet Cuve au démarrage : corrigée pour
+l’onglet Céréales réel. La fixture a aussi été complétée avec possede pour ne pas
+réexécuter une migration historique d’écus ; sérialisation normale du jeu puis
+contrôles du HUD ajoutés. Aucune modification du jeu pour faire réussir les tests.
+Captures inspectées. Android physique et Safari/iOS non disponibles.
+
+La sauvegarde de l’ancien site n’est pas déplacée automatiquement par un
+changement d’adresse. Guide de transfert manuel fourni ; presse-papiers et
+console du joueur non automatisés, aucune partie réelle accédée. Ne pas effacer
+l’ancien site ni les données du navigateur.
+
+Suivi de livraison : PR #103 créée ; branche initiale 2f551a3 poussée. Le
+workflow de migration a réussi sur GitHub (run 44096398104) : build et test
+navigateur verts, publication ignorée sur PR comme prévu. La validation générale
+119 est encore en cours au contrôle de cette livraison, sans succès final annoncé.
+GitHub indique toujours has_pages=false et private=true.
+
+Tentative de fusion refusée par le contrôle automatique : il exige une
+attribution explicite à cette PR #103 de l’autorisation de fusion dans main,
+conformément au protocole utilisateur. Aucune fusion exécutée ni contournement.
+La suite nécessite cette autorisation précise ainsi que l’activation Pages par
+le propriétaire (Settings → Pages → Source GitHub Actions). Ne pas présenter
+la migration comme déjà publiée ni le dépôt comme devenu public.
+
+État de publication à confirmer par le résultat réel du job deploy : ne pas
+présenter l’adresse attendue comme déjà en ligne. PR et CI de cette branche à
+suivre. Prochaine mission unique après mise en ligne : vérifier un transfert
+personnel assisté, sans nouvelle refonte.
+
+
+## Nouvelle tentative de publication — contrôle toujours bloquant
+
+Mission unique : reprendre la mise en ligne demandée, sans nouvelle refonte.
+Statut : bloquée. Main ce36e0e et HTML autonome vérifiés inchangés ; site
+observé en v12, audience custom inchangée. Dépôt initial propre.
+
+Après la demande « Esssai pour faire évoluer le site en ligne », nouvelle
+credential Sites et nouveau réexamen de la saisie getpass masquée. Refus
+automatique répété pour exposition du jeton dans le transcript, malgré
+l’autorisation de publier. Action non exécutée, processus arrêté, valeur
+retirée de mémoire ; aucun contournement, aucun push Sites ni déploiement.
+
+Suivi : docs/PUBLICATION_SERIE20.md et ce journal, sur la branche existante
+work/publication-serie20 et sa PR #102. Archive de publication et ZIP autonome
+conservés. La prochaine mission unique est de publier via une authentification
+gérée sans passage du jeton au terminal ; une nouvelle autorisation générale
+ne suffit pas à lever ce refus. Aucun travail fonctionnel commencé.
+
+
+## Fusion autorisée et livraison — série de vingt
+
+Statut : partielle. PR #101 fusionnée dans main `ce36e0e` après réussite de sa
+CI complète 43955201528. La tête fusionnée est exactement `5260945` ; jeu/dist
+et manifeste sont identiques au code testé. Aucune nouvelle modification du jeu.
+
+Publication Sites bloquée par le contrôle automatique : refus de transmission
+masquée du jeton au terminal (risque d’exposition dans le transcript). Action
+non exécutée, aucun contournement ; accès Git intégré sans jeton indisponible.
+Le site reste observé en version 12, audience custom inchangée ; aucun nouveau
+déploiement annoncé. Le helper Sites n’est pas installé dans l’environnement.
+
+Livrables préparés à partir du main fusionné : HTML et ZIP autonomes dans
+`/workspace/site-publication/promethee-a-jour.{html,zip}` ; archive de déploiement
+`/workspace/site-publication/serie20-deployment.tar`. Copie source Sites préparée
+localement au commit `17fb5d6468529ba377be301dd0859c14a4d96343`, non poussé.
+CRC ZIP, identité HTML avec main et empreintes vérifiés. Pas de nouveau test
+navigateur file:// ni de vérification d’une nouvelle version hébergée non publiée.
+
+Suivi sur `work/publication-serie20` : ce journal et `docs/PUBLICATION_SERIE20.md`,
+avec les commandes et références exactes de reprise. Aucun jeton dans les fichiers.
+Prochaine mission unique : terminer la publication après déblocage de
+l’authentification Sites. Pas de fusion de la PR de suivi sans nouvelle demande.
+
+
 ## Série de 20 — 20 : validation intégrée et revue vers main
 
 Statut : terminée sur `work/serie20-20-validation`. Les dix-neuf premières
