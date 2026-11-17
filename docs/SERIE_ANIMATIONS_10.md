@@ -47,3 +47,65 @@ Safari indisponibles. CI des nouvelles PR à distinguer des résultats locaux.
 Étape 8 validée : Bulles mobiles confinées au liquide des bouteilles — `work/anim-08-bulles` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `bulles*.png` et `bulles.json`.
 
 Étape 9 validée : Refroidissement Ulysse pendant collecte réelle — `work/anim-09-condenseur` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `condenseur*.png` et `condenseur.json`.
+
+## Vérification finale de la série
+
+Quarante scénarios sur le code final : dix animations × 320/390 px × normal/réduit,
+tous réussis. Comparaisons des trois récipients : le jet mobile atteint uniquement
+la fraction sélectionnée. Absence de mutation de l’état, d’erreur JS et de
+débordement. Six suites métier/images réussies après chaque changement ; build
+reproductible et syntaxe vérifiés. Captures réelles inspectées pour fermentation,
+capsulage et queues d’Ulysse.
+
+Parcours complets avec gestes de brassage réels et Ulysse expert/débutant avec
+chauffes et coupes réelles : tous réussis, y compris vente, achats persistés, chai,
+vieillissement et boutique. Le redémarrage de l’environnement a interrompu le
+dernier contrôle débutant ; seul ce contrôle a été relancé, puis réussi. Les
+résultats des trois vérifications précédentes ont été conservés.
+
+Commandes de reprise depuis la racine :
+
+```sh
+npm run build:jeu
+npm run test:jeu
+node jeu/tests/animations-serie.cjs
+GESTES_REELS=1 node jeu/tests/parcours.cjs
+ULYSSE_REEL=1 node jeu/tests/parcours.cjs
+MODE_JEU=debutant ULYSSE_REEL=1 node jeu/tests/parcours.cjs
+```
+
+Localement, Chromium système a été sélectionné via CHROMIUM_PATH pour le nouveau
+test ; les anciens parcours ont utilisé le préchargement temporaire décrit dans
+le journal. Les tests visuels utilisent l’horloge Playwright ; les parcours complets
+utilisent les attentes et gestes du vrai jeu. Aucun moteur simulé.
+
+Résultats : `docs/validation/animations-serie-final.json` et
+`animations-serie-matrice.json`. L’état CI observé avant l’étape 10 figure dans
+`animations-serie-ci-avant-etape10.json` : les trois premières PR étaient vertes,
+les suivantes en cours. Ce fichier est une photographie datée du processus, pas
+une affirmation que les dix CI sont terminées.
+
+## Branches et commits déjà confirmés
+
+| Étape | PR | Commit de la mission |
+| --- | --- | --- |
+| 1 | [#108](https://github.com/Maxoum-db/Ignem-custodimus/pull/108) | `ff2c1c1` |
+| 2 | [#109](https://github.com/Maxoum-db/Ignem-custodimus/pull/109) | `6e1ba07` |
+| 3 | [#110](https://github.com/Maxoum-db/Ignem-custodimus/pull/110) | `2824404` |
+| 4 | [#111](https://github.com/Maxoum-db/Ignem-custodimus/pull/111) | `c06992a` |
+| 5 | [#112](https://github.com/Maxoum-db/Ignem-custodimus/pull/112) | `129d3bc` |
+| 6 | [#113](https://github.com/Maxoum-db/Ignem-custodimus/pull/113) | `a29a95d` |
+| 7 | [#114](https://github.com/Maxoum-db/Ignem-custodimus/pull/114) | `7ed0947` |
+| 8 | [#115](https://github.com/Maxoum-db/Ignem-custodimus/pull/115) | `61c2ecf` |
+| 9 | [#116](https://github.com/Maxoum-db/Ignem-custodimus/pull/116) | `ac4c439` |
+
+L’étape 10 est sauvegardée sur `work/anim-10-fractions` par le commit contenant
+cette clôture, puis sa PR est ouverte sur `work/anim-09-condenseur`. Les dix PR
+restent séparées, aucune fusion dans main ou publication n’a été effectuée.
+Main reste la référence publique déjà publiée ; ces dix animations ne sont pas
+encore en ligne. Téléphone physique, Safari et équilibrage exhaustif non vérifiés.
+
+Prochaine mission unique proposée : revue de la pile pour intégration dans main,
+avec autorisation explicite de fusion. Aucune onzième animation commencée.
+
+Étape 10 validée : Jet dirigé vers la fraction réellement sélectionnée — `work/anim-10-fractions` ; quatre rendus/écrans mobiles et six suites métier réussis. Preuves : `fractions*.png` et `fractions.json`.

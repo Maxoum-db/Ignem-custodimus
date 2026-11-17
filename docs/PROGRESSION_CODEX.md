@@ -1,5 +1,38 @@
 # Progression Codex
 
+## Série de dix autorisée — étape 10/10 : Jet dirigé vers la fraction réellement sélectionnée
+
+Branche `work/anim-10-fractions` ; base = étape précédente (étape 1 sur la PR #107 non fusionnée).
+Critères validés : effet visible dans le renderer existant, arrêt selon état réel,
+mouvement réduit, état fourni non muté. Quatre scénarios 320/390 px DPR 2
+avec accès au vrai écran, commandes et capture du jeu : réussis.
+Commande : `CHROMIUM_PATH=/usr/bin/chromium CAS_ANIMATION=fractions node jeu/tests/animations-serie.cjs`.
+Build, six suites métier/images, syntaxe et diff propre réussis.
+Fichiers : ateliers.js, éventuelles données de présentation dans jeu.js,
+HTML reconstruits, test/configuration et captures `docs/captures/animations-serie/fractions*`.
+Aucune fusion, aucun calcul métier ou format de sauvegarde modifié.
+Téléphone physique et Safari indisponibles. Étape suivante : celle du plan
+`docs/SERIE_ANIMATIONS_10.md`, sans recommencer les effets existants.
+
+## Clôture des dix animations autorisées
+
+Code final : quarante scénarios 320/390 DPR2 normal/réduit et trois parcours
+complets réussis (gestes de brassage, chauffes/coupes Ulysse expert et débutant).
+Six suites métier/images, build, syntaxe et diff propre. Le redémarrage de
+l’environnement a interrompu uniquement le dernier contrôle débutant ; relance
+réussie, résultats précédents préservés. Aucun échec applicatif masqué.
+
+Détail de chaque mission, PR/commits et commandes : docs/SERIE_ANIMATIONS_10.md.
+Résultats structurés : docs/validation/animations-serie-final.json et
+animations-serie-matrice.json. Captures véritables des dix écrans/commandes
+dans docs/captures/animations-serie/. Les trois récipients Ulysse sont vérifiés.
+
+Dix branches successives ; pas de moteur, sauvegarde, règle, durée ou stock
+modifiés. Aucun nouveau scheduler. Ne pas confondre tests locaux réussis et CI
+GitHub encore en cours. Aucune fusion des nouvelles PR ni modification de main.
+Téléphone physique et Safari non disponibles. Prochaine mission : revue de la
+pile avant fusion explicitement autorisée. STOP après dix missions.
+
 ## Série de dix autorisée — étape 9/10 : Refroidissement Ulysse pendant collecte réelle
 
 Branche `work/anim-09-condenseur` ; base = étape précédente (étape 1 sur la PR #107 non fusionnée).

@@ -223,7 +223,11 @@
     if(s.foam>0)box(c,gx+3,gy+3+52*(1-level),9,Math.min(20,s.foam*20),'#f5e9ce',2,null);
     if(s.hot){path(c,'M145 309q96 28 194 0',null,'#e66c3d',9);steam(c,250,130,s.t,.65,70)}
     if(s.overflow)path(c,'M249 108q44 -16 75 0',null,'#f8e9c8',10);
-    if(active&&s.flow)for(let i=0;i<3;i++)ellipse(c,647,376+(reduced()?i*8:((s.t*28+i*8)%24)),2.5,4,'#e8f1dc',null);
+    if(active&&s.flow){
+      const receiver=s.fractions?628+clamp(s.phase,0,2)*45:647;
+      if(s.fractions){path(c,`M647 371Q647 387 ${receiver} 397`,null,'#dce8cf',2);flow(c,`M647 371Q647 387 ${receiver} 397`,s.t,1,'#f9f4df');}
+      for(let i=0;i<3;i++)ellipse(c,receiver,(s.fractions?398:376)+(reduced()?i*8:((s.t*28+i*8)%24)),2.5,4,'#e8f1dc',null);
+    }
     if(s.fractions){
       for(let i=0;i<3;i++){const x=610+i*45,h=clamp(s.fractions[i].V/Math.max(1,s.capacity))*72;box(c,x,402,36,82,'#e1e6d455',5);if(h>0)box(c,x+4,480-h,28,h,'#dce7cb',3,null);if(i===s.phase)path(c,`M${x} 396h36`,null,['#b94e32','#7eaa43','#8166a3'][i],5);text(c,['T','C','Q'][i],x+18,500,16,ink,'center')}
     }else{box(c,623,402,55,76,'#e1e6d466',8);box(c,628,472-clamp(s.collected)*60,45,clamp(s.collected)*60,'#dce7cb',3,null)}

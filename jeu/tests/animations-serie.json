@@ -172,5 +172,37 @@
       "active": false
     },
     "captureMs": 1800
+  },
+  "fractions": {
+    "renderer": "ulysse",
+    "patch": {
+      "fractions": [
+        {
+          "V": 20
+        },
+        {
+          "V": 30
+        },
+        {
+          "V": 10
+        }
+      ],
+      "capacity": 500,
+      "phase": 2
+    },
+    "region": [
+      702,
+      380,
+      25,
+      30
+    ],
+    "off": {
+      "flow": false
+    },
+    "inactive": {
+      "active": false
+    },
+    "event": "fractions",
+    "captureMs": 500
   }
 }

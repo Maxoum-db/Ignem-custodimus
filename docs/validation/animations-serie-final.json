@@ -1,0 +1,62 @@
+[
+  {
+    "scenario": "matrice",
+    "commande": [
+      "node",
+      "jeu/tests/animations-serie.cjs"
+    ],
+    "variables": {
+      "CHROMIUM_PATH": "/usr/bin/chromium",
+      "CAPTURE_DIR": "/tmp/anim-matrice-finale"
+    },
+    "code": 0,
+    "secondes": 173.95,
+    "log": "/tmp/anim-final-matrice.log"
+  },
+  {
+    "scenario": "brassage-reel",
+    "commande": [
+      "node",
+      "jeu/tests/parcours.cjs"
+    ],
+    "variables": {
+      "NODE_OPTIONS": "--require=/tmp/ignem-validation/chromium.cjs",
+      "GESTES_REELS": "1",
+      "CAPTURE_DIR": "/tmp/anim-parcours-gestes"
+    },
+    "code": 0,
+    "secondes": 98.23,
+    "log": "/tmp/anim-final-brassage-reel.log"
+  },
+  {
+    "scenario": "ulysse-expert",
+    "commande": [
+      "node",
+      "jeu/tests/parcours.cjs"
+    ],
+    "variables": {
+      "NODE_OPTIONS": "--require=/tmp/ignem-validation/chromium.cjs",
+      "ULYSSE_REEL": "1",
+      "CAPTURE_DIR": "/tmp/anim-parcours-expert"
+    },
+    "code": 0,
+    "secondes": 54.69,
+    "log": "/tmp/anim-final-ulysse-expert.log"
+  },
+  {
+    "scenario": "ulysse-debutant",
+    "commande": [
+      "node",
+      "jeu/tests/parcours.cjs"
+    ],
+    "variables": {
+      "NODE_OPTIONS": "--require=/tmp/ignem-validation/chromium.cjs",
+      "MODE_JEU": "debutant",
+      "ULYSSE_REEL": "1",
+      "CAPTURE_DIR": "/tmp/anim-parcours-debutant"
+    },
+    "code": 0,
+    "repris_apres_redemarrage_environnement": true,
+    "log": "/tmp/anim-final-ulysse-debutant.log"
+  }
+]
