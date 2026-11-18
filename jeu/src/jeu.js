@@ -484,7 +484,7 @@
   const LIEUX = [
     { id: 'brasserie', nom: 'Brasserie', r: [7, 46, 92, 77], ouvert: true, t: [53, 117] },
     { id: 'chai', nom: 'Chai', r: [108, 92, 76, 56], ouvert: true, t: [146, 143] },
-    { id: 'distillerie', nom: 'Alambic Ulysse', r: [102, 150, 82, 58], ouvert: true, t: [143, 202] },
+    { id: 'distillerie', nom: 'Alambic Ulysse', r: [102, 150, 82, 58], ouvert: true, t: [143, 171] },
     { id: 'catalogue', nom: 'Pigeonnier', r: [8, 139, 76, 69], ouvert: true, t: [46, 203] },
     { id: 'veillee', nom: 'Leçons', r: [94, 211, 90, 34], ouvert: true, t: [139, 241] },
     { id: 'rucher', nom: 'Rucher', r: [113, 45, 69, 39], t: [147, 79], msg: "Le rucher viendra en extension. Le miel du domaine est déjà dans la brasserie : essaie un braggot." },

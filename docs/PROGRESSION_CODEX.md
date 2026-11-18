@@ -1,5 +1,35 @@
 # Progression Codex
 
+## Correction du menu : nuit marquée et profondeur — 18 novembre 2026
+
+Demande : accentuer jour/nuit et empêcher le cheval de marcher sur le muret.
+Audit réel : main `8c88025`, #130/#131 fusionnées, branche locale initialement
+propre ; les anciennes PR ouvertes ne correspondent pas à cette correction.
+Branche dédiée `work/menu-nuit-profondeur`. Fusion en fin de mission autorisée
+par la consigne permanente conservée ci-dessous.
+
+`jeu/src/domaine.js` : trajet du cheval remonté et taille légèrement réduite,
+pieds restant sous la cote 217 du canvas logique pendant tout le cycle testé.
+Muret, portail et fleurs de premier plan redessinés devant les animaux depuis
+le fond saisonnier existant, avec le même cadrage. Nuit à dégradé bleu sombre,
+petite lune et fenêtre chaude renforcée ; étoiles douces conservées.
+`jeu/src/jeu.js` : seule l'ancre visuelle du libellé Ulysse remonte de 202 à
+171 pour dégager le cheval. Zones tactiles, destinations et règles inchangées.
+HTML reconstruits. Aucun asset retouché ou système parallèle ajouté.
+
+Validation : build et six suites métier/images réussis ; syntaxe et diff
+propres ; test complet du domaine réussi (six accès, saisons, niveaux/travaux,
+cibles 44 px, repli image manquante). Test domaine-vivant renforcé et huit
+contextes 320/390 DPR2 jour/nuit normal/réduit réussis. Vérification sur 96 s
+du trajet, pieds <217, dessin du premier plan après le cheval, sauvegarde
+inchangée, aucune erreur JS ni dépassement horizontal. Luminance nocturne
+de la zone d'herbe mesurée : environ 22,5 % de celle du jour.
+Preuves réelles et vidéo : `docs/captures/menu-nuit-profondeur/`.
+Résultats : `docs/validation/menu-nuit-profondeur.json`.
+Téléphone physique et Safari indisponibles. Prochaine mission proposée :
+contrôler le confort de lecture nocturne sur téléphone réel. Ne pas commencer
+une autre mission ; terminer la fusion et la vérification de publication.
+
 ## Menu vivant terminé et publié — 17 novembre 2026
 
 PR #130 fusionnée automatiquement après les deux CI réussies 44173137204 et
