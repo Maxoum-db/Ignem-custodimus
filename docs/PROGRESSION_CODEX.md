@@ -1,5 +1,30 @@
 # Progression Codex
 
+## Correction nuit/profondeur terminée et publiée — 18 novembre 2026
+
+PR #132 fusionnée après les deux CI réussies 44263289342 et 44263289376,
+source `95630dd`, fusion main `7a97479`. Déploiement Pages 44266755350 réussi
+(build et deploy). HTML public identique au build validé, HTTP 200 : SHA256
+`3bb45d27d58c125a953930a476aa0d408b5086832fb38cab640f337d52d5b345`.
+
+Huit contrôles supplémentaires sur le vrai site public réussis : 320/390 px
+DPR2, jour/nuit, normal/réduit. Pieds du cheval dans le pré (<217), premier
+plan dessiné devant lui, nuit nettement distincte (zone mesurée environ 22,5 %
+de la luminance du jour), sauvegarde inchangée et arrêt à la sortie du domaine.
+Aucune erreur JS ni dépassement horizontal. Captures réelles publiques :
+`docs/captures/menu-nuit-profondeur/en-ligne-domaine-390.png` et
+`en-ligne-domaine-390-nuit.png`. Résultats et limites :
+`docs/validation/menu-nuit-profondeur-public.json`.
+
+Premier retour de fusion non exploitable : PR relue réellement ouverte, puis
+fusion confirmée par GitHub. Déploiement retardé par l'installation de son
+navigateur de validation, finalement réussi. Aucun commit perdu ni changement
+supplémentaire du jeu. Preuves finales sauvegardées sur la même branche
+`work/menu-nuit-profondeur`, documents uniquement, code identique à #132.
+Téléphone physique et Safari non vérifiés. Prochaine mission unique proposée :
+contrôler le confort de lecture nocturne sur téléphone réel. Mission suivante
+non commencée. STOP après sauvegarde finale des preuves.
+
 ## Correction du menu : nuit marquée et profondeur — 18 novembre 2026
 
 Demande : accentuer jour/nuit et empêcher le cheval de marcher sur le muret.
