@@ -1,0 +1,158 @@
+[
+  {
+    "width": 320,
+    "night": false,
+    "draws_in_one_second": 21,
+    "regions": {
+      "poules": true,
+      "chat": true,
+      "cheval": true,
+      "pigeons": true,
+      "potager": true,
+      "ciel": true,
+      "fenetre": false
+    },
+    "promenades": {
+      "cheval": {
+        "min": 124.99999664199184,
+        "max": 150.99999594352613,
+        "inside": true,
+        "piedsMax": 215.82197355216655
+      },
+      "animal-poule-brune": {
+        "min": 76.99999793146698,
+        "max": 103.99999720613721,
+        "inside": true,
+        "piedsMax": 195.0052884195892
+      },
+      "animal-chat-noir": {
+        "min": 70.4999981060834,
+        "max": 93.4999974882099,
+        "inside": true,
+        "piedsMax": 133.90839694251477
+      }
+    },
+    "contraste": {
+      "jour": 190.37252324380142,
+      "nuit": 42.786794214876025,
+      "rapport": 0.2247529921115818
+    }
+  },
+  {
+    "width": 320,
+    "night": true,
+    "draws_in_one_second": 22,
+    "regions": {
+      "poules": true,
+      "chat": true,
+      "cheval": true,
+      "pigeons": false,
+      "potager": true,
+      "ciel": true,
+      "fenetre": true
+    },
+    "promenades": {
+      "cheval": {
+        "min": 124.99999664199184,
+        "max": 150.99999594352613,
+        "inside": true,
+        "piedsMax": 215.82197355216655
+      },
+      "animal-poule-brune": {
+        "min": 76.99999793146698,
+        "max": 103.99999720613721,
+        "inside": true,
+        "piedsMax": 195.0052884195892
+      },
+      "animal-chat-noir": {
+        "min": 70.4999981060834,
+        "max": 93.4999974882099,
+        "inside": true,
+        "piedsMax": 133.90839694251477
+      }
+    },
+    "contraste": {
+      "jour": 190.37252324380142,
+      "nuit": 42.786794214876025,
+      "rapport": 0.2247529921115818
+    }
+  },
+  {
+    "width": 390,
+    "night": false,
+    "draws_in_one_second": 24,
+    "regions": {
+      "poules": true,
+      "chat": true,
+      "cheval": true,
+      "pigeons": true,
+      "potager": true,
+      "ciel": true,
+      "fenetre": false
+    },
+    "promenades": {
+      "cheval": {
+        "min": 125,
+        "max": 151,
+        "inside": true,
+        "piedsMax": 215.91700744628906
+      },
+      "animal-poule-brune": {
+        "min": 77,
+        "max": 104,
+        "inside": true,
+        "piedsMax": 195.09115600585938
+      },
+      "animal-chat-noir": {
+        "min": 70.5,
+        "max": 93.5,
+        "inside": true,
+        "piedsMax": 133.9673614501953
+      }
+    },
+    "contraste": {
+      "jour": 190.23276297520607,
+      "nuit": 42.79235880991762,
+      "rapport": 0.22494736522065314
+    }
+  },
+  {
+    "width": 390,
+    "night": true,
+    "draws_in_one_second": 23,
+    "regions": {
+      "poules": true,
+      "chat": true,
+      "cheval": true,
+      "pigeons": false,
+      "potager": true,
+      "ciel": true,
+      "fenetre": true
+    },
+    "promenades": {
+      "cheval": {
+        "min": 125,
+        "max": 151,
+        "inside": true,
+        "piedsMax": 215.91700744628906
+      },
+      "animal-poule-brune": {
+        "min": 77,
+        "max": 104,
+        "inside": true,
+        "piedsMax": 195.09115600585938
+      },
+      "animal-chat-noir": {
+        "min": 70.5,
+        "max": 93.5,
+        "inside": true,
+        "piedsMax": 133.9673614501953
+      }
+    },
+    "contraste": {
+      "jour": 190.23276297520607,
+      "nuit": 42.79235880991762,
+      "rapport": 0.22494736522065314
+    }
+  }
+]
